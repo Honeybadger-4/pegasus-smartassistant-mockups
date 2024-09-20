@@ -1,3 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
-@import "primeng/resources/themes/fluent-light/theme.css";
-@import "primeng/resources/primeng.css";
+@layer tailwind-base, primeng, tailwind-utilities;
+        
+@layer tailwind-base {
+    @tailwind base;
+}
+
+@layer tailwind-utilities {
+    @tailwind components;
+    @tailwind utilities;
+}
+
+@import "primeicons/primeicons.css";

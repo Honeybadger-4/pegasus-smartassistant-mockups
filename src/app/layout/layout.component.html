@@ -1,0 +1,55 @@
+<main id="layout">
+  <div class="grid grid-flow-col gap-5">
+    <div class="col-span-1">
+      <div class="sidebar-menu-container">
+        <!-- Menu Header -->
+        <div class="sidebar-menu-header">
+          <p class="text-xl font-bold">EFB</p>
+          <p-divider />
+        </div>
+
+        <!-- Menu Content -->
+        <div class="sidebar-menu-content">
+          @for (menuItem of menuItems; track $index) {
+          <div class="menu-item-container">
+            @if(menuItem.items) {
+            <p-panel
+              *ngIf="menuItem.items"
+              [collapsed]="true"
+              [toggleable]="true"
+              class="w-full"
+            >
+              <ng-template pTemplate="header">
+                    <i [class]="menuItem.icon"></i>
+                    <span class="ml-2">{{ menuItem.label }}</span>
+              </ng-template>
+
+              @for (subMenuItem of menuItem.items; track $index) {
+              <a pRipple class="submenu-item">
+                <span [class]="subMenuItem.icon"></span>
+                <span class="ml-2">{{ subMenuItem.label }}</span>
+              </a>
+              }
+            </p-panel>
+
+            } @else {
+
+            <a *ngIf="!menuItem.items" pRipple class="menu-item">
+              <span [class]="menuItem.icon"></span>
+              <span class="ml-2">{{ menuItem.label }}</span>
+            </a>
+
+            }
+          </div>
+          }
+        </div>
+
+        <div class="sidebar-menu-footer"></div>
+      </div>
+    </div>
+
+    <div class="col-span-11">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</main>

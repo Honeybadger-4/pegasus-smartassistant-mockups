@@ -1,0 +1,55 @@
+
+#layout {
+    .sidebar-menu-container {
+        padding: 10px;
+
+        .sidebar-menu-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-menu-content {
+            padding-left: 10px;
+
+            .menu-item {
+                display: flex;
+                align-items: center;
+                margin-bottom: 20px;
+                margin-top: 20px;
+            }
+
+            .submenu-item {
+                padding-left: 20px;
+                display: flex;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+        }
+    }
+}
+
+::ng-deep {
+    #layout {
+        .p-menubar {
+            display: block !important;
+        }
+
+        .p-menubar-root-list {
+            display: block;
+        }
+
+        .p-panel .p-panel-header {
+            border: none;
+            background-color: transparent;
+            padding: 0;
+        }
+        
+        .p-panel .p-panel-header .p-panel-title {
+            font-weight: normal;
+        }
+
+        .p-panel .p-panel-content {
+            border: none;
+        }
+    }
+}
