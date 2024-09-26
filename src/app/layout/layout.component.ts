@@ -6,11 +6,12 @@ import { MenubarModule } from 'primeng/menubar';
 import { PanelModule } from 'primeng/panel';
 import { DividerModule } from 'primeng/divider';
 import { LayoutMenuItem } from '@shared/models/layout-sidebar-menu'
+import { AvatarModule } from 'primeng/avatar';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [CommonModule, ButtonModule, MenubarModule, MenuModule, PanelModule, DividerModule],
+  imports: [CommonModule, AvatarModule, ButtonModule, MenubarModule, PanelModule, DividerModule],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
 })

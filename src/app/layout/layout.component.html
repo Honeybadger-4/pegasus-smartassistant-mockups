@@ -13,15 +13,10 @@
           @for (menuItem of menuItems; track $index) {
           <div class="menu-item-container">
             @if(menuItem.items) {
-            <p-panel
-              *ngIf="menuItem.items"
-              [collapsed]="true"
-              [toggleable]="true"
-              class="w-full"
-            >
+            <p-panel *ngIf="menuItem.items" [collapsed]="true" [toggleable]="true" class="w-full">
               <ng-template pTemplate="header">
-                    <i [class]="menuItem.icon"></i>
-                    <span class="ml-2">{{ menuItem.label }}</span>
+                <i [class]="menuItem.icon"></i>
+                <span class="ml-2">{{ menuItem.label }}</span>
               </ng-template>
 
               @for (subMenuItem of menuItem.items; track $index) {
@@ -49,7 +44,24 @@
     </div>
 
     <div class="col-span-11">
+      <div class="toolbar flex ">
+        <div class="toolbar-left">
+          <h2 class="welcome-title text-xl font-bold">Welcome Dominic!</h2>
+          <p class="welcome-subtitle text-sm text-gray-600">How are you today?</p>
+        </div>
+
+        <div class="toolbar-right flex">
+          <div class="profile-avatar-container">
+            <p-avatar image="/images/profile.png" shape="circle" class="profile-avatar"></p-avatar>
+          </div>
+          <span class="role">Captain</span>
+          <i class="pi pi-sign-out"></i>
+        </div>
+      </div>
+
       <router-outlet></router-outlet>
     </div>
+
+
   </div>
 </main>
