@@ -1,55 +1,129 @@
-
 #layout {
-    .sidebar-menu-container {
-        padding: 10px;
+  .sidebar-menu-container {
+    padding: 10px;
 
-        .sidebar-menu-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .sidebar-menu-content {
-            padding-left: 10px;
-
-            .menu-item {
-                display: flex;
-                align-items: center;
-                margin-bottom: 20px;
-                margin-top: 20px;
-            }
-
-            .submenu-item {
-                padding-left: 20px;
-                display: flex;
-                align-items: center;
-                margin-bottom: 20px;
-            }
-        }
+    .sidebar-menu-header {
+      text-align: center;
+      margin-bottom: 20px;
     }
+
+    .sidebar-menu-content {
+      padding-left: 10px;
+
+      .menu-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        margin-top: 20px;
+      }
+
+      .submenu-item {
+        padding-left: 20px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #ffff;
+
+    .toolbar-left {
+      display: flex;
+      flex-direction: column;
+      width: 188px;
+      height: 73px;
+      padding: 10px 0 0 0;
+      gap: 10px;
+
+      .welcome-title {
+        font-size: 20px;
+        color: #4F4F4F;
+        font-weight: 700;
+        line-height: 24px;
+        text-align: left;
+      }
+
+      .welcome-subtitle {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 19.2px;
+        text-align: left;
+        color: #4F4F4F;
+      }
+    }
+
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      width: 179px;
+      height: 67px;
+      padding: 10px 0 0 0;
+      gap: 20px;
+      opacity: 1;
+
+      .profile-avatar-container {
+        position: relative;
+
+        .profile-avatar {
+          width: 47px;
+          height: 47px;
+        }
+
+        .profile-avatar img {
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+        }
+      }
+
+      .role {
+        width: 48px;
+        height: 16px;
+        font-family: 'Roboto', sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 16.41px;
+        text-align: left;
+      }
+
+      .pi-sign-out {
+        margin-left: 1rem;
+        font-size: 1.125rem;
+        color: #6b7280;
+      }
+    }
+  }
 }
 
 ::ng-deep {
-    #layout {
-        .p-menubar {
-            display: block !important;
-        }
-
-        .p-menubar-root-list {
-            display: block;
-        }
-
-        .p-panel .p-panel-header {
-            border: none;
-            background-color: transparent;
-            padding: 0;
-        }
-        
-        .p-panel .p-panel-header .p-panel-title {
-            font-weight: normal;
-        }
-
-        .p-panel .p-panel-content {
-            border: none;
-        }
+  #layout {
+    .p-menubar {
+      display: block !important;
     }
+
+    .p-menubar-root-list {
+      display: block;
+    }
+
+    .p-panel .p-panel-header {
+      border: none;
+      background-color: transparent;
+      padding: 0;
+    }
+
+    .p-panel .p-panel-header .p-panel-title {
+      font-weight: normal;
+    }
+
+    .p-panel .p-panel-content {
+      border: none;
+    }
+  }
 }
