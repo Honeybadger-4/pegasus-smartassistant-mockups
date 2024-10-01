@@ -7,6 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "format": "prettier .  --write",
     "serve:ssr:efb-admin": "node dist/efb-admin/server/server.mjs"
   },
   "private": true,
@@ -22,6 +23,7 @@
     "@angular/router": "^18.2.0",
     "@angular/ssr": "^18.2.4",
     "express": "^4.18.2",
+    "prettier": "^3.3.3",
     "primeicons": "^7.0.0",
     "primeng": "^17.18.10",
     "rxjs": "~7.8.0",

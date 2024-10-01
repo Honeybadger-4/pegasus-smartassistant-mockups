@@ -5,13 +5,20 @@ import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { PanelModule } from 'primeng/panel';
 import { DividerModule } from 'primeng/divider';
-import { LayoutMenuItem } from '@shared/models/layout-sidebar-menu'
+import { LayoutMenuItem } from '@shared/models/layout-sidebar-menu';
 import { AvatarModule } from 'primeng/avatar';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [CommonModule, AvatarModule, ButtonModule, MenubarModule, PanelModule, DividerModule],
+  imports: [
+    CommonModule,
+    AvatarModule,
+    ButtonModule,
+    MenubarModule,
+    PanelModule,
+    DividerModule,
+  ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
 })
@@ -27,26 +34,26 @@ export class LayoutComponent {
         icon: 'pi pi-home',
       },
       {
-        label: "Flight Information",
-        icon: "pi pi-circle-off",
+        label: 'Flight Information',
+        icon: 'pi pi-circle-off',
         items: [
           {
-            label: "Fuel",
-            icon: "pi pi-circle-off",
+            label: 'Fuel',
+            icon: 'pi pi-circle-off',
           },
           {
-            label: "Route",
-            icon: "pi pi-circle-off",
+            label: 'Route',
+            icon: 'pi pi-circle-off',
           },
           {
-            label: "Trip Info",
-            icon: "pi pi-circle-off",
+            label: 'Trip Info',
+            icon: 'pi pi-circle-off',
           },
           {
-            label: "Load Sheet",
-            icon: "pi pi-circle-off",
-          }
-        ]
+            label: 'Load Sheet',
+            icon: 'pi pi-circle-off',
+          },
+        ],
       },
       {
         label: 'Airport Information',

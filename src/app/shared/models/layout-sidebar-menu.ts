@@ -1,5 +1,5 @@
 export interface LayoutMenuItem {
-    label: string,
-    icon: string,
-    items?: LayoutMenuItem[]
+  label: string;
+  icon: string;
+  items?: LayoutMenuItem[];
 }

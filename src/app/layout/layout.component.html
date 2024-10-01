@@ -11,31 +11,33 @@
         <!-- Menu Content -->
         <div class="sidebar-menu-content">
           @for (menuItem of menuItems; track $index) {
-          <div class="menu-item-container">
-            @if(menuItem.items) {
-            <p-panel *ngIf="menuItem.items" [collapsed]="true" [toggleable]="true" class="w-full">
-              <ng-template pTemplate="header">
-                <i [class]="menuItem.icon"></i>
-                <span class="ml-2">{{ menuItem.label }}</span>
-              </ng-template>
+            <div class="menu-item-container">
+              @if (menuItem.items) {
+                <p-panel
+                  *ngIf="menuItem.items"
+                  [collapsed]="true"
+                  [toggleable]="true"
+                  class="w-full"
+                >
+                  <ng-template pTemplate="header">
+                    <i [class]="menuItem.icon"></i>
+                    <span class="ml-2">{{ menuItem.label }}</span>
+                  </ng-template>
 
-              @for (subMenuItem of menuItem.items; track $index) {
-              <a pRipple class="submenu-item">
-                <span [class]="subMenuItem.icon"></span>
-                <span class="ml-2">{{ subMenuItem.label }}</span>
-              </a>
+                  @for (subMenuItem of menuItem.items; track $index) {
+                    <a pRipple class="submenu-item">
+                      <span [class]="subMenuItem.icon"></span>
+                      <span class="ml-2">{{ subMenuItem.label }}</span>
+                    </a>
+                  }
+                </p-panel>
+              } @else {
+                <a *ngIf="!menuItem.items" pRipple class="menu-item">
+                  <span [class]="menuItem.icon"></span>
+                  <span class="ml-2">{{ menuItem.label }}</span>
+                </a>
               }
-            </p-panel>
-
-            } @else {
-
-            <a *ngIf="!menuItem.items" pRipple class="menu-item">
-              <span [class]="menuItem.icon"></span>
-              <span class="ml-2">{{ menuItem.label }}</span>
-            </a>
-
-            }
-          </div>
+            </div>
           }
         </div>
 
@@ -44,15 +46,21 @@
     </div>
 
     <div class="col-span-11">
-      <div class="toolbar flex ">
+      <div class="toolbar flex">
         <div class="toolbar-left">
           <h2 class="welcome-title text-xl font-bold">Welcome Dominic!</h2>
-          <p class="welcome-subtitle text-sm text-gray-600">How are you today?</p>
+          <p class="welcome-subtitle text-sm text-gray-600">
+            How are you today?
+          </p>
         </div>
 
         <div class="toolbar-right flex">
           <div class="profile-avatar-container">
-            <p-avatar image="/images/profile.png" shape="circle" class="profile-avatar"></p-avatar>
+            <p-avatar
+              image="/images/profile.png"
+              shape="circle"
+              class="profile-avatar"
+            ></p-avatar>
           </div>
           <span class="role">Captain</span>
           <i class="pi pi-sign-out"></i>
@@ -61,7 +69,5 @@
 
       <router-outlet></router-outlet>
     </div>
-
-
   </div>
 </main>
