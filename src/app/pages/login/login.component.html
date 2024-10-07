@@ -1,1 +1,45 @@
-<h1>login works!</h1>
+<div class="grid grid-cols-12 min-h-screen">
+    <div class="left-section hidden md:block col-span-7">
+        <img src="/images/yellow-circle.svg" alt="Yellow Circle" class="yellow-circle" />
+        <img src="/images/airplane.svg" alt="Airplane" class="airplane" />
+    </div>
+
+    <div class="right-section col-span-12 md:col-span-5">
+        <div class="login-form-container">
+            <div class="title-group">
+                <div class="pegasus-logo">PEGASUS</div>
+                <p class="sub-header">Electronic Flight Bag Administrator</p>
+            </div>
+
+            <div class="welcome-group">
+                <h1>Welcome!</h1>
+                <p>Enter your login credentials to get access</p>
+            </div>
+
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="form-inputs-group">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" formControlName="username"
+                            placeholder="Enter your email address or username" pInputText />
+                        @if (loginForm.get('username')?.invalid && loginForm.get('username')?.touched) {
+                        <div class="error-text">Wrong username</div>
+                        }
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" formControlName="password"
+                            placeholder="Enter your password" pInputText />
+                        @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+                        <div class="error-text">Wrong password</div>
+                        }
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <p-button label="Sign in" class="custom-button"></p-button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
