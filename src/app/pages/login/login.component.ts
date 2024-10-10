@@ -3,8 +3,6 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { CardModule } from 'primeng/card';
-
 
 @Component({
   selector: 'app-login',
@@ -14,25 +12,28 @@ import { CardModule } from 'primeng/card';
     ReactiveFormsModule,
     ButtonModule,
     InputTextModule,
-    CardModule,
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  loginForm: FormGroup;
+  loginForm: FormGroup = new FormGroup({});
 
-  constructor(private readonly fb: FormBuilder) {
-    this.loginForm = this.fb.group({
+  constructor(private formbuilder: FormBuilder) {}
+
+  ngOnInit() {
+    this.buildForm();
+  }
+ 
+  buildForm() {
+    this.loginForm = this.formbuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
 
   onSubmit() {
-    if (this.loginForm.invalid) {
-      return;
-    }
+      console.log(this.loginForm.value);
   }
 }
 
