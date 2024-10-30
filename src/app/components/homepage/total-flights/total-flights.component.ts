@@ -1,0 +1,94 @@
+import { Component, OnInit } from '@angular/core';
+import { HighchartsChartModule } from 'highcharts-angular';
+import Highcharts from 'highcharts';
+import { CardsHeaderComponent } from "../cards-header/cards-header.component";
+
+@Component({
+  selector: 'app-total-flights',
+  standalone: true,
+  imports: [HighchartsChartModule, CardsHeaderComponent],
+  templateUrl: './total-flights.component.html',
+  styleUrls: ['./total-flights.component.scss'],
+})
+export class TotalFlightsComponent implements OnInit {
+  Highcharts: typeof Highcharts = Highcharts;
+
+  chartOptionsFlights: Highcharts.Options = {
+    chart: {
+      type: 'pie',
+      height: 200,
+      width: 200,
+      plotBackgroundColor: undefined,
+      plotBorderWidth: 0,
+      plotShadow: false,
+    },
+    title: { text: undefined },
+    plotOptions: {
+      pie: {
+        dataLabels: {
+          enabled: false,
+        },
+        center: ['50%', '50%'],
+        size: '100%',
+        innerSize: '25%',
+      },
+
+    },
+    credits: {
+      enabled: false,
+    },
+    series: [
+      {
+        type: 'pie',
+        name: 'Flight Data',
+        innerSize: '65%',
+        data: [
+          { name: 'Flight Plan', y: 987, color: '#FED447' },
+          { name: 'Load Sheet', y: 789, color: '#F79009' },
+          { name: 'Trip Info', y: 234, color: '#D62828' },
+        ],
+      },
+    ],
+  };
+  chartOptionsFuelOrder: Highcharts.Options = {
+    chart: {
+      type: 'pie',
+      height: 200,
+      width: 200,
+      plotBackgroundColor: undefined,
+      plotBorderWidth: 0,
+      plotShadow: false,
+    },
+    title: { text: undefined },
+    plotOptions: {
+      pie: {
+        dataLabels: {
+          enabled: false,
+        },
+        center: ['50%', '50%'],
+        size: '100%',
+        innerSize: '25%',
+      },
+    },
+    credits: {
+      enabled: false,
+    },
+    series: [
+      {
+        type: 'pie',
+        name: 'Fuel Data',
+        innerSize: '65%',
+        data: [
+          { name: 'Fuel Order', y: 789, color: '#3D348B' },
+          { name: 'LMC', y: 234, color: '#7678ED' },
+          { name: 'GPS Loss Form', y: 143, color: '#092FF7' },
+        ],
+      },
+    ],
+  };
+
+  constructor() { }
+
+  ngOnInit(): void {}
+}
+

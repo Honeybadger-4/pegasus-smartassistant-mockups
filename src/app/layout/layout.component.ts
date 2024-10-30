@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
-import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { PanelModule } from 'primeng/panel';
 import { DividerModule } from 'primeng/divider';
@@ -24,53 +23,74 @@ import { AvatarModule } from 'primeng/avatar';
 })
 export class LayoutComponent {
   menuItems: LayoutMenuItem[] = [];
+  selectedItem: string = '';  
+
+  
 
   constructor() {}
 
   ngOnInit() {
     this.menuItems = [
       {
-        label: 'Home',
-        icon: 'pi pi-home',
+        label: 'Homepage',
+        icon: 'home-icon.svg',
+        path: ''
       },
       {
         label: 'Flight Information',
-        icon: 'pi pi-circle-off',
+        icon: 'flight-icon.svg',
         items: [
           {
             label: 'Fuel',
-            icon: 'pi pi-circle-off',
+            icon: 'fuel-icon.svg',
+            path: 'fuel'
           },
           {
             label: 'Route',
-            icon: 'pi pi-circle-off',
+            icon: 'route-icon.svg',
+            path: 'route'
           },
           {
             label: 'Trip Info',
-            icon: 'pi pi-circle-off',
+            icon: 'trip-icon.svg',
+            path: 'trip-info'
           },
           {
             label: 'Load Sheet',
-            icon: 'pi pi-circle-off',
+            icon: 'loadsheet-icon.svg',
+            path: 'load-sheet'
           },
         ],
       },
       {
         label: 'Airport Information',
-        icon: 'pi pi-circle-off',
+        icon: 'airport-icon.svg',
+        path: 'airport-information'
       },
       {
         label: 'Report',
-        icon: 'pi pi-circle-off',
+        icon: 'report-icon.svg',
+        path: 'report'
       },
       {
         label: 'User Login History',
-        icon: 'pi pi-circle-off',
+        icon: 'user-icon.svg',
+        path: 'user-login-history'
       },
       {
         label: 'Aircraft Database',
-        icon: 'pi pi-circle-off',
-      },
+        icon: 'aircraft-icon.svg',
+        path: 'aircraft-database'
+      }
     ];
   }
-}
+
+  onMenuClick(label: string) {
+    this.selectedItem = label;
+  }
+
+  isActive(label: string) {
+    return this.selectedItem === label;
+  }
+
+}  

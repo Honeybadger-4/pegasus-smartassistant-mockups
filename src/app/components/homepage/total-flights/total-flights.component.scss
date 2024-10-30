@@ -1,0 +1,71 @@
+.graph-container {
+  border: 0.5px solid #9a9a9a;
+  padding: 15px;
+  border-radius: 2px;
+  margin-bottom: 50px;
+
+  .charts-box {
+    padding: 15px;
+
+    .chart-box-flight {
+      .total-flights-title {
+        font-size: 20px;
+        color: #4f4f4f;
+      }
+
+      .total-flights-number {
+        font-size: 48px;
+        font-weight: 500;
+        color: #4f4f4f
+      }
+    }
+  }
+}
+
+.legend-section {
+  li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #4F4F4F;
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 8px;
+      display: inline-block;
+    }
+  }
+
+  &.legend-flights {
+    .flight-plan {
+      background-color: #F79009;
+    }
+
+    .load-sheet {
+      background-color: #FED447;
+    }
+
+    .trip-info {
+      background-color: #D62828;
+    }
+
+  }
+
+  &.legend-fuel {
+    .fuel-order {
+      background-color: #3D348B;
+    }
+
+    .lmc {
+      background-color: #7678ED;
+    }
+
+    .gps-loss-form {
+      background-color: #092FF7;
+    }
+
+  }
+}

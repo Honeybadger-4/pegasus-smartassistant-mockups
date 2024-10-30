@@ -1,0 +1,43 @@
+<div class="graph-container">
+  <app-cards-header title="Total Flights" />
+
+  <div class="charts-box grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
+    <!-- Flight Chart -->
+    <div class="chart-box-flight lg:flex sm: block">
+      <div class="left-content">  
+        <div class="total-flights-title">Total Flights</div>
+        <div class="total-flights-number">2,345</div>
+      </div>
+
+      <div class="flex">
+        <div>
+          <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptionsFlights"></highcharts-chart>
+        </div>
+  
+        <div class="legend-section legend-flights">
+          <ul>
+            <li><span class="dot flight-plan"></span> Flight Plan</li>
+            <li><span class="dot load-sheet"></span> Load Sheet</li>
+            <li><span class="dot trip-info"></span> Trip Info</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fuel Chart -->
+    <div class="flex">
+      <div class="chart-section"> 
+        <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptionsFuelOrder"></highcharts-chart>
+      </div>
+
+      <div class="legend-section legend-fuel">
+        <ul>
+          <li><span class="dot fuel-order"></span> Fuel Order</li>
+          <li><span class="dot lmc"></span> LMC</li>
+          <li><span class="dot gps-loss-form"></span> GPS Loss Form</li>
+        </ul>
+      </div>
+    </div>
+    
+  </div>
+</div>

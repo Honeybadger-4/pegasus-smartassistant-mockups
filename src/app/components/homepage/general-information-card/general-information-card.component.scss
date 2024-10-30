@@ -1,0 +1,95 @@
+#CombinedChartsComponent {
+  margin-bottom: 10px;
+  .graph-container {
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+  
+    .card-container {
+      border: 0.5px solid #9A9A9A;
+      border-radius: 2px 0 0 0;
+    }
+  
+    .chart-container {
+      border-radius: 2px;
+      padding: 20px;
+  
+      .chart-section {
+        padding: 10px 0;
+        border-radius: 10px 0 0 0;
+  
+          .title {
+            font-size: 16px;
+            text-align: left;
+            color: #4F4F4F;
+          }
+  
+          .total-number {
+            font-size: 40px;
+            text-align: left;
+            color: #4F4F4F;
+          }
+      }
+  
+      .title-alternate {
+        font-size: 14px;
+        font-weight: 700;
+      }
+    }
+  }
+  
+  .legend-section {
+    li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #4F4F4F;
+  
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 8px;
+        display: inline-block;
+      }
+    }
+  
+  
+    &.legend-loss {
+      .sys-affect {
+        background-color: #4F772D;
+      }
+  
+      .company-id {
+        background-color: #ECF39E;
+      }
+  
+      .gps-loss {
+        background-color: #4F772D;
+      }
+  
+      .alternative-mode {
+        background-color: #31572C;
+      }
+    }
+  
+    &.legend-fuel {
+      .meteorology {
+        background-color: #5E548E;
+      }
+  
+      .rwy-diff {
+        background-color: #9F86C0;
+      }
+  
+      .occ-decision {
+        background-color: #E0B1CB;
+      }
+  
+      .traffic-congestion {
+        background-color: #BE95C4;
+      }
+    }
+  }
+}
