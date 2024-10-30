@@ -1,9 +1,7 @@
 .graph-container {
-  display: flex;
-  flex-direction: column;
   border: 0.5px solid #9a9a9a;
   padding: 15px;
-  border-radius: 10px;
+  border-radius: 2px;
   margin-bottom: 50px;
 
   .header-box {
@@ -18,53 +16,31 @@
     }
 
     .dropdown {
+      width: 122px;
       select {
-        width: 122px;
-        height: 25px;
-        padding: 5px 10px;
+        width: 100%;
         border-radius: 5px;
         background: #F5F5F5;
         border: 0.5px solid #4F4F4F;
-        font-size: 12px;
-        font-weight: 300;
         text-align: center;
       }
     }
   }
 
   .charts-box {
-    display: flex;
     padding: 15px;
 
     .chart-box-flight {
-      display: flex;
-      height: 220px;
-      width: 537px;
-
-      .left-section {
-        display: flex;
-        flex-direction: column;
-        padding: 20px;
-      }
-
       .total-flights-title {
         font-size: 20px;
-        font-weight: 400;
-        text-align: center;
         color: #4f4f4f;
       }
 
       .total-flights-number {
         font-size: 48px;
         font-weight: 500;
-        text-align: left;
         color: #4f4f4f
       }
-    }
-    .chart-box-fuel {
-      display: flex;
-      height: 220px;
-      width: 391px;
     }
   }
 }

@@ -1,6 +1,6 @@
-<div class="page">
-  <div class="graph-container">
-    <div class="left-section">
+<div id="CombinedChartsComponent">
+  <div class="graph-container lg:h-[482px] h-full">
+    <div class="card-container">
       <div class="chart-container">
         <div class="header-box">
           <div class="dropdown">
@@ -11,66 +11,71 @@
         </div>
 
         <div class="chart-section">
-          <div class="left-content">
-            <div class="title">Total GPS Loss Form</div>
-            <div class="total-number">143</div>
-          </div>
-          <div class="right-content">
-            <highcharts-chart
-              [Highcharts]="Highcharts"
-              [options]="chartOptionsGPSLoss"
-            ></highcharts-chart>
-            <div class="legend-section legend-loss">
+          <div class="grid grid-cols-12 gap-4">
+            <div class="lg:col-span-3 md:col-span-4 sm:col-span-12">
+              <div class="title">Total GPS Loss Form</div>
+              <div class="total-number">143</div>
+            </div>
+
+            <div class="lg:col-span-3 md:col-span-4 sm:col-span-6">
+              <highcharts-chart
+                [Highcharts]="Highcharts"
+                [options]="chartOptionsGPSLoss"
+              ></highcharts-chart>
+            </div>
+
+            <div
+              class="legend-section legend-loss lg:col-span-6 md:col-span-4 sm:col-span-6"
+            >
               <ul>
-                <li><span class="dot sys-affect"></span> Surveillance System Affect(WX Radar, D-BUSS loss,ROPS Faults etc.)</li>
+                <li>
+                  <span class="dot sys-affect"></span> Surveillance System
+                  Affect(WX Radar, D-BUSS loss,ROPS Faults etc.)
+                </li>
                 <li><span class="dot company-id"></span> Company Id</li>
-                <li><span class="dot gps-loss"></span> Loss of GPS1-2(Faults9 or GPS Primary Lost)</li>
-                <li><span class="dot alternative-mode"></span>Switching to an alternative navigation mode(IRS displayed , VOR/DME)</li>
+                <li>
+                  <span class="dot gps-loss"></span> Loss of GPS1-2(Faults9 or
+                  GPS Primary Lost)
+                </li>
+                <li>
+                  <span class="dot alternative-mode"></span>Switching to an
+                  alternative navigation mode(IRS displayed , VOR/DME)
+                </li>
               </ul>
             </div>
           </div>
         </div>
 
         <div class="chart-section">
-          <div class="left-content">
-            <div class="title">Total Reason of Excess Fuel</div>
-            <div class="total-number">62</div>
-          </div>
-          <div class="right-content">
-            <highcharts-chart
-              [Highcharts]="Highcharts"
-              [options]="chartOptionsFuelExcess"
-            ></highcharts-chart>
-            <div class="legend-section legend-fuel">
+          <div class="grid grid-cols-12 gap-4">
+            <div class="lg:col-span-3 md:col-span-4 sm:col-span-12">
+              <div class="title">Total Reason of Excess Fuel</div>
+              <div class="total-number">62</div>
+            </div>
+
+            <div class="lg:col-span-3 md:col-span-4 sm:col-span-6">
+              <highcharts-chart
+                [Highcharts]="Highcharts"
+                [options]="chartOptionsFuelExcess"
+              ></highcharts-chart>
+            </div>
+
+            <div
+              class="legend-section legend-fuel lg:col-span-6 md:col-span-4 sm:col-span-6"
+            >
               <ul>
                 <li><span class="dot meteorology"></span> Meteorology</li>
-                <li><span class="dot rwy-diff"></span> Arrival/Departure Rwy Diff.</li>
+                <li>
+                  <span class="dot rwy-diff"></span> Arrival/Departure Rwy Diff.
+                </li>
                 <li><span class="dot occ-decision"></span> OCC Decision</li>
-                <li><span class="dot traffic-congestion"></span> Traffic Congestion on Arr. Airp.</li>
+                <li>
+                  <span class="dot traffic-congestion"></span> Traffic
+                  Congestion on Arr. Airp.
+                </li>
               </ul>
             </div>
           </div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="right-section">
-      <div class="chart-container">
-        <div class="header-box">
-          <div class="title-alternate">Top 5 Alternate Routes</div>
-          <div class="dropdown">
-            <select>
-              <option>Daily</option>
-            </select>
-          </div>
-        </div>
-        <div class="chart-box-alternate-routes">
-          <highcharts-chart
-            [Highcharts]="Highcharts"
-            [options]="chartOptionsAlternateRoutes"
-            style="width: 100%; height: 300px; display: block;"
-          ></highcharts-chart>
         </div>
       </div>
     </div>

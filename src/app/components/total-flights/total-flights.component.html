@@ -8,27 +8,31 @@
     </div>
   </div>
 
-  <div class="charts-box">
-    <div class="chart-box-flight">
-      <div class="left-content">
+  <div class="charts-box grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
+    <!-- Flight Chart -->
+    <div class="chart-box-flight lg:flex sm: block">
+      <div class="left-content">  
         <div class="total-flights-title">Total Flights</div>
         <div class="total-flights-number">2,345</div>
       </div>
 
-      <div class="chart-section">
-        <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptionsFlights"></highcharts-chart>
-      </div>
-
-      <div class="legend-section legend-flights">
-        <ul>
-          <li><span class="dot flight-plan"></span> Flight Plan</li>
-          <li><span class="dot load-sheet"></span> Load Sheet</li>
-          <li><span class="dot trip-info"></span> Trip Info</li>
-        </ul>
+      <div class="flex">
+        <div>
+          <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptionsFlights"></highcharts-chart>
+        </div>
+  
+        <div class="legend-section legend-flights">
+          <ul>
+            <li><span class="dot flight-plan"></span> Flight Plan</li>
+            <li><span class="dot load-sheet"></span> Load Sheet</li>
+            <li><span class="dot trip-info"></span> Trip Info</li>
+          </ul>
+        </div>
       </div>
     </div>
 
-    <div class="chart-box-fuel">
+    <!-- Fuel Chart -->
+    <div class="flex">
       <div class="chart-section"> 
         <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptionsFuelOrder"></highcharts-chart>
       </div>
@@ -41,5 +45,6 @@
         </ul>
       </div>
     </div>
+    
   </div>
 </div>
