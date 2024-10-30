@@ -2,7 +2,9 @@
   .sidebar-menu-container {
     padding: 35px 5px 59px 5px;
     height: 100vh;
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 10px;
 
     .sidebar-menu-header {
       margin-bottom: 20px;
@@ -17,7 +19,6 @@
 
     .sidebar-menu-content {
       padding: 10px 5px 10px 5px;
-      height: 910px;
 
       .menu-item,
       .submenu-item {
