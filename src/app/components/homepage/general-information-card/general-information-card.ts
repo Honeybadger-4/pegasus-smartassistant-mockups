@@ -7,10 +7,10 @@ import { CardsHeaderComponent } from "../cards-header/cards-header.component";
   selector: 'app-combined-charts',
   standalone: true,
   imports: [HighchartsChartModule, CardsHeaderComponent],
-  templateUrl: './combined-charts.component.html',
-  styleUrls: ['./combined-charts.component.scss'],
+  templateUrl: './general-information-card.html',
+  styleUrls: ['./general-information-card.scss'],
 })
-export class CombinedChartsComponent implements OnInit {
+export class GeneralInformationCardComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;
 
   chartOptionsGPSLoss: Highcharts.Options = {};  
