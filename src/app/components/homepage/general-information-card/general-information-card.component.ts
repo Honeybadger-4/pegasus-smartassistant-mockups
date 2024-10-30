@@ -4,20 +4,20 @@ import Highcharts from 'highcharts';
 import { CardsHeaderComponent } from "../cards-header/cards-header.component";
 
 @Component({
-  selector: 'app-total-flights',
+  selector: 'app-combined-charts',
   standalone: true,
   imports: [HighchartsChartModule, CardsHeaderComponent],
-  templateUrl: './total-flights.component.html',
-  styleUrls: ['./total-flights.component.scss'],
+  templateUrl: './general-information-card.html',
+  styleUrls: ['./general-information-card.scss'],
 })
-export class TotalFlightsComponent implements OnInit {
+export class GeneralInformationCardComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;
 
-  chartOptionsFlights: Highcharts.Options = {
+  chartOptionsGPSLoss: Highcharts.Options = {
     chart: {
       type: 'pie',
-      height: 200,
-      width: 200,
+      height: 150,
+      width: 150,
       plotBackgroundColor: undefined,
       plotBorderWidth: 0,
       plotShadow: false,
@@ -29,10 +29,9 @@ export class TotalFlightsComponent implements OnInit {
           enabled: false,
         },
         center: ['50%', '50%'],
-        size: '100%',
-        innerSize: '25%',
+        size: '90%',
+        innerSize: '65%',
       },
-
     },
     credits: {
       enabled: false,
@@ -40,21 +39,22 @@ export class TotalFlightsComponent implements OnInit {
     series: [
       {
         type: 'pie',
-        name: 'Flight Data',
+        name: 'GPS Loss Data',
         innerSize: '65%',
         data: [
-          { name: 'Flight Plan', y: 987, color: '#FED447' },
-          { name: 'Load Sheet', y: 789, color: '#F79009' },
-          { name: 'Trip Info', y: 234, color: '#D62828' },
+          { name: 'Surveillance System Affect', y: 40, color: '#31572C' },
+          { name: 'Company Id', y: 35, color: '#4F772D' },
+          { name: 'Loss of GPS1-2', y: 45, color: '#90A955' },
+          { name: 'Switching to Alternative Mode', y: 23, color: '#ECF39E' },
         ],
       },
     ],
-  };
-  chartOptionsFuelOrder: Highcharts.Options = {
+  };  
+  chartOptionsFuelExcess: Highcharts.Options = {
     chart: {
       type: 'pie',
-      height: 200,
-      width: 200,
+      height: 150,
+      width: 150,
       plotBackgroundColor: undefined,
       plotBorderWidth: 0,
       plotShadow: false,
@@ -66,8 +66,8 @@ export class TotalFlightsComponent implements OnInit {
           enabled: false,
         },
         center: ['50%', '50%'],
-        size: '100%',
-        innerSize: '25%',
+        size: '90%',
+        innerSize: '65%',
       },
     },
     credits: {
@@ -76,19 +76,20 @@ export class TotalFlightsComponent implements OnInit {
     series: [
       {
         type: 'pie',
-        name: 'Fuel Data',
+        name: 'Fuel Excess Data',
         innerSize: '65%',
         data: [
-          { name: 'Fuel Order', y: 789, color: '#3D348B' },
-          { name: 'LMC', y: 234, color: '#7678ED' },
-          { name: 'GPS Loss Form', y: 143, color: '#092FF7' },
+          { name: 'Meteorology', y: 20, color: '#5E548E' },
+          { name: 'Arrival/Departure Rwy Diff.', y: 15, color: '#E0B1CB' },
+          { name: 'OCC Decision', y: 10, color: '#BE95C4' },
+          { name: 'Traffic Congestion on Arr. Airp.', y: 17, color: '#9F86C0' },
         ],
       },
     ],
-  };
+  }; 
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 }
-

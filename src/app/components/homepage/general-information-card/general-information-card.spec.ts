@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GeneralInformationCardComponent } from './general-information-card';
+import { GeneralInformationCardComponent } from './general-information-card.component';
 
 describe('GeneralInformatiobCardComponent', () => {
   let component: GeneralInformationCardComponent;
