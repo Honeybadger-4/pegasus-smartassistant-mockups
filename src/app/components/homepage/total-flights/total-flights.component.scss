@@ -4,29 +4,6 @@
   border-radius: 2px;
   margin-bottom: 50px;
 
-  .header-box {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 10px;
-
-    .title {
-      font-size: 14px;
-      font-weight: 700;
-      color: #4f4f4f;
-    }
-
-    .dropdown {
-      width: 122px;
-      select {
-        width: 100%;
-        border-radius: 5px;
-        background: #F5F5F5;
-        border: 0.5px solid #4F4F4F;
-        text-align: center;
-      }
-    }
-  }
-
   .charts-box {
     padding: 15px;
 

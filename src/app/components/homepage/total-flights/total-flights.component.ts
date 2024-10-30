@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { HighchartsChartModule } from 'highcharts-angular';
 import * as Highcharts from 'highcharts';
+import { CardsHeaderComponent } from "../cards-header/cards-header.component";
 
 @Component({
   selector: 'app-total-flights',
   standalone: true,
-  imports: [HighchartsChartModule],
+  imports: [HighchartsChartModule, CardsHeaderComponent],
   templateUrl: './total-flights.component.html',
   styleUrls: ['./total-flights.component.scss'],
 })

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { HighchartsChartModule } from 'highcharts-angular';
 import * as Highcharts from 'highcharts';
+import { CardsHeaderComponent } from "../cards-header/cards-header.component";
 
 @Component({
   selector: 'app-combined-charts',
   standalone: true,
-  imports: [HighchartsChartModule],
+  imports: [HighchartsChartModule, CardsHeaderComponent],
   templateUrl: './combined-charts.component.html',
   styleUrls: ['./combined-charts.component.scss'],
 })

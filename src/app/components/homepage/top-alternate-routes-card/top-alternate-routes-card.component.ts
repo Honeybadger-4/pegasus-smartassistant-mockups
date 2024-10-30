@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { HighchartsChartModule } from 'highcharts-angular';
 import * as Highcharts from 'highcharts';
+import { CardsHeaderComponent } from "../cards-header/cards-header.component";
 
 @Component({
   selector: 'app-top-alternate-routes-card',
   standalone: true,
-  imports: [HighchartsChartModule],
+  imports: [HighchartsChartModule, CardsHeaderComponent],
   templateUrl: './top-alternate-routes-card.component.html',
   styleUrl: './top-alternate-routes-card.component.scss'
 })
