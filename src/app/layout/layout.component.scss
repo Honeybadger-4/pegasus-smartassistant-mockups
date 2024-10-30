@@ -22,7 +22,6 @@
 
       .menu-item,
       .submenu-item {
-
         display: flex;
         align-items: center;
         margin-bottom: 20px;
@@ -42,7 +41,10 @@
         background-color: #FED4471A;
         border-left-color: #FED447;
 
-        img,
+        img {
+          filter: invert(97%) sepia(22%) saturate(7475%) hue-rotate(320deg) brightness(105%) contrast(99%);
+        }
+
         span {
           color: #FED447;
           fill: #FED447;
@@ -69,8 +71,9 @@
       .menu-item.active {
         background-color: #FED4471A;
         border-left-color: #FED447;
-
-        img,
+        img {
+          filter: invert(97%) sepia(22%) saturate(7475%) hue-rotate(320deg) brightness(105%) contrast(99%);
+        }
         span {
           color: #FED447;
           fill: #FED447;
@@ -177,6 +180,10 @@
 
     .p-panel .p-panel-content {
       border: none;
+    }
+
+    .p-panel .p-panel-icons-end {
+      margin-bottom: 20px;
     }
   }
 }
