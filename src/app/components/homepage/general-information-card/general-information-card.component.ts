@@ -7,8 +7,8 @@ import { CardsHeaderComponent } from "../cards-header/cards-header.component";
   selector: 'app-combined-charts',
   standalone: true,
   imports: [HighchartsChartModule, CardsHeaderComponent],
-  templateUrl: './general-information-card.html',
-  styleUrls: ['./general-information-card.scss'],
+  templateUrl: './general-information-card.component.html',
+  styleUrls: ['./general-information-card.component.scss'],
 })
 export class GeneralInformationCardComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;
@@ -16,8 +16,8 @@ export class GeneralInformationCardComponent implements OnInit {
   chartOptionsGPSLoss: Highcharts.Options = {
     chart: {
       type: 'pie',
-      height: 150,
-      width: 150,
+      height: 170,
+      width: 170,
       plotBackgroundColor: undefined,
       plotBorderWidth: 0,
       plotShadow: false,
@@ -29,8 +29,8 @@ export class GeneralInformationCardComponent implements OnInit {
           enabled: false,
         },
         center: ['50%', '50%'],
-        size: '90%',
-        innerSize: '65%',
+        size: '100%',
+        innerSize: '25%',
       },
     },
     credits: {
@@ -53,8 +53,8 @@ export class GeneralInformationCardComponent implements OnInit {
   chartOptionsFuelExcess: Highcharts.Options = {
     chart: {
       type: 'pie',
-      height: 150,
-      width: 150,
+      height: 170,
+      width: 170,
       plotBackgroundColor: undefined,
       plotBorderWidth: 0,
       plotShadow: false,
@@ -66,8 +66,8 @@ export class GeneralInformationCardComponent implements OnInit {
           enabled: false,
         },
         center: ['50%', '50%'],
-        size: '90%',
-        innerSize: '65%',
+        size: '100%',
+        innerSize: '25%',
       },
     },
     credits: {
