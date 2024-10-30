@@ -1,10 +1,18 @@
 import { Component } from '@angular/core';
+import { TotalFlightsComponent } from 'src/app/components/total-flights/total-flights.component';
+import { CombinedChartsComponent } from 'src/app/components/combined-charts/combined-charts.component';
+
 
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [],
+  imports: [TotalFlightsComponent, CombinedChartsComponent],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.scss',
 })
 export class HomepageComponent {}
+
+
+
+CombinedChartsComponent
+

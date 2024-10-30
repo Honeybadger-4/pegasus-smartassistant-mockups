@@ -1,0 +1,45 @@
+<div class="graph-container">
+  <div class="header-box">
+    <div class="title">Total Flights</div>
+    <div class="dropdown">
+      <select>
+        <option>Daily</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="charts-box">
+    <div class="chart-box-flight">
+      <div class="left-content">
+        <div class="total-flights-title">Total Flights</div>
+        <div class="total-flights-number">2,345</div>
+      </div>
+
+      <div class="chart-section">
+        <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptionsFlights"></highcharts-chart>
+      </div>
+
+      <div class="legend-section legend-flights">
+        <ul>
+          <li><span class="dot flight-plan"></span> Flight Plan</li>
+          <li><span class="dot load-sheet"></span> Load Sheet</li>
+          <li><span class="dot trip-info"></span> Trip Info</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chart-box-fuel">
+      <div class="chart-section"> 
+        <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptionsFuelOrder"></highcharts-chart>
+      </div>
+
+      <div class="legend-section legend-fuel">
+        <ul>
+          <li><span class="dot fuel-order"></span> Fuel Order</li>
+          <li><span class="dot lmc"></span> LMC</li>
+          <li><span class="dot gps-loss-form"></span> GPS Loss Form</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

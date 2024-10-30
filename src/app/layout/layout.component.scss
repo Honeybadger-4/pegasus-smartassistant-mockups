@@ -1,27 +1,79 @@
 #layout {
   .sidebar-menu-container {
-    padding: 10px;
+    padding: 35px 5px 59px 5px;
+    height: 100vh;
+    position: relative;
 
     .sidebar-menu-header {
-      text-align: center;
       margin-bottom: 20px;
+      padding: 10px 0px 0px 10px;
+    }
+
+    .pegasus-logo {
+      width: 117px;
+      height: auto;
+      padding: 10px 0px 0px 10px;
     }
 
     .sidebar-menu-content {
-      padding-left: 10px;
+      padding: 10px 5px 10px 5px;
+      height: 910px;
 
-      .menu-item {
+      .menu-item,
+      .submenu-item {
+
         display: flex;
         align-items: center;
         margin-bottom: 20px;
-        margin-top: 20px;
+        padding: 10px;
+        border-left: 2px solid transparent;
+        transition: all 0.3s ease;
       }
 
       .submenu-item {
         padding-left: 20px;
+      }
+
+      .menu-item:hover,
+      .submenu-item:hover,
+      .menu-item.active,
+      .submenu-item.active {
+        background-color: #FED4471A;
+        border-left-color: #FED447;
+
+        img,
+        span {
+          color: #FED447;
+          fill: #FED447;
+        }
+      }
+    }
+
+    .sidebar-menu-footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+
+      .menu-item {
         display: flex;
         align-items: center;
-        margin-bottom: 20px;
+        padding: 10px;
+        border-left: 2px solid transparent;
+        transition: all 0.3s ease;
+      }
+
+      .menu-item:hover,
+      .menu-item.active {
+        background-color: #FED4471A;
+        border-left-color: #FED447;
+
+        img,
+        span {
+          color: #FED447;
+          fill: #FED447;
+        }
       }
     }
   }

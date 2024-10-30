@@ -4,44 +4,49 @@
       <div class="sidebar-menu-container">
         <!-- Menu Header -->
         <div class="sidebar-menu-header">
-          <p class="text-xl font-bold">EFB</p>
-          <p-divider />
+          <img src="/images/pegasus_logo.svg" alt="Pegasus Logo" class="pegasus-logo" />
         </div>
 
         <!-- Menu Content -->
         <div class="sidebar-menu-content">
           @for (menuItem of menuItems; track $index) {
-            <div class="menu-item-container">
-              @if (menuItem.items) {
-                <p-panel
-                  *ngIf="menuItem.items"
-                  [collapsed]="true"
-                  [toggleable]="true"
-                  class="w-full"
-                >
-                  <ng-template pTemplate="header">
-                    <i [class]="menuItem.icon"></i>
-                    <span class="ml-2">{{ menuItem.label }}</span>
-                  </ng-template>
-
-                  @for (subMenuItem of menuItem.items; track $index) {
-                    <a pRipple class="submenu-item">
-                      <span [class]="subMenuItem.icon"></span>
-                      <span class="ml-2">{{ subMenuItem.label }}</span>
-                    </a>
-                  }
-                </p-panel>
-              } @else {
-                <a *ngIf="!menuItem.items" pRipple class="menu-item">
-                  <span [class]="menuItem.icon"></span>
+          <div class="menu-item-container">
+            @if (menuItem.items) {
+            <p-panel *ngIf="menuItem.items" [collapsed]="true" [toggleable]="true" class="w-full">
+              <ng-template pTemplate="header">
+                <a pRipple class="menu-item" routerLink="/{{ menuItem.label | lowercase }}" routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: false }">
+                  <img src="/images/{{ menuItem.icon }}" alt="{{ menuItem.label }}" class="icon-class" />
                   <span class="ml-2">{{ menuItem.label }}</span>
                 </a>
+              </ng-template>
+
+              @for (subMenuItem of menuItem.items; track $index) {
+              <a pRipple class="submenu-item" routerLink="/{{ subMenuItem.label | lowercase }}"
+                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <img src="/images/{{ subMenuItem.icon }}" alt="{{ subMenuItem.label }}" class="icon-class" />
+                <span class="ml-2">{{ subMenuItem.label }}</span>
+              </a>
               }
-            </div>
+            </p-panel>
+            } @else {
+            <a *ngIf="!menuItem.items" pRipple class="menu-item" routerLink="/{{ menuItem.label | lowercase }}"
+              routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+              <img src="/images/{{ menuItem.icon }}" alt="{{ menuItem.label }}" class="icon-class" />
+              <span class="ml-2">{{ menuItem.label }}</span>
+            </a>
+            }
+          </div>
           }
         </div>
 
-        <div class="sidebar-menu-footer"></div>
+        <div class="sidebar-menu-footer">
+          <a pRipple class="menu-item" routerLink="/management" routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }">
+            <img src="/images/managament-icon.svg" alt="Management" class="icon-class" />
+            <span class="ml-2">Management</span>
+          </a>
+        </div>
       </div>
     </div>
 
@@ -56,11 +61,7 @@
 
         <div class="toolbar-right flex">
           <div class="profile-avatar-container">
-            <p-avatar
-              image="/images/profile.png"
-              shape="circle"
-              class="profile-avatar"
-            ></p-avatar>
+            <p-avatar image="/images/profile.png" shape="circle" class="profile-avatar"></p-avatar>
           </div>
           <span class="role">Captain</span>
           <i class="pi pi-sign-out"></i>
