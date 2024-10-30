@@ -16,7 +16,7 @@
               <ng-template pTemplate="header">
                 <a pRipple class="menu-item" routerLink="/{{ menuItem.label | lowercase }}" routerLinkActive="active"
                   [routerLinkActiveOptions]="{ exact: false }">
-                  <img src="/images/{{ menuItem.icon }}" alt="{{ menuItem.label }}" class="icon-class" />
+                  <img src="/icons/{{ menuItem.icon }}" alt="{{ menuItem.label }}" class="icon-class" />
                   <span class="ml-2">{{ menuItem.label }}</span>
                 </a>
               </ng-template>
@@ -24,7 +24,7 @@
               @for (subMenuItem of menuItem.items; track $index) {
               <a pRipple class="submenu-item" routerLink="/{{ subMenuItem.label | lowercase }}"
                 routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                <img src="/images/{{ subMenuItem.icon }}" alt="{{ subMenuItem.label }}" class="icon-class" />
+                <img src="/icons/{{ subMenuItem.icon }}" alt="{{ subMenuItem.label }}" class="icon-class" />
                 <span class="ml-2">{{ subMenuItem.label }}</span>
               </a>
               }
@@ -32,7 +32,7 @@
             } @else {
             <a *ngIf="!menuItem.items" pRipple class="menu-item" routerLink="/{{ menuItem.label | lowercase }}"
               routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-              <img src="/images/{{ menuItem.icon }}" alt="{{ menuItem.label }}" class="icon-class" />
+              <img src="/icons/{{ menuItem.icon }}" alt="{{ menuItem.label }}" class="icon-class" />
               <span class="ml-2">{{ menuItem.label }}</span>
             </a>
             }
@@ -43,7 +43,7 @@
         <div class="sidebar-menu-footer">
           <a pRipple class="menu-item" routerLink="/management" routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }">
-            <img src="/images/managament-icon.svg" alt="Management" class="icon-class" />
+            <img src="/icons/managament-icon.svg" alt="Management" class="icon-class" />
             <span class="ml-2">Management</span>
           </a>
         </div>
@@ -61,7 +61,7 @@
 
         <div class="toolbar-right flex">
           <div class="profile-avatar-container">
-            <p-avatar image="/images/profile.png" shape="circle" class="profile-avatar"></p-avatar>
+            <p-avatar image="/icons/profile.png" shape="circle" class="profile-avatar"></p-avatar>
           </div>
           <span class="role">Captain</span>
           <i class="pi pi-sign-out"></i>
