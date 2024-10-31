@@ -23,9 +23,7 @@ import { AvatarModule } from 'primeng/avatar';
 })
 export class LayoutComponent {
   menuItems: LayoutMenuItem[] = [];
-  selectedItem: string = '';  
-
-  
+  selectedItem: string = '';
 
   constructor() {}
 
@@ -34,7 +32,7 @@ export class LayoutComponent {
       {
         label: 'Homepage',
         icon: 'home-icon.svg',
-        path: ''
+        path: '',
       },
       {
         label: 'Flight Information',
@@ -43,45 +41,45 @@ export class LayoutComponent {
           {
             label: 'Fuel',
             icon: 'fuel-icon.svg',
-            path: 'fuel'
+            path: 'fuel',
           },
           {
             label: 'Route',
             icon: 'route-icon.svg',
-            path: 'route'
+            path: 'route',
           },
           {
             label: 'Trip Info',
             icon: 'trip-icon.svg',
-            path: 'trip-info'
+            path: 'trip-info',
           },
           {
             label: 'Load Sheet',
             icon: 'loadsheet-icon.svg',
-            path: 'load-sheet'
+            path: 'load-sheet',
           },
         ],
       },
       {
         label: 'Airport Information',
         icon: 'airport-icon.svg',
-        path: 'airport-information'
+        path: 'airport-information',
       },
       {
         label: 'Report',
         icon: 'report-icon.svg',
-        path: 'report'
+        path: 'report',
       },
       {
         label: 'User Login History',
         icon: 'user-icon.svg',
-        path: 'user-login-history'
+        path: 'user-login-history',
       },
       {
         label: 'Aircraft Database',
         icon: 'aircraft-icon.svg',
-        path: 'aircraft-database'
-      }
+        path: 'aircraft-database',
+      },
     ];
   }
 
@@ -92,5 +90,4 @@ export class LayoutComponent {
   isActive(label: string) {
     return this.selectedItem === label;
   }
-
-}  
+}

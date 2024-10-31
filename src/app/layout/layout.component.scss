@@ -38,16 +38,17 @@
       .submenu-item:hover,
       .menu-item.active,
       .submenu-item.active {
-        background-color: #FED4471A;
-        border-left-color: #FED447;
+        background-color: #fed4471a;
+        border-left-color: #fed447;
 
         img {
-          filter: invert(97%) sepia(22%) saturate(7475%) hue-rotate(320deg) brightness(105%) contrast(99%);
+          filter: invert(97%) sepia(22%) saturate(7475%) hue-rotate(320deg)
+            brightness(105%) contrast(99%);
         }
 
         span {
-          color: #FED447;
-          fill: #FED447;
+          color: #fed447;
+          fill: #fed447;
         }
       }
     }
@@ -69,14 +70,15 @@
 
       .menu-item:hover,
       .menu-item.active {
-        background-color: #FED4471A;
-        border-left-color: #FED447;
+        background-color: #fed4471a;
+        border-left-color: #fed447;
         img {
-          filter: invert(97%) sepia(22%) saturate(7475%) hue-rotate(320deg) brightness(105%) contrast(99%);
+          filter: invert(97%) sepia(22%) saturate(7475%) hue-rotate(320deg)
+            brightness(105%) contrast(99%);
         }
         span {
-          color: #FED447;
-          fill: #FED447;
+          color: #fed447;
+          fill: #fed447;
         }
       }
     }

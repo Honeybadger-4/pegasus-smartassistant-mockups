@@ -4,16 +4,19 @@
   <div class="charts-box grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
     <!-- Flight Chart -->
     <div class="chart-box-flight lg:flex sm: block">
-      <div class="left-content">  
+      <div class="left-content">
         <div class="total-flights-title">Total Flights</div>
         <div class="total-flights-number">2,345</div>
       </div>
 
       <div class="flex">
         <div>
-          <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptionsFlights"></highcharts-chart>
+          <highcharts-chart
+            [Highcharts]="Highcharts"
+            [options]="chartOptionsFlights"
+          ></highcharts-chart>
         </div>
-  
+
         <div class="legend-section legend-flights">
           <ul>
             <li><span class="dot flight-plan"></span> Flight Plan</li>
@@ -26,8 +29,11 @@
 
     <!-- Fuel Chart -->
     <div class="flex">
-      <div class="chart-section"> 
-        <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptionsFuelOrder"></highcharts-chart>
+      <div class="chart-section">
+        <highcharts-chart
+          [Highcharts]="Highcharts"
+          [options]="chartOptionsFuelOrder"
+        ></highcharts-chart>
       </div>
 
       <div class="legend-section legend-fuel">
@@ -38,6 +44,5 @@
         </ul>
       </div>
     </div>
-    
   </div>
 </div>

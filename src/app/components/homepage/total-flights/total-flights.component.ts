@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HighchartsChartModule } from 'highcharts-angular';
 import Highcharts from 'highcharts';
-import { CardsHeaderComponent } from "../cards-header/cards-header.component";
+import { CardsHeaderComponent } from '../cards-header/cards-header.component';
 
 @Component({
   selector: 'app-total-flights',
@@ -32,7 +32,6 @@ export class TotalFlightsComponent implements OnInit {
         size: '100%',
         innerSize: '25%',
       },
-
     },
     credits: {
       enabled: false,
@@ -87,8 +86,7 @@ export class TotalFlightsComponent implements OnInit {
     ],
   };
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {}
 }
-

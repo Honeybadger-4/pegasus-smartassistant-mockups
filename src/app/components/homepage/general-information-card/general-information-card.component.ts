@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HighchartsChartModule } from 'highcharts-angular';
 import Highcharts from 'highcharts';
-import { CardsHeaderComponent } from "../cards-header/cards-header.component";
+import { CardsHeaderComponent } from '../cards-header/cards-header.component';
 
 @Component({
   selector: 'app-combined-charts',
@@ -49,7 +49,7 @@ export class GeneralInformationCardComponent implements OnInit {
         ],
       },
     ],
-  };  
+  };
   chartOptionsFuelExcess: Highcharts.Options = {
     chart: {
       type: 'pie',
@@ -86,10 +86,9 @@ export class GeneralInformationCardComponent implements OnInit {
         ],
       },
     ],
-  }; 
+  };
 
   constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }
