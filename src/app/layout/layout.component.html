@@ -25,7 +25,11 @@
                   collapseIcon="pi pi-angle-down"
                 >
                   <ng-template pTemplate="header">
-                    <a pRipple class="menu-item">
+                    <a 
+                      pRipple class="menu-item"
+                      routerLink="/{{ menuItem.path }}"
+                      routerLinkActive="active"  
+                    >
                       <img
                         src="/icons/{{ menuItem.icon }}"
                         alt="{{ menuItem.label }}"
@@ -41,7 +45,6 @@
                       class="submenu-item"
                       routerLink="/{{ subMenuItem.path }}"
                       routerLinkActive="active"
-                      [routerLinkActiveOptions]="{ exact: true }"
                     >
                       <img
                         src="/icons/{{ subMenuItem.icon }}"
@@ -59,7 +62,6 @@
                   class="menu-item"
                   routerLink="/{{ menuItem.path }}"
                   routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
                 >
                   <img
                     src="/icons/{{ menuItem.icon }}"

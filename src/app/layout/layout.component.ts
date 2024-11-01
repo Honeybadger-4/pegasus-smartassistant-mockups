@@ -37,6 +37,7 @@ export class LayoutComponent {
       {
         label: 'Flight Information',
         icon: 'flight-icon.svg',
+        path: 'flight-information',
         items: [
           {
             label: 'Fuel',
