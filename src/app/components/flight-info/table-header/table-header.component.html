@@ -1,0 +1,49 @@
+<div id="table-header-component">
+  <div class="table-header-container">
+  <!-- Header Title -->
+  <p class="header-title">Flight Information List</p>
+
+  <!-- Filter Inputs and Dropdown -->
+  <div class="filter-container">
+    <div class="filter-item">
+      <p-iconField iconPosition="right">
+        <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+        <input type="text" pInputText placeholder="Flight No"/>
+      </p-iconField>
+    </div>
+
+    <!-- Dep Port Input -->
+    <div class="filter-item">
+      <p-iconField iconPosition="right">
+        <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+        <input type="text" pInputText placeholder="Dep Port"/>
+      </p-iconField>
+    </div>
+
+    <!-- Arr Port Input -->
+    <div class="filter-item">
+      <p-iconField iconPosition="right">
+        <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+        <input type="text" pInputText placeholder="Arr Port"/>
+      </p-iconField>
+    </div>
+
+    <!-- User Input -->
+    <div class="filter-item">
+      <p-iconField iconPosition="right">
+        <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+        <input type="text" pInputText placeholder="User"/>
+      </p-iconField>
+    </div>
+
+    <!-- Dropdown for "Daily" -->
+    <div class="filter-item">
+      <p-dropdown
+        [options]="dropdownOptions"
+        [(ngModel)]="selectedOption"
+        placeholder="Daily"
+      ></p-dropdown>
+    </div>
+  </div>
+</div>
+</div>
