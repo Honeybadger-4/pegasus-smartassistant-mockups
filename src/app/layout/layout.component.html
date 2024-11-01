@@ -28,7 +28,8 @@
                     <a 
                       pRipple class="menu-item"
                       routerLink="/{{ menuItem.path }}"
-                      routerLinkActive="active"  
+                      routerLinkActive="active"
+                      [routerLinkActiveOptions]="{ exact: true }"  
                     >
                       <img
                         src="/icons/{{ menuItem.icon }}"
@@ -45,6 +46,7 @@
                       class="submenu-item"
                       routerLink="/{{ subMenuItem.path }}"
                       routerLinkActive="active"
+                      [routerLinkActiveOptions]="{ exact: true }"
                     >
                       <img
                         src="/icons/{{ subMenuItem.icon }}"
@@ -62,6 +64,7 @@
                   class="menu-item"
                   routerLink="/{{ menuItem.path }}"
                   routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
                 >
                   <img
                     src="/icons/{{ menuItem.icon }}"
