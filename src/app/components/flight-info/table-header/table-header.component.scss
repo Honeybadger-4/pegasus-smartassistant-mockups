@@ -1,67 +1,14 @@
 .table-header-container {
-    display: flex;
+    //display: flex;
     justify-content: space-between;
 
     .header-title {
         font-size: 14px;
     }
 
-    .filter-container {
-        display: flex;
-        align-items: center;
-        gap: 25px;
-    }
-
     .filter-item {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 5px 0 0 0;
-        height: 25px;
-        font-size: 12px;
-        background-color: #F5F5F5;
-
-        input[pInputText] {
-            background-color: #F5F5F5;
-            text-align: center;
-            color: #4F4F4F;
-        }
-
-        select {
-            background-color: #F5F5F5;
-            text-align: center;
-            color: #4F4F4F;
-        }
-    }
-
-    p-inputIcon {
-        width: 15px;
-        height: 15px;
-    }
-}
-
-::ng-deep {
-    #table-header-component {
-        .p-dropdown {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 5px 0 0 0;
-            height: 25px;
-            
-            background-color: #F5F5F5;
-            color: #4F4F4F;
-            border: none;
-            
-            .p-dropdown-label {
-                text-align: center;
-                color: #4F4F4F;
-                font-size: 12px;
-            }
-
-            .p-dropdown-panel {
-                background-color: #F5F5F5; 
-            }
+        input {
+            font-size: 12px;
         }
     }
 }

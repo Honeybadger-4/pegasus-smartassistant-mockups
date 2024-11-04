@@ -1,6 +1,7 @@
 <main id="layout">
-  <div class="grid grid-flow-col gap-5">
-    <div class="col-span-1">
+  <div class="flex">
+
+    <div class="w-[15%]">
       <div class="sidebar-menu-container">
         <!-- Menu Header -->
         <div class="sidebar-menu-header">
@@ -29,7 +30,7 @@
                       pRipple class="menu-item"
                       routerLink="/{{ menuItem.path }}"
                       routerLinkActive="active"
-                      [routerLinkActiveOptions]="{ exact: true }"  
+                      [routerLinkActiveOptions]="{ exact: true }"
                     >
                       <img
                         src="/icons/{{ menuItem.icon }}"
@@ -97,7 +98,7 @@
       </div>
     </div>
 
-    <div class="col-span-11">
+    <div class="w-[85%]">
       <div class="toolbar flex">
         <div class="toolbar-left">
           <h2 class="welcome-title text-xl font-bold">Welcome Dominic!</h2>
@@ -119,7 +120,10 @@
         </div>
       </div>
 
-      <router-outlet></router-outlet>
+      <div class="pr-5">
+        <router-outlet></router-outlet>
+      </div>
+
     </div>
   </div>
 </main>
