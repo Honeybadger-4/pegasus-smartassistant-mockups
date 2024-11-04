@@ -4,48 +4,48 @@
     display: flex;
     justify-content: space-between;
     box-sizing: border-box;
-  
+
     .card-container {
-      border: 0.5px solid #9A9A9A;
+      border: 0.5px solid #9a9a9a;
       border-radius: 2px 0 0 0;
     }
-  
+
     .chart-container {
       border-radius: 2px;
       padding: 20px;
-  
+
       .chart-section {
         padding: 10px 0;
         border-radius: 10px 0 0 0;
-  
-          .title {
-            font-size: 16px;
-            text-align: left;
-            color: #4F4F4F;
-          }
-  
-          .total-number {
-            font-size: 40px;
-            text-align: left;
-            color: #4F4F4F;
-          }
+
+        .title {
+          font-size: 16px;
+          text-align: left;
+          color: #4f4f4f;
+        }
+
+        .total-number {
+          font-size: 40px;
+          text-align: left;
+          color: #4f4f4f;
+        }
       }
-  
+
       .title-alternate {
         font-size: 14px;
         font-weight: 700;
       }
     }
   }
-  
+
   .legend-section {
     li {
       display: flex;
       align-items: center;
       margin-bottom: 8px;
       font-size: 14px;
-      color: #4F4F4F;
-  
+      color: #4f4f4f;
+
       .dot {
         width: 10px;
         height: 10px;
@@ -54,41 +54,40 @@
         display: inline-block;
       }
     }
-  
-  
+
     &.legend-loss {
       .sys-affect {
-        background-color: #4F772D;
+        background-color: #4f772d;
       }
-  
+
       .company-id {
-        background-color: #ECF39E;
+        background-color: #ecf39e;
       }
-  
+
       .gps-loss {
-        background-color: #4F772D;
+        background-color: #4f772d;
       }
-  
+
       .alternative-mode {
-        background-color: #31572C;
+        background-color: #31572c;
       }
     }
-  
+
     &.legend-fuel {
       .meteorology {
-        background-color: #5E548E;
+        background-color: #5e548e;
       }
-  
+
       .rwy-diff {
-        background-color: #9F86C0;
+        background-color: #9f86c0;
       }
-  
+
       .occ-decision {
-        background-color: #E0B1CB;
+        background-color: #e0b1cb;
       }
-  
+
       .traffic-congestion {
-        background-color: #BE95C4;
+        background-color: #be95c4;
       }
     }
   }

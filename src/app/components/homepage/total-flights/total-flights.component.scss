@@ -16,7 +16,7 @@
       .total-flights-number {
         font-size: 48px;
         font-weight: 500;
-        color: #4f4f4f
+        color: #4f4f4f;
       }
     }
   }
@@ -28,7 +28,7 @@
     align-items: center;
     margin-bottom: 8px;
     font-size: 14px;
-    color: #4F4F4F;
+    color: #4f4f4f;
 
     .dot {
       width: 10px;
@@ -41,31 +41,29 @@
 
   &.legend-flights {
     .flight-plan {
-      background-color: #F79009;
+      background-color: #f79009;
     }
 
     .load-sheet {
-      background-color: #FED447;
+      background-color: #fed447;
     }
 
     .trip-info {
-      background-color: #D62828;
+      background-color: #d62828;
     }
-
   }
 
   &.legend-fuel {
     .fuel-order {
-      background-color: #3D348B;
+      background-color: #3d348b;
     }
 
     .lmc {
-      background-color: #7678ED;
+      background-color: #7678ed;
     }
 
     .gps-loss-form {
-      background-color: #092FF7;
+      background-color: #092ff7;
     }
-
   }
 }

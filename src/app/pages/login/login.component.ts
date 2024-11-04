@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -7,12 +12,7 @@ import { InputTextModule } from 'primeng/inputtext';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ButtonModule,
-    InputTextModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, ButtonModule, InputTextModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
@@ -24,7 +24,7 @@ export class LoginComponent {
   ngOnInit() {
     this.buildForm();
   }
- 
+
   buildForm() {
     this.loginForm = this.formbuilder.group({
       username: ['', Validators.required],
@@ -33,7 +33,6 @@ export class LoginComponent {
   }
 
   onSubmit() {
-      console.log(this.loginForm.value);
+    console.log(this.loginForm.value);
   }
 }
-

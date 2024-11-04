@@ -5,12 +5,12 @@ import { Component, Input } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './cards-header.component.html',
-  styleUrl: './cards-header.component.scss'
+  styleUrl: './cards-header.component.scss',
 })
 export class CardsHeaderComponent {
   @Input() title: string;
 
   constructor() {
-    this.title = "";
+    this.title = '';
   }
 }

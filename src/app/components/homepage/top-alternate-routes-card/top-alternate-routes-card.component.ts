@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { HighchartsChartModule } from 'highcharts-angular';
 import Highcharts from 'highcharts';
-import { CardsHeaderComponent } from "../cards-header/cards-header.component";
+import { CardsHeaderComponent } from '../cards-header/cards-header.component';
 
 @Component({
   selector: 'app-top-alternate-routes-card',
   standalone: true,
   imports: [HighchartsChartModule, CardsHeaderComponent],
   templateUrl: './top-alternate-routes-card.component.html',
-  styleUrl: './top-alternate-routes-card.component.scss'
+  styleUrl: './top-alternate-routes-card.component.scss',
 })
 export class TopAlternateRoutesCardComponent {
   Highcharts: typeof Highcharts = Highcharts;
@@ -24,15 +24,15 @@ export class TopAlternateRoutesCardComponent {
       title: { text: null },
       labels: {
         style: {
-          color: '#525252', 
+          color: '#525252',
           fontFamily: 'DM Sans',
-          fontSize: '12px',  
-          fontWeight: '500',  
-          lineHeight: '20px',  
-          letterSpacing: '-0.02em', 
-          textAlign: 'center' 
-        }
-      }
+          fontSize: '12px',
+          fontWeight: '500',
+          lineHeight: '20px',
+          letterSpacing: '-0.02em',
+          textAlign: 'center',
+        },
+      },
     },
     yAxis: {
       min: 0,
@@ -46,27 +46,26 @@ export class TopAlternateRoutesCardComponent {
         colorByPoint: true,
         colors: ['#FED447'],
         borderWidth: 0,
-        pointWidth: 39, 
-        groupPadding: 5, 
-      }
+        pointWidth: 39,
+        groupPadding: 5,
+      },
     },
     credits: {
-      enabled: false
+      enabled: false,
     },
     legend: {
-      enabled: false, 
+      enabled: false,
     },
     series: [
       {
         type: 'column',
         name: 'Routes',
         data: [5, 4, 3, 2, 1],
-      }
-    ]
-  }; 
+      },
+    ],
+  };
 
   constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }
