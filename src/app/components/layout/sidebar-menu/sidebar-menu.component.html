@@ -1,0 +1,98 @@
+<div id="LayoutSidebarMenu">
+  <div class="sidebar-menu-container">
+    <!-- Menu Header -->
+    <div class="sidebar-menu-header flex items-center justify-between">
+      <img
+        src="/images/pegasus_logo.svg"
+        alt="Pegasus Logo"
+        class="pegasus-logo"
+      />
+
+      <p-button icon="pi pi-times" class="sidebar-close-btn mt-2 lg:hidden" (onClick)="closeCallback($event)" />
+    </div>
+
+    <!-- Menu Content -->
+    <div class="sidebar-menu-content">
+      @for (menuItem of menuItems; track $index) {
+        <div class="menu-item-container">
+          @if (menuItem.items) {
+            <p-panel
+              *ngIf="menuItem.items"
+              [collapsed]="true"
+              [toggleable]="true"
+              expandIcon="pi pi-angle-up"
+              collapseIcon="pi pi-angle-down"
+            >
+              <ng-template pTemplate="header">
+                <a
+                  pRipple
+                  class="menu-item"
+                  routerLink="/{{ menuItem.path }}"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                >
+                  <img
+                    src="/icons/{{ menuItem.icon }}"
+                    alt="{{ menuItem.label }}"
+                    class="icon-class"
+                  />
+                  <span class="ml-2">{{ menuItem.label }}</span>
+                </a>
+              </ng-template>
+
+              @for (subMenuItem of menuItem.items; track $index) {
+                <a
+                  pRipple
+                  class="submenu-item"
+                  routerLink="/{{ subMenuItem.path }}"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                >
+                  <img
+                    src="/icons/{{ subMenuItem.icon }}"
+                    alt="{{ subMenuItem.label }}"
+                    class="icon-class"
+                  />
+                  <span class="ml-2">{{ subMenuItem.label }}</span>
+                </a>
+              }
+            </p-panel>
+          } @else {
+            <a
+              *ngIf="!menuItem.items"
+              pRipple
+              class="menu-item"
+              routerLink="/{{ menuItem.path }}"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <img
+                src="/icons/{{ menuItem.icon }}"
+                alt="{{ menuItem.label }}"
+                class="icon-class"
+              />
+              <span class="ml-2">{{ menuItem.label }}</span>
+            </a>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="sidebar-menu-footer">
+      <a
+        pRipple
+        class="menu-item"
+        routerLink="/management"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <img
+          src="/icons/managament-icon.svg"
+          alt="Management"
+          class="icon-class"
+        />
+        <span class="ml-2">Management</span>
+      </a>
+    </div>
+  </div>
+</div>
