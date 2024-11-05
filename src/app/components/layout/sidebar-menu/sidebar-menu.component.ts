@@ -9,14 +9,9 @@ import { Sidebar } from 'primeng/sidebar';
 @Component({
   selector: 'app-sidebar-menu',
   standalone: true,
-  imports: [
-    CommonModule,
-    PanelModule,
-    MenubarModule,
-    ButtonModule,
-  ],
+  imports: [CommonModule, PanelModule, MenubarModule, ButtonModule],
   templateUrl: './sidebar-menu.component.html',
-  styleUrl: './sidebar-menu.component.scss'
+  styleUrl: './sidebar-menu.component.scss',
 })
 export class SidebarMenuComponent {
   menuItems: LayoutMenuItem[] = [];

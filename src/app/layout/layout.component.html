@@ -1,6 +1,5 @@
 <main id="layout">
   <div class="flex">
-
     <!-- Large Screen Sidebar -->
     <div class="lg:w-[15%] lg:block hidden">
       <app-sidebar-menu></app-sidebar-menu>
@@ -17,7 +16,11 @@
       <!-- Topbar -->
       <div class="toolbar">
         <div class="toolbar-left">
-          <p-button icon="pi pi-bars" class="hamburger-menu-button block lg:hidden" (onClick)="toggleSidebarMenu()" />
+          <p-button
+            icon="pi pi-bars"
+            class="hamburger-menu-button block lg:hidden"
+            (onClick)="toggleSidebarMenu()"
+          />
 
           <div>
             <h2 class="welcome-title text-xl font-bold">Welcome Dominic!</h2>
@@ -43,7 +46,6 @@
       <div class="pl-5 pr-5">
         <router-outlet></router-outlet>
       </div>
-
     </div>
   </div>
 </main>

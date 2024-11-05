@@ -22,14 +22,14 @@ export const routes: Routes = [
         path: 'flight-information',
         children: [
           {
-            path: "",
-            component: FlightInfoComponent
+            path: '',
+            component: FlightInfoComponent,
           },
           {
             path: 'trip-information',
-            component: TripInfoComponent
-          }
-        ]
+            component: TripInfoComponent,
+          },
+        ],
       },
     ],
   },

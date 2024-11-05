@@ -9,15 +9,19 @@ import { InputTextModule } from 'primeng/inputtext';
 @Component({
   selector: 'app-table-header',
   standalone: true,
-  imports: [CommonModule, DropdownModule, IconFieldModule, InputIconModule, InputTextModule, FormsModule],
+  imports: [
+    CommonModule,
+    DropdownModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+    FormsModule,
+  ],
   templateUrl: './table-header.component.html',
   styleUrls: ['./table-header.component.scss'],
 })
 export class TableHeaderComponent {
   selectedOption: string = '';
 
-  dropdownOptions = [
-    { label: 'Daily', value: 'daily' },
-
-  ];
+  dropdownOptions = [{ label: 'Daily', value: 'daily' }];
 }
