@@ -14,13 +14,22 @@ import { ButtonModule } from 'primeng/button';
 import { Column } from '@shared/models/columns';
 import { TabViewModule } from 'primeng/tabview';
 
-
 @Component({
   selector: 'app-fuel',
   standalone: true,
-  imports: [CommonModule, DropdownModule, IconFieldModule, InputIconModule, InputTextModule, FormsModule, TableModule, ButtonModule, TabViewModule,],
+  imports: [
+    CommonModule,
+    DropdownModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+    FormsModule,
+    TableModule,
+    ButtonModule,
+    TabViewModule,
+  ],
   templateUrl: './fuel.component.html',
-  styleUrl: './fuel.component.scss'
+  styleUrl: './fuel.component.scss',
 })
 export class FuelComponent {
   selectedFuelOrder: string = '';
@@ -29,12 +38,12 @@ export class FuelComponent {
   fuelOrderOptions = [
     { label: 'Fuel Order 1', value: 'order1' },
     { label: 'Fuel Order 2', value: 'order2' },
-    { label: 'Fuel Order 3', value: 'order3' }
+    { label: 'Fuel Order 3', value: 'order3' },
   ];
   periodOptions = [
     { label: 'Daily 1', value: 'daily1' },
     { label: 'Daily 2', value: 'daily2' },
-    { label: 'Daily 3', value: 'daily3' }
+    { label: 'Daily 3', value: 'daily3' },
   ];
   fuelData = [
     {
@@ -74,7 +83,3 @@ export class FuelComponent {
     ];
   }
 }
-
-
-
-
