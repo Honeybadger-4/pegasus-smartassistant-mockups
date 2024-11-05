@@ -41,9 +41,7 @@ export class TripInfoComponent {
       {field: "departure", header: "Departure"},
       {field: "arrival", header: "Arrival"},
       {field: "status", header: "Status"},
-      {field: "username", header: "Username"},
-      {field: "", header: ""},
-      {field: "", header: ""},
+      {field: "username", header: "Username"}
     ]
   }
 
