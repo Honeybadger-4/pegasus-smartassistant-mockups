@@ -1,0 +1,95 @@
+<div id="FuelPage">
+  <section class="table-header-section lg:flex block">
+    <!-- Header Title -->
+    <p class="header-title">Fuel</p>
+
+    <!-- Filter Inputs and Dropdown -->
+    <div class="grid grid-cols-12 gap-4">
+      <!-- Aircraft  Input -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-iconField iconPosition="right" class="custom-icon-field">
+          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+          <input type="text" pInputText placeholder="Aircraft" />
+        </p-iconField>
+      </div>
+
+      <!-- Flight No Input -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-iconField iconPosition="right" class="custom-icon-field">
+          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+          <input type="text" pInputText placeholder="Flight No" />
+        </p-iconField>
+      </div>
+
+      <!-- Dep Port Input -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-iconField iconPosition="right" class="custom-icon-field">
+          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+          <input type="text" pInputText placeholder="Dep Port" />
+        </p-iconField>
+      </div>
+
+      <!-- Arr Port Input -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-iconField iconPosition="right" class="custom-icon-field">
+          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+          <input type="text" pInputText placeholder="Arr Port" />
+        </p-iconField>
+      </div>
+
+      <!-- Dropdown for "Fuel Order" -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-dropdown
+          [options]="fuelOrderOptions"
+          [(ngModel)]="selectedFuelOrder"
+          class="custom-dropdown"
+          placeholder="Fuel Order"
+        ></p-dropdown>
+      </div>
+
+      <!-- Dropdown for "Daily" -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-dropdown
+          [options]="periodOptions"
+          [(ngModel)]="selectedDaily"
+          class="custom-dropdown"
+          placeholder="Daily"
+        ></p-dropdown>
+      </div>
+    </div>
+  </section>
+
+  <section class="table-section">
+    <p-table
+      [value]="fuelData"
+      [columns]="columns"
+      dataKey="id"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      styleClass="p-datatable-striped"
+      [paginator]="true"
+      [rows]="5"
+      [rowsPerPageOptions]="[5, 10, 20]"
+    >
+      <!-- Table Header -->
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+
+      <!-- Table Body -->
+      <ng-template pTemplate="body" let-rowData>
+        <tr>
+          <td>{{ rowData.aircraft }}</td>
+          <td>{{ rowData.flightNo }}</td>
+          <td>{{ rowData.departure }}</td>
+          <td>{{ rowData.arrival }}</td>
+          <td class="font-bold">{{ rowData.fuelOrder }}</td>
+          <td>{{ rowData.amount }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </section>
+</div>
