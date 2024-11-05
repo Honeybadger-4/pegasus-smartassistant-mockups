@@ -31,13 +31,11 @@ export class FuelComponent {
     { label: 'Fuel Order 2', value: 'order2' },
     { label: 'Fuel Order 3', value: 'order3' }
   ];
-
-  dailyOptions = [
+  periodOptions = [
     { label: 'Daily 1', value: 'daily1' },
     { label: 'Daily 2', value: 'daily2' },
     { label: 'Daily 3', value: 'daily3' }
   ];
-
   fuelData = [
     {
       id: '0',
@@ -58,16 +56,7 @@ export class FuelComponent {
       amount: '4900 KG',
     },
   ];
-
-  expandedTableData: any[] = [];
-
-  // Columns Variable
-  mainCols!: Column[];
-  expandedTableColumns!: Column[];
-  // /Columns Variable
-
-  expandedRows = {};
-  activeTabIndex: number = 0;
+  columns!: Column[];
 
   ngOnInit() {
     this.defineMainColumns();
@@ -75,7 +64,7 @@ export class FuelComponent {
 
   // Define Columns Operation
   defineMainColumns() {
-    this.mainCols = [
+    this.columns = [
       { field: 'aircraft', header: 'Aircraft' },
       { field: 'flightNo', header: 'Flight No' },
       { field: 'departure', header: 'Departure' },
@@ -84,17 +73,6 @@ export class FuelComponent {
       { field: 'amount', header: 'Amount' },
     ];
   }
-
-  onRowExpand(event: TableRowExpandEvent) {
-    console.log('Expanded: ', event);
-  }
-
-  onRowCollapse(event: TableRowCollapseEvent) {
-    console.log('Collapsed: ', event);
-  }
-
-
-
 }
 
 

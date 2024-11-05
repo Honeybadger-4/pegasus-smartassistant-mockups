@@ -38,7 +38,7 @@ export class SidebarMenuComponent {
           {
             label: 'Fuel',
             icon: 'fuel-icon.svg',
-            path: 'fuel',
+            path: 'flight-information/fuel',
           },
           {
             label: 'Route',

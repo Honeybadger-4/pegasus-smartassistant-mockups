@@ -1,19 +1,12 @@
-.table-header-container {
-    //display: flex;
-    justify-content: space-between;
-
-    .header-title {
-        font-size: 14px;
-    }
-
-    .filter-item {
-        input {
-            font-size: 12px;
-        }
-    }
+#FuelPage {
+    .table-header-section {
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
     
-    
-}
-.bold-cell {
-    font-weight: bold;
+        .header-title {
+            font-weight: bold;
+            color: #4f4f4f;
+        }   
+    }
 }
