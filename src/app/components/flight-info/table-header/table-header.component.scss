@@ -1,14 +1,11 @@
-.table-header-container {
-    //display: flex;
+#FlightInfoTableHeaderComponent {
+  .table-header-container {
     justify-content: space-between;
+    align-items: center;
 
     .header-title {
-        font-size: 14px;
+      color: #4f4f4f;
+      font-weight: bold;
     }
-
-    .filter-item {
-        input {
-            font-size: 12px;
-        }
-    }
+  }
 }

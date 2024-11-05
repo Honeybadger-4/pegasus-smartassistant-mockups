@@ -10,11 +10,16 @@ import { Column } from '@shared/models/columns';
 import { TabViewModule } from 'primeng/tabview';
 import { TableHeaderComponent } from '../../components/flight-info/table-header/table-header.component';
 
-
 @Component({
   selector: 'app-flight-info',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, TabViewModule, TableHeaderComponent],
+  imports: [
+    CommonModule,
+    TableModule,
+    ButtonModule,
+    TabViewModule,
+    TableHeaderComponent,
+  ],
   templateUrl: './flight-info.component.html',
   styleUrl: './flight-info.component.scss',
 })
