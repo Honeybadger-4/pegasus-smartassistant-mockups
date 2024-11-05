@@ -1,0 +1,57 @@
+<div id="Fuel">
+    <div class="table-header-container lg:flex block">
+        <!-- Header Title -->
+        <p class="header-title">Fuel</p>
+
+        <!-- Filter Inputs and Dropdown -->
+        <div class="mb-2 grid lg:grid-cols-10 grid-cols-12 gap-6">
+            <!-- Aircraft  Input -->
+            <div class="filter-item lg:col-span-2 md:col-span-6 col-span-12">
+                <p-iconField iconPosition="right" class="custom-icon-field">
+                    <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+                    <input type="text" pInputText placeholder="Aircraft" />
+                </p-iconField>
+            </div>
+
+            <!-- Flight No Input -->
+            <div class="filter-item lg:col-span-2 md:col-span-6 col-span-12">
+                <p-iconField iconPosition="right" class="custom-icon-field">
+                    <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+                    <input type="text" pInputText placeholder="Flight No" />
+                </p-iconField>
+            </div>
+
+            <!-- Dep Port Input -->
+            <div class="filter-item lg:col-span-2 md:col-span-6 col-span-12">
+                <p-iconField iconPosition="right" class="custom-icon-field">
+                    <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+                    <input type="text" pInputText placeholder="Dep Port" />
+                </p-iconField>
+            </div>
+
+            <!-- Arr Port Input -->
+            <div class="filter-item lg:col-span-2 md:col-span-6 col-span-12">
+                <p-iconField iconPosition="right" class="custom-icon-field">
+                    <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+                    <input type="text" pInputText placeholder="Arr Port" />
+                </p-iconField>
+            </div>
+
+            <!-- Dropdown for "Fuel Order" -->
+            <div class="filter-item lg:col-span-2 md:col-span-6 col-span-12">
+                <p-dropdown [options]="fuelOrderOptions" [(ngModel)]="selectedFuelOrder" class="custom-dropdown"
+                    placeholder="Fuel Order"></p-dropdown>
+            </div>
+
+            <!-- Dropdown for "Daily" -->
+            <div class="filter-item lg:col-span-2 md:col-span-6 col-span-12">
+                <p-dropdown [options]="dailyOptions" [(ngModel)]="selectedDaily" class="custom-dropdown"
+                    placeholder="Daily"></p-dropdown>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,14 @@
+.table-header-container {
+    //display: flex;
+    justify-content: space-between;
+
+    .header-title {
+        font-size: 14px;
+    }
+
+    .filter-item {
+        input {
+            font-size: 12px;
+        }
+    }
+}
