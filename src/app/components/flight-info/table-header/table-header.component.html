@@ -1,50 +1,50 @@
 <div id="FlightInfoTableHeaderComponent">
   <div class="table-header-container lg:flex block">
-  <!-- Header Title -->
-  <p class="header-title">Flight Information List</p>
+    <!-- Header Title -->
+    <p class="header-title">Flight Information List</p>
 
-  <!-- Filter Inputs and Dropdown -->
-  <div class="mb-2 grid lg:grid-cols-10 grid-cols-12 gap-6">
-    <div class="filter-item lg:col-span-2 md:col-span-6 col-span-12">
-      <p-iconField iconPosition="right" class="custom-icon-field">
-        <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
-        <input type="text" pInputText placeholder="Flight No"/>
-      </p-iconField>
-    </div>
+    <!-- Filter Inputs and Dropdown -->
+    <div class="mb-2 grid lg:grid-cols-10 grid-cols-12 gap-6">
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-iconField iconPosition="right" class="custom-icon-field">
+          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+          <input type="text" pInputText placeholder="Flight No" />
+        </p-iconField>
+      </div>
 
-    <!-- Dep Port Input -->
-    <div class="filter-item lg:col-span-2 md:col-span-6 col-span-12">
-      <p-iconField  iconPosition="right" class="custom-icon-field">
-        <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
-        <input type="text" pInputText placeholder="Dep Port"/>
-      </p-iconField>
-    </div>
+      <!-- Dep Port Input -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-iconField iconPosition="right" class="custom-icon-field">
+          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+          <input type="text" pInputText placeholder="Dep Port" />
+        </p-iconField>
+      </div>
 
-    <!-- Arr Port Input -->
-    <div class="filter-item lg:col-span-2 md:col-span-6 col-span-12">
-      <p-iconField iconPosition="right" class="custom-icon-field">
-        <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
-        <input type="text" pInputText placeholder="Arr Port"/>
-      </p-iconField>
-    </div>
+      <!-- Arr Port Input -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-iconField iconPosition="right" class="custom-icon-field">
+          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+          <input type="text" pInputText placeholder="Arr Port" />
+        </p-iconField>
+      </div>
 
-    <!-- User Input -->
-    <div class="filter-item lg:col-span-2 md:col-span-6 col-span-12">
-      <p-iconField iconPosition="right" class="custom-icon-field">
-        <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
-        <input type="text" pInputText placeholder="User"/>
-      </p-iconField>
-    </div>
+      <!-- User Input -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-iconField iconPosition="right" class="custom-icon-field">
+          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+          <input type="text" pInputText placeholder="User" />
+        </p-iconField>
+      </div>
 
-    <!-- Dropdown for "Daily" -->
-    <div class="filter-item lg:col-span-2 md:col-span-6 col-span-12">
-      <p-dropdown
-        [options]="dropdownOptions"
-        [(ngModel)]="selectedOption"
-        class="custom-dropdown"
-        placeholder="Daily"
-      ></p-dropdown>
+      <!-- Dropdown for "Daily" -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-dropdown
+          [options]="dropdownOptions"
+          [(ngModel)]="selectedOption"
+          class="custom-dropdown"
+          placeholder="Daily"
+        ></p-dropdown>
+      </div>
     </div>
   </div>
-</div>
 </div>

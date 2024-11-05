@@ -9,7 +9,8 @@
     .toolbar-left {
       display: flex;
       align-items: center;
-      .welcome-title, .welcome-subtitle {
+      .welcome-title,
+      .welcome-subtitle {
         color: #4f4f4f;
       }
     }
@@ -46,13 +47,11 @@
         color: #6b7280;
       }
     }
-
   }
 }
 
 ::ng-deep {
   #layout {
-
     .mobile-sidebar-menu {
       .p-sidebar-header {
         display: none;

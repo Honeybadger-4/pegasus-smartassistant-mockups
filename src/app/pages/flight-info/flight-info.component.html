@@ -1,14 +1,11 @@
-<app-table-header></app-table-header>
 <div id="FlightInfoComponent">
-  <!-- <div class="table-header">
-    <h2>Flight Information List</h2>
-  </div> -->
+  <app-table-header></app-table-header>
 
   <p-table
     [value]="flightsData"
     [columns]="mainCols"
     dataKey="id"
-    [tableStyle]="{'min-width': '50rem'}"
+    [tableStyle]="{ 'min-width': '50rem' }"
     styleClass="p-datatable-striped"
     [expandedRowKeys]="expandedRows"
     (onRowExpand)="onRowExpand($event)"
@@ -81,7 +78,7 @@
           </div>
         </td>
       </tr>
-    </ng-template>    
+    </ng-template>
   </p-table>
 </div>
 

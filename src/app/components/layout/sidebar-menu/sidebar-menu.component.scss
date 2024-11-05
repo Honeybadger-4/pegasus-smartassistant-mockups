@@ -10,7 +10,7 @@
       margin-bottom: 20px;
       .sidebar-close-btn {
         .p-button {
-            background-color: yellow;
+          background-color: yellow;
         }
       }
     }
@@ -90,15 +90,15 @@
 }
 
 ::ng-deep {
-    #LayoutSidebarMenu {
-        .sidebar-menu-header {
-            .sidebar-close-btn {
-              .p-button {
-                  background-color: transparent;
-                  border: none;
-                  color: #4f4f4f;
-              }
-            }
-          }
+  #LayoutSidebarMenu {
+    .sidebar-menu-header {
+      .sidebar-close-btn {
+        .p-button {
+          background-color: transparent;
+          border: none;
+          color: #4f4f4f;
+        }
+      }
     }
+  }
 }
