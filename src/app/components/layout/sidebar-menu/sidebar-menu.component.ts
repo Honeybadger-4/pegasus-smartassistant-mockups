@@ -53,7 +53,7 @@ export class SidebarMenuComponent {
           {
             label: 'Trip Info',
             icon: 'trip-icon.svg',
-            path: 'trip-info',
+            path: 'flight-information/trip-information',
           },
           {
             label: 'Load Sheet',

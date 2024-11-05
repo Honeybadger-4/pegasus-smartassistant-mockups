@@ -1,0 +1,11 @@
+#TripInfoPage {
+    .table-header-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        .period-dropdown {
+            width: 120px;
+        }
+    }
+}
