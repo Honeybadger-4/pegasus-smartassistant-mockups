@@ -11,7 +11,7 @@
     ></p-dropdown>
   </section>
 
-  <section class="table-section">
+  <section class="table-section custom-card">
     <p-table
       [value]="userLoginHistoryData"
       [columns]="columns"
@@ -24,8 +24,6 @@
       <ng-template pTemplate="header">
         <tr>
           <th *ngFor="let column of columns">{{ column.header }}</th>
-          <th></th>
-          <th></th>
         </tr>
       </ng-template>
 

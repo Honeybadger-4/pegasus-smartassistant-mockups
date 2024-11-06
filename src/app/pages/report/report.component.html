@@ -11,7 +11,7 @@
       ></p-dropdown>
     </section>
   
-    <section class="table-section">
+    <section class="table-section custom-card">
       <p-table
         [value]="reportData"
         [columns]="columns"
@@ -29,14 +29,14 @@
           </tr>
         </ng-template>
   
-        <ng-template pTemplate="body" let-report>
+        <ng-template pTemplate="body" let-rowData>
           <tr>
-            <td>{{ report.aircraft }}</td>
-            <td>{{ report.flightNo }}</td>
-            <td>{{ report.departure }}</td>
-            <td>{{ report.arrival }}</td>
-            <td class="font-bold">{{ report.checklist }}</td>
-            <td>{{ report.username }}</td>
+            <td>{{ rowData.aircraft }}</td>
+            <td>{{ rowData.flightNo }}</td>
+            <td>{{ rowData.departure }}</td>
+            <td>{{ rowData.arrival }}</td>
+            <td class="font-bold">{{ rowData.checklist }}</td>
+            <td>{{ rowData.username }}</td>
             <td><i class="pi pi-eye"></i></td>
             <td><i class="pi pi-download"></i></td>
           </tr>
