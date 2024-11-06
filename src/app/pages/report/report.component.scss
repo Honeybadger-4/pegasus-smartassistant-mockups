@@ -1,0 +1,17 @@
+#ReportPage {
+  .table-header-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    .header-title {
+      color: #4f4f4f;
+      font-weight: bold;
+    }
+
+    .period-dropdown {
+      width: 120px;
+    }
+  }
+}
