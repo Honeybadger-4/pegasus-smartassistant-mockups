@@ -10,7 +10,7 @@ import { TableModule } from 'primeng/table';
   standalone: true,
   imports: [CommonModule, FormsModule, DropdownModule, TableModule],
   templateUrl: './report.component.html',
-  styleUrl: './report.component.scss'
+  styleUrl: './report.component.scss',
 })
 export class ReportComponent {
   selectedPeriod: string = '';
@@ -87,11 +87,3 @@ export class ReportComponent {
     ];
   }
 }
-
-
-
-
-
-
-
-
