@@ -11,7 +11,6 @@
     ></p-dropdown>
   </section>
 
-
   <section class="slider-section">
     <div class="slider-container">
       <p class="slider-title">Approved</p>
@@ -19,25 +18,23 @@
         [(ngModel)]="approvedValue"
         disabled
         class="approved-slider"
-        [ngStyle]="{'width': '100%'}" 
-
+        [ngStyle]="{ width: '100%' }"
       ></p-slider>
       <p class="percentage">{{ approvedValue }}%</p>
     </div>
 
-    <div class="slider-container" >
+    <div class="slider-container">
       <p class="slider-title">Declined</p>
       <p-slider
         [(ngModel)]="declinedValue"
         disabled
         class="declined-slider"
-        [ngStyle]="{'width': '100%'}"
-        ></p-slider>
+        [ngStyle]="{ width: '100%' }"
+      ></p-slider>
       <p class="percentage">{{ declinedValue }}%</p>
     </div>
   </section>
 
-  
   <section class="table-section">
     <p-table
       [value]="loadSheetData"

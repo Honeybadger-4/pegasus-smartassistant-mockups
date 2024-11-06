@@ -6,19 +6,24 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
 import { SliderModule } from 'primeng/slider';
 
-
 @Component({
   selector: 'app-load-sheet',
   standalone: true,
-  imports: [CommonModule, FormsModule, DropdownModule, TableModule, SliderModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    DropdownModule,
+    TableModule,
+    SliderModule,
+  ],
   templateUrl: './load-sheet.component.html',
-  styleUrl: './load-sheet.component.scss'
+  styleUrl: './load-sheet.component.scss',
 })
 export class LoadSheetComponent {
   selectedPeriod: string = '';
-  approvedValue: number = 76; 
-  declinedValue: number = 24; 
-  
+  approvedValue: number = 76;
+  declinedValue: number = 24;
+
   periodOptions = [
     { label: 'Daily', value: 'daily' },
     { label: 'Weekly', value: 'weekly' },
@@ -91,7 +96,4 @@ export class LoadSheetComponent {
       { field: 'username', header: 'Username' },
     ];
   }
-
-  
 }
-

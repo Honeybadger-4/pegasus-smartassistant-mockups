@@ -37,7 +37,7 @@ export const routes: Routes = [
           },
           {
             path: 'load-sheet',
-            component: LoadSheetComponent
+            component: LoadSheetComponent,
           },
         ],
       },
