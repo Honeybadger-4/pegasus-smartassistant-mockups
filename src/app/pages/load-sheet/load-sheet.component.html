@@ -17,19 +17,20 @@
       <p class="slider-title">Approved</p>
       <p-slider
         [(ngModel)]="approvedValue"
-        [disabled]="true"
-        styleClass="approved-slider"
+        disabled
+        class="approved-slider"
         [ngStyle]="{'width': '100%'}" 
 
       ></p-slider>
       <p class="percentage">{{ approvedValue }}%</p>
     </div>
+
     <div class="slider-container" >
       <p class="slider-title">Declined</p>
       <p-slider
         [(ngModel)]="declinedValue"
-        [disabled]="false"
-        styleClass="declined-slider"
+        disabled
+        class="declined-slider"
         [ngStyle]="{'width': '100%'}"
         ></p-slider>
       <p class="percentage">{{ declinedValue }}%</p>
