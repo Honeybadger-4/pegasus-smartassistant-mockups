@@ -6,6 +6,7 @@ import { FlightInfoComponent } from './pages/flight-info/flight-info.component';
 import { TripInfoComponent } from './pages/trip-info/trip-info.component';
 import { FuelComponent } from './pages/fuel/fuel.component';
 import { LoadSheetComponent } from './pages/load-sheet/load-sheet.component';
+import { AirportInfoComponent } from './pages/airport-info/airport-info.component';
 
 export const routes: Routes = [
   {
@@ -40,6 +41,10 @@ export const routes: Routes = [
             component: LoadSheetComponent,
           },
         ],
+      },
+      {
+        path: 'airport-information',
+        component: AirportInfoComponent,
       },
     ],
   },

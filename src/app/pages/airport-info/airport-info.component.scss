@@ -1,0 +1,25 @@
+#AirportInfoPage {
+  .form-section {
+    margin-bottom: 20px;
+  }
+
+  .title {
+    color: #4f4f4f;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+}
+
+::ng-deep {
+  #AirportInfoPage {
+    .save-button {
+      width: 100%;
+      display: flex;
+      justify-content: end;
+      button {
+        width: 150px;
+        border-radius: 10px;
+      }
+    }
+  }
+}
