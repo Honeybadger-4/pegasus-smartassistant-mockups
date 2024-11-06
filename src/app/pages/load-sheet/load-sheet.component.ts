@@ -16,8 +16,8 @@ import { SliderModule } from 'primeng/slider';
 })
 export class LoadSheetComponent {
   selectedPeriod: string = '';
-  approvedValue: number = 76; // Başlangıç değeri
-  declinedValue: number = 24; // Başlangıç değeri
+  approvedValue: number = 76; 
+  declinedValue: number = 24; 
   
   periodOptions = [
     { label: 'Daily', value: 'daily' },

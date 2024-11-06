@@ -18,7 +18,6 @@
 
 .slider-section {
   display: flex;
-  justify-content: space-between;
 
   .slider-container {
     display: flex;
@@ -29,34 +28,33 @@
 
     .slider-title {
       font-size: 12px;
-      font-weight: 300;
-      line-height: 14.06px;
-      text-align: left;
       color: #4f4f4f;
-    }
-    ::ng-deep .approved-slider .p-slider-range {
-      background-color: #FED447 !important; /* Sarı renk */
-      border-radius: 20px 0px 0px 0px;
-
-      
-    }
-
-    ::ng-deep .declined-slider .p-slider-range {
-      background-color: #d62828 !important; /* Kırmızı renk */
-      border-radius: 20px 0px 0px 0px;
-
-    }
-
-    ::ng-deep .p-slider-handle {
-      display: none !important;
     }
 
     .percentage {
       font-size: 32px;
-      font-weight: 400;
-      line-height: 37.5px;
-      text-align: center;
       color: #4f4f4f;
+      align-self: flex-start;
     }
   }
+}
+
+::ng-deep .approved-slider .p-slider-range {
+  background-color: #fed447 !important;
+  border-radius: 20px 0px 0px 0px;
+  height: 5px;
+}
+
+::ng-deep .declined-slider .p-slider-range {
+  background-color: #d62828 !important;
+  border-radius: 20px 0px 0px 0px;
+  height: 5px;
+}
+
+::ng-deep .p-slider {
+  background-color: #ffffff !important;
+}
+
+::ng-deep .p-slider-handle {
+  display: none !important;
 }
