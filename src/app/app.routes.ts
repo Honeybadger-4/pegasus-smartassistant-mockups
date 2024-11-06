@@ -7,6 +7,7 @@ import { TripInfoComponent } from './pages/trip-info/trip-info.component';
 import { FuelComponent } from './pages/fuel/fuel.component';
 import { LoadSheetComponent } from './pages/load-sheet/load-sheet.component';
 import { ReportComponent } from './pages/report/report.component';
+import { UserLoginHistoryComponent } from './pages/user-login-history/user-login-history.component';
 
 export const routes: Routes = [
   {
@@ -45,7 +46,11 @@ export const routes: Routes = [
       {
         path: 'report',
         component: ReportComponent,
-      }
+      },
+      {
+        path: 'user-login-history',
+        component: UserLoginHistoryComponent,
+      },
     ],
   },
 ];
