@@ -53,7 +53,7 @@ export class SidebarMenuComponent {
           {
             label: 'Load Sheet',
             icon: 'loadsheet-icon.svg',
-            path: 'load-sheet',
+            path: 'flight-information/load-sheet',
           },
         ],
       },

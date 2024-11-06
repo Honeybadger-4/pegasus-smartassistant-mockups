@@ -5,6 +5,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { FlightInfoComponent } from './pages/flight-info/flight-info.component';
 import { TripInfoComponent } from './pages/trip-info/trip-info.component';
 import { FuelComponent } from './pages/fuel/fuel.component';
+import { LoadSheetComponent } from './pages/load-sheet/load-sheet.component';
 
 export const routes: Routes = [
   {
@@ -33,6 +34,10 @@ export const routes: Routes = [
           {
             path: 'fuel',
             component: FuelComponent,
+          },
+          {
+            path: 'load-sheet',
+            component: LoadSheetComponent,
           },
         ],
       },
