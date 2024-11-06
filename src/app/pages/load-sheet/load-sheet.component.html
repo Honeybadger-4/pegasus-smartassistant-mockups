@@ -1,0 +1,70 @@
+<main id="LoadSheetPage">
+  <section class="table-header-section">
+    <span class="header-title">Load Sheet</span>
+    <p-dropdown
+      [options]="periodOptions"
+      [(ngModel)]="selectedPeriod"
+      optionLabel="label"
+      optionValue="value"
+      class="custom-dropdown period-dropdown"
+      placeholder="Daily"
+    ></p-dropdown>
+  </section>
+
+  <section class="slider-section">
+    <div class="slider-container">
+      <p class="slider-title">Approved</p>
+      <p-slider
+        [(ngModel)]="approvedValue"
+        disabled
+        class="approved-slider"
+        [ngStyle]="{ width: '100%' }"
+      ></p-slider>
+      <p class="percentage">{{ approvedValue }}%</p>
+    </div>
+
+    <div class="slider-container">
+      <p class="slider-title">Declined</p>
+      <p-slider
+        [(ngModel)]="declinedValue"
+        disabled
+        class="declined-slider"
+        [ngStyle]="{ width: '100%' }"
+      ></p-slider>
+      <p class="percentage">{{ declinedValue }}%</p>
+    </div>
+  </section>
+
+  <section class="table-section">
+    <p-table
+      [value]="loadSheetData"
+      [columns]="columns"
+      [paginator]="true"
+      [rows]="5"
+      [rowsPerPageOptions]="[5, 10, 20]"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      styleClass="p-datatable-striped"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th *ngFor="let column of columns">{{ column.header }}</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-loadSheet>
+        <tr>
+          <td>{{ loadSheet.aircraft }}</td>
+          <td>{{ loadSheet.flightNo }}</td>
+          <td>{{ loadSheet.departure }}</td>
+          <td>{{ loadSheet.arrival }}</td>
+          <td class="font-bold">{{ loadSheet.status }}</td>
+          <td>{{ loadSheet.username }}</td>
+          <td><i class="pi pi-eye"></i></td>
+          <td><i class="pi pi-download"></i></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </section>
+</main>
