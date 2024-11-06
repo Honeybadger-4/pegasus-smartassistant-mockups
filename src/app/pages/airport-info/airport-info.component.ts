@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -10,9 +15,17 @@ import { ButtonModule } from 'primeng/button';
 @Component({
   selector: 'app-airport-info',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, ButtonModule, TableModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    InputTextModule,
+    FloatLabelModule,
+    ButtonModule,
+    TableModule,
+  ],
   templateUrl: './airport-info.component.html',
-  styleUrl: './airport-info.component.scss'
+  styleUrl: './airport-info.component.scss',
 })
 export class AirportInfoComponent {
   columns: Column[] = [];
@@ -42,9 +55,7 @@ export class AirportInfoComponent {
     },
   ];
 
-  constructor(
-    private formBuilder: FormBuilder
-  ) {}
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
     this.builder();
@@ -79,5 +90,4 @@ export class AirportInfoComponent {
   formSubmit() {
     console.log(this.airportInfoFormGroup);
   }
-
 }

@@ -8,9 +8,8 @@ describe('AirportInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AirportInfoComponent]
-    })
-    .compileComponents();
+      imports: [AirportInfoComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AirportInfoComponent);
     component = fixture.componentInstance;

@@ -20,7 +20,7 @@ export class GeneralInformationCardComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.initializeChart()
+    this.initializeChart();
   }
 
   initializeChart() {
@@ -94,7 +94,11 @@ export class GeneralInformationCardComponent implements OnInit {
             { name: 'Meteorology', y: 20, color: '#5E548E' },
             { name: 'Arrival/Departure Rwy Diff.', y: 15, color: '#E0B1CB' },
             { name: 'OCC Decision', y: 10, color: '#BE95C4' },
-            { name: 'Traffic Congestion on Arr. Airp.', y: 17, color: '#9F86C0' },
+            {
+              name: 'Traffic Congestion on Arr. Airp.',
+              y: 17,
+              color: '#9F86C0',
+            },
           ],
         },
       ],

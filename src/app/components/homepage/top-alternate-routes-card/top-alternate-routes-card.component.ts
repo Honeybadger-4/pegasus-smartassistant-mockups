@@ -19,7 +19,7 @@ export class TopAlternateRoutesCardComponent {
   constructor() {}
 
   ngOnInit() {
-    this.initializeChart()
+    this.initializeChart();
   }
 
   initializeChart() {

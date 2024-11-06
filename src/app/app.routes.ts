@@ -44,8 +44,8 @@ export const routes: Routes = [
       },
       {
         path: 'airport-information',
-        component: AirportInfoComponent
-      }
+        component: AirportInfoComponent,
+      },
     ],
   },
 ];
