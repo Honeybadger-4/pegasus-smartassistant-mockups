@@ -12,6 +12,7 @@
       <div class="flex">
         <div>
           <highcharts-chart
+            *ngIf="isHighcharts"
             [Highcharts]="Highcharts"
             [options]="chartOptionsFlights"
           ></highcharts-chart>
@@ -31,6 +32,7 @@
     <div class="flex">
       <div class="chart-section">
         <highcharts-chart
+          *ngIf="isHighcharts"
           [Highcharts]="Highcharts"
           [options]="chartOptionsFuelOrder"
         ></highcharts-chart>

@@ -13,6 +13,7 @@
 
             <div class="lg:col-span-3 md:col-span-4 sm:col-span-6">
               <highcharts-chart
+                *ngIf="isHighcharts"
                 [Highcharts]="Highcharts"
                 [options]="chartOptionsGPSLoss"
               ></highcharts-chart>
@@ -49,6 +50,7 @@
 
             <div class="lg:col-span-3 md:col-span-4 sm:col-span-6">
               <highcharts-chart
+                *ngIf="isHighcharts"
                 [Highcharts]="Highcharts"
                 [options]="chartOptionsFuelExcess"
               ></highcharts-chart>
