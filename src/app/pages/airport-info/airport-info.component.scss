@@ -16,9 +16,13 @@
       width: 100%;
       display: flex;
       justify-content: end;
+      
       button {
         width: 150px;
         border-radius: 10px;
+        background-color: #F5F5F5;
+        color: #4F4F4F;
+        border: none;
       }
     }
   }
