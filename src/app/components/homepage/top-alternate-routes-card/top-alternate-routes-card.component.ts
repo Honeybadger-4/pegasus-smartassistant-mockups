@@ -35,7 +35,6 @@ export class TopAlternateRoutesCardComponent {
         labels: {
           style: {
             color: '#525252',
-            fontFamily: 'DM Sans',
             fontSize: '12px',
             fontWeight: '500',
             lineHeight: '20px',
