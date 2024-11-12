@@ -14,8 +14,9 @@ import { Sidebar } from 'primeng/sidebar';
   styleUrl: './sidebar-menu.component.scss',
 })
 export class SidebarMenuComponent {
-  menuItems: LayoutMenuItem[] = [];
   @Input() sidebarRef!: Sidebar;
+  menuItems: LayoutMenuItem[] = [];
+  panelIsCollapsed: boolean = true;
 
   constructor() {}
 
@@ -33,8 +34,12 @@ export class SidebarMenuComponent {
       {
         label: 'Flight Information',
         icon: 'flight-icon.svg',
-        path: 'flight-information',
         items: [
+          {
+            label: 'Flight Info',
+            icon: 'flight-icon.svg',
+            path: 'flight-information',
+          },
           {
             label: 'Fuel',
             icon: 'fuel-icon.svg',
