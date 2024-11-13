@@ -100,30 +100,6 @@
 
   <section class="table-section custom-card">
     <p class="title">Airport List</p>
-    <p-table
-      [value]="airportInfoData"
-      [columns]="columns"
-      [paginator]="true"
-      [rows]="5"
-      [rowsPerPageOptions]="[5, 10, 20]"
-      [tableStyle]="{ 'min-width': '50rem' }"
-      styleClass="p-datatable-striped"
-    >
-      <ng-template pTemplate="header">
-        <tr>
-          <th *ngFor="let column of columns">{{ column.header }}</th>
-        </tr>
-      </ng-template>
-
-      <ng-template pTemplate="body" let-rowData>
-        <tr>
-          <td>{{ rowData.name }}</td>
-          <td>{{ rowData.iata }}</td>
-          <td>{{ rowData.icao }}</td>
-          <td>{{ rowData.city }}</td>
-          <td class="font-bold">{{ rowData.state }}</td>
-        </tr>
-      </ng-template>
-    </p-table>
+    <app-custom-table [tableData]="airportInfoData" [tableColumns]="columns"></app-custom-table>
   </section>
 </main>

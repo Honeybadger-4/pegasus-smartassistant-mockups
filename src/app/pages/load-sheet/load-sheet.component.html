@@ -36,35 +36,19 @@
   </section>
 
   <section class="table-section custom-card">
-    <p-table
-      [value]="loadSheetData"
-      [columns]="columns"
-      [paginator]="true"
-      [rows]="5"
-      [rowsPerPageOptions]="[5, 10, 20]"
-      [tableStyle]="{ 'min-width': '50rem' }"
-      styleClass="p-datatable-striped"
-    >
-      <ng-template pTemplate="header">
-        <tr>
-          <th *ngFor="let column of columns">{{ column.header }}</th>
-          <th></th>
-          <th></th>
-        </tr>
-      </ng-template>
-
-      <ng-template pTemplate="body" let-loadSheet>
-        <tr>
-          <td>{{ loadSheet.aircraft }}</td>
-          <td>{{ loadSheet.flightNo }}</td>
-          <td>{{ loadSheet.departure }}</td>
-          <td>{{ loadSheet.arrival }}</td>
-          <td class="font-bold">{{ loadSheet.status }}</td>
-          <td>{{ loadSheet.username }}</td>
-          <td><i class="pi pi-eye"></i></td>
-          <td><i class="pi pi-download"></i></td>
-        </tr>
-      </ng-template>
-    </p-table>
+    <app-custom-table [tableData]="loadSheetData" [tableColumns]="columns"></app-custom-table>
   </section>
 </main>
+
+<!-- Table Cell Templates -->
+<ng-template #statusCellBodyTemplate let-rowData="rowData">
+  <span class="font-bold">{{rowData.status}}</span>
+</ng-template>
+
+<ng-template #previewCellBodyTemplate>
+  <i class="pi pi-eye"></i>
+</ng-template>
+
+<ng-template #downloadCellBodyTemplate>
+  <i class="pi pi-download"></i>
+</ng-template>

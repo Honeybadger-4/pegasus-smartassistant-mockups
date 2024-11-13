@@ -4,10 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
+import { CustomTableComponent } from 'src/app/components/custom-table/custom-table.component';
 @Component({
   selector: 'app-user-login-history',
   standalone: true,
-  imports: [CommonModule, FormsModule, DropdownModule, TableModule],
+  imports: [CommonModule, FormsModule, DropdownModule, CustomTableComponent],
   templateUrl: './user-login-history.component.html',
   styleUrl: './user-login-history.component.scss',
 })

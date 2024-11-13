@@ -60,36 +60,11 @@
   </section>
 
   <section class="table-section custom-card">
-    <p-table
-      [value]="fuelData"
-      [columns]="columns"
-      dataKey="id"
-      [tableStyle]="{ 'min-width': '50rem' }"
-      styleClass="p-datatable-striped"
-      [paginator]="true"
-      [rows]="5"
-      [rowsPerPageOptions]="[5, 10, 20]"
-    >
-      <!-- Table Header -->
-      <ng-template pTemplate="header" let-columns>
-        <tr>
-          <th *ngFor="let col of columns">
-            {{ col.header }}
-          </th>
-        </tr>
-      </ng-template>
-
-      <!-- Table Body -->
-      <ng-template pTemplate="body" let-rowData>
-        <tr>
-          <td>{{ rowData.aircraft }}</td>
-          <td>{{ rowData.flightNo }}</td>
-          <td>{{ rowData.departure }}</td>
-          <td>{{ rowData.arrival }}</td>
-          <td class="font-bold">{{ rowData.fuelOrder }}</td>
-          <td>{{ rowData.amount }}</td>
-        </tr>
-      </ng-template>
-    </p-table>
+    <app-custom-table [tableData]="fuelData" [tableColumns]="columns"></app-custom-table>
   </section>
 </div>
+
+<!-- Table Cell Templates -->
+<ng-template #fuelOrderCellBodyTemplate let-rowData="rowData">
+  <span class="font-bold">{{rowData.fuelOrder}}</span>
+</ng-template>

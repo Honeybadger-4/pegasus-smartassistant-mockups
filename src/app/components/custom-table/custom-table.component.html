@@ -1,0 +1,34 @@
+<p-table
+  [value]="tableData"
+  [columns]="tableColumns"
+  dataKey="id"
+  [tableStyle]="{ 'min-width': '50rem' }"
+  styleClass="p-datatable-striped"
+  [paginator]="true"
+  [rows]="5"
+  [rowsPerPageOptions]="[5, 10, 20]"
+>
+  <!-- Table Header -->
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns">
+        {{ col.header }}
+      </th>
+    </tr>
+  </ng-template>
+
+  <!-- Table Body -->
+  <ng-template pTemplate="body" let-rowData>
+    <tr>
+      <td *ngFor="let column of tableColumns">
+        <ng-container *ngIf="column.template; else defaultCell">
+           <ng-container *ngTemplateOutlet="column.template; context: { rowData: rowData }"></ng-container>
+        </ng-container>
+
+         <ng-template #defaultCell>
+           {{ rowData[column.field] }}
+         </ng-template>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

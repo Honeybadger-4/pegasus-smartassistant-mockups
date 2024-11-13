@@ -12,35 +12,19 @@
   </section>
 
   <section class="table-section custom-card">
-    <p-table
-      [value]="reportData"
-      [columns]="columns"
-      [paginator]="true"
-      [rows]="5"
-      [rowsPerPageOptions]="[5, 10, 20]"
-      [tableStyle]="{ 'min-width': '50rem' }"
-      styleClass="p-datatable-striped"
-    >
-      <ng-template pTemplate="header">
-        <tr>
-          <th *ngFor="let column of columns">{{ column.header }}</th>
-          <th></th>
-          <th></th>
-        </tr>
-      </ng-template>
-
-      <ng-template pTemplate="body" let-rowData>
-        <tr>
-          <td>{{ rowData.aircraft }}</td>
-          <td>{{ rowData.flightNo }}</td>
-          <td>{{ rowData.departure }}</td>
-          <td>{{ rowData.arrival }}</td>
-          <td class="font-bold">{{ rowData.checklist }}</td>
-          <td>{{ rowData.username }}</td>
-          <td><i class="pi pi-eye"></i></td>
-          <td><i class="pi pi-download"></i></td>
-        </tr>
-      </ng-template>
-    </p-table>
+    <app-custom-table [tableData]="reportData" [tableColumns]="columns"></app-custom-table>
   </section>
 </main>
+
+<!-- Table Cell Templates -->
+<ng-template #checkListCellBodyTemplate let-rowData="rowData">
+  <span class="font-bold">{{rowData.checkList}}</span>
+</ng-template>
+
+<ng-template #previewCellBodyTemplate>
+  <i class="pi pi-eye"></i>
+</ng-template>
+
+<ng-template #downloadCellBodyTemplate>
+  <i class="pi pi-download"></i>
+</ng-template>
