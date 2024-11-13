@@ -22,12 +22,14 @@
     <tr>
       <td *ngFor="let column of tableColumns">
         <ng-container *ngIf="column.template; else defaultCell">
-           <ng-container *ngTemplateOutlet="column.template; context: { rowData: rowData }"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="column.template; context: { rowData: rowData }"
+          ></ng-container>
         </ng-container>
 
-         <ng-template #defaultCell>
-           {{ rowData[column.field] }}
-         </ng-template>
+        <ng-template #defaultCell>
+          {{ rowData[column.field] }}
+        </ng-template>
       </td>
     </tr>
   </ng-template>

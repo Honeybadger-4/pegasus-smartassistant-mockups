@@ -20,13 +20,14 @@ import { CustomTableComponent } from 'src/app/components/custom-table/custom-tab
     ButtonModule,
     TabViewModule,
     TableHeaderComponent,
-    CustomTableComponent
+    CustomTableComponent,
   ],
   templateUrl: './flight-info.component.html',
   styleUrl: './flight-info.component.scss',
 })
 export class FlightInfoComponent {
-  @ViewChild('flightPlanTableFlightPlanCellTemplate', {static: true}) flightPlanTableFlightPlanCellTemplate!: TemplateRef<any>;
+  @ViewChild('flightPlanTableFlightPlanCellTemplate', { static: true })
+  flightPlanTableFlightPlanCellTemplate!: TemplateRef<any>;
   // Mock Data
   flightsData = [
     {
@@ -228,7 +229,11 @@ export class FlightInfoComponent {
       { field: 'fuelOrder', header: 'Fuel Order' },
       { field: 'altRoute', header: 'Alt. Route' },
       { field: 'gpsLossForm', header: 'GPS Loss Form' },
-      { field: 'flightPlan', header: 'Flight Plan', template: this.flightPlanTableFlightPlanCellTemplate },
+      {
+        field: 'flightPlan',
+        header: 'Flight Plan',
+        template: this.flightPlanTableFlightPlanCellTemplate,
+      },
     ];
   }
 

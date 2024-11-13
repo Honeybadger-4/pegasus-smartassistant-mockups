@@ -60,11 +60,14 @@
   </section>
 
   <section class="table-section custom-card">
-    <app-custom-table [tableData]="fuelData" [tableColumns]="columns"></app-custom-table>
+    <app-custom-table
+      [tableData]="fuelData"
+      [tableColumns]="columns"
+    ></app-custom-table>
   </section>
 </div>
 
 <!-- Table Cell Templates -->
 <ng-template #fuelOrderCellBodyTemplate let-rowData="rowData">
-  <span class="font-bold">{{rowData.fuelOrder}}</span>
+  <span class="font-bold">{{ rowData.fuelOrder }}</span>
 </ng-template>

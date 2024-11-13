@@ -36,13 +36,16 @@
   </section>
 
   <section class="table-section custom-card">
-    <app-custom-table [tableData]="loadSheetData" [tableColumns]="columns"></app-custom-table>
+    <app-custom-table
+      [tableData]="loadSheetData"
+      [tableColumns]="columns"
+    ></app-custom-table>
   </section>
 </main>
 
 <!-- Table Cell Templates -->
 <ng-template #statusCellBodyTemplate let-rowData="rowData">
-  <span class="font-bold">{{rowData.status}}</span>
+  <span class="font-bold">{{ rowData.status }}</span>
 </ng-template>
 
 <ng-template #previewCellBodyTemplate>

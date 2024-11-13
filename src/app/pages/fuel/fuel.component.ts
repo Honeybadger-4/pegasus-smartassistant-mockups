@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { Column } from '@shared/models/columns';
-import { CustomTableComponent } from "../../components/custom-table/custom-table.component";
+import { CustomTableComponent } from '../../components/custom-table/custom-table.component';
 
 @Component({
   selector: 'app-fuel',
@@ -18,13 +18,14 @@ import { CustomTableComponent } from "../../components/custom-table/custom-table
     InputIconModule,
     InputTextModule,
     FormsModule,
-    CustomTableComponent
-],
+    CustomTableComponent,
+  ],
   templateUrl: './fuel.component.html',
   styleUrl: './fuel.component.scss',
 })
 export class FuelComponent {
-  @ViewChild('fuelOrderCellBodyTemplate', {static: true}) fuelOrderCellBodyTemplate!: TemplateRef<any>
+  @ViewChild('fuelOrderCellBodyTemplate', { static: true })
+  fuelOrderCellBodyTemplate!: TemplateRef<any>;
   selectedFuelOrder: string = '';
   selectedDaily: string = '';
 
@@ -71,7 +72,11 @@ export class FuelComponent {
       { field: 'flightNo', header: 'Flight No' },
       { field: 'departure', header: 'Departure' },
       { field: 'arrival', header: 'Arrival' },
-      { field: 'fuelOrder', header: 'Fuel Order', template: this.fuelOrderCellBodyTemplate },
+      {
+        field: 'fuelOrder',
+        header: 'Fuel Order',
+        template: this.fuelOrderCellBodyTemplate,
+      },
       { field: 'amount', header: 'Amount' },
     ];
   }

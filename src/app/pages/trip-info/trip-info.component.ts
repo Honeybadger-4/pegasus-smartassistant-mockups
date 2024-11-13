@@ -14,9 +14,12 @@ import { CustomTableComponent } from 'src/app/components/custom-table/custom-tab
   styleUrl: './trip-info.component.scss',
 })
 export class TripInfoComponent {
-  @ViewChild('statusCellBodyTemplate', {static: true}) statusCellBodyTemplate!: TemplateRef<any>
-  @ViewChild('previewCellBodyTemplate', {static: true}) previewCellBodyTemplate!: TemplateRef<any>
-  @ViewChild('downloadCellBodyTemplate', {static: true}) downloadCellBodyTemplate!: TemplateRef<any>
+  @ViewChild('statusCellBodyTemplate', { static: true })
+  statusCellBodyTemplate!: TemplateRef<any>;
+  @ViewChild('previewCellBodyTemplate', { static: true })
+  previewCellBodyTemplate!: TemplateRef<any>;
+  @ViewChild('downloadCellBodyTemplate', { static: true })
+  downloadCellBodyTemplate!: TemplateRef<any>;
 
   selectedPeriod: string = '';
   periodOptions = [
@@ -87,10 +90,14 @@ export class TripInfoComponent {
       { field: 'flightNo', header: 'Flight No' },
       { field: 'departure', header: 'Departure' },
       { field: 'arrival', header: 'Arrival' },
-      { field: 'status', header: 'Status', template: this.statusCellBodyTemplate },
+      {
+        field: 'status',
+        header: 'Status',
+        template: this.statusCellBodyTemplate,
+      },
       { field: 'username', header: 'Username' },
-      { field: '', header: '', template: this.previewCellBodyTemplate},
-      { field: '', header: '', template: this.downloadCellBodyTemplate}
+      { field: '', header: '', template: this.previewCellBodyTemplate },
+      { field: '', header: '', template: this.downloadCellBodyTemplate },
     ];
   }
 }

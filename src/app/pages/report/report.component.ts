@@ -14,9 +14,12 @@ import { CustomTableComponent } from 'src/app/components/custom-table/custom-tab
   styleUrl: './report.component.scss',
 })
 export class ReportComponent {
-  @ViewChild('checkListCellBodyTemplate', {static: true}) checkListCellBodyTemplate!: TemplateRef<any>
-  @ViewChild('previewCellBodyTemplate', {static: true}) previewCellBodyTemplate!: TemplateRef<any>
-  @ViewChild('downloadCellBodyTemplate', {static: true}) downloadCellBodyTemplate!: TemplateRef<any>
+  @ViewChild('checkListCellBodyTemplate', { static: true })
+  checkListCellBodyTemplate!: TemplateRef<any>;
+  @ViewChild('previewCellBodyTemplate', { static: true })
+  previewCellBodyTemplate!: TemplateRef<any>;
+  @ViewChild('downloadCellBodyTemplate', { static: true })
+  downloadCellBodyTemplate!: TemplateRef<any>;
 
   selectedPeriod: string = '';
   periodOptions = [
@@ -87,10 +90,14 @@ export class ReportComponent {
       { field: 'flightNo', header: 'Flight No' },
       { field: 'departure', header: 'Departure' },
       { field: 'arrival', header: 'Arrival' },
-      { field: 'checkList', header: 'Checklist', template: this.checkListCellBodyTemplate },
+      {
+        field: 'checkList',
+        header: 'Checklist',
+        template: this.checkListCellBodyTemplate,
+      },
       { field: 'username', header: 'Username' },
-      { field: '', header: '', template: this.previewCellBodyTemplate},
-      { field: '', header: '', template: this.downloadCellBodyTemplate}
+      { field: '', header: '', template: this.previewCellBodyTemplate },
+      { field: '', header: '', template: this.downloadCellBodyTemplate },
     ];
   }
 }
