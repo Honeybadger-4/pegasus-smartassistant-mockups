@@ -61,27 +61,31 @@
                 (activeIndexChange)="activeTabIndexChange($event)"
               >
                 <p-tabPanel header="Crew">
-                  <ng-container
-                    *ngTemplateOutlet="expansionTable"
-                  ></ng-container>
+                  <app-custom-table
+                    [tableData]="expandedTableData"
+                    [tableColumns]="expandedTableColumns"
+                  ></app-custom-table>
                 </p-tabPanel>
 
                 <p-tabPanel header="Flight Plan">
-                  <ng-container
-                    *ngTemplateOutlet="expansionTable"
-                  ></ng-container>
+                  <app-custom-table
+                    [tableData]="expandedTableData"
+                    [tableColumns]="expandedTableColumns"
+                  ></app-custom-table>
                 </p-tabPanel>
 
                 <p-tabPanel header="Trip Info">
-                  <ng-container
-                    *ngTemplateOutlet="expansionTable"
-                  ></ng-container>
+                  <app-custom-table
+                    [tableData]="expandedTableData"
+                    [tableColumns]="expandedTableColumns"
+                  ></app-custom-table>
                 </p-tabPanel>
 
                 <p-tabPanel header="Load Sheet">
-                  <ng-container
-                    *ngTemplateOutlet="expansionTable"
-                  ></ng-container>
+                  <app-custom-table
+                    [tableData]="expandedTableData"
+                    [tableColumns]="expandedTableColumns"
+                  ></app-custom-table>
                 </p-tabPanel>
               </p-tabView>
             </div>
@@ -92,30 +96,11 @@
   </section>
 </div>
 
-<ng-template #expansionTable>
-  <div class="p-3">
-    <p-table [value]="expandedTableData" [columns]="expandedTableColumns">
-      <ng-template pTemplate="header" let-columns>
-        <tr>
-          <th *ngFor="let col of columns">
-            {{ col.header }}
-          </th>
-        </tr>
-      </ng-template>
-
-      <ng-template pTemplate="body" let-rowData let-columns="columns">
-        <tr>
-          <td *ngFor="let col of columns">
-            {{ rowData[col.field] }}
-          </td>
-        </tr>
-      </ng-template>
-
-      <ng-template pTemplate="emptymessage">
-        <tr>
-          <td colspan="6">There are no order for this product yet.</td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
+<!-- Table Cell Templates -->
+<ng-template #flightPlanTableFlightPlanCellTemplate let-rowData="rowData">
+  <img
+    src="/icons/document-view-icon.svg"
+    alt="document view icon"
+    class="icon-class"
+  />
 </ng-template>

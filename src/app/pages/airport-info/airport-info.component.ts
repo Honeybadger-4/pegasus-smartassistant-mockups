@@ -9,8 +9,8 @@ import {
 import { Column } from '@shared/models/columns';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
+import { CustomTableComponent } from '../../components/custom-table/custom-table.component';
 
 @Component({
   selector: 'app-airport-info',
@@ -22,7 +22,7 @@ import { ButtonModule } from 'primeng/button';
     InputTextModule,
     FloatLabelModule,
     ButtonModule,
-    TableModule,
+    CustomTableComponent,
   ],
   templateUrl: './airport-info.component.html',
   styleUrl: './airport-info.component.scss',

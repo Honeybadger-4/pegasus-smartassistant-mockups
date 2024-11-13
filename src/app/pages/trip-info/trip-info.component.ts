@@ -1,18 +1,26 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
+import { CustomTableComponent } from 'src/app/components/custom-table/custom-table.component';
 
 @Component({
   selector: 'app-trip-info',
   standalone: true,
-  imports: [CommonModule, FormsModule, DropdownModule, TableModule],
+  imports: [CommonModule, FormsModule, DropdownModule, CustomTableComponent],
   templateUrl: './trip-info.component.html',
   styleUrl: './trip-info.component.scss',
 })
 export class TripInfoComponent {
+  @ViewChild('statusCellBodyTemplate', { static: true })
+  statusCellBodyTemplate!: TemplateRef<any>;
+  @ViewChild('previewCellBodyTemplate', { static: true })
+  previewCellBodyTemplate!: TemplateRef<any>;
+  @ViewChild('downloadCellBodyTemplate', { static: true })
+  downloadCellBodyTemplate!: TemplateRef<any>;
+
   selectedPeriod: string = '';
   periodOptions = [
     { label: 'Daily', value: 'daily' },
@@ -82,8 +90,14 @@ export class TripInfoComponent {
       { field: 'flightNo', header: 'Flight No' },
       { field: 'departure', header: 'Departure' },
       { field: 'arrival', header: 'Arrival' },
-      { field: 'status', header: 'Status' },
+      {
+        field: 'status',
+        header: 'Status',
+        template: this.statusCellBodyTemplate,
+      },
       { field: 'username', header: 'Username' },
+      { field: '', header: '', template: this.previewCellBodyTemplate },
+      { field: '', header: '', template: this.downloadCellBodyTemplate },
     ];
   }
 }

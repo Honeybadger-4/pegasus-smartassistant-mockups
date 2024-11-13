@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   TableModule,
@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { Column } from '@shared/models/columns';
 import { TabViewModule } from 'primeng/tabview';
 import { TableHeaderComponent } from '../../components/flight-info/table-header/table-header.component';
+import { CustomTableComponent } from 'src/app/components/custom-table/custom-table.component';
 
 @Component({
   selector: 'app-flight-info',
@@ -19,11 +20,14 @@ import { TableHeaderComponent } from '../../components/flight-info/table-header/
     ButtonModule,
     TabViewModule,
     TableHeaderComponent,
+    CustomTableComponent,
   ],
   templateUrl: './flight-info.component.html',
   styleUrl: './flight-info.component.scss',
 })
 export class FlightInfoComponent {
+  @ViewChild('flightPlanTableFlightPlanCellTemplate', { static: true })
+  flightPlanTableFlightPlanCellTemplate!: TemplateRef<any>;
   // Mock Data
   flightsData = [
     {
@@ -225,7 +229,11 @@ export class FlightInfoComponent {
       { field: 'fuelOrder', header: 'Fuel Order' },
       { field: 'altRoute', header: 'Alt. Route' },
       { field: 'gpsLossForm', header: 'GPS Loss Form' },
-      { field: 'flightPlan', header: 'Flight Plan' },
+      {
+        field: 'flightPlan',
+        header: 'Flight Plan',
+        template: this.flightPlanTableFlightPlanCellTemplate,
+      },
     ];
   }
 

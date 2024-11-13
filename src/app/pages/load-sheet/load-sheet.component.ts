@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { DropdownModule } from 'primeng/dropdown';
-import { TableModule } from 'primeng/table';
 import { SliderModule } from 'primeng/slider';
+import { CustomTableComponent } from '../../components/custom-table/custom-table.component';
 
 @Component({
   selector: 'app-load-sheet',
@@ -13,13 +13,20 @@ import { SliderModule } from 'primeng/slider';
     CommonModule,
     FormsModule,
     DropdownModule,
-    TableModule,
     SliderModule,
+    CustomTableComponent,
   ],
   templateUrl: './load-sheet.component.html',
   styleUrl: './load-sheet.component.scss',
 })
 export class LoadSheetComponent {
+  @ViewChild('statusCellBodyTemplate', { static: true })
+  statusCellBodyTemplate!: TemplateRef<any>;
+  @ViewChild('previewCellBodyTemplate', { static: true })
+  previewCellBodyTemplate!: TemplateRef<any>;
+  @ViewChild('downloadCellBodyTemplate', { static: true })
+  downloadCellBodyTemplate!: TemplateRef<any>;
+
   selectedPeriod: string = '';
   approvedValue: number = 76;
   declinedValue: number = 24;
@@ -92,8 +99,14 @@ export class LoadSheetComponent {
       { field: 'flightNo', header: 'Flight No' },
       { field: 'departure', header: 'Departure' },
       { field: 'arrival', header: 'Arrival' },
-      { field: 'status', header: 'Status' },
+      {
+        field: 'status',
+        header: 'Status',
+        template: this.statusCellBodyTemplate,
+      },
       { field: 'username', header: 'Username' },
+      { field: '', header: '', template: this.previewCellBodyTemplate },
+      { field: '', header: '', template: this.downloadCellBodyTemplate },
     ];
   }
 }

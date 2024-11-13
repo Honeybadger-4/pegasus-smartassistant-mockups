@@ -12,37 +12,9 @@
   </section>
 
   <section class="table-section custom-card">
-    <p-table
-      [value]="userLoginHistoryData"
-      [columns]="columns"
-      [paginator]="true"
-      [rows]="5"
-      [rowsPerPageOptions]="[5, 10, 20]"
-      [tableStyle]="{ 'min-width': '50rem' }"
-      styleClass="p-datatable-striped"
-    >
-      <ng-template pTemplate="header">
-        <tr>
-          <th *ngFor="let column of columns">{{ column.header }}</th>
-        </tr>
-      </ng-template>
-
-      <ng-template pTemplate="body" let-userLoginHistory>
-        <tr>
-          <td>{{ userLoginHistory.appVersion }}</td>
-          <td>{{ userLoginHistory.channel }}</td>
-          <td>{{ userLoginHistory.companyID }}</td>
-          <td>{{ userLoginHistory.deviceBrand }}</td>
-          <td>{{ userLoginHistory.deviceID }}</td>
-          <td>{{ userLoginHistory.deviceModel }}</td>
-          <td>{{ userLoginHistory.ipAddress }}</td>
-          <td>{{ userLoginHistory.loggedInDate }}</td>
-          <td>{{ userLoginHistory.os }}</td>
-          <td>{{ userLoginHistory.osVersion }}</td>
-          <td>{{ userLoginHistory.userID }}</td>
-          <td>{{ userLoginHistory.username }}</td>
-        </tr>
-      </ng-template>
-    </p-table>
+    <app-custom-table
+      [tableData]="userLoginHistoryData"
+      [tableColumns]="columns"
+    ></app-custom-table>
   </section>
 </main>
