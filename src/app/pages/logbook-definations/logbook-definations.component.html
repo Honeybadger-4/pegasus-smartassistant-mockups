@@ -1,6 +1,26 @@
 <main id="LogbookDefinationsPage">
   <section class="table-header-section">
     <span class="header-title">Logbook List</span>
+
+    <p-calendar
+      [(ngModel)]="dateRange"
+      selectionMode="range"
+      [showIcon]="false"
+      placeholder="Start Date  -  End Date"
+      dateFormat="dd/mm/yy"
+      class="date-range-picker"
+    ></p-calendar>
+
+    <div class="search-container">
+      <input
+        type="text"
+        placeholder="Crew Name&Surname / Company ID"
+        class="search-input"
+        [(ngModel)]="searchQuery"
+      />
+      <i class="pi pi-search search-icon"></i>
+    </div>
+
     <p-dropdown
       [options]="statusOptions"
       [(ngModel)]="selectedPeriod"

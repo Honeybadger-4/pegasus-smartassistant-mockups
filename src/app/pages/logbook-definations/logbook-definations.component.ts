@@ -4,18 +4,24 @@ import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
+import { CalendarModule } from 'primeng/calendar'; // PrimeNG Takvim Modülü
+
+
 
 
 @Component({
   selector: 'app-logbook',
   standalone: true,
-  imports: [CommonModule, FormsModule, DropdownModule, TableModule],
+  imports: [CommonModule, FormsModule, DropdownModule, TableModule,CalendarModule],
   templateUrl: './logbook-definations.component.html',
   styleUrl: './logbook-definations.component.scss'
 })
 
 export class LogbookComponent {
+  dateRange: Date[] = []; // Tarih aralığı için
   selectedPeriod: string = '';
+  searchQuery: string = '';
+
   statusOptions = [
     { label: 'Status 1', value: 'status' },
     { label: 'Status 2', value: 'status' },
