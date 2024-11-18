@@ -9,6 +9,7 @@ import { LoadSheetComponent } from './pages/load-sheet/load-sheet.component';
 import { ReportComponent } from './pages/report/report.component';
 import { UserLoginHistoryComponent } from './pages/user-login-history/user-login-history.component';
 import { AirportInfoComponent } from './pages/airport-info/airport-info.component';
+import { LogbookComponent } from './pages/logbook-definations/logbook-definations.component';
 
 export const routes: Routes = [
   {
@@ -51,6 +52,10 @@ export const routes: Routes = [
       {
         path: 'user-login-history',
         component: UserLoginHistoryComponent,
+      },
+      {
+        path: 'logbook-definations',
+        component: LogbookComponent,
       },
       {
         path: 'airport-information',
