@@ -1,8 +1,9 @@
 <div class="header-box">
   <div class="title">{{ title }}</div>
   <div class="dropdown">
-    <select>
-      <option>Daily</option>
-    </select>
+    <p-dropdown 
+      [options]="dropdownOptions"
+      [(ngModel)]="selectedOption"
+      placeholder="Select"></p-dropdown>
   </div>
 </div>
