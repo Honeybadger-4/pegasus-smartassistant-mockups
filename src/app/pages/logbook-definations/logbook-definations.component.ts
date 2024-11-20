@@ -170,8 +170,15 @@ export class LogbookComponent {
       { field: 'updateDate', header: 'Update Date' },
       { field: 'comment', header: 'Comment' },
       { field: 'reviewedBy', header: 'Reviewed By' },
-
-
     ];
   }
+
+
+
+  approveLog(rowData: any): void {
+  }
+  
+  rejectLog(rowData: any): void {
+  }
+  
 }

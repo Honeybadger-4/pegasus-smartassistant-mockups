@@ -64,7 +64,26 @@
           <td>{{ rowData.comment }}</td>
           <td>{{ rowData.reviewedBy }}</td>
           <td><i class="pi pi-eye"></i></td>
-          <td><i class="pi pi-pen-to-square"></i></td>
+          <td *ngIf="rowData.status !== 'REASSING'">
+            <i class="pi pi-pen-to-square"></i>
+          </td>
+          <td *ngIf="rowData.status === 'REASSING'">
+            <div class="action-icons">
+              <img
+                src="/icons/check-icon.svg"
+                alt="Approve"
+                class="icon-action"
+                (click)="approveLog(rowData)"
+              />
+              <img
+                src="/icons/reject-icon.svg"
+                alt="Reject"
+                class="icon-action"
+                (click)="rejectLog(rowData)"
+              />
+            </div>
+          </td>
+          
         </tr>
       </ng-template>
     </p-table>
