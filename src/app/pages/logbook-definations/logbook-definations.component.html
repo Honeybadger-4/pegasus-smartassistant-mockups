@@ -1,15 +1,16 @@
 <main id="LogbookDefinationsPage">
+  <div class="header-title">Logbook List</div>
   <section class="table-header-section">
-    <span class="header-title">Logbook List</span>
-
-    <p-calendar
-      [(ngModel)]="dateRange"
-      selectionMode="range"
-      [showIcon]="false"
-      placeholder="Start Date  -  End Date"
-      dateFormat="dd/mm/yy"
-      class="date-range-picker"
-    ></p-calendar>
+    <div class="date-range-picker">
+      <p-calendar
+        [(ngModel)]="dateRange"
+        selectionMode="range"
+        [showIcon]="false"
+        placeholder="Start Date - End Date"
+        dateFormat="dd/mm/yy"
+        class="custom-icon-field date-range-picker"
+      ></p-calendar>
+    </div>
 
     <div class="search-container">
       <input
@@ -21,14 +22,16 @@
       <i class="pi pi-search search-icon"></i>
     </div>
 
-    <p-dropdown
-      [options]="statusOptions"
-      [(ngModel)]="selectedPeriod"
-      optionLabel="label"
-      optionValue="value"
-      class="custom-dropdown period-dropdown"
-      placeholder="Status"
-    ></p-dropdown>
+    <div class="dropdown-container">
+      <p-dropdown
+        [options]="statusOptions"
+        [(ngModel)]="selectedPeriod"
+        optionLabel="label"
+        optionValue="value"
+        class="custom-dropdown period-dropdown"
+        placeholder="Status"
+      ></p-dropdown>
+    </div>
   </section>
 
   <section class="table-section custom-card">
