@@ -4,21 +4,27 @@ import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
-import { CalendarModule } from 'primeng/calendar'; // PrimeNG Takvim Modülü
-
-
-
+import { CalendarModule } from 'primeng/calendar';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-logbook',
   standalone: true,
-  imports: [CommonModule, FormsModule, DropdownModule, TableModule,CalendarModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    TableModule,
+    ConfirmDialogModule,
+    CalendarModule,
+    DropdownModule,
+  ],
   templateUrl: './logbook-definations.component.html',
-  styleUrl: './logbook-definations.component.scss'
+  styleUrl: './logbook-definations.component.scss',
+  providers: [ConfirmationService],
 })
-
 export class LogbookComponent {
-  dateRange: Date[] = []; // Tarih aralığı için
+  dateRange: Date[] = [];
   selectedPeriod: string = '';
   searchQuery: string = '';
 
@@ -39,7 +45,7 @@ export class LogbookComponent {
       status: 'APPROVED',
       updateDate: '-',
       comment: '-',
-      reviewedBy: '-'
+      reviewedBy: '-',
     },
     {
       crewNameSurname: 'SAWC BIR NCS YUZ YIRMI UC YUZ KIRK',
@@ -50,7 +56,7 @@ export class LogbookComponent {
       status: 'PENDING',
       updateDate: '30/07/2025 13:30',
       comment: 'Lorem Impsum',
-      reviewedBy: 'ADMIN'
+      reviewedBy: 'ADMIN',
     },
     {
       crewNameSurname: 'SAWC BIR NCS YUZ YIRMI UC YUZ KIRK',
@@ -61,7 +67,7 @@ export class LogbookComponent {
       status: 'REASSING',
       updateDate: '30/07/2025 13:30',
       comment: 'Lorem Impsum',
-      reviewedBy: 'ADMIN'
+      reviewedBy: 'ADMIN',
     },
     {
       crewNameSurname: 'SAWC BIR NCS YUZ YIRMI UC YUZ KIRK',
@@ -72,7 +78,7 @@ export class LogbookComponent {
       status: 'APPROVED',
       updateDate: '-',
       comment: '-',
-      reviewedBy: '-'
+      reviewedBy: '-',
     },
     {
       crewNameSurname: 'SAWC BIR NCS YUZ YIRMI UC YUZ KIRK',
@@ -83,7 +89,7 @@ export class LogbookComponent {
       status: 'PENDING',
       updateDate: '30/07/2025 13:30',
       comment: 'Lorem Impsum',
-      reviewedBy: 'ADMIN'
+      reviewedBy: 'ADMIN',
     },
     {
       crewNameSurname: 'SAWC BIR NCS YUZ YIRMI UC YUZ KIRK',
@@ -94,7 +100,7 @@ export class LogbookComponent {
       status: 'REASSING',
       updateDate: '30/07/2025 13:30',
       comment: 'Lorem Impsum',
-      reviewedBy: 'ADMIN'
+      reviewedBy: 'ADMIN',
     },
     {
       crewNameSurname: 'SAWC BIR NCS YUZ YIRMI UC YUZ KIRK',
@@ -105,7 +111,7 @@ export class LogbookComponent {
       status: 'APPROVED',
       updateDate: '-',
       comment: '-',
-      reviewedBy: '-'
+      reviewedBy: '-',
     },
     {
       crewNameSurname: 'SAWC BIR NCS YUZ YIRMI UC YUZ KIRK',
@@ -116,7 +122,7 @@ export class LogbookComponent {
       status: 'APPROVED',
       updateDate: '-',
       comment: '-',
-      reviewedBy: '-'
+      reviewedBy: '-',
     },
     {
       crewNameSurname: 'SAWC BIR NCS YUZ YIRMI UC YUZ KIRK',
@@ -127,7 +133,7 @@ export class LogbookComponent {
       status: 'PENDING',
       updateDate: '30/07/2025 13:30',
       comment: 'Lorem Impsum',
-      reviewedBy: 'ADMIN'
+      reviewedBy: 'ADMIN',
     },
     {
       crewNameSurname: 'SAWC BIR NCS YUZ YIRMI UC YUZ KIRK',
@@ -138,7 +144,7 @@ export class LogbookComponent {
       status: 'APPROVED',
       updateDate: '-',
       comment: '-',
-      reviewedBy: '-'
+      reviewedBy: '-',
     },
     {
       crewNameSurname: 'SAWC BIR NCS YUZ YIRMI UC YUZ KIRK',
@@ -149,10 +155,8 @@ export class LogbookComponent {
       status: 'REASSING',
       updateDate: '30/07/2025 13:30',
       comment: 'Lorem Impsum',
-      reviewedBy: 'ADMIN'
+      reviewedBy: 'ADMIN',
     },
-    
-   
   ];
 
   ngOnInit() {
@@ -173,12 +177,53 @@ export class LogbookComponent {
     ];
   }
 
+  constructor(private confirmationService: ConfirmationService) {}
 
+  onApprove(rowData: any): void {
+    this.confirmationService.confirm({
+      message: `<div class="custom-confirm-content">
+                  <div class="custom-confirm-icon">
+                    <img src="/icons/approve-icon.svg" alt="Approve Icon" />
+                  </div>
+                  <p class="custom-confirm-message">Do you want to approve the logbook document?</p>
+                </div>`,
+      header: '',
+      icon: '',
+      closeOnEscape: false,
+      acceptLabel: 'Approve',
+      rejectLabel: 'Cancel',
+      acceptButtonStyleClass: 'approve-button',
+      rejectButtonStyleClass: 'cancel-button',
+      accept: () => {
+        console.log('Approved:', rowData);
+      },
+      reject: () => {
+        console.log('Approval cancelled.');
+      },
+    });
+  }
 
-  approveLog(rowData: any): void {
+  onReject(rowData: any): void {
+    this.confirmationService.confirm({
+      message: `<div class="custom-confirm-content">
+                  <div class="custom-confirm-icon">
+                    <img src="/icons/reject_icon.svg" alt="Reject Icon" />
+                  </div>
+                  <p class="custom-confirm-message">Do you want to reject the logbook document?</p>
+                </div>`,
+      header: '',
+      icon: '',
+      closeOnEscape: false,
+      acceptLabel: 'Reject',
+      rejectLabel: 'Cancel',
+      acceptButtonStyleClass: 'reject-button',
+      rejectButtonStyleClass: 'cancel-button',
+      accept: () => {
+        console.log('Rejected:', rowData);
+      },
+      reject: () => {
+        console.log('Rejection cancelled.');
+      },
+    });
   }
-  
-  rejectLog(rowData: any): void {
-  }
-  
 }

@@ -73,19 +73,19 @@
                 src="/icons/check-icon.svg"
                 alt="Approve"
                 class="icon-action"
-                (click)="approveLog(rowData)"
+                (click)="onApprove(rowData)"
               />
               <img
                 src="/icons/reject-icon.svg"
                 alt="Reject"
                 class="icon-action"
-                (click)="rejectLog(rowData)"
+                (click)="onReject(rowData)"
               />
             </div>
           </td>
-          
         </tr>
       </ng-template>
     </p-table>
   </section>
+  <p-confirmDialog></p-confirmDialog>
 </main>
