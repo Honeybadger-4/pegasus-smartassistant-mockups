@@ -1,93 +1,53 @@
 <main id="LogbookDefinationsPage">
-  <div class="header-title">Logbook List</div>
-  <section class="table-header-section">
-    <div class="date-range-picker">
-      <p-calendar
-        [(ngModel)]="dateRange"
-        selectionMode="range"
-        [showIcon]="false"
-        placeholder="Start Date - End Date"
-        dateFormat="dd/mm/yy"
-        class="custom-icon-field date-range-picker"
-      ></p-calendar>
-    </div>
-
-    <div class="search-container">
-      <input
-        type="text"
-        placeholder="Crew Name&Surname / Company ID"
-        class="search-input"
-        [(ngModel)]="searchQuery"
-      />
-      <i class="pi pi-search search-icon"></i>
-    </div>
-
-    <div class="dropdown-container">
-      <p-dropdown
-        [options]="statusOptions"
-        [(ngModel)]="selectedPeriod"
-        optionLabel="label"
-        optionValue="value"
-        class="custom-dropdown period-dropdown"
-        placeholder="Status"
-      ></p-dropdown>
+  <section class="table-header-section w-full">
+    <div class="header-title w-full">Logbook List</div>
+    <div class="flex justify-end items-center w-full gap-6">
+      <div class="date-range-picker">
+        <p-calendar
+          [(ngModel)]="dateRange"
+          selectionMode="range"
+          [showIcon]="false"
+          placeholder="Start Date - End Date"
+          dateFormat="dd/mm/yy"
+          class="custom-icon-field date-range-picker"
+        ></p-calendar>
+      </div>
+  
+      <div class="search-container">
+        <input
+          type="text"
+          placeholder="Crew Name&Surname / Company ID"
+          class="search-input"
+          [(ngModel)]="searchQuery"
+        />
+        <i class="pi pi-search search-icon"></i>
+      </div>
+  
+      <div class="dropdown-container">
+        <p-dropdown
+          [options]="statusOptions"
+          [(ngModel)]="selectedPeriod"
+          optionLabel="label"
+          optionValue="value"
+          class="custom-dropdown period-dropdown"
+          placeholder="Status"
+        ></p-dropdown>
+      </div>
     </div>
   </section>
 
   <section class="table-section custom-card">
-    <p-table
-      [value]="logbookData"
-      [columns]="columns"
-      [paginator]="true"
-      [rows]="5"
-      [rowsPerPageOptions]="[5, 10, 20]"
-      [tableStyle]="{ 'min-width': '50rem' }"
-      styleClass="p-datatable-striped"
-    >
-      <ng-template pTemplate="header">
-        <tr>
-          <th *ngFor="let column of columns">{{ column.header }}</th>
-          <th></th>
-          <th></th>
-        </tr>
-      </ng-template>
-
-      <ng-template pTemplate="body" let-rowData>
-        <tr>
-          <td>{{ rowData.crewNameSurname }}</td>
-          <td>{{ rowData.companyId }}</td>
-          <td>{{ rowData.uploadDate }}</td>
-          <td>{{ rowData.aircraftType }}</td>
-          <td>{{ rowData.aircraftReg }}</td>
-          <td>{{ rowData.status }}</td>
-          <td>{{ rowData.updateDate }}</td>
-          <td>{{ rowData.comment }}</td>
-          <td>{{ rowData.reviewedBy }}</td>
-          <td><i class="pi pi-eye"></i></td>
-          <td *ngIf="rowData.status !== 'REASSING'">
-            <i class="pi pi-pen-to-square"></i>
-          </td>
-          <td *ngIf="rowData.status === 'REASSING'">
-            <div class="action-icons">
-              <img
-                src="/icons/check-icon.svg"
-                alt="Approve"
-                class="icon-action"
-                (click)="onApprove(rowData)"
-              />
-              <img
-                src="/icons/reject-icon.svg"
-                alt="Reject"
-                class="icon-action"
-                (click)="onReject(rowData)"
-              />
-            </div>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
+    <app-custom-table
+      [tableData]="logbookData"
+      [tableColumns]="columns"
+    ></app-custom-table>
   </section>
-  <p-dialog [(visible)]="displayRejectPopup" [modal]="true">
+
+  <p-dialog 
+    [(visible)]="displayRejectPopup" 
+    [modal]="true" 
+    [draggable]="false"
+    class="custom-dialog-container">
     <div class="popup-content">
       <!-- Başlık ve Alt Bilgiler -->
       <p class="title">Upload Reason</p>
@@ -114,7 +74,31 @@
     </div>
   </p-dialog>
   
-  
-  
-  <p-confirmDialog></p-confirmDialog>
+  <p-confirmDialog class="custom-confirm-dialog-container"></p-confirmDialog>
 </main>
+
+<!-- Table Cell Templates -->
+<ng-template #previewCellBodyTemplate>
+  <i class="pi pi-eye"></i>
+</ng-template>
+
+<ng-template #editableCellBodyTemplate let-rowData="rowData">
+  @if(rowData.status !== 'REASSING') {
+    <i class="pi pi-pen-to-square" (click)="goToLogBookEditPage(rowData)"></i>
+  }@else if(rowData.status == 'REASSING') {
+    <div class="action-icons">
+      <img
+        src="/icons/check-icon.svg"
+        alt="Approve"
+        class="icon-action"
+        (click)="onApprove(rowData)"
+      />
+      <img
+        src="/icons/reject-icon.svg"
+        alt="Reject"
+        class="icon-action"
+        (click)="onReject(rowData)"
+      />
+    </div>
+  }
+</ng-template>

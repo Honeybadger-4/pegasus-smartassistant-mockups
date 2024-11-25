@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
@@ -8,6 +8,9 @@ import { CalendarModule } from 'primeng/calendar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
+import { CustomTableComponent } from 'src/app/components/custom-table/custom-table.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-logbook',
@@ -20,12 +23,17 @@ import { DialogModule } from 'primeng/dialog';
     CalendarModule,
     DropdownModule,
     DialogModule,
+    CustomTableComponent,
+    InputTextModule
   ],
   templateUrl: './logbook-definations.component.html',
   styleUrl: './logbook-definations.component.scss',
   providers: [ConfirmationService],
 })
 export class LogbookComponent {
+  @ViewChild('previewCellBodyTemplate', { static: true }) previewCellBodyTemplate!: TemplateRef<any>;
+  @ViewChild('editableCellBodyTemplate', { static: true }) editableCellBodyTemplate!: TemplateRef<any>;
+  
   dateRange: Date[] = [];
   selectedPeriod: string = '';
   searchQuery: string = '';
@@ -164,6 +172,11 @@ export class LogbookComponent {
     },
   ];
 
+  constructor(
+    private confirmationService: ConfirmationService,
+    private router: Router
+  ) {}
+
   ngOnInit() {
     this.defineColumn();
   }
@@ -179,10 +192,10 @@ export class LogbookComponent {
       { field: 'updateDate', header: 'Update Date' },
       { field: 'comment', header: 'Comment' },
       { field: 'reviewedBy', header: 'Reviewed By' },
+      { field: '', header: '', template: this.previewCellBodyTemplate},
+      { field: '', header: '', template: this.editableCellBodyTemplate}
     ];
   }
-
-  constructor(private confirmationService: ConfirmationService) {}
 
   onApprove(rowData: any): void {
     this.confirmationService.confirm({
@@ -197,7 +210,9 @@ export class LogbookComponent {
       closeOnEscape: false,
       acceptLabel: 'Approve',
       rejectLabel: 'Cancel',
-      acceptButtonStyleClass: 'approve-button',
+      acceptIcon:"none",
+      rejectIcon:"none",
+      acceptButtonStyleClass: 'action-button',
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
         console.log('Approved:', rowData);
@@ -221,7 +236,9 @@ export class LogbookComponent {
       closeOnEscape: false,
       acceptLabel: 'Reject',
       rejectLabel: 'Cancel',
-      acceptButtonStyleClass: 'reject-button',
+      acceptIcon:"none",
+      rejectIcon:"none",
+      acceptButtonStyleClass: 'action-button',
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
         this.selectedRow = rowData; 
@@ -237,6 +254,12 @@ export class LogbookComponent {
     console.log('Rejected Reason:', this.rejectReason);
     this.displayRejectPopup = false;
     this.rejectReason = '';
+  }
+
+  goToLogBookEditPage(data: any) {
+    this.router.navigate(['logbook-definations/logbook-edit', {
+      data: JSON.stringify(data)
+    }])
   }
   
 }
