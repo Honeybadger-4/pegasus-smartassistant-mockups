@@ -7,6 +7,7 @@ import { TableModule } from 'primeng/table';
 import { CalendarModule } from 'primeng/calendar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-logbook',
@@ -18,6 +19,7 @@ import { ConfirmationService } from 'primeng/api';
     ConfirmDialogModule,
     CalendarModule,
     DropdownModule,
+    DialogModule,
   ],
   templateUrl: './logbook-definations.component.html',
   styleUrl: './logbook-definations.component.scss',
@@ -27,6 +29,9 @@ export class LogbookComponent {
   dateRange: Date[] = [];
   selectedPeriod: string = '';
   searchQuery: string = '';
+  displayRejectPopup: boolean = false;
+  rejectReason: string = '';
+  selectedRow: any = null;
 
   statusOptions = [
     { label: 'Status 1', value: 'status' },
@@ -219,11 +224,19 @@ export class LogbookComponent {
       acceptButtonStyleClass: 'reject-button',
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
-        console.log('Rejected:', rowData);
+        this.selectedRow = rowData; 
+        this.displayRejectPopup = true; 
       },
       reject: () => {
         console.log('Rejection cancelled.');
       },
     });
   }
+  
+  submitRejectReason(): void {
+    console.log('Rejected Reason:', this.rejectReason);
+    this.displayRejectPopup = false;
+    this.rejectReason = '';
+  }
+  
 }

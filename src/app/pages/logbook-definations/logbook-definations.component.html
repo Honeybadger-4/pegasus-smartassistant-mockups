@@ -87,5 +87,34 @@
       </ng-template>
     </p-table>
   </section>
+  <p-dialog [(visible)]="displayRejectPopup" [modal]="true">
+    <div class="popup-content">
+      <!-- Başlık ve Alt Bilgiler -->
+      <p class="title">Upload Reason</p>
+      <div class="popup-header">
+        <p><b>Date:</b> {{ selectedRow?.uploadDate }}</p>
+        <p><b>A/C Type:</b> {{ selectedRow?.aircraftType }}</p>
+        <p><b>A/C Reg:</b> {{ selectedRow?.aircraftReg }}</p>
+      </div>
+      
+  
+      <!-- Giriş Alanı -->
+      <textarea
+        [(ngModel)]="rejectReason"
+        placeholder="Enter reason"
+        class="custom-textarea"
+        rows="5"
+        maxlength="100"
+      ></textarea>
+  
+      <!-- Footer Alanı -->
+      <div class="popup-footer">
+        <button type="button" pButton label="Submit" (click)="submitRejectReason()" class="submit-button"></button>
+      </div>
+    </div>
+  </p-dialog>
+  
+  
+  
   <p-confirmDialog></p-confirmDialog>
 </main>

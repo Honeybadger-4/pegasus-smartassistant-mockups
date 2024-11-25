@@ -40,6 +40,60 @@
       filter: brightness(0.8);
     }
   }
+  .popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 8px;
+    background: #fbfbfb;
+    width: 740px;
+
+    .title {
+      border-bottom: 1px solid #4f4f4f; 
+      padding-bottom: 8px; 
+    }
+    
+
+    .popup-header {
+      font-size: 16px;
+      color: #4f4f4f;
+      display: flex; 
+      gap: 20px; 
+      align-items: center; 
+    
+      p {
+        font-size: 14px;
+        color: #4f4f4f;
+        margin: 0;
+      }
+    }
+
+    .custom-textarea {
+      width: 100%;
+      border: 1px solid #4f4f4f;
+      border-radius: 8px;
+      padding: 12px;
+      background-color: #F5F5F5;
+
+    }
+
+    .popup-footer {
+      display: flex;
+      justify-content: flex-end;
+
+      .submit-button {
+        width: 145px;
+        background-color: #feb914;
+        color: #1F252C;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: 500;
+      }
+    }
+  }
 }
 
 ::ng-deep {
