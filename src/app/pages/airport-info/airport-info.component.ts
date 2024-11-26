@@ -10,7 +10,7 @@ import { Column } from '@shared/models/columns';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { ButtonModule } from 'primeng/button';
-import { CustomTableComponent } from '../../components/custom-table/custom-table.component';
+import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
 
 @Component({
   selector: 'app-airport-info',

@@ -9,7 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { Column } from '@shared/models/columns';
 import { TabViewModule } from 'primeng/tabview';
 import { TableHeaderComponent } from '../../components/flight-info/table-header/table-header.component';
-import { CustomTableComponent } from 'src/app/components/custom-table/custom-table.component';
+import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 
 @Component({
   selector: 'app-flight-info',

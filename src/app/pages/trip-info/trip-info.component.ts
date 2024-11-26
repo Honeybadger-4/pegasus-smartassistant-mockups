@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
-import { CustomTableComponent } from 'src/app/components/custom-table/custom-table.component';
+import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 
 @Component({
   selector: 'app-trip-info',

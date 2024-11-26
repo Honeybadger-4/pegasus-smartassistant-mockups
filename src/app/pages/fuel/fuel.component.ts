@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { Column } from '@shared/models/columns';
-import { CustomTableComponent } from '../../components/custom-table/custom-table.component';
+import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
 
 @Component({
   selector: 'app-fuel',
