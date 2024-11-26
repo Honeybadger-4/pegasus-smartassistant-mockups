@@ -10,10 +10,10 @@
         color: #4f4f4f;
         border: none;
         font-weight: bold;
-        padding: 17px 20px 14px 30px;
+        padding: 10px;
         border-radius: 5px;
-        width: 150px;
-        height: 50px;
+        width: 120px;
+        height: 35px;
       }
     }
   
@@ -29,6 +29,12 @@
   
       .custom-float-label-field {
         text-align: left;
+      }
+    }
+
+    .custom-card {
+      .form-cards-title {
+        color: #8E8E8E;
       }
     }
   }

@@ -95,28 +95,7 @@
 }
 
 ::ng-deep {
-  #LogbookDefinationsPage {
-
-    .custom-confirm-content {
-      text-align: center;
-    }
-  
-    .custom-confirm-icon {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 15px;
-  
-      img {
-        width: 40px;
-        height: 40px;
-      }
-    }
-  
-    .custom-confirm-message {
-      font-size: 16px;
-      font-weight: 500;
-    }
-  
+  #LogbookDefinationsPage {  
     .custom-dialog-container {
       .p-dialog {
         background-color: #fbfbfb;
@@ -131,32 +110,9 @@
       }
 
     }
-    
-    .p-dialog-header-close {
-      display: none;
-    }
   
     .p-confirm-dialog .p-dialog-footer {
       display: flex;
-    }
-  
-    .action-button,
-    .cancel-button {
-      width: 193px;
-      padding: 14px 16px;
-      border-radius: 8px;
-    }
-  
-    .action-button {
-      background-color: #feb914;
-      color: #4f4f4f;
-      border: none;
-    }
-  
-    .cancel-button {
-      background-color: #f5f5f5;
-      color: #4f4f4f;
-      border: none;
     }
   }
 }

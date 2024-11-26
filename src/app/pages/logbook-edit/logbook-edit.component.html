@@ -8,165 +8,255 @@
     </section>
   
     <!-- Form -->
-    <section class="form-section custom-card">
-      <p class="title mb-5">Flight</p>
+    <section class="form-section">
       <form [formGroup]="logbookFormGroup">
-
-        <div class="grid grid-cols-12 gap-5 text-center">
-            <!-- Crew Name -->
-            <p-floatLabel class="custom-float-label-field col-span-2">
-              <input pInputText id="crewName" formControlName="crewName" />
-              <label for="crewName">Crew Name & Surname</label>
-            </p-floatLabel>
-      
-            <!-- Company ID -->
-            <p-floatLabel class="custom-float-label-field col-span-2">
-              <input pInputText id="companyId" formControlName="companyId" />
-              <label for="companyId">Company ID</label>
-            </p-floatLabel>
-      
-            <!-- Upload Date -->
-            <p-floatLabel class="custom-float-label-field col-span-2">
-              <input pInputText id="uploadDate" formControlName="uploadDate" />
-              <label for="uploadDate">Upload Date</label>
-            </p-floatLabel>
-      
-            <!-- A/C Type -->
-            <p-floatLabel class="custom-float-label-field col-span-2">
-              <input pInputText id="acType" formControlName="acType" />
-              <label for="acType">A/C Type</label>
-            </p-floatLabel>
-      
-            <!-- A/C Reg -->
-            <p-floatLabel class="custom-float-label-field col-span-2">
-              <input pInputText id="acReg" formControlName="acReg" />
-              <label for="acReg">A/C Reg</label>
-            </p-floatLabel>
-      
-            <!-- Status -->
-            <p-floatLabel class="custom-float-label-field col-span-2">
-              <input pInputText id="status" formControlName="status" />
-              <label for="status">Status</label>
-            </p-floatLabel>
-        </div>
-
-        <div class="mt-5 grid grid-cols-12 gap-5 text-center">
-            <!-- Flight Version -->
-            <p-floatLabel class="custom-float-label-field col-span-6">
-              <input pInputText id="flightVersion" formControlName="flightVersion" />
-              <label for="flightVersion">Flight Version</label>
-            </p-floatLabel>
-
-            <!-- Aircraft Type -->
-            <p-floatLabel class="custom-float-label-field col-span-6">
-                <input pInputText id="aircraftType" formControlName="aircraftType" />
-                <label for="aircraftType">Aircraft Type</label>
-            </p-floatLabel>
-      
-            <!-- Date -->
-            <p-floatLabel class="custom-float-label-field col-span-6">
-              <input pInputText id="date" formControlName="date"/>
-              <label for="date">Date</label>
-            </p-floatLabel>
-
-            <!-- Aircraft Reg -->
-            <p-floatLabel class="custom-float-label-field col-span-6">
-                <input pInputText id="aircraftReg" formControlName="aircraftReg" />
-                <label for="aircraftReg">Aircraft Reg</label>
-            </p-floatLabel>
-      
-            <!-- Departure -->
-            <p-floatLabel class="custom-float-label-field col-span-6">
-              <input pInputText id="departure" formControlName="departure" />
-              <label for="departure">Departure</label>
-            </p-floatLabel>
-      
-            <!-- Arrival -->
-            <p-floatLabel class="custom-float-label-field col-span-6">
-              <input pInputText id="arrival" formControlName="arrival" />
-              <label for="arrival">Arrival</label>
-            </p-floatLabel>
-      
-            <!-- Departure Time -->
-            <p-floatLabel class="custom-float-label-field col-span-6">
-              <input pInputText id="departureTime" formControlName="departureTime" />
-              <label for="departureTime">Departure Time</label>
-            </p-floatLabel>
-      
-            <!-- Arrival Time -->
-            <p-floatLabel class="custom-float-label-field col-span-6">
-              <input pInputText id="arrivalTime" formControlName="arrivalTime" />
-              <label for="arrivalTime">Arrival Time</label>
-            </p-floatLabel>
-            
-            <!-- SE / ME -->
-            <div class="col-span-6">
-                <div class="grid grid-cols-2 gap-2">
-                    <!-- SE -->
-                    <p-floatLabel class="custom-float-label-field">
-                        <input pInputText id="se" formControlName="se" />
-                        <label for="se">SE</label>
-                    </p-floatLabel>
-
-                    <!-- ME -->
-                    <p-floatLabel class="custom-float-label-field">
-                        <input pInputText id="me" formControlName="me" />
-                        <label for="me">ME</label>
-                    </p-floatLabel>
-                </div>
-            </div>
-
-            <!-- Name PIC -->
-            <p-floatLabel class="custom-float-label-field col-span-6">
-                <input pInputText id="namePic" formControlName="namePic" />
-                <label for="namePic">Name PIC</label>
-            </p-floatLabel>
-
-            <!-- Multi Pilot Time -->
-            <p-floatLabel class="custom-float-label-field col-span-6">
-                <input pInputText id="multiPilotTime" formControlName="multiPilotTime" />
-                <label for="multiPilotTime">Multi Pilot Time</label>
-            </p-floatLabel>
-
-            <!-- Total Time -->
-            <p-floatLabel class="custom-float-label-field col-span-6">
-              <input pInputText id="totalTime" formControlName="totalTime" />
-              <label for="totalTime">Total Time</label>
-            </p-floatLabel>
-
-            <!-- Landing -->
-            <div class="col-span-6">
-                <p class="mb-5 flex justify-start">Landing</p>
-                <div class="mb-5 grid grid-cols-2 gap-2">
-                    <!-- Day -->
-                    <p-floatLabel class="custom-float-label-field">
-                        <input pInputText id="day" formControlName="day" />
-                        <label for="day">Day</label>
-                    </p-floatLabel>
-
-                    <!-- Night -->
-                    <p-floatLabel class="custom-float-label-field">
-                        <input pInputText id="night" formControlName="night" />
-                        <label for="night">Night</label>
-                    </p-floatLabel>
-                </div>
-
-                <!-- Instructor -->
-                <p-floatLabel class="custom-float-label-field">
-                    <input pInputText id="instructor" formControlName="instructor" />
-                    <label for="instructor">Instructor</label>
+        <section class="custom-card">
+            <p class="title mb-5">Flight</p>
+            <div class="grid grid-cols-12 gap-5 text-center">
+                <!-- Crew Name -->
+                <p-floatLabel class="custom-float-label-field col-span-2">
+                  <input pInputText id="crewName" formControlName="crewName" />
+                  <label for="crewName">Crew Name & Surname</label>
+                </p-floatLabel>
+          
+                <!-- Company ID -->
+                <p-floatLabel class="custom-float-label-field col-span-2">
+                  <input pInputText id="companyId" formControlName="companyId" />
+                  <label for="companyId">Company ID</label>
+                </p-floatLabel>
+          
+                <!-- Upload Date -->
+                <p-floatLabel class="custom-float-label-field col-span-2">
+                  <input pInputText id="uploadDate" formControlName="uploadDate" />
+                  <label for="uploadDate">Upload Date</label>
+                </p-floatLabel>
+          
+                <!-- A/C Type -->
+                <p-floatLabel class="custom-float-label-field col-span-2">
+                  <input pInputText id="acType" formControlName="acType" />
+                  <label for="acType">A/C Type</label>
+                </p-floatLabel>
+          
+                <!-- A/C Reg -->
+                <p-floatLabel class="custom-float-label-field col-span-2">
+                  <input pInputText id="acReg" formControlName="acReg" />
+                  <label for="acReg">A/C Reg</label>
+                </p-floatLabel>
+          
+                <!-- Status -->
+                <p-floatLabel class="custom-float-label-field col-span-2">
+                  <input pInputText id="status" formControlName="status" />
+                  <label for="status">Status</label>
                 </p-floatLabel>
             </div>
-      
-            <!-- Remarks -->
-            <p-floatLabel class="custom-float-label-field col-span-6">
-              <textarea pInputTextarea id="remarks" formControlName="remarks" class="w-full h-36"></textarea>
-              <label for="remarks">Remarks And Endorsements</label>
-            </p-floatLabel>
-        </div>
+    
+            <div class="mt-5 grid grid-cols-12 gap-5 text-center">
+                <!-- Flight Version -->
+                <p-floatLabel class="custom-float-label-field col-span-6">
+                  <input pInputText id="flightVersion" formControlName="flightVersion" />
+                  <label for="flightVersion">Flight Version</label>
+                </p-floatLabel>
+    
+                <!-- Aircraft Type -->
+                <p-floatLabel class="custom-float-label-field col-span-6">
+                    <input pInputText id="aircraftType" formControlName="aircraftType" />
+                    <label for="aircraftType">Aircraft Type</label>
+                </p-floatLabel>
+          
+                <!-- Date -->
+                <p-floatLabel class="custom-float-label-field col-span-6">
+                  <input pInputText id="date" formControlName="date"/>
+                  <label for="date">Date</label>
+                </p-floatLabel>
+    
+                <!-- Aircraft Reg -->
+                <p-floatLabel class="custom-float-label-field col-span-6">
+                    <input pInputText id="aircraftReg" formControlName="aircraftReg" />
+                    <label for="aircraftReg">Aircraft Reg</label>
+                </p-floatLabel>
+          
+                <!-- Departure -->
+                <p-floatLabel class="custom-float-label-field col-span-6">
+                  <input pInputText id="departure" formControlName="departure" />
+                  <label for="departure">Departure</label>
+                </p-floatLabel>
+          
+                <!-- Arrival -->
+                <p-floatLabel class="custom-float-label-field col-span-6">
+                  <input pInputText id="arrival" formControlName="arrival" />
+                  <label for="arrival">Arrival</label>
+                </p-floatLabel>
+          
+                <!-- Departure Time -->
+                <p-floatLabel class="custom-float-label-field col-span-6">
+                  <input pInputText id="departureTime" formControlName="departureTime" />
+                  <label for="departureTime">Departure Time</label>
+                </p-floatLabel>
+          
+                <!-- Arrival Time -->
+                <p-floatLabel class="custom-float-label-field col-span-6">
+                  <input pInputText id="arrivalTime" formControlName="arrivalTime" />
+                  <label for="arrivalTime">Arrival Time</label>
+                </p-floatLabel>
+                
+                <!-- SE / ME -->
+                <div class="col-span-6">
+                    <div class="grid grid-cols-2 gap-2">
+                        <!-- SE -->
+                        <p-floatLabel class="custom-float-label-field">
+                            <input pInputText id="se" formControlName="se" />
+                            <label for="se">SE</label>
+                        </p-floatLabel>
+    
+                        <!-- ME -->
+                        <p-floatLabel class="custom-float-label-field">
+                            <input pInputText id="me" formControlName="me" />
+                            <label for="me">ME</label>
+                        </p-floatLabel>
+                    </div>
+                </div>
+    
+                <!-- Name PIC -->
+                <p-floatLabel class="custom-float-label-field col-span-6">
+                    <input pInputText id="namePic" formControlName="namePic" />
+                    <label for="namePic">Name PIC</label>
+                </p-floatLabel>
+    
+                <!-- Multi Pilot Time -->
+                <p-floatLabel class="custom-float-label-field col-span-6">
+                    <input pInputText id="multiPilotTime" formControlName="multiPilotTime" />
+                    <label for="multiPilotTime">Multi Pilot Time</label>
+                </p-floatLabel>
+    
+                <!-- Total Time -->
+                <p-floatLabel class="custom-float-label-field col-span-6">
+                  <input pInputText id="totalTime" formControlName="totalTime" />
+                  <label for="totalTime">Total Time</label>
+                </p-floatLabel>
+    
+                <!-- Landing -->
+                <div class="col-span-6">
+                    <p class="mb-5 flex justify-start">Landing</p>
+                    <div class="mb-5 grid grid-cols-2 gap-2">
+                        <!-- Day -->
+                        <p-floatLabel class="custom-float-label-field">
+                            <input pInputText id="day" formControlName="day" />
+                            <label for="day">Day</label>
+                        </p-floatLabel>
+    
+                        <!-- Night -->
+                        <p-floatLabel class="custom-float-label-field">
+                            <input pInputText id="night" formControlName="night" />
+                            <label for="night">Night</label>
+                        </p-floatLabel>
+                    </div>
+    
+                    <!-- Instructor -->
+                    <p-floatLabel class="custom-float-label-field">
+                        <input pInputText id="instructor" formControlName="instructor" />
+                        <label for="instructor">Instructor</label>
+                    </p-floatLabel>
+                </div>
+          
+                <!-- Remarks -->
+                <p-floatLabel class="custom-float-label-field col-span-6">
+                  <textarea pInputTextarea id="remarks" formControlName="remarks" class="w-full h-36"></textarea>
+                  <label for="remarks">Remarks And Endorsements</label>
+                </p-floatLabel>
+            </div>
+        </section>
+
+
+        <section class="grid grid-cols-12 gap-5 mt-5">
+            <!-- Synthetic Training Devices Session -->
+            <div class="custom-card lg:col-span-4 md:col-span-6 col-span-12">
+                <p class="form-cards-title mb-5">
+                    Synthetic Training Devices Session
+                </p>
+    
+                <!-- Date -->
+                <div class="mb-5">
+                    <p-floatLabel class="custom-float-label-field">
+                      <input pInputText id="date" formControlName="date"/>
+                      <label for="date">Date</label>
+                    </p-floatLabel>
+                </div>
+    
+                <!-- Type -->
+                <div class="mb-5">
+                    <p-floatLabel class="custom-float-label-field">
+                        <input pInputText id="type" formControlName="type"/>
+                        <label for="type">Type</label>
+                    </p-floatLabel>
+                </div>
+    
+                <!-- Time -->
+                <div class="mb-5">
+                    <p-floatLabel class="custom-float-label-field">
+                        <input pInputText id="time" formControlName="time"/>
+                        <label for="time">Time</label>
+                    </p-floatLabel>
+                </div>
+            </div>
+    
+            <!-- Pilot Function Time -->
+            <div class="custom-card lg:col-span-4 md:col-span-6 col-span-12">
+                <p class="form-cards-title mb-5">
+                    Pilot Function Time
+                </p>
+    
+                <!-- PIC -->
+                <div class="mb-5">
+                    <p-floatLabel class="custom-float-label-field">
+                      <input pInputText id="pic" formControlName="pic"/>
+                      <label for="pic">PIC</label>
+                    </p-floatLabel>
+                </div>
+    
+                <!-- CO-PILOT -->
+                 <div class="mb-5">
+                     <p-floatLabel class="custom-float-label-field">
+                         <input pInputText id="coPilot" formControlName="coPilot"/>
+                         <label for="coPilot">CO-PILOT</label>
+                     </p-floatLabel>
+                 </div>
+    
+                <!-- Duty -->
+                 <div class="mb-5">
+                     <p-floatLabel class="custom-float-label-field">
+                         <input pInputText id="duty" formControlName="duty"/>
+                         <label for="duty">Duty</label>
+                     </p-floatLabel>
+                </div>
+            </div>
+    
+            <!-- Operation Condition Time -->
+            <div class="custom-card lg:col-span-4 md:col-span-6 col-span-12">
+                <p class="form-cards-title mb-5">
+                    Operation Condition Time
+                </p>
+    
+                <!-- Night -->
+                <div class="mb-5">
+                    <p-floatLabel class="custom-float-label-field">
+                      <input pInputText id="night" formControlName="night"/>
+                      <label for="night">Night</label>
+                    </p-floatLabel>
+                </div>
+    
+                <!-- IFR -->
+                <div class="mb-5">
+                    <p-floatLabel class="custom-float-label-field">
+                        <input pInputText id="ifr" formControlName="ifr"/>
+                        <label for="ifr">IFR</label>
+                    </p-floatLabel>
+                </div>
+            </div>
+        </section>
       </form>
     </section>
-  
-   
+
+    <p-confirmDialog class="custom-confirm-dialog-container"></p-confirmDialog>
+
   </main>
   

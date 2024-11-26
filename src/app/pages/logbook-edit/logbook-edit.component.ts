@@ -7,7 +7,8 @@ import { Column } from '@shared/models/columns';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
-import { MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-logbook-edit',
@@ -19,8 +20,10 @@ import { MenuItem } from 'primeng/api';
     ReactiveFormsModule,
     InputTextModule,
     FloatLabelModule,
-    CustomBreadcrumbComponent
+    CustomBreadcrumbComponent,
+    ConfirmDialogModule
   ],
+  providers: [ConfirmationService],
   templateUrl: './logbook-edit.component.html',
   styleUrls: ['./logbook-edit.component.scss'],
 })
@@ -61,7 +64,12 @@ export class LogbookEditComponent implements OnInit {
     },
   ];
 
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute) {}
+  constructor(
+    private formBuilder: FormBuilder, 
+    private route: ActivatedRoute,
+    private confirmationService: ConfirmationService,
+
+  ) {}
 
   ngOnInit() {
     const dataParam = this.route.snapshot.paramMap.get('data');
@@ -103,10 +111,39 @@ export class LogbookEditComponent implements OnInit {
       night: [''],
       instructor: [''],
       remarks: [''],
+      pic: [''],
+      coPilot: [''],
+      time: [''],
+      type: [''],
+      duty: [''],
+      ifr: ['']
     });
   }
 
-  onSave() {
+  onSave(): void {
+    this.confirmationService.confirm({
+      message: `<div class="custom-confirm-content">
+                  <div class="custom-confirm-icon">
+                    <img src="/icons/approve-icon.svg" alt="Approve Icon" />
+                  </div>
+                  <p class="custom-confirm-message">Do you save edits made to the logbook document?</p>
+                </div>`,
+      header: '',
+      icon: '',
+      closeOnEscape: false,
+      acceptLabel: 'Save',
+      rejectLabel: 'Cancel',
+      acceptIcon:"none",
+      rejectIcon:"none",
+      acceptButtonStyleClass: 'action-button',
+      rejectButtonStyleClass: 'cancel-button',
+      accept: () => {
+        this.formSubmit()
+      }
+    });
+  }
+
+  formSubmit() {
     console.log('Form data:', this.logbookFormGroup.value);
   }
 }
