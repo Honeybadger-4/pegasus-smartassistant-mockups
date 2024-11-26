@@ -6,6 +6,8 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { Column } from '@shared/models/columns';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-logbook-edit',
@@ -17,14 +19,14 @@ import { FloatLabelModule } from 'primeng/floatlabel';
     ReactiveFormsModule,
     InputTextModule,
     FloatLabelModule,
+    CustomBreadcrumbComponent
   ],
   templateUrl: './logbook-edit.component.html',
   styleUrls: ['./logbook-edit.component.scss'],
 })
 export class LogbookEditComponent implements OnInit {
   editData: any;
-  breadcrumbItems: { label: string; url?: string }[] = [];
-  columns: Column[] = [];
+  breadcrumbItems: MenuItem[] = [];
   logbookFormGroup!: FormGroup;
   logbookData = [
     {
@@ -69,13 +71,13 @@ export class LogbookEditComponent implements OnInit {
     }
 
     this.breadcrumbItems = [
-      { label: 'Logbook', url: '/logbook' },
+      { label: 'Logbook Definations', route: '/logbook-definations' },
       { label: 'Edit Logbook' },
     ];
 
     this.builder();
-    this.defineColumn();
   }
+
   builder() {
     this.logbookFormGroup = this.formBuilder.group({
       crewName: [''],
@@ -92,24 +94,6 @@ export class LogbookEditComponent implements OnInit {
       arrivalTime: [''],
       remarks: [''],
     });
-  }
-
-  defineColumn() {
-    this.columns = [
-      { field: 'crewName', header: 'Crew Name & Surname' },
-      { field: 'companyId', header: 'Company ID' },
-      { field: 'uploadDate', header: 'Upload Date' },
-      { field: 'acType', header: 'A/C Type' },
-      { field: 'acReg', header: 'A/C Reg' },
-      { field: 'status', header: 'Status' },
-      { field: 'flightVersion', header: 'Flight Version' },
-      { field: 'date', header: 'Date' },
-      { field: 'departure', header: 'Departure' },
-      { field: 'arrival', header: 'Arrival' },
-      { field: 'departureTime', header: 'Departure Time' },
-      { field: 'arrivalTime', header: 'Arrival Time' },
-      { field: 'remarks', header: 'Remarks And Endorsements' },
-    ];
   }
 
   onSave() {

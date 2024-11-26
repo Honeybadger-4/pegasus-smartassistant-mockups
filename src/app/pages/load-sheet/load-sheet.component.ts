@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { DropdownModule } from 'primeng/dropdown';
 import { SliderModule } from 'primeng/slider';
-import { CustomTableComponent } from '../../components/custom-table/custom-table.component';
+import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
 
 @Component({
   selector: 'app-load-sheet',

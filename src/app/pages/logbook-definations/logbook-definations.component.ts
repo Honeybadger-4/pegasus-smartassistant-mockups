@@ -8,7 +8,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
-import { CustomTableComponent } from 'src/app/components/custom-table/custom-table.component';
+import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { Router } from '@angular/router';
 
