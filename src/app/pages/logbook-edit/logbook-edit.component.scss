@@ -1,41 +1,40 @@
 #LogbookEditPage {
-    .page-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-  
-      button {
-        background-color: #feb914;
-        color: #4f4f4f;
-        border: none;
-        font-weight: bold;
-        padding: 10px;
-        border-radius: 5px;
-        width: 120px;
-        height: 35px;
-      }
-    }
-  
-    .form-section {
-      margin-bottom: 20px;
-  
-      .title {
-        font-size: 16px;
-        font-weight: 500;
-        text-align: left;
-        color: #8e8e8e;
-      }
-  
-      .custom-float-label-field {
-        text-align: left;
-      }
-    }
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 
-    .custom-card {
-      .form-cards-title {
-        color: #8E8E8E;
-      }
+    button {
+      background-color: #feb914;
+      color: #4f4f4f;
+      border: none;
+      font-weight: bold;
+      padding: 10px;
+      border-radius: 5px;
+      width: 120px;
+      height: 35px;
     }
   }
-  
+
+  .form-section {
+    margin-bottom: 20px;
+
+    .title {
+      font-size: 16px;
+      font-weight: 500;
+      text-align: left;
+      color: #8e8e8e;
+    }
+
+    .custom-float-label-field {
+      text-align: left;
+    }
+  }
+
+  .custom-card {
+    .form-cards-title {
+      color: #8e8e8e;
+    }
+  }
+}

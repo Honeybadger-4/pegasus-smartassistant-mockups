@@ -49,17 +49,17 @@
     width: 740px;
 
     .title {
-      border-bottom: 1px solid #4f4f4f; 
-      padding-bottom: 8px; 
+      border-bottom: 1px solid #4f4f4f;
+      padding-bottom: 8px;
     }
 
     .popup-header {
       font-size: 16px;
       color: #4f4f4f;
-      display: flex; 
-      gap: 20px; 
-      align-items: center; 
-    
+      display: flex;
+      gap: 20px;
+      align-items: center;
+
       p {
         font-size: 14px;
         color: #4f4f4f;
@@ -72,8 +72,7 @@
       border: 1px solid #4f4f4f;
       border-radius: 8px;
       padding: 12px;
-      background-color: #F5F5F5;
-
+      background-color: #f5f5f5;
     }
 
     .popup-footer {
@@ -83,7 +82,7 @@
       .submit-button {
         width: 145px;
         background-color: #feb914;
-        color: #1F252C;
+        color: #1f252c;
         border: none;
         border-radius: 8px;
         padding: 10px 20px;
@@ -95,22 +94,20 @@
 }
 
 ::ng-deep {
-  #LogbookDefinationsPage {  
+  #LogbookDefinationsPage {
     .custom-dialog-container {
       .p-dialog {
         background-color: #fbfbfb;
         border-radius: 8px;
-  
+
         .p-dialog-header,
         .p-dialog-content,
         .p-dialog-footer {
           background-color: transparent;
         }
-      
       }
-
     }
-  
+
     .p-confirm-dialog .p-dialog-footer {
       display: flex;
     }

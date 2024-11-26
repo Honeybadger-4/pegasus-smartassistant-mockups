@@ -12,7 +12,7 @@
           class="custom-icon-field date-range-picker"
         ></p-calendar>
       </div>
-  
+
       <div class="search-container">
         <input
           type="text"
@@ -22,7 +22,7 @@
         />
         <i class="pi pi-search search-icon"></i>
       </div>
-  
+
       <div class="dropdown-container">
         <p-dropdown
           [options]="statusOptions"
@@ -43,11 +43,12 @@
     ></app-custom-table>
   </section>
 
-  <p-dialog 
-    [(visible)]="displayRejectPopup" 
-    [modal]="true" 
+  <p-dialog
+    [(visible)]="displayRejectPopup"
+    [modal]="true"
     [draggable]="false"
-    class="custom-dialog-container">
+    class="custom-dialog-container"
+  >
     <div class="popup-content">
       <!-- Başlık ve Alt Bilgiler -->
       <p class="title">Upload Reason</p>
@@ -56,8 +57,7 @@
         <p><b>A/C Type:</b> {{ selectedRow?.aircraftType }}</p>
         <p><b>A/C Reg:</b> {{ selectedRow?.aircraftReg }}</p>
       </div>
-      
-  
+
       <!-- Giriş Alanı -->
       <textarea
         [(ngModel)]="rejectReason"
@@ -66,14 +66,20 @@
         rows="5"
         maxlength="100"
       ></textarea>
-  
+
       <!-- Footer Alanı -->
       <div class="popup-footer">
-        <button type="button" pButton label="Submit" (click)="submitRejectReason()" class="submit-button"></button>
+        <button
+          type="button"
+          pButton
+          label="Submit"
+          (click)="submitRejectReason()"
+          class="submit-button"
+        ></button>
       </div>
     </div>
   </p-dialog>
-  
+
   <p-confirmDialog class="custom-confirm-dialog-container"></p-confirmDialog>
 </main>
 
@@ -83,9 +89,9 @@
 </ng-template>
 
 <ng-template #editableCellBodyTemplate let-rowData="rowData">
-  @if(rowData.status !== 'REASSING') {
+  @if (rowData.status !== "REASSING") {
     <i class="pi pi-pen-to-square" (click)="goToLogBookEditPage(rowData)"></i>
-  }@else if(rowData.status == 'REASSING') {
+  } @else if (rowData.status == "REASSING") {
     <div class="action-icons">
       <img
         src="/icons/check-icon.svg"

@@ -2,7 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -21,7 +26,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     InputTextModule,
     FloatLabelModule,
     CustomBreadcrumbComponent,
-    ConfirmDialogModule
+    ConfirmDialogModule,
   ],
   providers: [ConfirmationService],
   templateUrl: './logbook-edit.component.html',
@@ -65,10 +70,9 @@ export class LogbookEditComponent implements OnInit {
   ];
 
   constructor(
-    private formBuilder: FormBuilder, 
+    private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
-
   ) {}
 
   ngOnInit() {
@@ -102,7 +106,7 @@ export class LogbookEditComponent implements OnInit {
       arrival: [''],
       departureTime: [''],
       arrivalTime: [''],
-      se: [''], 
+      se: [''],
       me: [''],
       namePic: [''],
       multiPilotTime: [''],
@@ -116,7 +120,7 @@ export class LogbookEditComponent implements OnInit {
       time: [''],
       type: [''],
       duty: [''],
-      ifr: ['']
+      ifr: [''],
     });
   }
 
@@ -133,13 +137,13 @@ export class LogbookEditComponent implements OnInit {
       closeOnEscape: false,
       acceptLabel: 'Save',
       rejectLabel: 'Cancel',
-      acceptIcon:"none",
-      rejectIcon:"none",
+      acceptIcon: 'none',
+      rejectIcon: 'none',
       acceptButtonStyleClass: 'action-button',
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
-        this.formSubmit()
-      }
+        this.formSubmit();
+      },
     });
   }
 

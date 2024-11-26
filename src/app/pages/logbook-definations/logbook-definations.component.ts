@@ -24,16 +24,18 @@ import { Router } from '@angular/router';
     DropdownModule,
     DialogModule,
     CustomTableComponent,
-    InputTextModule
+    InputTextModule,
   ],
   templateUrl: './logbook-definations.component.html',
   styleUrl: './logbook-definations.component.scss',
   providers: [ConfirmationService],
 })
 export class LogbookComponent {
-  @ViewChild('previewCellBodyTemplate', { static: true }) previewCellBodyTemplate!: TemplateRef<any>;
-  @ViewChild('editableCellBodyTemplate', { static: true }) editableCellBodyTemplate!: TemplateRef<any>;
-  
+  @ViewChild('previewCellBodyTemplate', { static: true })
+  previewCellBodyTemplate!: TemplateRef<any>;
+  @ViewChild('editableCellBodyTemplate', { static: true })
+  editableCellBodyTemplate!: TemplateRef<any>;
+
   dateRange: Date[] = [];
   selectedPeriod: string = '';
   searchQuery: string = '';
@@ -174,7 +176,7 @@ export class LogbookComponent {
 
   constructor(
     private confirmationService: ConfirmationService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -192,8 +194,8 @@ export class LogbookComponent {
       { field: 'updateDate', header: 'Update Date' },
       { field: 'comment', header: 'Comment' },
       { field: 'reviewedBy', header: 'Reviewed By' },
-      { field: '', header: '', template: this.previewCellBodyTemplate},
-      { field: '', header: '', template: this.editableCellBodyTemplate}
+      { field: '', header: '', template: this.previewCellBodyTemplate },
+      { field: '', header: '', template: this.editableCellBodyTemplate },
     ];
   }
 
@@ -210,8 +212,8 @@ export class LogbookComponent {
       closeOnEscape: false,
       acceptLabel: 'Approve',
       rejectLabel: 'Cancel',
-      acceptIcon:"none",
-      rejectIcon:"none",
+      acceptIcon: 'none',
+      rejectIcon: 'none',
       acceptButtonStyleClass: 'action-button',
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
@@ -236,20 +238,20 @@ export class LogbookComponent {
       closeOnEscape: false,
       acceptLabel: 'Reject',
       rejectLabel: 'Cancel',
-      acceptIcon:"none",
-      rejectIcon:"none",
+      acceptIcon: 'none',
+      rejectIcon: 'none',
       acceptButtonStyleClass: 'action-button',
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
-        this.selectedRow = rowData; 
-        this.displayRejectPopup = true; 
+        this.selectedRow = rowData;
+        this.displayRejectPopup = true;
       },
       reject: () => {
         console.log('Rejection cancelled.');
       },
     });
   }
-  
+
   submitRejectReason(): void {
     console.log('Rejected Reason:', this.rejectReason);
     this.displayRejectPopup = false;
@@ -257,9 +259,11 @@ export class LogbookComponent {
   }
 
   goToLogBookEditPage(data: any) {
-    this.router.navigate(['logbook-definations/logbook-edit', {
-      data: JSON.stringify(data)
-    }])
+    this.router.navigate([
+      'logbook-definations/logbook-edit',
+      {
+        data: JSON.stringify(data),
+      },
+    ]);
   }
-  
 }

@@ -63,9 +63,9 @@ export const routes: Routes = [
           },
           {
             path: 'logbook-edit',
-            component: LogbookEditComponent
-          }
-        ]
+            component: LogbookEditComponent,
+          },
+        ],
       },
       {
         path: 'airport-information',
