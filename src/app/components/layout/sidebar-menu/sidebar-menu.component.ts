@@ -48,7 +48,7 @@ export class SidebarMenuComponent {
           {
             label: 'Route',
             icon: 'route-icon.svg',
-            path: 'route',
+            path: 'flight-information/route',
           },
           {
             label: 'Trip Info',

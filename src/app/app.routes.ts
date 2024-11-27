@@ -11,6 +11,7 @@ import { UserLoginHistoryComponent } from './pages/user-login-history/user-login
 import { AirportInfoComponent } from './pages/airport-info/airport-info.component';
 import { LogbookComponent } from './pages/logbook-definations/logbook-definations.component';
 import { LogbookEditComponent } from './pages/logbook-edit/logbook-edit.component';
+import { RouteComponent } from './pages/route/route.component';
 
 export const routes: Routes = [
   {
@@ -39,6 +40,10 @@ export const routes: Routes = [
           {
             path: 'fuel',
             component: FuelComponent,
+          },
+          { 
+            path: 'route', 
+            component: RouteComponent, 
           },
           {
             path: 'load-sheet',
