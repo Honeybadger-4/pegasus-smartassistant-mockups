@@ -1,0 +1,19 @@
+#RouteTableHeaderComponent {
+  .table-header-container {
+    justify-content: space-between;
+    align-items: center;
+
+    .header-title {
+      color: #4f4f4f;
+      font-weight: bold;
+    }
+  }
+}
+
+::ng-deep {
+  #RouteTableHeaderComponent {
+    .p-calendar {
+      width: 100% !important;
+    }
+  }
+}

@@ -16,7 +16,7 @@ export class CardsHeaderComponent {
     { label: 'Weekly', value: 'weekly' },
     { label: 'Monthly', value: 'monthly' },
   ];
-  selectedOption: string = '';
+  selectedOption = '';
 
   constructor() {
     this.title = '';

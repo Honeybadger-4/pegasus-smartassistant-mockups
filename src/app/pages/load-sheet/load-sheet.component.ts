@@ -27,9 +27,9 @@ export class LoadSheetComponent {
   @ViewChild('downloadCellBodyTemplate', { static: true })
   downloadCellBodyTemplate!: TemplateRef<any>;
 
-  selectedPeriod: string = '';
-  approvedValue: number = 76;
-  declinedValue: number = 24;
+  selectedPeriod = '';
+  approvedValue = 76;
+  declinedValue = 24;
 
   periodOptions = [
     { label: 'Daily', value: 'daily' },

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { HighchartsChartModule } from 'highcharts-angular';
 import Highcharts from 'highcharts';
 import { CardsHeaderComponent } from '../cards-header/cards-header.component';
@@ -15,8 +15,6 @@ export class TopAlternateRoutesCardComponent {
   isHighcharts = typeof Highcharts === 'object';
   Highcharts: typeof Highcharts = Highcharts;
   chartOptionsAlternateRoutes: Highcharts.Options = {};
-
-  constructor() {}
 
   ngOnInit() {
     this.initializeChart();

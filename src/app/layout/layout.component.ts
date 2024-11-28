@@ -22,12 +22,8 @@ import { Sidebar, SidebarModule } from 'primeng/sidebar';
 })
 export class LayoutComponent {
   @ViewChild('sidebarRef') sidebarRef!: Sidebar;
-  sidebarVisible: boolean = false;
-
-  constructor() {}
-
-  ngOnInit() {}
-
+  sidebarVisible = false;
+  
   toggleSidebarMenu() {
     this.sidebarVisible = !this.sidebarVisible;
   }

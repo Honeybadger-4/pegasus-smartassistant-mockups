@@ -18,8 +18,6 @@ export class TotalFlightsComponent implements OnInit {
   chartOptionsFlights: Highcharts.Options = {};
   chartOptionsFuelOrder: Highcharts.Options = {};
 
-  constructor() {}
-
   ngOnInit(): void {
     this.initializeChart();
   }
