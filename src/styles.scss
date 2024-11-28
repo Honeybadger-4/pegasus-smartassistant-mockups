@@ -73,8 +73,8 @@ body {
 .custom-card {
   background-color: #f2f2f24d;
   border-radius: 10px;
-  padding: 20px;
 }
+
 
 .p-component {
   font-family: "Roboto", sans-serif;
@@ -87,6 +87,11 @@ body {
   font-weight: 400;
   color: black;
   font-size: 14px;
+}
+
+
+.p-datatable .p-datatable-tbody > tr > td{
+  padding: 7px;
 }
 
 // Confirm Dialog
