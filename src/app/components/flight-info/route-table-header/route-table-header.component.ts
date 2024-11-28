@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { DropdownModule } from 'primeng/dropdown';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { CommonModule } from '@angular/common';

@@ -17,8 +17,6 @@ export class GeneralInformationCardComponent implements OnInit {
   chartOptionsGPSLoss: Highcharts.Options = {};
   chartOptionsFuelExcess: Highcharts.Options = {};
 
-  constructor() {}
-
   ngOnInit(): void {
     this.initializeChart();
   }

@@ -91,7 +91,7 @@
 <ng-template #editableCellBodyTemplate let-rowData="rowData">
   @if (rowData.status !== "REASSING") {
     <i class="pi pi-pen-to-square" (click)="goToLogBookEditPage(rowData)"></i>
-  } @else if (rowData.status == "REASSING") {
+  } @else if (rowData.status === "REASSING") {
     <div class="action-icons">
       <img
         src="/icons/check-icon.svg"

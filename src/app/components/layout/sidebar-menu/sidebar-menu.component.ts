@@ -16,9 +16,7 @@ import { Sidebar } from 'primeng/sidebar';
 export class SidebarMenuComponent {
   @Input() sidebarRef!: Sidebar;
   menuItems: LayoutMenuItem[] = [];
-  panelIsCollapsed: boolean = true;
-
-  constructor() {}
+  panelIsCollapsed = true;
 
   ngOnInit() {
     this.definedMenu();

@@ -21,7 +21,7 @@ import { InputTextModule } from 'primeng/inputtext';
   styleUrls: ['./table-header.component.scss'],
 })
 export class TableHeaderComponent {
-  selectedOption: string = '';
+  selectedOption = '';
 
   dropdownOptions = [{ label: 'Daily', value: 'daily' }];
 }

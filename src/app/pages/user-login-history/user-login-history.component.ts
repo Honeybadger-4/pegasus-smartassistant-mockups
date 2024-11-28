@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { DropdownModule } from 'primeng/dropdown';
-import { TableModule } from 'primeng/table';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 @Component({
   selector: 'app-user-login-history',
@@ -13,7 +12,7 @@ import { CustomTableComponent } from '@shared/components/custom-table/custom-tab
   styleUrl: './user-login-history.component.scss',
 })
 export class UserLoginHistoryComponent {
-  selectedPeriod: string = '';
+  selectedPeriod = '';
   periodOptions = [
     { label: 'Daily', value: 'daily' },
     { label: 'Weekly', value: 'weekly' },
