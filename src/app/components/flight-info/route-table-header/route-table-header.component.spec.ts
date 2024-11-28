@@ -8,9 +8,8 @@ describe('RouteTableHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouteTableHeaderComponent]
-    })
-    .compileComponents();
+      imports: [RouteTableHeaderComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RouteTableHeaderComponent);
     component = fixture.componentInstance;

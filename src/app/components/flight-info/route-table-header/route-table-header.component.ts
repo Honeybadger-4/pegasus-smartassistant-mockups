@@ -23,5 +23,4 @@ import { CalendarModule } from 'primeng/calendar';
 })
 export class RouteTableHeaderComponent {
   dateRange: Date[] = [];
-
 }

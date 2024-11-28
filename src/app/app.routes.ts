@@ -41,9 +41,9 @@ export const routes: Routes = [
             path: 'fuel',
             component: FuelComponent,
           },
-          { 
-            path: 'route', 
-            component: RouteComponent, 
+          {
+            path: 'route',
+            component: RouteComponent,
           },
           {
             path: 'load-sheet',

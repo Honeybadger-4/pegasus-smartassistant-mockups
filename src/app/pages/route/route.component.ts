@@ -214,8 +214,11 @@ export class RouteComponent {
       { field: 'tw', header: 'T/W' },
       { field: 'atDt', header: 'AT-DT' },
       { field: 'acc', header: 'ACC' },
-      {field: '', header:'',template:this.expandableTableDocumentsIconTemplate},
-
+      {
+        field: '',
+        header: '',
+        template: this.expandableTableDocumentsIconTemplate,
+      },
     ];
   }
 
@@ -226,6 +229,4 @@ export class RouteComponent {
   onRowCollapse(event: TableRowCollapseEvent) {
     console.log('Collapsed: ', event);
   }
-
- 
 }
