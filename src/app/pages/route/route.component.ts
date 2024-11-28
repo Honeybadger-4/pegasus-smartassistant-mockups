@@ -170,14 +170,10 @@ export class RouteComponent {
     },
   ];
 
-  expandedTableData: any[] = [];
-
   // Columns Variable
   mainCols!: Column[];
   detailsCols!: Column[];
-  expandedTableColumns!: Column[];
   expandedRows = {};
-  activeTabIndex: number = 0;
 
   ngOnInit() {
     this.defineMainColumns();

@@ -12,7 +12,6 @@ import { CalendarModule } from 'primeng/calendar';
   standalone: true,
   imports: [
     CommonModule,
-    DropdownModule,
     IconFieldModule,
     InputIconModule,
     InputTextModule,

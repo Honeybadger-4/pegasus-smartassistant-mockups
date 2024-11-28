@@ -7,6 +7,14 @@
         color: #4f4f4f;
         font-weight: bold;
       }
+
     }
   }
-  
+
+  ::ng-deep {
+    #RouteTableHeaderComponent {
+      .p-calendar {
+        width: 100% !important;
+      }
+    }
+  }
