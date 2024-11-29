@@ -76,9 +76,9 @@ export class SidebarMenuComponent {
         path: 'user-login-history',
       },
       {
-        label: 'Logbook Definations',
+        label: 'Logbook',
         icon: 'open-book.svg',
-        path: 'logbook-definations',
+        path: 'logbook',
       },
       {
         label: 'Aircraft Database',

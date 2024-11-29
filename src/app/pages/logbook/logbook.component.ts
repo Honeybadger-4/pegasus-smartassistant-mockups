@@ -26,8 +26,8 @@ import { Router } from '@angular/router';
     CustomTableComponent,
     InputTextModule,
   ],
-  templateUrl: './logbook-definations.component.html',
-  styleUrl: './logbook-definations.component.scss',
+  templateUrl: './logbook.component.html',
+  styleUrl: './logbook.component.scss',
   providers: [ConfirmationService],
 })
 export class LogbookComponent {
@@ -260,7 +260,7 @@ export class LogbookComponent {
 
   goToLogBookEditPage(data: any) {
     this.router.navigate([
-      'logbook-definations/logbook-edit',
+      'logbook/logbook-edit',
       {
         data: JSON.stringify(data),
       },

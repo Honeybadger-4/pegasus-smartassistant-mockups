@@ -53,7 +53,7 @@ export class LogbookEditComponent implements OnInit {
     },
     {
       crewName: 'Jane Smith',
-      companyId: '67890',
+      companyId: '12345',
       uploadDate: '2024-11-25',
       acType: 'A320',
       acReg: 'TC-XYZ',
@@ -82,7 +82,7 @@ export class LogbookEditComponent implements OnInit {
     }
 
     this.breadcrumbItems = [
-      { label: 'Logbook Definations', route: '/logbook-definations' },
+      { label: 'Logbook', route: '/logbook' },
       { label: 'Edit Logbook' },
     ];
 
