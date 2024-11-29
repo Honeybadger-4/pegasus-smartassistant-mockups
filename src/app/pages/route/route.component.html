@@ -1,0 +1,77 @@
+<div id="RouteComponent">
+  <app-route-table-header></app-route-table-header>
+
+  <section class="table-section custom-card">
+    <p-table
+      [value]="routeData"
+      [columns]="mainCols"
+      dataKey="id"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      styleClass="p-datatable-striped"
+      [expandedRowKeys]="expandedRows"
+      (onRowExpand)="onRowExpand($event)"
+      (onRowCollapse)="onRowCollapse($event)"
+      [paginator]="true"
+      [rows]="5"
+      [rowsPerPageOptions]="[5, 10, 20]"
+    >
+      <!-- Table Header -->
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th></th>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <!-- Table Body -->
+      <ng-template
+        pTemplate="body"
+        let-rowData
+        let-columns="columns"
+        let-expanded="expanded"
+      >
+        <tr>
+          <td>
+            <p-button
+              type="button"
+              pRipple
+              [pRowToggler]="rowData"
+              [text]="true"
+              [rounded]="true"
+              [plain]="true"
+              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+            />
+          </td>
+
+          <td *ngFor="let col of columns">
+            {{ rowData[col.field] }}
+          </td>
+        </tr>
+      </ng-template>
+
+      <!-- Row Expansion Content -->
+      <ng-template pTemplate="rowexpansion">
+        <tr>
+          <td colspan="12">
+            <div>
+              <app-custom-table
+                [tableData]="detailsData"
+                [tableColumns]="detailsCols"
+              ></app-custom-table>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </section>
+</div>
+
+<!-- Table Cell Templates -->
+<ng-template #expandableTableDocumentsIconTemplate let-rowData="rowData">
+  <img
+    src="/icons/documents-icon.svg"
+    alt="document view icon"
+    class="icon-class"
+  />
+</ng-template>

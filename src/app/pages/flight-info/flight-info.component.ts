@@ -459,7 +459,7 @@ export class FlightInfoComponent {
   // /Columns Variable
 
   expandedRows = {};
-  activeTabIndex: number = 0;
+  activeTabIndex = 0;
 
   ngOnInit() {
     this.defineMainColumns();

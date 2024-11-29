@@ -37,10 +37,10 @@ export class LogbookComponent {
   editableCellBodyTemplate!: TemplateRef<any>;
 
   dateRange: Date[] = [];
-  selectedPeriod: string = '';
-  searchQuery: string = '';
-  displayRejectPopup: boolean = false;
-  rejectReason: string = '';
+  selectedPeriod = '';
+  searchQuery = '';
+  displayRejectPopup = false;
+  rejectReason = '';
   selectedRow: any = null;
 
   statusOptions = [

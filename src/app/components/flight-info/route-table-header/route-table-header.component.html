@@ -1,0 +1,52 @@
+<div id="RouteTableHeaderComponent">
+  <div class="table-header-container lg:flex block">
+    <!-- Header Title -->
+    <p class="header-title">Route</p>
+
+    <!-- Filter Inputs and Dropdown -->
+    <div class="mb-2 grid lg:grid-cols-10 grid-cols-12 gap-4">
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-iconField iconPosition="right" class="custom-icon-field">
+          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+          <input type="text" pInputText placeholder="Flight No" />
+        </p-iconField>
+      </div>
+
+      <!-- Dep Port Input -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-iconField iconPosition="right" class="custom-icon-field">
+          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+          <input type="text" pInputText placeholder="Dep Port" />
+        </p-iconField>
+      </div>
+
+      <!-- Arr Port Input -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-iconField iconPosition="right" class="custom-icon-field">
+          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+          <input type="text" pInputText placeholder="Arr Port" />
+        </p-iconField>
+      </div>
+
+      <!-- User Input -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-iconField iconPosition="right" class="custom-icon-field">
+          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+          <input type="text" pInputText placeholder="User" />
+        </p-iconField>
+      </div>
+
+      <!-- Calendar -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-calendar
+          [(ngModel)]="dateRange"
+          selectionMode="range"
+          [showIcon]="false"
+          placeholder="Start Date - End Date"
+          dateFormat="dd/mm/yy"
+          class="custom-icon-field inline-block w-full"
+        ></p-calendar>
+      </div>
+    </div>
+  </div>
+</div>

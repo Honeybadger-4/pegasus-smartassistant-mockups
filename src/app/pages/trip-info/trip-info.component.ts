@@ -3,7 +3,6 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { DropdownModule } from 'primeng/dropdown';
-import { TableModule } from 'primeng/table';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 
 @Component({
@@ -21,7 +20,7 @@ export class TripInfoComponent {
   @ViewChild('downloadCellBodyTemplate', { static: true })
   downloadCellBodyTemplate!: TemplateRef<any>;
 
-  selectedPeriod: string = '';
+  selectedPeriod = '';
   periodOptions = [
     { label: 'Daily', value: 'daily' },
     { label: 'Weekly', value: 'weekly' },
