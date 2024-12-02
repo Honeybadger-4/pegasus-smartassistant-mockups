@@ -1,10 +1,5 @@
 <main id="layout">
   <div class="flex">
-    <!-- Large Screen Sidebar -->
-    <div class="lg:w-[15%] lg:block hidden">
-      <app-sidebar-menu></app-sidebar-menu>
-    </div>
-
     <!-- Mobile Screen Sidebar -->
     <div class="mobile-sidebar-menu lg:hidden">
       <p-sidebar #sidebarRef [(visible)]="sidebarVisible">
@@ -12,10 +7,18 @@
       </p-sidebar>
     </div>
 
-    <div class="lg:w-[85%] w-[100%]">
+    <div class="w-[100%]">
       <!-- Topbar -->
       <div class="toolbar">
         <div class="toolbar-left">
+          <div class="pr-8 lg:block hidden">
+            <img
+              src="/images/pegasus_logo.svg"
+              alt="Pegasus Logo"
+              class="pegasus-logo"
+            />
+          </div>
+
           <p-button
             icon="pi pi-bars"
             class="hamburger-menu-button block lg:hidden"
@@ -43,8 +46,17 @@
         </div>
       </div>
 
-      <div class="pl-5 pr-5">
-        <router-outlet></router-outlet>
+      <hr class="ml-[70px]" />
+
+      <div class="flex w-full">
+        <!-- Large Screen Sidebar -->
+        <div class="w-[70px] lg:block hidden">
+          <app-sidebar-menu></app-sidebar-menu>
+        </div>
+  
+        <div class="pl-5 pr-5 w-full mt-5">
+          <router-outlet></router-outlet>
+        </div>
       </div>
     </div>
   </div>

@@ -1,20 +1,5 @@
 <div id="LayoutSidebarMenu">
   <div class="sidebar-menu-container">
-    <!-- Menu Header -->
-    <div class="sidebar-menu-header flex items-center justify-between">
-      <img
-        src="/images/pegasus_logo.svg"
-        alt="Pegasus Logo"
-        class="pegasus-logo"
-      />
-
-      <p-button
-        icon="pi pi-times"
-        class="sidebar-close-btn mt-2 lg:hidden"
-        (onClick)="closeCallback($event)"
-      />
-    </div>
-
     <!-- Menu Content -->
     <div class="sidebar-menu-content">
       @for (menuItem of menuItems; track $index) {
@@ -31,7 +16,7 @@
               alt="{{ menuItem.label }}"
               class="icon-class"
             />
-            <span class="ml-2">{{ menuItem.label }}</span>
+            <span>{{ menuItem.label }}</span>
           </a>
         </div>
       }
