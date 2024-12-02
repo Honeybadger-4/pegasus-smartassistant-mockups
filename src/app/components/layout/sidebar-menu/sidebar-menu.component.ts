@@ -30,35 +30,29 @@ export class SidebarMenuComponent {
         path: '',
       },
       {
-        label: 'Flight Information',
+        label: 'Flight Info',
         icon: 'flight-icon.svg',
-        items: [
-          {
-            label: 'Flight Info',
-            icon: 'flight-icon.svg',
-            path: 'flight-information',
-          },
-          {
-            label: 'Fuel',
-            icon: 'fuel-icon.svg',
-            path: 'flight-information/fuel',
-          },
-          {
-            label: 'Route',
-            icon: 'route-icon.svg',
-            path: 'flight-information/route',
-          },
-          {
-            label: 'Trip Info',
-            icon: 'trip-icon.svg',
-            path: 'flight-information/trip-information',
-          },
-          {
-            label: 'Load Sheet',
-            icon: 'loadsheet-icon.svg',
-            path: 'flight-information/load-sheet',
-          },
-        ],
+        path: 'flight-information',
+      },
+      {
+        label: 'Fuel',
+        icon: 'fuel-icon.svg',
+        path: 'flight-information/fuel',
+      },
+      {
+        label: 'Route',
+        icon: 'route-icon.svg',
+        path: 'flight-information/route',
+      },
+      {
+        label: 'Trip Info',
+        icon: 'trip-icon.svg',
+        path: 'flight-information/trip-information',
+      },
+      {
+        label: 'Load Sheet',
+        icon: 'loadsheet-icon.svg',
+        path: 'flight-information/load-sheet',
       },
       {
         label: 'Airport Information',
@@ -84,6 +78,11 @@ export class SidebarMenuComponent {
         label: 'Aircraft Database',
         icon: 'aircraft-icon.svg',
         path: 'aircraft-database',
+      },
+      {
+        label: 'Management',
+        icon: 'management-icon.svg',
+        path: 'management',
       },
     ];
   }

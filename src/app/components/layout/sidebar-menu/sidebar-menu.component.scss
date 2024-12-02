@@ -8,11 +8,6 @@
 
     .sidebar-menu-header {
       margin-bottom: 20px;
-      .sidebar-close-btn {
-        .p-button {
-          background-color: yellow;
-        }
-      }
     }
 
     .pegasus-logo {
@@ -24,8 +19,7 @@
     .sidebar-menu-content {
       padding: 10px 5px 10px 5px;
 
-      .menu-item,
-      .submenu-item {
+      .menu-item {
         display: flex;
         align-items: center;
         margin-bottom: 20px;
@@ -33,53 +27,27 @@
         border-left: 2px solid transparent;
         transition: all 0.3s ease;
       }
-
-      .submenu-item {
-        padding-left: 20px;
+      img {
+        width: 20px;
+        height: 20px;
       }
 
-      .menu-item:hover,
-      .submenu-item:hover,
-      .menu-item.active,
-      .submenu-item.active {
-        background-color: #fed4471a;
-        border-left-color: #fed447;
-
-        img {
-          filter: invert(97%) sepia(22%) saturate(7475%) hue-rotate(320deg)
-            brightness(105%) contrast(99%);
-        }
-
-        span {
-          color: #fed447;
-          fill: #fed447;
-        }
-      }
-    }
-
-    .sidebar-menu-footer {
-      position: absolute;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      padding: 10px 5px 10px 5px;
-
-      .menu-item {
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        border-left: 2px solid transparent;
-        transition: all 0.3s ease;
+      span {
+        margin-left: 10px;
+        color: #4f4f4f;
+        font-size: 14px;
       }
 
       .menu-item:hover,
       .menu-item.active {
         background-color: #fed4471a;
         border-left-color: #fed447;
+
         img {
           filter: invert(97%) sepia(22%) saturate(7475%) hue-rotate(320deg)
             brightness(105%) contrast(99%);
         }
+
         span {
           color: #fed447;
           fill: #fed447;
@@ -89,34 +57,22 @@
   }
 }
 
-::ng-deep {
-  #LayoutSidebarMenu {
-    .sidebar-menu-header {
-      .sidebar-close-btn {
-        .p-button {
-          background-color: transparent;
-          border: none;
-          color: #4f4f4f;
-        }
-      }
-    }
+::ng-deep .sidebar-specific .p-panel {
+  .p-panel-header {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+  }
 
-    .p-panel .p-panel-header {
-      border: none;
-      background-color: transparent;
-      padding: 0;
-    }
+  .p-panel-header .p-panel-title {
+    font-weight: normal;
+  }
 
-    .p-panel .p-panel-header .p-panel-title {
-      font-weight: normal;
-    }
+  .p-panel-content {
+    border: none;
+  }
 
-    .p-panel .p-panel-content {
-      border: none;
-    }
-
-    .p-panel .p-panel-icons-end {
-      display: none;
-    }
+  .p-panel-icons-end {
+    display: none;
   }
 }

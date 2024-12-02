@@ -19,88 +19,22 @@
     <div class="sidebar-menu-content">
       @for (menuItem of menuItems; track $index) {
         <div class="menu-item-container">
-          @if (menuItem.items) {
-            <p-panel
-              *ngIf="menuItem.items"
-              [(collapsed)]="panelIsCollapsed"
-              [toggleable]="true"
-            >
-              <ng-template pTemplate="header">
-                <a
-                  pRipple
-                  class="menu-item w-full"
-                  (click)="panelIsCollapsed = !panelIsCollapsed"
-                >
-                  <img
-                    src="/icons/{{ menuItem.icon }}"
-                    alt="{{ menuItem.label }}"
-                    class="icon-class"
-                  />
-                  <span class="ml-2">{{ menuItem.label }}</span>
-
-                  <button class="ml-auto">
-                    <i
-                      [ngClass]="
-                        panelIsCollapsed ? 'pi pi-angle-down' : 'pi pi-angle-up'
-                      "
-                    ></i>
-                  </button>
-                </a>
-              </ng-template>
-
-              @for (subMenuItem of menuItem.items; track $index) {
-                <a
-                  pRipple
-                  class="submenu-item"
-                  routerLink="/{{ subMenuItem.path }}"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                >
-                  <img
-                    src="/icons/{{ subMenuItem.icon }}"
-                    alt="{{ subMenuItem.label }}"
-                    class="icon-class"
-                  />
-                  <span class="ml-2">{{ subMenuItem.label }}</span>
-                </a>
-              }
-            </p-panel>
-          } @else {
-            <a
-              *ngIf="!menuItem.items"
-              pRipple
-              class="menu-item"
-              routerLink="/{{ menuItem.path }}"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-            >
-              <img
-                src="/icons/{{ menuItem.icon }}"
-                alt="{{ menuItem.label }}"
-                class="icon-class"
-              />
-              <span class="ml-2">{{ menuItem.label }}</span>
-            </a>
-          }
+          <a
+            pRipple
+            class="menu-item w-full"
+            routerLink="/{{ menuItem.path }}"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <img
+              src="/icons/{{ menuItem.icon }}"
+              alt="{{ menuItem.label }}"
+              class="icon-class"
+            />
+            <span class="ml-2">{{ menuItem.label }}</span>
+          </a>
         </div>
       }
-    </div>
-
-    <div class="sidebar-menu-footer">
-      <a
-        pRipple
-        class="menu-item"
-        routerLink="/management"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <img
-          src="/icons/managament-icon.svg"
-          alt="Management"
-          class="icon-class"
-        />
-        <span class="ml-2">Management</span>
-      </a>
     </div>
   </div>
 </div>
