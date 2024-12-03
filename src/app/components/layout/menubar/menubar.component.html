@@ -1,0 +1,47 @@
+<div id="LayoutMenuComponent">
+  <p-menubar [model]="menuItems" class="layout-menubar">
+    <ng-template pTemplate="start">
+      <img
+        src="/images/pegasus_logo.svg"
+        alt="Pegasus Logo"
+        class="menu-logo"
+      />
+    </ng-template>
+
+    <ng-template pTemplate="item" let-item let-root="root" class="flex">
+      <a
+        pRipple
+        routerLink="/{{ item.path }}"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="flex align-items-center p-menuitem-link"
+      >
+        <img
+          src="/icons/{{ item.icon }}"
+          alt="{{ item.label }}"
+          class="menu-item-icon"
+        />
+        <span class="menu-item-label">{{ item.label }}</span>
+        <i
+          *ngIf="item.items"
+          [ngClass]="[
+            'pi',
+            root ? 'pi-angle-down ml-2' : 'pi-angle-right ml-auto',
+          ]"
+        ></i>
+      </a>
+    </ng-template>
+
+    <ng-template pTemplate="end">
+      <div class="flex items-center gap-5">
+        <p-avatar
+          image="/images/profile.png"
+          shape="circle"
+          class="profile-avatar"
+        ></p-avatar>
+        <span class="role">Captain</span>
+        <i class="pi pi-sign-out"></i>
+      </div>
+    </ng-template>
+  </p-menubar>
+</div>

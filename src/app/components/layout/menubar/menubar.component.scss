@@ -1,0 +1,65 @@
+#LayoutMenuComponent {
+  .layout-menubar {
+    .menu-logo {
+      margin-right: 30px;
+    }
+
+    .p-menuitem-link {
+      &:hover,
+      &.active {
+        background-color: #fffbed;
+        .menu-item-label {
+          color: #fed447;
+        }
+        .menu-item-icon {
+          color: #fed447;
+          filter: invert(97%) sepia(22%) saturate(7475%) hue-rotate(320deg)
+            brightness(105%) contrast(99%);
+        }
+      }
+      .menu-item-label {
+        margin-left: 10px;
+        font-size: 12px;
+      }
+
+      .menu-item-icon {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}
+
+::ng-deep {
+  #LayoutMenuComponent {
+    .layout-menubar {
+      .p-menubar {
+        padding: 10px 20px 10px 20px;
+
+        .p-menubar-button {
+          color: black;
+        }
+
+        .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus
+          > .p-menuitem-content {
+          background-color: transparent;
+        }
+      }
+
+      .profile-avatar {
+        width: 47px;
+        height: 47px;
+        .p-avatar {
+          width: 100%;
+          height: 100%;
+          border: 2px solid #fed447;
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+      }
+    }
+  }
+}
