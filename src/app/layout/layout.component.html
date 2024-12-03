@@ -1,63 +1,7 @@
-<main id="layout">
-  <div class="flex">
-    <!-- Mobile Screen Sidebar -->
-    <div class="mobile-sidebar-menu lg:hidden md:hidden">
-      <p-sidebar #sidebarRef [(visible)]="sidebarVisible">
-        <app-sidebar-menu [sidebarRef]="sidebarRef"></app-sidebar-menu>
-      </p-sidebar>
-    </div>
+<main id="Layout">
+  <app-sidebar-menu></app-sidebar-menu>
 
-    <div class="w-[100%]">
-      <!-- Topbar -->
-      <div class="toolbar">
-        <div class="toolbar-left">
-          <div class="pr-8 lg:block md:block hidden">
-            <img
-              src="/images/pegasus_logo.svg"
-              alt="Pegasus Logo"
-              class="pegasus-logo"
-            />
-          </div>
-
-          <p-button
-            icon="pi pi-bars"
-            class="hamburger-menu-button block lg:hidden md:hidden"
-            (onClick)="toggleSidebarMenu()"
-          />
-
-          <div>
-            <h2 class="welcome-title text-xl font-bold">Welcome Dominic!</h2>
-            <p class="welcome-subtitle text-sm text-gray-600">
-              How are you today?
-            </p>
-          </div>
-        </div>
-
-        <div class="toolbar-right">
-          <div class="profile-avatar-container">
-            <p-avatar
-              image="/images/profile.png"
-              shape="circle"
-              class="profile-avatar"
-            ></p-avatar>
-          </div>
-          <span class="role">Captain</span>
-          <i class="pi pi-sign-out"></i>
-        </div>
-      </div>
-
-      <hr class="lg:ml-[70px] md:ml-[70px]" />
-
-      <div class="flex w-full">
-        <!-- Large Screen Sidebar -->
-        <div class="w-[70px] lg:block md:block hidden">
-          <app-sidebar-menu></app-sidebar-menu>
-        </div>
-
-        <div class="pl-5 pr-5 w-full mt-5">
-          <router-outlet></router-outlet>
-        </div>
-      </div>
-    </div>
+  <div class="page-container">
+    <router-outlet></router-outlet>
   </div>
 </main>

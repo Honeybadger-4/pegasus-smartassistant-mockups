@@ -1,96 +1,46 @@
-#LayoutSidebarMenu {
-  position: relative;
-  background-color: #f2f2f24d;
+#LayoutMenuComponent {
+  .layout-menubar {
+    .menu-logo {
+      margin-right: 30px;
+    }
 
-  .sidebar-menu-container {
-    padding: 0px 0px 59px 5px;
-    height: 100vh;
-    position: sticky;
-    top: 0px;
-    border-right: 1px solid #e5e7eb;
+    .p-menuitem-link {
+      .menu-item-label {
+        margin-left: 10px;
+        font-size: 12px;
+      }
 
-    .sidebar-menu-content {
-      display: flex;
-      flex-direction: column;
-      padding-right: 5px;
-
-      .menu-item-container {
-        margin-bottom: 20px;
-
-        .menu-item {
-          display: flex;
-          align-items: center;
-          border-left: 2px solid transparent;
-          transition: all 0.3s ease;
-          flex-direction: column;
-          justify-content: center;
-          text-align: center;
-
-          img {
-            width: 20px;
-            height: 20px;
-          }
-
-          span {
-            font-size: 10px;
-            color: #4f4f4f;
-          }
-        }
-
-        .menu-item:hover,
-        .menu-item.active {
-          background-color: #fed4471a;
-          border-left-color: #fed447;
-          border-radius: 8px;
-
-          img {
-            filter: invert(97%) sepia(22%) saturate(7475%) hue-rotate(320deg)
-              brightness(105%) contrast(99%);
-          }
-
-          span {
-            color: #fed447;
-            fill: #fed447;
-          }
-        }
+      .menu-item-icon {
+        width: 16px;
+        height: 16px;
       }
     }
   }
+}
 
-  .mobile-sidebar-menu-container {
-    height: 100vh;
-    margin-top: 20px;
-    .mobile-menu-item-container {
-      margin-bottom: 15px;
-      .mobile-menu-item {
-        display: flex;
-        align-items: center;
+::ng-deep {
+  #LayoutMenuComponent {
+    .layout-menubar {
+      .p-menubar {
+        padding: 10px 20px 10px 20px;
 
-        img {
-          width: 20px;
-          height: 20px;
-          margin-right: 10px;
-        }
-
-        span {
-          font-size: 16px;
+        .p-menubar-button {
+          color: black;
         }
       }
 
-      .mobile-menu-item:hover,
-      .mobile-menu-item.active {
-        background-color: #fed4471a;
-        border-left-color: #fed447;
-        border-radius: 8px;
-
-        img {
-          filter: invert(97%) sepia(22%) saturate(7475%) hue-rotate(320deg)
-            brightness(105%) contrast(99%);
-        }
-
-        span {
-          color: #fed447;
-          fill: #fed447;
+      .profile-avatar {
+        width: 47px;
+        height: 47px;
+        .p-avatar {
+          width: 100%;
+          height: 100%;
+          border: 2px solid #FED447;
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit:cover;
+          }
         }
       }
     }

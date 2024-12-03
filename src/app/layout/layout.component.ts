@@ -1,10 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { SidebarMenuComponent } from '../components/layout/sidebar-menu/sidebar-menu.component';
+
 import { ButtonModule } from 'primeng/button';
 import { MenubarModule } from 'primeng/menubar';
-import { AvatarModule } from 'primeng/avatar';
-import { SidebarMenuComponent } from '../components/layout/sidebar-menu/sidebar-menu.component';
-import { Sidebar, SidebarModule } from 'primeng/sidebar';
 
 @Component({
   selector: 'app-layout',
@@ -12,16 +12,13 @@ import { Sidebar, SidebarModule } from 'primeng/sidebar';
   imports: [
     CommonModule,
     SidebarMenuComponent,
-    AvatarModule,
     ButtonModule,
     MenubarModule,
-    SidebarModule,
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
 })
 export class LayoutComponent {
-  @ViewChild('sidebarRef') sidebarRef!: Sidebar;
   sidebarVisible = false;
 
   toggleSidebarMenu() {
