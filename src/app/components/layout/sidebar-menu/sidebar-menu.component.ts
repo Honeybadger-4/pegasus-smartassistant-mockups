@@ -20,16 +20,16 @@ export class SidebarMenuComponent {
   menuItems: LayoutMenuItem[] = [];
   panelIsCollapsed = true;
 
-  constructor(
-    private breakpointObserver: BreakpointObserver
-  ) {}
+  constructor(private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit() {
     this.definedMenu();
 
-    this.breakpointObserver.observe(['(max-width: 768px)']).subscribe((screenSize) => {
-			this.isMobile = screenSize.matches;
-		});
+    this.breakpointObserver
+      .observe(['(max-width: 768px)'])
+      .subscribe((screenSize) => {
+        this.isMobile = screenSize.matches;
+      });
   }
 
   definedMenu() {

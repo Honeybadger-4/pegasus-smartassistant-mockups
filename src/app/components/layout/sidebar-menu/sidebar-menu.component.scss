@@ -1,6 +1,6 @@
 #LayoutSidebarMenu {
   position: relative;
-  background-color: #F2F2F24D;
+  background-color: #f2f2f24d;
 
   .sidebar-menu-container {
     padding: 0px 0px 59px 5px;
@@ -78,21 +78,21 @@
       }
 
       .mobile-menu-item:hover,
-        .mobile-menu-item.active {
-          background-color: #fed4471a;
-          border-left-color: #fed447;
-          border-radius: 8px;
+      .mobile-menu-item.active {
+        background-color: #fed4471a;
+        border-left-color: #fed447;
+        border-radius: 8px;
 
-          img {
-            filter: invert(97%) sepia(22%) saturate(7475%) hue-rotate(320deg)
-              brightness(105%) contrast(99%);
-          }
-
-          span {
-            color: #fed447;
-            fill: #fed447;
-          }
+        img {
+          filter: invert(97%) sepia(22%) saturate(7475%) hue-rotate(320deg)
+            brightness(105%) contrast(99%);
         }
+
+        span {
+          color: #fed447;
+          fill: #fed447;
+        }
+      }
     }
   }
 }

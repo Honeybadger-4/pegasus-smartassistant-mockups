@@ -23,7 +23,7 @@ import { Sidebar, SidebarModule } from 'primeng/sidebar';
 export class LayoutComponent {
   @ViewChild('sidebarRef') sidebarRef!: Sidebar;
   sidebarVisible = false;
-  
+
   toggleSidebarMenu() {
     this.sidebarVisible = !this.sidebarVisible;
   }
