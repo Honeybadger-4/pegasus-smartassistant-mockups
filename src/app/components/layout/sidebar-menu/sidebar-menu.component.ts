@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { LayoutMenuItem } from '@shared/models/layout-sidebar-menu';
 import { PanelModule } from 'primeng/panel';
 import { ButtonModule } from 'primeng/button';
@@ -15,11 +16,20 @@ import { Sidebar } from 'primeng/sidebar';
 })
 export class SidebarMenuComponent {
   @Input() sidebarRef!: Sidebar;
+  isMobile = true;
   menuItems: LayoutMenuItem[] = [];
   panelIsCollapsed = true;
 
+  constructor(private breakpointObserver: BreakpointObserver) {}
+
   ngOnInit() {
     this.definedMenu();
+
+    this.breakpointObserver
+      .observe(['(max-width: 768px)'])
+      .subscribe((screenSize) => {
+        this.isMobile = screenSize.matches;
+      });
   }
 
   definedMenu() {
@@ -30,35 +40,29 @@ export class SidebarMenuComponent {
         path: '',
       },
       {
-        label: 'Flight Information',
+        label: 'Flight Info',
         icon: 'flight-icon.svg',
-        items: [
-          {
-            label: 'Flight Info',
-            icon: 'flight-icon.svg',
-            path: 'flight-information',
-          },
-          {
-            label: 'Fuel',
-            icon: 'fuel-icon.svg',
-            path: 'flight-information/fuel',
-          },
-          {
-            label: 'Route',
-            icon: 'route-icon.svg',
-            path: 'flight-information/route',
-          },
-          {
-            label: 'Trip Info',
-            icon: 'trip-icon.svg',
-            path: 'flight-information/trip-information',
-          },
-          {
-            label: 'Load Sheet',
-            icon: 'loadsheet-icon.svg',
-            path: 'flight-information/load-sheet',
-          },
-        ],
+        path: 'flight-information',
+      },
+      {
+        label: 'Fuel',
+        icon: 'fuel-icon.svg',
+        path: 'flight-information/fuel',
+      },
+      {
+        label: 'Route',
+        icon: 'route-icon.svg',
+        path: 'flight-information/route',
+      },
+      {
+        label: 'Trip Info',
+        icon: 'trip-icon.svg',
+        path: 'flight-information/trip-information',
+      },
+      {
+        label: 'Load Sheet',
+        icon: 'loadsheet-icon.svg',
+        path: 'flight-information/load-sheet',
       },
       {
         label: 'Airport Information',
@@ -84,6 +88,11 @@ export class SidebarMenuComponent {
         label: 'Aircraft Database',
         icon: 'aircraft-icon.svg',
         path: 'aircraft-database',
+      },
+      {
+        label: 'Management',
+        icon: 'management-icon.svg',
+        path: 'management',
       },
     ];
   }

@@ -1,122 +1,98 @@
 #LayoutSidebarMenu {
+  position: relative;
+  background-color: #f2f2f24d;
+
   .sidebar-menu-container {
-    padding: 35px 5px 59px 5px;
+    padding: 0px 0px 59px 5px;
     height: 100vh;
     position: sticky;
-    top: 0;
-    z-index: 10px;
-
-    .sidebar-menu-header {
-      margin-bottom: 20px;
-      .sidebar-close-btn {
-        .p-button {
-          background-color: yellow;
-        }
-      }
-    }
-
-    .pegasus-logo {
-      width: 117px;
-      height: auto;
-      padding: 10px 0px 0px 10px;
-    }
+    top: 0px;
+    border-right: 1px solid #e5e7eb;
 
     .sidebar-menu-content {
-      padding: 10px 5px 10px 5px;
-
-      .menu-item,
-      .submenu-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-        padding: 10px;
-        border-left: 2px solid transparent;
-        transition: all 0.3s ease;
-      }
-
-      .submenu-item {
-        padding-left: 20px;
-      }
-
-      .menu-item:hover,
-      .submenu-item:hover,
-      .menu-item.active,
-      .submenu-item.active {
-        background-color: #fed4471a;
-        border-left-color: #fed447;
-
-        img {
-          filter: invert(97%) sepia(22%) saturate(7475%) hue-rotate(320deg)
-            brightness(105%) contrast(99%);
-        }
-
-        span {
-          color: #fed447;
-          fill: #fed447;
-        }
-      }
-    }
-
-    .sidebar-menu-footer {
-      position: absolute;
-      width: 100%;
       display: flex;
-      align-items: center;
-      padding: 10px 5px 10px 5px;
+      flex-direction: column;
+      padding-right: 5px;
 
-      .menu-item {
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        border-left: 2px solid transparent;
-        transition: all 0.3s ease;
-      }
+      .menu-item-container {
+        margin-bottom: 20px;
 
-      .menu-item:hover,
-      .menu-item.active {
-        background-color: #fed4471a;
-        border-left-color: #fed447;
-        img {
-          filter: invert(97%) sepia(22%) saturate(7475%) hue-rotate(320deg)
-            brightness(105%) contrast(99%);
+        .menu-item {
+          display: flex;
+          align-items: center;
+          border-left: 2px solid transparent;
+          transition: all 0.3s ease;
+          flex-direction: column;
+          justify-content: center;
+          text-align: center;
+
+          img {
+            width: 20px;
+            height: 20px;
+          }
+
+          span {
+            font-size: 10px;
+            color: #4f4f4f;
+          }
         }
-        span {
-          color: #fed447;
-          fill: #fed447;
+
+        .menu-item:hover,
+        .menu-item.active {
+          background-color: #fed4471a;
+          border-left-color: #fed447;
+          border-radius: 8px;
+
+          img {
+            filter: invert(97%) sepia(22%) saturate(7475%) hue-rotate(320deg)
+              brightness(105%) contrast(99%);
+          }
+
+          span {
+            color: #fed447;
+            fill: #fed447;
+          }
         }
       }
     }
   }
-}
 
-::ng-deep {
-  #LayoutSidebarMenu {
-    .sidebar-menu-header {
-      .sidebar-close-btn {
-        .p-button {
-          background-color: transparent;
-          border: none;
-          color: #4f4f4f;
+  .mobile-sidebar-menu-container {
+    height: 100vh;
+    margin-top: 20px;
+    .mobile-menu-item-container {
+      margin-bottom: 15px;
+      .mobile-menu-item {
+        display: flex;
+        align-items: center;
+
+        img {
+          width: 20px;
+          height: 20px;
+          margin-right: 10px;
+        }
+
+        span {
+          font-size: 16px;
         }
       }
-    }
 
-    .p-panel .p-panel-header {
-      border: none;
-      background-color: transparent;
-      padding: 0;
-    }
+      .mobile-menu-item:hover,
+      .mobile-menu-item.active {
+        background-color: #fed4471a;
+        border-left-color: #fed447;
+        border-radius: 8px;
 
-    .p-panel .p-panel-header .p-panel-title {
-      font-weight: normal;
-    }
+        img {
+          filter: invert(97%) sepia(22%) saturate(7475%) hue-rotate(320deg)
+            brightness(105%) contrast(99%);
+        }
 
-    .p-panel .p-panel-content {
-      border: none;
-    }
-
-    .p-panel .p-panel-icons-end {
-      display: none;
+        span {
+          color: #fed447;
+          fill: #fed447;
+        }
+      }
     }
   }
 }
