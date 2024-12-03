@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { LayoutMenuItem } from '@shared/models/layout-sidebar-menu';
 import { PanelModule } from 'primeng/panel';
 import { ButtonModule } from 'primeng/button';
@@ -15,11 +16,20 @@ import { Sidebar } from 'primeng/sidebar';
 })
 export class SidebarMenuComponent {
   @Input() sidebarRef!: Sidebar;
+  isMobile = true;
   menuItems: LayoutMenuItem[] = [];
   panelIsCollapsed = true;
 
+  constructor(
+    private breakpointObserver: BreakpointObserver
+  ) {}
+
   ngOnInit() {
     this.definedMenu();
+
+    this.breakpointObserver.observe(['(max-width: 768px)']).subscribe((screenSize) => {
+			this.isMobile = screenSize.matches;
+		});
   }
 
   definedMenu() {

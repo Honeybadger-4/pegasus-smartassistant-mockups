@@ -1,7 +1,7 @@
 <main id="layout">
   <div class="flex">
     <!-- Mobile Screen Sidebar -->
-    <div class="mobile-sidebar-menu lg:hidden">
+    <div class="mobile-sidebar-menu lg:hidden md:hidden">
       <p-sidebar #sidebarRef [(visible)]="sidebarVisible">
         <app-sidebar-menu [sidebarRef]="sidebarRef"></app-sidebar-menu>
       </p-sidebar>
@@ -11,7 +11,7 @@
       <!-- Topbar -->
       <div class="toolbar">
         <div class="toolbar-left">
-          <div class="pr-8 lg:block hidden">
+          <div class="pr-8 lg:block md:block hidden">
             <img
               src="/images/pegasus_logo.svg"
               alt="Pegasus Logo"
@@ -21,7 +21,7 @@
 
           <p-button
             icon="pi pi-bars"
-            class="hamburger-menu-button block lg:hidden"
+            class="hamburger-menu-button block lg:hidden md:hidden"
             (onClick)="toggleSidebarMenu()"
           />
 
@@ -46,11 +46,11 @@
         </div>
       </div>
 
-      <hr class="ml-[70px]" />
+      <hr class="lg:ml-[70px] md:ml-[70px]" />
 
       <div class="flex w-full">
         <!-- Large Screen Sidebar -->
-        <div class="w-[70px] lg:block hidden">
+        <div class="w-[70px] lg:block md:block hidden">
           <app-sidebar-menu></app-sidebar-menu>
         </div>
   
