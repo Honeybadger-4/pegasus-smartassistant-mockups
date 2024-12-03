@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { LayoutMenuItem } from '@shared/models/layout-sidebar-menu';
 
 import { MenubarModule } from 'primeng/menubar';
@@ -9,12 +9,7 @@ import { AvatarModule } from 'primeng/avatar';
 @Component({
   selector: 'app-menubar',
   standalone: true,
-  imports: [
-    CommonModule, 
-    MenubarModule, 
-    ButtonModule,
-    AvatarModule
-  ],
+  imports: [CommonModule, MenubarModule, ButtonModule, AvatarModule],
   templateUrl: './menubar.component.html',
   styleUrl: './menubar.component.scss',
 })
@@ -57,7 +52,7 @@ export class MenubarComponent {
             icon: 'loadsheet-icon.svg',
             path: 'flight-information/load-sheet',
           },
-        ]
+        ],
       },
       {
         label: 'Airport Information',

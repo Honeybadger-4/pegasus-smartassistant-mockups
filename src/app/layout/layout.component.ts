@@ -9,12 +9,7 @@ import { MenubarModule } from 'primeng/menubar';
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [
-    CommonModule,
-    MenubarComponent,
-    ButtonModule,
-    MenubarModule,
-  ],
+  imports: [CommonModule, MenubarComponent, ButtonModule, MenubarModule],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
 })
