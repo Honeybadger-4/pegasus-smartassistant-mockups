@@ -25,8 +25,8 @@ export class GeneralInformationCardComponent implements OnInit {
     this.chartOptionsGPSLoss = {
       chart: {
         type: 'pie',
-        height: 170,
-        width: 170,
+        height: 190,
+        width: 190,
         plotBackgroundColor: undefined,
         plotBorderWidth: 0,
         plotShadow: false,
@@ -63,8 +63,8 @@ export class GeneralInformationCardComponent implements OnInit {
     this.chartOptionsFuelExcess = {
       chart: {
         type: 'pie',
-        height: 170,
-        width: 170,
+        height: 190,
+        width: 190,
         plotBackgroundColor: undefined,
         plotBorderWidth: 0,
         plotShadow: false,

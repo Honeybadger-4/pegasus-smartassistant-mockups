@@ -26,8 +26,8 @@ export class TotalFlightsComponent implements OnInit {
     this.chartOptionsFlights = {
       chart: {
         type: 'pie',
-        height: 200,
-        width: 200,
+        height: 270,
+        width: 270,
         plotBackgroundColor: undefined,
         plotBorderWidth: 0,
         plotShadow: false,
@@ -63,8 +63,8 @@ export class TotalFlightsComponent implements OnInit {
     this.chartOptionsFuelOrder = {
       chart: {
         type: 'pie',
-        height: 200,
-        width: 200,
+        height: 270,
+        width: 270,
         plotBackgroundColor: undefined,
         plotBorderWidth: 0,
         plotShadow: false,
