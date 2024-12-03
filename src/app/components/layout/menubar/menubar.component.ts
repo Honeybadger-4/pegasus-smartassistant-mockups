@@ -7,7 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { AvatarModule } from 'primeng/avatar';
 
 @Component({
-  selector: 'app-sidebar-menu',
+  selector: 'app-menubar',
   standalone: true,
   imports: [
     CommonModule, 
@@ -15,10 +15,10 @@ import { AvatarModule } from 'primeng/avatar';
     ButtonModule,
     AvatarModule
   ],
-  templateUrl: './sidebar-menu.component.html',
-  styleUrl: './sidebar-menu.component.scss',
+  templateUrl: './menubar.component.html',
+  styleUrl: './menubar.component.scss',
 })
-export class SidebarMenuComponent {
+export class MenubarComponent {
   menuItems: LayoutMenuItem[] = [];
 
   ngOnInit() {

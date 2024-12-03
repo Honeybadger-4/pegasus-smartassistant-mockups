@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { SidebarMenuComponent } from '../components/layout/sidebar-menu/sidebar-menu.component';
+import { MenubarComponent } from '../components/layout/menubar/menubar.component';
 
 import { ButtonModule } from 'primeng/button';
 import { MenubarModule } from 'primeng/menubar';
@@ -11,7 +11,7 @@ import { MenubarModule } from 'primeng/menubar';
   standalone: true,
   imports: [
     CommonModule,
-    SidebarMenuComponent,
+    MenubarComponent,
     ButtonModule,
     MenubarModule,
   ],

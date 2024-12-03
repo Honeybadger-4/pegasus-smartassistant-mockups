@@ -5,6 +5,18 @@
     }
 
     .p-menuitem-link {
+      &:hover,
+      &.active {
+        background-color: #FFFBED;
+        .menu-item-label {
+          color: #FED447;
+        }
+        .menu-item-icon {
+          color: #FED447;
+          filter: invert(97%) sepia(22%) saturate(7475%) hue-rotate(320deg)
+              brightness(105%) contrast(99%);
+        }
+      }
       .menu-item-label {
         margin-left: 10px;
         font-size: 12px;
@@ -26,6 +38,10 @@
 
         .p-menubar-button {
           color: black;
+        }
+
+        .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus > .p-menuitem-content {
+          background-color: transparent;
         }
       }
 
