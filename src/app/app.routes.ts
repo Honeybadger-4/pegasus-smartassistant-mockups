@@ -10,7 +10,8 @@ import { ReportComponent } from './pages/report/report.component';
 import { UserLoginHistoryComponent } from './pages/user-login-history/user-login-history.component';
 import { AirportInfoComponent } from './pages/airport-info/airport-info.component';
 import { LogbookComponent } from './pages/logbook/logbook.component';
-import { LogbookEditComponent } from './pages/logbook-edit/logbook-edit.component';
+import { LogbookDetailComponent } from './pages/logbook-detail/logbook-detail.component';
+import { LogbookDetailEditComponent } from './pages/logbook-detail-edit/logbook-detail-edit.component';
 import { RouteComponent } from './pages/route/route.component';
 
 export const routes: Routes = [
@@ -67,8 +68,12 @@ export const routes: Routes = [
             component: LogbookComponent,
           },
           {
-            path: 'logbook-edit',
-            component: LogbookEditComponent,
+            path: 'logbook-detail',
+            component: LogbookDetailComponent,
+          },
+          {
+            path: 'logbook-detail-edit',
+            component: LogbookDetailEditComponent,
           },
         ],
       },

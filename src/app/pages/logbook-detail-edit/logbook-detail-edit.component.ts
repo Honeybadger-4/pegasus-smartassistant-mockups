@@ -28,10 +28,10 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     ConfirmDialogModule,
   ],
   providers: [ConfirmationService],
-  templateUrl: './logbook-edit.component.html',
-  styleUrls: ['./logbook-edit.component.scss'],
+  templateUrl: './logbook-detail-edit.component.html',
+  styleUrls: ['./logbook-detail-edit.component.scss'],
 })
-export class LogbookEditComponent implements OnInit {
+export class LogbookDetailEditComponent implements OnInit {
   editData: any;
   breadcrumbItems: MenuItem[] = [];
   logbookFormGroup!: FormGroup;
