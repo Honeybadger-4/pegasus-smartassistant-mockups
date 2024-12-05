@@ -35,6 +35,7 @@ export class LogbookDetailEditComponent implements OnInit {
   editData: any;
   breadcrumbItems: MenuItem[] = [];
   logbookFormGroup!: FormGroup;
+  isEditMode = false;
   logbookData = [
     {
       crewName: 'John Doe',
@@ -121,6 +122,8 @@ export class LogbookDetailEditComponent implements OnInit {
       duty: [''],
       ifr: [''],
     });
+    this.logbookFormGroup.disable(); 
+
   }
 
   onSave(): void {
@@ -141,12 +144,31 @@ export class LogbookDetailEditComponent implements OnInit {
       acceptButtonStyleClass: 'action-button',
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
-        this.formSubmit();
+        this.formSubmit(); 
+        this.toggleEditMode(); 
       },
     });
   }
 
   formSubmit() {
-    console.log('Form data:', this.logbookFormGroup.value);
+    if (this.logbookFormGroup.valid) {
+      console.log('Form data:', this.logbookFormGroup.value);
+    } else {
+      console.error('Form is invalid');
+    }
   }
+  
+  
+
+  toggleEditMode(): void {
+    this.isEditMode = !this.isEditMode;
+  
+    if (this.isEditMode) {
+      this.logbookFormGroup.enable(); 
+    } else {
+      this.logbookFormGroup.disable();
+    }
+  }
+  
+  
 }

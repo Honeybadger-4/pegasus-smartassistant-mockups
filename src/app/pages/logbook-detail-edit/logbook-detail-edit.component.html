@@ -1,10 +1,16 @@
-<main id="LogbookEditPage">
+<main id="LogbookDetailEditPage">
   <!-- Header -->
   <section>
     <div class="page-header">
       <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" />
-      <button pButton type="button" label="SAVE" (click)="onSave()"></button>
-    </div>
+      <button 
+      pButton 
+      type="button" 
+      [label]="isEditMode ? 'SAVE' : 'EDIT'" 
+      (click)="isEditMode ? onSave() : toggleEditMode()">
+    </button>
+    
+        </div>
   </section>
 
   <!-- Form -->
