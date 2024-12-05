@@ -36,6 +36,9 @@ export class LogbookDetailEditComponent implements OnInit {
   breadcrumbItems: MenuItem[] = [];
   logbookFormGroup!: FormGroup;
   isEditMode = false;
+  rejectReason: string = '';
+  displayRejectPopup: boolean = false;
+  selectedRow: any;
   logbookData = [
     {
       crewName: 'John Doe',
@@ -169,6 +172,57 @@ export class LogbookDetailEditComponent implements OnInit {
       this.logbookFormGroup.disable();
     }
   }
+  onApprove(rowData: any): void {
+    this.confirmationService.confirm({
+      message: `<div class="custom-confirm-content">
+                  <div class="custom-confirm-icon">
+                    <img src="/icons/approve-icon.svg" alt="Approve Icon" />
+                  </div>
+                  <p class="custom-confirm-message">Do you want to approve the logbook document?</p>
+                </div>`,
+      header: '',
+      icon: '',
+      closeOnEscape: false,
+      acceptLabel: 'Approve',
+      rejectLabel: 'Cancel',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      acceptButtonStyleClass: 'action-button',
+      rejectButtonStyleClass: 'cancel-button',
+      accept: () => {
+        console.log('Approved:', rowData);
+      },
+      reject: () => {
+        console.log('Approval cancelled.');
+      },
+    });
+  }
+
+  onReject(rowData: any): void {
+    this.confirmationService.confirm({
+      message: `<div class="custom-confirm-content">
+                  <div class="custom-confirm-icon">
+                    <img src="/icons/reject-icon.svg" alt="Reject Icon" />
+                  </div>
+                  <p class="custom-confirm-message">Do you want to reject the logbook document?</p>
+                </div>`,
+      header: '',
+      icon: '',
+      closeOnEscape: false,
+      acceptLabel: 'Reject',
+      rejectLabel: 'Cancel',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      acceptButtonStyleClass: 'action-button',
+      rejectButtonStyleClass: 'cancel-button',
+      accept: () => {
+        this.selectedRow = rowData;
+        this.displayRejectPopup = true;
+      },
+      reject: () => {
+        console.log('Rejection cancelled.');
+      },
+    });
+  }}
   
-  
-}
+

@@ -3,14 +3,28 @@
   <section>
     <div class="page-header">
       <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" />
-      <button 
-      pButton 
-      type="button" 
-      [label]="isEditMode ? 'SAVE' : 'EDIT'" 
-      (click)="isEditMode ? onSave() : toggleEditMode()">
-    </button>
+      <div class="button-group">
+        <button 
+          pButton 
+          type="button" 
+          [label]="isEditMode ? 'SAVE' : 'EDIT'" 
+          (click)="isEditMode ? onSave() : toggleEditMode()">
+        </button>
+        <button 
+          pButton 
+          type="button" 
+          label="Approve" 
+          (click)="onApprove(editData)">
+        </button>
+        <button 
+          pButton 
+          type="button" 
+          label="Reject" 
+          (click)="onReject(editData)">
+        </button>
+      </div>
+    </div>
     
-        </div>
   </section>
 
   <!-- Form -->

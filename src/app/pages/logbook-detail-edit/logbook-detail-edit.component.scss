@@ -4,7 +4,10 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
-
+    .button-group {
+      display: flex;
+      gap: 10px;
+    }
     button {
       background-color: #feb914;
       color: #4f4f4f;
@@ -14,6 +17,10 @@
       border-radius: 5px;
       width: 120px;
       height: 35px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #e0a812;
     }
   }
 
