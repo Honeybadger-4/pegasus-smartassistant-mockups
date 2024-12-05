@@ -89,9 +89,11 @@
 </ng-template>
 
 <ng-template #editableCellBodyTemplate let-rowData="rowData">
-  @if (rowData.status !== "REASSING") {
-    <i class="pi pi-pen-to-square" (click)="goToLogBookDetailEditPage(rowData)"></i>
-  } @else if (rowData.status === "REASSING") {
+  <!-- Düzenleme Butonu Her Durumda Görünür -->
+  <i class="pi pi-pen-to-square" (click)="goToLogBookDetailEditPage(rowData)"></i>
+
+  <!-- Onay ve Reddetme İkonları Sadece REASSING Durumu İçin -->
+  @if (rowData.status === "REASSING") {
     <div class="action-icons">
       <img
         src="/icons/check-icon.svg"

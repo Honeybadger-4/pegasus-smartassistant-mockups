@@ -1,10 +1,6 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { DropdownModule } from 'primeng/dropdown';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { InputTextModule } from 'primeng/inputtext';
 import { Column } from '@shared/models/columns';
 import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
 
@@ -13,10 +9,6 @@ import { CustomTableComponent } from '../../shared/components/custom-table/custo
   standalone: true,
   imports: [
     CommonModule,
-    DropdownModule,
-    IconFieldModule,
-    InputIconModule,
-    InputTextModule,
     FormsModule,
     CustomTableComponent,
   ],
@@ -24,12 +16,7 @@ import { CustomTableComponent } from '../../shared/components/custom-table/custo
   styleUrl: './logbook.component.scss',
 })
 export class LogbookComponent {
-  @ViewChild('fuelOrderCellBodyTemplate', { static: true })
-  fuelOrderCellBodyTemplate!: TemplateRef<any>;
-  selectedFuelOrder = '';
-  selectedDaily = '';
-
-  fuelData = [
+  logbookData = [
     {
       id: '0',
       month: 'January 2019',
