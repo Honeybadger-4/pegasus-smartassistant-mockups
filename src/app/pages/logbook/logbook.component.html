@@ -1,1 +1,12 @@
-<p>logbook works!</p>
+<div id="LogbookPage">
+  <section class="table-header-section lg:flex block">
+    <div class="header-title w-full">Logbook List</div>
+  </section>
+
+  <section class="table-section custom-card">
+    <app-custom-table
+      [tableData]="fuelData"
+      [tableColumns]="columns"
+    ></app-custom-table>
+  </section>
+</div>

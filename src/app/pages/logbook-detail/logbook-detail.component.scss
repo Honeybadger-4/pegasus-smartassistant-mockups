@@ -1,4 +1,4 @@
-#LogbookPage {
+#LogbookDetailPage {
   .table-header-section {
     display: flex;
     align-items: center;
@@ -94,7 +94,7 @@
 }
 
 ::ng-deep {
-  #LogbookPage {
+  #LogbookDetailPage {
     .custom-dialog-container {
       .p-dialog {
         background-color: #fbfbfb;

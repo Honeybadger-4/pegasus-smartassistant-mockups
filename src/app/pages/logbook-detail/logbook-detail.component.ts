@@ -50,7 +50,7 @@ export class LogbookDetailComponent {
   ];
 
   columns: Column[] = [];
-  logbookData = [
+  logbookDetailData = [
     {
       crewNameSurname: 'SAWC BIR NCS YUZ YIRMI UC YUZ KIRK',
       companyId: '123140',
@@ -258,7 +258,7 @@ export class LogbookDetailComponent {
     this.rejectReason = '';
   }
 
-  goToLogBookEditPage(data: any) {
+  goToLogBookDetailEditPage(data: any) {
     this.router.navigate([
       'logbook/logbook-detail-edit',
       {

@@ -1,6 +1,6 @@
-<main id="LogbookPage">
+<main id="LogbookDetailPage">
   <section class="table-header-section w-full">
-    <div class="header-title w-full">Logbook List</div>
+    <div class="header-title w-full">Logbook Detail List</div>
     <div class="flex justify-end items-center w-full gap-6">
       <div class="date-range-picker">
         <p-calendar
@@ -38,7 +38,7 @@
 
   <section class="table-section custom-card">
     <app-custom-table
-      [tableData]="logbookData"
+      [tableData]="logbookDetailData"
       [tableColumns]="columns"
     ></app-custom-table>
   </section>
@@ -90,7 +90,7 @@
 
 <ng-template #editableCellBodyTemplate let-rowData="rowData">
   @if (rowData.status !== "REASSING") {
-    <i class="pi pi-pen-to-square" (click)="goToLogBookEditPage(rowData)"></i>
+    <i class="pi pi-pen-to-square" (click)="goToLogBookDetailEditPage(rowData)"></i>
   } @else if (rowData.status === "REASSING") {
     <div class="action-icons">
       <img
