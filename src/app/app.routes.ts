@@ -64,7 +64,7 @@ export const routes: Routes = [
         path: 'logbook',
         children: [
           {
-            path: '',
+            path: 'crew-list',
             component: CrewListComponent,
           },
           {

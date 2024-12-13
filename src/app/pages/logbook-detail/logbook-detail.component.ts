@@ -11,6 +11,7 @@ import { DialogModule } from 'primeng/dialog';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { Router } from '@angular/router';
+import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
 
 @Component({
   selector: 'app-logbook',
@@ -25,6 +26,7 @@ import { Router } from '@angular/router';
     DialogModule,
     CustomTableComponent,
     InputTextModule,
+    CustomBreadcrumbComponent
   ],
   templateUrl: './logbook-detail.component.html',
   styleUrl: './logbook-detail.component.scss',
@@ -32,9 +34,10 @@ import { Router } from '@angular/router';
 })
 export class LogbookDetailComponent {
   @ViewChild('previewCellBodyTemplate', { static: true })
+  crewListTableData: any;
   previewCellBodyTemplate!: TemplateRef<any>;
   @ViewChild('editableCellBodyTemplate', { static: true })
-  editableCellBodyTemplate!: TemplateRef<any>;
+  editableCellBodyTemplate!: TemplateRef<any>;  
 
   dateRange: Date[] = [];
   selectedPeriod = '';
@@ -47,6 +50,12 @@ export class LogbookDetailComponent {
     { label: 'Status 1', value: 'status' },
     { label: 'Status 2', value: 'status' },
     { label: 'Status 3', value: 'status' },
+  ];
+
+  breadcrumbItems = [
+    { label: 'Logbook', route: '/logbook' },
+    { label: 'Crew List', route: '/crew-list' },
+    { label: 'Logbook Detail List'}
   ];
 
   columns: Column[] = [];
@@ -286,6 +295,9 @@ export class LogbookDetailComponent {
 
   ngOnInit() {
     this.defineColumn();
+
+    this.crewListTableData = history.state.data;
+    console.log(this.crewListTableData);
   }
 
   defineColumn() {

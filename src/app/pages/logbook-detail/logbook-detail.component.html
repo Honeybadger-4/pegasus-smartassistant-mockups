@@ -1,6 +1,6 @@
 <main id="LogbookDetailPage">
   <section class="table-header-section w-full">
-    <div class="header-title w-full">Logbook Detail List</div>
+    <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" class="w-full" />
     <div class="flex justify-end items-center w-full gap-6">
       <div class="date-range-picker">
         <p-calendar
@@ -32,6 +32,16 @@
           class="custom-dropdown period-dropdown"
           placeholder="Status"
         ></p-dropdown>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div>
+      <p class="font-bold text-[12px]">December 2024</p>
+      <div class="text-[12px]">
+        <span class="font-bold">Crew Name&Surname / Company ID:</span>  
+        <span class="ml-2">{{crewListTableData.crewNameSurname}}</span>
       </div>
     </div>
   </section>

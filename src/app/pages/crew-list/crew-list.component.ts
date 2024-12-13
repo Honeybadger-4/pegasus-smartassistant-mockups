@@ -119,17 +119,12 @@ export class CrewListComponent {
   }
 
   onRowSelect(selectedData: any) {
-    
-    console.log(selectedData);
+    this.goToLogBookDetailListPage(selectedData)
   }
 
   goToLogBookDetailListPage(data: any) {
-    // TODO: Logbook detail sayfasına yönlendirme yapılmalı ve tablodan seçilen data props geçilmeli detail ekranına. 
-    this.router.navigate([
-      'logbook/logbook-detail-edit',
-      {
-        data: JSON.stringify(data),
-      },
-    ]);
+    this.router.navigate(['logbook/logbook-detail'], { 
+      state: { data: data } 
+    });
   }
 }
