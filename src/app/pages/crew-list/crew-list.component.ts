@@ -1,17 +1,24 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgModel } from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
+import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
+import { MenuItem } from 'primeng/api';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-logbook',
   standalone: true,
-  imports: [CommonModule, FormsModule, CustomTableComponent],
-  templateUrl: './logbook.component.html',
-  styleUrl: './logbook.component.scss',
+  imports: [CommonModule, FormsModule, CustomTableComponent, CustomBreadcrumbComponent, IconFieldModule, InputIconModule],
+  templateUrl: './crew-list.component.html',
+  styleUrl: './crew-list.component.scss',
 })
-export class LogbookComponent {
+export class CrewListComponent {
+  breadcrumbItems: MenuItem[] = [];
+  filterInput = '';
   logbookData = [
     {
       id: '0',
@@ -85,10 +92,17 @@ export class LogbookComponent {
       reassingLogs: '-',
     },
   ];
+  
   columns!: Column[];
+  router = inject(Router);
 
   ngOnInit() {
     this.defineMainColumns();
+
+    this.breadcrumbItems = [
+      { label: 'Logbook', route: '/logbook' },
+      { label: 'Crew List' },
+    ];
   }
 
   // Define Columns Operation
@@ -102,5 +116,20 @@ export class LogbookComponent {
       { field: 'approvedLogs', header: 'Approved Logs' },
       { field: 'reassingLogs', header: 'Reassing Logs' },
     ];
+  }
+
+  onRowSelect(selectedData: any) {
+    
+    console.log(selectedData);
+  }
+
+  goToLogBookDetailListPage(data: any) {
+    // TODO: Logbook detail sayfasına yönlendirme yapılmalı ve tablodan seçilen data props geçilmeli detail ekranına. 
+    this.router.navigate([
+      'logbook/logbook-detail-edit',
+      {
+        data: JSON.stringify(data),
+      },
+    ]);
   }
 }

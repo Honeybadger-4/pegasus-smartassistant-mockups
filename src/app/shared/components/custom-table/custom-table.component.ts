@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Column } from '@shared/models/columns';
 import { TableModule } from 'primeng/table';
 
@@ -13,4 +13,11 @@ import { TableModule } from 'primeng/table';
 export class CustomTableComponent {
   @Input() tableData: any;
   @Input() tableColumns!: Column[];
+  @Input()  selectionMode: 'single' | 'multiple' | null = null;
+  @Output() selectedRow = new EventEmitter<any>();
+
+  onRowSelect(rowData: any) {
+    this.selectedRow.emit(rowData?.data);
+    
+  }
 }

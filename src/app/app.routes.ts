@@ -9,7 +9,7 @@ import { LoadSheetComponent } from './pages/load-sheet/load-sheet.component';
 import { ReportComponent } from './pages/report/report.component';
 import { UserLoginHistoryComponent } from './pages/user-login-history/user-login-history.component';
 import { AirportInfoComponent } from './pages/airport-info/airport-info.component';
-import { LogbookComponent } from './pages/logbook/logbook.component';
+import { CrewListComponent } from './pages/crew-list/crew-list.component';
 import { LogbookDetailComponent } from './pages/logbook-detail/logbook-detail.component';
 import { LogbookDetailEditComponent } from './pages/logbook-detail-edit/logbook-detail-edit.component';
 import { RouteComponent } from './pages/route/route.component';
@@ -65,7 +65,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            component: LogbookComponent,
+            component: CrewListComponent,
           },
           {
             path: 'logbook-detail',
