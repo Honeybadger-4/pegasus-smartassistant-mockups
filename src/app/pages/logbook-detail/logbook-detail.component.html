@@ -41,7 +41,7 @@
       <p class="font-bold text-[12px]">December 2024</p>
       <div class="text-[12px]">
         <span class="font-bold">Crew Name&Surname / Company ID:</span>  
-        <span class="ml-2">{{crewListTableData.crewNameSurname}}</span>
+        <span class="ml-2">{{crewListTableData?.crewNameSurname}}</span>
       </div>
     </div>
   </section>
@@ -119,8 +119,4 @@
       />
     </div>
   }
-</ng-template>
-
-<ng-template #checkboxCellBodyTemplate let-rowData="rowData">
-  <p-checkbox [(ngModel)]="rowData.checked" [binary]="true"></p-checkbox>
 </ng-template>

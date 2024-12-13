@@ -118,10 +118,6 @@ export class CrewListComponent {
     ];
   }
 
-  onRowSelect(selectedData: any) {
-    this.goToLogBookDetailListPage(selectedData)
-  }
-
   goToLogBookDetailListPage(data: any) {
     this.router.navigate(['logbook/logbook-detail'], { 
       state: { data: data } 

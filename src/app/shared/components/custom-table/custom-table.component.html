@@ -7,8 +7,6 @@
   [paginator]="true"
   [rows]="20"
   [rowsPerPageOptions]="[20, 40, 80]"
-  [selectionMode]="selectionMode"
-  (onRowSelect)="onRowSelect($event)"
 >
   <!-- Table Header -->
   <ng-template pTemplate="header" let-columns>
@@ -21,7 +19,7 @@
 
   <!-- Table Body -->
   <ng-template pTemplate="body" let-rowData>
-    <tr [pSelectableRow]="rowData">
+    <tr>
       <td *ngFor="let column of tableColumns">
         <ng-container *ngIf="column.template; else defaultCell">
           <ng-container

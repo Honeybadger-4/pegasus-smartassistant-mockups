@@ -35,21 +35,17 @@ import { CheckboxModule } from 'primeng/checkbox';
   providers: [ConfirmationService],
 })
 export class LogbookDetailComponent {
-  @ViewChild('previewCellBodyTemplate', { static: true })
+  @ViewChild('previewCellBodyTemplate', { static: true }) previewCellBodyTemplate!: TemplateRef<any>;
+  @ViewChild('editableCellBodyTemplate', { static: true }) editableCellBodyTemplate!: TemplateRef<any>;
+  @ViewChild('checkboxCellBodyTemplate', { static: true }) checkboxCellBodyTemplate!: TemplateRef<any>;
+  
   crewListTableData: any;
-  previewCellBodyTemplate!: TemplateRef<any>;
-  @ViewChild('editableCellBodyTemplate', { static: true })
-  editableCellBodyTemplate!: TemplateRef<any>;
-  @ViewChild('checkboxCellBodyTemplate', { static: true })
-  checkboxCellBodyTemplate!: TemplateRef<any>;
-
   dateRange: Date[] = [];
   selectedPeriod = '';
   searchQuery = '';
   displayRejectPopup = false;
   rejectReason = '';
-  selectedRow: any = null;
-
+  selectedRow: any;
 
   statusOptions = [
     { label: 'Status 1', value: 'status' },
@@ -66,6 +62,7 @@ export class LogbookDetailComponent {
   columns: Column[] = [];
   logbookDetailData = [
     {
+      id: 0,
       date: '23/12/2024',
       dutyType: 'Flight',
       aircraftType: 'B737',
@@ -81,6 +78,7 @@ export class LogbookDetailComponent {
       status: 'APPROVED',
     },
     {
+      id: 1,
       date: '23/12/2024',
       dutyType: 'Flight',
       aircraftType: 'B737',
@@ -97,6 +95,7 @@ export class LogbookDetailComponent {
       checked: false, 
     },
     {
+      id: 2,
       date: '23/12/2024',
       dutyType: 'Flight',
       aircraftType: 'B737',
@@ -113,6 +112,7 @@ export class LogbookDetailComponent {
       checked: false,
     },
     {
+      id: 3,
       date: '23/12/2024',
       dutyType: 'Flight',
       aircraftType: 'B737',
@@ -129,6 +129,7 @@ export class LogbookDetailComponent {
       checked: false, 
     },
     {
+      id: 4,
       date: '23/12/2024',
       dutyType: 'Flight',
       aircraftType: 'B737',
@@ -145,6 +146,7 @@ export class LogbookDetailComponent {
       checked: false,
     },
     {
+      id: 5,
       date: '23/12/2024',
       dutyType: 'Flight',
       aircraftType: 'B737',
@@ -161,6 +163,7 @@ export class LogbookDetailComponent {
       checked: false, 
     },
     {
+      id: 6,
       date: '23/12/2024',
       dutyType: 'Flight',
       aircraftType: 'B737',
@@ -177,6 +180,7 @@ export class LogbookDetailComponent {
       checked: false, 
     },
     {
+      id: 7,
       date: '23/12/2024',
       dutyType: 'Flight',
       aircraftType: 'B737',
@@ -193,6 +197,7 @@ export class LogbookDetailComponent {
       checked: false, 
     },
     {
+      id: 8,
       date: '23/12/2024',
       dutyType: 'Flight',
       aircraftType: 'B737',
@@ -209,6 +214,7 @@ export class LogbookDetailComponent {
       checked: false,
     },
     {
+      id: 9,
       date: '23/12/2024',
       dutyType: 'Flight',
       aircraftType: 'B737',
@@ -225,6 +231,7 @@ export class LogbookDetailComponent {
       checked: false, 
     },
     {
+      id: 10,
       date: '23/12/2024',
       dutyType: 'Flight',
       aircraftType: 'B737',
@@ -241,6 +248,7 @@ export class LogbookDetailComponent {
       checked: false, 
     },
     {
+      id: 11,
       date: '23/12/2024',
       dutyType: 'Flight',
       aircraftType: 'B737',
@@ -257,6 +265,7 @@ export class LogbookDetailComponent {
       checked: false, 
     },
     {
+      id: 12,
       date: '23/12/2024',
       dutyType: 'Flight',
       aircraftType: 'B737',
@@ -273,6 +282,7 @@ export class LogbookDetailComponent {
       checked: false, 
     },
     {
+      id: 13,
       date: '23/12/2024',
       dutyType: 'Flight',
       aircraftType: 'B737',
@@ -289,6 +299,7 @@ export class LogbookDetailComponent {
       checked: false,
     },
     {
+      id: 14,
       date: '23/12/2024',
       dutyType: 'Flight',
       aircraftType: 'B737',
@@ -320,11 +331,6 @@ export class LogbookDetailComponent {
 
   defineColumn() {
     this.columns = [
-      {
-        field: 'checkbox',
-        header: '',
-        template: this.checkboxCellBodyTemplate,
-      },
       { field: 'date', header: 'Date' },
       { field: 'dutyType', header: 'Duty Type' },
       { field: 'aircraftType', header: 'A/C Type' },
@@ -338,9 +344,6 @@ export class LogbookDetailComponent {
       { field: 'comment', header: 'Comment' },
       { field: 'reviewedBy', header: 'Reviewed By' },
       { field: 'status', header: 'Status' },
-
-      
-
       { field: '', header: '', template: this.previewCellBodyTemplate },
       { field: '', header: '', template: this.editableCellBodyTemplate },
     ];
@@ -365,6 +368,7 @@ export class LogbookDetailComponent {
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
         console.log('Approved:', rowData);
+        this.selectedRow = rowData;
       },
       reject: () => {
         console.log('Approval cancelled.');
@@ -390,7 +394,6 @@ export class LogbookDetailComponent {
       acceptButtonStyleClass: 'action-button',
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
-        this.selectedRow = rowData;
         this.displayRejectPopup = true;
       },
       reject: () => {
