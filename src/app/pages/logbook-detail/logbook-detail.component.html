@@ -110,3 +110,7 @@
     </div>
   }
 </ng-template>
+
+<ng-template #checkboxCellBodyTemplate let-rowData="rowData">
+  <p-checkbox [(ngModel)]="rowData.checked" [binary]="true"></p-checkbox>
+</ng-template>

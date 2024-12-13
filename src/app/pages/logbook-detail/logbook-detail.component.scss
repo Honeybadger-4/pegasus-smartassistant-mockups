@@ -111,5 +111,26 @@
     .p-confirm-dialog .p-dialog-footer {
       display: flex;
     }
+    .p-checkbox-box {
+      width: 14px;
+      height: 14px;
+      border-radius: 2px;
+      border: 1px solid #9a9a9a;
+      transition: all 0.3s ease;
+    }
+
+    .p-checkbox-box:hover {
+      border-color: #feb914;
+    }
+
+    .p-checkbox-box.p-highlight {
+      background: #feb914;
+      border-color: #feb914;
+    }
+
+    .p-checkbox-icon {
+      color: white;
+      font-size: 8px;
+    }
   }
 }
