@@ -12,6 +12,7 @@ import { CustomTableComponent } from '@shared/components/custom-table/custom-tab
 import { InputTextModule } from 'primeng/inputtext';
 import { Router } from '@angular/router';
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @Component({
   selector: 'app-logbook',
@@ -26,7 +27,8 @@ import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/
     DialogModule,
     CustomTableComponent,
     InputTextModule,
-    CustomBreadcrumbComponent
+    CustomBreadcrumbComponent,
+    CheckboxModule,
   ],
   templateUrl: './logbook-detail.component.html',
   styleUrl: './logbook-detail.component.scss',
@@ -37,7 +39,9 @@ export class LogbookDetailComponent {
   crewListTableData: any;
   previewCellBodyTemplate!: TemplateRef<any>;
   @ViewChild('editableCellBodyTemplate', { static: true })
-  editableCellBodyTemplate!: TemplateRef<any>;  
+  editableCellBodyTemplate!: TemplateRef<any>;
+  @ViewChild('checkboxCellBodyTemplate', { static: true })
+  checkboxCellBodyTemplate!: TemplateRef<any>;
 
   dateRange: Date[] = [];
   selectedPeriod = '';
@@ -45,6 +49,7 @@ export class LogbookDetailComponent {
   displayRejectPopup = false;
   rejectReason = '';
   selectedRow: any = null;
+
 
   statusOptions = [
     { label: 'Status 1', value: 'status' },
@@ -68,7 +73,7 @@ export class LogbookDetailComponent {
       departure: 'SAW',
       depTime: '20:35',
       arrival: 'ADB',
-      arrTime:'21:45',
+      arrTime: '21:45',
       totalTime: '01:10',
       updateDate: '23/12/2024 13:30',
       comment: '-',
@@ -83,12 +88,13 @@ export class LogbookDetailComponent {
       departure: 'SAW',
       depTime: '20:35',
       arrival: 'ADB',
-      arrTime:'21:45',
+      arrTime: '21:45',
       totalTime: '01:10',
       updateDate: '23/12/2024 13:30',
       comment: 'Lorem Impsum',
       reviewedBy: '-',
       status: 'PENDING',
+      checked: false, 
     },
     {
       date: '23/12/2024',
@@ -98,12 +104,13 @@ export class LogbookDetailComponent {
       departure: 'SAW',
       depTime: '20:35',
       arrival: 'ADB',
-      arrTime:'21:45',
+      arrTime: '21:45',
       totalTime: '01:10',
       updateDate: '23/12/2024 13:30',
       comment: '-',
       reviewedBy: 'ADMIN',
       status: 'APPROVED',
+      checked: false,
     },
     {
       date: '23/12/2024',
@@ -113,12 +120,13 @@ export class LogbookDetailComponent {
       departure: 'SAW',
       depTime: '20:35',
       arrival: 'ADB',
-      arrTime:'21:45',
+      arrTime: '21:45',
       totalTime: '01:10',
       updateDate: '23/12/2024 13:30',
       comment: 'Lorem Impsum',
       reviewedBy: 'ADMIN',
       status: 'PENDING',
+      checked: false, 
     },
     {
       date: '23/12/2024',
@@ -128,12 +136,13 @@ export class LogbookDetailComponent {
       departure: 'SAW',
       depTime: '20:35',
       arrival: 'ADB',
-      arrTime:'21:45',
+      arrTime: '21:45',
       totalTime: '01:10',
       updateDate: '23/12/2024 13:30',
       comment: '-',
       reviewedBy: '-',
       status: 'APPROVED',
+      checked: false,
     },
     {
       date: '23/12/2024',
@@ -143,12 +152,13 @@ export class LogbookDetailComponent {
       departure: 'SAW',
       depTime: '20:35',
       arrival: 'ADB',
-      arrTime:'21:45',
+      arrTime: '21:45',
       totalTime: '01:10',
       updateDate: '23/12/2024 13:30',
       comment: 'Lorem Impsum',
       reviewedBy: 'ADMIN',
       status: 'PENDING',
+      checked: false, 
     },
     {
       date: '23/12/2024',
@@ -158,12 +168,13 @@ export class LogbookDetailComponent {
       departure: 'SAW',
       depTime: '20:35',
       arrival: 'ADB',
-      arrTime:'21:45',
+      arrTime: '21:45',
       totalTime: '01:10',
       updateDate: '23/12/2024 13:30',
       comment: 'Lorem Impsum',
       reviewedBy: '-',
       status: 'APPROVED',
+      checked: false, 
     },
     {
       date: '23/12/2024',
@@ -173,12 +184,13 @@ export class LogbookDetailComponent {
       departure: 'SAW',
       depTime: '20:35',
       arrival: 'ADB',
-      arrTime:'21:45',
+      arrTime: '21:45',
       totalTime: '01:10',
       updateDate: '23/12/2024 13:30',
       comment: '-',
       reviewedBy: 'ADMIN',
       status: 'PENDING',
+      checked: false, 
     },
     {
       date: '23/12/2024',
@@ -188,12 +200,13 @@ export class LogbookDetailComponent {
       departure: 'SAW',
       depTime: '20:35',
       arrival: 'ADB',
-      arrTime:'21:45',
+      arrTime: '21:45',
       totalTime: '01:10',
       updateDate: '23/12/2024 13:30',
       comment: 'Lorem Impsum',
       reviewedBy: '-',
       status: 'APPROVED',
+      checked: false,
     },
     {
       date: '23/12/2024',
@@ -203,12 +216,13 @@ export class LogbookDetailComponent {
       departure: 'SAW',
       depTime: '20:35',
       arrival: 'ADB',
-      arrTime:'21:45',
+      arrTime: '21:45',
       totalTime: '01:10',
       updateDate: '23/12/2024 13:30',
       comment: 'Lorem Impsum',
       reviewedBy: 'ADMIN',
       status: 'PENDING',
+      checked: false, 
     },
     {
       date: '23/12/2024',
@@ -218,12 +232,13 @@ export class LogbookDetailComponent {
       departure: 'SAW',
       depTime: '20:35',
       arrival: 'ADB',
-      arrTime:'21:45',
+      arrTime: '21:45',
       totalTime: '01:10',
       updateDate: '23/12/2024 13:30',
       comment: 'Lorem Impsum',
       reviewedBy: '-',
       status: 'APPROVED',
+      checked: false, 
     },
     {
       date: '23/12/2024',
@@ -233,12 +248,13 @@ export class LogbookDetailComponent {
       departure: 'SAW',
       depTime: '20:35',
       arrival: 'ADB',
-      arrTime:'21:45',
+      arrTime: '21:45',
       totalTime: '01:10',
       updateDate: '23/12/2024 13:30',
       comment: '-',
       reviewedBy: 'ADMIN',
       status: 'PENDING',
+      checked: false, 
     },
     {
       date: '23/12/2024',
@@ -248,12 +264,13 @@ export class LogbookDetailComponent {
       departure: 'SAW',
       depTime: '20:35',
       arrival: 'ADB',
-      arrTime:'21:45',
+      arrTime: '21:45',
       totalTime: '01:10',
       updateDate: '23/12/2024 13:30',
       comment: 'Lorem Impsum',
       reviewedBy: '-',
       status: 'APPROVED',
+      checked: false, 
     },
     {
       date: '23/12/2024',
@@ -263,12 +280,13 @@ export class LogbookDetailComponent {
       departure: 'SAW',
       depTime: '20:35',
       arrival: 'ADB',
-      arrTime:'21:45',
+      arrTime: '21:45',
       totalTime: '01:10',
       updateDate: '23/12/2024 13:30',
       comment: '-',
       reviewedBy: 'ADMIN',
       status: 'PENDING',
+      checked: false,
     },
     {
       date: '23/12/2024',
@@ -278,14 +296,14 @@ export class LogbookDetailComponent {
       departure: 'SAW',
       depTime: '20:35',
       arrival: 'ADB',
-      arrTime:'21:45',
+      arrTime: '21:45',
       totalTime: '01:10',
       updateDate: '23/12/2024 13:30',
       comment: 'Lorem Impsum',
       reviewedBy: '-',
       status: 'APPROVED',
+      checked: false,
     },
-
   ];
 
   constructor(
@@ -302,6 +320,11 @@ export class LogbookDetailComponent {
 
   defineColumn() {
     this.columns = [
+      {
+        field: 'checkbox',
+        header: '',
+        template: this.checkboxCellBodyTemplate,
+      },
       { field: 'date', header: 'Date' },
       { field: 'dutyType', header: 'Duty Type' },
       { field: 'aircraftType', header: 'A/C Type' },
@@ -315,6 +338,8 @@ export class LogbookDetailComponent {
       { field: 'comment', header: 'Comment' },
       { field: 'reviewedBy', header: 'Reviewed By' },
       { field: 'status', header: 'Status' },
+
+      
 
       { field: '', header: '', template: this.previewCellBodyTemplate },
       { field: '', header: '', template: this.editableCellBodyTemplate },
