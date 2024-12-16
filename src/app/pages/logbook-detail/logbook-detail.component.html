@@ -40,25 +40,27 @@
     <div class="flex items-center justify-between">
       <div class="text-[12px]">
         <p class="font-bold">December 2024</p>
-        <span class="font-bold">Crew Name&Surname / Company ID:</span>  
-        <span class="ml-2">{{crewListTableData?.crewNameSurname}}</span>
+        <span class="font-bold">Crew Name&Surname / Company ID:</span>
+        <span class="ml-2">{{ crewListTableData?.crewNameSurname }}</span>
       </div>
 
       <div class="button-group flex items-center gap-4">
-        <button 
-          pButton 
-          type="button" 
-          label="Approve" 
+        <button
+          pButton
+          type="button"
+          label="Approve"
           [disabled]="selectedCheckbox.length <= 0"
-          (click)="onApprove()">
-        </button>
-        <button 
-          pButton 
-          type="button" 
-          label="Reject" 
-          [disabled]="selectedCheckbox.length > 1 || selectedCheckbox.length <= 0"
-          (click)="displayRejectPopup = true;">
-        </button>
+          (click)="onApprove()"
+        ></button>
+        <button
+          pButton
+          type="button"
+          label="Reject"
+          [disabled]="
+            selectedCheckbox.length > 1 || selectedCheckbox.length <= 0
+          "
+          (click)="displayRejectPopup = true"
+        ></button>
       </div>
     </div>
   </section>
@@ -118,5 +120,8 @@
 </ng-template>
 
 <ng-template #editableCellBodyTemplate let-rowData="rowData">
-  <i class="pi pi-pen-to-square" (click)="goToLogBookDetailEditPage(rowData)"></i>
+  <i
+    class="pi pi-pen-to-square"
+    (click)="goToLogBookDetailEditPage(rowData)"
+  ></i>
 </ng-template>

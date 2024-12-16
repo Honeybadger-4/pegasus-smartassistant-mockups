@@ -26,7 +26,7 @@ import { DialogModule } from 'primeng/dialog';
     FloatLabelModule,
     CustomBreadcrumbComponent,
     ConfirmDialogModule,
-    DialogModule
+    DialogModule,
   ],
   providers: [ConfirmationService],
   templateUrl: './logbook-detail-edit.component.html',
@@ -124,7 +124,7 @@ export class LogbookDetailEditComponent implements OnInit {
       duty: [''],
       ifr: [''],
     });
-    this.logbookFormGroup.disable(); 
+    this.logbookFormGroup.disable();
   }
 
   onSave(): void {
@@ -145,8 +145,8 @@ export class LogbookDetailEditComponent implements OnInit {
       acceptButtonStyleClass: 'action-button',
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
-        this.formSubmit(); 
-        this.toggleEditMode(); 
+        this.formSubmit();
+        this.toggleEditMode();
       },
     });
   }
@@ -158,12 +158,12 @@ export class LogbookDetailEditComponent implements OnInit {
       console.error('Form is invalid');
     }
   }
-  
+
   toggleEditMode(): void {
     this.isEditMode = !this.isEditMode;
-  
+
     if (this.isEditMode) {
-      this.logbookFormGroup.enable(); 
+      this.logbookFormGroup.enable();
     } else {
       this.logbookFormGroup.disable();
     }
@@ -197,11 +197,11 @@ export class LogbookDetailEditComponent implements OnInit {
 
   submitRejectReason(): void {
     this.displayRejectPopup = false;
-    
+
     let rejectReguestBody = {
       selectedLogBook: this.editData,
-      rejectReason: this.rejectReason
-    }
+      rejectReason: this.rejectReason,
+    };
 
     this.onReject(rejectReguestBody);
   }
@@ -230,6 +230,5 @@ export class LogbookDetailEditComponent implements OnInit {
         console.log('Rejection cancelled.');
       },
     });
-  }}
-  
-
+  }
+}

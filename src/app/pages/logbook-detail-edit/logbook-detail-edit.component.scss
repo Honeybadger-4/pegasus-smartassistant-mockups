@@ -99,22 +99,22 @@
 ::ng-deep {
   #LogbookDetailEditPage {
     .button-group {
-        .p-button-label {
-          font-weight: 500;
-        }
+      .p-button-label {
+        font-weight: 500;
       }
     }
+  }
 
-    .custom-dialog-container {
-      .p-dialog {
-        background-color: #fbfbfb;
-        border-radius: 8px;
+  .custom-dialog-container {
+    .p-dialog {
+      background-color: #fbfbfb;
+      border-radius: 8px;
 
-        .p-dialog-header,
-        .p-dialog-content,
-        .p-dialog-footer {
-          background-color: transparent;
-        }
+      .p-dialog-header,
+      .p-dialog-content,
+      .p-dialog-footer {
+        background-color: transparent;
       }
     }
+  }
 }

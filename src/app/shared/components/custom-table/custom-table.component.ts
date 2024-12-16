@@ -17,7 +17,7 @@ export class CustomTableComponent {
 
   @Output() rowClickedEvent: EventEmitter<any> = new EventEmitter<any>();
   @Output() selectedCheckbox: EventEmitter<any> = new EventEmitter<any>();
-  selectionData: any[] = []
+  selectionData: any[] = [];
 
   rowClicked(rowData: any) {
     this.rowClickedEvent.emit(rowData);

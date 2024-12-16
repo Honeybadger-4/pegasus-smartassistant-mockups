@@ -1,4 +1,10 @@
-import { Component, EventEmitter, inject, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgModel } from '@angular/forms';
 import { Column } from '@shared/models/columns';
@@ -12,7 +18,14 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-logbook',
   standalone: true,
-  imports: [CommonModule, FormsModule, CustomTableComponent, CustomBreadcrumbComponent, IconFieldModule, InputIconModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    CustomTableComponent,
+    CustomBreadcrumbComponent,
+    IconFieldModule,
+    InputIconModule,
+  ],
   templateUrl: './crew-list.component.html',
   styleUrl: './crew-list.component.scss',
 })
@@ -92,7 +105,7 @@ export class CrewListComponent {
       reassingLogs: '-',
     },
   ];
-  
+
   columns!: Column[];
   router = inject(Router);
 
@@ -123,8 +136,8 @@ export class CrewListComponent {
   }
 
   goToLogBookDetailListPage(data: any) {
-    this.router.navigate(['logbook/logbook-detail'], { 
-      state: { data: data } 
+    this.router.navigate(['logbook/logbook-detail'], {
+      state: { data: data },
     });
   }
 }

@@ -35,10 +35,13 @@ import { CheckboxModule } from 'primeng/checkbox';
   providers: [ConfirmationService],
 })
 export class LogbookDetailComponent {
-  @ViewChild('previewCellBodyTemplate', { static: true }) previewCellBodyTemplate!: TemplateRef<any>;
-  @ViewChild('editableCellBodyTemplate', { static: true }) editableCellBodyTemplate!: TemplateRef<any>;
-  @ViewChild('checkboxCellBodyTemplate', { static: true }) checkboxCellBodyTemplate!: TemplateRef<any>;
-  
+  @ViewChild('previewCellBodyTemplate', { static: true })
+  previewCellBodyTemplate!: TemplateRef<any>;
+  @ViewChild('editableCellBodyTemplate', { static: true })
+  editableCellBodyTemplate!: TemplateRef<any>;
+  @ViewChild('checkboxCellBodyTemplate', { static: true })
+  checkboxCellBodyTemplate!: TemplateRef<any>;
+
   crewListTableData: any;
   dateRange: Date[] = [];
   selectedPeriod = '';
@@ -56,7 +59,7 @@ export class LogbookDetailComponent {
   breadcrumbItems = [
     { label: 'Logbook', route: '/logbook' },
     { label: 'Crew List', route: '/crew-list' },
-    { label: 'Logbook Detail List'}
+    { label: 'Logbook Detail List' },
   ];
 
   columns: Column[] = [];
@@ -92,7 +95,7 @@ export class LogbookDetailComponent {
       comment: 'Lorem Impsum',
       reviewedBy: '-',
       status: 'PENDING',
-      checked: false, 
+      checked: false,
     },
     {
       id: 2,
@@ -126,7 +129,7 @@ export class LogbookDetailComponent {
       comment: 'Lorem Impsum',
       reviewedBy: 'ADMIN',
       status: 'PENDING',
-      checked: false, 
+      checked: false,
     },
     {
       id: 4,
@@ -160,7 +163,7 @@ export class LogbookDetailComponent {
       comment: 'Lorem Impsum',
       reviewedBy: 'ADMIN',
       status: 'PENDING',
-      checked: false, 
+      checked: false,
     },
     {
       id: 6,
@@ -177,7 +180,7 @@ export class LogbookDetailComponent {
       comment: 'Lorem Impsum',
       reviewedBy: '-',
       status: 'APPROVED',
-      checked: false, 
+      checked: false,
     },
     {
       id: 7,
@@ -194,7 +197,7 @@ export class LogbookDetailComponent {
       comment: '-',
       reviewedBy: 'ADMIN',
       status: 'PENDING',
-      checked: false, 
+      checked: false,
     },
     {
       id: 8,
@@ -228,7 +231,7 @@ export class LogbookDetailComponent {
       comment: 'Lorem Impsum',
       reviewedBy: 'ADMIN',
       status: 'PENDING',
-      checked: false, 
+      checked: false,
     },
     {
       id: 10,
@@ -245,7 +248,7 @@ export class LogbookDetailComponent {
       comment: 'Lorem Impsum',
       reviewedBy: '-',
       status: 'APPROVED',
-      checked: false, 
+      checked: false,
     },
     {
       id: 11,
@@ -262,7 +265,7 @@ export class LogbookDetailComponent {
       comment: '-',
       reviewedBy: 'ADMIN',
       status: 'PENDING',
-      checked: false, 
+      checked: false,
     },
     {
       id: 12,
@@ -279,7 +282,7 @@ export class LogbookDetailComponent {
       comment: 'Lorem Impsum',
       reviewedBy: '-',
       status: 'APPROVED',
-      checked: false, 
+      checked: false,
     },
     {
       id: 13,
@@ -408,18 +411,18 @@ export class LogbookDetailComponent {
 
   submitRejectReason(): void {
     this.displayRejectPopup = false;
-    
+
     let rejectReguestBody = {
       selectedLogBook: this.selectedCheckbox[0],
-      rejectReason: this.rejectReason
-    }
+      rejectReason: this.rejectReason,
+    };
 
     this.onReject(rejectReguestBody);
   }
 
   goToLogBookDetailEditPage(data: any) {
-    this.router.navigate(['logbook/logbook-detail-edit'], { 
-      state: { data: data } 
+    this.router.navigate(['logbook/logbook-detail-edit'], {
+      state: { data: data },
     });
   }
 }
