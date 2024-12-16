@@ -418,11 +418,8 @@ export class LogbookDetailComponent {
   }
 
   goToLogBookDetailEditPage(data: any) {
-    this.router.navigate([
-      'logbook/logbook-detail-edit',
-      {
-        data: JSON.stringify(data),
-      },
-    ]);
+    this.router.navigate(['logbook/logbook-detail-edit'], { 
+      state: { data: data } 
+    });
   }
 }

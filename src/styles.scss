@@ -51,6 +51,11 @@ body {
     width: 100%;
     font-size: 12px;
   }
+
+  .p-inputtext:disabled {
+    background-color: #f3f2f1;
+    border-color: #f3f2f1;
+  }
 }
 
 .custom-dropdown {
@@ -92,6 +97,7 @@ body {
 .custom-card {
   background-color: #f2f2f24d;
   border-radius: 10px;
+  padding: 10px 16px 10px 16px;
 }
 
 .p-component {
@@ -145,6 +151,8 @@ body {
 
 .p-dialog-content {
   background-color: #fbfbfb;
+  display: flex;
+  justify-content: center;
 }
 
 .p-dialog-footer {

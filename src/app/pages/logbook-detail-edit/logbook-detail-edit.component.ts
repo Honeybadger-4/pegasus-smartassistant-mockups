@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import {
@@ -13,6 +12,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-logbook-edit',
@@ -26,6 +26,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     FloatLabelModule,
     CustomBreadcrumbComponent,
     ConfirmDialogModule,
+    DialogModule
   ],
   providers: [ConfirmationService],
   templateUrl: './logbook-detail-edit.component.html',
@@ -74,19 +75,17 @@ export class LogbookDetailEditComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
   ) {}
 
   ngOnInit() {
-    const dataParam = this.route.snapshot.paramMap.get('data');
-    if (dataParam) {
-      this.editData = JSON.parse(dataParam);
-      console.log(this.editData);
-    }
+    this.editData = history.state.data;
+    console.log(this.editData);
 
     this.breadcrumbItems = [
       { label: 'Logbook', route: '/logbook' },
+      { label: 'Crew List', route: '/logbook/crew-list' },
+      { label: 'Logbook Detail List', route: '/logbook/logbook-detail' },
       { label: 'Edit Logbook' },
     ];
 
@@ -126,7 +125,6 @@ export class LogbookDetailEditComponent implements OnInit {
       ifr: [''],
     });
     this.logbookFormGroup.disable(); 
-
   }
 
   onSave(): void {
@@ -161,8 +159,6 @@ export class LogbookDetailEditComponent implements OnInit {
     }
   }
   
-  
-
   toggleEditMode(): void {
     this.isEditMode = !this.isEditMode;
   
@@ -172,6 +168,7 @@ export class LogbookDetailEditComponent implements OnInit {
       this.logbookFormGroup.disable();
     }
   }
+
   onApprove(rowData: any): void {
     this.confirmationService.confirm({
       message: `<div class="custom-confirm-content">
@@ -198,11 +195,22 @@ export class LogbookDetailEditComponent implements OnInit {
     });
   }
 
-  onReject(rowData: any): void {
+  submitRejectReason(): void {
+    this.displayRejectPopup = false;
+    
+    let rejectReguestBody = {
+      selectedLogBook: this.editData,
+      rejectReason: this.rejectReason
+    }
+
+    this.onReject(rejectReguestBody);
+  }
+
+  onReject(data: any): void {
     this.confirmationService.confirm({
       message: `<div class="custom-confirm-content">
                   <div class="custom-confirm-icon">
-                    <img src="/icons/reject-icon.svg" alt="Reject Icon" />
+                    <img src="/icons/reject_icon.svg" alt="Reject Icon" />
                   </div>
                   <p class="custom-confirm-message">Do you want to reject the logbook document?</p>
                 </div>`,
@@ -216,8 +224,7 @@ export class LogbookDetailEditComponent implements OnInit {
       acceptButtonStyleClass: 'action-button',
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
-        this.selectedRow = rowData;
-        this.displayRejectPopup = true;
+        console.log(data);
       },
       reject: () => {
         console.log('Rejection cancelled.');

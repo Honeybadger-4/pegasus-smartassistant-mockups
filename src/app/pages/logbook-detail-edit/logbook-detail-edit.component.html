@@ -20,12 +20,49 @@
           pButton 
           type="button" 
           label="Reject" 
-          (click)="onReject(editData)">
+          (click)="displayRejectPopup = true">
         </button>
       </div>
     </div>
     
   </section>
+
+  <p-dialog
+  [(visible)]="displayRejectPopup"
+  [modal]="true"
+  [draggable]="false"
+  class="custom-dialog-container"
+>
+  <div class="popup-content">
+    <!-- Başlık ve Alt Bilgiler -->
+    <p class="title">Upload Reason</p>
+    <div class="popup-header">
+      <p><b>Date:</b> {{ editData?.date }}</p>
+      <p><b>A/C Type:</b> {{ editData?.aircraftType }}</p>
+      <p><b>A/C Reg:</b> {{ editData?.aircraftReg }}</p>
+    </div>
+
+    <!-- Giriş Alanı -->
+    <textarea
+      [(ngModel)]="rejectReason"
+      placeholder="Enter reason"
+      class="custom-textarea"
+      rows="5"
+      maxlength="100"
+    ></textarea>
+
+    <!-- Footer Alanı -->
+    <div class="popup-footer">
+      <button
+        type="button"
+        pButton
+        label="Submit"
+        (click)="submitRejectReason()"
+        class="submit-button"
+      ></button>
+    </div>
+  </div>
+</p-dialog>
 
   <!-- Form -->
   <section class="form-section">
