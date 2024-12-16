@@ -1,6 +1,6 @@
-<main id="LogbookPage">
+<main id="LogbookDetailPage">
   <section class="table-header-section w-full">
-    <div class="header-title w-full">Logbook List</div>
+    <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" class="w-full" />
     <div class="flex justify-end items-center w-full gap-6">
       <div class="date-range-picker">
         <p-calendar
@@ -36,10 +36,41 @@
     </div>
   </section>
 
+  <section>
+    <div class="flex items-center justify-between">
+      <div class="text-[12px]">
+        <p class="font-bold">December 2024</p>
+        <span class="font-bold">Crew Name&Surname / Company ID:</span>
+        <span class="ml-2">{{ crewListTableData?.crewNameSurname }}</span>
+      </div>
+
+      <div class="button-group flex items-center gap-4">
+        <button
+          pButton
+          type="button"
+          label="Approve"
+          [disabled]="selectedCheckbox.length <= 0"
+          (click)="onApprove()"
+        ></button>
+        <button
+          pButton
+          type="button"
+          label="Reject"
+          [disabled]="
+            selectedCheckbox.length > 1 || selectedCheckbox.length <= 0
+          "
+          (click)="displayRejectPopup = true"
+        ></button>
+      </div>
+    </div>
+  </section>
+
   <section class="table-section custom-card">
     <app-custom-table
-      [tableData]="logbookData"
+      [tableData]="logbookDetailData"
       [tableColumns]="columns"
+      selectionMode="multiple"
+      (selectedCheckbox)="selectionCheckbox($event)"
     ></app-custom-table>
   </section>
 
@@ -53,9 +84,9 @@
       <!-- Başlık ve Alt Bilgiler -->
       <p class="title">Upload Reason</p>
       <div class="popup-header">
-        <p><b>Date:</b> {{ selectedRow?.uploadDate }}</p>
-        <p><b>A/C Type:</b> {{ selectedRow?.aircraftType }}</p>
-        <p><b>A/C Reg:</b> {{ selectedRow?.aircraftReg }}</p>
+        <p><b>Date:</b> {{ selectedCheckbox[0]?.date }}</p>
+        <p><b>A/C Type:</b> {{ selectedCheckbox[0]?.aircraftType }}</p>
+        <p><b>A/C Reg:</b> {{ selectedCheckbox[0]?.aircraftReg }}</p>
       </div>
 
       <!-- Giriş Alanı -->
@@ -89,22 +120,8 @@
 </ng-template>
 
 <ng-template #editableCellBodyTemplate let-rowData="rowData">
-  @if (rowData.status !== "REASSING") {
-    <i class="pi pi-pen-to-square" (click)="goToLogBookEditPage(rowData)"></i>
-  } @else if (rowData.status === "REASSING") {
-    <div class="action-icons">
-      <img
-        src="/icons/check-icon.svg"
-        alt="Approve"
-        class="icon-action"
-        (click)="onApprove(rowData)"
-      />
-      <img
-        src="/icons/reject-icon.svg"
-        alt="Reject"
-        class="icon-action"
-        (click)="onReject(rowData)"
-      />
-    </div>
-  }
+  <i
+    class="pi pi-pen-to-square"
+    (click)="goToLogBookDetailEditPage(rowData)"
+  ></i>
 </ng-template>

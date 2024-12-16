@@ -2,7 +2,7 @@
   <p-breadcrumb class="max-w-full" [model]="breadCrumbItems">
     <ng-template pTemplate="item" let-item>
       <a [routerLink]="item.route" class="p-menuitem-link">
-        <span class="item-text">{{ item.label }}</span>
+        <span class="item-text font-bold">{{ item.label }}</span>
       </a>
     </ng-template>
   </p-breadcrumb>

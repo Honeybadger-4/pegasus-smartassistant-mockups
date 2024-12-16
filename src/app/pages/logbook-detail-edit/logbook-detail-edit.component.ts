@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import {
@@ -13,6 +12,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-logbook-edit',
@@ -26,15 +26,20 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     FloatLabelModule,
     CustomBreadcrumbComponent,
     ConfirmDialogModule,
+    DialogModule,
   ],
   providers: [ConfirmationService],
-  templateUrl: './logbook-edit.component.html',
-  styleUrls: ['./logbook-edit.component.scss'],
+  templateUrl: './logbook-detail-edit.component.html',
+  styleUrls: ['./logbook-detail-edit.component.scss'],
 })
-export class LogbookEditComponent implements OnInit {
+export class LogbookDetailEditComponent implements OnInit {
   editData: any;
   breadcrumbItems: MenuItem[] = [];
   logbookFormGroup!: FormGroup;
+  isEditMode = false;
+  rejectReason: string = '';
+  displayRejectPopup: boolean = false;
+  selectedRow: any;
   logbookData = [
     {
       crewName: 'John Doe',
@@ -70,19 +75,17 @@ export class LogbookEditComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
     private confirmationService: ConfirmationService,
   ) {}
 
   ngOnInit() {
-    const dataParam = this.route.snapshot.paramMap.get('data');
-    if (dataParam) {
-      this.editData = JSON.parse(dataParam);
-      console.log(this.editData);
-    }
+    this.editData = history.state.data;
+    console.log(this.editData);
 
     this.breadcrumbItems = [
       { label: 'Logbook', route: '/logbook' },
+      { label: 'Crew List', route: '/logbook/crew-list' },
+      { label: 'Logbook Detail List', route: '/logbook/logbook-detail' },
       { label: 'Edit Logbook' },
     ];
 
@@ -121,6 +124,7 @@ export class LogbookEditComponent implements OnInit {
       duty: [''],
       ifr: [''],
     });
+    this.logbookFormGroup.disable();
   }
 
   onSave(): void {
@@ -142,11 +146,89 @@ export class LogbookEditComponent implements OnInit {
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
         this.formSubmit();
+        this.toggleEditMode();
       },
     });
   }
 
   formSubmit() {
-    console.log('Form data:', this.logbookFormGroup.value);
+    if (this.logbookFormGroup.valid) {
+      console.log('Form data:', this.logbookFormGroup.value);
+    } else {
+      console.error('Form is invalid');
+    }
+  }
+
+  toggleEditMode(): void {
+    this.isEditMode = !this.isEditMode;
+
+    if (this.isEditMode) {
+      this.logbookFormGroup.enable();
+    } else {
+      this.logbookFormGroup.disable();
+    }
+  }
+
+  onApprove(rowData: any): void {
+    this.confirmationService.confirm({
+      message: `<div class="custom-confirm-content">
+                  <div class="custom-confirm-icon">
+                    <img src="/icons/approve-icon.svg" alt="Approve Icon" />
+                  </div>
+                  <p class="custom-confirm-message">Do you want to approve the logbook document?</p>
+                </div>`,
+      header: '',
+      icon: '',
+      closeOnEscape: false,
+      acceptLabel: 'Approve',
+      rejectLabel: 'Cancel',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      acceptButtonStyleClass: 'action-button',
+      rejectButtonStyleClass: 'cancel-button',
+      accept: () => {
+        console.log('Approved:', rowData);
+      },
+      reject: () => {
+        console.log('Approval cancelled.');
+      },
+    });
+  }
+
+  submitRejectReason(): void {
+    this.displayRejectPopup = false;
+
+    let rejectReguestBody = {
+      selectedLogBook: this.editData,
+      rejectReason: this.rejectReason,
+    };
+
+    this.onReject(rejectReguestBody);
+  }
+
+  onReject(data: any): void {
+    this.confirmationService.confirm({
+      message: `<div class="custom-confirm-content">
+                  <div class="custom-confirm-icon">
+                    <img src="/icons/reject_icon.svg" alt="Reject Icon" />
+                  </div>
+                  <p class="custom-confirm-message">Do you want to reject the logbook document?</p>
+                </div>`,
+      header: '',
+      icon: '',
+      closeOnEscape: false,
+      acceptLabel: 'Reject',
+      rejectLabel: 'Cancel',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      acceptButtonStyleClass: 'action-button',
+      rejectButtonStyleClass: 'cancel-button',
+      accept: () => {
+        console.log(data);
+      },
+      reject: () => {
+        console.log('Rejection cancelled.');
+      },
+    });
   }
 }

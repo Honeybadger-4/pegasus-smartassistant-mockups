@@ -1,43 +1,46 @@
-#LogbookPage {
-  .table-header-section {
+#LogbookDetailEditPage {
+  .page-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
-
-    .search-container {
+    .button-group {
       display: flex;
-      padding: 5px 10px 5px 10px;
-      border-radius: 5px;
-      background-color: #f5f5f5;
-      width: 234px !important;
+      gap: 10px;
 
-      .search-input {
-        flex-grow: 1;
-        font-size: 8px;
-        font-weight: 300;
-        background-color: transparent;
-        outline: none !important;
-      }
-
-      .search-icon {
-        width: 12px;
+      button {
+        background-color: #feb914;
+        border: none;
+        font-size: 14px;
+        border-radius: 5px;
+        width: 100px;
+        height: 32px;
+        cursor: pointer;
+        span {
+          font-weight: 500;
+        }
       }
     }
   }
 
-  .action-icons {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  .form-section {
+    margin-bottom: 20px;
+
+    .title {
+      font-size: 16px;
+      font-weight: 500;
+      text-align: left;
+      color: #8e8e8e;
+    }
+
+    .custom-float-label-field {
+      text-align: left;
+    }
   }
 
-  .icon-action {
-    width: 14px;
-    height: 14px;
-    cursor: pointer;
-
-    &:hover {
-      filter: brightness(0.8);
+  .custom-card {
+    .form-cards-title {
+      color: #8e8e8e;
     }
   }
 
@@ -94,22 +97,24 @@
 }
 
 ::ng-deep {
-  #LogbookPage {
-    .custom-dialog-container {
-      .p-dialog {
-        background-color: #fbfbfb;
-        border-radius: 8px;
-
-        .p-dialog-header,
-        .p-dialog-content,
-        .p-dialog-footer {
-          background-color: transparent;
-        }
+  #LogbookDetailEditPage {
+    .button-group {
+      .p-button-label {
+        font-weight: 500;
       }
     }
+  }
 
-    .p-confirm-dialog .p-dialog-footer {
-      display: flex;
+  .custom-dialog-container {
+    .p-dialog {
+      background-color: #fbfbfb;
+      border-radius: 8px;
+
+      .p-dialog-header,
+      .p-dialog-content,
+      .p-dialog-footer {
+        background-color: transparent;
+      }
     }
   }
 }

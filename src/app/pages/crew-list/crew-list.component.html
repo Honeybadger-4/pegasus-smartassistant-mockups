@@ -1,0 +1,28 @@
+<div id="LogbookPage">
+  <div class="flex items-center justify-between">
+    <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" />
+
+    <p-iconField iconPosition="right" class="custom-icon-field w-[234px]">
+      <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+      <input
+        type="text"
+        pInputText
+        placeholder="Crew Name&Surname / Company ID"
+        [(ngModel)]="filterInput"
+      />
+    </p-iconField>
+  </div>
+
+  <section class="table-header-section lg:flex block mt-5">
+    <!-- TODO: Logbook ekranından seçilen Tarihe göre title dinamik olarak gösterilecek. -->
+    <div class="header-title w-full">December 2024</div>
+  </section>
+
+  <section class="table-section custom-card">
+    <app-custom-table
+      [tableData]="logbookData"
+      [tableColumns]="columns"
+      (rowClickedEvent)="tableRowSelected($event)"
+    ></app-custom-table>
+  </section>
+</div>
