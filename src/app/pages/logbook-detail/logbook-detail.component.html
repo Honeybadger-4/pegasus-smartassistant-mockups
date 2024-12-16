@@ -37,11 +37,28 @@
   </section>
 
   <section>
-    <div>
-      <p class="font-bold text-[12px]">December 2024</p>
+    <div class="flex items-center justify-between">
       <div class="text-[12px]">
+        <p class="font-bold">December 2024</p>
         <span class="font-bold">Crew Name&Surname / Company ID:</span>  
         <span class="ml-2">{{crewListTableData?.crewNameSurname}}</span>
+      </div>
+
+      <div class="button-group flex items-center gap-4">
+        <button 
+          pButton 
+          type="button" 
+          label="Approve" 
+          [disabled]="selectedCheckbox.length <= 0"
+          (click)="onApprove()">
+        </button>
+        <button 
+          pButton 
+          type="button" 
+          label="Reject" 
+          [disabled]="selectedCheckbox.length > 1 || selectedCheckbox.length <= 0"
+          (click)="this.displayRejectPopup = true;">
+        </button>
       </div>
     </div>
   </section>
@@ -65,9 +82,9 @@
       <!-- Başlık ve Alt Bilgiler -->
       <p class="title">Upload Reason</p>
       <div class="popup-header">
-        <p><b>Date:</b> {{ selectedRow?.uploadDate }}</p>
-        <p><b>A/C Type:</b> {{ selectedRow?.aircraftType }}</p>
-        <p><b>A/C Reg:</b> {{ selectedRow?.aircraftReg }}</p>
+        <p><b>Date:</b> {{ selectedCheckbox[0]?.date }}</p>
+        <p><b>A/C Type:</b> {{ selectedCheckbox[0]?.aircraftType }}</p>
+        <p><b>A/C Reg:</b> {{ selectedCheckbox[0]?.aircraftReg }}</p>
       </div>
 
       <!-- Giriş Alanı -->
@@ -101,24 +118,5 @@
 </ng-template>
 
 <ng-template #editableCellBodyTemplate let-rowData="rowData">
-  <!-- Düzenleme Butonu Her Durumda Görünür -->
   <i class="pi pi-pen-to-square" (click)="goToLogBookDetailEditPage(rowData)"></i>
-
-  <!-- Onay ve Reddetme İkonları Sadece REASSING Durumu İçin -->
-  @if (rowData.status === "REASSING") {
-    <div class="action-icons">
-      <img
-        src="/icons/check-icon.svg"
-        alt="Approve"
-        class="icon-action"
-        (click)="onApprove(rowData)"
-      />
-      <img
-        src="/icons/reject-icon.svg"
-        alt="Reject"
-        class="icon-action"
-        (click)="onReject(rowData)"
-      />
-    </div>
-  }
 </ng-template>

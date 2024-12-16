@@ -13,7 +13,7 @@
 
       .search-input {
         flex-grow: 1;
-        font-size: 12px;
+        font-size: 10px;
         font-weight: 300;
         background-color: transparent;
         outline: none !important;
@@ -25,19 +25,14 @@
     }
   }
 
-  .action-icons {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .icon-action {
-    width: 14px;
-    height: 14px;
-    cursor: pointer;
-
-    &:hover {
-      filter: brightness(0.8);
+  .button-group {
+    .p-button {
+      background-color: #FEB914;
+      width: 100px;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
     }
   }
 
@@ -91,6 +86,7 @@
       }
     }
   }
+  
 }
 
 ::ng-deep {
@@ -110,6 +106,12 @@
 
     .p-confirm-dialog .p-dialog-footer {
       display: flex;
+    }
+
+    .button-group {
+      .p-button-label {
+        font-weight: 400;
+      }
     }
 
     // Table checbox style 

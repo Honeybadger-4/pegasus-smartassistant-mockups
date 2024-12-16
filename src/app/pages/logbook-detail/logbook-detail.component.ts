@@ -45,7 +45,6 @@ export class LogbookDetailComponent {
   searchQuery = '';
   displayRejectPopup = false;
   rejectReason = '';
-  selectedRow: any;
   selectedCheckbox: any[] = [];
 
   statusOptions = [
@@ -355,7 +354,7 @@ export class LogbookDetailComponent {
     console.log(this.selectedCheckbox);
   }
 
-  onApprove(rowData: any): void {
+  onApprove(): void {
     this.confirmationService.confirm({
       message: `<div class="custom-confirm-content">
                   <div class="custom-confirm-icon">
@@ -373,8 +372,7 @@ export class LogbookDetailComponent {
       acceptButtonStyleClass: 'action-button',
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
-        console.log('Approved:', rowData);
-        this.selectedRow = rowData;
+        console.log('Approved:', this.selectedCheckbox);
       },
       reject: () => {
         console.log('Approval cancelled.');
@@ -382,7 +380,7 @@ export class LogbookDetailComponent {
     });
   }
 
-  onReject(rowData: any): void {
+  onReject(data: any): void {
     this.confirmationService.confirm({
       message: `<div class="custom-confirm-content">
                   <div class="custom-confirm-icon">
@@ -400,7 +398,7 @@ export class LogbookDetailComponent {
       acceptButtonStyleClass: 'action-button',
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
-        this.displayRejectPopup = true;
+        console.log(data);
       },
       reject: () => {
         console.log('Rejection cancelled.');
@@ -409,9 +407,14 @@ export class LogbookDetailComponent {
   }
 
   submitRejectReason(): void {
-    console.log('Rejected Reason:', this.rejectReason);
     this.displayRejectPopup = false;
-    this.rejectReason = '';
+    
+    let rejectReguestBody = {
+      selectedLogBook: this.selectedCheckbox[0],
+      rejectReason: this.rejectReason
+    }
+
+    this.onReject(rejectReguestBody);
   }
 
   goToLogBookDetailEditPage(data: any) {
