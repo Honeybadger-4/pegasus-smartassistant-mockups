@@ -1,4 +1,4 @@
-import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, inject, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgModel } from '@angular/forms';
 import { Column } from '@shared/models/columns';
@@ -116,6 +116,10 @@ export class CrewListComponent {
       { field: 'approvedLogs', header: 'Approved Logs' },
       { field: 'reassingLogs', header: 'Reassing Logs' },
     ];
+  }
+
+  tableRowSelected(event: any) {
+    this.goToLogBookDetailListPage(event);
   }
 
   goToLogBookDetailListPage(data: any) {

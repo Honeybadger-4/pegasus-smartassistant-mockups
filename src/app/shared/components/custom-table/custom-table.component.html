@@ -7,10 +7,14 @@
   [paginator]="true"
   [rows]="20"
   [rowsPerPageOptions]="[20, 40, 80]"
+  [selectionMode]="selectionMode"
+  [(selection)]="selectionData"
+  (selectionChange)="selectionChange($event)"
 >
   <!-- Table Header -->
   <ng-template pTemplate="header" let-columns>
     <tr>
+      <th *ngIf="selectionMode === 'multiple'" style="width: 4rem"><p-tableHeaderCheckbox /></th>
       <th *ngFor="let col of columns">
         {{ col.header }}
       </th>
@@ -19,7 +23,11 @@
 
   <!-- Table Body -->
   <ng-template pTemplate="body" let-rowData>
-    <tr>
+    <tr (click)="rowClicked(rowData)">
+      <td *ngIf="selectionMode === 'multiple'">
+        <p-tableCheckbox [value]="rowData" />
+      </td>
+
       <td *ngFor="let column of tableColumns">
         <ng-container *ngIf="column.template; else defaultCell">
           <ng-container

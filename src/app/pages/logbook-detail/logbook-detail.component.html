@@ -50,6 +50,8 @@
     <app-custom-table
       [tableData]="logbookDetailData"
       [tableColumns]="columns"
+      selectionMode="multiple"
+      (selectedCheckbox)="selectionCheckbox($event)"
     ></app-custom-table>
   </section>
 

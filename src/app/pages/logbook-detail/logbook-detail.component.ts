@@ -46,6 +46,7 @@ export class LogbookDetailComponent {
   displayRejectPopup = false;
   rejectReason = '';
   selectedRow: any;
+  selectedCheckbox: any[] = [];
 
   statusOptions = [
     { label: 'Status 1', value: 'status' },
@@ -347,6 +348,11 @@ export class LogbookDetailComponent {
       { field: '', header: '', template: this.previewCellBodyTemplate },
       { field: '', header: '', template: this.editableCellBodyTemplate },
     ];
+  }
+
+  selectionCheckbox(event: any) {
+    this.selectedCheckbox = event;
+    console.log(this.selectedCheckbox);
   }
 
   onApprove(rowData: any): void {
