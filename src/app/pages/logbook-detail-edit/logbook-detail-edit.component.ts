@@ -28,9 +28,10 @@ import { ToastModule } from 'primeng/toast';
     FloatLabelModule,
     CustomBreadcrumbComponent,
     ConfirmDialogModule,
-    DialogModule,ToastModule,
+    DialogModule,
+    ToastModule,
   ],
-  providers: [ConfirmationService,MessageService],
+  providers: [ConfirmationService, MessageService],
   templateUrl: './logbook-detail-edit.component.html',
   styleUrls: ['./logbook-detail-edit.component.scss'],
 })

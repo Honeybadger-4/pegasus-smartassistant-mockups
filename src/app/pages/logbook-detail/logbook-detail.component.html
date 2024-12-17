@@ -24,7 +24,6 @@
           placeholder="Duty Type"
         ></p-dropdown>
       </div>
-      
 
       <div class="dropdown-container">
         <p-dropdown
@@ -44,7 +43,10 @@
       <div class="text-[12px]">
         <p class="font-bold">December 2024</p>
         <span class="font-bold">Crew Name&Surname / Company ID:</span>
-        <span class="ml-2">{{ crewListTableData?.crewNameSurname }} / {{ crewListTableData?.companyId }}</span>
+        <span class="ml-2"
+          >{{ crewListTableData?.crewNameSurname }} /
+          {{ crewListTableData?.companyId }}</span
+        >
       </div>
 
       <div class="button-group flex items-center gap-4">
@@ -67,7 +69,7 @@
       </div>
     </div>
   </section>
-  
+
   <section class="table-section custom-card">
     <app-custom-table
       [tableData]="logbookDetailData"
