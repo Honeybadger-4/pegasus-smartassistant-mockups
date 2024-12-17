@@ -13,6 +13,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { Router } from '@angular/router';
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
 import { CheckboxModule } from 'primeng/checkbox';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-logbook',
@@ -29,10 +31,11 @@ import { CheckboxModule } from 'primeng/checkbox';
     InputTextModule,
     CustomBreadcrumbComponent,
     CheckboxModule,
+    ToastModule,
   ],
   templateUrl: './logbook-detail.component.html',
   styleUrl: './logbook-detail.component.scss',
-  providers: [ConfirmationService],
+  providers: [ConfirmationService, MessageService],
 })
 export class LogbookDetailComponent {
   @ViewChild('previewCellBodyTemplate', { static: true })
@@ -327,6 +330,7 @@ export class LogbookDetailComponent {
 
   constructor(
     private confirmationService: ConfirmationService,
+    private messageService: MessageService,
     private router: Router,
   ) {}
 
@@ -388,7 +392,10 @@ export class LogbookDetailComponent {
     });
   }
 
-  onReject(data: any): void {
+  onSubmitRejectReason(): void {
+    this.displayRejectPopup = false;
+
+    // Reject onay popup'ını aç
     this.confirmationService.confirm({
       message: `<div class="custom-confirm-content">
                   <div class="custom-confirm-icon">
@@ -406,7 +413,8 @@ export class LogbookDetailComponent {
       acceptButtonStyleClass: 'action-button',
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
-        console.log(data);
+        this.showRejectToast();
+        console.log('Rejected with reason:', this.rejectReason);
       },
       reject: () => {
         console.log('Rejection cancelled.');
@@ -414,15 +422,12 @@ export class LogbookDetailComponent {
     });
   }
 
-  submitRejectReason(): void {
-    this.displayRejectPopup = false;
-
-    let rejectReguestBody = {
-      selectedLogBook: this.selectedCheckbox[0],
-      rejectReason: this.rejectReason,
-    };
-
-    this.onReject(rejectReguestBody);
+  showRejectToast() {
+    this.messageService.add({
+      severity: 'warn',
+      summary: 'Warning',
+      detail: 'Your rejection email has been sent.',
+    });
   }
 
   goToLogBookDetailEditPage(data: any) {

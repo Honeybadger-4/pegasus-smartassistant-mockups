@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <main id="LogbookDetailPage">
   <section class="table-header-section w-full">
     <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" class="w-full" />
@@ -66,7 +67,7 @@
       </div>
     </div>
   </section>
-
+  
   <section class="table-section custom-card">
     <app-custom-table
       [tableData]="logbookDetailData"
@@ -106,7 +107,7 @@
           type="button"
           pButton
           label="Submit"
-          (click)="submitRejectReason()"
+          (click)="onSubmitRejectReason()"
           class="submit-button"
         ></button>
       </div>
