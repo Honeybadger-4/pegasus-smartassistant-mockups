@@ -13,15 +13,17 @@
         ></p-calendar>
       </div>
 
-      <div class="search-container">
-        <input
-          type="text"
-          placeholder="Crew Name&Surname / Company ID"
-          class="search-input"
-          [(ngModel)]="searchQuery"
-        />
-        <i class="pi pi-search search-icon"></i>
+      <div class="dropdown-container">
+        <p-dropdown
+          [options]="dutyTypeOptions"
+          [(ngModel)]="selectedDutyType"
+          optionLabel="label"
+          optionValue="value"
+          class="custom-dropdown period-dropdown"
+          placeholder="Duty Type"
+        ></p-dropdown>
       </div>
+      
 
       <div class="dropdown-container">
         <p-dropdown

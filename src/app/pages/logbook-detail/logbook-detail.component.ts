@@ -44,8 +44,8 @@ export class LogbookDetailComponent {
 
   crewListTableData: any;
   dateRange: Date[] = [];
+  selectedDutyType = '';
   selectedPeriod = '';
-  searchQuery = '';
   displayRejectPopup = false;
   rejectReason = '';
   selectedCheckbox: any[] = [];
@@ -54,6 +54,11 @@ export class LogbookDetailComponent {
     { label: 'Status 1', value: 'status' },
     { label: 'Status 2', value: 'status' },
     { label: 'Status 3', value: 'status' },
+  ];
+  dutyTypeOptions = [
+    { label: 'Duty Type 1', value: 'dutyType1' },
+    { label: 'Duty Type 2', value: 'dutyType2' },
+    { label: 'Duty Type 3', value: 'dutyType3' },
   ];
 
   breadcrumbItems = [
