@@ -395,7 +395,6 @@ export class LogbookDetailComponent {
   onSubmitRejectReason(): void {
     this.displayRejectPopup = false;
 
-    // Reject onay popup'ını aç
     this.confirmationService.confirm({
       message: `<div class="custom-confirm-content">
                   <div class="custom-confirm-icon">

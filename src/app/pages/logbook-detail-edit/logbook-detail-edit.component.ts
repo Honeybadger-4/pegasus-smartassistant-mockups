@@ -13,6 +13,8 @@ import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-logbook-edit',
@@ -26,9 +28,9 @@ import { DialogModule } from 'primeng/dialog';
     FloatLabelModule,
     CustomBreadcrumbComponent,
     ConfirmDialogModule,
-    DialogModule,
+    DialogModule,ToastModule,
   ],
-  providers: [ConfirmationService],
+  providers: [ConfirmationService,MessageService],
   templateUrl: './logbook-detail-edit.component.html',
   styleUrls: ['./logbook-detail-edit.component.scss'],
 })
@@ -76,6 +78,7 @@ export class LogbookDetailEditComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
+    private messageService: MessageService,
   ) {}
 
   ngOnInit() {
@@ -195,18 +198,9 @@ export class LogbookDetailEditComponent implements OnInit {
     });
   }
 
-  submitRejectReason(): void {
+  onSubmitRejectReason(): void {
     this.displayRejectPopup = false;
 
-    let rejectReguestBody = {
-      selectedLogBook: this.editData,
-      rejectReason: this.rejectReason,
-    };
-
-    this.onReject(rejectReguestBody);
-  }
-
-  onReject(data: any): void {
     this.confirmationService.confirm({
       message: `<div class="custom-confirm-content">
                   <div class="custom-confirm-icon">
@@ -224,11 +218,20 @@ export class LogbookDetailEditComponent implements OnInit {
       acceptButtonStyleClass: 'action-button',
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
-        console.log(data);
+        this.showRejectToast();
+        console.log('Rejected with reason:', this.rejectReason);
       },
       reject: () => {
         console.log('Rejection cancelled.');
       },
+    });
+  }
+
+  showRejectToast() {
+    this.messageService.add({
+      severity: 'warn',
+      summary: 'Warning',
+      detail: 'Your rejection email has been sent.',
     });
   }
 }
