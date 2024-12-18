@@ -13,6 +13,7 @@ import { CrewListComponent } from './pages/crew-list/crew-list.component';
 import { LogbookDetailComponent } from './pages/logbook-detail/logbook-detail.component';
 import { LogbookDetailEditComponent } from './pages/logbook-detail-edit/logbook-detail-edit.component';
 import { RouteComponent } from './pages/route/route.component';
+import { authGuard } from '@shared/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -22,6 +23,7 @@ export const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: '',
