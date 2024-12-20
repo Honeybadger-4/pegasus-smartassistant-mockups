@@ -10,7 +10,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
-      if ((error.error.status = 401)) {
+      if ((error.error.status === 401)) {
         // TODO: Kullanıcı logout fonksiyonu çağırılıp logout edilmeli. Login'e yönlendirilmeden önce
         router.navigate(['/login']);
       }
