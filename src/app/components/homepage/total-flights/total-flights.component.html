@@ -10,12 +10,8 @@
       </div>
 
       <div class="flex">
-        <div>
-          <highcharts-chart
-            *ngIf="isHighcharts"
-            [Highcharts]="Highcharts"
-            [options]="chartOptionsFlights"
-          ></highcharts-chart>
+        <div class="chart-container">
+          <app-custom-donut-chart [data]="chartDataOne" [options]="chartOptionsOne" />
         </div>
 
         <div class="legend-section legend-flights">
@@ -30,12 +26,8 @@
 
     <!-- Fuel Chart -->
     <div class="flex">
-      <div class="chart-section">
-        <highcharts-chart
-          *ngIf="isHighcharts"
-          [Highcharts]="Highcharts"
-          [options]="chartOptionsFuelOrder"
-        ></highcharts-chart>
+      <div class="chart-container">
+        <app-custom-donut-chart [data]="chartDataTwo" [options]="chartOptionsTwo" />
       </div>
 
       <div class="legend-section legend-fuel">
