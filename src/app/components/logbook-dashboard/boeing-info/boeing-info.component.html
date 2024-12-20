@@ -1,0 +1,48 @@
+<div class="graph-container">
+  <app-boeing-info title="Boeing / 2024" />
+
+  <div class="charts-box grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
+    <!-- Total Duty Chart -->
+    <div class="chart-box-duty lg:flex sm: block">
+      <div class="left-content">
+        <div class="total-duty-title">Total Duty</div>
+        <div class="total-duty-number">12.345</div>
+      </div>
+
+      <div class="flex">
+        <div>
+          <highcharts-chart
+            *ngIf="isHighcharts"
+            [Highcharts]="Highcharts"
+            [options]="chartOptionsDuty"
+          ></highcharts-chart>
+        </div>
+
+        <div class="legend-section legend-duty">
+          <ul>
+            <li><span class="dot flight"></span>Flight</li>
+            <li><span class="dot training"></span>Training</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Time Chart -->
+    <div class="flex">
+      <div class="chart-section">
+        <highcharts-chart
+          *ngIf="isHighcharts"
+          [Highcharts]="Highcharts"
+          [options]="chartOptionsTime"
+        ></highcharts-chart>
+      </div>
+
+      <div class="legend-section legend-time">
+        <ul>
+          <li><span class="dot flight"></span>Flight</li>
+          <li><span class="dot training"></span>Training</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -14,6 +14,7 @@ import { LogbookDetailComponent } from './pages/logbook-detail/logbook-detail.co
 import { LogbookDetailEditComponent } from './pages/logbook-detail-edit/logbook-detail-edit.component';
 import { RouteComponent } from './pages/route/route.component';
 import { authGuard } from '@shared/guards/auth.guard';
+import { LogbookComponent } from './pages/logbook/logbook.component';
 
 export const routes: Routes = [
   {
@@ -65,6 +66,10 @@ export const routes: Routes = [
       {
         path: 'logbook',
         children: [
+          {
+            path: '',
+            component: LogbookComponent,
+          },
           {
             path: 'crew-list',
             component: CrewListComponent,

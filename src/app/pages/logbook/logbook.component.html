@@ -1,0 +1,16 @@
+<div id="LogbookComponent">
+  <section class="table-header-section">
+    <span class="header-title">Logbook</span>
+    <p-dropdown
+      [options]="yearOptions"
+      [(ngModel)]="selectedYear"
+      optionLabel="label"
+      optionValue="value"
+      class="custom-dropdown period-dropdown"
+      placeholder="Select Year"
+    ></p-dropdown>
+
+  <app-boeing-info></app-boeing-info>
+  <app-airbus-info></app-airbus-info>
+  </section>
+</div>
