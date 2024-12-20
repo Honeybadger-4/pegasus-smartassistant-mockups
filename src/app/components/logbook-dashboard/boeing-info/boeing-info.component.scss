@@ -1,61 +1,13 @@
-.graph-container {
-  border: 0.5px solid #9a9a9a;
-  padding: 15px;
-  border-radius: 2px;
-  margin-bottom: 50px;
-
-  .charts-box {
-    padding: 10px 75px 10px 75px;
-
-    .chart-box-duty {
-      .total-flights-duty {
-        font-size: 20px;
-        color: #4f4f4f;
-      }
-
-      .total-flights-duty {
-        font-size: 48px;
-        font-weight: 500;
-        color: #4f4f4f;
-      }
-    }
+#BoeingInfo {
+  .form-section {
+    margin-bottom: 20px;
   }
-}
 
-.legend-section {
-  li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
+  .title {
+    color: #444444;
+    font-weight: bold;
+    margin-bottom: 20px;
     font-size: 14px;
-    color: #4f4f4f;
 
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      margin-right: 8px;
-      display: inline-block;
-    }
-  }
-
-  &.legend-duty {
-    .flight {
-      background-color: #f79009;
-    }
-
-    .training {
-      background-color: #fed447;
-    }
-  }
-
-  &.legend-time {
-    .flight {
-      background-color: #3d348b;
-    }
-
-    .training {
-      background-color: #7678ed;
-    }
   }
 }
