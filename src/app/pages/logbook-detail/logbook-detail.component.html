@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <main id="LogbookDetailPage">
   <section class="table-header-section w-full">
     <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" class="w-full" />
@@ -13,14 +14,15 @@
         ></p-calendar>
       </div>
 
-      <div class="search-container">
-        <input
-          type="text"
-          placeholder="Crew Name&Surname / Company ID"
-          class="search-input"
-          [(ngModel)]="searchQuery"
-        />
-        <i class="pi pi-search search-icon"></i>
+      <div class="dropdown-container">
+        <p-dropdown
+          [options]="dutyTypeOptions"
+          [(ngModel)]="selectedDutyType"
+          optionLabel="label"
+          optionValue="value"
+          class="custom-dropdown period-dropdown"
+          placeholder="Duty Type"
+        ></p-dropdown>
       </div>
 
       <div class="dropdown-container">
@@ -41,7 +43,10 @@
       <div class="text-[12px]">
         <p class="font-bold">December 2024</p>
         <span class="font-bold">Crew Name&Surname / Company ID:</span>
-        <span class="ml-2">{{ crewListTableData?.crewNameSurname }}</span>
+        <span class="ml-2"
+          >{{ crewListTableData?.crewNameSurname }} /
+          {{ crewListTableData?.companyId }}</span
+        >
       </div>
 
       <div class="button-group flex items-center gap-4">
@@ -104,7 +109,7 @@
           type="button"
           pButton
           label="Submit"
-          (click)="submitRejectReason()"
+          (click)="onSubmitRejectReason()"
           class="submit-button"
         ></button>
       </div>
