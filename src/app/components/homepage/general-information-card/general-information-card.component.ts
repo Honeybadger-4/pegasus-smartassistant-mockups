@@ -16,18 +16,8 @@ export class GeneralInformationCardComponent implements OnInit {
     datasets: [
       {
         data: [300, 50, 100],
-        backgroundColor: [
-          "#ECF39E",
-              "#90A955",
-              "#4F772D",
-              "#31572C"
-        ],
-        hoverBackgroundColor: [
-          "#ECF39E",
-              "#90A955",
-              "#4F772D",
-              "#31572C"
-        ],
+        backgroundColor: ['#ECF39E', '#90A955', '#4F772D', '#31572C'],
+        hoverBackgroundColor: ['#ECF39E', '#90A955', '#4F772D', '#31572C'],
       },
     ],
   };
@@ -35,45 +25,35 @@ export class GeneralInformationCardComponent implements OnInit {
   chartOptionsOne: any = {
     cutout: '60%',
     plugins: {
-        legend: {
-            labels: {
-                //color: "blue"
-            }
-        }
-    }
+      legend: {
+        labels: {
+          //color: "blue"
+        },
+      },
+    },
   };
-  
+
   chartDataTwo: any = {
-        //labels: ['A', 'B', 'C'],
-        datasets: [
-          {
-            data: [300, 50, 100],
-            backgroundColor: [
-              "#5E548E",
-              "#E0B1CB",
-              "#BE95C4",
-              "#9F86C0"
-            ],
-            hoverBackgroundColor: [
-              "#5E548E",
-              "#E0B1CB",
-              "#BE95C4",
-              "#9F86C0"
-            ],
-          },
-        ],
-  }
+    //labels: ['A', 'B', 'C'],
+    datasets: [
+      {
+        data: [300, 50, 100],
+        backgroundColor: ['#5E548E', '#E0B1CB', '#BE95C4', '#9F86C0'],
+        hoverBackgroundColor: ['#5E548E', '#E0B1CB', '#BE95C4', '#9F86C0'],
+      },
+    ],
+  };
 
   chartOptionsTwo: any = {
     cutout: '60%',
     plugins: {
-        legend: {
-            labels: {
-                //color: "blue"
-            }
-        }
-    }
-  }
+      legend: {
+        labels: {
+          //color: "blue"
+        },
+      },
+    },
+  };
 
   ngOnInit(): void {}
 }

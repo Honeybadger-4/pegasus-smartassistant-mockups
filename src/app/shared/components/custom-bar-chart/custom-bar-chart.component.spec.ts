@@ -8,9 +8,8 @@ describe('CustomBarChartComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CustomBarChartComponent]
-    })
-    .compileComponents();
+      imports: [CustomBarChartComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CustomBarChartComponent);
     component = fixture.componentInstance;

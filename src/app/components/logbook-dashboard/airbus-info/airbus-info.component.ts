@@ -5,8 +5,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './airbus-info.component.html',
-  styleUrl: './airbus-info.component.scss'
+  styleUrl: './airbus-info.component.scss',
 })
-export class AirbusInfoComponent {
-
-}
+export class AirbusInfoComponent {}

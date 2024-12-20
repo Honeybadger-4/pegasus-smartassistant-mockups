@@ -6,31 +6,18 @@ import { CustomDonutChartComponent } from '../../../shared/components/custom-don
 @Component({
   selector: 'app-total-flights',
   standalone: true,
-  imports: [
-    CommonModule,
-    CardsHeaderComponent,
-    CustomDonutChartComponent,
-  ],
+  imports: [CommonModule, CardsHeaderComponent, CustomDonutChartComponent],
   templateUrl: './total-flights.component.html',
   styleUrls: ['./total-flights.component.scss'],
 })
 export class TotalFlightsComponent implements OnInit {
-
   chartDataOne: any = {
     //labels: ['A', 'B', 'C'],
     datasets: [
       {
         data: [300, 50, 100],
-        backgroundColor: [
-          "#F79009",
-          "#D62828",
-          "#FED447"
-        ],
-        hoverBackgroundColor: [
-          "#F79009",
-          "#D62828",
-          "#FED447"
-        ],
+        backgroundColor: ['#F79009', '#D62828', '#FED447'],
+        hoverBackgroundColor: ['#F79009', '#D62828', '#FED447'],
       },
     ],
   };
@@ -38,44 +25,35 @@ export class TotalFlightsComponent implements OnInit {
   chartOptionsOne: any = {
     cutout: '60%',
     plugins: {
-        legend: {
-            labels: {
-                //color: "blue"
-            }
-        }
-    }
+      legend: {
+        labels: {
+          //color: "blue"
+        },
+      },
+    },
   };
-  
+
   chartDataTwo: any = {
-        //labels: ['A', 'B', 'C'],
-        datasets: [
-          {
-            data: [300, 50, 100],
-            backgroundColor: [
-              "#092FF7",
-              "#3D348B",
-              "#7678ED"
-            ],
-            hoverBackgroundColor: [
-              "#092FF7",
-              "#3D348B",
-              "#7678ED"
-            ],
-          },
-        ],
-  }
+    //labels: ['A', 'B', 'C'],
+    datasets: [
+      {
+        data: [300, 50, 100],
+        backgroundColor: ['#092FF7', '#3D348B', '#7678ED'],
+        hoverBackgroundColor: ['#092FF7', '#3D348B', '#7678ED'],
+      },
+    ],
+  };
 
   chartOptionsTwo: any = {
     cutout: '60%',
     plugins: {
-        legend: {
-            labels: {
-                //color: "blue"
-            }
-        }
-    }
-  }
+      legend: {
+        labels: {
+          //color: "blue"
+        },
+      },
+    },
+  };
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }

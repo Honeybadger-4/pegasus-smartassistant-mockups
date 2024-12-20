@@ -1,13 +1,19 @@
 import { isPlatformBrowser } from '@angular/common';
-import { ChangeDetectorRef, Component, inject, Input, PLATFORM_ID } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  inject,
+  Input,
+  PLATFORM_ID,
+} from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 
 @Component({
   selector: 'app-custom-donut-chart',
   standalone: true,
-  imports: [ ChartModule ],
+  imports: [ChartModule],
   templateUrl: './custom-donut-chart.component.html',
-  styleUrl: './custom-donut-chart.component.scss'
+  styleUrl: './custom-donut-chart.component.scss',
 })
 export class CustomDonutChartComponent {
   @Input() data: any;
@@ -23,10 +29,7 @@ export class CustomDonutChartComponent {
 
   initChart() {
     if (isPlatformBrowser(this.platformId)) {
-        this.cd.markForCheck()
+      this.cd.markForCheck();
     }
-}
-
-
-
+  }
 }

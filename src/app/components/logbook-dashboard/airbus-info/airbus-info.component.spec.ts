@@ -8,9 +8,8 @@ describe('AirbusInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AirbusInfoComponent]
-    })
-    .compileComponents();
+      imports: [AirbusInfoComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AirbusInfoComponent);
     component = fixture.componentInstance;
