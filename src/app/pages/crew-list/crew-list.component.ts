@@ -28,7 +28,7 @@ import { CustomDonutChartComponent } from '@shared/components/custom-donut-chart
     IconFieldModule,
     InputIconModule,
     PanelModule,
-    CustomDonutChartComponent
+    CustomDonutChartComponent,
   ],
   templateUrl: './crew-list.component.html',
   styleUrl: './crew-list.component.scss',
@@ -115,7 +115,7 @@ export class CrewListComponent {
       reassingLogs: '-',
     },
   ];
-  
+
   chartDataOne: any = {
     //labels: ['A', 'B', 'C'],
     datasets: [
@@ -159,7 +159,7 @@ export class CrewListComponent {
       },
     },
   };
-  
+
   columns!: Column[];
 
   ngOnInit() {

@@ -4,22 +4,25 @@ import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 
-
 import { CustomDonutChartComponent } from '../../../shared/components/custom-donut-chart/custom-donut-chart.component';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-boeing-info',
   standalone: true,
-  imports: [CommonModule, FormsModule, CustomTableComponent,CustomDonutChartComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    CustomTableComponent,
+    CustomDonutChartComponent,
+  ],
   templateUrl: './boeing-info.component.html',
   styleUrl: './boeing-info.component.scss',
 })
-export class BoeingInfoComponent implements OnInit  {
+export class BoeingInfoComponent implements OnInit {
   router = inject(Router);
-  
-  columns: Column[] = [];
 
+  columns: Column[] = [];
 
   boeingInfoData = [
     {
@@ -82,8 +85,6 @@ export class BoeingInfoComponent implements OnInit  {
       flight: '135  / 2.987 hours',
       training: '10  / 456 hours',
     },
-
-
   ];
 
   chartDataOne: any = {
@@ -148,8 +149,3 @@ export class BoeingInfoComponent implements OnInit  {
     });
   }
 }
-
-
-
-
-

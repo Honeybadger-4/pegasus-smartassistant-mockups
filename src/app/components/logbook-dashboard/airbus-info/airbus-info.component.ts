@@ -9,7 +9,12 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-airbus-info',
   standalone: true,
-  imports: [CommonModule, FormsModule, CustomTableComponent, CustomDonutChartComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    CustomTableComponent,
+    CustomDonutChartComponent,
+  ],
   templateUrl: './airbus-info.component.html',
   styleUrl: './airbus-info.component.scss',
 })
@@ -78,8 +83,6 @@ export class AirbusInfoComponent {
       flight: '135  / 2.987 hours',
       training: '10  / 456 hours',
     },
-
-
   ];
 
   chartDataOne: any = {

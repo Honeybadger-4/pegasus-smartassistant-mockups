@@ -10,7 +10,10 @@
         </div>
 
         <div class="chart-container">
-          <app-custom-donut-chart [data]="chartDataOne" [options]="chartOptionsOne" />
+          <app-custom-donut-chart
+            [data]="chartDataOne"
+            [options]="chartOptionsOne"
+          />
         </div>
 
         <div class="list-section duty-chart-list">
@@ -32,7 +35,10 @@
         </div>
 
         <div class="chart-container">
-          <app-custom-donut-chart [data]="chartDataTwo" [options]="chartOptionsTwo" />
+          <app-custom-donut-chart
+            [data]="chartDataTwo"
+            [options]="chartOptionsTwo"
+          />
         </div>
 
         <div class="list-section time-chart-list">
@@ -48,9 +54,9 @@
   <section class="table-section custom-card">
     <p class="title">Airbus</p>
 
-    <app-custom-table 
-      [tableData]="airbusInfoData" 
-      [tableColumns]="columns" 
+    <app-custom-table
+      [tableData]="airbusInfoData"
+      [tableColumns]="columns"
       [isPaginator]="false"
       (rowClickedEvent)="tableRowSelected($event)"
     />
