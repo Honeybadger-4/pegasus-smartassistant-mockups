@@ -14,6 +14,8 @@ import { MenuItem } from 'primeng/api';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { Router } from '@angular/router';
+import { PanelModule } from 'primeng/panel';
+import { CustomDonutChartComponent } from '@shared/components/custom-donut-chart/custom-donut-chart.component';
 
 @Component({
   selector: 'app-logbook',
@@ -25,13 +27,21 @@ import { Router } from '@angular/router';
     CustomBreadcrumbComponent,
     IconFieldModule,
     InputIconModule,
+    PanelModule,
+    CustomDonutChartComponent
   ],
   templateUrl: './crew-list.component.html',
   styleUrl: './crew-list.component.scss',
 })
 export class CrewListComponent {
-  breadcrumbItems: MenuItem[] = [];
+  router = inject(Router);
+
+  breadcrumbItems: MenuItem[] = [
+    { label: 'Logbook', route: '/logbook' },
+    { label: 'Crew List' },
+  ];
   filterInput = '';
+  logbookDashboardData: any;
   logbookData = [
     {
       id: '0',
@@ -105,17 +115,58 @@ export class CrewListComponent {
       reassingLogs: '-',
     },
   ];
+  
+  chartDataOne: any = {
+    //labels: ['A', 'B', 'C'],
+    datasets: [
+      {
+        data: [300, 50],
+        backgroundColor: ['#5E548E', '#9F86C0'],
+        hoverBackgroundColor: ['#5E548E', '#9F86C0'],
+      },
+    ],
+  };
 
+  chartOptionsOne: any = {
+    cutout: '65%',
+    plugins: {
+      legend: {
+        labels: {
+          //color: "blue"
+        },
+      },
+    },
+  };
+
+  chartDataTwo: any = {
+    //labels: ['A', 'B', 'C'],
+    datasets: [
+      {
+        data: [300, 50],
+        backgroundColor: ['#31572C', '#4F772D'],
+        hoverBackgroundColor: ['#31572C', '#4F772D'],
+      },
+    ],
+  };
+
+  chartOptionsTwo: any = {
+    cutout: '65%',
+    plugins: {
+      legend: {
+        labels: {
+          //color: "blue"
+        },
+      },
+    },
+  };
+  
   columns!: Column[];
-  router = inject(Router);
 
   ngOnInit() {
     this.defineMainColumns();
 
-    this.breadcrumbItems = [
-      { label: 'Logbook', route: '/logbook' },
-      { label: 'Crew List' },
-    ];
+    this.logbookDashboardData = history.state.data;
+    console.log(this.logbookDashboardData);
   }
 
   // Define Columns Operation

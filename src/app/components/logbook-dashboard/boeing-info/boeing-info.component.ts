@@ -1,15 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core'; // OnInit burada doğru şekilde içe aktarılıyor
+import { Component, inject, OnInit } from '@angular/core'; // OnInit burada doğru şekilde içe aktarılıyor
 import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 
 
 import { CustomDonutChartComponent } from '../../../shared/components/custom-donut-chart/custom-donut-chart.component';
-
-
-
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-boeing-info',
@@ -19,6 +16,8 @@ import { CustomDonutChartComponent } from '../../../shared/components/custom-don
   styleUrl: './boeing-info.component.scss',
 })
 export class BoeingInfoComponent implements OnInit  {
+  router = inject(Router);
+  
   columns: Column[] = [];
 
 
@@ -91,15 +90,15 @@ export class BoeingInfoComponent implements OnInit  {
     //labels: ['A', 'B', 'C'],
     datasets: [
       {
-        data: [300, 50, 100],
-        backgroundColor: ['#F79009', '#D62828', '#FED447'],
-        hoverBackgroundColor: ['#F79009', '#D62828', '#FED447'],
+        data: [300, 50],
+        backgroundColor: ['#5E548E', '#9F86C0'],
+        hoverBackgroundColor: ['#5E548E', '#9F86C0'],
       },
     ],
   };
 
   chartOptionsOne: any = {
-    cutout: '60%',
+    cutout: '65%',
     plugins: {
       legend: {
         labels: {
@@ -113,15 +112,15 @@ export class BoeingInfoComponent implements OnInit  {
     //labels: ['A', 'B', 'C'],
     datasets: [
       {
-        data: [300, 50, 100],
-        backgroundColor: ['#092FF7', '#3D348B', '#7678ED'],
-        hoverBackgroundColor: ['#092FF7', '#3D348B', '#7678ED'],
+        data: [300, 50],
+        backgroundColor: ['#31572C', '#4F772D'],
+        hoverBackgroundColor: ['#31572C', '#4F772D'],
       },
     ],
   };
 
   chartOptionsTwo: any = {
-    cutout: '60%',
+    cutout: '65%',
     plugins: {
       legend: {
         labels: {
@@ -141,6 +140,12 @@ export class BoeingInfoComponent implements OnInit  {
       { field: 'flight', header: 'Flight' },
       { field: 'training', header: 'Training' },
     ];
+  }
+
+  tableRowSelected(event: any) {
+    this.router.navigate(['logbook/crew-list'], {
+      state: { data: event },
+    });
   }
 }
 

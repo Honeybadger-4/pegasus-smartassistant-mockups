@@ -1,17 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
+import { CustomDonutChartComponent } from '@shared/components/custom-donut-chart/custom-donut-chart.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-airbus-info',
   standalone: true,
-  imports: [CommonModule, FormsModule, CustomTableComponent],
+  imports: [CommonModule, FormsModule, CustomTableComponent, CustomDonutChartComponent],
   templateUrl: './airbus-info.component.html',
   styleUrl: './airbus-info.component.scss',
 })
 export class AirbusInfoComponent {
+  router = inject(Router);
+
   columns: Column[] = [];
   airbusInfoData = [
     {
@@ -78,6 +82,50 @@ export class AirbusInfoComponent {
 
   ];
 
+  chartDataOne: any = {
+    //labels: ['A', 'B', 'C'],
+    datasets: [
+      {
+        data: [300, 50],
+        backgroundColor: ['#5E548E', '#9F86C0'],
+        hoverBackgroundColor: ['#5E548E', '#9F86C0'],
+      },
+    ],
+  };
+
+  chartOptionsOne: any = {
+    cutout: '65%',
+    plugins: {
+      legend: {
+        labels: {
+          //color: "blue"
+        },
+      },
+    },
+  };
+
+  chartDataTwo: any = {
+    //labels: ['A', 'B', 'C'],
+    datasets: [
+      {
+        data: [300, 50],
+        backgroundColor: ['#31572C', '#4F772D'],
+        hoverBackgroundColor: ['#31572C', '#4F772D'],
+      },
+    ],
+  };
+
+  chartOptionsTwo: any = {
+    cutout: '65%',
+    plugins: {
+      legend: {
+        labels: {
+          //color: "blue"
+        },
+      },
+    },
+  };
+
   ngOnInit() {
     this.defineColumn();
   }
@@ -88,5 +136,11 @@ export class AirbusInfoComponent {
       { field: 'flight', header: 'Flight' },
       { field: 'training', header: 'Training' },
     ];
+  }
+
+  tableRowSelected(event: any) {
+    this.router.navigate(['logbook/crew-list'], {
+      state: { data: event },
+    });
   }
 }

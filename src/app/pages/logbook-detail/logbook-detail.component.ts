@@ -66,7 +66,7 @@ export class LogbookDetailComponent {
 
   breadcrumbItems = [
     { label: 'Logbook', route: '/logbook' },
-    { label: 'Crew List', route: '/crew-list' },
+    { label: 'Crew List', route: '/logbook/crew-list' },
     { label: 'Logbook Detail List' },
   ];
 
