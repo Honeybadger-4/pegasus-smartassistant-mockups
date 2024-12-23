@@ -1,4 +1,52 @@
 <main id="BoeingInfo">
+  <section class="graph-container">
+    <div class="charts-box grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
+      <!-- Flight Chart -->
+      <div class="chart-box-flight lg:flex sm: block">
+        <div class="left-content">
+          <div class="total-flights-title">Total Duty</div>
+          <div class="total-flights-number">12.345</div>
+        </div>
+  
+        <div class="flex">
+          <div class="chart-container">
+            <app-custom-donut-chart
+              [data]="chartDataOne"
+              [options]="chartOptionsOne"
+            />
+          </div>
+  
+          <div class="legend-section legend-flights">
+            <ul>
+              <li><span class="dot flight"></span> Flight</li>
+              <li><span class="dot training"></span>Training</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Fuel Chart -->
+      <div class="flex">
+        <div class="chart-container">
+          <app-custom-donut-chart
+            [data]="chartDataTwo"
+            [options]="chartOptionsTwo"
+          />
+        </div>
+  
+        <div class="legend-section legend-fuel">
+          <ul>
+            <li><span class="dot flight"></span> Flight</li>
+            <li><span class="dot training"></span>Training</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+
+
+
   <section class="table-section custom-card">
     <p class="title">Boeing</p>
 

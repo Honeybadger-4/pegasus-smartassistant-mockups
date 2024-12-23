@@ -1,18 +1,26 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core'; // OnInit burada doğru şekilde içe aktarılıyor
 import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 
+
+import { CustomDonutChartComponent } from '../../../shared/components/custom-donut-chart/custom-donut-chart.component';
+
+
+
+
+
 @Component({
   selector: 'app-boeing-info',
   standalone: true,
-  imports: [CommonModule, FormsModule, CustomTableComponent],
+  imports: [CommonModule, FormsModule, CustomTableComponent,CustomDonutChartComponent],
   templateUrl: './boeing-info.component.html',
   styleUrl: './boeing-info.component.scss',
 })
-export class BoeingInfoComponent {
+export class BoeingInfoComponent implements OnInit  {
   columns: Column[] = [];
+
 
   boeingInfoData = [
     {
@@ -78,6 +86,50 @@ export class BoeingInfoComponent {
 
 
   ];
+
+  chartDataOne: any = {
+    //labels: ['A', 'B', 'C'],
+    datasets: [
+      {
+        data: [300, 50, 100],
+        backgroundColor: ['#F79009', '#D62828', '#FED447'],
+        hoverBackgroundColor: ['#F79009', '#D62828', '#FED447'],
+      },
+    ],
+  };
+
+  chartOptionsOne: any = {
+    cutout: '60%',
+    plugins: {
+      legend: {
+        labels: {
+          //color: "blue"
+        },
+      },
+    },
+  };
+
+  chartDataTwo: any = {
+    //labels: ['A', 'B', 'C'],
+    datasets: [
+      {
+        data: [300, 50, 100],
+        backgroundColor: ['#092FF7', '#3D348B', '#7678ED'],
+        hoverBackgroundColor: ['#092FF7', '#3D348B', '#7678ED'],
+      },
+    ],
+  };
+
+  chartOptionsTwo: any = {
+    cutout: '60%',
+    plugins: {
+      legend: {
+        labels: {
+          //color: "blue"
+        },
+      },
+    },
+  };
 
   ngOnInit() {
     this.defineColumn();
