@@ -1,105 +1,59 @@
 import { Component, OnInit } from '@angular/core';
-import { HighchartsChartModule } from 'highcharts-angular';
-import Highcharts from 'highcharts';
 import { CardsHeaderComponent } from '../cards-header/cards-header.component';
 import { CommonModule } from '@angular/common';
+import { CustomDonutChartComponent } from '@shared/components/custom-donut-chart/custom-donut-chart.component';
 
 @Component({
   selector: 'app-combined-charts',
   standalone: true,
-  imports: [CommonModule, HighchartsChartModule, CardsHeaderComponent],
+  imports: [CommonModule, CustomDonutChartComponent, CardsHeaderComponent],
   templateUrl: './general-information-card.component.html',
   styleUrls: ['./general-information-card.component.scss'],
 })
 export class GeneralInformationCardComponent implements OnInit {
-  isHighcharts = typeof Highcharts === 'object';
-  Highcharts: typeof Highcharts = Highcharts;
-  chartOptionsGPSLoss: Highcharts.Options = {};
-  chartOptionsFuelExcess: Highcharts.Options = {};
+  chartDataOne: any = {
+    //labels: ['A', 'B', 'C'],
+    datasets: [
+      {
+        data: [300, 50, 100],
+        backgroundColor: ['#ECF39E', '#90A955', '#4F772D', '#31572C'],
+        hoverBackgroundColor: ['#ECF39E', '#90A955', '#4F772D', '#31572C'],
+      },
+    ],
+  };
 
-  ngOnInit(): void {
-    this.initializeChart();
-  }
+  chartOptionsOne: any = {
+    cutout: '60%',
+    plugins: {
+      legend: {
+        labels: {
+          //color: "blue"
+        },
+      },
+    },
+  };
 
-  initializeChart() {
-    this.chartOptionsGPSLoss = {
-      chart: {
-        type: 'pie',
-        height: 190,
-        width: 190,
-        plotBackgroundColor: undefined,
-        plotBorderWidth: 0,
-        plotShadow: false,
+  chartDataTwo: any = {
+    //labels: ['A', 'B', 'C'],
+    datasets: [
+      {
+        data: [300, 50, 100],
+        backgroundColor: ['#5E548E', '#E0B1CB', '#BE95C4', '#9F86C0'],
+        hoverBackgroundColor: ['#5E548E', '#E0B1CB', '#BE95C4', '#9F86C0'],
       },
-      title: { text: undefined },
-      plotOptions: {
-        pie: {
-          dataLabels: {
-            enabled: false,
-          },
-          center: ['50%', '50%'],
-          size: '100%',
-          innerSize: '25%',
-        },
-      },
-      credits: {
-        enabled: false,
-      },
-      series: [
-        {
-          type: 'pie',
-          name: 'GPS Loss Data',
-          innerSize: '65%',
-          data: [
-            { name: 'Surveillance System Affect', y: 40, color: '#31572C' },
-            { name: 'Company Id', y: 35, color: '#4F772D' },
-            { name: 'Loss of GPS1-2', y: 45, color: '#90A955' },
-            { name: 'Switching to Alternative Mode', y: 23, color: '#ECF39E' },
-          ],
-        },
-      ],
-    };
+    ],
+  };
 
-    this.chartOptionsFuelExcess = {
-      chart: {
-        type: 'pie',
-        height: 190,
-        width: 190,
-        plotBackgroundColor: undefined,
-        plotBorderWidth: 0,
-        plotShadow: false,
-      },
-      title: { text: undefined },
-      plotOptions: {
-        pie: {
-          dataLabels: {
-            enabled: false,
-          },
-          center: ['50%', '50%'],
-          size: '100%',
-          innerSize: '25%',
+  chartOptionsTwo: any = {
+    cutout: '60%',
+    plugins: {
+      legend: {
+        labels: {
+          //color: "blue"
         },
       },
-      credits: {
-        enabled: false,
-      },
-      series: [
-        {
-          type: 'pie',
-          name: 'Fuel Excess Data',
-          innerSize: '65%',
-          data: [
-            { name: 'Meteorology', y: 20, color: '#5E548E' },
-            { name: 'Arrival/Departure Rwy Diff.', y: 15, color: '#E0B1CB' },
-            { name: 'OCC Decision', y: 10, color: '#BE95C4' },
-            {
-              name: 'Traffic Congestion on Arr. Airp.',
-              y: 17,
-              color: '#9F86C0',
-            },
-          ],
-        },
-      ],
-    };
-  }
+    },
+  };
+
+  ngOnInit(): void {}
 }

@@ -1,7 +1,17 @@
-#LogbookPage {
-  .chart-panel-section {
+#AirbusInfo {
+  .title {
+    color: #444444;
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-size: 14px;
   }
+
   .graph-container {
+    border: 0.5px solid #9a9a9a;
+    padding: 15px;
+    border-radius: 2px;
+    margin-bottom: 50px;
+
     .chart-title {
       font-size: 20px;
       color: #4f4f4f;
@@ -19,8 +29,8 @@
     }
 
     .chart-container {
-      width: 200px;
-      height: 200px;
+      width: 130px;
+      height: 130px;
     }
 
     .list-section {
@@ -58,30 +68,6 @@
         .training {
           background-color: #4f772d;
         }
-      }
-    }
-  }
-
-  .table-header-section {
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-
-    .header-title {
-      font-weight: bold;
-      color: #4f4f4f;
-    }
-  }
-}
-
-::ng-deep {
-  #LogbookPage {
-    .chart-panel-section {
-      .p-panel .p-panel-header {
-        background-color: transparent;
-      }
-      .p-panel-expanded .p-panel-header {
-        border-bottom: none;
       }
     }
   }

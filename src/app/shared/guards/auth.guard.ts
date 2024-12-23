@@ -6,8 +6,8 @@ export const authGuard: CanActivateFn = (route, state) => {
   // TODO: Login servisi bağlandıktan sonra isCanActive değişkeninin değeri default olarak false olacak. Login servisi isteği içerisinde true yapılacak.
   let isCanActive: boolean = true;
 
-  if(!isCanActive) {
-    router.navigate(["/login"]);
+  if (!isCanActive) {
+    router.navigate(['/login']);
   }
 
   return isCanActive;

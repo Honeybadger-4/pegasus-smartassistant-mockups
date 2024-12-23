@@ -13,6 +13,68 @@
     </p-iconField>
   </div>
 
+  <section class="chart-panel-section mt-5">
+    <p-panel
+      header="Airbus / December 2024"
+      [toggleable]="true"
+      collapsed="true"
+      iconPos="start"
+      expandIcon="pi pi-angle-up"
+      collapseIcon="pi pi-angle-down"
+    >
+      <div class="graph-container">
+        <div class="grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
+          <!-- Total Duty Chart -->
+          <div class="lg:flex sm: block">
+            <div>
+              <div class="chart-title">Total Duty</div>
+              <div class="chart-number">12.345</div>
+            </div>
+
+            <div class="chart-container">
+              <app-custom-donut-chart
+                [data]="chartDataOne"
+                [options]="chartOptionsOne"
+              />
+            </div>
+
+            <div class="list-section duty-chart-list">
+              <ul>
+                <li><span class="dot flight"></span> Flight</li>
+                <li><span class="dot training"></span>Training</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Total Time Chart -->
+          <div class="lg:flex sm: block">
+            <div>
+              <div class="chart-title">Total Time</div>
+              <div class="chart-number">
+                <span>22.345</span>
+                <small> hours</small>
+              </div>
+            </div>
+
+            <div class="chart-container">
+              <app-custom-donut-chart
+                [data]="chartDataTwo"
+                [options]="chartOptionsTwo"
+              />
+            </div>
+
+            <div class="list-section time-chart-list">
+              <ul>
+                <li><span class="dot flight"></span> Flight</li>
+                <li><span class="dot training"></span>Training</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </p-panel>
+  </section>
+
   <section class="table-header-section lg:flex block mt-5">
     <!-- TODO: Logbook ekranından seçilen Tarihe göre title dinamik olarak gösterilecek. -->
     <div class="header-title w-full">December 2024</div>

@@ -14,6 +14,7 @@ export class CustomTableComponent {
   @Input() tableData: any;
   @Input() tableColumns!: Column[];
   @Input() selectionMode: 'single' | 'multiple' | null = null;
+  @Input() isPaginator: boolean = true;
 
   @Output() rowClickedEvent: EventEmitter<any> = new EventEmitter<any>();
   @Output() selectedCheckbox: EventEmitter<any> = new EventEmitter<any>();
