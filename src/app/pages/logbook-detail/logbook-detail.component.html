@@ -117,6 +117,12 @@
   </p-dialog>
 
   <p-confirmDialog class="custom-confirm-dialog-container"></p-confirmDialog>
+
+  <app-detail-modal
+  *ngIf="showDetailModal"
+  (closeModal)="toggleModal()"
+></app-detail-modal>
+
 </main>
 
 <!-- Table Cell Templates -->
@@ -124,10 +130,7 @@
   <i class="pi pi-eye" (click)="toggleModal()"></i>
 </ng-template>
 
-<app-detail-modal
-  *ngIf="showDetailModal"
-  (closeModal)="toggleModal()"
-></app-detail-modal>
+
 
 
 <ng-template #editableCellBodyTemplate let-rowData="rowData">
