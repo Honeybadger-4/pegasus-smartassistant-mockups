@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-detail-modal',
@@ -8,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './detail-modal.component.scss'
 })
 export class DetailModalComponent {
+  @Output() closeModal = new EventEmitter<void>();
 
+  close() {
+    this.closeModal.emit();
+  }
 }

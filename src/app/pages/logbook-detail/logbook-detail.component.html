@@ -121,8 +121,14 @@
 
 <!-- Table Cell Templates -->
 <ng-template #previewCellBodyTemplate>
-  <i class="pi pi-eye"></i>
+  <i class="pi pi-eye" (click)="toggleModal()"></i>
 </ng-template>
+
+<app-detail-modal
+  *ngIf="showDetailModal"
+  (closeModal)="toggleModal()"
+></app-detail-modal>
+
 
 <ng-template #editableCellBodyTemplate let-rowData="rowData">
   <i
