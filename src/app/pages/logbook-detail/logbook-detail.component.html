@@ -83,7 +83,7 @@
     [(visible)]="displayRejectPopup"
     [modal]="true"
     [draggable]="false"
-    class="custom-dialog-container"
+    class="custom-confirm-dialog-container"
   >
     <div class="popup-content">
       <!-- Başlık ve Alt Bilgiler -->
@@ -119,7 +119,7 @@
   <p-confirmDialog class="custom-confirm-dialog-container"></p-confirmDialog>
 
   <app-detail-modal
-  *ngIf="showDetailModal"
+  [visible]="displayPreviewDialog"
   (closeModal)="toggleModal()"
 ></app-detail-modal>
 

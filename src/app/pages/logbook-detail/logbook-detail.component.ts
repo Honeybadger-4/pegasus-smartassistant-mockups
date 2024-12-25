@@ -57,7 +57,7 @@ export class LogbookDetailComponent {
   displayRejectPopup = false;
   rejectReason = '';
   selectedCheckbox: any[] = [];
-  showDetailModal = false;
+  displayPreviewDialog = true;
 
   statusOptions = [
     { label: 'Status 1', value: 'status' },
@@ -442,6 +442,6 @@ export class LogbookDetailComponent {
   }
 
   toggleModal() {
-    this.showDetailModal = !this.showDetailModal;
+    this.displayPreviewDialog = !this.displayPreviewDialog;
   }
 }
