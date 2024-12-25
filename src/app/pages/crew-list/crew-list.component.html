@@ -1,4 +1,4 @@
-<div id="LogbookPage">
+<div id="CrewListPage">
   <div class="flex items-center justify-between">
     <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" />
 
@@ -14,6 +14,7 @@
   </div>
 
   <section class="chart-panel-section mt-5">
+    <!-- TODO: Logbook ekranından seçilen dataya göre panel header dinamik olarak gösterilecek. -->
     <p-panel
       header="Airbus / December 2024"
       [toggleable]="true"
@@ -75,12 +76,7 @@
     </p-panel>
   </section>
 
-  <section class="table-header-section lg:flex block mt-5">
-    <!-- TODO: Logbook ekranından seçilen Tarihe göre title dinamik olarak gösterilecek. -->
-    <div class="header-title w-full">December 2024</div>
-  </section>
-
-  <section class="table-section custom-card">
+  <section class="table-section custom-card mt-5">
     <app-custom-table
       [tableData]="logbookData"
       [tableColumns]="columns"

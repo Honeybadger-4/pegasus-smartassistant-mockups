@@ -1,4 +1,4 @@
-#LogbookPage {
+#CrewListPage {
   .chart-panel-section {
     .graph-container {
       .chart-title {
@@ -61,21 +61,10 @@
       }
     }
   }
-
-  .table-header-section {
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-
-    .header-title {
-      font-weight: bold;
-      color: #4f4f4f;
-    }
-  }
 }
 
 ::ng-deep {
-  #LogbookPage {
+  #CrewListPage {
     .chart-panel-section {
       .p-panel .p-panel-header {
         background-color: transparent;

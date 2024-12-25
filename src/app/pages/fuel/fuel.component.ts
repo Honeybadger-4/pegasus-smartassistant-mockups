@@ -26,6 +26,8 @@ import { CustomTableComponent } from '../../shared/components/custom-table/custo
 export class FuelComponent {
   @ViewChild('fuelOrderCellBodyTemplate', { static: true })
   fuelOrderCellBodyTemplate!: TemplateRef<any>;
+  
+  columns!: Column[];
   selectedFuelOrder = '';
   selectedDaily = '';
 
@@ -59,14 +61,12 @@ export class FuelComponent {
       amount: '4900 KG',
     },
   ];
-  columns!: Column[];
 
   ngOnInit() {
-    this.defineMainColumns();
+    this.defineColumns();
   }
 
-  // Define Columns Operation
-  defineMainColumns() {
+  defineColumns() {
     this.columns = [
       { field: 'aircraft', header: 'Aircraft' },
       { field: 'flightNo', header: 'Flight No' },

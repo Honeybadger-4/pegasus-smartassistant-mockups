@@ -24,13 +24,15 @@
         color: #4f4f4f;
         border: none;
       }
+
+      .p-button .p-button-label {
+        font-size: 12px;
+      }
     }
 
     .p-float-label label {
       font-size: 12px;
     }
-    .p-button .p-button-label {
-      font-size: 12px;
-    }
+    
   }
 }

@@ -60,33 +60,14 @@
                 [(activeIndex)]="activeTabIndex"
                 (activeIndexChange)="activeTabIndexChange($event)"
               >
-                <p-tabPanel header="Crew">
-                  <app-custom-table
-                    [tableData]="expandedTableData"
-                    [tableColumns]="expandedTableColumns"
-                  ></app-custom-table>
-                </p-tabPanel>
-
-                <p-tabPanel header="Flight Plan">
-                  <app-custom-table
-                    [tableData]="expandedTableData"
-                    [tableColumns]="expandedTableColumns"
-                  ></app-custom-table>
-                </p-tabPanel>
-
-                <p-tabPanel header="Trip Info">
-                  <app-custom-table
-                    [tableData]="expandedTableData"
-                    [tableColumns]="expandedTableColumns"
-                  ></app-custom-table>
-                </p-tabPanel>
-
-                <p-tabPanel header="Load Sheet">
-                  <app-custom-table
-                    [tableData]="expandedTableData"
-                    [tableColumns]="expandedTableColumns"
-                  ></app-custom-table>
-                </p-tabPanel>
+                @for (item of tableSubPanels; track $index) {
+                  <p-tabPanel header="{{item.panelHeader}}">
+                    <app-custom-table
+                      [tableData]="item.tableData"
+                      [tableColumns]="item.tableColumns"
+                    ></app-custom-table>
+                  </p-tabPanel>
+                }
               </p-tabView>
             </div>
           </td>
@@ -98,6 +79,30 @@
 
 <!-- Table Cell Templates -->
 <ng-template #flightPlanTableFlightPlanCellTemplate let-rowData="rowData">
+  <img
+    src="/icons/document-view-icon.svg"
+    alt="document view icon"
+    class="icon-class"
+  />
+</ng-template>
+
+<ng-template #tripInfoTableTripInfoCellTemplate let-rowData="rowData">
+  <img
+    src="/icons/document-view-icon.svg"
+    alt="document view icon"
+    class="icon-class"
+  />
+</ng-template>
+
+<ng-template #loadSheetTableLoadSheetCellTemplate let-rowData="rowData">
+  <img
+    src="/icons/document-view-icon.svg"
+    alt="document view icon"
+    class="icon-class"
+  />
+</ng-template>
+
+<ng-template #loadSheetTableCGLimitsCellTemplate let-rowData="rowData">
   <img
     src="/icons/document-view-icon.svg"
     alt="document view icon"
