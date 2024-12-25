@@ -1,81 +1,70 @@
-#LogbookPage {
+#CrewListPage {
   .chart-panel-section {
-  }
-  .graph-container {
-    .chart-title {
-      font-size: 20px;
-      color: #4f4f4f;
-    }
-
-    .chart-number {
-      font-size: 28px;
-      font-weight: 500;
-      color: #4f4f4f;
-
-      small {
-        font-size: 14px;
-        font-weight: 400;
-      }
-    }
-
-    .chart-container {
-      width: 200px;
-      height: 200px;
-    }
-
-    .list-section {
-      li {
-        display: flex;
-        align-items: center;
-        margin-bottom: 8px;
-        font-size: 14px;
+    .graph-container {
+      .chart-title {
+        font-size: 20px;
         color: #4f4f4f;
-
-        .dot {
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
-          margin-right: 8px;
-          display: inline-block;
+      }
+  
+      .chart-number {
+        font-size: 28px;
+        font-weight: 500;
+        color: #4f4f4f;
+  
+        small {
+          font-size: 14px;
+          font-weight: 400;
         }
       }
-
-      &.duty-chart-list {
-        .flight {
-          background-color: #5e548e;
+  
+      .chart-container {
+        width: 200px;
+        height: 200px;
+      }
+  
+      .list-section {
+        li {
+          display: flex;
+          align-items: center;
+          margin-bottom: 8px;
+          font-size: 14px;
+          color: #4f4f4f;
+  
+          .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+            display: inline-block;
+          }
         }
-
-        .training {
-          background-color: #9f86c0;
+  
+        &.duty-chart-list {
+          .flight {
+            background-color: #5e548e;
+          }
+  
+          .training {
+            background-color: #9f86c0;
+          }
+        }
+  
+        &.time-chart-list {
+          .flight {
+            background-color: #31572c;
+          }
+  
+          .training {
+            background-color: #4f772d;
+          }
         }
       }
-
-      &.time-chart-list {
-        .flight {
-          background-color: #31572c;
-        }
-
-        .training {
-          background-color: #4f772d;
-        }
-      }
-    }
-  }
-
-  .table-header-section {
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-
-    .header-title {
-      font-weight: bold;
-      color: #4f4f4f;
     }
   }
 }
 
 ::ng-deep {
-  #LogbookPage {
+  #CrewListPage {
     .chart-panel-section {
       .p-panel .p-panel-header {
         background-color: transparent;

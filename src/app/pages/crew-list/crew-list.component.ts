@@ -1,21 +1,17 @@
-import {
-  Component,
-  EventEmitter,
-  inject,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, NgModel } from '@angular/forms';
-import { Column } from '@shared/models/columns';
-import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { CustomDonutChartComponent } from '@shared/components/custom-donut-chart/custom-donut-chart.component';
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
-import { MenuItem } from 'primeng/api';
+import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
+import { Column } from '@shared/models/columns';
+
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
-import { Router } from '@angular/router';
 import { PanelModule } from 'primeng/panel';
-import { CustomDonutChartComponent } from '@shared/components/custom-donut-chart/custom-donut-chart.component';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-logbook',
@@ -23,12 +19,12 @@ import { CustomDonutChartComponent } from '@shared/components/custom-donut-chart
   imports: [
     CommonModule,
     FormsModule,
-    CustomTableComponent,
     CustomBreadcrumbComponent,
+    CustomDonutChartComponent,
+    CustomTableComponent,
     IconFieldModule,
     InputIconModule,
     PanelModule,
-    CustomDonutChartComponent,
   ],
   templateUrl: './crew-list.component.html',
   styleUrl: './crew-list.component.scss',
@@ -36,12 +32,16 @@ import { CustomDonutChartComponent } from '@shared/components/custom-donut-chart
 export class CrewListComponent {
   router = inject(Router);
 
-  breadcrumbItems: MenuItem[] = [
-    { label: 'Logbook', route: '/logbook' },
-    { label: 'Crew List' },
-  ];
+  breadcrumbItems!: MenuItem[];
+  columns!: Column[];
   filterInput = '';
   logbookDashboardData: any;
+
+  chartDataOne: any;
+  chartOptionsOne: any;
+  chartDataTwo: any;
+  chartOptionsTwo: any;
+
   logbookData = [
     {
       id: '0',
@@ -116,61 +116,17 @@ export class CrewListComponent {
     },
   ];
 
-  chartDataOne: any = {
-    //labels: ['A', 'B', 'C'],
-    datasets: [
-      {
-        data: [300, 50],
-        backgroundColor: ['#5E548E', '#9F86C0'],
-        hoverBackgroundColor: ['#5E548E', '#9F86C0'],
-      },
-    ],
-  };
-
-  chartOptionsOne: any = {
-    cutout: '65%',
-    plugins: {
-      legend: {
-        labels: {
-          //color: "blue"
-        },
-      },
-    },
-  };
-
-  chartDataTwo: any = {
-    //labels: ['A', 'B', 'C'],
-    datasets: [
-      {
-        data: [300, 50],
-        backgroundColor: ['#31572C', '#4F772D'],
-        hoverBackgroundColor: ['#31572C', '#4F772D'],
-      },
-    ],
-  };
-
-  chartOptionsTwo: any = {
-    cutout: '65%',
-    plugins: {
-      legend: {
-        labels: {
-          //color: "blue"
-        },
-      },
-    },
-  };
-
-  columns!: Column[];
-
   ngOnInit() {
-    this.defineMainColumns();
+    this.defineColumns();
+    this.defineBreadcrumbItems();
+    this.defineChartDataAndOptions();
 
     this.logbookDashboardData = history.state.data;
     console.log(this.logbookDashboardData);
   }
 
-  // Define Columns Operation
-  defineMainColumns() {
+  // Define values
+  defineColumns() {
     this.columns = [
       { field: 'crewNameSurname', header: 'Crew Name & Surname' },
       { field: 'companyId', header: 'Company ID' },
@@ -182,13 +138,46 @@ export class CrewListComponent {
     ];
   }
 
-  tableRowSelected(event: any) {
-    this.goToLogBookDetailListPage(event);
+  defineBreadcrumbItems() {
+    this.breadcrumbItems = [
+      { label: 'Logbook', route: '/logbook' },
+      { label: 'Crew List' },
+    ];
   }
 
-  goToLogBookDetailListPage(data: any) {
+  defineChartDataAndOptions() {
+    this.chartDataOne = {
+      datasets: [
+        {
+          data: [300, 50],
+          backgroundColor: ['#5E548E', '#9F86C0'],
+          hoverBackgroundColor: ['#5E548E', '#9F86C0'],
+        },
+      ],
+    };
+
+    this.chartOptionsOne = {
+      cutout: '65%'
+    };
+
+    this.chartDataTwo = {
+      datasets: [
+        {
+          data: [300, 50],
+          backgroundColor: ['#31572C', '#4F772D'],
+          hoverBackgroundColor: ['#31572C', '#4F772D'],
+        },
+      ],
+    };
+
+    this.chartOptionsTwo = {
+      cutout: '65%',
+    };
+  }
+
+  tableRowSelected(event: any) {
     this.router.navigate(['logbook/logbook-detail'], {
-      state: { data: data },
+      state: { data: event },
     });
   }
 }

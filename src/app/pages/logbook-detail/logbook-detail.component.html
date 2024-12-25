@@ -83,7 +83,7 @@
     [(visible)]="displayRejectPopup"
     [modal]="true"
     [draggable]="false"
-    class="custom-dialog-container"
+    class="custom-confirm-dialog-container"
   >
     <div class="popup-content">
       <!-- Başlık ve Alt Bilgiler -->
@@ -117,12 +117,21 @@
   </p-dialog>
 
   <p-confirmDialog class="custom-confirm-dialog-container"></p-confirmDialog>
+
+  <app-detail-modal
+  [visible]="displayPreviewDialog"
+  (closeModal)="toggleModal()"
+></app-detail-modal>
+
 </main>
 
 <!-- Table Cell Templates -->
 <ng-template #previewCellBodyTemplate>
-  <i class="pi pi-eye"></i>
+  <i class="pi pi-eye" (click)="toggleModal()"></i>
 </ng-template>
+
+
+
 
 <ng-template #editableCellBodyTemplate let-rowData="rowData">
   <i

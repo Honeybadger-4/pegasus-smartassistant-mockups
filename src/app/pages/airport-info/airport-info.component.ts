@@ -1,16 +1,18 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+
+import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
 import { Column } from '@shared/models/columns';
+
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { ButtonModule } from 'primeng/button';
-import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
 
 @Component({
   selector: 'app-airport-info',

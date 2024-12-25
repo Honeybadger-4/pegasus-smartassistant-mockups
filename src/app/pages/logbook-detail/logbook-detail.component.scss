@@ -70,19 +70,6 @@
 
 ::ng-deep {
   #LogbookDetailPage {
-    .custom-dialog-container {
-      .p-dialog {
-        background-color: #fbfbfb;
-        border-radius: 8px;
-
-        .p-dialog-header,
-        .p-dialog-content,
-        .p-dialog-footer {
-          background-color: transparent;
-        }
-      }
-    }
-
     .p-confirm-dialog .p-dialog-footer {
       display: flex;
     }

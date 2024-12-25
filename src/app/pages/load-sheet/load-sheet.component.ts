@@ -1,10 +1,12 @@
-import { CommonModule } from '@angular/common';
 import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
+import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { Column } from '@shared/models/columns';
+
 import { DropdownModule } from 'primeng/dropdown';
 import { SliderModule } from 'primeng/slider';
-import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
 
 @Component({
   selector: 'app-load-sheet',

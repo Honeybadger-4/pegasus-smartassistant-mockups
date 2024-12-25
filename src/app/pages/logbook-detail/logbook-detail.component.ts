@@ -15,6 +15,10 @@ import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/
 import { CheckboxModule } from 'primeng/checkbox';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { DetailModalComponent } from '../../components/logbook-detail/detail-modal/detail-modal.component';
+
+
+
 
 @Component({
   selector: 'app-logbook',
@@ -32,6 +36,7 @@ import { ToastModule } from 'primeng/toast';
     CustomBreadcrumbComponent,
     CheckboxModule,
     ToastModule,
+    DetailModalComponent
   ],
   templateUrl: './logbook-detail.component.html',
   styleUrl: './logbook-detail.component.scss',
@@ -52,6 +57,7 @@ export class LogbookDetailComponent {
   displayRejectPopup = false;
   rejectReason = '';
   selectedCheckbox: any[] = [];
+  displayPreviewDialog = true;
 
   statusOptions = [
     { label: 'Status 1', value: 'status' },
@@ -433,5 +439,9 @@ export class LogbookDetailComponent {
     this.router.navigate(['logbook/logbook-detail-edit'], {
       state: { data: data },
     });
+  }
+
+  toggleModal() {
+    this.displayPreviewDialog = !this.displayPreviewDialog;
   }
 }
