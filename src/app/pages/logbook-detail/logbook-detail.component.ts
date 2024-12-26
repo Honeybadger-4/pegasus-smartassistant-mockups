@@ -50,6 +50,13 @@ export class LogbookDetailComponent {
   @ViewChild('checkboxCellBodyTemplate', { static: true })
   checkboxCellBodyTemplate!: TemplateRef<any>;
 
+  breadcrumbItems = [
+    { label: 'Logbook', route: '/logbook' },
+    { label: 'Crew List', route: '/logbook/crew-list' },
+    { label: 'Logbook Detail List' },
+  ];
+  columns: Column[] = [];
+
   crewListTableData: any;
   dateRange: Date[] = [];
   selectedDutyType = '';
@@ -57,7 +64,7 @@ export class LogbookDetailComponent {
   displayRejectPopup = false;
   rejectReason = '';
   selectedCheckbox: any[] = [];
-  displayPreviewDialog = true;
+  displayPreviewDialog = false;
 
   statusOptions = [
     { label: 'Status 1', value: 'status' },
@@ -69,14 +76,6 @@ export class LogbookDetailComponent {
     { label: 'Duty Type 2', value: 'dutyType2' },
     { label: 'Duty Type 3', value: 'dutyType3' },
   ];
-
-  breadcrumbItems = [
-    { label: 'Logbook', route: '/logbook' },
-    { label: 'Crew List', route: '/logbook/crew-list' },
-    { label: 'Logbook Detail List' },
-  ];
-
-  columns: Column[] = [];
   logbookDetailData = [
     {
       id: 0,

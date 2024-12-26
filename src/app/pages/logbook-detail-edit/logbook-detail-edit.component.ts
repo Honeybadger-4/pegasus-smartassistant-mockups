@@ -36,8 +36,13 @@ import { ToastModule } from 'primeng/toast';
   styleUrls: ['./logbook-detail-edit.component.scss'],
 })
 export class LogbookDetailEditComponent implements OnInit {
+  breadcrumbItems: MenuItem[] = [
+    { label: 'Logbook', route: '/logbook' },
+    { label: 'Crew List', route: '/logbook/crew-list' },
+    { label: 'Logbook Detail List', route: '/logbook/logbook-detail' },
+    { label: 'Edit Logbook' },
+  ];
   editData: any;
-  breadcrumbItems: MenuItem[] = [];
   logbookFormGroup!: FormGroup;
   isEditMode = false;
   rejectReason: string = '';
@@ -85,13 +90,6 @@ export class LogbookDetailEditComponent implements OnInit {
   ngOnInit() {
     this.editData = history.state.data;
     console.log(this.editData);
-
-    this.breadcrumbItems = [
-      { label: 'Logbook', route: '/logbook' },
-      { label: 'Crew List', route: '/logbook/crew-list' },
-      { label: 'Logbook Detail List', route: '/logbook/logbook-detail' },
-      { label: 'Edit Logbook' },
-    ];
 
     this.builder();
   }

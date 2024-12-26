@@ -32,7 +32,10 @@ import { MenuItem } from 'primeng/api';
 export class CrewListComponent {
   router = inject(Router);
 
-  breadcrumbItems!: MenuItem[];
+  breadcrumbItems: MenuItem[] = [
+    { label: 'Logbook', route: '/logbook' },
+    { label: 'Crew List' },
+  ];
   columns!: Column[];
   filterInput = '';
   logbookDashboardData: any;
@@ -118,7 +121,6 @@ export class CrewListComponent {
 
   ngOnInit() {
     this.defineColumns();
-    this.defineBreadcrumbItems();
     this.defineChartDataAndOptions();
 
     this.logbookDashboardData = history.state.data;
@@ -135,13 +137,6 @@ export class CrewListComponent {
       { field: 'simulatorFlightLogs', header: 'Simulator Flight Logs' },
       { field: 'approvedLogs', header: 'Approved Logs' },
       { field: 'reassingLogs', header: 'Reassing Logs' },
-    ];
-  }
-
-  defineBreadcrumbItems() {
-    this.breadcrumbItems = [
-      { label: 'Logbook', route: '/logbook' },
-      { label: 'Crew List' },
     ];
   }
 
