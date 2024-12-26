@@ -127,15 +127,12 @@
 
 <!-- Table Cell Templates -->
 <ng-template #previewCellBodyTemplate>
-  <i class="pi pi-eye" (click)="toggleModal()"></i>
+  <i class="pi pi-eye cursor-pointer" (click)="toggleModal()"></i>
 </ng-template>
-
-
-
 
 <ng-template #editableCellBodyTemplate let-rowData="rowData">
   <i
-    class="pi pi-pen-to-square"
+    class="pi pi-pen-to-square cursor-pointer"
     (click)="goToLogBookDetailEditPage(rowData)"
   ></i>
 </ng-template>

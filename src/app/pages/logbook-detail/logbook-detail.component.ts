@@ -57,7 +57,7 @@ export class LogbookDetailComponent {
   displayRejectPopup = false;
   rejectReason = '';
   selectedCheckbox: any[] = [];
-  displayPreviewDialog = true;
+  displayPreviewDialog = false;
 
   statusOptions = [
     { label: 'Status 1', value: 'status' },
