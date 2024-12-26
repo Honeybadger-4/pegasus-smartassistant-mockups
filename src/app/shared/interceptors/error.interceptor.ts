@@ -11,16 +11,14 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
       if (error.error.status === 401) {
-        // TODO: Kullanıcı logout fonksiyonu çağırılıp logout edilmeli. Login'e yönlendirilmeden önce
         router.navigate(['/login']);
       }
       if (req.method !== 'GET') {
-        // TODO: detail parametresi servisten gelen hata mesajı ile doldurulacak.
         // Hataların başlığı var ise summary alanıda servisten gelen bilgiye göre doldurulabilir.
         messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'error.message',
+          detail: error.error.error.message,
         });
       }
 

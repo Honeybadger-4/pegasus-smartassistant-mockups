@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { LayoutMenuItem } from '@shared/models/layout-sidebar-menu';
 
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { AvatarModule } from 'primeng/avatar';
+import { LoginService } from '@shared/services/login.service';
 
 @Component({
   selector: 'app-menubar',
@@ -14,6 +15,7 @@ import { AvatarModule } from 'primeng/avatar';
   styleUrl: './menubar.component.scss',
 })
 export class MenubarComponent {
+  loginService = inject(LoginService);
   menuItems: LayoutMenuItem[] = [];
 
   ngOnInit() {
@@ -85,5 +87,10 @@ export class MenubarComponent {
         path: 'management',
       },
     ];
+  }
+
+  signOut() {
+    console.log("clicked");
+    this.loginService.logout();
   }
 }

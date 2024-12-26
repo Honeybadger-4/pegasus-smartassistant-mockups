@@ -1,14 +1,17 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
+import { LoginService } from '@shared/services/login.service';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
-  // TODO: Login servisi bağlandıktan sonra isCanActive değişkeninin değeri default olarak false olacak. Login servisi isteği içerisinde true yapılacak.
-  let isCanActive: boolean = true;
+  const loginService = inject(LoginService);
+
+  let isCanActive = loginService.isAuthenticated();
 
   if (!isCanActive) {
     router.navigate(['/login']);
+    return false;
   }
 
-  return isCanActive;
+  return true;
 };
