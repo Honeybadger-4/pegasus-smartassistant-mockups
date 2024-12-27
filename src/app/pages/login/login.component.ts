@@ -25,7 +25,7 @@ export class LoginComponent {
   loginService = inject(LoginService);
   loginForm: FormGroup = new FormGroup({});
 
-  constructor(private formbuilder: FormBuilder) { }
+  constructor(private formbuilder: FormBuilder) {}
 
   ngOnInit() {
     this.buildForm();
@@ -40,14 +40,14 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-        const username = this.loginForm.value.username;
-        const password = this.loginForm.value.password;
+      const username = this.loginForm.value.username;
+      const password = this.loginForm.value.password;
 
       this.loginService.login(username, password).subscribe({
         next: () => {
           this.router.navigate(['/']);
-        }
-      })
+        },
+      });
     }
   }
 }

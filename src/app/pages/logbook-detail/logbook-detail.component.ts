@@ -17,9 +17,6 @@ import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { DetailModalComponent } from '../../components/logbook-detail/detail-modal/detail-modal.component';
 
-
-
-
 @Component({
   selector: 'app-logbook',
   standalone: true,
@@ -36,7 +33,7 @@ import { DetailModalComponent } from '../../components/logbook-detail/detail-mod
     CustomBreadcrumbComponent,
     CheckboxModule,
     ToastModule,
-    DetailModalComponent
+    DetailModalComponent,
   ],
   templateUrl: './logbook-detail.component.html',
   styleUrl: './logbook-detail.component.scss',

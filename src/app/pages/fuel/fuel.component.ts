@@ -26,7 +26,7 @@ import { CustomTableComponent } from '../../shared/components/custom-table/custo
 export class FuelComponent {
   @ViewChild('fuelOrderCellBodyTemplate', { static: true })
   fuelOrderCellBodyTemplate!: TemplateRef<any>;
-  
+
   columns!: Column[];
   selectedFuelOrder = '';
   selectedDaily = '';

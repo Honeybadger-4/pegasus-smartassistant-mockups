@@ -19,6 +19,6 @@ export class HomepageComponent {
   loginService = inject(LoginService);
 
   ngOnInit() {
-    console.log(this.loginService.currentUser())
+    console.log(this.loginService.currentUser());
   }
 }

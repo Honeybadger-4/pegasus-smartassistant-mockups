@@ -28,6 +28,8 @@ export const appConfig: ApplicationConfig = {
       RouterModule.forRoot(routes, { useHash: true }),
     ),
     MessageService,
-    provideHttpClient(withInterceptors([httpHeadersInterceptor, errorInterceptor])),
+    provideHttpClient(
+      withInterceptors([httpHeadersInterceptor, errorInterceptor]),
+    ),
   ],
 };

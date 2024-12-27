@@ -28,9 +28,7 @@
               placeholder="Enter your email address or username"
               pInputText
             />
-            @if (
-              loginForm.get("username")?.invalid
-            ) {
+            @if (loginForm.get("username")?.invalid) {
               <div class="error-text">Required username</div>
             }
           </div>
@@ -43,9 +41,7 @@
               placeholder="Enter your password"
               pInputText
             />
-            @if (
-              loginForm.get("password")?.invalid
-            ) {
+            @if (loginForm.get("password")?.invalid) {
               <div class="error-text">Required password</div>
             }
           </div>

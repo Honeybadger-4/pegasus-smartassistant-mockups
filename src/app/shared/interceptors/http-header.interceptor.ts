@@ -8,7 +8,7 @@ export const httpHeadersInterceptor: HttpInterceptorFn = (req, next) => {
       os: 'a',
       osVersion: '1',
       appVersion: '1',
-      deviceBrand: 'a', 
+      deviceBrand: 'a',
       deviceModel: 'a',
       deviceId: '1',
       ipAddress: '1',

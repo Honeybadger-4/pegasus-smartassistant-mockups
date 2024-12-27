@@ -152,7 +152,7 @@ export class CrewListComponent {
     };
 
     this.chartOptionsOne = {
-      cutout: '65%'
+      cutout: '65%',
     };
 
     this.chartDataTwo = {
