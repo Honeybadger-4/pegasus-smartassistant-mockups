@@ -61,7 +61,7 @@
                 (activeIndexChange)="activeTabIndexChange($event)"
               >
                 @for (item of tableSubPanels; track $index) {
-                  <p-tabPanel header="{{item.panelHeader}}">
+                  <p-tabPanel header="{{ item.panelHeader }}">
                     <app-custom-table
                       [tableData]="item.tableData"
                       [tableColumns]="item.tableColumns"

@@ -1,14 +1,23 @@
-import { inject } from '@angular/core';
+import { inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { CanActivateFn, Router } from '@angular/router';
+import { LoginService } from '@shared/services/login.service';
 
 export const authGuard: CanActivateFn = (route, state) => {
+  const platformId = inject(PLATFORM_ID);
   const router = inject(Router);
-  // TODO: Login servisi bağlandıktan sonra isCanActive değişkeninin değeri default olarak false olacak. Login servisi isteği içerisinde true yapılacak.
-  let isCanActive: boolean = true;
+  const loginService = inject(LoginService);
 
-  if (!isCanActive) {
-    router.navigate(['/login']);
+  if (isPlatformBrowser(platformId)) {
+    const isCanActivate = loginService.isAuthenticated();
+
+    if (!isCanActivate) {
+      router.navigate(['/login']);
+      return false;
+    }
+
+    return true;
   }
 
-  return isCanActive;
+  return true;
 };

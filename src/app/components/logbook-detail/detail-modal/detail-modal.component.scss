@@ -8,58 +8,58 @@
     thead {
       border: 1px solid #444444;
     }
-  
+
     tr {
       border: 1px solid #444444;
     }
-  
+
     th {
-      background-color: #f9f9f9; 
+      background-color: #f9f9f9;
       font-weight: bold;
     }
-  
+
     td {
       border: 1px solid #444444;
     }
 
-    th, td {
+    th,
+    td {
       border: 1px solid #444444;
-      text-align: center; 
+      text-align: center;
       padding: 8px;
-      box-sizing: border-box; 
+      box-sizing: border-box;
     }
 
     .total {
-      text-align: right; 
+      text-align: right;
     }
   }
-
 }
 
-  ::ng-deep {
-    #LogbookDetailPage {
-      .p-dialog-header {
-        border-top-right-radius: 8px;
-        border-top-left-radius: 8px;
+::ng-deep {
+  #LogbookDetailPage {
+    .p-dialog-header {
+      border-top-right-radius: 8px;
+      border-top-left-radius: 8px;
+    }
+
+    .p-dialog-content {
+      border-bottom-right-radius: 8px;
+      border-bottom-left-radius: 8px;
+    }
+
+    .download-button {
+      .p-button {
+        width: 2rem;
+        height: 2rem;
       }
-  
-      .p-dialog-content {
-          border-bottom-right-radius: 8px;
-          border-bottom-left-radius: 8px;
+      .p-button.p-button-text {
+        color: #4f4f4f;
       }
 
-      .download-button {
-        .p-button {
-          width: 2rem;
-          height: 2rem;
-        }
-        .p-button.p-button-text {
-          color: #4F4F4F;
-        }
-
-        .p-button.p-button-text:not(:disabled):hover {
-          background-color: #f3f2f1;
-        }
+      .p-button.p-button-text:not(:disabled):hover {
+        background-color: #f3f2f1;
       }
     }
   }
+}

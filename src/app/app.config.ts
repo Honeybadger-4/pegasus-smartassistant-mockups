@@ -4,13 +4,18 @@ import {
   provideZoneChangeDetection,
 } from '@angular/core';
 import { provideRouter, RouterModule } from '@angular/router';
-
-import { routes } from './app.routes';
 import {
   BrowserModule,
   provideClientHydration,
 } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+
+import { routes } from './app.routes';
+import { httpHeadersInterceptor } from '@shared/interceptors/http-header.interceptor';
+import { errorInterceptor } from '@shared/interceptors/error.interceptor';
+
+import { MessageService } from 'primeng/api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -21,6 +26,10 @@ export const appConfig: ApplicationConfig = {
       BrowserModule,
       BrowserAnimationsModule,
       RouterModule.forRoot(routes, { useHash: true }),
+    ),
+    MessageService,
+    provideHttpClient(
+      withInterceptors([httpHeadersInterceptor, errorInterceptor]),
     ),
   ],
 };
