@@ -1,22 +1,27 @@
 import { HttpClient } from "@angular/common/http";
-import { inject, Injectable, signal } from "@angular/core";
+import { Inject, inject, Injectable, PLATFORM_ID, signal } from "@angular/core";
 import { IHttpResponseModel } from "@shared/models/http-response.model";
 import { ILoginResponse } from "@shared/models/login-response.model";
 import { map, Observable } from "rxjs";
 import { environment } from "@environments/environment";
 import { Router } from "@angular/router";
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LoginService {
     router = inject(Router);
+    platformId = inject(PLATFORM_ID);
     baseUrl = environment.baseApi;
-    private tokenKey = 'authToken';
-    isAuthenticated = signal<boolean>(this.hasToken());
-    currentUserData = signal<ILoginResponse | null>(null);
+    currentUser = signal<ILoginResponse | null>(null);
+    private userDataStorageKey = 'userData';
 
-    constructor(private http: HttpClient) { }
+    constructor(
+        private http: HttpClient
+    ) {
+        this.loadUserData();
+    }
 
     login(username: string, password: string): Observable<any> {
         const apiUrl = `${this.baseUrl}/api/v1/login`;
@@ -24,29 +29,34 @@ export class LoginService {
         return this.http.post<IHttpResponseModel>(apiUrl, { username, password }).pipe(
             map((response) => {
                 const data: ILoginResponse = response.data;
-                this.setToken(data.efbToken);
+                this.setUserData(data);
 
-                this.currentUserData.set(data);
-                this.isAuthenticated.set(true);
+                this.currentUser.set(data);
             })
         );
     }
 
     logout(): void {
-        localStorage.removeItem(this.tokenKey);
-        this.isAuthenticated.set(false);
+        localStorage.removeItem(this.userDataStorageKey);
+        this.currentUser.set(null);
         this.router.navigate(['/login']);
     }
 
-    private setToken(token: string): void {
-        localStorage.setItem(this.tokenKey, token);
+    loadUserData(): void {
+        if(isPlatformBrowser(this.platformId)) {
+            const userJson = JSON.parse(localStorage.getItem(this.userDataStorageKey) || '{}');
+            this.currentUser.set(userJson);
+        }else {
+            this.currentUser.set(null);
+        }
     }
 
-    private hasToken(): boolean {
-        return !!localStorage.getItem(this.tokenKey);
+    private setUserData(data: ILoginResponse): void {
+        localStorage.setItem(this.userDataStorageKey, JSON.stringify(data));
     }
 
-    getToken(): string | null {
-        return localStorage.getItem(this.tokenKey);
+    isAuthenticated(): boolean {
+        const userData: ILoginResponse = JSON.parse(localStorage?.getItem(this.userDataStorageKey) || '{}');
+        return !!userData.efbToken;
     }
 }

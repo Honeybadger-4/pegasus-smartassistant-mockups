@@ -89,8 +89,7 @@ export class MenubarComponent {
     ];
   }
 
-  signOut() {
-    console.log("clicked");
+  logout() {
     this.loginService.logout();
   }
 }
