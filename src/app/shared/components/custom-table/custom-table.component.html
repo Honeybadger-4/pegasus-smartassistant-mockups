@@ -1,20 +1,24 @@
 <p-table
-  [value]="tableData"
-  [columns]="tableColumns"
+  [value]="tableData()"
+  [columns]="tableColumns()"
   dataKey="id"
   [tableStyle]="{ 'min-width': '50rem' }"
   styleClass="p-datatable-striped"
-  [paginator]="isPaginator"
-  [rows]="20"
+  [lazy]="true"
+  [paginator]="isPaginator()"
+  [rows]="rows"
+  [first]="first"
+  [totalRecords]="totalRecords()"
   [rowsPerPageOptions]="[20, 40, 80]"
-  [selectionMode]="selectionMode"
+  [selectionMode]="selectionMode()"
   [(selection)]="selectionData"
   (selectionChange)="selectionChange($event)"
+  (onPage)="pageChange($event)"
 >
   <!-- Table Header -->
   <ng-template pTemplate="header" let-columns>
     <tr>
-      <th *ngIf="selectionMode === 'multiple'" style="width: 4rem">
+      <th *ngIf="selectionMode() === 'multiple'" style="width: 4rem">
         <p-tableHeaderCheckbox />
       </th>
       <th *ngFor="let col of columns">
@@ -26,11 +30,11 @@
   <!-- Table Body -->
   <ng-template pTemplate="body" let-rowData>
     <tr (click)="rowClicked(rowData)">
-      <td *ngIf="selectionMode === 'multiple'">
+      <td *ngIf="selectionMode() === 'multiple'">
         <p-tableCheckbox [value]="rowData" />
       </td>
 
-      <td *ngFor="let column of tableColumns">
+      <td *ngFor="let column of tableColumns()">
         <ng-container *ngIf="column.template; else defaultCell">
           <ng-container
             *ngTemplateOutlet="column.template; context: { rowData: rowData }"

@@ -4,17 +4,19 @@
     <p-dropdown
       [options]="periodOptions"
       [(ngModel)]="selectedPeriod"
+      (ngModelChange)="onPeriodChange($event)"
       optionLabel="label"
       optionValue="value"
       class="custom-dropdown period-dropdown"
-      placeholder="Daily"
     ></p-dropdown>
   </section>
 
   <section class="table-section custom-card">
     <app-custom-table
-      [tableData]="userLoginHistoryData"
+      [tableData]="userLoginHistoryTableData()"
       [tableColumns]="columns"
+      [totalRecords]="userLoginHistoryData()!.totalElements"
+      (pageEvent)="pageEvent($event)"
     ></app-custom-table>
   </section>
 </main>
