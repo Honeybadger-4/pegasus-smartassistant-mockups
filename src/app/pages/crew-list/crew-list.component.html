@@ -78,8 +78,10 @@
 
   <section class="table-section custom-card mt-5">
     <app-custom-table
-      [tableData]="logbookData"
+      [tableData]="crewListContentData()"
       [tableColumns]="columns"
+      [totalRecords]="crewListData()?.totalElements || 0"
+      (pageEvent)="pageEvent($event)"
       (rowClickedEvent)="tableRowSelected($event)"
     ></app-custom-table>
   </section>

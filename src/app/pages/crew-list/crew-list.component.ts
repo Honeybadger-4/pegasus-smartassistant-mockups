@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -12,6 +12,8 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { PanelModule } from 'primeng/panel';
 import { MenuItem } from 'primeng/api';
+import { LogbookService } from '@shared/services/logbook.service';
+import { ILogbookCrewListContentData, ILogbookCrewListResponse } from '@shared/models/logbook-crew-list-response.model';
 
 @Component({
   selector: 'app-logbook',
@@ -31,6 +33,7 @@ import { MenuItem } from 'primeng/api';
 })
 export class CrewListComponent {
   router = inject(Router);
+  logbookService = inject(LogbookService);
 
   breadcrumbItems: MenuItem[] = [
     { label: 'Logbook', route: '/logbook' },
@@ -39,92 +42,27 @@ export class CrewListComponent {
   columns!: Column[];
   filterInput = '';
   logbookDashboardData: any;
+  crewListData = signal<ILogbookCrewListResponse | null>(null)
+  crewListContentData = signal<ILogbookCrewListContentData[]>([])
+
+  currentPage = 0;
+  currentRows = 20;
 
   chartDataOne: any;
   chartOptionsOne: any;
   chartDataTwo: any;
   chartOptionsTwo: any;
 
-  logbookData = [
-    {
-      id: '0',
-      crewNameSurname: 'SAWC BIR NCS YUZ YIRMI UC YUZ KIRK',
-      companyId: '123140',
-      totalNumberofLog: '100',
-      flightLog: '70',
-      simulatorFlightLogs: '30',
-      approvedLogs: '100',
-      reassingLogs: '-',
-    },
-    {
-      id: '1',
-      crewNameSurname: 'SAWC BIR NCS YUZ YIRMI UC YUZ KIRK',
-      companyId: '123140',
-      totalNumberofLog: '100',
-      flightLog: '70',
-      simulatorFlightLogs: '30',
-      approvedLogs: '100',
-      reassingLogs: '-',
-    },
-    {
-      id: '2',
-      crewNameSurname: 'SAWC BIR NCS YUZ YIRMI UC YUZ KIRK',
-      companyId: '123140',
-      totalNumberofLog: '100',
-      flightLog: '70',
-      simulatorFlightLogs: '30',
-      approvedLogs: '100',
-      reassingLogs: '-',
-    },
-    {
-      id: '3',
-      crewNameSurname: 'SAWC BIR NCS YUZ YIRMI UC YUZ KIRK',
-      companyId: '123140',
-      totalNumberofLog: '100',
-      flightLog: '70',
-      simulatorFlightLogs: '30',
-      approvedLogs: '100',
-      reassingLogs: '-',
-    },
-    {
-      id: '4',
-      crewNameSurname: 'SAWC BIR NCS YUZ YIRMI UC YUZ KIRK',
-      companyId: '123140',
-      totalNumberofLog: '100',
-      flightLog: '70',
-      simulatorFlightLogs: '30',
-      approvedLogs: '100',
-      reassingLogs: '-',
-    },
-    {
-      id: '5',
-      crewNameSurname: 'SAWC BIR NCS YUZ YIRMI UC YUZ KIRK',
-      companyId: '123140',
-      totalNumberofLog: '100',
-      flightLog: '70',
-      simulatorFlightLogs: '30',
-      approvedLogs: '100',
-      reassingLogs: '-',
-    },
-
-    {
-      id: '6',
-      crewNameSurname: 'SAWC BIR NCS YUZ YIRMI UC YUZ KIRK',
-      companyId: '123140',
-      totalNumberofLog: '100',
-      flightLog: '70',
-      simulatorFlightLogs: '30',
-      approvedLogs: '100',
-      reassingLogs: '-',
-    },
-  ];
+  // Mock data
+  yerMonthValue = '2024-11';
 
   ngOnInit() {
-    this.defineColumns();
-    this.defineChartDataAndOptions();
-
     this.logbookDashboardData = history.state.data;
     console.log(this.logbookDashboardData);
+
+    this.defineColumns();
+    this.defineChartDataAndOptions();
+    this.getCrewList();
   }
 
   // Define values
@@ -132,11 +70,11 @@ export class CrewListComponent {
     this.columns = [
       { field: 'crewNameSurname', header: 'Crew Name & Surname' },
       { field: 'companyId', header: 'Company ID' },
-      { field: 'totalNumberofLog', header: 'Total Number of Log' },
+      { field: 'totalNumberOfLog', header: 'Total Number of Log' },
       { field: 'flightLog', header: 'Flight Log' },
       { field: 'simulatorFlightLogs', header: 'Simulator Flight Logs' },
       { field: 'approvedLogs', header: 'Approved Logs' },
-      { field: 'reassingLogs', header: 'Reassing Logs' },
+      { field: 'reassignedLogs', header: 'Reassing Logs' },
     ];
   }
 
@@ -170,9 +108,29 @@ export class CrewListComponent {
     };
   }
 
+  getCrewList() {
+    this.logbookService.getCrewList(this.yerMonthValue, this.currentPage, this.currentRows, this.filterInput).subscribe({
+      next: (response) => {
+        this.crewListData.set(response);
+        this.crewListContentData.set(response.content);
+        console.log(response);
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    })
+  }
+
   tableRowSelected(event: any) {
     this.router.navigate(['logbook/logbook-detail'], {
       state: { data: event },
     });
+  }
+
+  pageEvent(event: { first: number; rows: number }) {
+    const page = event.first / event.rows;
+    this.currentPage = page;
+    this.currentRows = event.rows;
+    this.getCrewList();
   }
 }
