@@ -3,13 +3,12 @@ import {
   Component,
   EventEmitter,
   input,
-  Input,
   output,
   Output,
+  ViewChild,
 } from '@angular/core';
 import { Column } from '@shared/models/columns';
-import { TableModule } from 'primeng/table';
-import { first } from 'rxjs';
+import { Table, TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-custom-table',
@@ -19,6 +18,8 @@ import { first } from 'rxjs';
   styleUrl: './custom-table.component.scss',
 })
 export class CustomTableComponent {
+  @ViewChild('table') table!: Table;
+
   tableData = input<any>();
   tableColumns = input<Column[]>();
   selectionMode = input<'single' | 'multiple' | null>();
@@ -31,7 +32,6 @@ export class CustomTableComponent {
   selectionData: any[] = [];
 
   rows = 20;
-  first = 0;
 
   rowClicked(rowData: any) {
     this.rowClickedEvent.emit(rowData);
@@ -43,5 +43,12 @@ export class CustomTableComponent {
 
   pageChange(event: any) {
     this.pageEvent.emit(event);
+  }
+
+  // It resets the table's first value to 0 when needed, triggered from the parent component.
+  resetTableFirstValue() {
+    if(this.table.first) {
+      this.table.first = 0;
+    }
   }
 }

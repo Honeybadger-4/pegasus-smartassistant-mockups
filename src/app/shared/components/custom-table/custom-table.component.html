@@ -1,4 +1,5 @@
 <p-table
+  #table
   [value]="tableData()"
   [columns]="tableColumns()"
   dataKey="id"
@@ -7,7 +8,7 @@
   [lazy]="true"
   [paginator]="isPaginator()"
   [rows]="rows"
-  [first]="first"
+  [first]="0"
   [totalRecords]="totalRecords()"
   [rowsPerPageOptions]="[20, 40, 80]"
   [selectionMode]="selectionMode()"

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { DropdownModule } from 'primeng/dropdown';
@@ -19,12 +19,13 @@ import { PERIOD_OPTIONS } from '@shared/constants/global-constant';
   styleUrl: './user-login-history.component.scss',
 })
 export class UserLoginHistoryComponent {
+  @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
   loginInfoService = inject(LoginInfoService);
 
   columns: Column[] = [];
   userLoginHistoryData = signal<ILoginInfoResponse | null>(null);
   userLoginHistoryTableData = signal<ILoginInfoTableData[]>([]);
-  first = 0;
+  currentFirst = 0;
   currentPage = 0;
   currentRows = 20;
   periodOptions: any;
@@ -34,7 +35,6 @@ export class UserLoginHistoryComponent {
     this.periodOptions = PERIOD_OPTIONS;
     this.selectedPeriod = this.periodOptions[0].value;
     this.defineColumn();
-    this.getAllLoginInfo(0, 20);
   }
 
   defineColumn() {
@@ -69,8 +69,8 @@ export class UserLoginHistoryComponent {
   }
 
   onPeriodChange(event: any) {
-    // TODO: Tablonun first değeri 0 olarak güncellenmeli.
     this.currentPage = 0;
+    this.customTableComponent.resetTableFirstValue();
     this.getAllLoginInfo(this.currentPage, this.currentRows);
   }
 
