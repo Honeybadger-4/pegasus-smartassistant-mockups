@@ -25,7 +25,6 @@ export class UserLoginHistoryComponent {
   columns: Column[] = [];
   userLoginHistoryData = signal<ILoginInfoResponse | null>(null);
   userLoginHistoryTableData = signal<ILoginInfoTableData[]>([]);
-  currentFirst = 0;
   currentPage = 0;
   currentRows = 20;
   periodOptions: any;
