@@ -47,7 +47,7 @@ export class CustomTableComponent {
 
   // It resets the table's first value to 0 when needed, triggered from the parent component.
   resetTableFirstValue() {
-    if(this.table.first) {
+    if (this.table.first) {
       this.table.first = 0;
     }
   }

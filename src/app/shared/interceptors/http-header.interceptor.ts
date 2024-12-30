@@ -8,7 +8,7 @@ export const httpHeadersInterceptor: HttpInterceptorFn = (req, next) => {
   const token = loginService.currentUser()?.efbToken;
   const header = signal<any>({});
 
-  if(req.url.includes('/login') && !req.url.includes('/login-info')) {
+  if (req.url.includes('/login') && !req.url.includes('/login-info')) {
     header.set({
       'Content-Type': 'application/json',
       Accept: '*/*',
@@ -19,7 +19,7 @@ export const httpHeadersInterceptor: HttpInterceptorFn = (req, next) => {
       deviceModel: 'a',
       deviceId: '1',
       ipAddress: '1',
-    })
+    });
   } else {
     header.set({
       'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ export const httpHeadersInterceptor: HttpInterceptorFn = (req, next) => {
       deviceId: '1',
       ipAddress: '1',
       authorization: `Bearer ${token}`,
-    })
+    });
   }
 
   const updatedRequest = req.clone({
