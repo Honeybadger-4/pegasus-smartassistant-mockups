@@ -2,19 +2,21 @@
   <section class="table-header-section">
     <span class="header-title">User Login History</span>
     <p-dropdown
-      [options]="periodOptions"
-      [(ngModel)]="selectedPeriod"
       optionLabel="label"
       optionValue="value"
+      [options]="periodOptions"
+      [(ngModel)]="selectedPeriod"
       class="custom-dropdown period-dropdown"
-      placeholder="Daily"
+      (ngModelChange)="onPeriodChange($event)"
     ></p-dropdown>
   </section>
 
   <section class="table-section custom-card">
     <app-custom-table
-      [tableData]="userLoginHistoryData"
+      [tableData]="userLoginHistoryTableData()"
       [tableColumns]="columns"
+      [totalRecords]="userLoginHistoryData()?.totalElements || 0"
+      (pageEvent)="pageEvent($event)"
     ></app-custom-table>
   </section>
 </main>
