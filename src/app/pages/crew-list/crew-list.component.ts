@@ -13,7 +13,10 @@ import { InputIconModule } from 'primeng/inputicon';
 import { PanelModule } from 'primeng/panel';
 import { MenuItem } from 'primeng/api';
 import { LogbookService } from '@shared/services/logbook.service';
-import { ILogbookCrewListContentData, ILogbookCrewListResponse } from '@shared/models/logbook-crew-list-response.model';
+import {
+  ILogbookCrewListContentData,
+  ILogbookCrewListResponse,
+} from '@shared/models/logbook-crew-list-response.model';
 
 @Component({
   selector: 'app-logbook',
@@ -42,8 +45,8 @@ export class CrewListComponent {
   columns!: Column[];
   filterInput = '';
   logbookDashboardData: any;
-  crewListData = signal<ILogbookCrewListResponse | null>(null)
-  crewListContentData = signal<ILogbookCrewListContentData[]>([])
+  crewListData = signal<ILogbookCrewListResponse | null>(null);
+  crewListContentData = signal<ILogbookCrewListContentData[]>([]);
 
   currentPage = 0;
   currentRows = 20;
@@ -109,16 +112,23 @@ export class CrewListComponent {
   }
 
   getCrewList() {
-    this.logbookService.getCrewList(this.yerMonthValue, this.currentPage, this.currentRows, this.filterInput).subscribe({
-      next: (response) => {
-        this.crewListData.set(response);
-        this.crewListContentData.set(response.content);
-        console.log(response);
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    })
+    this.logbookService
+      .getCrewList(
+        this.yerMonthValue,
+        this.currentPage,
+        this.currentRows,
+        this.filterInput,
+      )
+      .subscribe({
+        next: (response) => {
+          this.crewListData.set(response);
+          this.crewListContentData.set(response.content);
+          console.log(response);
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
   }
 
   tableRowSelected(event: any) {
