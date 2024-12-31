@@ -6,9 +6,11 @@
       <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
       <input
         type="text"
+        #searchInput
+        [(ngModel)]="searchInputValue"
+        (ngModelChange)="onChangeSearch($event)"
         pInputText
         placeholder="Crew Name&Surname / Company ID"
-        [(ngModel)]="filterInput"
       />
     </p-iconField>
   </div>
@@ -78,8 +80,10 @@
 
   <section class="table-section custom-card mt-5">
     <app-custom-table
-      [tableData]="logbookData"
+      [tableData]="crewListContentData()"
       [tableColumns]="columns"
+      [totalRecords]="crewListData()?.totalElements || 0"
+      (pageEvent)="pageEvent($event)"
       (rowClickedEvent)="tableRowSelected($event)"
     ></app-custom-table>
   </section>
