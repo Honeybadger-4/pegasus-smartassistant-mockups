@@ -22,8 +22,8 @@ export class LogbookService {
 
     let params = new HttpParams()
       .set('yearMonth', yearMonth)
-      .set('page', page.toString())
-      .set('size', size.toString());
+      .set('page', page)
+      .set('size', size);
 
     if (searchValue) {
       params = params.set('searchValue', searchValue);
