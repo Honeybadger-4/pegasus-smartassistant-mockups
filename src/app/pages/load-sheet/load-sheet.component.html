@@ -3,7 +3,7 @@
     <span class="header-title">Load Sheet</span>
     <p-dropdown
       [options]="periodOptions"
-      [(ngModel)]="selectedPeriod"
+      (ngModelChange)="onPeriodChange($event)"
       optionLabel="label"
       optionValue="value"
       class="custom-dropdown period-dropdown"
@@ -39,6 +39,8 @@
     <app-custom-table
       [tableData]="loadSheetTableData()"
       [tableColumns]="columns"
+      [totalRecords]="loadSheetData()?.loadSheets?.totalElements || 0"
+      (pageEvent)="pageEvent($event)"
     ></app-custom-table>
   </section>
 </main>

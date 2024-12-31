@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   inject,
@@ -5,19 +6,17 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { Column } from '@shared/models/columns';
-
 import { DropdownModule } from 'primeng/dropdown';
+import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { SliderModule } from 'primeng/slider';
 import { LoadSheetService } from '@shared/services/load-sheet.service';
 import {
   ILoadSheetResponse,
   ILoadSheetTableData,
 } from '@shared/models/load-sheet-response.model';
+import { PERIOD_OPTIONS } from '@shared/constants/global-constant';
 
 @Component({
   selector: 'app-load-sheet',
@@ -33,6 +32,7 @@ import {
   styleUrl: './load-sheet.component.scss',
 })
 export class LoadSheetComponent {
+  @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
   @ViewChild('statusCellBodyTemplate', { static: true })
   statusCellBodyTemplate!: TemplateRef<any>;
   @ViewChild('previewCellBodyTemplate', { static: true })
@@ -41,25 +41,23 @@ export class LoadSheetComponent {
   downloadCellBodyTemplate!: TemplateRef<any>;
 
   loadSheetService = inject(LoadSheetService);
-
+  columns: Column[] = [];
 
   loadSheetData = signal<ILoadSheetResponse | null>(null);
   loadSheetTableData = signal<ILoadSheetTableData[]>([]);
-
+  currentPage = 0;
+  currentRows = 20;
+  periodOptions: any;
   selectedPeriod = '';
+
   approvedValue = 76;
   declinedValue = 24;
 
-  periodOptions = [
-    { label: 'Daily', value: 'daily' },
-    { label: 'Weekly', value: 'weekly' },
-    { label: 'Monthly', value: 'monthly' },
-  ];
-  columns: Column[] = [];
-
   ngOnInit() {
+    this.periodOptions = PERIOD_OPTIONS;
+    this.selectedPeriod = this.periodOptions[0].value;
     this.defineColumn();
-    this.getLoadSheet();
+    this.getLoadSheet(this.currentPage, this.currentRows);
   }
 
   defineColumn() {
@@ -79,25 +77,29 @@ export class LoadSheetComponent {
     ];
   }
 
-  // getLoadSheet(page: number, size: number) {
-  //   this.loadSheetService
-  //     .getLoadSheet(this.selectedPeriod, page, size)
-  //     .subscribe({
-  //       next: (response) => {
-  //         this.loadSheetData.set(response);
-  //         this.loadSheetTableData.set(response.content);
-  //       },
-  //       error: (error) => {
-  //         console.error(error);
-  //       },
-  //     });
-  // }
-
-  getLoadSheet() {
+  getLoadSheet(page: number, size: number) {
     this.loadSheetService
-      .getLoadSheet('MONTHLY', 0, 3)
-      .subscribe((response) => {
-        this.loadSheetTableData.set(response.loadSheets.content);
+      .getLoadSheet(this.selectedPeriod, page, size)
+      .subscribe({
+        next: (response) => {
+          this.loadSheetData.set(response);
+          this.loadSheetTableData.set(response.loadSheets.content);
+        },
+        error: (error) => {
+          console.error(error);
+        },
       });
+  }
+
+  onPeriodChange(event: any) {
+    this.currentPage = 0;
+    this.customTableComponent.resetTableFirstValue();
+    this.getLoadSheet(this.currentPage, this.currentRows);
+  }
+  pageEvent(event: { first: number; rows: number }) {
+    const page = event.first / event.rows;
+    this.currentPage = page;
+    this.currentRows = event.rows;
+    this.getLoadSheet(page, event.rows);
   }
 }
