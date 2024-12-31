@@ -1,4 +1,10 @@
-import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -141,7 +147,7 @@ export class CrewListComponent {
       .pipe(
         map((event: Event) => (event.target as HTMLInputElement).value),
         debounceTime(300),
-        distinctUntilChanged()
+        distinctUntilChanged(),
       )
       .subscribe((searchText) => {
         if (searchText.trim() || searchText === '') {
