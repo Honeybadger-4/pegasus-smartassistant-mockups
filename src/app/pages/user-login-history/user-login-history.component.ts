@@ -58,8 +58,7 @@ export class UserLoginHistoryComponent {
       .getAllLoginInfo(this.selectedPeriod, page, size)
       .subscribe({
         next: (response) => {
-          this.userLoginHistoryData.set(response);
-          this.userLoginHistoryTableData.set(response.content);
+          t
         },
         error: (error) => {
           console.error(error);

@@ -1,4 +1,10 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -7,6 +13,11 @@ import { Column } from '@shared/models/columns';
 
 import { DropdownModule } from 'primeng/dropdown';
 import { SliderModule } from 'primeng/slider';
+import { LoadSheetService } from '@shared/services/load-sheet.service';
+import {
+  ILoadSheetResponse,
+  ILoadSheetTableData,
+} from '@shared/models/load-sheet-response.model';
 
 @Component({
   selector: 'app-load-sheet',
@@ -29,6 +40,12 @@ export class LoadSheetComponent {
   @ViewChild('downloadCellBodyTemplate', { static: true })
   downloadCellBodyTemplate!: TemplateRef<any>;
 
+  loadSheetService = inject(LoadSheetService);
+
+
+  loadSheetData = signal<ILoadSheetResponse | null>(null);
+  loadSheetTableData = signal<ILoadSheetTableData[]>([]);
+
   selectedPeriod = '';
   approvedValue = 76;
   declinedValue = 24;
@@ -38,69 +55,19 @@ export class LoadSheetComponent {
     { label: 'Weekly', value: 'weekly' },
     { label: 'Monthly', value: 'monthly' },
   ];
-
   columns: Column[] = [];
-  loadSheetData = [
-    {
-      aircraft: 'TC-A329',
-      flightNo: 'PC2009',
-      departure: 'AYT',
-      arrival: 'DUS',
-      status: 'Approved',
-      username: 'SAWBNCS1',
-    },
-    {
-      aircraft: 'TC-A329',
-      flightNo: 'PC2009',
-      departure: 'AYT',
-      arrival: 'DUS',
-      status: 'Declined',
-      username: 'SAWBNCS2',
-    },
-    {
-      aircraft: 'TC-A329',
-      flightNo: 'PC2009',
-      departure: 'AYT',
-      arrival: 'DUS',
-      status: 'Sent',
-      username: 'SAWBNCS3',
-    },
-    {
-      aircraft: 'TC-A329',
-      flightNo: 'PC2009',
-      departure: 'AYT',
-      arrival: 'DUS',
-      status: 'Not Sent',
-      username: 'SAWBNCS4',
-    },
-    {
-      aircraft: 'TC-A329',
-      flightNo: 'PC2009',
-      departure: 'AYT',
-      arrival: 'DUS',
-      status: 'Sent',
-      username: 'SAWBNCS5',
-    },
-    {
-      aircraft: 'TC-A329',
-      flightNo: 'PC2009',
-      departure: 'AYT',
-      arrival: 'DUS',
-      status: 'Not Sent',
-      username: 'SAWBNCS6',
-    },
-  ];
 
   ngOnInit() {
     this.defineColumn();
+    this.getLoadSheet();
   }
 
   defineColumn() {
     this.columns = [
-      { field: 'aircraft', header: 'Aircraft' },
+      { field: 'aircraftReg', header: 'Aircraft' },
       { field: 'flightNo', header: 'Flight No' },
-      { field: 'departure', header: 'Departure' },
-      { field: 'arrival', header: 'Arrival' },
+      { field: 'depPort', header: 'Departure' },
+      { field: 'arrPort', header: 'Arrival' },
       {
         field: 'status',
         header: 'Status',
@@ -110,5 +77,27 @@ export class LoadSheetComponent {
       { field: '', header: '', template: this.previewCellBodyTemplate },
       { field: '', header: '', template: this.downloadCellBodyTemplate },
     ];
+  }
+
+  // getLoadSheet(page: number, size: number) {
+  //   this.loadSheetService
+  //     .getLoadSheet(this.selectedPeriod, page, size)
+  //     .subscribe({
+  //       next: (response) => {
+  //         this.loadSheetData.set(response);
+  //         this.loadSheetTableData.set(response.content);
+  //       },
+  //       error: (error) => {
+  //         console.error(error);
+  //       },
+  //     });
+  // }
+
+  getLoadSheet() {
+    this.loadSheetService
+      .getLoadSheet('MONTHLY', 0, 3)
+      .subscribe((response) => {
+        this.loadSheetTableData.set(response.loadSheets.content);
+      });
   }
 }
