@@ -16,7 +16,7 @@ export class LogbookService {
     yearMonth: string,
     page: number,
     size: number,
-    searchValue?: string,
+    searchValue?: string | null,
   ): Observable<ILogbookCrewListResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/crewList`;
 

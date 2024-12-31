@@ -6,9 +6,11 @@
       <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
       <input
         type="text"
+        #searchInput
+        [(ngModel)]="searchInputValue"
+        (ngModelChange)="onChangeSearch($event)"
         pInputText
         placeholder="Crew Name&Surname / Company ID"
-        [(ngModel)]="filterInput"
       />
     </p-iconField>
   </div>

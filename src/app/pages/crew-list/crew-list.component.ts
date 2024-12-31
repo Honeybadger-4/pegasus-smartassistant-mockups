@@ -1,4 +1,5 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core';
+import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -6,17 +7,17 @@ import { Router } from '@angular/router';
 import { CustomDonutChartComponent } from '@shared/components/custom-donut-chart/custom-donut-chart.component';
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
 import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
+import { LogbookService } from '@shared/services/logbook.service';
 import { Column } from '@shared/models/columns';
+import {
+  ILogbookCrewListContentData,
+  ILogbookCrewListResponse,
+} from '@shared/models/logbook-crew-list-response.model';
 
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { PanelModule } from 'primeng/panel';
 import { MenuItem } from 'primeng/api';
-import { LogbookService } from '@shared/services/logbook.service';
-import {
-  ILogbookCrewListContentData,
-  ILogbookCrewListResponse,
-} from '@shared/models/logbook-crew-list-response.model';
 
 @Component({
   selector: 'app-logbook',
@@ -35,6 +36,9 @@ import {
   styleUrl: './crew-list.component.scss',
 })
 export class CrewListComponent {
+  @ViewChild('searchInput', { static: true }) searchInput!: ElementRef;
+  @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
+
   router = inject(Router);
   logbookService = inject(LogbookService);
 
@@ -42,21 +46,20 @@ export class CrewListComponent {
     { label: 'Logbook', route: '/logbook' },
     { label: 'Crew List' },
   ];
+  searchInputValue = '';
   columns!: Column[];
-  filterInput = '';
+  currentPage = 0;
+  currentRows = 20;
   logbookDashboardData: any;
   crewListData = signal<ILogbookCrewListResponse | null>(null);
   crewListContentData = signal<ILogbookCrewListContentData[]>([]);
-
-  currentPage = 0;
-  currentRows = 20;
 
   chartDataOne: any;
   chartOptionsOne: any;
   chartDataTwo: any;
   chartOptionsTwo: any;
 
-  // Mock data
+  // TODO: Logbook ekranından crew list ekranına yönlenildiğinde yerMonthValue parametresi logbook componentinden buraya gönderilmeli.
   yerMonthValue = '2024-11';
 
   ngOnInit() {
@@ -66,9 +69,10 @@ export class CrewListComponent {
     this.defineColumns();
     this.defineChartDataAndOptions();
     this.getCrewList();
+    this.setupSearchListener();
   }
 
-  // Define values
+  // Define Operations
   defineColumns() {
     this.columns = [
       { field: 'crewNameSurname', header: 'Crew Name & Surname' },
@@ -117,7 +121,7 @@ export class CrewListComponent {
         this.yerMonthValue,
         this.currentPage,
         this.currentRows,
-        this.filterInput,
+        this.searchInputValue,
       )
       .subscribe({
         next: (response) => {
@@ -131,6 +135,28 @@ export class CrewListComponent {
       });
   }
 
+  // Search Operations
+  setupSearchListener() {
+    fromEvent<Event>(this.searchInput.nativeElement, 'input')
+      .pipe(
+        map((event: Event) => (event.target as HTMLInputElement).value),
+        debounceTime(300),
+        distinctUntilChanged()
+      )
+      .subscribe((searchText) => {
+        if (searchText.trim() || searchText === '') {
+          this.currentPage = 0;
+          this.customTableComponent.resetTableFirstValue();
+          this.getCrewList();
+        }
+      });
+  }
+
+  onChangeSearch(value: string) {
+    this.searchInputValue = value.toUpperCase();
+  }
+
+  // Table Operations
   tableRowSelected(event: any) {
     this.router.navigate(['logbook/logbook-detail'], {
       state: { data: event },
