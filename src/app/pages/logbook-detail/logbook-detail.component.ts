@@ -1,9 +1,18 @@
-import { Component, inject, signal, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { IDetailedListContentData, IDetailedListResponse } from '@shared/models/detailed-list-response.model';
+import {
+  IDetailedListContentData,
+  IDetailedListResponse,
+} from '@shared/models/detailed-list-response.model';
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
 import { DetailModalComponent } from '../../components/logbook-detail/detail-modal/detail-modal.component';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
@@ -124,18 +133,20 @@ export class LogbookDetailComponent {
       monthLogId: this.crewListTableData.monthlyLogbookId,
       status: '',
       startDate: '',
-      endDate: ''
-    }
+      endDate: '',
+    };
 
-    this.logbookService.getDetailedList(requestBody, this.currentPage, this.currentRows).subscribe({
-      next: (response) => {
-        this.logbookDetailData.set(response);
-        this.logbookDetailTableData.set(response.content);
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    })
+    this.logbookService
+      .getDetailedList(requestBody, this.currentPage, this.currentRows)
+      .subscribe({
+        next: (response) => {
+          this.logbookDetailData.set(response);
+          this.logbookDetailTableData.set(response.content);
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
   }
 
   selectionCheckbox(event: any) {

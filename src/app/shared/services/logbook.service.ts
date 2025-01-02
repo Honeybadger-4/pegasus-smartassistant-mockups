@@ -36,9 +36,15 @@ export class LogbookService {
       .pipe(map((response) => response.data));
   }
 
-  getDetailedList(requestBody: IDetailedListRequest, page: number, size: number): Observable<IDetailedListResponse> {
+  getDetailedList(
+    requestBody: IDetailedListRequest,
+    page: number,
+    size: number,
+  ): Observable<IDetailedListResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/detailedList?page=${page}&size=${size}`;
-    
-    return this.http.post<IHttpResponseModel>(apiUrl, requestBody).pipe(map((response) => response.data));
+
+    return this.http
+      .post<IHttpResponseModel>(apiUrl, requestBody)
+      .pipe(map((response) => response.data));
   }
 }
