@@ -15,3 +15,10 @@
     }
   }
 }
+::ng-deep {
+  #TripInfoPage {
+    .p-calendar {
+      width: 100% !important;
+    }
+  }
+}

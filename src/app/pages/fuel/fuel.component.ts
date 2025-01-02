@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { Column } from '@shared/models/columns';
 import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
+import { CalendarModule } from 'primeng/calendar';
 
 @Component({
   selector: 'app-fuel',
@@ -19,19 +20,15 @@ import { CustomTableComponent } from '../../shared/components/custom-table/custo
     InputTextModule,
     FormsModule,
     CustomTableComponent,
+    CalendarModule
   ],
   templateUrl: './fuel.component.html',
   styleUrl: './fuel.component.scss',
 })
 export class FuelComponent {
   columns!: Column[];
-  selectedDaily = '';
-
-  periodOptions = [
-    { label: 'Daily 1', value: 'daily1' },
-    { label: 'Daily 2', value: 'daily2' },
-    { label: 'Daily 3', value: 'daily3' },
-  ];
+  dateRange: Date[] = [];
+  
   fuelData = [
     {
       id: '0',
