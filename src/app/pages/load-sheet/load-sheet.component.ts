@@ -45,19 +45,20 @@ export class LoadSheetComponent {
 
   loadSheetData = signal<ILoadSheetResponse | null>(null);
   loadSheetTableData = signal<ILoadSheetTableData[]>([]);
+  approvedValue = signal<number>(0);
+  declinedValue = signal<number>(0);
   currentPage = 0;
   currentRows = 20;
   periodOptions: any;
   selectedPeriod = '';
 
-  approvedValue = 76;
-  declinedValue = 24;
 
   ngOnInit() {
     this.periodOptions = PERIOD_OPTIONS;
     this.selectedPeriod = this.periodOptions[0].value;
+
     this.defineColumn();
-    this.getLoadSheet(this.currentPage, this.currentRows);
+    this.getLoadSheet();
   }
 
   defineColumn() {
@@ -77,13 +78,15 @@ export class LoadSheetComponent {
     ];
   }
 
-  getLoadSheet(page: number, size: number) {
+  getLoadSheet() {
     this.loadSheetService
-      .getLoadSheet(this.selectedPeriod, page, size)
+      .getLoadSheet(this.selectedPeriod, this.currentPage, this.currentRows)
       .subscribe({
         next: (response) => {
           this.loadSheetData.set(response);
           this.loadSheetTableData.set(response.loadSheets.content);
+          this.approvedValue.set(response.approvedPercentage);
+          this.declinedValue.set(100 - response.approvedPercentage);
         },
         error: (error) => {
           console.error(error);
@@ -94,12 +97,13 @@ export class LoadSheetComponent {
   onPeriodChange(event: any) {
     this.currentPage = 0;
     this.customTableComponent.resetTableFirstValue();
-    this.getLoadSheet(this.currentPage, this.currentRows);
+    this.getLoadSheet();
   }
+
   pageEvent(event: { first: number; rows: number }) {
     const page = event.first / event.rows;
     this.currentPage = page;
     this.currentRows = event.rows;
-    this.getLoadSheet(page, event.rows);
+    this.getLoadSheet();
   }
 }
