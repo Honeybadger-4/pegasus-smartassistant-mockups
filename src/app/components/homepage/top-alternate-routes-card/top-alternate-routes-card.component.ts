@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { CardsHeaderComponent } from '../cards-header/cards-header.component';
 import { CommonModule } from '@angular/common';
 import { CustomBarChartComponent } from '../../../shared/components/custom-bar-chart/custom-bar-chart.component';
 
 @Component({
   selector: 'app-top-alternate-routes-card',
   standalone: true,
-  imports: [CommonModule, CardsHeaderComponent, CustomBarChartComponent],
+  imports: [CommonModule,CustomBarChartComponent],
   templateUrl: './top-alternate-routes-card.component.html',
   styleUrl: './top-alternate-routes-card.component.scss',
 })

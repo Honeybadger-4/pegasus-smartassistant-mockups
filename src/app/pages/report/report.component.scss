@@ -9,9 +9,14 @@
       color: #4f4f4f;
       font-weight: bold;
     }
+  }
+}
 
-    .period-dropdown {
-      width: 120px;
+
+::ng-deep {
+  #ReportPage {
+    .p-calendar {
+      width: 100% !important;
     }
   }
 }

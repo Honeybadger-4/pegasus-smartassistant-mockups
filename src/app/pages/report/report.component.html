@@ -1,14 +1,14 @@
 <main id="ReportPage">
   <section class="table-header-section">
     <span class="header-title">Report</span>
-    <p-dropdown
-      [options]="periodOptions"
-      [(ngModel)]="selectedPeriod"
-      optionLabel="label"
-      optionValue="value"
-      class="custom-dropdown period-dropdown"
-      placeholder="Daily"
-    ></p-dropdown>
+      <p-calendar
+        [(ngModel)]="dateRange"
+        selectionMode="range"
+        [showIcon]="false"
+        placeholder="Start Date - End Date"
+        dateFormat="dd/mm/yy"
+        class="custom-icon-field"
+      ></p-calendar>
   </section>
 
   <section class="table-section custom-card">

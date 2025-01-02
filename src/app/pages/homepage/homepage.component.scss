@@ -1,3 +1,18 @@
 #HomepageComponent {
   padding-right: 10px;
+
+  .table-header-section {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+  }
+}
+
+::ng-deep {
+  #HomepageComponent {
+    .p-calendar {
+      width: 100% !important;
+    }
+  }
 }

@@ -4,11 +4,18 @@ import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { DropdownModule } from 'primeng/dropdown';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
+import { CalendarModule } from 'primeng/calendar';
 
 @Component({
   selector: 'app-report',
   standalone: true,
-  imports: [CommonModule, FormsModule, DropdownModule, CustomTableComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    DropdownModule,
+    CustomTableComponent,
+    CalendarModule,
+  ],
   templateUrl: './report.component.html',
   styleUrl: './report.component.scss',
 })
@@ -20,12 +27,7 @@ export class ReportComponent {
   @ViewChild('downloadCellBodyTemplate', { static: true })
   downloadCellBodyTemplate!: TemplateRef<any>;
 
-  selectedPeriod = '';
-  periodOptions = [
-    { label: 'Daily', value: 'daily' },
-    { label: 'Weekly', value: 'weekly' },
-    { label: 'Monthly', value: 'monthly' },
-  ];
+  dateRange: Date[] = [];
 
   columns: Column[] = [];
   reportData = [
