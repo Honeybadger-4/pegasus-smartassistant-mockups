@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal, ViewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { DropdownModule } from 'primeng/dropdown';
@@ -20,6 +26,8 @@ import { PERIOD_OPTIONS } from '@shared/constants/global-constant';
 })
 export class UserLoginHistoryComponent {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
+  @ViewChild('loggedInDateTemplate', { static: true })
+  loggedInDateTemplate!: TemplateRef<any>;
   loginInfoService = inject(LoginInfoService);
 
   columns: Column[] = [];
@@ -45,7 +53,11 @@ export class UserLoginHistoryComponent {
       { field: 'deviceId', header: 'Device ID' },
       { field: 'deviceModel', header: 'Device Model' },
       { field: 'ipAddress', header: 'IP Address' },
-      { field: 'loggedInDate', header: 'Logged In Date' },
+      {
+        field: 'loggedInDate',
+        header: 'Logged In Date',
+        template: this.loggedInDateTemplate,
+      },
       { field: 'os', header: 'OS' },
       { field: 'osVersion', header: 'OS Version' },
       { field: 'userId', header: 'User ID' },
