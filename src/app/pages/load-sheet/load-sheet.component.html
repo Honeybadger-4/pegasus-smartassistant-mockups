@@ -20,7 +20,7 @@
         class="approved-slider"
         [ngStyle]="{ width: '100%' }"
       ></p-slider>
-      <p class="percentage">{{ approvedValue }}%</p>
+      <p class="percentage">{{ approvedValue() }}%</p>
     </div>
 
     <div class="slider-container">
@@ -31,7 +31,7 @@
         class="declined-slider"
         [ngStyle]="{ width: '100%' }"
       ></p-slider>
-      <p class="percentage">{{ declinedValue }}%</p>
+      <p class="percentage">{{ declinedValue() }}%</p>
     </div>
   </section>
 
@@ -47,7 +47,12 @@
 
 <!-- Table Cell Templates -->
 <ng-template #statusCellBodyTemplate let-rowData="rowData">
-  <span class="font-bold">{{ rowData.status }}</span>
+  @if(rowData.status == "LOADSHEET_APPROVED"){
+    <span class="font-bold">APPROVED</span>
+  }@else if (rowData.status == "LOADSHEET_DECLINED") {
+    <span class="font-bold">DECLINED</span>
+  }
+  
 </ng-template>
 
 <ng-template #previewCellBodyTemplate>
