@@ -3,28 +3,6 @@
   <section class="table-header-section w-full">
     <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" class="w-full" />
     <div class="flex justify-end items-center w-full gap-6">
-      <div class="date-range-picker">
-        <p-calendar
-          [(ngModel)]="dateRange"
-          selectionMode="range"
-          [showIcon]="false"
-          placeholder="Start Date - End Date"
-          dateFormat="dd/mm/yy"
-          class="custom-icon-field date-range-picker"
-        ></p-calendar>
-      </div>
-
-      <div class="dropdown-container">
-        <p-dropdown
-          [options]="dutyTypeOptions"
-          [(ngModel)]="selectedDutyType"
-          optionLabel="label"
-          optionValue="value"
-          class="custom-dropdown period-dropdown"
-          placeholder="Duty Type"
-        ></p-dropdown>
-      </div>
-
       <div class="dropdown-container">
         <p-dropdown
           [options]="statusOptions"
@@ -35,6 +13,17 @@
           placeholder="Status"
         ></p-dropdown>
       </div>
+
+      <div class="date-range-picker">
+        <p-calendar
+          [(ngModel)]="dateRange"
+          selectionMode="range"
+          [showIcon]="false"
+          placeholder="Start Date - End Date"
+          dateFormat="dd/mm/yy"
+          class="custom-icon-field date-range-picker"
+        ></p-calendar>
+      </div>
     </div>
   </section>
 
@@ -44,8 +33,8 @@
         <p class="font-bold">December 2024</p>
         <span class="font-bold">Crew Name&Surname / Company ID:</span>
         <span class="ml-2"
-          >{{ crewListTableData?.crewNameSurname }} /
-          {{ crewListTableData?.companyId }}</span
+          >{{ crewListTableData.crewNameSurname }} /
+          {{ crewListTableData.companyId }}</span
         >
       </div>
 
@@ -72,10 +61,12 @@
 
   <section class="table-section custom-card">
     <app-custom-table
-      [tableData]="logbookDetailData"
+      [tableData]="logbookDetailTableData()"
       [tableColumns]="columns"
       selectionMode="multiple"
+      [totalRecords]="logbookDetailData()?.totalElements || 0"
       (selectedCheckbox)="selectionCheckbox($event)"
+      (pageEvent)="onPageChange($event)"
     ></app-custom-table>
   </section>
 

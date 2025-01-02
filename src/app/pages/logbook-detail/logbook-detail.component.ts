@@ -1,21 +1,27 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, signal, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Column } from '@shared/models/columns';
-import { DropdownModule } from 'primeng/dropdown';
-import { TableModule } from 'primeng/table';
-import { CalendarModule } from 'primeng/calendar';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService } from 'primeng/api';
-import { DialogModule } from 'primeng/dialog';
-import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
-import { InputTextModule } from 'primeng/inputtext';
 import { Router } from '@angular/router';
+
+import { IDetailedListContentData, IDetailedListResponse } from '@shared/models/detailed-list-response.model';
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
-import { CheckboxModule } from 'primeng/checkbox';
-import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
 import { DetailModalComponent } from '../../components/logbook-detail/detail-modal/detail-modal.component';
+import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
+import { ILogbookCrewListContentData } from '@shared/models/logbook-crew-list-response.model';
+import { IDetailedListRequest } from '@shared/models/detailed-list-request.model';
+import { LogbookService } from '@shared/services/logbook.service';
+import { Column } from '@shared/models/columns';
+
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+import { ConfirmationService } from 'primeng/api';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DialogModule } from 'primeng/dialog';
+import { MessageService } from 'primeng/api';
+import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-logbook',
@@ -47,14 +53,22 @@ export class LogbookDetailComponent {
   @ViewChild('checkboxCellBodyTemplate', { static: true })
   checkboxCellBodyTemplate!: TemplateRef<any>;
 
+  router = inject(Router);
+  logbookService = inject(LogbookService);
+  messageService = inject(MessageService);
+  confirmationService = inject(ConfirmationService);
+
   breadcrumbItems = [
     { label: 'Logbook', route: '/logbook' },
     { label: 'Crew List', route: '/logbook/crew-list' },
     { label: 'Logbook Detail List' },
   ];
   columns: Column[] = [];
-
-  crewListTableData: any;
+  crewListTableData!: ILogbookCrewListContentData;
+  logbookDetailData = signal<IDetailedListResponse | null>(null);
+  logbookDetailTableData = signal<IDetailedListContentData[]>([]);
+  currentPage = 0;
+  currentRows = 20;
   dateRange: Date[] = [];
   selectedDutyType = '';
   selectedPeriod = '';
@@ -63,6 +77,7 @@ export class LogbookDetailComponent {
   selectedCheckbox: any[] = [];
   displayPreviewDialog = false;
 
+  // Mock Data
   statusOptions = [
     { label: 'Status 1', value: 'status' },
     { label: 'Status 2', value: 'status' },
@@ -73,274 +88,14 @@ export class LogbookDetailComponent {
     { label: 'Duty Type 2', value: 'dutyType2' },
     { label: 'Duty Type 3', value: 'dutyType3' },
   ];
-  logbookDetailData = [
-    {
-      id: 0,
-      date: '23/12/2024',
-      dutyType: 'Flight',
-      aircraftType: 'B737',
-      aircraftReg: 'TC-IZE',
-      departure: 'SAW',
-      depTime: '20:35',
-      arrival: 'ADB',
-      arrTime: '21:45',
-      totalTime: '01:10',
-      updateDate: '23/12/2024 13:30',
-      comment: '-',
-      reviewedBy: 'ADMIN',
-      status: 'APPROVED',
-    },
-    {
-      id: 1,
-      date: '23/12/2024',
-      dutyType: 'Flight',
-      aircraftType: 'B737',
-      aircraftReg: 'TC-IZE',
-      departure: 'SAW',
-      depTime: '20:35',
-      arrival: 'ADB',
-      arrTime: '21:45',
-      totalTime: '01:10',
-      updateDate: '23/12/2024 13:30',
-      comment: 'Lorem Impsum',
-      reviewedBy: '-',
-      status: 'PENDING',
-      checked: false,
-    },
-    {
-      id: 2,
-      date: '23/12/2024',
-      dutyType: 'Flight',
-      aircraftType: 'B737',
-      aircraftReg: 'TC-IZE',
-      departure: 'SAW',
-      depTime: '20:35',
-      arrival: 'ADB',
-      arrTime: '21:45',
-      totalTime: '01:10',
-      updateDate: '23/12/2024 13:30',
-      comment: '-',
-      reviewedBy: 'ADMIN',
-      status: 'APPROVED',
-      checked: false,
-    },
-    {
-      id: 3,
-      date: '23/12/2024',
-      dutyType: 'Flight',
-      aircraftType: 'B737',
-      aircraftReg: 'TC-IZE',
-      departure: 'SAW',
-      depTime: '20:35',
-      arrival: 'ADB',
-      arrTime: '21:45',
-      totalTime: '01:10',
-      updateDate: '23/12/2024 13:30',
-      comment: 'Lorem Impsum',
-      reviewedBy: 'ADMIN',
-      status: 'PENDING',
-      checked: false,
-    },
-    {
-      id: 4,
-      date: '23/12/2024',
-      dutyType: 'Flight',
-      aircraftType: 'B737',
-      aircraftReg: 'TC-IZE',
-      departure: 'SAW',
-      depTime: '20:35',
-      arrival: 'ADB',
-      arrTime: '21:45',
-      totalTime: '01:10',
-      updateDate: '23/12/2024 13:30',
-      comment: '-',
-      reviewedBy: '-',
-      status: 'APPROVED',
-      checked: false,
-    },
-    {
-      id: 5,
-      date: '23/12/2024',
-      dutyType: 'Flight',
-      aircraftType: 'B737',
-      aircraftReg: 'TC-IZE',
-      departure: 'SAW',
-      depTime: '20:35',
-      arrival: 'ADB',
-      arrTime: '21:45',
-      totalTime: '01:10',
-      updateDate: '23/12/2024 13:30',
-      comment: 'Lorem Impsum',
-      reviewedBy: 'ADMIN',
-      status: 'PENDING',
-      checked: false,
-    },
-    {
-      id: 6,
-      date: '23/12/2024',
-      dutyType: 'Flight',
-      aircraftType: 'B737',
-      aircraftReg: 'TC-IZE',
-      departure: 'SAW',
-      depTime: '20:35',
-      arrival: 'ADB',
-      arrTime: '21:45',
-      totalTime: '01:10',
-      updateDate: '23/12/2024 13:30',
-      comment: 'Lorem Impsum',
-      reviewedBy: '-',
-      status: 'APPROVED',
-      checked: false,
-    },
-    {
-      id: 7,
-      date: '23/12/2024',
-      dutyType: 'Flight',
-      aircraftType: 'B737',
-      aircraftReg: 'TC-IZE',
-      departure: 'SAW',
-      depTime: '20:35',
-      arrival: 'ADB',
-      arrTime: '21:45',
-      totalTime: '01:10',
-      updateDate: '23/12/2024 13:30',
-      comment: '-',
-      reviewedBy: 'ADMIN',
-      status: 'PENDING',
-      checked: false,
-    },
-    {
-      id: 8,
-      date: '23/12/2024',
-      dutyType: 'Flight',
-      aircraftType: 'B737',
-      aircraftReg: 'TC-IZE',
-      departure: 'SAW',
-      depTime: '20:35',
-      arrival: 'ADB',
-      arrTime: '21:45',
-      totalTime: '01:10',
-      updateDate: '23/12/2024 13:30',
-      comment: 'Lorem Impsum',
-      reviewedBy: '-',
-      status: 'APPROVED',
-      checked: false,
-    },
-    {
-      id: 9,
-      date: '23/12/2024',
-      dutyType: 'Flight',
-      aircraftType: 'B737',
-      aircraftReg: 'TC-IZE',
-      departure: 'SAW',
-      depTime: '20:35',
-      arrival: 'ADB',
-      arrTime: '21:45',
-      totalTime: '01:10',
-      updateDate: '23/12/2024 13:30',
-      comment: 'Lorem Impsum',
-      reviewedBy: 'ADMIN',
-      status: 'PENDING',
-      checked: false,
-    },
-    {
-      id: 10,
-      date: '23/12/2024',
-      dutyType: 'Flight',
-      aircraftType: 'B737',
-      aircraftReg: 'TC-IZE',
-      departure: 'SAW',
-      depTime: '20:35',
-      arrival: 'ADB',
-      arrTime: '21:45',
-      totalTime: '01:10',
-      updateDate: '23/12/2024 13:30',
-      comment: 'Lorem Impsum',
-      reviewedBy: '-',
-      status: 'APPROVED',
-      checked: false,
-    },
-    {
-      id: 11,
-      date: '23/12/2024',
-      dutyType: 'Flight',
-      aircraftType: 'B737',
-      aircraftReg: 'TC-IZE',
-      departure: 'SAW',
-      depTime: '20:35',
-      arrival: 'ADB',
-      arrTime: '21:45',
-      totalTime: '01:10',
-      updateDate: '23/12/2024 13:30',
-      comment: '-',
-      reviewedBy: 'ADMIN',
-      status: 'PENDING',
-      checked: false,
-    },
-    {
-      id: 12,
-      date: '23/12/2024',
-      dutyType: 'Flight',
-      aircraftType: 'B737',
-      aircraftReg: 'TC-IZE',
-      departure: 'SAW',
-      depTime: '20:35',
-      arrival: 'ADB',
-      arrTime: '21:45',
-      totalTime: '01:10',
-      updateDate: '23/12/2024 13:30',
-      comment: 'Lorem Impsum',
-      reviewedBy: '-',
-      status: 'APPROVED',
-      checked: false,
-    },
-    {
-      id: 13,
-      date: '23/12/2024',
-      dutyType: 'Flight',
-      aircraftType: 'B737',
-      aircraftReg: 'TC-IZE',
-      departure: 'SAW',
-      depTime: '20:35',
-      arrival: 'ADB',
-      arrTime: '21:45',
-      totalTime: '01:10',
-      updateDate: '23/12/2024 13:30',
-      comment: '-',
-      reviewedBy: 'ADMIN',
-      status: 'PENDING',
-      checked: false,
-    },
-    {
-      id: 14,
-      date: '23/12/2024',
-      dutyType: 'Flight',
-      aircraftType: 'B737',
-      aircraftReg: 'TC-IZE',
-      departure: 'SAW',
-      depTime: '20:35',
-      arrival: 'ADB',
-      arrTime: '21:45',
-      totalTime: '01:10',
-      updateDate: '23/12/2024 13:30',
-      comment: 'Lorem Impsum',
-      reviewedBy: '-',
-      status: 'APPROVED',
-      checked: false,
-    },
-  ];
-
-  constructor(
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService,
-    private router: Router,
-  ) {}
 
   ngOnInit() {
     this.defineColumn();
 
     this.crewListTableData = history.state.data;
     console.log(this.crewListTableData);
+
+    this.getDetailedList();
   }
 
   defineColumn() {
@@ -361,6 +116,26 @@ export class LogbookDetailComponent {
       { field: '', header: '', template: this.previewCellBodyTemplate },
       { field: '', header: '', template: this.editableCellBodyTemplate },
     ];
+  }
+
+  getDetailedList() {
+    // TODO: Filtreler request'e eklenmeli.
+    const requestBody: IDetailedListRequest = {
+      monthLogId: this.crewListTableData.monthlyLogbookId,
+      status: '',
+      startDate: '',
+      endDate: ''
+    }
+
+    this.logbookService.getDetailedList(requestBody, this.currentPage, this.currentRows).subscribe({
+      next: (response) => {
+        this.logbookDetailData.set(response);
+        this.logbookDetailTableData.set(response.content);
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    })
   }
 
   selectionCheckbox(event: any) {
@@ -439,5 +214,12 @@ export class LogbookDetailComponent {
 
   toggleModal() {
     this.displayPreviewDialog = !this.displayPreviewDialog;
+  }
+
+  onPageChange(event: { first: number; rows: number }) {
+    const page = event.first / event.rows;
+    this.currentPage = page;
+    this.currentRows = event.rows;
+    this.getDetailedList();
   }
 }

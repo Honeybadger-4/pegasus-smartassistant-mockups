@@ -1,6 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
+import { IDetailedListRequest } from '@shared/models/detailed-list-request.model';
+import { IDetailedListResponse } from '@shared/models/detailed-list-response.model';
 import { IHttpResponseModel } from '@shared/models/http-response.model';
 import { ILogbookCrewListResponse } from '@shared/models/logbook-crew-list-response.model';
 import { map, Observable } from 'rxjs';
@@ -32,5 +34,11 @@ export class LogbookService {
     return this.http
       .get<IHttpResponseModel>(apiUrl, { params })
       .pipe(map((response) => response.data));
+  }
+
+  getDetailedList(requestBody: IDetailedListRequest, page: number, size: number): Observable<IDetailedListResponse> {
+    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/detailedList?page=${page}&size=${size}`;
+    
+    return this.http.post<IHttpResponseModel>(apiUrl, requestBody).pipe(map((response) => response.data));
   }
 }
