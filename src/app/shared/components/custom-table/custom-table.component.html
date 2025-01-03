@@ -2,9 +2,10 @@
   #table
   [value]="tableData()"
   [columns]="tableColumns()"
-  dataKey="id"
+  [dataKey]="dataKeyId()"
   [tableStyle]="{ 'min-width': '50rem' }"
   styleClass="p-datatable-striped"
+  [loading]="tableLoading()"
   [lazy]="true"
   [paginator]="isPaginator()"
   [rows]="rows"

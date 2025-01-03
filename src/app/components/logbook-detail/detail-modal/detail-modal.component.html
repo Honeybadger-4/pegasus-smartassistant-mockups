@@ -50,18 +50,26 @@
         </thead>
         <tbody>
           <tr>
-            <td>22.07.2025</td>
-            <td>B737</td>
-            <td>TC-IZE</td>
-            <td>SAW</td>
-            <td>05:05</td>
-            <td>ADB</td>
-            <td>06:14</td>
-            <td></td>
-            <td>X</td>
-            <td>01:09</td>
-            <td>01:09</td>
-            <td>SELF</td>
+            <td>{{ detailedListRowData()?.date }}</td>
+            <td>{{ detailedListRowData()?.aircraftReg }}</td>
+            <td>{{ detailedListRowData()?.aircraftType }}</td>
+            <td>{{ detailedListRowData()?.departure }}</td>
+            <td>{{ detailedListRowData()?.depTime }}</td>
+            <td>{{ detailedListRowData()?.arrival }}</td>
+            <td>{{ detailedListRowData()?.arrTime }}</td>
+            <td>
+              @if (detailedListRowData()?.engineType === "SE") {
+                X
+              }
+            </td>
+            <td>
+              @if (detailedListRowData()?.engineType === "ME") {
+                X
+              }
+            </td>
+            <td>{{ detailedListRowData()?.multiPilotTime }}</td>
+            <td>{{ detailedListRowData()?.totalTime }}</td>
+            <td>{{ detailedListRowData()?.pic }}</td>
           </tr>
         </tbody>
 
@@ -118,17 +126,17 @@
         </thead>
         <tbody>
           <tr>
-            <td>1</td>
-            <td>---</td>
-            <td>---</td>
-            <td>01:09</td>
-            <td>01:09</td>
+            <td>{{ detailedListRowData()?.dayLanding }}</td>
+            <td>{{ detailedListRowData()?.nightLanding }}</td>
+            <td>{{ detailedListRowData()?.nightTime }}</td>
+            <td>{{ detailedListRowData()?.ifrTime }}</td>
+            <td>{{ detailedListRowData()?.pilotFunctionPic }}</td>
+            <td>{{ detailedListRowData()?.pilotFunctionCoPilot }}</td>
+            <td>{{ detailedListRowData()?.pilotFunctionDual }}</td>
             <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>{{ detailedListRowData()?.syntheticTrainingDate }}</td>
+            <td>{{ detailedListRowData()?.syntheticTrainingType }}</td>
+            <td>{{ detailedListRowData()?.syntheticTrainingTime }}</td>
           </tr>
         </tbody>
       </table>
