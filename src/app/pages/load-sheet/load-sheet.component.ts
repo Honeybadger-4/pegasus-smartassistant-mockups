@@ -61,6 +61,8 @@ export class LoadSheetComponent {
       { field: 'flightNo', header: 'Flight No' },
       { field: 'depPort', header: 'Departure' },
       { field: 'arrPort', header: 'Arrival' },
+      { field: 'depDateTime', header: 'Dep Date/Time' },
+      { field: 'arrDateTime', header: 'Arr Date/Time' },
       {
         field: 'status',
         header: 'Status',

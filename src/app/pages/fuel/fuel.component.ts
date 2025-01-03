@@ -20,7 +20,7 @@ import { CalendarModule } from 'primeng/calendar';
     InputTextModule,
     FormsModule,
     CustomTableComponent,
-    CalendarModule
+    CalendarModule,
   ],
   templateUrl: './fuel.component.html',
   styleUrl: './fuel.component.scss',
@@ -28,7 +28,7 @@ import { CalendarModule } from 'primeng/calendar';
 export class FuelComponent {
   columns!: Column[];
   dateRange: Date[] = [];
-  
+
   fuelData = [
     {
       id: '0',
@@ -36,6 +36,8 @@ export class FuelComponent {
       flightNo: 'PC2009',
       departure: 'AYT',
       arrival: 'DUS',
+      depDateTime: '22/07/2025 13:30',
+      arrDateTime: '22/07/2025 16:30',
       amount: '4800 KG',
     },
     {
@@ -44,6 +46,8 @@ export class FuelComponent {
       flightNo: 'PC2009',
       departure: 'AYT',
       arrival: 'DUS',
+      depDateTime: '22/07/2025 13:30',
+      arrDateTime: '22/07/2025 16:30',
       amount: '4900 KG',
     },
   ];
@@ -58,6 +62,8 @@ export class FuelComponent {
       { field: 'flightNo', header: 'Flight No' },
       { field: 'departure', header: 'Departure' },
       { field: 'arrival', header: 'Arrival' },
+      { field: 'depDateTime', header: 'Dep Date/Time' },
+      { field: 'arrDateTime', header: 'Arr Date/Time' },
       { field: 'amount', header: 'Amount' },
     ];
   }
