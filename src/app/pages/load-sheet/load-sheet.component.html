@@ -46,21 +46,23 @@
       (pageEvent)="pageEvent($event)"
     ></app-custom-table>
   </section>
+
+  <app-load-and-trim-sheet [visible]="isDialogVisible" (close)="toggleDialog()">
+  </app-load-and-trim-sheet>
 </main>
 
 <!-- Table Cell Templates -->
 <ng-template #statusCellBodyTemplate let-rowData="rowData">
-  @if(rowData.status == "LOADSHEET_APPROVED"){
+  @if (rowData.status == "LOADSHEET_APPROVED") {
     <span class="font-bold">APPROVED</span>
-  }@else if (rowData.status == "LOADSHEET_DECLINED") {
+  } @else if (rowData.status == "LOADSHEET_DECLINED") {
     <span class="font-bold">DECLINED</span>
   }
-  
 </ng-template>
 
 <ng-template #previewCellBodyTemplate>
-  <i class="pi pi-eye"></i>
-</ng-template>
+  <i class="pi pi-eye cursor-pointer" (click)="toggleDialog()"> </i
+></ng-template>
 
 <ng-template #downloadCellBodyTemplate>
   <i class="pi pi-download"></i>

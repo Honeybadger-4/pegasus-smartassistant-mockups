@@ -16,6 +16,9 @@ import {
   ILoadSheetTableData,
 } from '@shared/models/load-sheet-response.model';
 import { CalendarModule } from 'primeng/calendar';
+import { DialogModule } from 'primeng/dialog';
+import { LoadAndTrimSheetComponent } from '../../components/load-and-trim-sheet/load-and-trim-sheet.component';
+
 
 @Component({
   selector: 'app-load-sheet',
@@ -26,6 +29,8 @@ import { CalendarModule } from 'primeng/calendar';
     SliderModule,
     CustomTableComponent,
     CalendarModule,
+    LoadAndTrimSheetComponent,
+    DialogModule,
   ],
   templateUrl: './load-sheet.component.html',
   styleUrl: './load-sheet.component.scss',
@@ -44,6 +49,8 @@ export class LoadSheetComponent {
   dateRange: Date[] = [];
   currentPage = 0;
   currentRows = 20;
+  isDialogVisible = true; 
+
 
   loadSheetData = signal<ILoadSheetResponse | null>(null);
   loadSheetTableData = signal<ILoadSheetTableData[]>([]);
@@ -117,4 +124,9 @@ export class LoadSheetComponent {
     this.customTableComponent.resetTableFirstValue();
     this.getLoadSheet();
   }
+
+  toggleDialog() {
+    this.isDialogVisible = !this.isDialogVisible;
+  }
+  
 }
