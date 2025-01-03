@@ -10,15 +10,13 @@
       font-weight: bold;
     }
 
-    .period-dropdown {
-      width: 120px;
-    }
   }
 }
+
 ::ng-deep {
   #TripInfoPage {
     .p-calendar {
-      width: 100% !important;
+      width: 150px !important;
     }
   }
 }
