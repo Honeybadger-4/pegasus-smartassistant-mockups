@@ -22,6 +22,8 @@ export class CustomTableComponent {
 
   tableData = input<any>();
   tableColumns = input<Column[]>();
+  dataKeyId = input<string>('id');
+  tableLoading = input<boolean>(false);
   selectionMode = input<'single' | 'multiple' | null>();
   isPaginator = input<boolean>(true);
   totalRecords = input<number>(0);
