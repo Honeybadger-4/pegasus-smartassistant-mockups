@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import {
@@ -31,6 +31,8 @@ import { DialogModule } from 'primeng/dialog';
 import { MessageService } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
+import moment from 'moment';
 
 @Component({
   selector: 'app-logbook',
@@ -38,17 +40,19 @@ import { ToastModule } from 'primeng/toast';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
+    CustomTableComponent,
+    CustomBreadcrumbComponent,
+    DetailModalComponent,
     TableModule,
     ConfirmDialogModule,
     CalendarModule,
     DropdownModule,
     DialogModule,
-    CustomTableComponent,
     InputTextModule,
-    CustomBreadcrumbComponent,
     CheckboxModule,
     ToastModule,
-    DetailModalComponent,
+    ButtonModule,
   ],
   templateUrl: './logbook-detail.component.html',
   styleUrl: './logbook-detail.component.scss',
@@ -66,21 +70,21 @@ export class LogbookDetailComponent {
   logbookService = inject(LogbookService);
   messageService = inject(MessageService);
   confirmationService = inject(ConfirmationService);
+  formBuilder = inject(FormBuilder);
 
   breadcrumbItems = [
     { label: 'Logbook', route: '/logbook' },
     { label: 'Crew List', route: '/logbook/crew-list' },
     { label: 'Logbook Detail List' },
   ];
+  filterFormGroup!: FormGroup;
   columns: Column[] = [];
   crewListTableData!: ILogbookCrewListContentData;
   logbookDetailData = signal<IDetailedListResponse | null>(null);
   logbookDetailTableData = signal<IDetailedListContentData[]>([]);
   currentPage = 0;
   currentRows = 20;
-  dateRange: Date[] = [];
-  selectedDutyType = '';
-  selectedPeriod = '';
+  tableLoading = false;
   displayRejectPopup = false;
   rejectReason = '';
   selectedCheckbox: any[] = [];
@@ -88,9 +92,10 @@ export class LogbookDetailComponent {
 
   // Mock Data
   statusOptions = [
-    { label: 'Status 1', value: 'status' },
-    { label: 'Status 2', value: 'status' },
-    { label: 'Status 3', value: 'status' },
+    { label: 'APPROVED', value: 'APPROVED' },
+    { label: 'REASSIGNED', value: 'REASSIGNED' },
+    { label: 'WAITING_APPROVAL', value: 'WAITING_APPROVAL' },
+    { label: 'REJECTED', value: 'REJECTED' },
   ];
   dutyTypeOptions = [
     { label: 'Duty Type 1', value: 'dutyType1' },
@@ -99,12 +104,20 @@ export class LogbookDetailComponent {
   ];
 
   ngOnInit() {
+    this.builder();
     this.defineColumn();
 
     this.crewListTableData = history.state.data;
     console.log(this.crewListTableData);
 
     this.getDetailedList();
+  }
+
+  builder() {
+    this.filterFormGroup = this.formBuilder.group({
+      status: [''],
+      dateRange: [''],
+    });
   }
 
   defineColumn() {
@@ -128,12 +141,28 @@ export class LogbookDetailComponent {
   }
 
   getDetailedList() {
-    // TODO: Filtreler request'e eklenmeli.
+    this.tableLoading = true;
+    const status = this.filterFormGroup.get('status')?.value;
+    let formattedStartDate = '';
+    let formattedEndDate = '';
+    if(this.filterFormGroup.get('dateRange')?.value) {
+      const startDate = this.filterFormGroup.get('dateRange')?.value[0];
+      const endDate = this.filterFormGroup.get('dateRange')?.value[1];
+
+      formattedStartDate = startDate
+      ? moment(startDate).format()
+      : '';
+    
+      formattedEndDate = endDate
+        ? moment(endDate).format()
+        : '';
+    }
+
     const requestBody: IDetailedListRequest = {
       monthLogId: this.crewListTableData.monthlyLogbookId,
-      status: '',
-      startDate: '',
-      endDate: '',
+      status: status,
+      startDate: formattedStartDate,
+      endDate: formattedEndDate,
     };
 
     this.logbookService
@@ -142,11 +171,17 @@ export class LogbookDetailComponent {
         next: (response) => {
           this.logbookDetailData.set(response);
           this.logbookDetailTableData.set(response.content);
+          this.tableLoading = false;
         },
         error: (error) => {
           console.error(error);
+          this.tableLoading = false;
         },
       });
+  }
+
+  onFilterSubmit() {
+    this.getDetailedList();
   }
 
   selectionCheckbox(event: any) {

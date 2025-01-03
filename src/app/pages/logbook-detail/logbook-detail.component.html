@@ -1,30 +1,34 @@
 <p-toast></p-toast>
 <main id="LogbookDetailPage">
-  <section class="table-header-section w-full">
-    <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" class="w-full" />
-    <div class="flex justify-end items-center w-full gap-6">
-      <div class="dropdown-container">
-        <p-dropdown
-          [options]="statusOptions"
-          [(ngModel)]="selectedPeriod"
-          optionLabel="label"
-          optionValue="value"
-          class="custom-dropdown period-dropdown"
-          placeholder="Status"
-        ></p-dropdown>
-      </div>
+  <section class="flex justify-between items-center w-full mb-3">
+    <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems"/>
+    <form [formGroup]="filterFormGroup" (ngSubmit)="onFilterSubmit()">
+      <div class="flex justify-end items-center w-full gap-6">
+        <div class="w-[122px]">
+          <p-dropdown
+            [options]="statusOptions"
+            formControlName="status"
+            optionLabel="label"
+            optionValue="value"
+            class="custom-dropdown w-full"
+            placeholder="Status"
+          ></p-dropdown>
+        </div>
+  
+        <div class="w-[122px]">
+          <p-calendar
+            formControlName="dateRange"
+            selectionMode="range"
+            [showIcon]="false"
+            placeholder="Start Date - End Date"
+            dateFormat="dd/mm/yy"
+            class="custom-calendar"
+          ></p-calendar>
+        </div>
 
-      <div class="date-range-picker">
-        <p-calendar
-          [(ngModel)]="dateRange"
-          selectionMode="range"
-          [showIcon]="false"
-          placeholder="Start Date - End Date"
-          dateFormat="dd/mm/yy"
-          class="custom-icon-field date-range-picker"
-        ></p-calendar>
+        <p-button type="submit" icon="pi pi-search" [rounded]="true" class="filter-submit-btn" />
       </div>
-    </div>
+    </form>
   </section>
 
   <section>
@@ -63,8 +67,10 @@
     <app-custom-table
       [tableData]="logbookDetailTableData()"
       [tableColumns]="columns"
+      dataKeyId="logId"
       selectionMode="multiple"
       [totalRecords]="logbookDetailData()?.totalElements || 0"
+      [tableLoading]="tableLoading"
       (selectedCheckbox)="selectionCheckbox($event)"
       (pageEvent)="onPageChange($event)"
     ></app-custom-table>
