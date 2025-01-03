@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { IHttpResponseModel } from '@shared/models/http-response.model';
@@ -13,12 +13,25 @@ export class LoadSheetService {
   baseUrl = environment.baseApi;
 
   getLoadSheet(startDate: string, endDate: string, page: number, size: number): Observable<ILoadSheetResponse> {
-    const apiUrl = `${this.baseUrl}/api/v1/admin/load-sheets?startDate=${startDate}&endDate=${endDate}&page=${page}&size=${size}`;
+    const apiUrl = `${this.baseUrl}/api/v1/admin/load-sheets`
+
+     let params = new HttpParams()
+          .set('page', page)
+          .set('size', size);
+    
+        if (startDate && endDate) {
+          params = params.set('startDate', startDate);
+          params = params.set('endDate', endDate);
+        }
+    
+
 
     return this.http
-      .get<IHttpResponseModel>(apiUrl)
+      .get<IHttpResponseModel>(apiUrl, { params })
       .pipe(map((response) => response.data));
   }
 }
+
+
 
 

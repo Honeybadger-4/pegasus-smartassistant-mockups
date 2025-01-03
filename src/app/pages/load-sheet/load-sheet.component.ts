@@ -42,8 +42,6 @@ export class LoadSheetComponent {
   loadSheetService = inject(LoadSheetService);
   columns: Column[] = [];
   dateRange: Date[] = [];
-  startDate: string = '';
-  endDate: string = '';
   currentPage = 0;
   currentRows = 20;
 
@@ -54,15 +52,6 @@ export class LoadSheetComponent {
 
   ngOnInit() {
     this.defineColumn();
-
-    const today = new Date();
-    const sevenDaysAgo = new Date();
-    sevenDaysAgo.setDate(today.getDate() - 7);
-
-    this.startDate = sevenDaysAgo.toLocaleDateString('en-CA');
-    this.endDate = today.toLocaleDateString('en-CA');
-    this.dateRange = [sevenDaysAgo, today];
-
     this.getLoadSheet();
   }
 
@@ -84,13 +73,17 @@ export class LoadSheetComponent {
   }
 
   getLoadSheet() {
+    console.log(1);
+    let startDate = '';
+    let endDate = '';
+
+    if ((this.dateRange.length == 2)) {
+      startDate = this.dateRange[0]?.toISOString();
+      endDate = this.dateRange[1]?.toISOString();
+    }
+
     this.loadSheetService
-      .getLoadSheet(
-        this.startDate,
-        this.endDate,
-        this.currentPage,
-        this.currentRows,
-      )
+      .getLoadSheet(startDate, endDate, this.currentPage, this.currentRows)
       .subscribe({
         next: (response) => {
           this.loadSheetData.set(response);
@@ -104,12 +97,6 @@ export class LoadSheetComponent {
       });
   }
 
-  onPeriodChange(event: any) {
-    this.currentPage = 0;
-    this.customTableComponent.resetTableFirstValue();
-    this.getLoadSheet();
-  }
-
   pageEvent(event: { first: number; rows: number }) {
     const page = event.first / event.rows;
     this.currentPage = page;
@@ -117,14 +104,13 @@ export class LoadSheetComponent {
     this.getLoadSheet();
   }
 
-  onDateRangeChange() {
+  onDateRangeChange(event: Event) {
+    console.log(this.dateRange);
     if (!this.dateRange || this.dateRange.length < 2) {
       console.warn('Date range is not selected');
       return;
     }
 
-    this.startDate = this.dateRange[0].toLocaleDateString('en-CA');
-    this.endDate = this.dateRange[1].toLocaleDateString('en-CA');
     this.currentPage = 0;
     this.customTableComponent.resetTableFirstValue();
     this.getLoadSheet();

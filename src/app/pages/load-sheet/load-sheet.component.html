@@ -4,6 +4,7 @@
     <div class="date-range-picker">
       <p-calendar
         [(ngModel)]="dateRange"
+        (ngModelChange)="onDateRangeChange($event)"
         selectionMode="range"
         [showIcon]="false"
         placeholder="Start Date - End Date"
