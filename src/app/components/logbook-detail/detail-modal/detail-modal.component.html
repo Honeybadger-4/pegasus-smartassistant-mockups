@@ -50,26 +50,26 @@
         </thead>
         <tbody>
           <tr>
-            <td>{{detailedListRowData()?.date}}</td>
-            <td>{{detailedListRowData()?.aircraftReg}}</td>
-            <td>{{detailedListRowData()?.aircraftType}}</td>
-            <td>{{detailedListRowData()?.departure}}</td>
-            <td>{{detailedListRowData()?.depTime}}</td>
-            <td>{{detailedListRowData()?.arrival}}</td>
-            <td>{{detailedListRowData()?.arrTime}}</td>
+            <td>{{ detailedListRowData()?.date }}</td>
+            <td>{{ detailedListRowData()?.aircraftReg }}</td>
+            <td>{{ detailedListRowData()?.aircraftType }}</td>
+            <td>{{ detailedListRowData()?.departure }}</td>
+            <td>{{ detailedListRowData()?.depTime }}</td>
+            <td>{{ detailedListRowData()?.arrival }}</td>
+            <td>{{ detailedListRowData()?.arrTime }}</td>
             <td>
-              @if(detailedListRowData()?.engineType === 'SE') {
+              @if (detailedListRowData()?.engineType === "SE") {
                 X
               }
             </td>
             <td>
-              @if(detailedListRowData()?.engineType === 'ME') {
+              @if (detailedListRowData()?.engineType === "ME") {
                 X
               }
             </td>
-            <td>{{detailedListRowData()?.multiPilotTime}}</td>
-            <td>{{detailedListRowData()?.totalTime}}</td>
-            <td>{{detailedListRowData()?.pic}}</td>
+            <td>{{ detailedListRowData()?.multiPilotTime }}</td>
+            <td>{{ detailedListRowData()?.totalTime }}</td>
+            <td>{{ detailedListRowData()?.pic }}</td>
           </tr>
         </tbody>
 
@@ -126,17 +126,17 @@
         </thead>
         <tbody>
           <tr>
-            <td>{{detailedListRowData()?.dayLanding}}</td>
-            <td>{{detailedListRowData()?.nightLanding}}</td>
-            <td>{{detailedListRowData()?.nightTime}}</td>
-            <td>{{detailedListRowData()?.ifrTime}}</td>
-            <td>{{detailedListRowData()?.pilotFunctionPic}}</td>
-            <td>{{detailedListRowData()?.pilotFunctionCoPilot}}</td>
-            <td>{{detailedListRowData()?.pilotFunctionDual}}</td>
+            <td>{{ detailedListRowData()?.dayLanding }}</td>
+            <td>{{ detailedListRowData()?.nightLanding }}</td>
+            <td>{{ detailedListRowData()?.nightTime }}</td>
+            <td>{{ detailedListRowData()?.ifrTime }}</td>
+            <td>{{ detailedListRowData()?.pilotFunctionPic }}</td>
+            <td>{{ detailedListRowData()?.pilotFunctionCoPilot }}</td>
+            <td>{{ detailedListRowData()?.pilotFunctionDual }}</td>
             <td></td>
-            <td>{{detailedListRowData()?.syntheticTrainingDate}}</td>
-            <td>{{detailedListRowData()?.syntheticTrainingType}}</td>
-            <td>{{detailedListRowData()?.syntheticTrainingTime}}</td>
+            <td>{{ detailedListRowData()?.syntheticTrainingDate }}</td>
+            <td>{{ detailedListRowData()?.syntheticTrainingType }}</td>
+            <td>{{ detailedListRowData()?.syntheticTrainingTime }}</td>
           </tr>
         </tbody>
       </table>

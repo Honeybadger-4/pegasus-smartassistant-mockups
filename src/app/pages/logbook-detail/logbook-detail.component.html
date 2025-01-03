@@ -39,7 +39,7 @@
   <section>
     <div class="flex items-center justify-between">
       <div class="text-[12px]">
-        <p class="font-bold">{{dateTitleTemplate()}}</p>
+        <p class="font-bold">{{ dateTitleTemplate() }}</p>
         <span class="font-bold">Crew Name&Surname / Company ID:</span>
         <span class="ml-2"
           >{{ crewListTableData.crewNameSurname }} /
@@ -129,7 +129,10 @@
 
 <!-- Table Cell Templates -->
 <ng-template #previewCellBodyTemplate let-rowData="rowData">
-  <i class="pi pi-eye cursor-pointer" (click)="togglePreviewDialog(rowData)"></i>
+  <i
+    class="pi pi-eye cursor-pointer"
+    (click)="togglePreviewDialog(rowData)"
+  ></i>
 </ng-template>
 
 <ng-template #editableCellBodyTemplate let-rowData="rowData">

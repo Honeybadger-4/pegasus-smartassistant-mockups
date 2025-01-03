@@ -183,7 +183,7 @@ export class LogbookDetailComponent {
       error: (error) => {
         console.error(error);
       },
-    })
+    });
   }
 
   // Filter Operations
@@ -198,9 +198,17 @@ export class LogbookDetailComponent {
   }
 
   setCalendarMinMaxDate() {
-    let defaultDate = new Date(this.crewListTableData.yearMonth)
-    this.minDate = new Date(defaultDate.getFullYear(), defaultDate.getMonth() , 1);
-    this.maxDate = new Date(defaultDate.getFullYear(), defaultDate.getMonth() + 1 , 0);
+    let defaultDate = new Date(this.crewListTableData.yearMonth);
+    this.minDate = new Date(
+      defaultDate.getFullYear(),
+      defaultDate.getMonth(),
+      1,
+    );
+    this.maxDate = new Date(
+      defaultDate.getFullYear(),
+      defaultDate.getMonth() + 1,
+      0,
+    );
   }
 
   onFilterSubmit() {
@@ -278,9 +286,9 @@ export class LogbookDetailComponent {
 
   // Other Operations
   dateTitleTemplate() {
-    let dateFormat = "";
+    let dateFormat = '';
 
-    if(this.crewListTableData.yearMonth) {
+    if (this.crewListTableData.yearMonth) {
       dateFormat = moment(this.crewListTableData.yearMonth).format('MMMM YYYY');
     }
 
