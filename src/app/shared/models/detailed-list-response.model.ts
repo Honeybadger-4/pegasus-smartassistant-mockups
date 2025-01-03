@@ -53,4 +53,5 @@ export interface IDetailedListContentData {
   pilotFunctionDual: string | null;
   nightTime: string | null;
   ifrTime: string | null;
+  engineType: string;
 }

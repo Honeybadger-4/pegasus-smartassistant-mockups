@@ -5,17 +5,6 @@
     <form [formGroup]="filterFormGroup" (ngSubmit)="onFilterSubmit()">
       <div class="flex justify-end items-center w-full gap-6">
         <div class="w-[122px]">
-          <p-dropdown
-            [options]="statusOptions"
-            formControlName="status"
-            optionLabel="label"
-            optionValue="value"
-            class="custom-dropdown w-full"
-            placeholder="Status"
-          ></p-dropdown>
-        </div>
-
-        <div class="w-[122px]">
           <p-calendar
             formControlName="dateRange"
             selectionMode="range"
@@ -24,6 +13,17 @@
             dateFormat="dd/mm/yy"
             class="custom-calendar"
           ></p-calendar>
+        </div>
+
+        <div class="w-[122px]">
+          <p-dropdown
+            [options]="statusOptions"
+            formControlName="status"
+            optionLabel="label"
+            optionValue="value"
+            class="custom-dropdown w-full"
+            placeholder="Status"
+          ></p-dropdown>
         </div>
 
         <p-button
@@ -121,14 +121,15 @@
   <p-confirmDialog class="custom-confirm-dialog-container"></p-confirmDialog>
 
   <app-detail-modal
-    [visible]="displayPreviewDialog"
-    (closeModal)="toggleModal()"
+    [visible]="displayPreviewDialog()"
+    [detailedListRowData]="detailedListPreviewModalData()"
+    (closeModal)="togglePreviewDialog()"
   ></app-detail-modal>
 </main>
 
 <!-- Table Cell Templates -->
-<ng-template #previewCellBodyTemplate>
-  <i class="pi pi-eye cursor-pointer" (click)="toggleModal()"></i>
+<ng-template #previewCellBodyTemplate let-rowData="rowData">
+  <i class="pi pi-eye cursor-pointer" (click)="togglePreviewDialog(rowData)"></i>
 </ng-template>
 
 <ng-template #editableCellBodyTemplate let-rowData="rowData">

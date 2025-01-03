@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, input, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
+import { IDetailedListContentData } from '@shared/models/detailed-list-response.model';
 
 @Component({
   selector: 'app-detail-modal',
@@ -11,8 +12,9 @@ import { ButtonModule } from 'primeng/button';
   styleUrl: './detail-modal.component.scss',
 })
 export class DetailModalComponent {
-  @Output() closeModal = new EventEmitter<void>();
+  detailedListRowData = input<IDetailedListContentData | null>(null);
   @Input() visible: boolean = false;
+  @Output() closeModal = new EventEmitter<void>();
 
   close() {
     this.closeModal.emit();

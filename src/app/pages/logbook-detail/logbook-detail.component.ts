@@ -87,13 +87,14 @@ export class LogbookDetailComponent {
   crewListTableData!: ILogbookCrewListContentData;
   logbookDetailData = signal<IDetailedListResponse | null>(null);
   logbookDetailTableData = signal<IDetailedListContentData[]>([]);
+  detailedListPreviewModalData = signal<IDetailedListContentData | null>(null);
   currentPage = 0;
   currentRows = 20;
   tableLoading = false;
   displayRejectPopup = false;
   rejectReason = '';
   selectedCheckbox: any[] = [];
-  displayPreviewDialog = false;
+  displayPreviewDialog = signal<boolean>(false);
 
   // Mock Data
   statusOptions = [
@@ -259,8 +260,9 @@ export class LogbookDetailComponent {
     });
   }
 
-  toggleModal() {
-    this.displayPreviewDialog = !this.displayPreviewDialog;
+  togglePreviewDialog(rowData?: IDetailedListContentData) {
+    this.displayPreviewDialog.set(!this.displayPreviewDialog());
+    this.detailedListPreviewModalData.set(rowData ? rowData : null);
   }
 
   onPageChange(event: { first: number; rows: number }) {
