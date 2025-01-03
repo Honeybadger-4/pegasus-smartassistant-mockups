@@ -83,6 +83,8 @@ export class LogbookDetailComponent {
     { label: 'Logbook Detail List' },
   ];
   filterFormGroup!: FormGroup;
+  minDate = new Date();
+  maxDate = new Date();
   columns: Column[] = [];
   crewListTableData!: ILogbookCrewListContentData;
   logbookDetailData = signal<IDetailedListResponse | null>(null);
@@ -103,26 +105,21 @@ export class LogbookDetailComponent {
     { label: 'WAITING_APPROVAL', value: 'WAITING_APPROVAL' },
     { label: 'REJECTED', value: 'REJECTED' },
   ];
-  dutyTypeOptions = [
-    { label: 'Duty Type 1', value: 'dutyType1' },
-    { label: 'Duty Type 2', value: 'dutyType2' },
-    { label: 'Duty Type 3', value: 'dutyType3' },
-  ];
 
   ngOnInit() {
+    this.crewListTableData = history.state.data;
+
     this.builder();
     this.defineColumn();
-
-    this.crewListTableData = history.state.data;
-    console.log(this.crewListTableData);
-
     this.getDetailedList();
+
+    this.setCalendarMinMaxDate();
   }
 
   builder() {
     this.filterFormGroup = this.formBuilder.group({
       status: [''],
-      dateRange: [''],
+      dateRange: [this.dateRangeDefaultValue()],
     });
   }
 
@@ -182,10 +179,28 @@ export class LogbookDetailComponent {
       });
   }
 
+  // Filter Operations
+  dateRangeDefaultValue() {
+    this.crewListTableData.yearMonth;
+    let year = new Date(this.crewListTableData.yearMonth).getFullYear();
+    let month = new Date(this.crewListTableData.yearMonth).getMonth();
+    let startDate = new Date(year, month, 1);
+    let endDate = new Date(year, month, 2);
+
+    return [startDate, endDate];
+  }
+
+  setCalendarMinMaxDate() {
+    let defaultDate = new Date(this.crewListTableData.yearMonth)
+    this.minDate = new Date(defaultDate.getFullYear(), defaultDate.getMonth() , 1);
+    this.maxDate = new Date(defaultDate.getFullYear(), defaultDate.getMonth() + 1 , 0);
+  }
+
   onFilterSubmit() {
     this.getDetailedList();
   }
 
+  // Approve and Reject Operations
   selectionCheckbox(event: any) {
     this.selectedCheckbox = event;
     console.log(this.selectedCheckbox);
@@ -252,6 +267,17 @@ export class LogbookDetailComponent {
       summary: 'Warning',
       detail: 'Your rejection email has been sent.',
     });
+  }
+
+  // Other Operations
+  dateTitleTemplate() {
+    let dateFormat = "";
+
+    if(this.crewListTableData.yearMonth) {
+      dateFormat = moment(this.crewListTableData.yearMonth).format('MMMM YYYY');
+    }
+
+    return dateFormat;
   }
 
   goToLogBookDetailEditPage(data: any) {

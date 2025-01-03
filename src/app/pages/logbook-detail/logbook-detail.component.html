@@ -9,8 +9,10 @@
             formControlName="dateRange"
             selectionMode="range"
             [showIcon]="false"
-            placeholder="Start Date - End Date"
             dateFormat="dd/mm/yy"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            placeholder="Start Date - End Date"
             class="custom-calendar"
           ></p-calendar>
         </div>
@@ -39,7 +41,7 @@
   <section>
     <div class="flex items-center justify-between">
       <div class="text-[12px]">
-        <p class="font-bold">December 2024</p>
+        <p class="font-bold">{{dateTitleTemplate()}}</p>
         <span class="font-bold">Crew Name&Surname / Company ID:</span>
         <span class="ml-2"
           >{{ crewListTableData.crewNameSurname }} /

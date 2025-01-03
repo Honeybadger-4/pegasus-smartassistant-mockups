@@ -36,4 +36,5 @@ export interface ILogbookCrewListContentData {
   simulatorFlightLogs: number;
   approvedLogs: number;
   reassignedLogs: number;
+  yearMonth: string;
 }
