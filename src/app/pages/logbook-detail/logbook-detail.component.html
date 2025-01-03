@@ -1,7 +1,7 @@
 <p-toast></p-toast>
 <main id="LogbookDetailPage">
   <section class="flex justify-between items-center w-full mb-3">
-    <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems"/>
+    <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" />
     <form [formGroup]="filterFormGroup" (ngSubmit)="onFilterSubmit()">
       <div class="flex justify-end items-center w-full gap-6">
         <div class="w-[122px]">
@@ -14,7 +14,7 @@
             placeholder="Status"
           ></p-dropdown>
         </div>
-  
+
         <div class="w-[122px]">
           <p-calendar
             formControlName="dateRange"
@@ -26,7 +26,12 @@
           ></p-calendar>
         </div>
 
-        <p-button type="submit" icon="pi pi-search" [rounded]="true" class="filter-submit-btn" />
+        <p-button
+          type="submit"
+          icon="pi pi-search"
+          [rounded]="true"
+          class="filter-submit-btn"
+        />
       </div>
     </form>
   </section>

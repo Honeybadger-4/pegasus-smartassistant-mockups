@@ -6,7 +6,12 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 
 import {
@@ -145,17 +150,13 @@ export class LogbookDetailComponent {
     const status = this.filterFormGroup.get('status')?.value;
     let formattedStartDate = '';
     let formattedEndDate = '';
-    if(this.filterFormGroup.get('dateRange')?.value) {
+    if (this.filterFormGroup.get('dateRange')?.value) {
       const startDate = this.filterFormGroup.get('dateRange')?.value[0];
       const endDate = this.filterFormGroup.get('dateRange')?.value[1];
 
-      formattedStartDate = startDate
-      ? moment(startDate).format()
-      : '';
-    
-      formattedEndDate = endDate
-        ? moment(endDate).format()
-        : '';
+      formattedStartDate = startDate ? moment(startDate).format() : '';
+
+      formattedEndDate = endDate ? moment(endDate).format() : '';
     }
 
     const requestBody: IDetailedListRequest = {
