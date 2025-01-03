@@ -20,6 +20,7 @@ import {
 } from '@shared/models/detailed-list-response.model';
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
 import { DetailModalComponent } from '../../components/logbook-detail/detail-modal/detail-modal.component';
+import { ILogbookStatusListResponse } from '@shared/models/logbook-status-list-response.model';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { ILogbookCrewListContentData } from '@shared/models/logbook-crew-list-response.model';
 import { IDetailedListRequest } from '@shared/models/detailed-list-request.model';
@@ -90,6 +91,7 @@ export class LogbookDetailComponent {
   logbookDetailData = signal<IDetailedListResponse | null>(null);
   logbookDetailTableData = signal<IDetailedListContentData[]>([]);
   detailedListPreviewModalData = signal<IDetailedListContentData | null>(null);
+  statusOptions = signal<ILogbookStatusListResponse[]>([]);
   currentPage = 0;
   currentRows = 20;
   tableLoading = false;
@@ -98,20 +100,13 @@ export class LogbookDetailComponent {
   selectedCheckbox: any[] = [];
   displayPreviewDialog = signal<boolean>(false);
 
-  // Mock Data
-  statusOptions = [
-    { label: 'APPROVED', value: 'APPROVED' },
-    { label: 'REASSIGNED', value: 'REASSIGNED' },
-    { label: 'WAITING_APPROVAL', value: 'WAITING_APPROVAL' },
-    { label: 'REJECTED', value: 'REJECTED' },
-  ];
-
   ngOnInit() {
     this.crewListTableData = history.state.data;
 
     this.builder();
     this.defineColumn();
     this.getDetailedList();
+    this.getLogbookStatusList();
 
     this.setCalendarMinMaxDate();
   }
@@ -143,6 +138,7 @@ export class LogbookDetailComponent {
     ];
   }
 
+  // API Calls Operations
   getDetailedList() {
     this.tableLoading = true;
     const status = this.filterFormGroup.get('status')?.value;
@@ -177,6 +173,17 @@ export class LogbookDetailComponent {
           this.tableLoading = false;
         },
       });
+  }
+
+  getLogbookStatusList() {
+    this.logbookService.getLogbookStatusList().subscribe({
+      next: (response) => {
+        this.statusOptions.set(response);
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    })
   }
 
   // Filter Operations

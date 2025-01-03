@@ -19,10 +19,8 @@
 
         <div class="w-[122px]">
           <p-dropdown
-            [options]="statusOptions"
+            [options]="statusOptions()"
             formControlName="status"
-            optionLabel="label"
-            optionValue="value"
             class="custom-dropdown w-full"
             placeholder="Status"
           ></p-dropdown>
