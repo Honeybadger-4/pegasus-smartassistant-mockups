@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
-import { DropdownModule } from 'primeng/dropdown';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { SliderModule } from 'primeng/slider';
 import { LoadSheetService } from '@shared/services/load-sheet.service';
@@ -16,7 +15,7 @@ import {
   ILoadSheetResponse,
   ILoadSheetTableData,
 } from '@shared/models/load-sheet-response.model';
-import { PERIOD_OPTIONS } from '@shared/constants/global-constant';
+import { CalendarModule } from 'primeng/calendar';
 
 @Component({
   selector: 'app-load-sheet',
@@ -24,9 +23,9 @@ import { PERIOD_OPTIONS } from '@shared/constants/global-constant';
   imports: [
     CommonModule,
     FormsModule,
-    DropdownModule,
     SliderModule,
     CustomTableComponent,
+    CalendarModule,
   ],
   templateUrl: './load-sheet.component.html',
   styleUrl: './load-sheet.component.scss',
@@ -42,22 +41,28 @@ export class LoadSheetComponent {
 
   loadSheetService = inject(LoadSheetService);
   columns: Column[] = [];
+  dateRange: Date[] = [];
+  startDate: string = '';
+  endDate: string = '';
+  currentPage = 0;
+  currentRows = 20;
 
   loadSheetData = signal<ILoadSheetResponse | null>(null);
   loadSheetTableData = signal<ILoadSheetTableData[]>([]);
   approvedValue = signal<number>(0);
   declinedValue = signal<number>(0);
-  currentPage = 0;
-  currentRows = 20;
-  periodOptions: any;
-  selectedPeriod = '';
-
 
   ngOnInit() {
-    this.periodOptions = PERIOD_OPTIONS;
-    this.selectedPeriod = this.periodOptions[0].value;
-
     this.defineColumn();
+
+    const today = new Date();
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(today.getDate() - 7);
+
+    this.startDate = sevenDaysAgo.toLocaleDateString('en-CA');
+    this.endDate = today.toLocaleDateString('en-CA');
+    this.dateRange = [sevenDaysAgo, today];
+
     this.getLoadSheet();
   }
 
@@ -80,7 +85,12 @@ export class LoadSheetComponent {
 
   getLoadSheet() {
     this.loadSheetService
-      .getLoadSheet(this.selectedPeriod, this.currentPage, this.currentRows)
+      .getLoadSheet(
+        this.startDate,
+        this.endDate,
+        this.currentPage,
+        this.currentRows,
+      )
       .subscribe({
         next: (response) => {
           this.loadSheetData.set(response);
@@ -104,6 +114,19 @@ export class LoadSheetComponent {
     const page = event.first / event.rows;
     this.currentPage = page;
     this.currentRows = event.rows;
+    this.getLoadSheet();
+  }
+
+  onDateRangeChange() {
+    if (!this.dateRange || this.dateRange.length < 2) {
+      console.warn('Date range is not selected');
+      return;
+    }
+
+    this.startDate = this.dateRange[0].toLocaleDateString('en-CA');
+    this.endDate = this.dateRange[1].toLocaleDateString('en-CA');
+    this.currentPage = 0;
+    this.customTableComponent.resetTableFirstValue();
     this.getLoadSheet();
   }
 }

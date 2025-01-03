@@ -12,11 +12,13 @@ export class LoadSheetService {
   http = inject(HttpClient);
   baseUrl = environment.baseApi;
 
-  getLoadSheet(dateRange: string, page: number, size: number): Observable<ILoadSheetResponse> {
-    const apiUrl = `${this.baseUrl}/api/v1/admin/load-sheets?dateRange=${dateRange}&page=${page}&size=${size}`;
+  getLoadSheet(startDate: string, endDate: string, page: number, size: number): Observable<ILoadSheetResponse> {
+    const apiUrl = `${this.baseUrl}/api/v1/admin/load-sheets?startDate=${startDate}&endDate=${endDate}&page=${page}&size=${size}`;
 
     return this.http
       .get<IHttpResponseModel>(apiUrl)
       .pipe(map((response) => response.data));
   }
 }
+
+
