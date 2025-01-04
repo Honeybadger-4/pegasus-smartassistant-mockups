@@ -1,51 +1,49 @@
 <p-toast></p-toast>
 <main id="LogbookDetailPage">
-  <section class="table-header-section w-full">
-    <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" class="w-full" />
-    <div class="flex justify-end items-center w-full gap-6">
-      <div class="date-range-picker">
-        <p-calendar
-          [(ngModel)]="dateRange"
-          selectionMode="range"
-          [showIcon]="false"
-          placeholder="Start Date - End Date"
-          dateFormat="dd/mm/yy"
-          class="custom-icon-field date-range-picker"
-        ></p-calendar>
-      </div>
+  <section class="flex justify-between items-center w-full mb-3">
+    <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" />
+    <form [formGroup]="filterFormGroup" (ngSubmit)="onFilterSubmit()">
+      <div class="flex justify-end items-center w-full gap-6">
+        <div class="w-[122px]">
+          <p-calendar
+            formControlName="dateRange"
+            selectionMode="range"
+            [showIcon]="false"
+            dateFormat="dd/mm/yy"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            placeholder="Start Date - End Date"
+            class="custom-calendar"
+          ></p-calendar>
+        </div>
 
-      <div class="dropdown-container">
-        <p-dropdown
-          [options]="dutyTypeOptions"
-          [(ngModel)]="selectedDutyType"
-          optionLabel="label"
-          optionValue="value"
-          class="custom-dropdown period-dropdown"
-          placeholder="Duty Type"
-        ></p-dropdown>
-      </div>
+        <div class="w-[122px]">
+          <p-dropdown
+            [options]="statusOptions()"
+            formControlName="status"
+            class="custom-dropdown w-full"
+            placeholder="Status"
+          ></p-dropdown>
+        </div>
 
-      <div class="dropdown-container">
-        <p-dropdown
-          [options]="statusOptions"
-          [(ngModel)]="selectedPeriod"
-          optionLabel="label"
-          optionValue="value"
-          class="custom-dropdown period-dropdown"
-          placeholder="Status"
-        ></p-dropdown>
+        <p-button
+          type="submit"
+          icon="pi pi-search"
+          [rounded]="true"
+          class="filter-submit-btn"
+        />
       </div>
-    </div>
+    </form>
   </section>
 
   <section>
     <div class="flex items-center justify-between">
       <div class="text-[12px]">
-        <p class="font-bold">December 2024</p>
+        <p class="font-bold">{{ dateTitleTemplate() }}</p>
         <span class="font-bold">Crew Name&Surname / Company ID:</span>
         <span class="ml-2"
-          >{{ crewListTableData?.crewNameSurname }} /
-          {{ crewListTableData?.companyId }}</span
+          >{{ crewListTableData.crewNameSurname }} /
+          {{ crewListTableData.companyId }}</span
         >
       </div>
 
@@ -72,10 +70,14 @@
 
   <section class="table-section custom-card">
     <app-custom-table
-      [tableData]="logbookDetailData"
+      [tableData]="logbookDetailTableData()"
       [tableColumns]="columns"
+      dataKeyId="logId"
       selectionMode="multiple"
+      [totalRecords]="logbookDetailData()?.totalElements || 0"
+      [tableLoading]="tableLoading"
       (selectedCheckbox)="selectionCheckbox($event)"
+      (pageEvent)="onPageChange($event)"
     ></app-custom-table>
   </section>
 
@@ -119,14 +121,18 @@
   <p-confirmDialog class="custom-confirm-dialog-container"></p-confirmDialog>
 
   <app-detail-modal
-    [visible]="displayPreviewDialog"
-    (closeModal)="toggleModal()"
+    [visible]="displayPreviewDialog()"
+    [detailedListRowData]="detailedListPreviewModalData()"
+    (closeModal)="togglePreviewDialog()"
   ></app-detail-modal>
 </main>
 
 <!-- Table Cell Templates -->
-<ng-template #previewCellBodyTemplate>
-  <i class="pi pi-eye cursor-pointer" (click)="toggleModal()"></i>
+<ng-template #previewCellBodyTemplate let-rowData="rowData">
+  <i
+    class="pi pi-eye cursor-pointer"
+    (click)="togglePreviewDialog(rowData)"
+  ></i>
 </ng-template>
 
 <ng-template #editableCellBodyTemplate let-rowData="rowData">

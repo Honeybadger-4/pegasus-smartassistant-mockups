@@ -1,10 +1,4 @@
 #LogbookDetailPage {
-  .table-header-section {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-
   .button-group {
     .p-button {
       background-color: #feb914;
@@ -70,6 +64,19 @@
 
 ::ng-deep {
   #LogbookDetailPage {
+    .filter-submit-btn {
+      .p-button {
+        background-color: #feb914;
+        border-color: #feb914;
+        width: 30px;
+        height: 30px;
+
+        .p-button-icon {
+          font-size: 14px;
+        }
+      }
+    }
+
     .p-confirm-dialog .p-dialog-footer {
       display: flex;
     }
