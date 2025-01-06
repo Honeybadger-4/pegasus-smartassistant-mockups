@@ -183,7 +183,7 @@ export class LogbookDetailComponent {
     this.logbookService.getLogbookStatusList().subscribe({
       next: (response) => {
         this.statusOptions.set(response);
-      }
+      },
     });
   }
 
@@ -193,9 +193,11 @@ export class LogbookDetailComponent {
     this.logbookService.putApprove(logIds).subscribe({
       next: () => {
         this.getDetailedList();
-        this.showToastService.showSuccessToast("Logbook(s) approved successfully.");
-      }
-    })
+        this.showToastService.showSuccessToast(
+          'Logbook(s) approved successfully.',
+        );
+      },
+    });
   }
 
   putReject() {
@@ -205,9 +207,11 @@ export class LogbookDetailComponent {
       next: () => {
         this.getDetailedList();
         this.rejectReason = '';
-        this.showToastService.showSuccessToast("Logbook rejected successfully.");
-      }
-    })
+        this.showToastService.showSuccessToast(
+          'Logbook rejected successfully.',
+        );
+      },
+    });
   }
 
   // Filter Operations
@@ -263,7 +267,7 @@ export class LogbookDetailComponent {
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
         this.putApprove();
-      }
+      },
     });
   }
 
@@ -288,7 +292,7 @@ export class LogbookDetailComponent {
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
         this.putReject();
-      }
+      },
     });
   }
 

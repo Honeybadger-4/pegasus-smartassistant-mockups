@@ -59,17 +59,20 @@ export class LogbookService {
   }
 
   putApprove(legIds: number[]): Observable<any> {
-    const joinLegIds = legIds.join(",");
+    const joinLegIds = legIds.join(',');
 
     const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/approve?logIds=${joinLegIds}`;
 
-    return this.http.put<IHttpResponseModel>(apiUrl, null).pipe(map((response) => response.data));
+    return this.http
+      .put<IHttpResponseModel>(apiUrl, null)
+      .pipe(map((response) => response.data));
   }
 
   putReject(logId: number, reason: string): Observable<any> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/reject?logId=${logId}&reason=${reason}`;
 
-    return this.http.put<IHttpResponseModel>(apiUrl, null).pipe(map((response) => response.data));
+    return this.http
+      .put<IHttpResponseModel>(apiUrl, null)
+      .pipe(map((response) => response.data));
   }
-
 }
