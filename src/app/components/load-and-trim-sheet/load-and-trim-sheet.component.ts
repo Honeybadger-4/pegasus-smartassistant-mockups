@@ -10,8 +10,9 @@ import { DialogModule } from 'primeng/dialog';
   styleUrl: './load-and-trim-sheet.component.scss'
 })
 export class LoadAndTrimSheetComponent {
-  @Output() closeModal = new EventEmitter<void>();
   @Input() visible: boolean = true;
+  @Output() closeModal = new EventEmitter<void>();
+
   
     close() {
       this.closeModal.emit();

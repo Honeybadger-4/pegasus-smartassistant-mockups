@@ -1,7 +1,7 @@
 <main id="LoadSheetPage">
   <section class="table-header-section">
     <span class="header-title">Load Sheet</span>
-    <div class="date-range-picker">
+    <div class="w-[122px]">
       <p-calendar
         [(ngModel)]="dateRange"
         (ngModelChange)="onDateRangeChange($event)"
@@ -9,7 +9,7 @@
         [showIcon]="false"
         placeholder="Start Date - End Date"
         dateFormat="dd/mm/yy"
-        class="custom-icon-field date-range-picker"
+        class="custom-calendar"
       ></p-calendar>
     </div>
   </section>

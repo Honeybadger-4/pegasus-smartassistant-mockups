@@ -18,7 +18,8 @@ import {
 import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/dialog';
 import { LoadAndTrimSheetComponent } from '../../components/load-and-trim-sheet/load-and-trim-sheet.component';
-
+import moment from 'moment';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-load-sheet',
@@ -49,8 +50,8 @@ export class LoadSheetComponent {
   dateRange: Date[] = [];
   currentPage = 0;
   currentRows = 20;
-  isDialogVisible = true; 
-
+  isDialogVisible = true;
+  
 
   loadSheetData = signal<ILoadSheetResponse | null>(null);
   loadSheetTableData = signal<ILoadSheetTableData[]>([]);
@@ -59,6 +60,13 @@ export class LoadSheetComponent {
 
   ngOnInit() {
     this.defineColumn();
+
+    const today = moment();
+    this.dateRange = [
+      today.clone().subtract(7, 'days').toDate(),
+      today.clone().add(7, 'days').toDate(),
+    ];
+
     this.getLoadSheet();
   }
 
@@ -82,14 +90,41 @@ export class LoadSheetComponent {
   }
 
   getLoadSheet() {
-    console.log(1);
     let startDate = '';
     let endDate = '';
 
-    if ((this.dateRange.length == 2)) {
-      startDate = this.dateRange[0]?.toISOString();
-      endDate = this.dateRange[1]?.toISOString();
+    // Tarih aralığı kontrolü ve formatlama
+    if (this.dateRange.length === 2) {
+      const [start, end] = this.dateRange;
+
+      if (
+        start &&
+        end &&
+        !isNaN(new Date(start).getTime()) &&
+        !isNaN(new Date(end).getTime())
+      ) {
+        startDate = moment(start).format('YYYY-MM-DD');
+        endDate = moment(end).format('YYYY-MM-DD');
+      } else {
+        console.error('Geçersiz tarih aralığı algılandı.');
+        return;
+      }
     }
+
+    // Eğer tarih aralığı eksikse, işlemi durdur
+    if (!startDate || !endDate) {
+      console.warn('Tarih aralığı eksik.');
+      return;
+    }
+
+    // HttpParams oluştur ve API'ye gönder
+    let params = new HttpParams()
+      .set('page', this.currentPage.toString())
+      .set('size', this.currentRows.toString())
+      .set('startDate', startDate)
+      .set('endDate', endDate);
+
+    console.log('API Params:', params.toString());
 
     this.loadSheetService
       .getLoadSheet(startDate, endDate, this.currentPage, this.currentRows)
@@ -101,7 +136,7 @@ export class LoadSheetComponent {
           this.declinedValue.set(100 - response.approvedPercentage);
         },
         error: (error) => {
-          console.error(error);
+          console.error('API çağrısında hata:', error);
         },
       });
   }
@@ -114,19 +149,31 @@ export class LoadSheetComponent {
   }
 
   onDateRangeChange(event: Event) {
-    console.log(this.dateRange);
+    console.log('Seçilen Tarih Aralığı:', this.dateRange);
+
     if (!this.dateRange || this.dateRange.length < 2) {
-      console.warn('Date range is not selected');
+      console.warn('Tarih aralığı eksik veya doğru seçilmedi.');
       return;
     }
 
-    this.currentPage = 0;
-    this.customTableComponent.resetTableFirstValue();
-    this.getLoadSheet();
+    const [startDate, endDate] = this.dateRange;
+
+    if (
+      !startDate ||
+      !endDate ||
+      isNaN(new Date(startDate).getTime()) ||
+      isNaN(new Date(endDate).getTime())
+    ) {
+      console.error('Geçersiz tarih aralığı seçimi.');
+      return;
+    }
+
+    this.currentPage = 0; // Sayfayı sıfırla
+    this.customTableComponent.resetTableFirstValue(); // Tabloyu sıfırla
+    this.getLoadSheet(); // API çağrısı
   }
 
   toggleDialog() {
     this.isDialogVisible = !this.isDialogVisible;
   }
-  
 }
