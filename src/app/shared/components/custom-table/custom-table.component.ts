@@ -53,4 +53,8 @@ export class CustomTableComponent {
       this.table.first = 0;
     }
   }
+
+  clearSelectionData() {
+    this.selectionData = [];
+  }
 }

@@ -23,6 +23,7 @@ import { DetailModalComponent } from '../../components/logbook-detail/detail-mod
 import { ILogbookStatusListResponse } from '@shared/models/logbook-status-list-response.model';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { ILogbookCrewListContentData } from '@shared/models/logbook-crew-list-response.model';
+import { ShowToastService } from '@shared/services/helpers-services/show-toast.service';
 import { IDetailedListRequest } from '@shared/models/detailed-list-request.model';
 import { LogbookService } from '@shared/services/logbook.service';
 import { Column } from '@shared/models/columns';
@@ -65,6 +66,7 @@ import moment from 'moment';
   providers: [ConfirmationService, MessageService],
 })
 export class LogbookDetailComponent {
+  @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
   @ViewChild('previewCellBodyTemplate', { static: true })
   previewCellBodyTemplate!: TemplateRef<any>;
   @ViewChild('editableCellBodyTemplate', { static: true })
@@ -77,6 +79,7 @@ export class LogbookDetailComponent {
   messageService = inject(MessageService);
   confirmationService = inject(ConfirmationService);
   formBuilder = inject(FormBuilder);
+  showToastService = inject(ShowToastService);
 
   breadcrumbItems = [
     { label: 'Logbook', route: '/logbook' },
@@ -88,16 +91,16 @@ export class LogbookDetailComponent {
   maxDate = new Date();
   columns: Column[] = [];
   crewListTableData!: ILogbookCrewListContentData;
-  logbookDetailData = signal<IDetailedListResponse | null>(null);
-  logbookDetailTableData = signal<IDetailedListContentData[]>([]);
-  detailedListPreviewModalData = signal<IDetailedListContentData | null>(null);
-  statusOptions = signal<ILogbookStatusListResponse[]>([]);
   currentPage = 0;
   currentRows = 20;
   tableLoading = false;
   displayRejectPopup = false;
   rejectReason = '';
-  selectedCheckbox: any[] = [];
+  logbookDetailData = signal<IDetailedListResponse | null>(null);
+  logbookDetailTableData = signal<IDetailedListContentData[]>([]);
+  detailedListPreviewModalData = signal<IDetailedListContentData | null>(null);
+  statusOptions = signal<ILogbookStatusListResponse[]>([]);
+  selectedCheckbox = signal<IDetailedListContentData[]>([]);
   displayPreviewDialog = signal<boolean>(false);
 
   ngOnInit() {
@@ -107,7 +110,6 @@ export class LogbookDetailComponent {
     this.defineColumn();
     this.getDetailedList();
     this.getLogbookStatusList();
-
     this.setCalendarMinMaxDate();
   }
 
@@ -166,6 +168,8 @@ export class LogbookDetailComponent {
         next: (response) => {
           this.logbookDetailData.set(response);
           this.logbookDetailTableData.set(response.content);
+          this.selectedCheckbox.set([]);
+          this.customTableComponent.clearSelectionData();
           this.tableLoading = false;
         },
         error: (error) => {
@@ -180,8 +184,32 @@ export class LogbookDetailComponent {
       next: (response) => {
         this.statusOptions.set(response);
       },
-      error: (error) => {
-        console.error(error);
+    });
+  }
+
+  putApprove() {
+    const logIds = this.selectedCheckbox().map((item) => item.logId);
+
+    this.logbookService.putApprove(logIds).subscribe({
+      next: () => {
+        this.getDetailedList();
+        this.showToastService.showSuccessToast(
+          'Logbook(s) approved successfully.',
+        );
+      },
+    });
+  }
+
+  putReject() {
+    const logId = this.selectedCheckbox().map((item) => item.logId)[0];
+
+    this.logbookService.putReject(logId, this.rejectReason).subscribe({
+      next: () => {
+        this.getDetailedList();
+        this.rejectReason = '';
+        this.showToastService.showSuccessToast(
+          'Logbook rejected successfully.',
+        );
       },
     });
   }
@@ -217,8 +245,7 @@ export class LogbookDetailComponent {
 
   // Approve and Reject Operations
   selectionCheckbox(event: any) {
-    this.selectedCheckbox = event;
-    console.log(this.selectedCheckbox);
+    this.selectedCheckbox.set(event);
   }
 
   onApprove(): void {
@@ -227,7 +254,7 @@ export class LogbookDetailComponent {
                   <div class="custom-confirm-icon">
                     <img src="/icons/approve-icon.svg" alt="Approve Icon" />
                   </div>
-                  <p class="custom-confirm-message">Do you want to approve the logbook document?</p>
+                  <p class="custom-confirm-message">Do you want to approve the logbook(s) document?</p>
                 </div>`,
       header: '',
       icon: '',
@@ -239,10 +266,7 @@ export class LogbookDetailComponent {
       acceptButtonStyleClass: 'action-button',
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
-        console.log('Approved:', this.selectedCheckbox);
-      },
-      reject: () => {
-        console.log('Approval cancelled.');
+        this.putApprove();
       },
     });
   }
@@ -267,20 +291,8 @@ export class LogbookDetailComponent {
       acceptButtonStyleClass: 'action-button',
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
-        this.showRejectToast();
-        console.log('Rejected with reason:', this.rejectReason);
+        this.putReject();
       },
-      reject: () => {
-        console.log('Rejection cancelled.');
-      },
-    });
-  }
-
-  showRejectToast() {
-    this.messageService.add({
-      severity: 'warn',
-      summary: 'Warning',
-      detail: 'Your rejection email has been sent.',
     });
   }
 
