@@ -65,6 +65,7 @@ import moment from 'moment';
   providers: [ConfirmationService, MessageService],
 })
 export class LogbookDetailComponent {
+  @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
   @ViewChild('previewCellBodyTemplate', { static: true })
   previewCellBodyTemplate!: TemplateRef<any>;
   @ViewChild('editableCellBodyTemplate', { static: true })
@@ -92,12 +93,12 @@ export class LogbookDetailComponent {
   logbookDetailTableData = signal<IDetailedListContentData[]>([]);
   detailedListPreviewModalData = signal<IDetailedListContentData | null>(null);
   statusOptions = signal<ILogbookStatusListResponse[]>([]);
+  selectedCheckbox = signal<IDetailedListContentData[]>([]);
   currentPage = 0;
   currentRows = 20;
   tableLoading = false;
   displayRejectPopup = false;
   rejectReason = '';
-  selectedCheckbox: any[] = [];
   displayPreviewDialog = signal<boolean>(false);
 
   ngOnInit() {
@@ -186,6 +187,21 @@ export class LogbookDetailComponent {
     });
   }
 
+  putApprove() {
+    const logIds = this.selectedCheckbox().map((item) => item.logId);
+
+    this.logbookService.putApprove(logIds).subscribe({
+      next: () => {
+        this.getDetailedList();
+        this.selectedCheckbox.set([]);
+        this.customTableComponent.clearSelectionData();
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    })
+  }
+
   // Filter Operations
   dateRangeDefaultValue() {
     this.crewListTableData.yearMonth;
@@ -217,8 +233,7 @@ export class LogbookDetailComponent {
 
   // Approve and Reject Operations
   selectionCheckbox(event: any) {
-    this.selectedCheckbox = event;
-    console.log(this.selectedCheckbox);
+    this.selectedCheckbox.set(event);
   }
 
   onApprove(): void {
@@ -239,7 +254,7 @@ export class LogbookDetailComponent {
       acceptButtonStyleClass: 'action-button',
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
-        console.log('Approved:', this.selectedCheckbox);
+        this.putApprove();
       },
       reject: () => {
         console.log('Approval cancelled.');

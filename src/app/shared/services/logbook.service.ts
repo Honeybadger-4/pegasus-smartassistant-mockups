@@ -57,4 +57,13 @@ export class LogbookService {
       .get<IHttpResponseModel>(apiUrl)
       .pipe(map((response) => response.data));
   }
+
+  putApprove(legIds: number[]): Observable<any> {
+    const joinLegIds = legIds.join(",");
+
+    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/approve?logIds=${joinLegIds}`;
+
+    return this.http.put<IHttpResponseModel>(apiUrl, null).pipe(map((response) => response.data));
+  }
+
 }
