@@ -66,4 +66,10 @@ export class LogbookService {
     return this.http.put<IHttpResponseModel>(apiUrl, null).pipe(map((response) => response.data));
   }
 
+  putReject(logId: number, reason: string): Observable<any> {
+    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/reject?logId=${logId}&reason=${reason}`;
+
+    return this.http.put<IHttpResponseModel>(apiUrl, null).pipe(map((response) => response.data));
+  }
+
 }

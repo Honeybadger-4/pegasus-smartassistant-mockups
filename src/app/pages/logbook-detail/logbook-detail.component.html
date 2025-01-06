@@ -85,10 +85,11 @@
     [(visible)]="displayRejectPopup"
     [modal]="true"
     [draggable]="false"
+    [resizable]="false"
     class="custom-confirm-dialog-container"
   >
     <div class="popup-content">
-      <!-- Başlık ve Alt Bilgiler -->
+      <!-- Header -->
       <p class="title">Upload Reason</p>
 
       @if(selectedCheckbox()[0]) {
@@ -99,7 +100,7 @@
         </div>
       }
 
-      <!-- Giriş Alanı -->
+      <!-- Content -->
       <textarea
         [(ngModel)]="rejectReason"
         placeholder="Enter reason"
@@ -108,7 +109,7 @@
         maxlength="100"
       ></textarea>
 
-      <!-- Footer Alanı -->
+      <!-- Footer -->
       <div class="popup-footer">
         <button
           type="button"
