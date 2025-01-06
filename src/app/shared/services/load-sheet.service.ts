@@ -14,7 +14,7 @@ export class LoadSheetService {
 
   getLoadSheet(startDate: string, endDate: string, page: number, size: number): Observable<ILoadSheetResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/load-sheets`;
-  
+
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());

@@ -49,7 +49,7 @@ export class LoadSheetComponent {
   dateRange: Date[] = [];
   currentPage = 0;
   currentRows = 20;
-  isDialogVisible = true;
+  isDialogVisible = false;
   
 
   loadSheetData = signal<ILoadSheetResponse | null>(null);

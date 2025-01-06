@@ -13,8 +13,8 @@ export class LoadAndTrimSheetComponent {
   @Input() visible: boolean = true;
   @Output() closeModal = new EventEmitter<void>();
 
-  
-    close() {
-      this.closeModal.emit();
-    }
+
+  close() {
+    this.closeModal.emit();
+  }
 }
