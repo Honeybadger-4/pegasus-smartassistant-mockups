@@ -54,6 +54,7 @@ export class LoadSheetComponent {
 
   loadSheetData = signal<ILoadSheetResponse | null>(null);
   loadSheetTableData = signal<ILoadSheetTableData[]>([]);
+  loadAndTrimSheetData = signal<ILoadSheetTableData | null>(null);
   approvedValue = signal<number>(0);
   declinedValue = signal<number>(0);
 
@@ -138,7 +139,8 @@ export class LoadSheetComponent {
     }
   }
 
-  toggleDialog() {
+  toggleLoadAndTrimSheetDialogVisible(rowData: ILoadSheetTableData | null = null) {
     this.isDialogVisible = !this.isDialogVisible;
+    this.loadAndTrimSheetData.set(rowData);
   }
 }
