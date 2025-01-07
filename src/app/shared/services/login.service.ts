@@ -64,7 +64,7 @@ export class LoginService {
 
     const token = userData?.efbToken;
 
-    if(!token){
+    if (!token) {
       return false;
     }
 
