@@ -1,14 +1,18 @@
 <main id="UserLoginHistoryPage">
   <section class="table-header-section">
     <span class="header-title">User Login History</span>
-    <p-dropdown
-      optionLabel="label"
-      optionValue="value"
-      [options]="periodOptions"
-      [(ngModel)]="selectedPeriod"
-      class="custom-dropdown period-dropdown"
-      (ngModelChange)="onPeriodChange($event)"
-    ></p-dropdown>
+    <div class="w-[122px]">
+      <p-calendar
+        [(ngModel)]="dateRange"
+        (ngModelChange)="onDateRangeChange($event)"
+        selectionMode="range"
+        [showIcon]="false"
+        [readonlyInput]="true"
+        placeholder="Start Date - End Date"
+        dateFormat="dd/mm/yy"
+        class="custom-calendar"
+      ></p-calendar>
+    </div>
   </section>
 
   <section class="table-section custom-card">
