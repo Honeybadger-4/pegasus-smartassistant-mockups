@@ -53,7 +53,7 @@
           pButton
           type="button"
           label="Approve"
-          [disabled]="selectedCheckbox.length <= 0"
+          [disabled]="selectedCheckbox().length <= 0"
           (click)="onApprove()"
         ></button>
         <button
@@ -61,7 +61,7 @@
           type="button"
           label="Reject"
           [disabled]="
-            selectedCheckbox.length > 1 || selectedCheckbox.length <= 0
+            selectedCheckbox().length > 1 || selectedCheckbox().length <= 0
           "
           (click)="displayRejectPopup = true"
         ></button>
@@ -86,27 +86,31 @@
     [(visible)]="displayRejectPopup"
     [modal]="true"
     [draggable]="false"
+    [resizable]="false"
     class="custom-confirm-dialog-container"
   >
     <div class="popup-content">
-      <!-- Başlık ve Alt Bilgiler -->
+      <!-- Header -->
       <p class="title">Upload Reason</p>
-      <div class="popup-header">
-        <p><b>Date:</b> {{ selectedCheckbox[0]?.date }}</p>
-        <p><b>A/C Type:</b> {{ selectedCheckbox[0]?.aircraftType }}</p>
-        <p><b>A/C Reg:</b> {{ selectedCheckbox[0]?.aircraftReg }}</p>
-      </div>
 
-      <!-- Giriş Alanı -->
+      @if (selectedCheckbox()[0]) {
+        <div class="popup-header">
+          <p><b>Date:</b> {{ selectedCheckbox()[0].date }}</p>
+          <p><b>A/C Type:</b> {{ selectedCheckbox()[0].aircraftType }}</p>
+          <p><b>A/C Reg:</b> {{ selectedCheckbox()[0].aircraftReg }}</p>
+        </div>
+      }
+
+      <!-- Content -->
       <textarea
         [(ngModel)]="rejectReason"
         placeholder="Enter reason"
         class="custom-textarea"
         rows="5"
-        maxlength="100"
+        maxlength="500"
       ></textarea>
 
-      <!-- Footer Alanı -->
+      <!-- Footer -->
       <div class="popup-footer">
         <button
           type="button"
