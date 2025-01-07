@@ -4,7 +4,7 @@ export interface ILoadandTrimSheetResponse {
       id: number;
       preparedBy: string;
       checkedBy: string;
-      approvedBy: string;
+      approvedBy: string | "";
       creation_date: string;
       pades_ls_updatedate: string;
       loadSheetVersion: number;
@@ -18,7 +18,7 @@ export interface ILoadandTrimSheetResponse {
       tripFuel: number;
       transitTransferInfo: string;
       TACStatus: string;
-      tacDeclineReason: string;
+      tacDeclineReason: string | null;
       flightInfo: {
         flightDate: string;
         airline_code: string;
@@ -37,24 +37,24 @@ export interface ILoadandTrimSheetResponse {
       };
       flapInfo: {
         stapTo: string;
-        flapText: string;
+        flapText: string | "";
         flapValue: string;
       };
       landingWeight: {
         leastLw: string;
-        adj: string;
+        adj: string | "";
         max: number;
         actual: number;
       };
       takeOffWeight: {
-        leastTow: string;
-        adj: string;
+        leastTow: string | "";
+        adj: string | "";
         max: number;
         actual: number;
       };
       zeroFuelWeight: {
-        leastZfw: string;
-        adj: string;
+        leastZfw: string | "";
+        adj: string | "";
         max: number;
         actual: number;
       };
@@ -108,7 +108,7 @@ export interface ILoadandTrimSheetResponse {
             Id: string;
             Destination: string;
             SpcType: string;
-            SpcSubtype: string;
+            SpcSubtype: string | null;
             SpcAmount: string;
             ClCpt: string;
             Weight: number;
@@ -132,8 +132,8 @@ export interface ILoadandTrimSheetResponse {
         aircraftRegistration: string;
         status: string;
         approvedBy: string;
-        declinedBy: string;
-        declineReason: string;
+        declinedBy: string | null;
+        declineReason: string | null;
         created: string;
         delivered: string;
         approved: string;
