@@ -10,74 +10,116 @@
     (onHide)="close()"
     (onShow)="dialogOpened()"
   >
+    <div class="content-container" *ngIf="loadAndTrimSheetData">
+      <div class="flex items-center gap-5">
+        <div>
+          <p>PREPARED BY</p>
+          <p>
+            {{ loadAndTrimSheetData.loadAndTrimSheet[0].preparedBy || "-" }}
+          </p>
+        </div>
 
-  <div class="content-container" *ngIf="loadAndTrimSheetData">
+        <div>
+          <p>CHECKED BY</p>
+          <p>{{ loadAndTrimSheetData.loadAndTrimSheet[0].checkedBy || "-" }}</p>
+        </div>
 
-    <div class="flex items-center gap-5">
-      <div>
-        <p>PREPARED BY</p>
-        <p>{{loadAndTrimSheetData.loadAndTrimSheet[0].preparedBy || "-"}}</p>
+        <div>
+          <p>APPROVED BY</p>
+          <p>
+            {{ loadAndTrimSheetData.loadAndTrimSheet[0].approvedBy || "-" }}
+          </p>
+        </div>
+
+        <div>
+          <p>EDNO</p>
+          <p>
+            {{
+              loadAndTrimSheetData.loadAndTrimSheet[0].loadSheetStatus?.edNo ||
+                "-"
+            }}
+          </p>
+        </div>
       </div>
-  
-      <div>
-        <p>CHECKED BY</p>
-        <p>{{loadAndTrimSheetData.loadAndTrimSheet[0].checkedBy || "-"}}</p>
-      </div>
-  
-      <div>
-        <p>APPROVED BY</p>
-        <p>{{loadAndTrimSheetData.loadAndTrimSheet[0].approvedBy || "-"}}</p>
-      </div>
-  
-      <div>
-        <p>EDNO</p>
-        <p>{{loadAndTrimSheetData.loadAndTrimSheet[0].loadSheetStatus?.edNo || "-"}}</p>
+
+      <div class="flex items-center gap-5 mt-10">
+        <div>
+          <p>FROM/TO</p>
+          <p>
+            {{
+              (loadAndTrimSheetData.loadAndTrimSheet[0].flightInfo
+                ?.departurePort
+                ? loadAndTrimSheetData.loadAndTrimSheet[0].flightInfo
+                    ?.departurePort
+                : "-") +
+                "/" +
+                (loadAndTrimSheetData.loadAndTrimSheet[0].flightInfo
+                  ?.arrivalPort
+                  ? loadAndTrimSheetData.loadAndTrimSheet[0].flightInfo
+                      ?.arrivalPort
+                  : "-")
+            }}
+          </p>
+        </div>
+
+        <div>
+          <p>FLIGHT</p>
+          <p>
+            {{
+              loadAndTrimSheetData.loadAndTrimSheet[0].flightInfo?.flightNo ||
+                "-"
+            }}
+          </p>
+        </div>
+
+        <div>
+          <p>A/C-REG</p>
+          <p>
+            {{
+              loadAndTrimSheetData.loadAndTrimSheet[0].flightInfo?.acReg || "-"
+            }}
+          </p>
+        </div>
+
+        <div>
+          <p>A/C TYPE</p>
+          <p>
+            {{
+              loadAndTrimSheetData.loadAndTrimSheet[0].flightInfo?.acType || "-"
+            }}
+          </p>
+        </div>
+
+        <div>
+          <p>VERSION</p>
+          <p>
+            {{
+              loadAndTrimSheetData.loadAndTrimSheet[0].flightInfo?.acVersion ||
+                "-"
+            }}
+          </p>
+        </div>
+
+        <div>
+          <p>CREW</p>
+          <p>
+            {{
+              loadAndTrimSheetData.loadAndTrimSheet[0].flightInfo
+                ?.crewConfiguration || "-"
+            }}
+          </p>
+        </div>
+
+        <div>
+          <p>DATE- TIME</p>
+          <p>
+            {{
+              loadAndTrimSheetData.loadAndTrimSheet[0].flightInfo?.flightDate ||
+                "-"
+            }}
+          </p>
+        </div>
       </div>
     </div>
-
-    <div class="flex items-center gap-5 mt-10">
-      <div>
-        <p>FROM/TO</p>
-        <p>{{
-          (loadAndTrimSheetData.loadAndTrimSheet[0].flightInfo?.departurePort ? loadAndTrimSheetData.loadAndTrimSheet[0].flightInfo?.departurePort : "-")  + 
-          "/" + 
-          (loadAndTrimSheetData.loadAndTrimSheet[0].flightInfo?.arrivalPort ? loadAndTrimSheetData.loadAndTrimSheet[0].flightInfo?.arrivalPort : "-")
-          }}</p>
-      </div>
-
-      <div>
-        <p>FLIGHT</p>
-        <p>{{loadAndTrimSheetData.loadAndTrimSheet[0].flightInfo?.flightNo || "-"}}</p>
-      </div>
-
-      <div>
-        <p>A/C-REG</p>
-        <p>{{loadAndTrimSheetData.loadAndTrimSheet[0].flightInfo?.acReg || "-"}}</p>
-      </div>
-
-      <div>
-        <p>A/C TYPE</p>
-        <p>{{loadAndTrimSheetData.loadAndTrimSheet[0].flightInfo?.acType || "-"}}</p>
-      </div>
-
-      <div>
-        <p>VERSION</p>
-        <p>{{loadAndTrimSheetData.loadAndTrimSheet[0].flightInfo?.acVersion || "-"}}</p>
-      </div>
-
-      <div>
-        <p>CREW</p>
-        <p>{{loadAndTrimSheetData.loadAndTrimSheet[0].flightInfo?.crewConfiguration || "-"}}</p>
-      </div>
-
-      <div>
-        <p>DATE- TIME</p>
-        <p>{{loadAndTrimSheetData.loadAndTrimSheet[0].flightInfo?.flightDate || "-"}}</p>
-      </div>
-
-    </div>
-
-  </div>
-
   </p-dialog>
 </div>

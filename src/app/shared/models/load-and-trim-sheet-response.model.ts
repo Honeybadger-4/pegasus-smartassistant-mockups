@@ -4,7 +4,7 @@ export interface ILoadandTrimSheetResponse {
       id?: number;
       preparedBy?: string;
       checkedBy?: string;
-      approvedBy?: string | "";
+      approvedBy?: string | '';
       creation_date?: string;
       pades_ls_updatedate?: string;
       loadSheetVersion?: number;
@@ -37,24 +37,24 @@ export interface ILoadandTrimSheetResponse {
       };
       flapInfo?: {
         stapTo?: string;
-        flapText?: string | "";
+        flapText?: string | '';
         flapValue?: string;
       };
       landingWeight?: {
         leastLw?: string;
-        adj?: string | "";
+        adj?: string | '';
         max?: number;
         actual?: number;
       };
       takeOffWeight?: {
-        leastTow?: string | "";
-        adj?: string | "";
+        leastTow?: string | '';
+        adj?: string | '';
         max?: number;
         actual?: number;
       };
       zeroFuelWeight?: {
-        leastZfw?: string | "";
-        adj?: string | "";
+        leastZfw?: string | '';
+        adj?: string | '';
         max?: number;
         actual?: number;
       };
@@ -138,7 +138,7 @@ export interface ILoadandTrimSheetResponse {
         delivered?: string;
         approved?: string;
         validatedLoadSheet?: string;
-        edNo?: string
+        edNo?: string;
       };
     },
   ];

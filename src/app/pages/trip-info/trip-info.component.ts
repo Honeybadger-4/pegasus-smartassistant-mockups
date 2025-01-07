@@ -92,17 +92,17 @@ export class TripInfoComponent {
     }
 
     this.tripInfoService
-    .getTripInfo(startDate, endDate, this.currentPage,this.currentRows,)
-    .subscribe({
-      next: (response) => {
-        this.tripInfoData.set(response);
-        this.tripInfoTableData.set(response.content);
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    });
-}
+      .getTripInfo(startDate, endDate, this.currentPage, this.currentRows)
+      .subscribe({
+        next: (response) => {
+          this.tripInfoData.set(response);
+          this.tripInfoTableData.set(response.content);
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
+  }
 
   pageEvent(event: { first: number; rows: number }) {
     const page = event.first / event.rows;

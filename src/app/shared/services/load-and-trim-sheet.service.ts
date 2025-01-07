@@ -15,8 +15,8 @@ export class LoadAndTrimSheetService {
   getLoadAndTrimSheet(legIsn: number): Observable<ILoadandTrimSheetResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/external/flybus/loadandtrimsheet?legIsn=${legIsn}`;
 
-     return this.http
-          .get<IHttpResponseModel>(apiUrl)
-          .pipe(map((response) => response.data));
+    return this.http
+      .get<IHttpResponseModel>(apiUrl)
+      .pipe(map((response) => response.data));
   }
 }

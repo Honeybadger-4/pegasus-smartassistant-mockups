@@ -13,22 +13,23 @@ export class LoginInfoService {
   baseUrl = environment.baseApi;
 
   getAllLoginInfo(
-    startDate: string, endDate: string,
+    startDate: string,
+    endDate: string,
     page: number,
     size: number,
   ): Observable<ILoginInfoResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/login-info`;
 
-   let params = new HttpParams()
-         .set('page', page.toString())
-         .set('size', size.toString());
-     
-       if (startDate && endDate) {
-         params = params.set('startDate', startDate).set('endDate', endDate);
-       }
-     
-       return this.http
-         .get<IHttpResponseModel>(apiUrl, { params })
-         .pipe(map((response) => response.data));
-     }
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+
+    if (startDate && endDate) {
+      params = params.set('startDate', startDate).set('endDate', endDate);
+    }
+
+    return this.http
+      .get<IHttpResponseModel>(apiUrl, { params })
+      .pipe(map((response) => response.data));
+  }
 }

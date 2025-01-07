@@ -7,7 +7,6 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
 
-
 @Component({
   selector: 'app-table-header',
   standalone: true,
@@ -25,5 +24,4 @@ import { CalendarModule } from 'primeng/calendar';
 })
 export class TableHeaderComponent {
   dateRange: Date[] = [];
-
 }

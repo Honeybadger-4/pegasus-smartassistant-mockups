@@ -1,4 +1,11 @@
-import { Component, EventEmitter, inject, Input, Output, signal } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import { LoadAndTrimSheetService } from '@shared/services/load-and-trim-sheet.service';
@@ -8,9 +15,9 @@ import { ILoadandTrimSheetResponse } from '@shared/models/load-and-trim-sheet-re
 @Component({
   selector: 'app-load-and-trim-sheet',
   standalone: true,
-  imports: [CommonModule, DialogModule,],
+  imports: [CommonModule, DialogModule],
   templateUrl: './load-and-trim-sheet.component.html',
-  styleUrl: './load-and-trim-sheet.component.scss'
+  styleUrl: './load-and-trim-sheet.component.scss',
 })
 export class LoadAndTrimSheetComponent {
   @Input() visible: boolean = true;
@@ -21,8 +28,8 @@ export class LoadAndTrimSheetComponent {
   loadAndTrimSheetData!: ILoadandTrimSheetResponse;
 
   dialogOpened() {
-    if(this.loadSheetRowData) {
-      this.getLoadAndTrimSheet(this.loadSheetRowData.legIsn)
+    if (this.loadSheetRowData) {
+      this.getLoadAndTrimSheet(this.loadSheetRowData.legIsn);
     }
   }
 
@@ -34,10 +41,9 @@ export class LoadAndTrimSheetComponent {
       },
       error: (error: any) => {
         console.log(error);
-      }
-    })
+      },
+    });
   }
-
 
   close() {
     this.closeModal.emit();

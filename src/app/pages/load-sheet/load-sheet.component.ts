@@ -50,7 +50,6 @@ export class LoadSheetComponent {
   currentPage = 0;
   currentRows = 20;
   isDialogVisible = false;
-  
 
   loadSheetData = signal<ILoadSheetResponse | null>(null);
   loadSheetTableData = signal<ILoadSheetTableData[]>([]);
@@ -132,14 +131,16 @@ export class LoadSheetComponent {
   onDateRangeChange(event: Event) {
     const [startDate, endDate] = this.dateRange;
 
-    if(startDate && endDate) {
+    if (startDate && endDate) {
       this.currentPage = 0;
       this.customTableComponent.resetTableFirstValue();
       this.getLoadSheet();
     }
   }
 
-  toggleLoadAndTrimSheetDialogVisible(rowData: ILoadSheetTableData | null = null) {
+  toggleLoadAndTrimSheetDialogVisible(
+    rowData: ILoadSheetTableData | null = null,
+  ) {
     this.isDialogVisible = !this.isDialogVisible;
     this.loadAndTrimSheetData.set(rowData);
   }

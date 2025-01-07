@@ -12,24 +12,24 @@ export class TripInfoService {
   http = inject(HttpClient);
   baseUrl = environment.baseApi;
 
-  getTripInfo(startDate: string, endDate: string, page: number, size: number): Observable<ITripInfoResponse> {
+  getTripInfo(
+    startDate: string,
+    endDate: string,
+    page: number,
+    size: number,
+  ): Observable<ITripInfoResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/trip-info`;
 
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
-  
+
     if (startDate && endDate) {
       params = params.set('startDate', startDate).set('endDate', endDate);
     }
-  
+
     return this.http
       .get<IHttpResponseModel>(apiUrl, { params })
       .pipe(map((response) => response.data));
   }
-  
 }
-
-
-
-

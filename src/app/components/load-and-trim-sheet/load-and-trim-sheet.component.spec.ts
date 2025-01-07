@@ -8,9 +8,8 @@ describe('LoadAndTrimSheetComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LoadAndTrimSheetComponent]
-    })
-    .compileComponents();
+      imports: [LoadAndTrimSheetComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LoadAndTrimSheetComponent);
     component = fixture.componentInstance;

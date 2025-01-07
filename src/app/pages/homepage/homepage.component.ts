@@ -6,8 +6,6 @@ import { LoginService } from '@shared/services/login.service';
 import { CalendarModule } from 'primeng/calendar';
 import { FormsModule } from '@angular/forms';
 
-
-
 @Component({
   selector: 'app-homepage',
   standalone: true,
@@ -24,7 +22,6 @@ import { FormsModule } from '@angular/forms';
 export class HomepageComponent {
   loginService = inject(LoginService);
   dateRange: Date[] = [];
-
 
   ngOnInit() {
     console.log(this.loginService.currentUser());

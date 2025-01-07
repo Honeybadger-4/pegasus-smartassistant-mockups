@@ -49,9 +49,10 @@
   </section>
 
   <app-load-and-trim-sheet
-    [visible]="isDialogVisible" 
+    [visible]="isDialogVisible"
     [loadSheetRowData]="loadAndTrimSheetData()"
-    (closeModal)="toggleLoadAndTrimSheetDialogVisible()">
+    (closeModal)="toggleLoadAndTrimSheetDialogVisible()"
+  >
   </app-load-and-trim-sheet>
 </main>
 
@@ -65,7 +66,11 @@
 </ng-template>
 
 <ng-template #previewCellBodyTemplate let-rowData="rowData">
-  <i class="pi pi-eye cursor-pointer" (click)="toggleLoadAndTrimSheetDialogVisible(rowData)"> </i
+  <i
+    class="pi pi-eye cursor-pointer"
+    (click)="toggleLoadAndTrimSheetDialogVisible(rowData)"
+  >
+  </i
 ></ng-template>
 
 <ng-template #downloadCellBodyTemplate>
