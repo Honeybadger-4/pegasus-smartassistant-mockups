@@ -61,6 +61,27 @@ export class LoginService {
     const userData: ILoginResponse = JSON.parse(
       localStorage?.getItem(this.userDataStorageKey) || '{}',
     );
-    return !!userData.efbToken;
+
+    const token = userData?.efbToken;
+
+    if(!token){
+      return false;
+    }
+
+    const expireTime = this.getTokenExpireTime(token);
+    const now = Date.now();
+
+    if (expireTime < now) {
+      localStorage.removeItem(this.userDataStorageKey);
+      return false;
+    }
+
+    return true;
+  }
+
+  getTokenExpireTime(token: string): number {
+    const payload = JSON.parse(atob(token.split('.')[1])); // JWT payload kısmını decode et
+
+    return payload.exp * 1000; // `exp` zamanı Unix epoch formatındadır, milisaniyeye çevir
   }
 }
