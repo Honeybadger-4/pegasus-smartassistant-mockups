@@ -129,7 +129,7 @@ export class LogbookDetailEditComponent implements OnInit {
       pilotFunctionDual: [this.editData.pilotFunctionDual || '-'],
       // Operation Condition Timek
       nightTime: [this.editData.nightTime || '-'],
-      ifrTime: [this.editData.ifrTime || '-']
+      ifrTime: [this.editData.ifrTime || '-'],
     });
     this.logbookFormGroup.disable();
   }

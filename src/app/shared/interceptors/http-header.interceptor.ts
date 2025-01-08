@@ -7,7 +7,7 @@ export const httpHeadersInterceptor: HttpInterceptorFn = (req, next) => {
   const loginService = inject(LoginService);
 
   const token = loginService.currentUser()?.efbToken;
-  
+
   const parser = new UAParser();
   const result = parser.getResult();
   const os = result.os.name || 'Unknown OS';
@@ -25,10 +25,10 @@ export const httpHeadersInterceptor: HttpInterceptorFn = (req, next) => {
     deviceModel,
     deviceId: '1',
     ipAddress: '1',
-  }
+  };
 
   if (!req.url.includes('/login') || req.url.includes('/login-info')) {
-    headers['authorization'] = `Bearer ${token}`
+    headers['authorization'] = `Bearer ${token}`;
   }
 
   const updatedRequest = req.clone({
