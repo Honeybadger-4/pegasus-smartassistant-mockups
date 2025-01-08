@@ -54,4 +54,10 @@ export interface IDetailedListContentData {
   nightTime: string | null;
   ifrTime: string | null;
   engineType: string;
+  uploadReason: string;
+  updatedDate: string;
+  lastReviewedAdmin: string;
+  instructor: string;
+  remarksAndEndorsements: string;
+  canReassign: boolean;
 }

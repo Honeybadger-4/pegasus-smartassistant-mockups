@@ -15,6 +15,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { IDetailedListContentData } from '@shared/models/detailed-list-response.model';
 
 @Component({
   selector: 'app-logbook-edit',
@@ -42,7 +43,7 @@ export class LogbookDetailEditComponent implements OnInit {
     { label: 'Logbook Detail List', route: '/logbook/logbook-detail' },
     { label: 'Edit Logbook' },
   ];
-  editData: any;
+  editData!: IDetailedListContentData;
   logbookFormGroup!: FormGroup;
   isEditMode = false;
   rejectReason: string = '';
@@ -96,35 +97,39 @@ export class LogbookDetailEditComponent implements OnInit {
 
   builder() {
     this.logbookFormGroup = this.formBuilder.group({
-      crewName: [this.editData.crewNameSurname || ''],
-      companyId: [this.editData.companyId || ''],
-      uploadDate: [this.editData.uploadDate || ''],
-      acType: [this.editData.aircraftType || ''],
-      acReg: [this.editData.aircraftReg || ''],
-      status: [this.editData.status || ''],
-      flightVersion: [''],
-      aircraftType: [this.editData.aircraftType || ''],
-      date: [''],
-      aircraftReg: [this.editData.aircraftReg || ''],
-      departure: [''],
-      arrival: [''],
-      departureTime: [''],
-      arrivalTime: [''],
-      se: [''],
-      me: [''],
-      namePic: [''],
-      multiPilotTime: [''],
-      totalTime: [''],
-      day: [''],
-      night: [''],
-      instructor: [''],
-      remarks: [''],
-      pic: [''],
-      coPilot: [''],
-      time: [''],
-      type: [''],
-      duty: [''],
-      ifr: [''],
+      crewName: [this.editData.crewName || '-'],
+      companyId: [this.editData.companyId || '-'],
+      updatedDate: [this.editData.updatedDate || '-'],
+      aircraftType: [this.editData.aircraftType || '-'],
+      aircraftReg: [this.editData.aircraftReg || '-'],
+      status: [this.editData.status || '-'],
+      flightVersion: ['-'], // TODO : Servise parametre eklendiğinde burada tanımlanmalıdır.
+      date: [this.editData.date || ''],
+      departure: [this.editData.departure || '-'],
+      arrival: [this.editData.arrival || '-'],
+      depTime: [this.editData.depTime || '-'],
+      arrTime: [this.editData.arrTime || '-'],
+      se: [this.editData.engineType === 'SE' ? 'X' : ''],
+      me: [this.editData.engineType === 'ME' ? 'X' : ''],
+      pic: [this.editData.pic || '-'],
+      multiPilotTime: [this.editData.multiPilotTime || '-'],
+      totalTime: [this.editData.totalTime || '-'],
+      // Landing
+      dayLanding: [this.editData.dayLanding || '-'],
+      nightLanding: [this.editData.nightLanding || '-'],
+      instructor: [this.editData.instructor || '-'],
+      remarksAndEndorsements: [this.editData.remarksAndEndorsements || '-'],
+      // Synthetic Training Devices Session
+      syntheticTrainingDate: [this.editData.syntheticTrainingDate || '-'],
+      syntheticTrainingType: [this.editData.syntheticTrainingType || '-'],
+      syntheticTrainingTime: [this.editData.syntheticTrainingTime || '-'],
+      // Pilot Function Time
+      pilotFunctionPic: [this.editData.pilotFunctionPic || '-'],
+      pilotFunctionCoPilot: [this.editData.pilotFunctionCoPilot || '-'],
+      pilotFunctionDual: [this.editData.pilotFunctionDual || '-'],
+      // Operation Condition Timek
+      nightTime: [this.editData.nightTime || '-'],
+      ifrTime: [this.editData.ifrTime || '-']
     });
     this.logbookFormGroup.disable();
   }

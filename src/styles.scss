@@ -46,7 +46,7 @@ body {
     color: #4f4f4f;
     border: none;
     border-radius: 5px;
-    padding-top: 10px;
+    padding-top: 15px;
     padding-left: 10px;
     padding-bottom: 10px;
     width: 100%;
@@ -56,6 +56,12 @@ body {
   .p-inputtext:disabled {
     background-color: #f3f2f1;
     border-color: #f3f2f1;
+  }
+
+  .p-float-label input:focus ~ label, .p-float-label input.p-filled ~ label, .p-float-label textarea:focus ~ label, .p-float-label textarea.p-filled ~ label, .p-float-label .p-inputwrapper-focus ~ label, .p-float-label .p-inputwrapper-filled ~ label {
+    top: 10px;
+    font-size: 10px;
+    padding-top: 5px;
   }
 }
 
