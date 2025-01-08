@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { Column } from '@shared/models/columns';
 import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
+import { CalendarModule } from 'primeng/calendar';
 
 @Component({
   selector: 'app-fuel',
@@ -19,28 +20,15 @@ import { CustomTableComponent } from '../../shared/components/custom-table/custo
     InputTextModule,
     FormsModule,
     CustomTableComponent,
+    CalendarModule,
   ],
   templateUrl: './fuel.component.html',
   styleUrl: './fuel.component.scss',
 })
 export class FuelComponent {
-  @ViewChild('fuelOrderCellBodyTemplate', { static: true })
-  fuelOrderCellBodyTemplate!: TemplateRef<any>;
-
   columns!: Column[];
-  selectedFuelOrder = '';
-  selectedDaily = '';
+  dateRange: Date[] = [];
 
-  fuelOrderOptions = [
-    { label: 'Fuel Order 1', value: 'order1' },
-    { label: 'Fuel Order 2', value: 'order2' },
-    { label: 'Fuel Order 3', value: 'order3' },
-  ];
-  periodOptions = [
-    { label: 'Daily 1', value: 'daily1' },
-    { label: 'Daily 2', value: 'daily2' },
-    { label: 'Daily 3', value: 'daily3' },
-  ];
   fuelData = [
     {
       id: '0',
@@ -48,7 +36,8 @@ export class FuelComponent {
       flightNo: 'PC2009',
       departure: 'AYT',
       arrival: 'DUS',
-      fuelOrder: 'YES',
+      depDateTime: '22/07/2025 13:30',
+      arrDateTime: '22/07/2025 16:30',
       amount: '4800 KG',
     },
     {
@@ -57,7 +46,8 @@ export class FuelComponent {
       flightNo: 'PC2009',
       departure: 'AYT',
       arrival: 'DUS',
-      fuelOrder: 'YES',
+      depDateTime: '22/07/2025 13:30',
+      arrDateTime: '22/07/2025 16:30',
       amount: '4900 KG',
     },
   ];
@@ -72,11 +62,8 @@ export class FuelComponent {
       { field: 'flightNo', header: 'Flight No' },
       { field: 'departure', header: 'Departure' },
       { field: 'arrival', header: 'Arrival' },
-      {
-        field: 'fuelOrder',
-        header: 'Fuel Order',
-        template: this.fuelOrderCellBodyTemplate,
-      },
+      { field: 'depDateTime', header: 'Dep Date/Time' },
+      { field: 'arrDateTime', header: 'Arr Date/Time' },
       { field: 'amount', header: 'Amount' },
     ];
   }

@@ -10,3 +10,11 @@
     }
   }
 }
+
+::ng-deep {
+  #FuelPage {
+    .p-calendar {
+      width: 125px !important;
+    }
+  }
+}

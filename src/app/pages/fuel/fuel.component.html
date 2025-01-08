@@ -4,7 +4,7 @@
     <p class="header-title">Fuel</p>
 
     <!-- Filter Inputs and Dropdown -->
-    <div class="grid grid-cols-12 gap-4 items-center">
+    <div class="grid grid-cols-10 gap-4 items-center">
       <!-- Aircraft  Input -->
       <div class="lg:col-span-2 md:col-span-6 col-span-12">
         <p-iconField iconPosition="right" class="custom-icon-field">
@@ -37,24 +37,16 @@
         </p-iconField>
       </div>
 
-      <!-- Dropdown for "Fuel Order" -->
+      <!-- Calendar -->
       <div class="lg:col-span-2 md:col-span-6 col-span-12">
-        <p-dropdown
-          [options]="fuelOrderOptions"
-          [(ngModel)]="selectedFuelOrder"
-          class="custom-dropdown"
-          placeholder="Fuel Order"
-        ></p-dropdown>
-      </div>
-
-      <!-- Dropdown for "Daily" -->
-      <div class="lg:col-span-2 md:col-span-6 col-span-12">
-        <p-dropdown
-          [options]="periodOptions"
-          [(ngModel)]="selectedDaily"
-          class="custom-dropdown"
-          placeholder="Daily"
-        ></p-dropdown>
+        <p-calendar
+          [(ngModel)]="dateRange"
+          selectionMode="range"
+          [showIcon]="false"
+          placeholder="Start Date - End Date"
+          dateFormat="dd/mm/yy"
+          class="custom-icon-field w-full inline-block"
+        ></p-calendar>
       </div>
     </div>
   </section>
@@ -66,8 +58,3 @@
     ></app-custom-table>
   </section>
 </div>
-
-<!-- Table Cell Templates -->
-<ng-template #fuelOrderCellBodyTemplate let-rowData="rowData">
-  <span class="font-bold">{{ rowData.fuelOrder }}</span>
-</ng-template>

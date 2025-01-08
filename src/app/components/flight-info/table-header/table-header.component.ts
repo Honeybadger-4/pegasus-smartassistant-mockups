@@ -5,6 +5,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
 
 @Component({
   selector: 'app-table-header',
@@ -16,12 +17,11 @@ import { InputTextModule } from 'primeng/inputtext';
     InputIconModule,
     InputTextModule,
     FormsModule,
+    CalendarModule,
   ],
   templateUrl: './table-header.component.html',
   styleUrls: ['./table-header.component.scss'],
 })
 export class TableHeaderComponent {
-  selectedOption = '';
-
-  dropdownOptions = [{ label: 'Daily', value: 'daily' }];
+  dateRange: Date[] = [];
 }

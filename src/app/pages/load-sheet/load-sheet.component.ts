@@ -1,12 +1,24 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {
+  Component,
+  inject,
+  signal,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { Column } from '@shared/models/columns';
-
-import { DropdownModule } from 'primeng/dropdown';
+import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { SliderModule } from 'primeng/slider';
+import { LoadSheetService } from '@shared/services/load-sheet.service';
+import {
+  ILoadSheetResponse,
+  ILoadSheetTableData,
+} from '@shared/models/load-sheet-response.model';
+import { CalendarModule } from 'primeng/calendar';
+import { DialogModule } from 'primeng/dialog';
+import { LoadAndTrimSheetComponent } from '../../components/load-and-trim-sheet/load-and-trim-sheet.component';
+import moment from 'moment';
 
 @Component({
   selector: 'app-load-sheet',
@@ -14,14 +26,17 @@ import { SliderModule } from 'primeng/slider';
   imports: [
     CommonModule,
     FormsModule,
-    DropdownModule,
     SliderModule,
     CustomTableComponent,
+    CalendarModule,
+    LoadAndTrimSheetComponent,
+    DialogModule,
   ],
   templateUrl: './load-sheet.component.html',
   styleUrl: './load-sheet.component.scss',
 })
 export class LoadSheetComponent {
+  @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
   @ViewChild('statusCellBodyTemplate', { static: true })
   statusCellBodyTemplate!: TemplateRef<any>;
   @ViewChild('previewCellBodyTemplate', { static: true })
@@ -29,78 +44,35 @@ export class LoadSheetComponent {
   @ViewChild('downloadCellBodyTemplate', { static: true })
   downloadCellBodyTemplate!: TemplateRef<any>;
 
-  selectedPeriod = '';
-  approvedValue = 76;
-  declinedValue = 24;
-
-  periodOptions = [
-    { label: 'Daily', value: 'daily' },
-    { label: 'Weekly', value: 'weekly' },
-    { label: 'Monthly', value: 'monthly' },
-  ];
-
+  loadSheetService = inject(LoadSheetService);
   columns: Column[] = [];
-  loadSheetData = [
-    {
-      aircraft: 'TC-A329',
-      flightNo: 'PC2009',
-      departure: 'AYT',
-      arrival: 'DUS',
-      status: 'Approved',
-      username: 'SAWBNCS1',
-    },
-    {
-      aircraft: 'TC-A329',
-      flightNo: 'PC2009',
-      departure: 'AYT',
-      arrival: 'DUS',
-      status: 'Declined',
-      username: 'SAWBNCS2',
-    },
-    {
-      aircraft: 'TC-A329',
-      flightNo: 'PC2009',
-      departure: 'AYT',
-      arrival: 'DUS',
-      status: 'Sent',
-      username: 'SAWBNCS3',
-    },
-    {
-      aircraft: 'TC-A329',
-      flightNo: 'PC2009',
-      departure: 'AYT',
-      arrival: 'DUS',
-      status: 'Not Sent',
-      username: 'SAWBNCS4',
-    },
-    {
-      aircraft: 'TC-A329',
-      flightNo: 'PC2009',
-      departure: 'AYT',
-      arrival: 'DUS',
-      status: 'Sent',
-      username: 'SAWBNCS5',
-    },
-    {
-      aircraft: 'TC-A329',
-      flightNo: 'PC2009',
-      departure: 'AYT',
-      arrival: 'DUS',
-      status: 'Not Sent',
-      username: 'SAWBNCS6',
-    },
-  ];
+  dateRange: Date[] = [];
+  currentPage = 0;
+  currentRows = 20;
+  isDialogVisible = false;
+
+  loadSheetData = signal<ILoadSheetResponse | null>(null);
+  loadSheetTableData = signal<ILoadSheetTableData[]>([]);
+  loadAndTrimSheetData = signal<ILoadSheetTableData | null>(null);
+  approvedValue = signal<number>(0);
+  declinedValue = signal<number>(0);
 
   ngOnInit() {
     this.defineColumn();
+
+    const today = moment();
+    this.initialDateRangeValue();
+    this.getLoadSheet();
   }
 
   defineColumn() {
     this.columns = [
-      { field: 'aircraft', header: 'Aircraft' },
+      { field: 'aircraftReg', header: 'Aircraft' },
       { field: 'flightNo', header: 'Flight No' },
-      { field: 'departure', header: 'Departure' },
-      { field: 'arrival', header: 'Arrival' },
+      { field: 'depPort', header: 'Departure' },
+      { field: 'arrPort', header: 'Arrival' },
+      { field: 'depDateTime', header: 'Dep Date/Time' },
+      { field: 'arrDateTime', header: 'Arr Date/Time' },
       {
         field: 'status',
         header: 'Status',
@@ -110,5 +82,66 @@ export class LoadSheetComponent {
       { field: '', header: '', template: this.previewCellBodyTemplate },
       { field: '', header: '', template: this.downloadCellBodyTemplate },
     ];
+  }
+
+  initialDateRangeValue() {
+    const today = moment();
+    this.dateRange = [
+      today.clone().subtract(7, 'days').toDate(),
+      today.clone().add(7, 'days').toDate(),
+    ];
+  }
+
+  getLoadSheet() {
+    let startDate = '';
+    let endDate = '';
+
+    // Tarih aralığı kontrolü ve formatlama
+    if (this.dateRange.length === 2) {
+      const [start, end] = this.dateRange;
+
+      if (start && end) {
+        startDate = moment(start).format('YYYY-MM-DD');
+        endDate = moment(end).format('YYYY-MM-DD');
+      }
+    }
+
+    this.loadSheetService
+      .getLoadSheet(startDate, endDate, this.currentPage, this.currentRows)
+      .subscribe({
+        next: (response) => {
+          this.loadSheetData.set(response);
+          this.loadSheetTableData.set(response.loadSheets.content);
+          this.approvedValue.set(response.approvedPercentage);
+          this.declinedValue.set(100 - response.approvedPercentage);
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
+  }
+
+  pageEvent(event: { first: number; rows: number }) {
+    const page = event.first / event.rows;
+    this.currentPage = page;
+    this.currentRows = event.rows;
+    this.getLoadSheet();
+  }
+
+  onDateRangeChange(event: Event) {
+    const [startDate, endDate] = this.dateRange;
+
+    if (startDate && endDate) {
+      this.currentPage = 0;
+      this.customTableComponent.resetTableFirstValue();
+      this.getLoadSheet();
+    }
+  }
+
+  toggleLoadAndTrimSheetDialogVisible(
+    rowData: ILoadSheetTableData | null = null,
+  ) {
+    this.isDialogVisible = !this.isDialogVisible;
+    this.loadAndTrimSheetData.set(rowData);
   }
 }

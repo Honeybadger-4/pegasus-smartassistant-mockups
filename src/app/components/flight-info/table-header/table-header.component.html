@@ -36,14 +36,16 @@
         </p-iconField>
       </div>
 
-      <!-- Dropdown for "Daily" -->
+      <!-- Calendar -->
       <div class="lg:col-span-2 md:col-span-6 col-span-12">
-        <p-dropdown
-          [options]="dropdownOptions"
-          [(ngModel)]="selectedOption"
-          class="custom-dropdown"
-          placeholder="Daily"
-        ></p-dropdown>
+        <p-calendar
+          [(ngModel)]="dateRange"
+          selectionMode="range"
+          [showIcon]="false"
+          placeholder="Start Date - End Date"
+          dateFormat="dd/mm/yy"
+          class="custom-icon-field inline-block w-full"
+        ></p-calendar>
       </div>
     </div>
   </div>
