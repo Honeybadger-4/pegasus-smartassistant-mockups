@@ -25,7 +25,7 @@ export class LoadAndTrimSheetComponent {
   @Output() closeModal = new EventEmitter<void>();
 
   loadAndTrimSheetService = inject(LoadAndTrimSheetService);
-  loadAndTrimSheetData!: ILoadandTrimSheetResponse;
+  loadAndTrimSheetData = signal<ILoadandTrimSheetResponse | null>(null);
 
   dialogOpened() {
     if (this.loadSheetRowData) {
@@ -36,7 +36,7 @@ export class LoadAndTrimSheetComponent {
   getLoadAndTrimSheet(legIsn: number) {
     this.loadAndTrimSheetService.getLoadAndTrimSheet(legIsn).subscribe({
       next: (response: ILoadandTrimSheetResponse) => {
-        this.loadAndTrimSheetData = response;
+        this.loadAndTrimSheetData.set(response);
         console.log(this.loadAndTrimSheetData);
       },
       error: (error: any) => {
