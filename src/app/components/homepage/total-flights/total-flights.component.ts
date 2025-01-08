@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { CardsHeaderComponent } from '../cards-header/cards-header.component';
 import { CommonModule } from '@angular/common';
 import { CustomDonutChartComponent } from '../../../shared/components/custom-donut-chart/custom-donut-chart.component';
 
 @Component({
   selector: 'app-total-flights',
   standalone: true,
-  imports: [CommonModule, CardsHeaderComponent, CustomDonutChartComponent],
+  imports: [CommonModule, CustomDonutChartComponent],
   templateUrl: './total-flights.component.html',
   styleUrls: ['./total-flights.component.scss'],
 })

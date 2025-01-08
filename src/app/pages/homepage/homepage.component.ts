@@ -3,6 +3,8 @@ import { GeneralInformationCardComponent } from 'src/app/components/homepage/gen
 import { TopAlternateRoutesCardComponent } from '../../components/homepage/top-alternate-routes-card/top-alternate-routes-card.component';
 import { TotalFlightsComponent } from 'src/app/components/homepage/total-flights/total-flights.component';
 import { LoginService } from '@shared/services/login.service';
+import { CalendarModule } from 'primeng/calendar';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-homepage',
@@ -11,12 +13,15 @@ import { LoginService } from '@shared/services/login.service';
     TotalFlightsComponent,
     GeneralInformationCardComponent,
     TopAlternateRoutesCardComponent,
+    CalendarModule,
+    FormsModule,
   ],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.scss',
 })
 export class HomepageComponent {
   loginService = inject(LoginService);
+  dateRange: Date[] = [];
 
   ngOnInit() {
     console.log(this.loginService.currentUser());

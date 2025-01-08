@@ -9,9 +9,13 @@
       color: #4f4f4f;
       font-weight: bold;
     }
+  }
+}
 
-    .period-dropdown {
-      width: 120px;
+::ng-deep {
+  #TripInfoPage {
+    .p-calendar {
+      width: 150px !important;
     }
   }
 }

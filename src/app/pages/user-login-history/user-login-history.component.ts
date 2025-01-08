@@ -8,19 +8,19 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
-import { DropdownModule } from 'primeng/dropdown';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { LoginInfoService } from '@shared/services/login-info.service';
 import {
   ILoginInfoResponse,
   ILoginInfoTableData,
 } from '@shared/models/login-info-response.model';
-import { PERIOD_OPTIONS } from '@shared/constants/global-constant';
+import { CalendarModule } from 'primeng/calendar';
+import moment from 'moment';
 
 @Component({
   selector: 'app-user-login-history',
   standalone: true,
-  imports: [CommonModule, FormsModule, DropdownModule, CustomTableComponent],
+  imports: [CommonModule, FormsModule, CustomTableComponent, CalendarModule],
   templateUrl: './user-login-history.component.html',
   styleUrl: './user-login-history.component.scss',
 })
@@ -35,13 +35,12 @@ export class UserLoginHistoryComponent {
   userLoginHistoryTableData = signal<ILoginInfoTableData[]>([]);
   currentPage = 0;
   currentRows = 20;
-  periodOptions: any;
-  selectedPeriod = '';
+  dateRange: Date[] = [];
 
   ngOnInit() {
-    this.periodOptions = PERIOD_OPTIONS;
-    this.selectedPeriod = this.periodOptions[0].value;
     this.defineColumn();
+    const today = moment();
+    this.initialDateRangeValue();
   }
 
   defineColumn() {
@@ -65,9 +64,29 @@ export class UserLoginHistoryComponent {
     ];
   }
 
-  getAllLoginInfo(page: number, size: number) {
+  initialDateRangeValue() {
+    const today = moment();
+    this.dateRange = [
+      today.clone().subtract(7, 'days').toDate(),
+      today.clone().add(7, 'days').toDate(),
+    ];
+  }
+
+  getAllLoginInfo() {
+    let startDate = '';
+    let endDate = '';
+
+    // Tarih aralığı kontrolü ve formatlama
+    if (this.dateRange.length === 2) {
+      const [start, end] = this.dateRange;
+
+      if (start && end) {
+        startDate = moment(start).format('YYYY-MM-DD');
+        endDate = moment(end).format('YYYY-MM-DD');
+      }
+    }
     this.loginInfoService
-      .getAllLoginInfo(this.selectedPeriod, page, size)
+      .getAllLoginInfo(startDate, endDate, this.currentPage, this.currentRows)
       .subscribe({
         next: (response) => {
           this.userLoginHistoryData.set(response);
@@ -79,16 +98,20 @@ export class UserLoginHistoryComponent {
       });
   }
 
-  onPeriodChange(event: any) {
-    this.currentPage = 0;
-    this.customTableComponent.resetTableFirstValue();
-    this.getAllLoginInfo(this.currentPage, this.currentRows);
+  onDateRangeChange(event: Event) {
+    const [startDate, endDate] = this.dateRange;
+
+    if (startDate && endDate) {
+      this.currentPage = 0;
+      this.customTableComponent.resetTableFirstValue();
+      this.getAllLoginInfo();
+    }
   }
 
   pageEvent(event: { first: number; rows: number }) {
     const page = event.first / event.rows;
     this.currentPage = page;
     this.currentRows = event.rows;
-    this.getAllLoginInfo(page, event.rows);
+    this.getAllLoginInfo();
   }
 }

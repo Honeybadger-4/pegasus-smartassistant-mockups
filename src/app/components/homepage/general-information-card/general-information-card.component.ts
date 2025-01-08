@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { CardsHeaderComponent } from '../cards-header/cards-header.component';
 import { CommonModule } from '@angular/common';
 import { CustomDonutChartComponent } from '@shared/components/custom-donut-chart/custom-donut-chart.component';
 
 @Component({
   selector: 'app-combined-charts',
   standalone: true,
-  imports: [CommonModule, CustomDonutChartComponent, CardsHeaderComponent],
+  imports: [CommonModule, CustomDonutChartComponent],
   templateUrl: './general-information-card.component.html',
   styleUrls: ['./general-information-card.component.scss'],
 })

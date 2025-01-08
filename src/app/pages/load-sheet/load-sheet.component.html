@@ -1,14 +1,18 @@
 <main id="LoadSheetPage">
   <section class="table-header-section">
     <span class="header-title">Load Sheet</span>
-    <p-dropdown
-      [options]="periodOptions"
-      [(ngModel)]="selectedPeriod"
-      optionLabel="label"
-      optionValue="value"
-      class="custom-dropdown period-dropdown"
-      placeholder="Daily"
-    ></p-dropdown>
+    <div class="w-[122px]">
+      <p-calendar
+        [(ngModel)]="dateRange"
+        (ngModelChange)="onDateRangeChange($event)"
+        selectionMode="range"
+        [showIcon]="false"
+        [readonlyInput]="true"
+        placeholder="Start Date - End Date"
+        dateFormat="dd/mm/yy"
+        class="custom-calendar"
+      ></p-calendar>
+    </div>
   </section>
 
   <section class="slider-section custom-card">
@@ -20,7 +24,7 @@
         class="approved-slider"
         [ngStyle]="{ width: '100%' }"
       ></p-slider>
-      <p class="percentage">{{ approvedValue }}%</p>
+      <p class="percentage">{{ approvedValue() }}%</p>
     </div>
 
     <div class="slider-container">
@@ -31,26 +35,43 @@
         class="declined-slider"
         [ngStyle]="{ width: '100%' }"
       ></p-slider>
-      <p class="percentage">{{ declinedValue }}%</p>
+      <p class="percentage">{{ declinedValue() }}%</p>
     </div>
   </section>
 
   <section class="table-section custom-card">
     <app-custom-table
-      [tableData]="loadSheetData"
+      [tableData]="loadSheetTableData()"
       [tableColumns]="columns"
+      [totalRecords]="loadSheetData()?.loadSheets?.totalElements || 0"
+      (pageEvent)="pageEvent($event)"
     ></app-custom-table>
   </section>
+
+  <app-load-and-trim-sheet
+    [visible]="isDialogVisible"
+    [loadSheetRowData]="loadAndTrimSheetData()"
+    (closeModal)="toggleLoadAndTrimSheetDialogVisible()"
+  >
+  </app-load-and-trim-sheet>
 </main>
 
 <!-- Table Cell Templates -->
 <ng-template #statusCellBodyTemplate let-rowData="rowData">
-  <span class="font-bold">{{ rowData.status }}</span>
+  @if (rowData.status == "LOADSHEET_APPROVED") {
+    <span class="font-bold">APPROVED</span>
+  } @else if (rowData.status == "LOADSHEET_DECLINED") {
+    <span class="font-bold">DECLINED</span>
+  }
 </ng-template>
 
-<ng-template #previewCellBodyTemplate>
-  <i class="pi pi-eye"></i>
-</ng-template>
+<ng-template #previewCellBodyTemplate let-rowData="rowData">
+  <i
+    class="pi pi-eye cursor-pointer"
+    (click)="toggleLoadAndTrimSheetDialogVisible(rowData)"
+  >
+  </i
+></ng-template>
 
 <ng-template #downloadCellBodyTemplate>
   <i class="pi pi-download"></i>
