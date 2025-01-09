@@ -1,4 +1,4 @@
-#FuelPage {
+#FuelOrderPage {
   .table-header-section {
     justify-content: space-between;
     align-items: center;
@@ -12,7 +12,7 @@
 }
 
 ::ng-deep {
-  #FuelPage {
+  #FuelOrderPage {
     .p-calendar {
       width: 125px !important;
     }

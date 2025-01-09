@@ -4,7 +4,7 @@ import { HomepageComponent } from './pages/homepage/homepage.component';
 import { LoginComponent } from './pages/login/login.component';
 import { FlightInfoComponent } from './pages/flight-info/flight-info.component';
 import { TripInfoComponent } from './pages/trip-info/trip-info.component';
-import { FuelComponent } from './pages/fuel/fuel.component';
+import { FuelOrderComponent } from './pages/fuel-order/fuel-order.component';
 import { LoadSheetComponent } from './pages/load-sheet/load-sheet.component';
 import { ReportComponent } from './pages/report/report.component';
 import { UserLoginHistoryComponent } from './pages/user-login-history/user-login-history.component';
@@ -43,7 +43,7 @@ export const routes: Routes = [
           },
           {
             path: 'fuel',
-            component: FuelComponent,
+            component: FuelOrderComponent,
           },
           {
             path: 'route',

@@ -22,10 +22,10 @@ import { CalendarModule } from 'primeng/calendar';
     CustomTableComponent,
     CalendarModule,
   ],
-  templateUrl: './fuel.component.html',
-  styleUrl: './fuel.component.scss',
+  templateUrl: './fuel-order.component.html',
+  styleUrl: './fuel-order.component.scss',
 })
-export class FuelComponent {
+export class FuelOrderComponent {
   columns!: Column[];
   dateRange: Date[] = [];
 
