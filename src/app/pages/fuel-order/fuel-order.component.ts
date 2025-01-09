@@ -9,7 +9,12 @@ import { DropdownModule } from 'primeng/dropdown';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { Column } from '@shared/models/columns';
 import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
@@ -31,6 +36,7 @@ import moment from 'moment';
     InputIconModule,
     InputTextModule,
     FormsModule,
+    ReactiveFormsModule,
     CustomTableComponent,
     CalendarModule,
   ],
@@ -41,17 +47,29 @@ export class FuelOrderComponent {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
   columns!: Column[];
   dateRange: Date[] = [];
+  formBuilder = inject(FormBuilder);
 
   fuelOrderService = inject(FuelOrderService);
   fuelOrderHistoryData = signal<IFuelOrderResponse | null>(null);
   fuelOrderHistoryTableData = signal<IFuelOrderTableData[]>([]);
   currentPage = 0;
   currentRows = 20;
+  filterFormGroup!: FormGroup;
 
   ngOnInit() {
+    this.builder();
     this.defineColumns();
     const today = moment();
-    this.initialDateRangeValue();
+    this.dateRangeDefaultValue();
+  }
+  builder() {
+    this.filterFormGroup = this.formBuilder.group({
+      acReg: [''],
+      flightNo: [''],
+      depPort: [''],
+      arrPort: [''],
+      dateRange: [this.dateRangeDefaultValue()],
+    });
   }
 
   defineColumns() {
@@ -66,36 +84,47 @@ export class FuelOrderComponent {
     ];
   }
 
-  initialDateRangeValue() {
+  dateRangeDefaultValue() {
     const today = moment();
-    this.dateRange = [
-      today.clone().subtract(7, 'days').toDate(),
-      today.clone().add(7, 'days').toDate(),
-    ];
+    return [today.clone().subtract(7, 'days').toDate(), today.clone().toDate()];
+  }
+
+  onFilterSubmit() {
+    this.getFuelOrder();
   }
 
   getFuelOrder() {
+    const formValues = this.filterFormGroup.value;
+
+    const acReg = formValues.acReg?.trim() || null;
+    const flightNo = formValues.flightNo?.trim() || null;
+    const depPort = formValues.depPort?.trim() || null;
+    const arrPort = formValues.arrPort?.trim() || null;
+
     let startDate = '';
     let endDate = '';
-  
+
     // Tarih aralığı kontrolü ve formatlama
-    if (this.dateRange.length === 2) {
-      const [start, end] = this.dateRange;
-  
+    if (formValues.dateRange && formValues.dateRange.length === 2) {
+      const [start, end] = formValues.dateRange;
+
       if (start && end) {
         startDate = moment(start).format('YYYY-MM-DD');
         endDate = moment(end).format('YYYY-MM-DD');
       }
     }
-  
-    // Filtreleme alanlarından değerleri alın
-    const acReg = (document.querySelector('input[placeholder="Aircraft"]') as HTMLInputElement)?.value || null;
-    const flightNo = (document.querySelector('input[placeholder="Flight No"]') as HTMLInputElement)?.value || null;
-    const depPort = (document.querySelector('input[placeholder="Dep Port"]') as HTMLInputElement)?.value || null;
-    const arrPort = (document.querySelector('input[placeholder="Arr Port"]') as HTMLInputElement)?.value || null;
-  
+
     this.fuelOrderService
-      .getFuelOrder(this.currentPage, this.currentRows, startDate, endDate, acReg, flightNo, depPort, arrPort)
+      .getFuelOrder(
+        this.currentPage,
+        this.currentRows,
+        startDate,
+        endDate,
+        acReg,
+        flightNo,
+        depPort,
+        arrPort,
+      )
       .subscribe({
         next: (response) => {
           this.fuelOrderHistoryData.set(response);
@@ -106,7 +135,6 @@ export class FuelOrderComponent {
         },
       });
   }
-  
 
   onDateRangeChange(event: Event) {
     const [startDate, endDate] = this.dateRange;
