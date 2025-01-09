@@ -67,6 +67,8 @@ import moment from 'moment';
 })
 export class LogbookDetailComponent {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
+  @ViewChild('updatedDateCellBodyTemplate', { static: true })
+  updatedDateCellBodyTemplate!: TemplateRef<any>;
   @ViewChild('previewCellBodyTemplate', { static: true })
   previewCellBodyTemplate!: TemplateRef<any>;
   @ViewChild('editableCellBodyTemplate', { static: true })
@@ -131,7 +133,7 @@ export class LogbookDetailComponent {
       { field: 'arrival', header: 'Arrival' },
       { field: 'arrTime', header: 'Arrival Time' },
       { field: 'totalTime', header: 'Total Time' },
-      { field: 'updatedDate', header: 'Update Date' },
+      { field: 'updatedDate', header: 'Update Date', template: this.updatedDateCellBodyTemplate },
       { field: 'uploadReason', header: 'Comment' },
       { field: 'lastReviewedAdmin', header: 'Reviewed By' },
       { field: 'status', header: 'Status' },
@@ -302,6 +304,16 @@ export class LogbookDetailComponent {
 
     if (this.crewListTableData.yearMonth) {
       dateFormat = moment(this.crewListTableData.yearMonth).format('MMMM YYYY');
+    }
+
+    return dateFormat;
+  }
+
+  updatedDateTemplate(rowData: IDetailedListContentData) {
+    let dateFormat = '';
+
+    if (rowData.updatedDate) {
+      dateFormat = moment(rowData.updatedDate).format('DD/MM/YYYY hh:mm');
     }
 
     return dateFormat;
