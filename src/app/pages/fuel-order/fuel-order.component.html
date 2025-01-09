@@ -40,14 +40,26 @@
       <!-- Calendar -->
       <div class="lg:col-span-2 md:col-span-6 col-span-12">
         <p-calendar
-          [(ngModel)]="dateRange"
-          selectionMode="range"
-          [showIcon]="false"
-          placeholder="Start Date - End Date"
-          dateFormat="dd/mm/yy"
-          class="custom-icon-field w-full inline-block"
-        ></p-calendar>
+        [(ngModel)]="dateRange"
+        (ngModelChange)="onDateRangeChange($event)"
+        selectionMode="range"
+        [showIcon]="false"
+        [readonlyInput]="true"
+        placeholder="Start Date - End Date"
+        dateFormat="dd/mm/yy"
+        class="custom-calendar"
+      ></p-calendar>
       </div>
+
+      <p-button
+      type="submit"
+      icon="pi pi-search"
+      [rounded]="true"
+      class="filter-submit-btn"
+    />
+
+
+
     </div>
   </section>
 
