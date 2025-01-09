@@ -8,20 +8,8 @@
         <button
           pButton
           type="button"
-          [label]="isEditMode ? 'Save' : 'Edit'"
-          (click)="isEditMode ? onSave() : toggleEditMode()"
-        ></button>
-        <button
-          pButton
-          type="button"
-          label="Approve"
-          (click)="onApprove(editData)"
-        ></button>
-        <button
-          pButton
-          type="button"
-          label="Reject"
-          (click)="displayRejectPopup = true"
+          [label]="isEditMode() ? 'Save' : 'Edit'"
+          (click)="isEditMode() ? onSave() : toggleEditMode()"
         ></button>
       </div>
     </div>
@@ -69,45 +57,42 @@
     <form [formGroup]="logbookFormGroup">
       <section class="custom-card">
         <p class="title mb-5">Flight</p>
+        <!-- Summary -->
         <div class="grid grid-cols-12 gap-5 text-center">
           <!-- Crew Name -->
           <p-floatLabel class="custom-float-label-field col-span-2">
-            <input pInputText id="crewName" formControlName="crewName" />
-            <label for="crewName">Crew Name & Surname</label>
+            <input pInputText [value]="editData.crewName" disabled />
+            <label>Crew Name & Surname</label>
           </p-floatLabel>
 
           <!-- Company ID -->
           <p-floatLabel class="custom-float-label-field col-span-2">
-            <input pInputText id="companyId" formControlName="companyId" />
-            <label for="companyId">Company ID</label>
+            <input pInputText [value]="editData.companyId" disabled  />
+            <label>Company ID</label>
           </p-floatLabel>
 
           <!-- Updated Date -->
           <p-floatLabel class="custom-float-label-field col-span-2">
-            <input pInputText id="updatedDate" formControlName="updatedDate" />
-            <label for="updatedDate">Updated Date</label>
+            <input pInputText [value]="editData.updatedDate" disabled />
+            <label>Updated Date</label>
           </p-floatLabel>
 
           <!-- A/C Type -->
           <p-floatLabel class="custom-float-label-field col-span-2">
-            <input
-              pInputText
-              id="aircraftType"
-              formControlName="aircraftType"
-            />
-            <label for="aircraftType">A/C Type</label>
+            <input pInputText [value]="editData.aircraftType" disabled />
+            <label>A/C Type</label>
           </p-floatLabel>
 
           <!-- A/C Reg -->
           <p-floatLabel class="custom-float-label-field col-span-2">
-            <input pInputText id="aircraftReg" formControlName="aircraftReg" />
-            <label for="aircraftReg">A/C Reg</label>
+            <input pInputText [value]="editData.aircraftReg" disabled />
+            <label>A/C Reg</label>
           </p-floatLabel>
 
           <!-- Status -->
           <p-floatLabel class="custom-float-label-field col-span-2">
-            <input pInputText id="status" formControlName="status" />
-            <label for="status">Status</label>
+            <input pInputText [value]="editData.status" disabled />
+            <label>Status</label>
           </p-floatLabel>
         </div>
 
@@ -172,16 +157,27 @@
           <div class="col-span-6">
             <div class="grid grid-cols-2 gap-2">
               <!-- SE -->
-              <p-floatLabel class="custom-float-label-field">
-                <input pInputText id="se" formControlName="se" />
+              <div class="radio-button-container">
                 <label for="se">SE</label>
-              </p-floatLabel>
+                <p-radioButton 
+                  name="engineType" 
+                  value="SE" 
+                  formControlName="engineType" 
+                  inputId="se" 
+                />
+              </div>
 
               <!-- ME -->
-              <p-floatLabel class="custom-float-label-field">
-                <input pInputText id="me" formControlName="me" />
+              <div class="radio-button-container">
                 <label for="me">ME</label>
-              </p-floatLabel>
+                <p-radioButton 
+                  name="engineType" 
+                  value="ME" 
+                  formControlName="engineType" 
+                  inputId="me" 
+                />
+
+              </div>
             </div>
           </div>
 

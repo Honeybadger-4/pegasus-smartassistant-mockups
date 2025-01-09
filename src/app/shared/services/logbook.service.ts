@@ -8,6 +8,7 @@ import { IDetailedListResponse } from '@shared/models/detailed-list-response.mod
 import { IDetailedListRequest } from '@shared/models/detailed-list-request.model';
 import { IHttpResponseModel } from '@shared/models/http-response.model';
 import { environment } from '@environments/environment';
+import { ILogbookEditRequest } from '@shared/models/logbook-edit-request.model';
 
 @Injectable({
   providedIn: 'root',
@@ -74,5 +75,13 @@ export class LogbookService {
     return this.http
       .put<IHttpResponseModel>(apiUrl, null)
       .pipe(map((response) => response.data));
+  }
+
+  putEdit(requestBody: ILogbookEditRequest) {
+    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/edit`;
+
+    return this.http
+    .put<IHttpResponseModel>(apiUrl, requestBody)
+    .pipe(map((response) => response.data));
   }
 }

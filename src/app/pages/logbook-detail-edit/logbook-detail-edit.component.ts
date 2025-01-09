@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import {
@@ -16,6 +16,9 @@ import { DialogModule } from 'primeng/dialog';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { IDetailedListContentData } from '@shared/models/detailed-list-response.model';
+import { LogbookService } from '@shared/services/logbook.service';
+import { ILogbookEditRequest } from '@shared/models/logbook-edit-request.model';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @Component({
   selector: 'app-logbook-edit',
@@ -31,12 +34,15 @@ import { IDetailedListContentData } from '@shared/models/detailed-list-response.
     ConfirmDialogModule,
     DialogModule,
     ToastModule,
+    RadioButtonModule,
   ],
   providers: [ConfirmationService, MessageService],
   templateUrl: './logbook-detail-edit.component.html',
   styleUrls: ['./logbook-detail-edit.component.scss'],
 })
 export class LogbookDetailEditComponent implements OnInit {
+  logbookService = inject(LogbookService);
+
   breadcrumbItems: MenuItem[] = [
     { label: 'Logbook', route: '/logbook' },
     { label: 'Crew List', route: '/logbook/crew-list' },
@@ -45,42 +51,10 @@ export class LogbookDetailEditComponent implements OnInit {
   ];
   editData!: IDetailedListContentData;
   logbookFormGroup!: FormGroup;
-  isEditMode = false;
+  selectedRow: any;
   rejectReason: string = '';
   displayRejectPopup: boolean = false;
-  selectedRow: any;
-  logbookData = [
-    {
-      crewName: 'John Doe',
-      companyId: '12345',
-      uploadDate: '2024-11-26',
-      acType: 'B737',
-      acReg: 'TC-ABC',
-      status: 'APPROVED',
-      flightVersion: 'Flight',
-      date: '26.07.2019',
-      departure: 'SAW',
-      arrival: 'ADB',
-      departureTime: '05:05',
-      arrivalTime: '06:14',
-      remarks: '-',
-    },
-    {
-      crewName: 'Jane Smith',
-      companyId: '12345',
-      uploadDate: '2024-11-25',
-      acType: 'A320',
-      acReg: 'TC-XYZ',
-      status: 'PENDING',
-      flightVersion: 'Test',
-      date: '27.07.2019',
-      departure: 'IST',
-      arrival: 'ANK',
-      departureTime: '08:00',
-      arrivalTime: '09:00',
-      remarks: 'Test remarks',
-    },
-  ];
+  isEditMode = signal<boolean>(false);
 
   constructor(
     private formBuilder: FormBuilder,
@@ -97,79 +71,123 @@ export class LogbookDetailEditComponent implements OnInit {
 
   builder() {
     this.logbookFormGroup = this.formBuilder.group({
-      crewName: [this.editData.crewName || '-'],
-      companyId: [this.editData.companyId || '-'],
-      updatedDate: [this.editData.updatedDate || '-'],
-      aircraftType: [this.editData.aircraftType || '-'],
-      aircraftReg: [this.editData.aircraftReg || '-'],
-      status: [this.editData.status || '-'],
-      flightVersion: ['-'], // TODO : Servise parametre eklendiğinde burada tanımlanmalıdır.
+      flightVersion: [null], // TODO : Servise parametre eklendiğinde burada tanımlanmalıdır.
+      aircraftType: [this.editData.aircraftType],
       date: [this.editData.date || ''],
-      departure: [this.editData.departure || '-'],
-      arrival: [this.editData.arrival || '-'],
-      depTime: [this.editData.depTime || '-'],
-      arrTime: [this.editData.arrTime || '-'],
-      se: [this.editData.engineType === 'SE' ? 'X' : ''],
-      me: [this.editData.engineType === 'ME' ? 'X' : ''],
-      pic: [this.editData.pic || '-'],
-      multiPilotTime: [this.editData.multiPilotTime || '-'],
-      totalTime: [this.editData.totalTime || '-'],
+      aircraftReg: [this.editData.aircraftReg],
+      departure: [this.editData.departure],
+      arrival: [this.editData.arrival],
+      depTime: [this.editData.depTime],
+      arrTime: [this.editData.arrTime],
+      engineType: [this.editData.engineType],
+      pic: [this.editData.pic],
+      multiPilotTime: [this.editData.multiPilotTime],
+      totalTime: [this.editData.totalTime],
       // Landing
-      dayLanding: [this.editData.dayLanding || '-'],
-      nightLanding: [this.editData.nightLanding || '-'],
-      instructor: [this.editData.instructor || '-'],
-      remarksAndEndorsements: [this.editData.remarksAndEndorsements || '-'],
+      dayLanding: [this.editData.dayLanding],
+      nightLanding: [this.editData.nightLanding],
+      instructor: [this.editData.instructor],
+      remarksAndEndorsements: [this.editData.remarksAndEndorsements],
       // Synthetic Training Devices Session
-      syntheticTrainingDate: [this.editData.syntheticTrainingDate || '-'],
-      syntheticTrainingType: [this.editData.syntheticTrainingType || '-'],
-      syntheticTrainingTime: [this.editData.syntheticTrainingTime || '-'],
+      syntheticTrainingDate: [this.editData.syntheticTrainingDate],
+      syntheticTrainingType: [this.editData.syntheticTrainingType],
+      syntheticTrainingTime: [this.editData.syntheticTrainingTime],
       // Pilot Function Time
-      pilotFunctionPic: [this.editData.pilotFunctionPic || '-'],
-      pilotFunctionCoPilot: [this.editData.pilotFunctionCoPilot || '-'],
-      pilotFunctionDual: [this.editData.pilotFunctionDual || '-'],
+      pilotFunctionPic: [this.editData.pilotFunctionPic],
+      pilotFunctionCoPilot: [this.editData.pilotFunctionCoPilot],
+      pilotFunctionDual: [this.editData.pilotFunctionDual],
       // Operation Condition Timek
-      nightTime: [this.editData.nightTime || '-'],
-      ifrTime: [this.editData.ifrTime || '-'],
+      nightTime: [this.editData.nightTime],
+      ifrTime: [this.editData.ifrTime],
     });
     this.logbookFormGroup.disable();
   }
 
   onSave(): void {
+    const message = this.editData.canReassign
+      ? 'Do you want to reject the logbook document?'
+      : 'Do you want to approve the logbook document?';
     this.confirmationService.confirm({
       message: `<div class="custom-confirm-content">
                   <div class="custom-confirm-icon">
                     <img src="/icons/approve-icon.svg" alt="Approve Icon" />
                   </div>
-                  <p class="custom-confirm-message">Do you save edits made to the logbook document?</p>
+                  <p class="custom-confirm-message">${message}</p>
                 </div>`,
       header: '',
       icon: '',
       closeOnEscape: false,
-      acceptLabel: 'Save',
+      acceptLabel: this.editData.canReassign ? 'Reject' : 'Approve',
       rejectLabel: 'Cancel',
       acceptIcon: 'none',
       rejectIcon: 'none',
       acceptButtonStyleClass: 'action-button',
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
-        this.formSubmit();
-        this.toggleEditMode();
+        if (this.editData.canReassign) {
+          this.displayRejectPopup = true;
+        } else {
+          this.formSubmit();
+          this.toggleEditMode();
+        }
       },
     });
   }
 
   formSubmit() {
     if (this.logbookFormGroup.valid) {
-      console.log('Form data:', this.logbookFormGroup.value);
+      const changesArr: ILogbookEditRequest['changes'] = [{}];
+      const changedValues = this.checkFormChangeValues();
+
+      if (Object.keys(changedValues).length > 0) {
+        changesArr.shift();
+        Object.keys(changedValues).map((item: string, index) => {
+          changesArr.push({
+            field: Object.keys(changedValues)[index]?.toString(),
+            newValue: Object.values(changedValues)[index]?.toString(),
+          });
+        });
+      }
+
+      const requestBody: ILogbookEditRequest = {
+        logId: this.editData.logId,
+        changes: changesArr,
+        ...(this.editData.canReassign && { uploadReason: this.rejectReason }),
+      };
+
+      this.logbookService.putEdit(requestBody).subscribe({
+        next(response) {
+          console.log(response);
+        },
+        error(err) {
+          console.log(err);
+        },
+      });
     } else {
       console.error('Form is invalid');
     }
   }
 
-  toggleEditMode(): void {
-    this.isEditMode = !this.isEditMode;
+  checkFormChangeValues() {
+    const changedValues: any = {};
+    for (const key in this.logbookFormGroup.value) {
+      if (key in this.editData) {
+        if (
+          this.editData[key as keyof IDetailedListContentData] !=
+          this.logbookFormGroup.value[key]
+        ) {
+          changedValues[key] = this.logbookFormGroup.value[key];
+        }
+      }
+    }
 
-    if (this.isEditMode) {
+    return changedValues;
+  }
+
+  toggleEditMode(): void {
+    this.isEditMode.set(!this.isEditMode());
+
+    if (this.isEditMode()) {
       this.logbookFormGroup.enable();
     } else {
       this.logbookFormGroup.disable();
@@ -204,31 +222,8 @@ export class LogbookDetailEditComponent implements OnInit {
 
   onSubmitRejectReason(): void {
     this.displayRejectPopup = false;
-
-    this.confirmationService.confirm({
-      message: `<div class="custom-confirm-content">
-                  <div class="custom-confirm-icon">
-                    <img src="/icons/reject_icon.svg" alt="Reject Icon" />
-                  </div>
-                  <p class="custom-confirm-message">Do you want to reject the logbook document?</p>
-                </div>`,
-      header: '',
-      icon: '',
-      closeOnEscape: false,
-      acceptLabel: 'Reject',
-      rejectLabel: 'Cancel',
-      acceptIcon: 'none',
-      rejectIcon: 'none',
-      acceptButtonStyleClass: 'action-button',
-      rejectButtonStyleClass: 'cancel-button',
-      accept: () => {
-        this.showRejectToast();
-        console.log('Rejected with reason:', this.rejectReason);
-      },
-      reject: () => {
-        console.log('Rejection cancelled.');
-      },
-    });
+    this.formSubmit();
+    this.toggleEditMode();
   }
 
   showRejectToast() {

@@ -36,6 +36,20 @@
     .custom-float-label-field {
       text-align: left;
     }
+
+    .radio-button-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding-right: 15px;
+      padding-left: 10px;
+      padding-bottom: 10px;
+      padding-top: 10px;
+      background-color: #f3f2f1;
+      border-radius: 5px;
+      color: #4f4f4f;
+    }
   }
 
   .custom-card {
