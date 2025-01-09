@@ -53,8 +53,10 @@
 
   <section class="table-section custom-card">
     <app-custom-table
-      [tableData]="fuelData"
+      [tableData]="fuelOrderHistoryTableData()"
       [tableColumns]="columns"
+      [totalRecords]="fuelOrderHistoryData()?.totalElements || 0"
+      (pageEvent)="pageEvent($event)"
     ></app-custom-table>
   </section>
 </div>
