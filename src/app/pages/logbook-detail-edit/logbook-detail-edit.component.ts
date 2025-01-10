@@ -23,7 +23,6 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
 
-
 @Component({
   selector: 'app-logbook-edit',
   standalone: true,
@@ -40,7 +39,7 @@ import { ToastModule } from 'primeng/toast';
     DialogModule,
     ToastModule,
     RadioButtonModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
   ],
   providers: [ConfirmationService],
   templateUrl: './logbook-detail-edit.component.html',
@@ -121,7 +120,7 @@ export class LogbookDetailEditComponent implements OnInit {
       },
       error: (error) => {
         this.formDataLoading.set(false);
-      }
+      },
     });
   }
 
@@ -143,14 +142,16 @@ export class LogbookDetailEditComponent implements OnInit {
       const requestBody: ILogbookEditRequest = {
         logId: this.editDefaultData()?.logId || 0,
         changes: changesArr,
-        ...(this.editDefaultData()?.canReassign && { uploadReason: this.rejectReason }),
+        ...(this.editDefaultData()?.canReassign && {
+          uploadReason: this.rejectReason,
+        }),
       };
 
       this.logbookService.putEdit(requestBody).subscribe({
         next: () => {
           this.getLogByLogId();
         },
-        error:(err) => {
+        error: (err) => {
           console.log(err);
         },
       });
@@ -163,15 +164,15 @@ export class LogbookDetailEditComponent implements OnInit {
     const changedValues: any = {};
     const defaultData = this.editDefaultData();
 
-      for (const key in this.logbookFormGroup.value) {
-        if (defaultData && key in defaultData) {
-          if (
-            defaultData[key as keyof IDetailedListContentData] !=
-            this.logbookFormGroup.value[key]
-          ) {
-            changedValues[key] = this.logbookFormGroup.value[key];
-          }
+    for (const key in this.logbookFormGroup.value) {
+      if (defaultData && key in defaultData) {
+        if (
+          defaultData[key as keyof IDetailedListContentData] !=
+          this.logbookFormGroup.value[key]
+        ) {
+          changedValues[key] = this.logbookFormGroup.value[key];
         }
+      }
     }
 
     return changedValues;

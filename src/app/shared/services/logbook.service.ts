@@ -86,9 +86,10 @@ export class LogbookService {
   }
 
   getLogByLogId(logId: number): Observable<IDetailedListResponse> {
-    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/?logId=${logId}`
+    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/?logId=${logId}`;
 
-    return this.http.get<IHttpResponseModel>(apiUrl).pipe(map((response) => response.data));
-
+    return this.http
+      .get<IHttpResponseModel>(apiUrl)
+      .pipe(map((response) => response.data));
   }
 }

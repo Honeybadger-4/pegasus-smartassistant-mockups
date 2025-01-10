@@ -21,13 +21,14 @@
       <section class="custom-card">
         <div class="flex items-center gap-5 mb-5">
           <p class="title">Flight</p>
-          <p-progressSpinner 
-            *ngIf="formDataLoading()" 
-            ariaLabel="loading" 
-            ngClass="flex justify-center" 
+          <p-progressSpinner
+            *ngIf="formDataLoading()"
+            ariaLabel="loading"
+            ngClass="flex justify-center"
             class="title-loading"
-            strokeWidth="8" 
-            styleClass="w-[20px] h-[20px]" />
+            strokeWidth="8"
+            styleClass="w-[20px] h-[20px]"
+          />
         </div>
         <!-- Summary -->
         <div class="grid grid-cols-12 gap-5 text-center">
@@ -45,19 +46,31 @@
 
           <!-- Updated Date -->
           <p-floatLabel class="custom-float-label-field col-span-2">
-            <input pInputText [value]="editDefaultData()?.updatedDate" disabled />
+            <input
+              pInputText
+              [value]="editDefaultData()?.updatedDate"
+              disabled
+            />
             <label>Updated Date</label>
           </p-floatLabel>
 
           <!-- A/C Type -->
           <p-floatLabel class="custom-float-label-field col-span-2">
-            <input pInputText [value]="editDefaultData()?.aircraftType" disabled />
+            <input
+              pInputText
+              [value]="editDefaultData()?.aircraftType"
+              disabled
+            />
             <label>A/C Type</label>
           </p-floatLabel>
 
           <!-- A/C Reg -->
           <p-floatLabel class="custom-float-label-field col-span-2">
-            <input pInputText [value]="editDefaultData()?.aircraftReg" disabled />
+            <input
+              pInputText
+              [value]="editDefaultData()?.aircraftReg"
+              disabled
+            />
             <label>A/C Reg</label>
           </p-floatLabel>
 
@@ -71,11 +84,7 @@
         <div class="mt-5 grid grid-cols-12 gap-5 text-center">
           <!-- Flight Version -->
           <p-floatLabel class="custom-float-label-field col-span-6">
-            <input
-              pInputText
-              id="dutyType"
-              formControlName="dutyType"
-            />
+            <input pInputText id="dutyType" formControlName="dutyType" />
             <label for="dutyType">Flight Version</label>
           </p-floatLabel>
 
@@ -342,7 +351,10 @@
       <!-- Başlık ve Alt Bilgiler -->
       <div class="flex items-center justify-between">
         <p>Upload Reason</p>
-        <i class="pi pi-times cursor-pointer" (click)="displayRejectPopup = false"></i>
+        <i
+          class="pi pi-times cursor-pointer"
+          (click)="displayRejectPopup = false"
+        ></i>
       </div>
 
       <hr class="divider" />
