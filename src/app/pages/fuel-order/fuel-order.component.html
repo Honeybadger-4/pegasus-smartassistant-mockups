@@ -4,11 +4,10 @@
     <p class="header-title">Fuel</p>
     <!-- Filter Inputs and Dropdown -->
     <form [formGroup]="filterFormGroup" (ngSubmit)="onFilterSubmit()">
-      <div class="grid grid-cols-10 gap-4 items-center">
+      <div class="grid grid-cols-12 gap-4 items-center">
         <!-- Aircraft  Input -->
         <div class="lg:col-span-2 md:col-span-6 col-span-12">
           <p-iconField iconPosition="right" class="custom-icon-field">
-            <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
             <input
               type="text"
               pInputText
@@ -20,7 +19,6 @@
         <!-- Flight No Input -->
         <div class="lg:col-span-2 md:col-span-6 col-span-12">
           <p-iconField iconPosition="right" class="custom-icon-field">
-            <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
             <input
               type="text"
               pInputText
@@ -32,7 +30,6 @@
         <!-- Dep Port Input -->
         <div class="lg:col-span-2 md:col-span-6 col-span-12">
           <p-iconField iconPosition="right" class="custom-icon-field">
-            <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
             <input
               type="text"
               pInputText
@@ -44,7 +41,6 @@
         <!-- Arr Port Input -->
         <div class="lg:col-span-2 md:col-span-6 col-span-12">
           <p-iconField iconPosition="right" class="custom-icon-field">
-            <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
             <input
               type="text"
               pInputText
@@ -64,12 +60,14 @@
             class="custom-calendar"
           ></p-calendar>
         </div>
-        <p-button
-          type="submit"
-          icon="pi pi-search"
-          [rounded]="true"
-          class="filter-submit-btn"
-        />
+        <div class="lg:col-span-2 md:col-span-6 col-span-12 flex">
+          <p-button
+            type="submit"
+            icon="pi pi-search"
+            [rounded]="true"
+            class="filter-submit-btn"
+          />
+        </div>
       </div>
     </form>
   </section>
