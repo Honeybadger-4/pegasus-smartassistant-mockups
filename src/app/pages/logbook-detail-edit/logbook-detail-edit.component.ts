@@ -51,7 +51,6 @@ export class LogbookDetailEditComponent implements OnInit {
   ];
   editData!: IDetailedListContentData;
   logbookFormGroup!: FormGroup;
-  selectedRow: any;
   rejectReason: string = '';
   displayRejectPopup: boolean = false;
   isEditMode = signal<boolean>(false);
@@ -100,7 +99,61 @@ export class LogbookDetailEditComponent implements OnInit {
       nightTime: [this.editData.nightTime],
       ifrTime: [this.editData.ifrTime],
     });
+
     this.logbookFormGroup.disable();
+  }
+
+  formSubmit() {
+    if (this.logbookFormGroup.valid) {
+      const changesArr: ILogbookEditRequest['changes'] = [{}];
+      const changedValues = this.checkFormChangeValues();
+
+      if (Object.keys(changedValues).length > 0) {
+        changesArr.shift();
+        Object.keys(changedValues).map((item: string, index) => {
+          changesArr.push({
+            field: Object.keys(changedValues)[index]?.toString(),
+            newValue: Object.values(changedValues)[index]?.toString(),
+          });
+        });
+      }
+
+      const requestBody: ILogbookEditRequest = {
+        logId: this.editData.logId,
+        changes: changesArr,
+        ...(this.editData.canReassign && { uploadReason: this.rejectReason }),
+      };
+
+      console.log(requestBody);
+
+      this.logbookService.putEdit(requestBody).subscribe({
+        next(response) {
+          // TODO : edit sayfası için bir get servisi verilecek. o servise istek atılıp editData değişkeni güncellenmeli.
+          console.log(response);
+        },
+        error(err) {
+          console.log(err);
+        },
+      });
+    } else {
+      console.error('Form is invalid');
+    }
+  }
+
+  checkFormChangeValues() {
+    const changedValues: any = {};
+    for (const key in this.logbookFormGroup.value) {
+      if (key in this.editData) {
+        if (
+          this.editData[key as keyof IDetailedListContentData] !=
+          this.logbookFormGroup.value[key]
+        ) {
+          changedValues[key] = this.logbookFormGroup.value[key];
+        }
+      }
+    }
+
+    return changedValues;
   }
 
   onSave(): void {
@@ -134,54 +187,10 @@ export class LogbookDetailEditComponent implements OnInit {
     });
   }
 
-  formSubmit() {
-    if (this.logbookFormGroup.valid) {
-      const changesArr: ILogbookEditRequest['changes'] = [{}];
-      const changedValues = this.checkFormChangeValues();
-
-      if (Object.keys(changedValues).length > 0) {
-        changesArr.shift();
-        Object.keys(changedValues).map((item: string, index) => {
-          changesArr.push({
-            field: Object.keys(changedValues)[index]?.toString(),
-            newValue: Object.values(changedValues)[index]?.toString(),
-          });
-        });
-      }
-
-      const requestBody: ILogbookEditRequest = {
-        logId: this.editData.logId,
-        changes: changesArr,
-        ...(this.editData.canReassign && { uploadReason: this.rejectReason }),
-      };
-
-      this.logbookService.putEdit(requestBody).subscribe({
-        next(response) {
-          console.log(response);
-        },
-        error(err) {
-          console.log(err);
-        },
-      });
-    } else {
-      console.error('Form is invalid');
-    }
-  }
-
-  checkFormChangeValues() {
-    const changedValues: any = {};
-    for (const key in this.logbookFormGroup.value) {
-      if (key in this.editData) {
-        if (
-          this.editData[key as keyof IDetailedListContentData] !=
-          this.logbookFormGroup.value[key]
-        ) {
-          changedValues[key] = this.logbookFormGroup.value[key];
-        }
-      }
-    }
-
-    return changedValues;
+  onSubmitRejectReason(): void {
+    this.formSubmit();
+    this.toggleEditMode();
+    this.displayRejectPopup = false;
   }
 
   toggleEditMode(): void {
@@ -194,43 +203,7 @@ export class LogbookDetailEditComponent implements OnInit {
     }
   }
 
-  onApprove(rowData: any): void {
-    this.confirmationService.confirm({
-      message: `<div class="custom-confirm-content">
-                  <div class="custom-confirm-icon">
-                    <img src="/icons/approve-icon.svg" alt="Approve Icon" />
-                  </div>
-                  <p class="custom-confirm-message">Do you want to approve the logbook document?</p>
-                </div>`,
-      header: '',
-      icon: '',
-      closeOnEscape: false,
-      acceptLabel: 'Approve',
-      rejectLabel: 'Cancel',
-      acceptIcon: 'none',
-      rejectIcon: 'none',
-      acceptButtonStyleClass: 'action-button',
-      rejectButtonStyleClass: 'cancel-button',
-      accept: () => {
-        console.log('Approved:', rowData);
-      },
-      reject: () => {
-        console.log('Approval cancelled.');
-      },
-    });
-  }
-
-  onSubmitRejectReason(): void {
-    this.displayRejectPopup = false;
-    this.formSubmit();
-    this.toggleEditMode();
-  }
-
-  showRejectToast() {
-    this.messageService.add({
-      severity: 'warn',
-      summary: 'Warning',
-      detail: 'Your rejection email has been sent.',
-    });
+  rejectReasonDialogOnHide() {
+    this.rejectReason = '';
   }
 }

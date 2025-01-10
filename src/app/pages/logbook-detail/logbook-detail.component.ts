@@ -133,7 +133,11 @@ export class LogbookDetailComponent {
       { field: 'arrival', header: 'Arrival' },
       { field: 'arrTime', header: 'Arrival Time' },
       { field: 'totalTime', header: 'Total Time' },
-      { field: 'updatedDate', header: 'Update Date', template: this.updatedDateCellBodyTemplate },
+      {
+        field: 'updatedDate',
+        header: 'Update Date',
+        template: this.updatedDateCellBodyTemplate,
+      },
       { field: 'uploadReason', header: 'Comment' },
       { field: 'lastReviewedAdmin', header: 'Reviewed By' },
       { field: 'status', header: 'Status' },

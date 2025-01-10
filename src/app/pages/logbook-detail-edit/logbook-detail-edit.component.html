@@ -4,53 +4,16 @@
   <section>
     <div class="page-header">
       <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" />
-      <div class="button-group">
-        <button
-          pButton
-          type="button"
-          [label]="isEditMode() ? 'Save' : 'Edit'"
-          (click)="isEditMode() ? onSave() : toggleEditMode()"
-        ></button>
-      </div>
+
+      <button
+        pButton
+        type="button"
+        [label]="isEditMode() ? 'Save' : 'Edit'"
+        class="save-button"
+        (click)="isEditMode() ? onSave() : toggleEditMode()"
+      ></button>
     </div>
   </section>
-
-  <p-dialog
-    [(visible)]="displayRejectPopup"
-    [modal]="true"
-    [draggable]="false"
-    class="custom-dialog-container"
-  >
-    <div class="popup-content">
-      <!-- Başlık ve Alt Bilgiler -->
-      <p class="title">Upload Reason</p>
-      <div class="popup-header">
-        <p><b>Date:</b> {{ editData.date }}</p>
-        <p><b>A/C Type:</b> {{ editData.aircraftType }}</p>
-        <p><b>A/C Reg:</b> {{ editData.aircraftReg }}</p>
-      </div>
-
-      <!-- Giriş Alanı -->
-      <textarea
-        [(ngModel)]="rejectReason"
-        placeholder="Enter reason"
-        class="custom-textarea"
-        rows="5"
-        maxlength="100"
-      ></textarea>
-
-      <!-- Footer Alanı -->
-      <div class="popup-footer">
-        <button
-          type="button"
-          pButton
-          label="Submit"
-          (click)="onSubmitRejectReason()"
-          class="submit-button"
-        ></button>
-      </div>
-    </div>
-  </p-dialog>
 
   <!-- Form -->
   <section class="form-section">
@@ -67,7 +30,7 @@
 
           <!-- Company ID -->
           <p-floatLabel class="custom-float-label-field col-span-2">
-            <input pInputText [value]="editData.companyId" disabled  />
+            <input pInputText [value]="editData.companyId" disabled />
             <label>Company ID</label>
           </p-floatLabel>
 
@@ -159,24 +122,23 @@
               <!-- SE -->
               <div class="radio-button-container">
                 <label for="se">SE</label>
-                <p-radioButton 
-                  name="engineType" 
-                  value="SE" 
-                  formControlName="engineType" 
-                  inputId="se" 
+                <p-radioButton
+                  name="engineType"
+                  value="SE"
+                  formControlName="engineType"
+                  inputId="se"
                 />
               </div>
 
               <!-- ME -->
               <div class="radio-button-container">
                 <label for="me">ME</label>
-                <p-radioButton 
-                  name="engineType" 
-                  value="ME" 
-                  formControlName="engineType" 
-                  inputId="me" 
+                <p-radioButton
+                  name="engineType"
+                  value="ME"
+                  formControlName="engineType"
+                  inputId="me"
                 />
-
               </div>
             </div>
           </div>
@@ -358,4 +320,48 @@
   </section>
 
   <p-confirmDialog class="custom-confirm-dialog-container"></p-confirmDialog>
+
+  <!-- Reject Reason Dialog -->
+  <p-dialog
+    [(visible)]="displayRejectPopup"
+    [modal]="true"
+    [draggable]="false"
+    class="custom-dialog-container"
+    (onHide)="rejectReasonDialogOnHide()"
+  >
+    <div class="popup-content">
+      <!-- Başlık ve Alt Bilgiler -->
+      <div>
+        <p class="title">Upload Reason</p>
+        <i class="pi pi-times" (click)="displayRejectPopup = false"></i>
+      </div>
+      <div class="popup-header">
+        <p><b>Date:</b> {{ editData.date }}</p>
+        <p><b>A/C Type:</b> {{ editData.aircraftType }}</p>
+        <p><b>A/C Reg:</b> {{ editData.aircraftReg }}</p>
+      </div>
+
+      <!-- Giriş Alanı -->
+      <textarea
+        [(ngModel)]="rejectReason"
+        required
+        placeholder="Enter reason"
+        class="custom-textarea"
+        rows="5"
+        maxlength="100"
+      ></textarea>
+
+      <!-- Footer Alanı -->
+      <div class="popup-footer">
+        <button
+          pButton
+          type="button"
+          label="Submit"
+          [disabled]="rejectReason.length == 0"
+          class="submit-button"
+          (click)="onSubmitRejectReason()"
+        ></button>
+      </div>
+    </div>
+  </p-dialog>
 </main>

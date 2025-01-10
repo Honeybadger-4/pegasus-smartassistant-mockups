@@ -81,7 +81,7 @@ export class LogbookService {
     const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/edit`;
 
     return this.http
-    .put<IHttpResponseModel>(apiUrl, requestBody)
-    .pipe(map((response) => response.data));
+      .put<IHttpResponseModel>(apiUrl, requestBody)
+      .pipe(map((response) => response.data));
   }
 }

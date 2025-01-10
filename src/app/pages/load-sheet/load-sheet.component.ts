@@ -114,12 +114,11 @@ export class LoadSheetComponent {
           this.loadSheetTableData.set(response.loadSheets.content);
           this.approvedValue.set(response.approvedPercentage);
 
-          if(response.approvedPercentage === 0) {
+          if (response.approvedPercentage === 0) {
             this.declinedValue.set(0);
-          }else {
+          } else {
             this.declinedValue.set(100 - response.approvedPercentage);
           }
-
         },
         error: (error) => {
           console.error(error);
