@@ -323,9 +323,9 @@ export class LogbookDetailComponent {
     return dateFormat;
   }
 
-  goToLogBookDetailEditPage(data: any) {
+  goToLogBookDetailEditPage(data: IDetailedListContentData) {
     this.router.navigate(['logbook/logbook-detail-edit'], {
-      state: { data: data },
+      state: { logId: data.logId },
     });
   }
 

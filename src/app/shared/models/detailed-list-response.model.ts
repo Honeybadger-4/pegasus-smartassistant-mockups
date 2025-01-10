@@ -32,7 +32,7 @@ export interface IDetailedListContentData {
   companyId: number;
   crewName: string;
   date: string;
-  flightVersion: string;
+  dutyType: string;
   aircraftType: string;
   aircraftReg: string;
   departure: string;

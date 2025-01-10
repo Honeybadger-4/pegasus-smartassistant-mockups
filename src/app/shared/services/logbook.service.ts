@@ -84,4 +84,11 @@ export class LogbookService {
       .put<IHttpResponseModel>(apiUrl, requestBody)
       .pipe(map((response) => response.data));
   }
+
+  getLogByLogId(logId: number): Observable<IDetailedListResponse> {
+    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/?logId=${logId}`
+
+    return this.http.get<IHttpResponseModel>(apiUrl).pipe(map((response) => response.data));
+
+  }
 }

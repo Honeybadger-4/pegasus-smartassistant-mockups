@@ -1,29 +1,34 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { InputTextModule } from 'primeng/inputtext';
-import { FloatLabelModule } from 'primeng/floatlabel';
+
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
-import { ConfirmationService, MenuItem } from 'primeng/api';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { DialogModule } from 'primeng/dialog';
-import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
 import { IDetailedListContentData } from '@shared/models/detailed-list-response.model';
 import { LogbookService } from '@shared/services/logbook.service';
 import { ILogbookEditRequest } from '@shared/models/logbook-edit-request.model';
+
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ConfirmationService, MenuItem } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { ToastModule } from 'primeng/toast';
+
 
 @Component({
   selector: 'app-logbook-edit',
   standalone: true,
   imports: [
+    CommonModule,
     BreadcrumbModule,
     ButtonModule,
     FormsModule,
@@ -35,8 +40,9 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     DialogModule,
     ToastModule,
     RadioButtonModule,
+    ProgressSpinnerModule
   ],
-  providers: [ConfirmationService, MessageService],
+  providers: [ConfirmationService],
   templateUrl: './logbook-detail-edit.component.html',
   styleUrls: ['./logbook-detail-edit.component.scss'],
 })
@@ -49,58 +55,74 @@ export class LogbookDetailEditComponent implements OnInit {
     { label: 'Logbook Detail List', route: '/logbook/logbook-detail' },
     { label: 'Edit Logbook' },
   ];
-  editData!: IDetailedListContentData;
+  logId: number = 0;
   logbookFormGroup!: FormGroup;
   rejectReason: string = '';
   displayRejectPopup: boolean = false;
+  editDefaultData = signal<IDetailedListContentData | null>(null);
+  formDataLoading = signal<boolean>(false);
   isEditMode = signal<boolean>(false);
 
   constructor(
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService,
   ) {}
 
   ngOnInit() {
-    this.editData = history.state.data;
-    console.log(this.editData);
+    this.logId = history.state.logId;
+    console.log(this.logId);
 
+    this.getLogByLogId();
     this.builder();
   }
 
   builder() {
     this.logbookFormGroup = this.formBuilder.group({
-      flightVersion: [null], // TODO : Servise parametre eklendiğinde burada tanımlanmalıdır.
-      aircraftType: [this.editData.aircraftType],
-      date: [this.editData.date || ''],
-      aircraftReg: [this.editData.aircraftReg],
-      departure: [this.editData.departure],
-      arrival: [this.editData.arrival],
-      depTime: [this.editData.depTime],
-      arrTime: [this.editData.arrTime],
-      engineType: [this.editData.engineType],
-      pic: [this.editData.pic],
-      multiPilotTime: [this.editData.multiPilotTime],
-      totalTime: [this.editData.totalTime],
+      dutyType: [this.editDefaultData()?.dutyType],
+      aircraftType: [this.editDefaultData()?.aircraftType],
+      date: [this.editDefaultData()?.date || ''],
+      aircraftReg: [this.editDefaultData()?.aircraftReg],
+      departure: [this.editDefaultData()?.departure],
+      arrival: [this.editDefaultData()?.arrival],
+      depTime: [this.editDefaultData()?.depTime],
+      arrTime: [this.editDefaultData()?.arrTime],
+      engineType: [this.editDefaultData()?.engineType],
+      pic: [this.editDefaultData()?.pic],
+      multiPilotTime: [this.editDefaultData()?.multiPilotTime],
+      totalTime: [this.editDefaultData()?.totalTime],
       // Landing
-      dayLanding: [this.editData.dayLanding],
-      nightLanding: [this.editData.nightLanding],
-      instructor: [this.editData.instructor],
-      remarksAndEndorsements: [this.editData.remarksAndEndorsements],
+      dayLanding: [this.editDefaultData()?.dayLanding],
+      nightLanding: [this.editDefaultData()?.nightLanding],
+      instructor: [this.editDefaultData()?.instructor],
+      remarksAndEndorsements: [this.editDefaultData()?.remarksAndEndorsements],
       // Synthetic Training Devices Session
-      syntheticTrainingDate: [this.editData.syntheticTrainingDate],
-      syntheticTrainingType: [this.editData.syntheticTrainingType],
-      syntheticTrainingTime: [this.editData.syntheticTrainingTime],
+      syntheticTrainingDate: [this.editDefaultData()?.syntheticTrainingDate],
+      syntheticTrainingType: [this.editDefaultData()?.syntheticTrainingType],
+      syntheticTrainingTime: [this.editDefaultData()?.syntheticTrainingTime],
       // Pilot Function Time
-      pilotFunctionPic: [this.editData.pilotFunctionPic],
-      pilotFunctionCoPilot: [this.editData.pilotFunctionCoPilot],
-      pilotFunctionDual: [this.editData.pilotFunctionDual],
+      pilotFunctionPic: [this.editDefaultData()?.pilotFunctionPic],
+      pilotFunctionCoPilot: [this.editDefaultData()?.pilotFunctionCoPilot],
+      pilotFunctionDual: [this.editDefaultData()?.pilotFunctionDual],
       // Operation Condition Timek
-      nightTime: [this.editData.nightTime],
-      ifrTime: [this.editData.ifrTime],
+      nightTime: [this.editDefaultData()?.nightTime],
+      ifrTime: [this.editDefaultData()?.ifrTime],
     });
 
     this.logbookFormGroup.disable();
+  }
+
+  getLogByLogId() {
+    this.formDataLoading.set(true);
+
+    this.logbookService.getLogByLogId(this.logId).subscribe({
+      next: (response) => {
+        this.editDefaultData.set(response.content[0]);
+        this.formDataLoading.set(false);
+      },
+      error: (error) => {
+        this.formDataLoading.set(false);
+      }
+    });
   }
 
   formSubmit() {
@@ -119,19 +141,16 @@ export class LogbookDetailEditComponent implements OnInit {
       }
 
       const requestBody: ILogbookEditRequest = {
-        logId: this.editData.logId,
+        logId: this.editDefaultData()?.logId || 0,
         changes: changesArr,
-        ...(this.editData.canReassign && { uploadReason: this.rejectReason }),
+        ...(this.editDefaultData()?.canReassign && { uploadReason: this.rejectReason }),
       };
 
-      console.log(requestBody);
-
       this.logbookService.putEdit(requestBody).subscribe({
-        next(response) {
-          // TODO : edit sayfası için bir get servisi verilecek. o servise istek atılıp editData değişkeni güncellenmeli.
-          console.log(response);
+        next: () => {
+          this.getLogByLogId();
         },
-        error(err) {
+        error:(err) => {
           console.log(err);
         },
       });
@@ -142,22 +161,24 @@ export class LogbookDetailEditComponent implements OnInit {
 
   checkFormChangeValues() {
     const changedValues: any = {};
-    for (const key in this.logbookFormGroup.value) {
-      if (key in this.editData) {
-        if (
-          this.editData[key as keyof IDetailedListContentData] !=
-          this.logbookFormGroup.value[key]
-        ) {
-          changedValues[key] = this.logbookFormGroup.value[key];
+    const defaultData = this.editDefaultData();
+
+      for (const key in this.logbookFormGroup.value) {
+        if (defaultData && key in defaultData) {
+          if (
+            defaultData[key as keyof IDetailedListContentData] !=
+            this.logbookFormGroup.value[key]
+          ) {
+            changedValues[key] = this.logbookFormGroup.value[key];
+          }
         }
-      }
     }
 
     return changedValues;
   }
 
   onSave(): void {
-    const message = this.editData.canReassign
+    const message = this.editDefaultData()?.canReassign
       ? 'Do you want to reject the logbook document?'
       : 'Do you want to approve the logbook document?';
     this.confirmationService.confirm({
@@ -170,14 +191,14 @@ export class LogbookDetailEditComponent implements OnInit {
       header: '',
       icon: '',
       closeOnEscape: false,
-      acceptLabel: this.editData.canReassign ? 'Reject' : 'Approve',
+      acceptLabel: this.editDefaultData()?.canReassign ? 'Reject' : 'Approve',
       rejectLabel: 'Cancel',
       acceptIcon: 'none',
       rejectIcon: 'none',
       acceptButtonStyleClass: 'action-button',
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
-        if (this.editData.canReassign) {
+        if (this.editDefaultData()?.canReassign) {
           this.displayRejectPopup = true;
         } else {
           this.formSubmit();
