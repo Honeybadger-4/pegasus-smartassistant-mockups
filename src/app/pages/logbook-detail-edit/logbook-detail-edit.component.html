@@ -35,37 +35,39 @@
           <!-- Crew Name -->
           <div class="summary-box col-span-2">
             <p class="summary-title">Crew Name & Surname</p>
-            <p class="summary-value">{{editDefaultData()?.crewName}}</p>
+            <p class="summary-value">{{ editDefaultData()?.crewName }}</p>
           </div>
 
           <!-- Company ID -->
           <div class="summary-box col-span-2">
             <p class="summary-title">Company ID</p>
-            <p class="summary-value">{{editDefaultData()?.companyId}}</p>
+            <p class="summary-value">{{ editDefaultData()?.companyId }}</p>
           </div>
 
           <!-- Updated Date -->
           <div class="summary-box col-span-2">
             <p class="summary-title">Updated Date</p>
-            <p class="summary-value">{{editDefaultData()?.updatedDate | date: "dd/MM/YYYY"}}</p>
+            <p class="summary-value">
+              {{ editDefaultData()?.updatedDate | date: "dd/MM/YYYY" }}
+            </p>
           </div>
 
           <!-- A/C Type -->
           <div class="summary-box col-span-2">
             <p class="summary-title">A/C Type</p>
-            <p class="summary-value">{{editDefaultData()?.aircraftType}}</p>
+            <p class="summary-value">{{ editDefaultData()?.aircraftType }}</p>
           </div>
 
           <!-- A/C Reg -->
           <div class="summary-box col-span-2">
             <p class="summary-title">A/C Reg</p>
-            <p class="summary-value">{{editDefaultData()?.aircraftReg}}</p>
+            <p class="summary-value">{{ editDefaultData()?.aircraftReg }}</p>
           </div>
 
           <!-- Status -->
           <div class="summary-box col-span-2">
             <p class="summary-title">Status</p>
-            <p class="summary-value">{{editDefaultData()?.status}}</p>
+            <p class="summary-value">{{ editDefaultData()?.status }}</p>
           </div>
         </div>
 

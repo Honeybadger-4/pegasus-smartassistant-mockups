@@ -4,7 +4,10 @@ import { map, Observable } from 'rxjs';
 
 import { ILogbookStatusListResponse } from '@shared/models/logbook-status-list-response.model';
 import { ILogbookCrewListResponse } from '@shared/models/logbook-crew-list-response.model';
-import { IDetailedListContentData, IDetailedListResponse } from '@shared/models/detailed-list-response.model';
+import {
+  IDetailedListContentData,
+  IDetailedListResponse,
+} from '@shared/models/detailed-list-response.model';
 import { IDetailedListRequest } from '@shared/models/detailed-list-request.model';
 import { IHttpResponseModel } from '@shared/models/http-response.model';
 import { environment } from '@environments/environment';

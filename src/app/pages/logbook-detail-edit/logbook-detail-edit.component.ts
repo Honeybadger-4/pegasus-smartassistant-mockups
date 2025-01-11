@@ -48,7 +48,7 @@ import { ToastModule } from 'primeng/toast';
 export class LogbookDetailEditComponent implements OnInit {
   logbookService = inject(LogbookService);
   formBuilder = inject(FormBuilder);
-  confirmationService = inject(ConfirmationService)
+  confirmationService = inject(ConfirmationService);
 
   breadcrumbItems: MenuItem[] = [
     { label: 'Logbook', route: '/logbook' },
