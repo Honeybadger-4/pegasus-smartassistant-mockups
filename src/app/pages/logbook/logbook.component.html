@@ -2,10 +2,9 @@
     <section class="table-header-section">
       <span class="header-title">Logbook</span>
       <p-dropdown
-        [options]="yearOptions"
+        [options]="yearOptions()"
         [(ngModel)]="selectedYear"
-        optionLabel="label"
-        optionValue="value"
+        (ngModelChange)="this.getLogbookSummary()"
         class="custom-dropdown period-dropdown"
         placeholder="Select Year"
       ></p-dropdown>
@@ -33,7 +32,6 @@
               </div>
               <p class="chart-description">{{boeingData()?.totalHours}} hours</p>
             </div>
-  
           </div>
   
           <div class="custom-card mt-5">
@@ -43,7 +41,6 @@
               [tableLoading]="tableLoading"
               [isPaginator]="false"
             />
-
           </div>
          </div>
   
@@ -77,9 +74,9 @@
               [tableLoading]="tableLoading"
               [isPaginator]="false"
             />
-
           </div>
          </div>
+
           <!-- TRAINING -->
           <div class="lg:col-span-4 md:col-span-6 col-span-12 mb-5">
             <div class="chart-box-container">
@@ -112,7 +109,6 @@
               />
             </div>
            </div>
-  
       </div>
     </section>
 </div>
@@ -126,5 +122,5 @@
 </ng-template>
 
 <ng-template #linkedNextPageTemplate let-rowData="rowData">
-  <i class="pi pi-arrow-right cursor-pointer" (click)="onNextPage(rowData)"></i>
+  <i class="pi pi-angle-right cursor-pointer" (click)="onNextPage(rowData)"></i>
 </ng-template>

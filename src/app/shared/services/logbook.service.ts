@@ -27,8 +27,15 @@ export class LogbookService {
     return this.http.get<IHttpResponseModel>(apiUrl).pipe(map((response) => response.data));
   }
 
+  getAvailableYears(): Observable<number[]> {
+    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/available-years`;
+
+    return this.http.get<IHttpResponseModel>(apiUrl).pipe(map((response) => response.data));
+  }
+
   getCrewList(
-    yearMonth: string,
+    logbookType: string,
+    yearMonth: number,
     page: number,
     size: number,
     searchValue?: string | null,
@@ -36,6 +43,7 @@ export class LogbookService {
     const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/crewList`;
 
     let params = new HttpParams()
+      .set('logbookType', logbookType)
       .set('yearMonth', yearMonth)
       .set('page', page)
       .set('size', size);

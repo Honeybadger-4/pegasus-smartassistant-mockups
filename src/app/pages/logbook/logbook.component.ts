@@ -1,24 +1,20 @@
 import { Component, inject, signal, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
-import { BoeingInfoComponent } from 'src/app/components/logbook-dashboard/boeing-info/boeing-info.component';
-import { AirbusInfoComponent } from 'src/app/components/logbook-dashboard/airbus-info/airbus-info.component';
+import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
+import { ILogbookSummaryResponse } from '@shared/models/logbook-summary-response.model';
+import { LogbookService } from '@shared/services/logbook.service';
+import { Column } from '@shared/models/columns';
 
 import { DropdownModule } from 'primeng/dropdown';
 import { SliderModule } from 'primeng/slider';
-import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
-import { Column } from '@shared/models/columns';
-import { LogbookService } from '@shared/services/logbook.service';
-import { ILogbookSummaryResponse } from '@shared/models/logbook-summary-response.model';
-
 
 @Component({
   selector: 'app-logbook',
   standalone: true,
   imports: [
-    // BoeingInfoComponent,
-    // AirbusInfoComponent,
     DropdownModule,
     CommonModule,
     FormsModule,
@@ -32,31 +28,22 @@ export class LogbookComponent {
   @ViewChild('monthColumnsTemplate', {static: true}) monthColumnsTemplate!: TemplateRef<any>;
   @ViewChild('dutyColumnsTemplate', {static: true}) dutyColumnsTemplate!: TemplateRef<any>;
   @ViewChild('linkedNextPageTemplate', {static: true}) linkedNextPageTemplate!: TemplateRef<any>;
+  router = inject(Router)
   logbookService = inject(LogbookService);
 
-  tableLoading = false;
   logbookSummaryData = signal<ILogbookSummaryResponse | null>(null);
   boeingData = signal<ILogbookSummaryResponse['boeingSummary'] | null>(null);
   airbusData = signal<ILogbookSummaryResponse['airbusSummary'] | null>(null);
   trainingData = signal<ILogbookSummaryResponse['trainingSummary'] | null>(null);
+  yearOptions = signal<number[] | undefined>(undefined);
 
   columns!: Column[];
-
+  tableLoading = false;
   selectedYear!: number;
-  yearOptions = [
-    { label: '2022', value: 2022 },
-    { label: '2023', value: 2023 },
-    { label: '2024', value: 2024 },
-  ];
 
   ngOnInit() {
     this.defineColumns();
-
-    const today = new Date();
-    //this.selectedYear = today.getFullYear();
-    this.selectedYear = 2024;
-
-    this.getLogbookSummary();
+    this.getAvailableYears();
   }
 
   defineColumns() {
@@ -78,13 +65,27 @@ export class LogbookComponent {
         this.tableLoading = false;
       },
       error: (error) => {
-        console.log(error);
         this.tableLoading = false;
       }
     })
   }
 
+  getAvailableYears() {
+    this.logbookService.getAvailableYears().subscribe({
+      next: (response) => {
+        this.yearOptions.set(response);
+        this.selectedYear = response[0];
+        this.getLogbookSummary();
+      },
+      error: (error) => {
+
+      }
+    });
+  }
+
   onNextPage(rowData: any) {
-    console.log(rowData);
+    this.router.navigate(['logbook/crew-list'], {
+      state: { data: rowData },
+    });
   }
 }

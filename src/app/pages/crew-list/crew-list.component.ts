@@ -3,6 +3,7 @@ import {
   ElementRef,
   inject,
   signal,
+  TemplateRef,
   ViewChild,
 } from '@angular/core';
 import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
@@ -10,7 +11,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { CustomDonutChartComponent } from '@shared/components/custom-donut-chart/custom-donut-chart.component';
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
 import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
 import { LogbookService } from '@shared/services/logbook.service';
@@ -22,8 +22,10 @@ import {
 
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { SliderModule } from 'primeng/slider';
 import { PanelModule } from 'primeng/panel';
 import { MenuItem } from 'primeng/api';
+
 
 @Component({
   selector: 'app-logbook',
@@ -32,18 +34,19 @@ import { MenuItem } from 'primeng/api';
     CommonModule,
     FormsModule,
     CustomBreadcrumbComponent,
-    CustomDonutChartComponent,
     CustomTableComponent,
     IconFieldModule,
     InputIconModule,
-    PanelModule,
+    SliderModule,
+    PanelModule
   ],
   templateUrl: './crew-list.component.html',
   styleUrl: './crew-list.component.scss',
 })
 export class CrewListComponent {
-  @ViewChild('searchInput', { static: true }) searchInput!: ElementRef;
+  @ViewChild('linkedNextPageTemplate', {static: true}) linkedNextPageTemplate!: TemplateRef<any>;
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
+  @ViewChild('searchInput', { static: true }) searchInput!: ElementRef;
 
   router = inject(Router);
   logbookService = inject(LogbookService);
@@ -56,24 +59,14 @@ export class CrewListComponent {
   columns!: Column[];
   currentPage = 0;
   currentRows = 20;
-  logbookDashboardData: any;
   crewListData = signal<ILogbookCrewListResponse | null>(null);
   crewListContentData = signal<ILogbookCrewListContentData[]>([]);
-
-  chartDataOne: any;
-  chartOptionsOne: any;
-  chartDataTwo: any;
-  chartOptionsTwo: any;
-
-  // TODO: Logbook ekranından crew list ekranına yönlenildiğinde yerMonthValue parametresi logbook componentinden buraya gönderilmeli.
-  yerMonthValue = '2024-11';
+  logbookDashboardData = signal<any>(null); 
 
   ngOnInit() {
-    this.logbookDashboardData = history.state.data;
-    console.log(this.logbookDashboardData);
+    this.logbookDashboardData.set(history.state.data);
 
     this.defineColumns();
-    this.defineChartDataAndOptions();
     this.getCrewList();
     this.setupSearchListener();
   }
@@ -88,43 +81,15 @@ export class CrewListComponent {
       { field: 'simulatorFlightLogs', header: 'Simulator Flight Logs' },
       { field: 'approvedLogs', header: 'Approved Logs' },
       { field: 'reassignedLogs', header: 'Reassing Logs' },
+      { field: '', header: '', template: this.linkedNextPageTemplate },
     ];
-  }
-
-  defineChartDataAndOptions() {
-    this.chartDataOne = {
-      datasets: [
-        {
-          data: [300, 50],
-          backgroundColor: ['#5E548E', '#9F86C0'],
-          hoverBackgroundColor: ['#5E548E', '#9F86C0'],
-        },
-      ],
-    };
-
-    this.chartOptionsOne = {
-      cutout: '65%',
-    };
-
-    this.chartDataTwo = {
-      datasets: [
-        {
-          data: [300, 50],
-          backgroundColor: ['#31572C', '#4F772D'],
-          hoverBackgroundColor: ['#31572C', '#4F772D'],
-        },
-      ],
-    };
-
-    this.chartOptionsTwo = {
-      cutout: '65%',
-    };
   }
 
   getCrewList() {
     this.logbookService
       .getCrewList(
-        this.yerMonthValue,
+        this.logbookDashboardData()?.logbookType,
+        this.logbookDashboardData()?.yearMonth,
         this.currentPage,
         this.currentRows,
         this.searchInputValue,
@@ -133,7 +98,6 @@ export class CrewListComponent {
         next: (response) => {
           this.crewListData.set(response);
           this.crewListContentData.set(response.content);
-          console.log(response);
         },
         error: (error) => {
           console.error(error);

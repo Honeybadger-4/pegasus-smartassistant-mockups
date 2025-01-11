@@ -7,6 +7,7 @@ export interface ILogbookSummaryResponse {
                 yearMonth: string,
                 dutyCount: number,
                 totalHours: number
+                logbookType: string
             }
         ]
     },
@@ -18,6 +19,7 @@ export interface ILogbookSummaryResponse {
                 yearMonth: string,
                 dutyCount: number,
                 totalHours: number
+                logbookType: string
             }
         ]
     },
@@ -29,6 +31,7 @@ export interface ILogbookSummaryResponse {
                 yearMonth: string,
                 dutyCount: number,
                 totalHours: number
+                logbookType: string
             }
         ]
     }

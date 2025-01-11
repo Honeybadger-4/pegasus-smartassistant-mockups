@@ -2,7 +2,7 @@
   <div class="flex items-center justify-between">
     <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" />
 
-    <p-iconField iconPosition="right" class="custom-icon-field w-[234px]">
+    <p-iconField iconPosition="right" class="custom-icon-field w-[234px] h-[24px]">
       <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
       <input
         type="text"
@@ -11,70 +11,35 @@
         (ngModelChange)="onChangeSearch($event)"
         pInputText
         placeholder="Crew Name&Surname / Company ID"
+        class="h-full"
       />
     </p-iconField>
   </div>
 
   <section class="chart-panel-section mt-5">
-    <!-- TODO: Logbook ekranından seçilen dataya göre panel header dinamik olarak gösterilecek. -->
     <p-panel
-      header="Airbus / December 2024"
+      [header]="logbookDashboardData()?.logbookType + ' / ' + (logbookDashboardData()?.yearMonth | date: 'MMMM-YYYY')"
       [toggleable]="true"
       collapsed="true"
       iconPos="start"
       expandIcon="pi pi-angle-up"
       collapseIcon="pi pi-angle-down"
     >
-      <div class="graph-container">
-        <div class="grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
-          <!-- Total Duty Chart -->
-          <div class="lg:flex sm: block">
-            <div>
-              <div class="chart-title">Total Duty</div>
-              <div class="chart-number">12.345</div>
-            </div>
+    <div class="grid grid-cols-12">
+      <div class="line-chart-container lg:col-span-6 col-span-12">
+          <p class="chart-label">Duty</p>
+          <p-slider [ngModel]="logbookDashboardData()?.dutyCount" class="duty-chart" styleClass="lg:w-[565px] sm:w-full h-[5px]"/>
+          <p class="chart-description">{{logbookDashboardData()?.dutyCount}} duty</p>
+      </div>
 
-            <div class="chart-container">
-              <app-custom-donut-chart
-                [data]="chartDataOne"
-                [options]="chartOptionsOne"
-              />
-            </div>
-
-            <div class="list-section duty-chart-list">
-              <ul>
-                <li><span class="dot flight"></span> Flight</li>
-                <li><span class="dot training"></span>Training</li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Total Time Chart -->
-          <div class="lg:flex sm: block">
-            <div>
-              <div class="chart-title">Total Time</div>
-              <div class="chart-number">
-                <span>22.345</span>
-                <small> hours</small>
-              </div>
-            </div>
-
-            <div class="chart-container">
-              <app-custom-donut-chart
-                [data]="chartDataTwo"
-                [options]="chartOptionsTwo"
-              />
-            </div>
-
-            <div class="list-section time-chart-list">
-              <ul>
-                <li><span class="dot flight"></span> Flight</li>
-                <li><span class="dot training"></span>Training</li>
-              </ul>
-            </div>
-          </div>
+      <div class="line-chart-container lg:col-span-6 col-span-12 lg:flex lg:justify-end">
+        <div>
+          <p class="chart-label">Time</p>
+          <p-slider [ngModel]="logbookDashboardData()?.totalHours" class="time-chart" styleClass="lg:w-[565px] sm:w-full h-[5px]"/>
+          <p class="chart-description">{{logbookDashboardData()?.totalHours}} hours</p>
         </div>
       </div>
+    </div>
     </p-panel>
   </section>
 
@@ -84,7 +49,10 @@
       [tableColumns]="columns"
       [totalRecords]="crewListData()?.totalElements || 0"
       (pageEvent)="pageEvent($event)"
-      (rowClickedEvent)="tableRowSelected($event)"
     ></app-custom-table>
   </section>
 </div>
+
+<ng-template #linkedNextPageTemplate let-rowData="rowData">
+  <i class="pi pi-angle-right cursor-pointer" (click)="tableRowSelected(rowData)"></i>
+</ng-template>
