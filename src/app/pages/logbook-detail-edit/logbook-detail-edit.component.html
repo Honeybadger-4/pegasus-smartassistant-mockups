@@ -4,118 +4,78 @@
   <section>
     <div class="page-header">
       <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" />
-      <div class="button-group">
-        <button
-          pButton
-          type="button"
-          [label]="isEditMode ? 'Save' : 'Edit'"
-          (click)="isEditMode ? onSave() : toggleEditMode()"
-        ></button>
-        <button
-          pButton
-          type="button"
-          label="Approve"
-          (click)="onApprove(editData)"
-        ></button>
-        <button
-          pButton
-          type="button"
-          label="Reject"
-          (click)="displayRejectPopup = true"
-        ></button>
-      </div>
+
+      <button
+        pButton
+        type="button"
+        [label]="isEditMode() ? 'Save' : 'Edit'"
+        class="save-button"
+        (click)="isEditMode() ? onSave() : toggleEditMode()"
+      ></button>
     </div>
   </section>
-
-  <p-dialog
-    [(visible)]="displayRejectPopup"
-    [modal]="true"
-    [draggable]="false"
-    class="custom-dialog-container"
-  >
-    <div class="popup-content">
-      <!-- Başlık ve Alt Bilgiler -->
-      <p class="title">Upload Reason</p>
-      <div class="popup-header">
-        <p><b>Date:</b> {{ editData?.date }}</p>
-        <p><b>A/C Type:</b> {{ editData?.aircraftType }}</p>
-        <p><b>A/C Reg:</b> {{ editData?.aircraftReg }}</p>
-      </div>
-
-      <!-- Giriş Alanı -->
-      <textarea
-        [(ngModel)]="rejectReason"
-        placeholder="Enter reason"
-        class="custom-textarea"
-        rows="5"
-        maxlength="100"
-      ></textarea>
-
-      <!-- Footer Alanı -->
-      <div class="popup-footer">
-        <button
-          type="button"
-          pButton
-          label="Submit"
-          (click)="onSubmitRejectReason()"
-          class="submit-button"
-        ></button>
-      </div>
-    </div>
-  </p-dialog>
 
   <!-- Form -->
   <section class="form-section">
     <form [formGroup]="logbookFormGroup">
       <section class="custom-card">
-        <p class="title mb-5">Flight</p>
-        <div class="grid grid-cols-12 gap-5 text-center">
+        <div class="flex items-center gap-5 mb-5">
+          <p class="title">Flight</p>
+          <p-progressSpinner
+            *ngIf="formDataLoading()"
+            ariaLabel="loading"
+            ngClass="flex justify-center"
+            class="title-loading"
+            strokeWidth="8"
+            styleClass="w-[20px] h-[20px]"
+          />
+        </div>
+        <!-- Summary -->
+        <div class="summary-container grid grid-cols-12">
           <!-- Crew Name -->
-          <p-floatLabel class="custom-float-label-field col-span-2">
-            <input pInputText id="crewName" formControlName="crewName" />
-            <label for="crewName">Crew Name & Surname</label>
-          </p-floatLabel>
+          <div class="summary-box col-span-2">
+            <p class="summary-title">Crew Name & Surname</p>
+            <p class="summary-value">{{ editDefaultData()?.crewName }}</p>
+          </div>
 
           <!-- Company ID -->
-          <p-floatLabel class="custom-float-label-field col-span-2">
-            <input pInputText id="companyId" formControlName="companyId" />
-            <label for="companyId">Company ID</label>
-          </p-floatLabel>
+          <div class="summary-box col-span-2">
+            <p class="summary-title">Company ID</p>
+            <p class="summary-value">{{ editDefaultData()?.companyId }}</p>
+          </div>
 
-          <!-- Upload Date -->
-          <p-floatLabel class="custom-float-label-field col-span-2">
-            <input pInputText id="uploadDate" formControlName="uploadDate" />
-            <label for="uploadDate">Upload Date</label>
-          </p-floatLabel>
+          <!-- Updated Date -->
+          <div class="summary-box col-span-2">
+            <p class="summary-title">Updated Date</p>
+            <p class="summary-value">
+              {{ editDefaultData()?.updatedDate | date: "dd/MM/YYYY" }}
+            </p>
+          </div>
 
           <!-- A/C Type -->
-          <p-floatLabel class="custom-float-label-field col-span-2">
-            <input pInputText id="acType" formControlName="acType" />
-            <label for="acType">A/C Type</label>
-          </p-floatLabel>
+          <div class="summary-box col-span-2">
+            <p class="summary-title">A/C Type</p>
+            <p class="summary-value">{{ editDefaultData()?.aircraftType }}</p>
+          </div>
 
           <!-- A/C Reg -->
-          <p-floatLabel class="custom-float-label-field col-span-2">
-            <input pInputText id="acReg" formControlName="acReg" />
-            <label for="acReg">A/C Reg</label>
-          </p-floatLabel>
+          <div class="summary-box col-span-2">
+            <p class="summary-title">A/C Reg</p>
+            <p class="summary-value">{{ editDefaultData()?.aircraftReg }}</p>
+          </div>
 
           <!-- Status -->
-          <p-floatLabel class="custom-float-label-field col-span-2">
-            <input pInputText id="status" formControlName="status" />
-            <label for="status">Status</label>
-          </p-floatLabel>
+          <div class="summary-box col-span-2">
+            <p class="summary-title">Status</p>
+            <p class="summary-value">{{ editDefaultData()?.status }}</p>
+          </div>
         </div>
 
         <div class="mt-5 grid grid-cols-12 gap-5 text-center">
           <!-- Flight Version -->
           <p-floatLabel class="custom-float-label-field col-span-6">
-            <input
-              pInputText
-              id="flightVersion"
-              formControlName="flightVersion"
-            />
-            <label for="flightVersion">Flight Version</label>
+            <input pInputText id="dutyType" formControlName="dutyType" />
+            <label for="dutyType">Flight Version</label>
           </p-floatLabel>
 
           <!-- Aircraft Type -->
@@ -154,41 +114,47 @@
 
           <!-- Departure Time -->
           <p-floatLabel class="custom-float-label-field col-span-6">
-            <input
-              pInputText
-              id="departureTime"
-              formControlName="departureTime"
-            />
-            <label for="departureTime">Departure Time</label>
+            <input pInputText id="depTime" formControlName="depTime" />
+            <label for="depTime">Departure Time</label>
           </p-floatLabel>
 
           <!-- Arrival Time -->
           <p-floatLabel class="custom-float-label-field col-span-6">
-            <input pInputText id="arrivalTime" formControlName="arrivalTime" />
-            <label for="arrivalTime">Arrival Time</label>
+            <input pInputText id="arrTime" formControlName="arrTime" />
+            <label for="arrTime">Arrival Time</label>
           </p-floatLabel>
 
           <!-- SE / ME -->
           <div class="col-span-6">
             <div class="grid grid-cols-2 gap-2">
               <!-- SE -->
-              <p-floatLabel class="custom-float-label-field">
-                <input pInputText id="se" formControlName="se" />
+              <div class="radio-button-container">
                 <label for="se">SE</label>
-              </p-floatLabel>
+                <p-radioButton
+                  name="engineType"
+                  value="SE"
+                  formControlName="engineType"
+                  inputId="se"
+                />
+              </div>
 
               <!-- ME -->
-              <p-floatLabel class="custom-float-label-field">
-                <input pInputText id="me" formControlName="me" />
+              <div class="radio-button-container">
                 <label for="me">ME</label>
-              </p-floatLabel>
+                <p-radioButton
+                  name="engineType"
+                  value="ME"
+                  formControlName="engineType"
+                  inputId="me"
+                />
+              </div>
             </div>
           </div>
 
           <!-- Name PIC -->
           <p-floatLabel class="custom-float-label-field col-span-6">
-            <input pInputText id="namePic" formControlName="namePic" />
-            <label for="namePic">Name PIC</label>
+            <input pInputText id="pic" formControlName="pic" />
+            <label for="pic">Name PIC</label>
           </p-floatLabel>
 
           <!-- Multi Pilot Time -->
@@ -213,14 +179,22 @@
             <div class="mb-5 grid grid-cols-2 gap-2">
               <!-- Day -->
               <p-floatLabel class="custom-float-label-field">
-                <input pInputText id="day" formControlName="day" />
-                <label for="day">Day</label>
+                <input
+                  pInputText
+                  id="dayLanding"
+                  formControlName="dayLanding"
+                />
+                <label for="dayLanding">Day</label>
               </p-floatLabel>
 
               <!-- Night -->
               <p-floatLabel class="custom-float-label-field">
-                <input pInputText id="night" formControlName="night" />
-                <label for="night">Night</label>
+                <input
+                  pInputText
+                  id="nightLanding"
+                  formControlName="nightLanding"
+                />
+                <label for="nightLanding">Night</label>
               </p-floatLabel>
             </div>
 
@@ -235,11 +209,11 @@
           <p-floatLabel class="custom-float-label-field col-span-6">
             <textarea
               pInputTextarea
-              id="remarks"
-              formControlName="remarks"
-              class="w-full h-36"
+              id="remarksAndEndorsements"
+              formControlName="remarksAndEndorsements"
+              class="w-full h-36 mt-1"
             ></textarea>
-            <label for="remarks">Remarks And Endorsements</label>
+            <label for="remarksAndEndorsements">Remarks And Endorsements</label>
           </p-floatLabel>
         </div>
       </section>
@@ -254,15 +228,23 @@
           <!-- Date -->
           <div class="mb-5">
             <p-floatLabel class="custom-float-label-field">
-              <input pInputText id="date" formControlName="date" />
-              <label for="date">Date</label>
+              <input
+                pInputText
+                id="syntheticTrainingDate"
+                formControlName="syntheticTrainingDate"
+              />
+              <label for="syntheticTrainingDate">Date</label>
             </p-floatLabel>
           </div>
 
           <!-- Type -->
           <div class="mb-5">
             <p-floatLabel class="custom-float-label-field">
-              <input pInputText id="type" formControlName="type" />
+              <input
+                pInputText
+                id="type"
+                formControlName="syntheticTrainingType"
+              />
               <label for="type">Type</label>
             </p-floatLabel>
           </div>
@@ -270,7 +252,11 @@
           <!-- Time -->
           <div class="mb-5">
             <p-floatLabel class="custom-float-label-field">
-              <input pInputText id="time" formControlName="time" />
+              <input
+                pInputText
+                id="time"
+                formControlName="syntheticTrainingTime"
+              />
               <label for="time">Time</label>
             </p-floatLabel>
           </div>
@@ -283,24 +269,36 @@
           <!-- PIC -->
           <div class="mb-5">
             <p-floatLabel class="custom-float-label-field">
-              <input pInputText id="pic" formControlName="pic" />
-              <label for="pic">PIC</label>
+              <input
+                pInputText
+                id="pilotFunctionPic"
+                formControlName="pilotFunctionPic"
+              />
+              <label for="pilotFunctionPic">PIC</label>
             </p-floatLabel>
           </div>
 
           <!-- CO-PILOT -->
           <div class="mb-5">
             <p-floatLabel class="custom-float-label-field">
-              <input pInputText id="coPilot" formControlName="coPilot" />
-              <label for="coPilot">CO-PILOT</label>
+              <input
+                pInputText
+                id="pilotFunctionCoPilot"
+                formControlName="pilotFunctionCoPilot"
+              />
+              <label for="pilotFunctionCoPilot">CO-PILOT</label>
             </p-floatLabel>
           </div>
 
           <!-- Duty -->
           <div class="mb-5">
             <p-floatLabel class="custom-float-label-field">
-              <input pInputText id="duty" formControlName="duty" />
-              <label for="duty">Duty</label>
+              <input
+                pInputText
+                id="pilotFunctionDual"
+                formControlName="pilotFunctionDual"
+              />
+              <label for="pilotFunctionDual">Duty</label>
             </p-floatLabel>
           </div>
         </div>
@@ -312,16 +310,16 @@
           <!-- Night -->
           <div class="mb-5">
             <p-floatLabel class="custom-float-label-field">
-              <input pInputText id="night" formControlName="night" />
-              <label for="night">Night</label>
+              <input pInputText id="nightTime" formControlName="nightTime" />
+              <label for="nightTime">Night</label>
             </p-floatLabel>
           </div>
 
           <!-- IFR -->
           <div class="mb-5">
             <p-floatLabel class="custom-float-label-field">
-              <input pInputText id="ifr" formControlName="ifr" />
-              <label for="ifr">IFR</label>
+              <input pInputText id="ifrTime" formControlName="ifrTime" />
+              <label for="ifrTime">IFR</label>
             </p-floatLabel>
           </div>
         </div>
@@ -330,4 +328,54 @@
   </section>
 
   <p-confirmDialog class="custom-confirm-dialog-container"></p-confirmDialog>
+
+  <!-- Reject Reason Dialog -->
+  <p-dialog
+    [(visible)]="displayRejectPopup"
+    [modal]="true"
+    [draggable]="false"
+    class="custom-dialog-container"
+    (onHide)="rejectReasonDialogOnHide()"
+  >
+    <div class="popup-content">
+      <!-- Başlık ve Alt Bilgiler -->
+      <div class="flex items-center justify-between">
+        <p>Upload Reason</p>
+        <i
+          class="pi pi-times cursor-pointer"
+          (click)="displayRejectPopup = false"
+        ></i>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="popup-header">
+        <p><b>Date:</b> {{ editDefaultData()?.date }}</p>
+        <p><b>A/C Type:</b> {{ editDefaultData()?.aircraftType }}</p>
+        <p><b>A/C Reg:</b> {{ editDefaultData()?.aircraftReg }}</p>
+      </div>
+
+      <!-- Giriş Alanı -->
+      <textarea
+        [(ngModel)]="rejectReason"
+        required
+        placeholder="Enter reason"
+        class="custom-textarea"
+        rows="5"
+        maxlength="100"
+      ></textarea>
+
+      <!-- Footer Alanı -->
+      <div class="popup-footer">
+        <button
+          pButton
+          type="button"
+          label="Submit"
+          [disabled]="rejectReason.length == 0"
+          class="submit-button"
+          (click)="onSubmitRejectReason()"
+        ></button>
+      </div>
+    </div>
+  </p-dialog>
 </main>

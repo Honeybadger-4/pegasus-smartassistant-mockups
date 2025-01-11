@@ -32,6 +32,7 @@
     "primeng": "^17.18.10",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "ua-parser-js": "^2.0.0",
     "zone.js": "~0.14.10"
   },
   "devDependencies": {
@@ -41,6 +42,7 @@
     "@types/express": "^4.17.17",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",
+    "@types/ua-parser-js": "^0.7.39",
     "angular-eslint": "18.4.2",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.15.0",

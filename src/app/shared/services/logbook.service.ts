@@ -4,10 +4,14 @@ import { map, Observable } from 'rxjs';
 
 import { ILogbookStatusListResponse } from '@shared/models/logbook-status-list-response.model';
 import { ILogbookCrewListResponse } from '@shared/models/logbook-crew-list-response.model';
-import { IDetailedListResponse } from '@shared/models/detailed-list-response.model';
+import {
+  IDetailedListContentData,
+  IDetailedListResponse,
+} from '@shared/models/detailed-list-response.model';
 import { IDetailedListRequest } from '@shared/models/detailed-list-request.model';
 import { IHttpResponseModel } from '@shared/models/http-response.model';
 import { environment } from '@environments/environment';
+import { ILogbookEditRequest } from '@shared/models/logbook-edit-request.model';
 
 @Injectable({
   providedIn: 'root',
@@ -73,6 +77,22 @@ export class LogbookService {
 
     return this.http
       .put<IHttpResponseModel>(apiUrl, null)
+      .pipe(map((response) => response.data));
+  }
+
+  putEdit(requestBody: ILogbookEditRequest) {
+    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/edit`;
+
+    return this.http
+      .put<IHttpResponseModel>(apiUrl, requestBody)
+      .pipe(map((response) => response.data));
+  }
+
+  getLogByLogId(logId: number): Observable<IDetailedListContentData> {
+    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/${logId}`;
+
+    return this.http
+      .get<IHttpResponseModel>(apiUrl)
       .pipe(map((response) => response.data));
   }
 }

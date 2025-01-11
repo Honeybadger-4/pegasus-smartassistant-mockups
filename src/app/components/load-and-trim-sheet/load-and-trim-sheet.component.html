@@ -14,8 +14,9 @@
       class="content-container"
       *ngIf="loadAndTrimSheetData()?.loadAndTrimSheet"
     >
-      <!-- PREPARED BY-CHECKED BY-APPROVED BY-EDNO  -->
-      <div class="flex items-center gap-5">
+      <!-- ROW - 1  -->
+      <section class="flex items-center gap-5">
+        <!-- PREPARED BY -->
         <div>
           <p>PREPARED BY</p>
           <p>
@@ -25,6 +26,7 @@
           </p>
         </div>
 
+        <!-- CHECKED BY -->
         <div>
           <p>CHECKED BY</p>
           <p>
@@ -34,6 +36,7 @@
           </p>
         </div>
 
+        <!-- APPROVED BY -->
         <div>
           <p>APPROVED BY</p>
           <p>
@@ -43,6 +46,7 @@
           </p>
         </div>
 
+        <!-- EDNO -->
         <div>
           <p>EDNO</p>
           <p>
@@ -52,10 +56,11 @@
             }}
           </p>
         </div>
-      </div>
+      </section>
 
-      <!-- FROM/TO-FLIGHT-A/C-REG-A/C TYPE-VERSION-CREW-DATE-TIME -->
-      <div class="flex items-center gap-5 mt-10">
+      <!-- ROW - 2 -->
+      <section class="flex items-center gap-5 mt-10">
+        <!-- FROM/TO -->
         <div>
           <p>FROM/TO</p>
           <p>
@@ -75,6 +80,7 @@
           </p>
         </div>
 
+        <!-- FLIGHT -->
         <div>
           <p>FLIGHT</p>
           <p>
@@ -85,6 +91,7 @@
           </p>
         </div>
 
+        <!-- A/C-REG -->
         <div>
           <p>A/C-REG</p>
           <p>
@@ -95,6 +102,7 @@
           </p>
         </div>
 
+        <!-- A/C TYPE -->
         <div>
           <p>A/C TYPE</p>
           <p>
@@ -105,6 +113,7 @@
           </p>
         </div>
 
+        <!-- VERSION -->
         <div>
           <p>VERSION</p>
           <p>
@@ -115,6 +124,7 @@
           </p>
         </div>
 
+        <!-- CREW -->
         <div>
           <p>CREW</p>
           <p>
@@ -125,6 +135,7 @@
           </p>
         </div>
 
+        <!-- DATE- TIME -->
         <div>
           <p>DATE- TIME</p>
           <p>
@@ -134,36 +145,27 @@
             }}
           </p>
         </div>
-      </div>
+      </section>
 
-      <!-- WEIGHT-DISTRIBUTION -->
-      <div class="mt-10">
-        <div class="grid grid-cols-12 gap-10 mt-4">
-          <div class="col-span-3">
+      <!-- ROW - 3 -->
+      <section class="mt-10">
+        <div class="flex items-center gap-10 mt-4">
+          <!-- LOAD IN COMPARTMENTS - PASSENGER/CABIN BAG -->
+          <div>
             <p></p>
-          </div>
-          <div class="col-span-1">
-            <p>WEIGHT</p>
-          </div>
-          <div class="col-span-2">
-            <p>DISTRIBUTION</p>
-          </div>
-        </div>
-
-        <!-- LOAD IN COMPARTMENTS -->
-        <div class="grid grid-cols-12 gap-10 mt-2">
-          <div class="col-span-3">
             <p>LOAD IN COMPARTMENTS</p>
+            <p>PASSENGER/CABIN BAG</p>
           </div>
-          <div class="col-span-1">
+
+          <!-- WEIGHT -->
+          <div>
+            <p>WEIGHT</p>
             <p>
               {{
                 loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.loadInCompartment
                   ?.destinations?.[0]?.totalHoldWeight || "-"
               }}
             </p>
-          </div>
-          <div class="col-span-2">
             <p>
               {{
                 loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.loadInCompartment
@@ -171,22 +173,16 @@
               }}
             </p>
           </div>
-        </div>
 
-        <!-- PASSENGER/CABIN BAG -->
-        <div class="grid grid-cols-12 gap-10 mt-4">
-          <div class="col-span-3">
-            <p>PASSENGER/CABIN BAG</p>
-          </div>
-          <div class="col-span-1">
+          <!-- DISTRIBUTION -->
+          <div>
+            <p>DISTRIBUTION</p>
             <p>
               {{
                 loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.passenger
                   ?.weight || "-"
               }}
             </p>
-          </div>
-          <div class="col-span-2">
             <p>
               {{
                 loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.passenger
@@ -200,122 +196,149 @@
             </p>
           </div>
         </div>
-      </div>
+      </section>
 
       <p>
         *******************************************************************************
       </p>
 
-      <div class="grid grid-cols-4 mt-1 items-center">
+      <!-- TOTAL TRAFFIC LOAD to LANDING WEIGHT ACTUAL -->
+      <section>
         <!-- TOTAL TRAFFIC LOAD -->
-        <p>TOTAL TRAFFIC LOAD</p>
-        <p>
-          {{
-            loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.totalTrafficLoad ||
-              "-"
-          }}
-        </p>
-        <p></p>
-        <p></p>
+        <div class="flex items-center justify-between w-[250px]">
+          <p>TOTAL TRAFFIC LOAD</p>
+          <p>
+            {{
+              loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.totalTrafficLoad ||
+                "-"
+            }}
+          </p>
+        </div>
 
         <!-- DRY OPERATING WEIGHT -->
-        <p>DRY OPERATING WEIGHT</p>
-        <p>{{ loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.dow || "-" }}</p>
-        <p></p>
-        <p></p>
+        <div class="flex items-center justify-between w-[250px]">
+          <p>DRY OPERATING WEIGHT</p>
+          <p>{{ loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.dow || "-" }}</p>
+        </div>
 
         <!-- ZERO FUEL WEIGHT ACTUAL -->
-        <p>ZERO FUEL WEIGHT ACTUAL</p>
-        <p>
-          {{
-            loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.zeroFuelWeight
-              ?.actual || "-"
-          }}
-        </p>
-        <p>
-          MAX
-          {{
-            loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.zeroFuelWeight
-              ?.max || "-"
-          }}
-        </p>
+        <div class="flex items-center gap-10">
+          <div class="flex items-center justify-between w-[250px]">
+            <p>ZERO FUEL WEIGHT ACTUAL</p>
+            <p>
+              {{
+                loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.zeroFuelWeight
+                  ?.actual || "-"
+              }}
+            </p>
+          </div>
 
-        <p>
-          {{
-            loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.zeroFuelWeight
-              ?.adj || "-"
-          }}
-        </p>
+          <!-- MAX -->
+          <div class="flex items-center gap-10">
+            <div class="flex items-center gap-10">
+              <span>MAX</span>
+              {{
+                loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.zeroFuelWeight
+                  ?.max || "-"
+              }}
+            </div>
+
+            <p>
+              {{
+                loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.zeroFuelWeight
+                  ?.adj || "-"
+              }}
+            </p>
+          </div>
+        </div>
 
         <!-- TAKE OFF FUEL -->
-        <p>TAKE OFF FUEL</p>
-        <p>
-          {{
-            loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.takeoffFuel || "-"
-          }}
-        </p>
-        <p></p>
-        <p></p>
+        <div class="flex items-center justify-between w-[250px]">
+          <p>TAKE OFF FUEL</p>
+          <p>
+            {{
+              loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.takeoffFuel || "-"
+            }}
+          </p>
+        </div>
 
         <!-- TAKE OFF WEIGHT ACTUAL -->
-        <p>TAKE OFF WEIGHT ACTUAL</p>
-        <p>
-          {{
-            loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.takeOffWeight
-              ?.actual || "-"
-          }}
-        </p>
-        <p>
-          MAX
-          {{
-            loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.takeOffWeight?.max ||
-              "-"
-          }}
-        </p>
+        <div class="flex items-center gap-10">
+          <div class="flex items-center justify-between w-[250px]">
+            <p>TAKE OFF WEIGHT ACTUAL</p>
+            <p>
+              {{
+                loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.takeOffWeight
+                  ?.actual || "-"
+              }}
+            </p>
+          </div>
+          <!-- MAX -->
+          <div class="flex items-center gap-10">
+            <div class="flex items-center gap-10">
+              <p>MAX</p>
+              {{
+                loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.takeOffWeight
+                  ?.max || "-"
+              }}
+            </div>
 
-        <p>
-          {{
-            loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.takeOffWeight?.adj ||
-              "-"
-          }}
-        </p>
+            <p>
+              {{
+                loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.takeOffWeight
+                  ?.adj || "-"
+              }}
+            </p>
+          </div>
+        </div>
 
         <!-- TRIP FUEL -->
-        <p>TRIP FUEL</p>
-        {{ loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.tripFuel || "-" }}
-        <p></p>
-        <p></p>
+        <div class="flex items-center justify-between w-[250px]">
+          <p>TRIP FUEL</p>
+          {{ loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.tripFuel || "-" }}
+        </div>
 
         <!-- LANDING WEIGHT ACTUAL -->
-        <p>LANDING WEIGHT ACTUAL</p>
-        <p>
-          {{
-            loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.landingWeight
-              ?.actual || "-"
-          }}
-        </p>
-        <p>
-          MAX
-          {{
-            loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.landingWeight?.max ||
-              "-"
-          }}
-        </p>
+        <div class="flex items-center gap-10">
+          <div class="flex items-center justify-between w-[250px]">
+            <p>LANDING WEIGHT ACTUAL</p>
+            <p>
+              {{
+                loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.landingWeight
+                  ?.actual || "-"
+              }}
+            </p>
+          </div>
 
-        <p>
-          {{
-            loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.landingWeight?.adj ||
-              "-"
-          }}
-        </p>
-      </div>
+          <!-- MAX -->
+          <div class="flex items-center gap-10">
+            <div class="flex items-center gap-10">
+              <p>MAX</p>
+              {{
+                loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.landingWeight
+                  ?.max || "-"
+              }}
+            </div>
 
-      <div class="grid grid-cols-2 gap-10 mt-10">
+            <p>
+              {{
+                loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.landingWeight
+                  ?.adj || "-"
+              }}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- BALANCE AND SEATING CONDITIONS to LAST MINUTE CHANGES -->
+      <section class="grid grid-cols-2 gap-10 mt-10">
         <!-- BALANCE AND SEATING CONDITIONS -->
         <div class="col-span-1">
           <p class="mb-2">BALANCE AND SEATING CONDITIONS</p>
-          <div class="flex mb-2">
-            <p class="mr-[180px]">DOI</p>
+
+          <!-- DOI -->
+          <div class="flex items-center justify-between w-[250px]">
+            <p>DOI</p>
             <p>
               {{
                 loadAndTrimSheetData()?.loadAndTrimSheet?.[0]
@@ -323,8 +346,10 @@
               }}
             </p>
           </div>
-          <div class="flex gap-20">
-            <div class="flex gap-2 mb-2">
+
+          <!-- LIZFW - MACZFW -->
+          <div class="grid grid-cols-2">
+            <div class="col-span-1 flex items-center gap-10">
               <p>LIZFW</p>
               <p>
                 {{
@@ -333,7 +358,8 @@
                 }}
               </p>
             </div>
-            <div class="flex gap-2 mb-2">
+
+            <div class="col-span-1 flex items-center gap-5">
               <p>MACZFW</p>
               <p>
                 {{
@@ -344,8 +370,9 @@
             </div>
           </div>
 
-          <div class="flex gap-20">
-            <div class="flex gap-2 mb-2">
+          <!-- LITOW - MACTOW -->
+          <div class="grid grid-cols-2">
+            <div class="col-span-1 flex items-center gap-10">
               <p>LITOW</p>
               <p>
                 {{
@@ -354,7 +381,8 @@
                 }}
               </p>
             </div>
-            <div class="flex gap-2 mb-2">
+
+            <div class="col-span-1 flex items-center gap-5">
               <p>MACTOW</p>
               <p>
                 {{
@@ -365,8 +393,9 @@
             </div>
           </div>
 
-          <div class="flex gap-20">
-            <div class="flex gap-2 mb-2">
+          <!-- LILAW - MACLAW -->
+          <div class="grid grid-cols-2">
+            <div class="col-span-1 flex items-center gap-10">
               <p>LILAW</p>
               <p>
                 {{
@@ -375,7 +404,8 @@
                 }}
               </p>
             </div>
-            <div class="flex gap-2 mb-2">
+
+            <div class="col-span-1 flex items-center gap-5">
               <p>MACLAW</p>
               <p>
                 {{
@@ -390,56 +420,70 @@
         <!-- LAST MINUTE CHANGES -->
         <div class="col-span-1">
           <p class="mb-4">LAST MINUTE CHANGES</p>
-          <div class="grid grid-cols-4">
-            <p>DEST</p>
-            <p>SPEC</p>
-            <p>CL/CPT</p>
-            <p>+ WEIGHT</p>
-          </div>
-          <div class="grid grid-cols-4">
-            <p>
-              {{
-                loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.lmc?.lmcJson?.[0]
-                  ?.Destination || "-"
-              }}
-            </p>
-            <div class="flex gap-2">
+          <div class="flex items-center gap-5">
+            <!-- DEST -->
+            <div>
+              <p>DEST</p>
               <p>
                 {{
                   loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.lmc
-                    ?.lmcJson?.[0]?.SpcAmount || "-"
-                }}
-              </p>
-              <p>
-                {{
-                  loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.lmc
-                    ?.lmcJson?.[0]?.SpcType || "-"
-                }}
-              </p>
-              <p>
-                {{
-                  loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.lmc
-                    ?.lmcJson?.[0]?.SpcSubtype || "-"
+                    ?.lmcJson?.[0]?.Destination || "-"
                 }}
               </p>
             </div>
-            <p>
-              {{
-                loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.lmc?.lmcJson?.[0]
-                  ?.ClCpt || "-"
-              }}
-            </p>
-            <p>
-              {{
-                loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.lmc?.lmcJson?.[0]
-                  ?.Weight || "-"
-              }}
-            </p>
+
+            <!-- SPEC -->
+            <div>
+              <p>SPEC</p>
+              <div class="flex items-center gap-2">
+                <p>
+                  {{
+                    loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.lmc
+                      ?.lmcJson?.[0]?.SpcAmount || "-"
+                  }}
+                </p>
+                <p>
+                  {{
+                    loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.lmc
+                      ?.lmcJson?.[0]?.SpcType || "-"
+                  }}
+                </p>
+                <p>
+                  {{
+                    loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.lmc
+                      ?.lmcJson?.[0]?.SpcSubtype || "-"
+                  }}
+                </p>
+              </div>
+            </div>
+
+            <!-- CL/CPT -->
+            <div>
+              <p>CL/CPT</p>
+              <p>
+                {{
+                  loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.lmc
+                    ?.lmcJson?.[0]?.ClCpt || "-"
+                }}
+              </p>
+            </div>
+
+            <!-- + WEIGHT -->
+            <div>
+              <p>+ WEIGHT</p>
+              <p>
+                {{
+                  loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.lmc
+                    ?.lmcJson?.[0]?.Weight || "-"
+                }}
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
 
+    <!-- TODO : Bu alan neye karşılık geliyor? -->
     <div class="flex gap-4">
       <p>
         {{
@@ -454,6 +498,7 @@
       </p>
     </div>
 
+    <!-- SEATING -->
     <div>
       <p>SEATING</p>
       {{
@@ -461,6 +506,7 @@
       }}
     </div>
 
+    <!-- UNDERLOAD -->
     <div class="flex gap-4">
       <p>UNDERLOAD</p>
       <p>
@@ -473,37 +519,35 @@
 
     <p>*</p>
 
-    <div class="mt-10">
+    <!-- LOAD MESSAGE AND CAPTAIN'S INFORMATION -->
+    <section class="mt-10">
       <p class="mb-4">LOAD MESSAGE AND CAPTAIN'S INFORMATION</p>
 
       <!-- TAXI FUEL -->
-      <div class="grid grid-cols-2 gap-10 mt-4">
-        <div class="flex justify-between">
-          <p>TAXI FUEL</p>
-          <p>
-            {{
-              loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.loadMessage
-                ?.taxiFuel || "-"
-            }}
-          </p>
-        </div>
+      <div class="flex items-center justify-between w-[250px]">
+        <p>TAXI FUEL</p>
+        <p>
+          {{
+            loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.loadMessage
+              ?.taxiFuel || "-"
+          }}
+        </p>
       </div>
 
       <!-- PAX WEIGHT USED -->
-      <div class="grid grid-cols-2 gap-10 mt-4">
-        <div class="flex justify-between">
-          <p>PAX WEIGHT USED</p>
-          <p>
-            {{
-              loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.lmc?.ldmJson
-                ?.PaxWeightUsed || "-"
-            }}
-          </p>
-        </div>
+      <div class="flex items-center justify-between w-[250px]">
+        <p>PAX WEIGHT USED</p>
+        <p>
+          {{
+            loadAndTrimSheetData()?.loadAndTrimSheet?.[0]?.lmc?.ldmJson
+              ?.PaxWeightUsed || "-"
+          }}
+        </p>
       </div>
-    </div>
+    </section>
 
-    <div>
+    <!-- LDM -->
+    <div class="mt-5">
       <p>LDM</p>
       <p>
         {{
@@ -512,6 +556,7 @@
       </p>
     </div>
 
+    <!-- SI -->
     <div>
       <p>SI</p>
       <p>
@@ -521,6 +566,7 @@
       </p>
     </div>
 
+    <!-- EET -->
     <div>
       <p>EET</p>
       <p></p>
