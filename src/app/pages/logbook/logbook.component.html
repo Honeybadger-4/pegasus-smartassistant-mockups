@@ -1,23 +1,130 @@
 <div id="LogbookComponent">
-  <section class="table-header-section">
-    <span class="header-title">Logbook</span>
-    <p-dropdown
-      [options]="yearOptions"
-      [(ngModel)]="selectedYear"
-      optionLabel="label"
-      optionValue="value"
-      class="custom-dropdown period-dropdown"
-      placeholder="Select Year"
-    ></p-dropdown>
-  </section>
+    <section class="table-header-section">
+      <span class="header-title">Logbook</span>
+      <p-dropdown
+        [options]="yearOptions"
+        [(ngModel)]="selectedYear"
+        optionLabel="label"
+        optionValue="value"
+        class="custom-dropdown period-dropdown"
+        placeholder="Select Year"
+      ></p-dropdown>
+    </section>
+    
+    <section>
+      <div class="grid grid-cols-12 lg:gap-20 md:gap-20">
+        <!-- BOEING -->
+         <div class="lg:col-span-4 md:col-span-6 col-span-12 mb-5">
+          <div class="chart-box-container">
+            <div class="chart-box-header">Boeing / {{selectedYear}}</div>
+  
+            <div class="line-chart-container mb-4">
+              <div class="flex items-center gap-2">
+                <p class="chart-label">Duty</p>
+                <p-slider [ngModel]="boeingData()?.totalDuties" class="duty-chart" styleClass="w-[230px] h-[5px]"/>
+              </div>
+              <p class="chart-description">{{boeingData()?.totalDuties}} duty</p>
+            </div>
+  
+            <div class="line-chart-container">
+              <div class="flex items-center gap-2">
+                <p class="chart-label">Time</p>
+                <p-slider [ngModel]="boeingData()?.totalHours" class="time-chart" styleClass="w-[230px] h-[5px]"/>
+              </div>
+              <p class="chart-description">{{boeingData()?.totalHours}} hours</p>
+            </div>
+  
+          </div>
+  
+          <div class="custom-card mt-5">
+            <app-custom-table 
+              [tableData]="boeingData()?.monthlyDetails"
+              [tableColumns]="columns"
+              [tableLoading]="tableLoading"
+              [isPaginator]="false"
+            />
 
-  <div class="grid grid-cols-12 gap-11">
-    <div class="lg:col-span-6 col-span-12">
-      <app-boeing-info></app-boeing-info>
-    </div>
+          </div>
+         </div>
+  
+         <!-- AIRBUS -->
+         <div class="lg:col-span-4 md:col-span-6 col-span-12 mb-5">
+          <div class="chart-box-container">
+            <div class="chart-box-header">Airbus / {{selectedYear}}</div>
+  
+            <div class="line-chart-container mb-4">
+              <div class="flex items-center gap-2">
+                <p class="chart-label">Duty</p>
+                <p-slider [ngModel]="airbusData()?.totalDuties" class="duty-chart" styleClass="w-[230px] h-[5px]"/>
+              </div>
+              <p class="chart-description">{{airbusData()?.totalDuties}} duty</p>
+            </div>
+  
+            <div class="line-chart-container">
+              <div class="flex items-center gap-2">
+                <p class="chart-label">Time</p>
+                <p-slider [ngModel]="airbusData()?.totalHours" class="time-chart" styleClass="w-[230px] h-[5px]"/>
+              </div>
+              <p class="chart-description">{{airbusData()?.totalHours}} hours</p>
+            </div>
+  
+          </div>
+  
+          <div class="custom-card mt-5">
+            <app-custom-table 
+              [tableData]="airbusData()?.monthlyDetails"
+              [tableColumns]="columns"
+              [tableLoading]="tableLoading"
+              [isPaginator]="false"
+            />
 
-    <div class="lg:col-span-6 col-span-12">
-      <app-airbus-info></app-airbus-info>
-    </div>
-  </div>
+          </div>
+         </div>
+          <!-- TRAINING -->
+          <div class="lg:col-span-4 md:col-span-6 col-span-12 mb-5">
+            <div class="chart-box-container">
+              <div class="chart-box-header">Training / {{selectedYear}}</div>
+    
+              <div class="line-chart-container mb-4">
+                <div class="flex items-center gap-2">
+                  <p class="chart-label">Duty</p>
+                  <p-slider [ngModel]="trainingData()?.totalTrainings" class="duty-chart" styleClass="w-[230px] h-[5px]"/>
+                </div>
+                <p class="chart-description">{{trainingData()?.totalTrainings}} duty</p>
+              </div>
+    
+              <div class="line-chart-container">
+                <div class="flex items-center gap-2">
+                  <p class="chart-label">Time</p>
+                  <p-slider [ngModel]="trainingData()?.totalHours" class="time-chart" styleClass="w-[230px] h-[5px]"/>
+                </div>
+                <p class="chart-description">{{trainingData()?.totalHours}} hours</p>
+              </div>
+    
+            </div>
+    
+            <div class="custom-card mt-5">
+              <app-custom-table 
+                [tableData]="trainingData()?.monthlyDetails"
+                [tableColumns]="columns"
+                [tableLoading]="tableLoading"
+                [isPaginator]="false"
+              />
+            </div>
+           </div>
+  
+      </div>
+    </section>
 </div>
+
+<ng-template #monthColumnsTemplate let-rowData="rowData">
+  <span>{{rowData.yearMonth | date: 'MMMM'}}</span>
+</ng-template>
+
+<ng-template #dutyColumnsTemplate let-rowData="rowData">
+  <span>{{rowData.dutyCount}} / {{rowData.totalHours}} hours</span>
+</ng-template>
+
+<ng-template #linkedNextPageTemplate let-rowData="rowData">
+  <i class="pi pi-arrow-right cursor-pointer" (click)="onNextPage(rowData)"></i>
+</ng-template>

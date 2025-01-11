@@ -12,6 +12,7 @@ import { IDetailedListRequest } from '@shared/models/detailed-list-request.model
 import { IHttpResponseModel } from '@shared/models/http-response.model';
 import { environment } from '@environments/environment';
 import { ILogbookEditRequest } from '@shared/models/logbook-edit-request.model';
+import { ILogbookSummaryResponse } from '@shared/models/logbook-summary-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,12 @@ import { ILogbookEditRequest } from '@shared/models/logbook-edit-request.model';
 export class LogbookService {
   http = inject(HttpClient);
   baseUrl = environment.baseApi;
+
+  getLogbookSummary(year: number): Observable<ILogbookSummaryResponse> {
+    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/logbook-summary?year=${year}`
+
+    return this.http.get<IHttpResponseModel>(apiUrl).pipe(map((response) => response.data));
+  }
 
   getCrewList(
     yearMonth: string,
