@@ -133,6 +133,10 @@
 </main>
 
 <!-- Table Cell Templates -->
+<ng-template #updatedDateCellBodyTemplate let-rowData="rowData">
+  {{ updatedDateTemplate(rowData) }}
+</ng-template>
+
 <ng-template #previewCellBodyTemplate let-rowData="rowData">
   <i
     class="pi pi-eye cursor-pointer"

@@ -67,6 +67,8 @@ import moment from 'moment';
 })
 export class LogbookDetailComponent {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
+  @ViewChild('updatedDateCellBodyTemplate', { static: true })
+  updatedDateCellBodyTemplate!: TemplateRef<any>;
   @ViewChild('previewCellBodyTemplate', { static: true })
   previewCellBodyTemplate!: TemplateRef<any>;
   @ViewChild('editableCellBodyTemplate', { static: true })
@@ -131,9 +133,13 @@ export class LogbookDetailComponent {
       { field: 'arrival', header: 'Arrival' },
       { field: 'arrTime', header: 'Arrival Time' },
       { field: 'totalTime', header: 'Total Time' },
-      { field: 'updateDate', header: 'Update Date' },
-      { field: 'comment', header: 'Comment' },
-      { field: 'reviewedBy', header: 'Reviewed By' },
+      {
+        field: 'updatedDate',
+        header: 'Update Date',
+        template: this.updatedDateCellBodyTemplate,
+      },
+      { field: 'uploadReason', header: 'Comment' },
+      { field: 'lastReviewedAdmin', header: 'Reviewed By' },
       { field: 'status', header: 'Status' },
       { field: '', header: '', template: this.previewCellBodyTemplate },
       { field: '', header: '', template: this.editableCellBodyTemplate },
@@ -307,9 +313,19 @@ export class LogbookDetailComponent {
     return dateFormat;
   }
 
-  goToLogBookDetailEditPage(data: any) {
+  updatedDateTemplate(rowData: IDetailedListContentData) {
+    let dateFormat = '';
+
+    if (rowData.updatedDate) {
+      dateFormat = moment(rowData.updatedDate).format('DD/MM/YYYY hh:mm');
+    }
+
+    return dateFormat;
+  }
+
+  goToLogBookDetailEditPage(data: IDetailedListContentData) {
     this.router.navigate(['logbook/logbook-detail-edit'], {
-      state: { data: data },
+      state: { logId: data.logId },
     });
   }
 

@@ -32,7 +32,7 @@ export interface IDetailedListContentData {
   companyId: number;
   crewName: string;
   date: string;
-  flightVersion: string;
+  dutyType: string;
   aircraftType: string;
   aircraftReg: string;
   departure: string;
@@ -54,4 +54,11 @@ export interface IDetailedListContentData {
   nightTime: string | null;
   ifrTime: string | null;
   engineType: string;
+  instructor: string;
+  remarksAndEndorsements: string;
+  canReassign: boolean;
+  lastReviewedAdmin: string;
+  updatedDate: string;
+  uploadReason: string;
+  chamges: [];
 }
