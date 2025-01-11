@@ -1,10 +1,4 @@
-import {
-  Component,
-  inject,
-  signal,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
+import { Component, inject, signal, ViewChild } from '@angular/core';
 import { DropdownModule } from 'primeng/dropdown';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
@@ -45,22 +39,22 @@ import moment from 'moment';
 })
 export class FuelOrderComponent {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
+
+  formBuilder = inject(FormBuilder);
+  fuelOrderService = inject(FuelOrderService);
+  filterFormGroup!: FormGroup;
   columns!: Column[];
   dateRange: Date[] = [];
-  formBuilder = inject(FormBuilder);
-
-  fuelOrderService = inject(FuelOrderService);
-  fuelOrderHistoryData = signal<IFuelOrderResponse | null>(null);
-  fuelOrderHistoryTableData = signal<IFuelOrderTableData[]>([]);
   currentPage = 0;
   currentRows = 20;
-  filterFormGroup!: FormGroup;
+
+  fuelOrderHistoryData = signal<IFuelOrderResponse | null>(null);
+  fuelOrderHistoryTableData = signal<IFuelOrderTableData[]>([]);
 
   ngOnInit() {
     this.builder();
     this.defineColumns();
     const today = moment();
-    this.dateRangeDefaultValue();
   }
   builder() {
     this.filterFormGroup = this.formBuilder.group({
@@ -74,6 +68,7 @@ export class FuelOrderComponent {
 
   defineColumns() {
     this.columns = [
+      { field: 'date', header: 'Date' },
       { field: 'aircraftReg', header: 'Aircraft' },
       { field: 'flightNo', header: 'Flight No' },
       { field: 'depPort', header: 'Departure' },
@@ -81,16 +76,10 @@ export class FuelOrderComponent {
       { field: 'depDateTime', header: 'Dep Date/Time' },
       { field: 'arrDateTime', header: 'Arr Date/Time' },
       { field: 'amount', header: 'Amount' },
+      { field: 'user', header: 'User' },
+      { field: 'orderDateTime', header: 'Order Date / Time' },
+
     ];
-  }
-
-  dateRangeDefaultValue() {
-    const today = moment();
-    return [today.clone().subtract(7, 'days').toDate(), today.clone().toDate()];
-  }
-
-  onFilterSubmit() {
-    this.getFuelOrder();
   }
 
   getFuelOrder() {
@@ -134,6 +123,14 @@ export class FuelOrderComponent {
           console.error(error);
         },
       });
+  }
+  onFilterSubmit() {
+    this.getFuelOrder();
+  }
+
+  dateRangeDefaultValue() {
+    const today = moment();
+    return [today.clone().subtract(7, 'days').toDate(), today.clone().toDate()];
   }
 
   onDateRangeChange(event: Event) {
