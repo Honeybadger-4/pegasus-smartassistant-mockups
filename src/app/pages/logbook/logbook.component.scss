@@ -16,7 +16,7 @@
   }
 
   .chart-box-container {
-    border: 0.5px solid #9A9A9A;
+    border: 0.5px solid #9a9a9a;
     border-radius: 5px;
     height: 117px;
     padding: 10px 20px 10px 20px;
@@ -27,16 +27,17 @@
       color: #444444;
       margin-bottom: 15px;
     }
-    
+
     .line-chart-container {
       display: flex;
       justify-content: space-between;
       align-items: center;
 
-      .chart-label, .chart-description {
+      .chart-label,
+      .chart-description {
         font-size: 12px;
         font-weight: 300;
-        color: #4F4F4F;
+        color: #4f4f4f;
       }
     }
   }
@@ -49,7 +50,7 @@
         .duty-chart {
           .p-slider {
             .p-slider-range {
-              background-color: #9F86C0;
+              background-color: #9f86c0;
             }
           }
         }
@@ -57,12 +58,13 @@
         .time-chart {
           .p-slider {
             .p-slider-range {
-              background-color: #4F772D;
+              background-color: #4f772d;
             }
           }
         }
 
-        .duty-chart, .time-chart {
+        .duty-chart,
+        .time-chart {
           .p-slider {
             background-color: transparent;
             cursor: default;
@@ -71,7 +73,7 @@
             .p-slider-range {
               border-radius: 20px;
             }
-      
+
             .p-slider-handle {
               display: none;
             }

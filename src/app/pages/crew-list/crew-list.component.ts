@@ -26,7 +26,6 @@ import { SliderModule } from 'primeng/slider';
 import { PanelModule } from 'primeng/panel';
 import { MenuItem } from 'primeng/api';
 
-
 @Component({
   selector: 'app-logbook',
   standalone: true,
@@ -38,13 +37,14 @@ import { MenuItem } from 'primeng/api';
     IconFieldModule,
     InputIconModule,
     SliderModule,
-    PanelModule
+    PanelModule,
   ],
   templateUrl: './crew-list.component.html',
   styleUrl: './crew-list.component.scss',
 })
 export class CrewListComponent {
-  @ViewChild('linkedNextPageTemplate', {static: true}) linkedNextPageTemplate!: TemplateRef<any>;
+  @ViewChild('linkedNextPageTemplate', { static: true })
+  linkedNextPageTemplate!: TemplateRef<any>;
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
   @ViewChild('searchInput', { static: true }) searchInput!: ElementRef;
 
@@ -61,7 +61,7 @@ export class CrewListComponent {
   currentRows = 20;
   crewListData = signal<ILogbookCrewListResponse | null>(null);
   crewListContentData = signal<ILogbookCrewListContentData[]>([]);
-  logbookDashboardData = signal<any>(null); 
+  logbookDashboardData = signal<any>(null);
 
   ngOnInit() {
     this.logbookDashboardData.set(history.state.data);

@@ -1,4 +1,10 @@
-import { Component, inject, signal, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -19,22 +25,27 @@ import { SliderModule } from 'primeng/slider';
     CommonModule,
     FormsModule,
     SliderModule,
-    CustomTableComponent
+    CustomTableComponent,
   ],
   templateUrl: './logbook.component.html',
   styleUrl: './logbook.component.scss',
 })
 export class LogbookComponent {
-  @ViewChild('monthColumnsTemplate', {static: true}) monthColumnsTemplate!: TemplateRef<any>;
-  @ViewChild('dutyColumnsTemplate', {static: true}) dutyColumnsTemplate!: TemplateRef<any>;
-  @ViewChild('linkedNextPageTemplate', {static: true}) linkedNextPageTemplate!: TemplateRef<any>;
-  router = inject(Router)
+  @ViewChild('monthColumnsTemplate', { static: true })
+  monthColumnsTemplate!: TemplateRef<any>;
+  @ViewChild('dutyColumnsTemplate', { static: true })
+  dutyColumnsTemplate!: TemplateRef<any>;
+  @ViewChild('linkedNextPageTemplate', { static: true })
+  linkedNextPageTemplate!: TemplateRef<any>;
+  router = inject(Router);
   logbookService = inject(LogbookService);
 
   logbookSummaryData = signal<ILogbookSummaryResponse | null>(null);
   boeingData = signal<ILogbookSummaryResponse['boeingSummary'] | null>(null);
   airbusData = signal<ILogbookSummaryResponse['airbusSummary'] | null>(null);
-  trainingData = signal<ILogbookSummaryResponse['trainingSummary'] | null>(null);
+  trainingData = signal<ILogbookSummaryResponse['trainingSummary'] | null>(
+    null,
+  );
   yearOptions = signal<number[] | undefined>(undefined);
 
   columns!: Column[];
@@ -48,10 +59,18 @@ export class LogbookComponent {
 
   defineColumns() {
     this.columns = [
-      {field: "yearMonth", header: "Month", template: this.monthColumnsTemplate},
-      {field: "dutyCount", header: "Duty", template: this.dutyColumnsTemplate},
-      {field: "", header: "", template: this.linkedNextPageTemplate}
-    ]
+      {
+        field: 'yearMonth',
+        header: 'Month',
+        template: this.monthColumnsTemplate,
+      },
+      {
+        field: 'dutyCount',
+        header: 'Duty',
+        template: this.dutyColumnsTemplate,
+      },
+      { field: '', header: '', template: this.linkedNextPageTemplate },
+    ];
   }
 
   getLogbookSummary() {
@@ -66,8 +85,8 @@ export class LogbookComponent {
       },
       error: (error) => {
         this.tableLoading = false;
-      }
-    })
+      },
+    });
   }
 
   getAvailableYears() {
@@ -77,9 +96,7 @@ export class LogbookComponent {
         this.selectedYear = response[0];
         this.getLogbookSummary();
       },
-      error: (error) => {
-
-      }
+      error: (error) => {},
     });
   }
 

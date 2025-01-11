@@ -2,7 +2,10 @@
   <div class="flex items-center justify-between">
     <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" />
 
-    <p-iconField iconPosition="right" class="custom-icon-field w-[234px] h-[24px]">
+    <p-iconField
+      iconPosition="right"
+      class="custom-icon-field w-[234px] h-[24px]"
+    >
       <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
       <input
         type="text"
@@ -18,28 +21,46 @@
 
   <section class="chart-panel-section mt-5">
     <p-panel
-      [header]="logbookDashboardData()?.logbookType + ' / ' + (logbookDashboardData()?.yearMonth | date: 'MMMM-YYYY')"
+      [header]="
+        logbookDashboardData()?.logbookType +
+        ' / ' +
+        (logbookDashboardData()?.yearMonth | date: 'MMMM-YYYY')
+      "
       [toggleable]="true"
       collapsed="true"
       iconPos="start"
       expandIcon="pi pi-angle-up"
       collapseIcon="pi pi-angle-down"
     >
-    <div class="grid grid-cols-12">
-      <div class="line-chart-container lg:col-span-6 col-span-12">
+      <div class="grid grid-cols-12">
+        <div class="line-chart-container lg:col-span-6 col-span-12">
           <p class="chart-label">Duty</p>
-          <p-slider [ngModel]="logbookDashboardData()?.dutyCount" class="duty-chart" styleClass="lg:w-[565px] sm:w-full h-[5px]"/>
-          <p class="chart-description">{{logbookDashboardData()?.dutyCount}} duty</p>
-      </div>
+          <p-slider
+            [ngModel]="logbookDashboardData()?.dutyCount"
+            class="duty-chart"
+            styleClass="lg:w-[565px] sm:w-full h-[5px]"
+          />
+          <p class="chart-description">
+            {{ logbookDashboardData()?.dutyCount }} duty
+          </p>
+        </div>
 
-      <div class="line-chart-container lg:col-span-6 col-span-12 lg:flex lg:justify-end">
-        <div>
-          <p class="chart-label">Time</p>
-          <p-slider [ngModel]="logbookDashboardData()?.totalHours" class="time-chart" styleClass="lg:w-[565px] sm:w-full h-[5px]"/>
-          <p class="chart-description">{{logbookDashboardData()?.totalHours}} hours</p>
+        <div
+          class="line-chart-container lg:col-span-6 col-span-12 lg:flex lg:justify-end"
+        >
+          <div>
+            <p class="chart-label">Time</p>
+            <p-slider
+              [ngModel]="logbookDashboardData()?.totalHours"
+              class="time-chart"
+              styleClass="lg:w-[565px] sm:w-full h-[5px]"
+            />
+            <p class="chart-description">
+              {{ logbookDashboardData()?.totalHours }} hours
+            </p>
+          </div>
         </div>
       </div>
-    </div>
     </p-panel>
   </section>
 
@@ -54,5 +75,8 @@
 </div>
 
 <ng-template #linkedNextPageTemplate let-rowData="rowData">
-  <i class="pi pi-angle-right cursor-pointer" (click)="tableRowSelected(rowData)"></i>
+  <i
+    class="pi pi-angle-right cursor-pointer"
+    (click)="tableRowSelected(rowData)"
+  ></i>
 </ng-template>

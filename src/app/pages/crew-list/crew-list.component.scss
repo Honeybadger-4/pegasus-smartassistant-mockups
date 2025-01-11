@@ -3,12 +3,12 @@
     .line-chart-container {
       .chart-label {
         font-size: 12px;
-        color: #4F4F4F;
+        color: #4f4f4f;
       }
       .chart-description {
         font-size: 24px;
         font-weight: 300;
-        color: #4F4F4F;
+        color: #4f4f4f;
       }
     }
   }
@@ -25,37 +25,38 @@
       }
 
       .line-chart-container {
-          .duty-chart {
-            .p-slider {
-              .p-slider-range {
-                background-color: #9F86C0;
-              }
+        .duty-chart {
+          .p-slider {
+            .p-slider-range {
+              background-color: #9f86c0;
             }
           }
-  
-          .time-chart {
-            .p-slider {
-              .p-slider-range {
-                background-color: #4F772D;
-              }
+        }
+
+        .time-chart {
+          .p-slider {
+            .p-slider-range {
+              background-color: #4f772d;
             }
           }
-  
-          .duty-chart, .time-chart {
-            .p-slider {
-              background-color: #F5F5F5;
-              cursor: default;
-              pointer-events: none;
-  
-              .p-slider-range {
-                border-radius: 20px;
-              }
-        
-              .p-slider-handle {
-                display: none;
-              }
+        }
+
+        .duty-chart,
+        .time-chart {
+          .p-slider {
+            background-color: #f5f5f5;
+            cursor: default;
+            pointer-events: none;
+
+            .p-slider-range {
+              border-radius: 20px;
+            }
+
+            .p-slider-handle {
+              display: none;
             }
           }
+        }
       }
     }
   }

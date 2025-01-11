@@ -22,15 +22,19 @@ export class LogbookService {
   baseUrl = environment.baseApi;
 
   getLogbookSummary(year: number): Observable<ILogbookSummaryResponse> {
-    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/logbook-summary?year=${year}`
+    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/logbook-summary?year=${year}`;
 
-    return this.http.get<IHttpResponseModel>(apiUrl).pipe(map((response) => response.data));
+    return this.http
+      .get<IHttpResponseModel>(apiUrl)
+      .pipe(map((response) => response.data));
   }
 
   getAvailableYears(): Observable<number[]> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/available-years`;
 
-    return this.http.get<IHttpResponseModel>(apiUrl).pipe(map((response) => response.data));
+    return this.http
+      .get<IHttpResponseModel>(apiUrl)
+      .pipe(map((response) => response.data));
   }
 
   getCrewList(
