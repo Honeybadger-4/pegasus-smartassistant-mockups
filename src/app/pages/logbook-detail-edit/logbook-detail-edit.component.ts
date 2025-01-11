@@ -47,6 +47,8 @@ import { ToastModule } from 'primeng/toast';
 })
 export class LogbookDetailEditComponent implements OnInit {
   logbookService = inject(LogbookService);
+  formBuilder = inject(FormBuilder);
+  confirmationService = inject(ConfirmationService)
 
   breadcrumbItems: MenuItem[] = [
     { label: 'Logbook', route: '/logbook' },
@@ -62,14 +64,8 @@ export class LogbookDetailEditComponent implements OnInit {
   formDataLoading = signal<boolean>(false);
   isEditMode = signal<boolean>(false);
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private confirmationService: ConfirmationService,
-  ) {}
-
   ngOnInit() {
     this.logId = history.state.logId;
-    console.log(this.logId);
 
     this.getLogByLogId();
     this.builder();
@@ -115,8 +111,9 @@ export class LogbookDetailEditComponent implements OnInit {
 
     this.logbookService.getLogByLogId(this.logId).subscribe({
       next: (response) => {
-        this.editDefaultData.set(response.content[0]);
+        this.editDefaultData.set(response);
         this.formDataLoading.set(false);
+        this.builder();
       },
       error: (error) => {
         this.formDataLoading.set(false);

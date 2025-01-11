@@ -28,6 +28,24 @@
       color: #8e8e8e;
     }
 
+    .summary-container {
+      .summary-box {
+        .summary-title {
+          padding-left: 10px;
+          font-size: 14px;
+        }
+
+        .summary-value {
+          height: 40px;
+          background-color: #F5F5F5;
+          font-size: 14px;
+          display: flex;
+          align-items: center;
+          padding-left: 10px;
+        }
+      }
+    }
+
     .radio-button-container {
       display: flex;
       justify-content: space-between;

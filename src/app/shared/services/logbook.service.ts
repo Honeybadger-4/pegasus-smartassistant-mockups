@@ -4,7 +4,7 @@ import { map, Observable } from 'rxjs';
 
 import { ILogbookStatusListResponse } from '@shared/models/logbook-status-list-response.model';
 import { ILogbookCrewListResponse } from '@shared/models/logbook-crew-list-response.model';
-import { IDetailedListResponse } from '@shared/models/detailed-list-response.model';
+import { IDetailedListContentData, IDetailedListResponse } from '@shared/models/detailed-list-response.model';
 import { IDetailedListRequest } from '@shared/models/detailed-list-request.model';
 import { IHttpResponseModel } from '@shared/models/http-response.model';
 import { environment } from '@environments/environment';
@@ -85,8 +85,8 @@ export class LogbookService {
       .pipe(map((response) => response.data));
   }
 
-  getLogByLogId(logId: number): Observable<IDetailedListResponse> {
-    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/?logId=${logId}`;
+  getLogByLogId(logId: number): Observable<IDetailedListContentData> {
+    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/${logId}`;
 
     return this.http
       .get<IHttpResponseModel>(apiUrl)
