@@ -54,8 +54,12 @@ export class FuelOrderComponent {
   ngOnInit() {
     this.builder();
     this.defineColumns();
-    const today = moment();
+
+    // Sayfa yüklendiğinde varsayılan tarih aralığı ile API çağrısı
+    const [startDate, endDate] = this.dateRangeDefaultValue();
+    this.getFuelOrderByDefaultRange(startDate, endDate);
   }
+
   builder() {
     this.filterFormGroup = this.formBuilder.group({
       acReg: [''],
@@ -78,7 +82,6 @@ export class FuelOrderComponent {
       { field: 'amount', header: 'Amount' },
       { field: 'user', header: 'User' },
       { field: 'orderDateTime', header: 'Order Date / Time' },
-
     ];
   }
 
@@ -127,10 +130,33 @@ export class FuelOrderComponent {
   onFilterSubmit() {
     this.getFuelOrder();
   }
-
   dateRangeDefaultValue() {
-    const today = moment();
-    return [today.clone().subtract(7, 'days').toDate(), today.clone().toDate()];
+    const endDate = moment();
+    const startDate = moment().subtract(3, 'days');
+
+    return [startDate.toDate(), endDate.toDate()];
+  }
+
+  getFuelOrderByDefaultRange(startDate: Date, endDate: Date) {
+    const formattedStartDate = moment(startDate).format('YYYY-MM-DD');
+    const formattedEndDate = moment(endDate).format('YYYY-MM-DD');
+
+    this.fuelOrderService
+      .getFuelOrder(
+        this.currentPage,
+        this.currentRows,
+        formattedStartDate,
+        formattedEndDate,
+      )
+      .subscribe({
+        next: (response) => {
+          this.fuelOrderHistoryData.set(response);
+          this.fuelOrderHistoryTableData.set(response.content);
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
   }
 
   onDateRangeChange(event: Event) {
