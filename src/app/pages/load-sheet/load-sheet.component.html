@@ -1,6 +1,6 @@
 <main id="LoadSheetPage">
   <section class="table-header-section lg:flex block">
-        <!-- Header Title -->
+    <!-- Header Title -->
     <span class="header-title">Load Sheet</span>
 
     <!-- Filter Inputs and Dropdown -->
@@ -40,18 +40,17 @@
       <!-- Calendar -->
       <div class="lg:col-span-2 md:col-span-6 col-span-12">
         <p-calendar
-        [(ngModel)]="dateRange"
-        (ngModelChange)="onDateRangeChange($event)"
-        selectionMode="range"
-        [showIcon]="false"
-        [readonlyInput]="true"
-        placeholder="Start Date - End Date"
-        dateFormat="dd/mm/yy"
-        class="custom-calendar"
-      ></p-calendar>
+          [(ngModel)]="dateRange"
+          (ngModelChange)="onDateRangeChange($event)"
+          selectionMode="range"
+          [showIcon]="false"
+          [readonlyInput]="true"
+          placeholder="Start Date - End Date"
+          dateFormat="dd/mm/yy"
+          class="custom-calendar"
+        ></p-calendar>
       </div>
     </div>
-   
   </section>
 
   <section class="slider-section custom-card">

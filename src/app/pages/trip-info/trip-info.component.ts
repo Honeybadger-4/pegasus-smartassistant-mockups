@@ -21,7 +21,6 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 
-
 @Component({
   selector: 'app-trip-info',
   standalone: true,
@@ -34,7 +33,6 @@ import { InputTextModule } from 'primeng/inputtext';
     IconFieldModule,
     InputIconModule,
     InputTextModule,
-
   ],
   templateUrl: './trip-info.component.html',
   styleUrl: './trip-info.component.scss',
