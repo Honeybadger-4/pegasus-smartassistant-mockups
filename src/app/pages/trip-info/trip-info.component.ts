@@ -17,6 +17,10 @@ import {
   ITripInfoTableData,
 } from '@shared/models/trip-info-response.model';
 import moment from 'moment';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+
 
 @Component({
   selector: 'app-trip-info',
@@ -27,6 +31,10 @@ import moment from 'moment';
     DropdownModule,
     CustomTableComponent,
     CalendarModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+
   ],
   templateUrl: './trip-info.component.html',
   styleUrl: './trip-info.component.scss',
@@ -57,6 +65,7 @@ export class TripInfoComponent {
 
   defineColumn() {
     this.columns = [
+      { field: 'date', header: 'Date' },
       { field: 'aircraftReg', header: 'Aircraft' },
       { field: 'flightNo', header: 'Flight No' },
       { field: 'depPort', header: 'Departure' },

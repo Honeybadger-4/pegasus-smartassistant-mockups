@@ -19,6 +19,9 @@ import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/dialog';
 import { LoadAndTrimSheetComponent } from '../../components/load-and-trim-sheet/load-and-trim-sheet.component';
 import moment from 'moment';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-load-sheet',
@@ -31,6 +34,9 @@ import moment from 'moment';
     CalendarModule,
     LoadAndTrimSheetComponent,
     DialogModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
   ],
   templateUrl: './load-sheet.component.html',
   styleUrl: './load-sheet.component.scss',
@@ -67,6 +73,7 @@ export class LoadSheetComponent {
 
   defineColumn() {
     this.columns = [
+      { field: 'date', header: 'Date' },
       { field: 'aircraftReg', header: 'Aircraft' },
       { field: 'flightNo', header: 'Flight No' },
       { field: 'depPort', header: 'Departure' },
