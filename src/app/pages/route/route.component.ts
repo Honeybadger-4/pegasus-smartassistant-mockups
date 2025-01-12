@@ -183,7 +183,7 @@ export class RouteComponent {
   // Define Columns Operation
   defineMainColumns() {
     this.mainCols = [
-      { field: 'aircraft', header: 'Aircraft' },
+      { field: 'aircraftReg', header: 'Aircraft' },
       { field: 'flightNo', header: 'Flight No' },
       { field: 'depPort', header: 'Dep Port' },
       { field: 'arrPort', header: 'Arr Port' },
@@ -194,7 +194,6 @@ export class RouteComponent {
       { field: 'alternateRoute', header: 'Alternate Route' },
     ];
   }
-
   defineDetailsColumns() {
     this.detailsCols = [
       { field: 'airway', header: 'Airway' },
