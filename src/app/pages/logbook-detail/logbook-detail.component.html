@@ -75,7 +75,7 @@
       [tableColumns]="columns"
       dataKeyId="logId"
       selectionMode="multiple"
-      [totalRecords]="logbookDetailData()?.totalElements || 0"
+      [totalRecords]="logbookDetailData()?.logbookDetails?.totalElements || 0"
       [tableLoading]="tableLoading"
       (selectedCheckbox)="selectionCheckbox($event)"
       (pageEvent)="onPageChange($event)"
