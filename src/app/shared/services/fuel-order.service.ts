@@ -26,10 +26,10 @@ export class FuelOrderService {
     const apiUrl = `${this.baseUrl}/api/v1/admin/fuel-orders`;
 
     let params = new HttpParams()
-    .set('page', page)
-    .set('size', size)
-    .set('startDate', startDate)
-    .set('endDate', endDate)
+      .set('page', page)
+      .set('size', size)
+      .set('startDate', startDate)
+      .set('endDate', endDate);
 
     if (acReg) {
       params = params.set('acReg', acReg);
