@@ -28,14 +28,6 @@
         </p-iconField>
       </div>
 
-      <!-- User Input -->
-      <div class="lg:col-span-2 md:col-span-6 col-span-12">
-        <p-iconField iconPosition="right" class="custom-icon-field">
-          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
-          <input type="text" pInputText placeholder="User" />
-        </p-iconField>
-      </div>
-
       <!-- Calendar -->
       <div class="lg:col-span-2 md:col-span-6 col-span-12">
         <p-calendar
@@ -44,8 +36,17 @@
           [showIcon]="false"
           placeholder="Start Date - End Date"
           dateFormat="dd/mm/yy"
-          class="custom-icon-field inline-block w-full"
+          class="custom-calendar"
+          [readonlyInput]="true"
         ></p-calendar>
+      </div>
+
+      <!-- User Input -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-iconField iconPosition="right" class="custom-icon-field">
+          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+          <input type="text" pInputText placeholder="User" />
+        </p-iconField>
       </div>
     </div>
   </div>

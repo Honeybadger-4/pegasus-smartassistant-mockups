@@ -16,11 +16,22 @@ import {
 } from '@shared/models/login-info-response.model';
 import { CalendarModule } from 'primeng/calendar';
 import moment from 'moment';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-user-login-history',
   standalone: true,
-  imports: [CommonModule, FormsModule, CustomTableComponent, CalendarModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    CustomTableComponent,
+    CalendarModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+  ],
   templateUrl: './user-login-history.component.html',
   styleUrl: './user-login-history.component.scss',
 })

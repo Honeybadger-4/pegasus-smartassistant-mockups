@@ -545,7 +545,7 @@ export class FlightInfoComponent {
 
   defineLoadSheetColums() {
     this.loadSheetCols = [
-      { field: 'preparedBy', header: 'Prepared Byy' },
+      { field: 'preparedBy', header: 'Prepared By' },
       { field: 'checkedBy', header: 'Checked By' },
       { field: 'approvedBy', header: 'Approved By' },
       { field: 'lmc', header: 'LMC' },
