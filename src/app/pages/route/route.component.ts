@@ -55,70 +55,9 @@ import moment from 'moment';
 export class RouteComponent {
   @ViewChild('expandableTableDocumentsIconTemplate', { static: true })
   expandableTableDocumentsIconTemplate!: TemplateRef<any>;
+
   formBuilder = inject(FormBuilder);
   routeService = inject(RouteService);
- routeData = [
-    {
-      id: '0',
-      aircraft: 'TC-A329',
-      flightNo: 'PC2009',
-      depPort: 'AYT',
-      arrPort: 'DUS',
-      depDateTime: '22/07/2025 13:30',
-      arrDateTime: '22/07/2025 16:30',
-      user: 'SAWBNCS1',
-      gpsLossForm: '+',
-      alternateRoute: '-',
-    },
-    {
-      id: '1',
-      aircraft: 'TC-A329',
-      flightNo: 'PC2004',
-      depPort: 'AYT',
-      arrPort: 'DUS',
-      depDateTime: '23/07/2025 13:30',
-      arrDateTime: '23/07/2025 16:30',
-      user: 'SAWBNCS2',
-      gpsLossForm: '+',
-      alternateRoute: '-',
-    },
-    {
-      id: '2',
-      aircraft: 'TC-A329',
-      flightNo: 'PC2009',
-      depPort: 'AYT',
-      arrPort: 'DUS',
-      depDateTime: '22/07/2025 13:30',
-      arrDateTime: '22/07/2025 16:30',
-      user: 'SAWBNCS1',
-      gpsLossForm: '+',
-      alternateRoute: 'LTBJ',
-    },
-    {
-      id: '3',
-      aircraft: 'TC-A329',
-      flightNo: 'PC2009',
-      depPort: 'AYT',
-      arrPort: 'DUS',
-      depDateTime: '22/07/2025 13:30',
-      arrDateTime: '22/07/2025 16:30',
-      user: 'SAWBNCS1',
-      gpsLossForm: '+',
-      alternateRoute: 'LTBJ',
-    },
-    {
-      id: '4',
-      aircraft: 'TC-A329',
-      flightNo: 'PC2009',
-      depPort: 'AYT',
-      arrPort: 'DUS',
-      depDateTime: '22/07/2025 13:30',
-      arrDateTime: '22/07/2025 16:30',
-      user: 'SAWBNCS1',
-      gpsLossForm: '+',
-      alternateRoute: 'LTBJ',
-    },
-  ];
 
   detailsData = [
     {
@@ -199,12 +138,10 @@ export class RouteComponent {
     },
   ];
 
-  dateRange: Date[] = [];
   filterFormGroup!: FormGroup;
-
-  // Columns Variable
   mainCols!: Column[];
   detailsCols!: Column[];
+  dateRange: Date[] = [];
   expandedRows = {};
   currentPage = 0;
   currentRows = 20;
@@ -225,7 +162,7 @@ export class RouteComponent {
       flightNo: [''],
       depPort: [''],
       arrPort: [''],
-      user: [''],
+      username: [''],
       dateRange: [this.dateRangeDefaultValue()],
     });
   }
@@ -275,7 +212,7 @@ export class RouteComponent {
     this.tableLoading = true;
 
     const formValues = this.filterFormGroup.value;
-    const user = formValues.user?.trim() || null;
+    const username = formValues.username?.trim() || null;
     const flightNo = formValues.flightNo?.trim() || null;
     const depPort = formValues.depPort?.trim() || null;
     const arrPort = formValues.arrPort?.trim() || null;
@@ -299,7 +236,7 @@ export class RouteComponent {
         this.currentRows,
         startDate,
         endDate,
-        user,
+        username,
         flightNo,
         depPort,
         arrPort,

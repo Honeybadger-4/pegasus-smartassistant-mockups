@@ -29,14 +29,14 @@ export interface IRouteResponse {
 
 export interface IRouteTableData {
   flightPlanId: number;
-  legIsn: number| null;
+  legIsn: number | null;
   aircraftReg: string;
   flightNo: string;
   depPort: string;
   arrPort: string;
   depDateTime: string;
   arrDateTime: string;
-  user: string | null; 
-  gpsLossForm: number | null; 
-  alternateRoute: string | null; 
+  user: string | null;
+  gpsLossForm: number | null;
+  alternateRoute: string | null;
 }
