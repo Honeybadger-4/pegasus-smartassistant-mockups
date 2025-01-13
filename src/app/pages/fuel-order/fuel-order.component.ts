@@ -1,7 +1,4 @@
 import { Component, inject, signal, ViewChild } from '@angular/core';
-import { DropdownModule } from 'primeng/dropdown';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -9,15 +6,20 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { InputTextModule } from 'primeng/inputtext';
-import { Column } from '@shared/models/columns';
+
 import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
-import { CalendarModule } from 'primeng/calendar';
 import { FuelOrderService } from '@shared/services/fuel-order.service';
+import { Column } from '@shared/models/columns';
 import {
   IFuelOrderResponse,
   IFuelOrderTableData,
 } from '@shared/models/fuel-order-response.model';
+
+import { DropdownModule } from 'primeng/dropdown';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { CalendarModule } from 'primeng/calendar';
+import { InputTextModule } from 'primeng/inputtext';
 import moment from 'moment';
 
 @Component({
@@ -39,14 +41,15 @@ import moment from 'moment';
 })
 export class FuelOrderComponent {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
-
   formBuilder = inject(FormBuilder);
   fuelOrderService = inject(FuelOrderService);
+
   filterFormGroup!: FormGroup;
   columns!: Column[];
   dateRange: Date[] = [];
   currentPage = 0;
   currentRows = 20;
+  tableLoading: boolean = false;
 
   fuelOrderHistoryData = signal<IFuelOrderResponse | null>(null);
   fuelOrderHistoryTableData = signal<IFuelOrderTableData[]>([]);
@@ -54,10 +57,7 @@ export class FuelOrderComponent {
   ngOnInit() {
     this.builder();
     this.defineColumns();
-
-    // Sayfa yüklendiğinde varsayılan tarih aralığı ile API çağrısı
-    const [startDate, endDate] = this.dateRangeDefaultValue();
-    this.getFuelOrderByDefaultRange(startDate, endDate);
+    this.getFuelOrder();
   }
 
   builder() {
@@ -86,8 +86,9 @@ export class FuelOrderComponent {
   }
 
   getFuelOrder() {
-    const formValues = this.filterFormGroup.value;
+    this.tableLoading = true;
 
+    const formValues = this.filterFormGroup.value;
     const acReg = formValues.acReg?.trim() || null;
     const flightNo = formValues.flightNo?.trim() || null;
     const depPort = formValues.depPort?.trim() || null;
@@ -121,52 +122,23 @@ export class FuelOrderComponent {
         next: (response) => {
           this.fuelOrderHistoryData.set(response);
           this.fuelOrderHistoryTableData.set(response.content);
+          this.tableLoading = false;
         },
-        error: (error) => {
-          console.error(error);
+        error: () => {
+          this.tableLoading = false;
         },
       });
   }
+
   onFilterSubmit() {
     this.getFuelOrder();
   }
+
   dateRangeDefaultValue() {
     const endDate = moment();
     const startDate = moment().subtract(3, 'days');
 
     return [startDate.toDate(), endDate.toDate()];
-  }
-
-  getFuelOrderByDefaultRange(startDate: Date, endDate: Date) {
-    const formattedStartDate = moment(startDate).format('YYYY-MM-DD');
-    const formattedEndDate = moment(endDate).format('YYYY-MM-DD');
-
-    this.fuelOrderService
-      .getFuelOrder(
-        this.currentPage,
-        this.currentRows,
-        formattedStartDate,
-        formattedEndDate,
-      )
-      .subscribe({
-        next: (response) => {
-          this.fuelOrderHistoryData.set(response);
-          this.fuelOrderHistoryTableData.set(response.content);
-        },
-        error: (error) => {
-          console.error(error);
-        },
-      });
-  }
-
-  onDateRangeChange(event: Event) {
-    const [startDate, endDate] = this.dateRange;
-
-    if (startDate && endDate) {
-      this.currentPage = 0;
-      this.customTableComponent.resetTableFirstValue();
-      this.getFuelOrder();
-    }
   }
 
   pageEvent(event: { first: number; rows: number }) {

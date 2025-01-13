@@ -80,6 +80,7 @@
       [tableData]="fuelOrderHistoryTableData()"
       [tableColumns]="columns"
       [totalRecords]="fuelOrderHistoryData()?.totalElements || 0"
+      [tableLoading]="tableLoading"
       (pageEvent)="pageEvent($event)"
     ></app-custom-table>
   </section>

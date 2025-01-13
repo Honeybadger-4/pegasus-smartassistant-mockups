@@ -1,9 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from '@environments/environment';
+import { map, Observable } from 'rxjs';
+
 import { IFuelOrderResponse } from '@shared/models/fuel-order-response.model';
 import { IHttpResponseModel } from '@shared/models/http-response.model';
-import { map, Observable } from 'rxjs';
+import { environment } from '@environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -24,11 +25,12 @@ export class FuelOrderService {
   ): Observable<IFuelOrderResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/fuel-orders`;
 
-    let params = new HttpParams().set('page', page).set('size', size);
+    let params = new HttpParams()
+    .set('page', page)
+    .set('size', size)
+    .set('startDate', startDate)
+    .set('endDate', endDate)
 
-    if (startDate && endDate) {
-      params = params.set('startDate', startDate).set('endDate', endDate);
-    }
     if (acReg) {
       params = params.set('acReg', acReg);
     }
