@@ -1,15 +1,52 @@
 <main id="ReportPage">
   <section class="table-header-section">
     <span class="header-title">Report</span>
-    <div>
-      <p-calendar
-        [(ngModel)]="dateRange"
-        selectionMode="range"
-        [showIcon]="false"
-        placeholder="Start Date - End Date"
-        dateFormat="dd/mm/yy"
-        class="custom-icon-field w-full inline-block"
-      ></p-calendar>
+    <!-- Filter Inputs and Dropdown -->
+    <div class="grid grid-cols-10 gap-4 items-center">
+      <!-- Aircraft  Input -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-iconField iconPosition="right" class="custom-icon-field">
+          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+          <input type="text" pInputText placeholder="Aircraft" />
+        </p-iconField>
+      </div>
+
+      <!-- Flight No Input -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-iconField iconPosition="right" class="custom-icon-field">
+          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+          <input type="text" pInputText placeholder="Flight No" />
+        </p-iconField>
+      </div>
+
+      <!-- Dep Port Input -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-iconField iconPosition="right" class="custom-icon-field">
+          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+          <input type="text" pInputText placeholder="Dep Port" />
+        </p-iconField>
+      </div>
+
+      <!-- Arr Port Input -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-iconField iconPosition="right" class="custom-icon-field">
+          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+          <input type="text" pInputText placeholder="Arr Port" />
+        </p-iconField>
+      </div>
+
+      <!-- Calendar -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-calendar
+          [(ngModel)]="dateRange"
+          selectionMode="range"
+          [showIcon]="false"
+          [readonlyInput]="true"
+          placeholder="Start Date - End Date"
+          dateFormat="dd/mm/yy"
+          class="custom-calendar"
+        ></p-calendar>
+      </div>
     </div>
   </section>
 

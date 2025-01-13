@@ -11,24 +11,47 @@ import { CustomBarChartComponent } from '../../../shared/components/custom-bar-c
 })
 export class TopAlternateRoutesCardComponent {
   chartData: any = {
-    labels: ['LTBJ', 'LTBS', 'LTAY', 'LTAI'],
+    labels: ['LTBJ', 'LTBS', 'LTAY', 'LTAI', 'LTAI'],
     datasets: [
       {
         label: '',
-        data: [500, 400, 300, 200],
-        backgroundColor: ['#FED447', '#FED447', '#FED447', '#FED447'],
-        borderColor: ['#FED447', '#FED447', '#FED447', '#FED447'],
+        data: [500, 400, 300, 200, 100],
+        backgroundColor: [
+          '#FED447',
+          '#FED447',
+          '#FED447',
+          '#FED447',
+          '#FED447',
+        ],
+        borderColor: ['#FED447', '#FED447', '#FED447', '#FED447', '#FED447'],
         borderWidth: 1,
+        barThickness: 60,
       },
     ],
   };
 
   chartOptions: any = {
+    scales: {
+      y: {
+        ticks: {
+          display: false,
+        },
+        grid: {
+          color: '#4444444D',
+          borderDash: [0],
+          drawTicks: false,
+        },
+      },
+      x: {
+        grid: {
+          drawOnChartArea: false,
+          drawTicks: false,
+        },
+      },
+    },
     plugins: {
       legend: {
-        labels: {
-          color: '#444444',
-        },
+        display: false,
       },
     },
   };
