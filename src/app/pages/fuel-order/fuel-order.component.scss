@@ -1,4 +1,4 @@
-#FuelPage {
+#FuelOrderPage {
   .table-header-section {
     justify-content: space-between;
     align-items: center;
@@ -12,9 +12,22 @@
 }
 
 ::ng-deep {
-  #FuelPage {
+  #FuelOrderPage {
     .p-calendar {
       width: 125px !important;
+    }
+
+    .filter-submit-btn {
+      .p-button {
+        background-color: #feb914;
+        border-color: #feb914;
+        width: 30px;
+        height: 30px;
+
+        .p-button-icon {
+          font-size: 14px;
+        }
+      }
     }
   }
 }

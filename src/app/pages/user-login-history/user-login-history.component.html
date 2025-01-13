@@ -1,17 +1,38 @@
 <main id="UserLoginHistoryPage">
-  <section class="table-header-section">
+  <section class="table-header-section lg:flex block">
     <span class="header-title">User Login History</span>
-    <div class="w-[122px]">
-      <p-calendar
-        [(ngModel)]="dateRange"
-        (ngModelChange)="onDateRangeChange($event)"
-        selectionMode="range"
-        [showIcon]="false"
-        [readonlyInput]="true"
-        placeholder="Start Date - End Date"
-        dateFormat="dd/mm/yy"
-        class="custom-calendar"
-      ></p-calendar>
+
+    <!-- Filter Inputs and Dropdown -->
+    <div class="grid grid-cols-12 gap-4 items-center">
+      <!-- Username  Input -->
+      <div class="lg:col-span-4 md:col-span-6 col-span-12">
+        <p-iconField iconPosition="right" class="custom-icon-field">
+          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+          <input type="text" pInputText placeholder="Username" />
+        </p-iconField>
+      </div>
+
+      <!-- Company Id Input -->
+      <div class="lg:col-span-4 md:col-span-6 col-span-12">
+        <p-iconField iconPosition="right" class="custom-icon-field">
+          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+          <input type="text" pInputText placeholder="Company ID" />
+        </p-iconField>
+      </div>
+
+      <!-- Calendar -->
+      <div class="lg:col-span-4 md:col-span-6 col-span-12">
+        <p-calendar
+          [(ngModel)]="dateRange"
+          (ngModelChange)="onDateRangeChange($event)"
+          selectionMode="range"
+          [showIcon]="false"
+          [readonlyInput]="true"
+          placeholder="Start Date - End Date"
+          dateFormat="dd/mm/yy"
+          class="custom-calendar"
+        ></p-calendar>
+      </div>
     </div>
   </section>
 
