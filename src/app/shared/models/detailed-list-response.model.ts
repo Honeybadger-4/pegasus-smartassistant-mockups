@@ -1,30 +1,35 @@
 export interface IDetailedListResponse {
-  content: [IDetailedListContentData];
-  pageable: {
-    pageNumber: number;
-    pageSize: number;
+  logbookDetails: {
+    content: [IDetailedListContentData];
+    pageable: {
+      pageNumber: number;
+      pageSize: number;
+      sort: {
+        empty: boolean;
+        sorted: boolean;
+        unsorted: boolean;
+      };
+      offset: number;
+      paged: boolean;
+      unpaged: boolean;
+    };
+    totalElements: number;
+    totalPages: number;
+    last: boolean;
+    size: number;
+    number: number;
     sort: {
       empty: boolean;
       sorted: boolean;
       unsorted: boolean;
     };
-    offset: number;
-    paged: boolean;
-    unpaged: boolean;
-  };
-  totalElements: number;
-  totalPages: number;
-  last: boolean;
-  size: number;
-  number: number;
-  sort: {
+    numberOfElements: number;
+    first: boolean;
     empty: boolean;
-    sorted: boolean;
-    unsorted: boolean;
-  };
-  numberOfElements: number;
-  first: boolean;
-  empty: boolean;
+  },
+  currentPageTotal: string,
+  allPagesTotal: string,
+  previousPagesTotal: string
 }
 
 export interface IDetailedListContentData {
@@ -60,5 +65,5 @@ export interface IDetailedListContentData {
   lastReviewedAdmin: string;
   updatedDate: string;
   uploadReason: string;
-  chamges: [];
+  changes: [];
 }
