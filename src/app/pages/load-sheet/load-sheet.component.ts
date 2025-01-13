@@ -140,16 +140,6 @@ export class LoadSheetComponent {
     this.getLoadSheet();
   }
 
-  onDateRangeChange(event: Event) {
-    const [startDate, endDate] = this.dateRange;
-
-    if (startDate && endDate) {
-      this.currentPage = 0;
-      this.customTableComponent.resetTableFirstValue();
-      this.getLoadSheet();
-    }
-  }
-
   toggleLoadAndTrimSheetDialogVisible(
     rowData: ILoadSheetTableData | null = null,
   ) {
