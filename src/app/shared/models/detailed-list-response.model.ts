@@ -26,10 +26,10 @@ export interface IDetailedListResponse {
     numberOfElements: number;
     first: boolean;
     empty: boolean;
-  },
-  currentPageTotal: string,
-  allPagesTotal: string,
-  previousPagesTotal: string
+  };
+  currentPageTotal: string;
+  allPagesTotal: string;
+  previousPagesTotal: string;
 }
 
 export interface IDetailedListContentData {

@@ -41,7 +41,7 @@ import { TooltipModule } from 'primeng/tooltip';
     ToastModule,
     RadioButtonModule,
     ProgressSpinnerModule,
-    TooltipModule
+    TooltipModule,
   ],
   providers: [ConfirmationService],
   templateUrl: './logbook-detail-edit.component.html',
@@ -230,15 +230,15 @@ export class LogbookDetailEditComponent implements OnInit {
 
   generateHistoryTooltip(data: any): string {
     const changerForUser: any[] = [];
-    const changerForAdmin: any[]  = [];
-    const changerForOriginal: any[]  = [];
+    const changerForAdmin: any[] = [];
+    const changerForOriginal: any[] = [];
 
     data.map((item: any) => {
-      if(item.changerType === 'USER') {
+      if (item.changerType === 'USER') {
         changerForUser.push(item.value);
-      }else if(item.changerType === 'ADMIN') {
+      } else if (item.changerType === 'ADMIN') {
         changerForAdmin.push(item.value);
-      }else if(item.changerType === 'ORIGINAL') {
+      } else if (item.changerType === 'ORIGINAL') {
         changerForOriginal.push(item.value);
       }
     });
@@ -284,9 +284,9 @@ export class LogbookDetailEditComponent implements OnInit {
 
   checkCahngedField(fieldName: string): boolean {
     const changesField = this.editDefaultData()?.changes;
-    if(changesField) {
+    if (changesField) {
       return Object.keys(changesField).includes(fieldName);
     }
-    return false
+    return false;
   }
 }
