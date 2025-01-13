@@ -1,9 +1,68 @@
 <div id="RouteComponent">
-  <app-route-table-header></app-route-table-header>
+  <section class="table-header-section lg:flex block">
+    <!-- Header Title -->
+    <p class="header-title">Route</p>
+    <!-- Filter Inputs and Dropdown -->
+    <form [formGroup]="filterFormGroup" (ngSubmit)="onFilterSubmit()">
+      <div class="flex justify-between items-center gap-4">
+        <div class="grid grid-cols-10 gap-4 items-center">
+          <div class="lg:col-span-2 md:col-span-6 col-span-12">
+            <p-iconField iconPosition="right" class="custom-icon-field">
+              <input type="text" pInputText placeholder="Flight No" />
+            </p-iconField>
+          </div>
+
+          <!-- Dep Port Input -->
+          <div class="lg:col-span-2 md:col-span-6 col-span-12">
+            <p-iconField iconPosition="right" class="custom-icon-field">
+              <input type="text" pInputText placeholder="Dep Port" />
+            </p-iconField>
+          </div>
+
+          <!-- Arr Port Input -->
+          <div class="lg:col-span-2 md:col-span-6 col-span-12">
+            <p-iconField iconPosition="right" class="custom-icon-field">
+              <input type="text" pInputText placeholder="Arr Port" />
+            </p-iconField>
+          </div>
+
+          <!-- User Input -->
+          <div class="lg:col-span-2 md:col-span-6 col-span-12">
+            <p-iconField iconPosition="right" class="custom-icon-field">
+              <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+              <input type="text" pInputText placeholder="User" />
+            </p-iconField>
+          </div>
+
+          <!-- Calendar -->
+          <div class="lg:col-span-2 md:col-span-6 col-span-12">
+            <p-calendar
+              [(ngModel)]="dateRange"
+              selectionMode="range"
+              [showIcon]="false"
+              placeholder="Start Date - End Date"
+              dateFormat="dd/mm/yy"
+              class="custom-calendar"
+              [readonlyInput]="true"
+            ></p-calendar>
+          </div>
+        </div>
+
+        <div>
+          <p-button
+            type="submit"
+            icon="pi pi-search"
+            [rounded]="true"
+            class="filter-submit-btn"
+          />
+        </div>
+      </div>
+    </form>
+  </section>
 
   <section class="table-section custom-card">
     <p-table
-      [value]="routeData"
+      [value]="routeHistoryTableData()"
       [columns]="mainCols"
       dataKey="id"
       [tableStyle]="{ 'min-width': '50rem' }"
@@ -12,8 +71,11 @@
       (onRowExpand)="onRowExpand($event)"
       (onRowCollapse)="onRowCollapse($event)"
       [paginator]="true"
-      [rows]="5"
-      [rowsPerPageOptions]="[5, 10, 20]"
+      [rows]="currentRows"
+      [totalRecords]="routeHistoryData()?.totalElements || 0"
+      [loading]="tableLoading"
+      [lazy]="true"
+      (onPage)="pageEvent($event)"
     >
       <!-- Table Header -->
       <ng-template pTemplate="header" let-columns>

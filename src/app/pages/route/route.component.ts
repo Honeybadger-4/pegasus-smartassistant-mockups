@@ -1,5 +1,10 @@
-import { RouteTableHeaderComponent } from '../../components/flight-info/route-table-header/route-table-header.component';
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   TableModule,
@@ -10,17 +15,39 @@ import { ButtonModule } from 'primeng/button';
 import { Column } from '@shared/models/columns';
 import { TabViewModule } from 'primeng/tabview';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { RouteService } from '@shared/services/route.service';
+import {
+  IRouteResponse,
+  IRouteTableData,
+} from '@shared/models/route-response.model';
+import moment from 'moment';
 
 @Component({
   selector: 'app-route',
   standalone: true,
   imports: [
-    RouteTableHeaderComponent,
     CommonModule,
     TableModule,
     ButtonModule,
     TabViewModule,
     CustomTableComponent,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+    FormsModule,
+    CalendarModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './route.component.html',
   styleUrl: './route.component.scss',
@@ -28,8 +55,9 @@ import { CustomTableComponent } from '@shared/components/custom-table/custom-tab
 export class RouteComponent {
   @ViewChild('expandableTableDocumentsIconTemplate', { static: true })
   expandableTableDocumentsIconTemplate!: TemplateRef<any>;
-  // Mock Data
-  routeData = [
+  formBuilder = inject(FormBuilder);
+  routeService = inject(RouteService);
+ routeData = [
     {
       id: '0',
       aircraft: 'TC-A329',
@@ -91,6 +119,7 @@ export class RouteComponent {
       alternateRoute: 'LTBJ',
     },
   ];
+
   detailsData = [
     {
       airway: 'UGB',
@@ -170,14 +199,35 @@ export class RouteComponent {
     },
   ];
 
+  dateRange: Date[] = [];
+  filterFormGroup!: FormGroup;
+
   // Columns Variable
   mainCols!: Column[];
   detailsCols!: Column[];
   expandedRows = {};
+  currentPage = 0;
+  currentRows = 20;
+  tableLoading: boolean = false;
+
+  routeHistoryData = signal<IRouteResponse | null>(null);
+  routeHistoryTableData = signal<IRouteTableData[]>([]);
 
   ngOnInit() {
+    this.builder();
     this.defineMainColumns();
     this.defineDetailsColumns();
+    this.getRoute();
+  }
+
+  builder() {
+    this.filterFormGroup = this.formBuilder.group({
+      flightNo: [''],
+      depPort: [''],
+      arrPort: [''],
+      user: [''],
+      dateRange: [this.dateRangeDefaultValue()],
+    });
   }
 
   // Define Columns Operation
@@ -219,6 +269,69 @@ export class RouteComponent {
         template: this.expandableTableDocumentsIconTemplate,
       },
     ];
+  }
+
+  getRoute() {
+    this.tableLoading = true;
+
+    const formValues = this.filterFormGroup.value;
+    const user = formValues.user?.trim() || null;
+    const flightNo = formValues.flightNo?.trim() || null;
+    const depPort = formValues.depPort?.trim() || null;
+    const arrPort = formValues.arrPort?.trim() || null;
+
+    let startDate = '';
+    let endDate = '';
+
+    // Tarih aralığı kontrolü ve formatlama
+    if (formValues.dateRange && formValues.dateRange.length === 2) {
+      const [start, end] = formValues.dateRange;
+
+      if (start && end) {
+        startDate = moment(start).format('YYYY-MM-DD');
+        endDate = moment(end).format('YYYY-MM-DD');
+      }
+    }
+
+    this.routeService
+      .getRoute(
+        this.currentPage,
+        this.currentRows,
+        startDate,
+        endDate,
+        user,
+        flightNo,
+        depPort,
+        arrPort,
+      )
+      .subscribe({
+        next: (response) => {
+          this.routeHistoryData.set(response);
+          this.routeHistoryTableData.set(response.content);
+          this.tableLoading = false;
+        },
+        error: () => {
+          this.tableLoading = false;
+        },
+      });
+  }
+
+  onFilterSubmit() {
+    this.getRoute();
+  }
+
+  dateRangeDefaultValue() {
+    const endDate = moment();
+    const startDate = moment().subtract(3, 'days');
+
+    return [startDate.toDate(), endDate.toDate()];
+  }
+
+  pageEvent(event: { first: number; rows: number }) {
+    const page = event.first / event.rows;
+    this.currentPage = page;
+    this.currentRows = event.rows;
+    this.getRoute();
   }
 
   onRowExpand(event: TableRowExpandEvent) {

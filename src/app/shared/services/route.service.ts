@@ -24,11 +24,12 @@ export class RouteService {
   ): Observable<IRouteResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/routes`;
 
-    let params = new HttpParams().set('page', page).set('size', size);
+    let params = new HttpParams()
+      .set('page', page)
+      .set('size', size)
+      .set('startDate', startDate)
+      .set('endDate', endDate);
 
-    if (startDate && endDate) {
-      params = params.set('startDate', startDate).set('endDate', endDate);
-    }
     if (flightNo) {
       params = params.set('flightNo', flightNo);
     }

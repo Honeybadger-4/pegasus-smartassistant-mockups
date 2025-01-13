@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-
 import { IFuelOrderResponse } from '@shared/models/fuel-order-response.model';
 import { IHttpResponseModel } from '@shared/models/http-response.model';
 import { environment } from '@environments/environment';
