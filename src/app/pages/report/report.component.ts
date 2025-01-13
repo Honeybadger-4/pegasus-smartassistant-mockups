@@ -5,6 +5,9 @@ import { Column } from '@shared/models/columns';
 import { DropdownModule } from 'primeng/dropdown';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { CalendarModule } from 'primeng/calendar';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-report',
@@ -15,6 +18,9 @@ import { CalendarModule } from 'primeng/calendar';
     DropdownModule,
     CustomTableComponent,
     CalendarModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
   ],
   templateUrl: './report.component.html',
   styleUrl: './report.component.scss',
@@ -32,6 +38,7 @@ export class ReportComponent {
   columns: Column[] = [];
   reportData = [
     {
+      date: '02.02.2024',
       aircraft: 'TC-A329',
       flightNo: 'PC2009',
       departure: 'AYT',
@@ -42,6 +49,7 @@ export class ReportComponent {
       username: 'SAWBNCS1',
     },
     {
+      date: '02.02.2024',
       aircraft: 'TC-A329',
       flightNo: 'PC2009',
       departure: 'AYT',
@@ -52,6 +60,7 @@ export class ReportComponent {
       username: 'SAWBNCS2',
     },
     {
+      date: '02.02.2024',
       aircraft: 'TC-A329',
       flightNo: 'PC2009',
       departure: 'AYT',
@@ -62,6 +71,7 @@ export class ReportComponent {
       username: 'SAWBNCS3',
     },
     {
+      date: '02.02.2024',
       aircraft: 'TC-A329',
       flightNo: 'PC2009',
       departure: 'AYT',
@@ -72,6 +82,7 @@ export class ReportComponent {
       username: 'SAWBNCS4',
     },
     {
+      date: '02.02.2024',
       aircraft: 'TC-A329',
       flightNo: 'PC2009',
       departure: 'AYT',
@@ -82,6 +93,7 @@ export class ReportComponent {
       username: 'SAWBNCS5',
     },
     {
+      date: '02.02.2024',
       aircraft: 'TC-A329',
       flightNo: 'PC2009',
       departure: 'AYT',
@@ -99,6 +111,7 @@ export class ReportComponent {
 
   defineColumn() {
     this.columns = [
+      { field: 'date', header: 'Date' },
       { field: 'aircraft', header: 'Aircraft' },
       { field: 'flightNo', header: 'Flight No' },
       { field: 'departure', header: 'Departure' },

@@ -1,17 +1,55 @@
 <main id="LoadSheetPage">
-  <section class="table-header-section">
+  <section class="table-header-section lg:flex block">
+    <!-- Header Title -->
     <span class="header-title">Load Sheet</span>
-    <div class="w-[122px]">
-      <p-calendar
-        [(ngModel)]="dateRange"
-        (ngModelChange)="onDateRangeChange($event)"
-        selectionMode="range"
-        [showIcon]="false"
-        [readonlyInput]="true"
-        placeholder="Start Date - End Date"
-        dateFormat="dd/mm/yy"
-        class="custom-calendar"
-      ></p-calendar>
+
+    <!-- Filter Inputs and Dropdown -->
+    <div class="grid grid-cols-10 gap-4 items-center">
+      <!-- Aircraft  Input -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-iconField iconPosition="right" class="custom-icon-field">
+          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+          <input type="text" pInputText placeholder="Aircraft" />
+        </p-iconField>
+      </div>
+
+      <!-- Flight No Input -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-iconField iconPosition="right" class="custom-icon-field">
+          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+          <input type="text" pInputText placeholder="Flight No" />
+        </p-iconField>
+      </div>
+
+      <!-- Dep Port Input -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-iconField iconPosition="right" class="custom-icon-field">
+          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+          <input type="text" pInputText placeholder="Dep Port" />
+        </p-iconField>
+      </div>
+
+      <!-- Arr Port Input -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-iconField iconPosition="right" class="custom-icon-field">
+          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+          <input type="text" pInputText placeholder="Arr Port" />
+        </p-iconField>
+      </div>
+
+      <!-- Calendar -->
+      <div class="lg:col-span-2 md:col-span-6 col-span-12">
+        <p-calendar
+          [(ngModel)]="dateRange"
+          (ngModelChange)="onDateRangeChange($event)"
+          selectionMode="range"
+          [showIcon]="false"
+          [readonlyInput]="true"
+          placeholder="Start Date - End Date"
+          dateFormat="dd/mm/yy"
+          class="custom-calendar"
+        ></p-calendar>
+      </div>
     </div>
   </section>
 
