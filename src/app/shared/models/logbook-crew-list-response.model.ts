@@ -29,6 +29,8 @@ export interface ILogbookCrewListResponse {
 
 export interface ILogbookCrewListContentData {
   monthlyLogbookId: number;
+  yearMonth: string;
+  logbookType: string;
   crewNameSurname: string;
   companyId: number;
   totalNumberOfLog: number;
@@ -36,5 +38,4 @@ export interface ILogbookCrewListContentData {
   simulatorFlightLogs: number;
   approvedLogs: number;
   reassignedLogs: number;
-  yearMonth: string;
 }
