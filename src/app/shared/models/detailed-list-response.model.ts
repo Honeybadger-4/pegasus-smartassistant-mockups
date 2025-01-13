@@ -65,5 +65,5 @@ export interface IDetailedListContentData {
   lastReviewedAdmin: string;
   updatedDate: string;
   uploadReason: string;
-  changes: [];
+  changes: any;
 }

@@ -73,60 +73,176 @@
 
         <div class="mt-5 grid grid-cols-12 gap-5 text-center">
           <!-- Flight Version -->
-          <p-floatLabel class="custom-float-label-field col-span-6">
-            <input pInputText id="dutyType" formControlName="dutyType" />
-            <label for="dutyType">Flight Version</label>
-          </p-floatLabel>
+          <div class="col-span-6 form-item-container">
+            <p-floatLabel class="custom-float-label-field w-full">
+              <input pInputText id="dutyType" formControlName="dutyType" />
+              <label for="dutyType">Flight Version</label>
+            </p-floatLabel>
+
+            <i
+              *ngIf="checkCahngedField('dutyType')"
+              class="pi pi-info-circle history-icon"
+              [pTooltip]="
+                generateHistoryTooltip(editDefaultData()?.changes?.dutyType)
+              "
+              tooltipPosition="top"
+              [escape]="false"
+              tooltipStyleClass="history-tooltip"
+            >
+            </i>
+          </div>
 
           <!-- Aircraft Type -->
-          <p-floatLabel class="custom-float-label-field col-span-6">
-            <input
-              pInputText
-              id="aircraftType"
-              formControlName="aircraftType"
-            />
-            <label for="aircraftType">Aircraft Type</label>
-          </p-floatLabel>
+          <div class="col-span-6 form-item-container">
+            <p-floatLabel class="custom-float-label-field w-full">
+              <input
+                pInputText
+                id="aircraftType"
+                formControlName="aircraftType"
+              />
+              <label for="aircraftType">Aircraft Type</label>
+            </p-floatLabel>
+
+            <i
+              *ngIf="checkCahngedField('aircraftType')"
+              class="pi pi-info-circle history-icon"
+              [pTooltip]="
+                generateHistoryTooltip(editDefaultData()?.changes?.aircraftType)
+              "
+              tooltipPosition="top"
+              [escape]="false"
+              tooltipStyleClass="history-tooltip"
+            >
+            </i>
+          </div>
 
           <!-- Date -->
-          <p-floatLabel class="custom-float-label-field col-span-6">
-            <input pInputText id="date" formControlName="date" />
-            <label for="date">Date</label>
-          </p-floatLabel>
+          <div class="col-span-6 form-item-container">
+            <p-floatLabel class="custom-float-label-field w-full">
+              <input pInputText id="date" formControlName="date" />
+              <label for="date">Date</label>
+            </p-floatLabel>
+
+            <i
+              *ngIf="checkCahngedField('date')"
+              class="pi pi-info-circle history-icon"
+              [pTooltip]="
+                generateHistoryTooltip(editDefaultData()?.changes?.date)
+              "
+              tooltipPosition="top"
+              [escape]="false"
+              tooltipStyleClass="history-tooltip"
+            >
+            </i>
+          </div>
 
           <!-- Aircraft Reg -->
-          <p-floatLabel class="custom-float-label-field col-span-6">
-            <input pInputText id="aircraftReg" formControlName="aircraftReg" />
-            <label for="aircraftReg">Aircraft Reg</label>
-          </p-floatLabel>
+          <div class="col-span-6 form-item-container">
+            <p-floatLabel class="custom-float-label-field w-full">
+              <input
+                pInputText
+                id="aircraftReg"
+                formControlName="aircraftReg"
+              />
+              <label for="aircraftReg">Aircraft Reg</label>
+            </p-floatLabel>
+
+            <i
+              *ngIf="checkCahngedField('aircraftReg')"
+              class="pi pi-info-circle history-icon"
+              [pTooltip]="
+                generateHistoryTooltip(editDefaultData()?.changes?.aircraftReg)
+              "
+              tooltipPosition="top"
+              [escape]="false"
+              tooltipStyleClass="history-tooltip"
+            >
+            </i>
+          </div>
 
           <!-- Departure -->
-          <p-floatLabel class="custom-float-label-field col-span-6">
-            <input pInputText id="departure" formControlName="departure" />
-            <label for="departure">Departure</label>
-          </p-floatLabel>
+          <div class="col-span-6 form-item-container">
+            <p-floatLabel class="custom-float-label-field w-full">
+              <input pInputText id="departure" formControlName="departure" />
+              <label for="departure">Departure</label>
+            </p-floatLabel>
+
+            <i
+              *ngIf="checkCahngedField('departure')"
+              class="pi pi-info-circle history-icon"
+              [pTooltip]="
+                generateHistoryTooltip(editDefaultData()?.changes?.departure)
+              "
+              tooltipPosition="top"
+              [escape]="false"
+              tooltipStyleClass="history-tooltip"
+            >
+            </i>
+          </div>
 
           <!-- Arrival -->
-          <p-floatLabel class="custom-float-label-field col-span-6">
-            <input pInputText id="arrival" formControlName="arrival" />
-            <label for="arrival">Arrival</label>
-          </p-floatLabel>
+          <div class="col-span-6 form-item-container">
+            <p-floatLabel class="custom-float-label-field w-full">
+              <input pInputText id="arrival" formControlName="arrival" />
+              <label for="arrival">Arrival</label>
+            </p-floatLabel>
+
+            <i
+              *ngIf="checkCahngedField('arrival')"
+              class="pi pi-info-circle history-icon"
+              [pTooltip]="
+                generateHistoryTooltip(editDefaultData()?.changes?.arrival)
+              "
+              tooltipPosition="top"
+              [escape]="false"
+              tooltipStyleClass="history-tooltip"
+            >
+            </i>
+          </div>
 
           <!-- Departure Time -->
-          <p-floatLabel class="custom-float-label-field col-span-6">
-            <input pInputText id="depTime" formControlName="depTime" />
-            <label for="depTime">Departure Time</label>
-          </p-floatLabel>
+          <div class="col-span-6 form-item-container">
+            <p-floatLabel class="custom-float-label-field w-full">
+              <input pInputText id="depTime" formControlName="depTime" />
+              <label for="depTime">Departure Time</label>
+            </p-floatLabel>
+
+            <i
+              *ngIf="checkCahngedField('depTime')"
+              class="pi pi-info-circle history-icon"
+              [pTooltip]="
+                generateHistoryTooltip(editDefaultData()?.changes?.depTime)
+              "
+              tooltipPosition="top"
+              [escape]="false"
+              tooltipStyleClass="history-tooltip"
+            >
+            </i>
+          </div>
 
           <!-- Arrival Time -->
-          <p-floatLabel class="custom-float-label-field col-span-6">
-            <input pInputText id="arrTime" formControlName="arrTime" />
-            <label for="arrTime">Arrival Time</label>
-          </p-floatLabel>
+          <div class="col-span-6 form-item-container">
+            <p-floatLabel class="custom-float-label-field w-full">
+              <input pInputText id="arrTime" formControlName="arrTime" />
+              <label for="arrTime">Arrival Time</label>
+            </p-floatLabel>
+
+            <i
+              *ngIf="checkCahngedField('arrTime')"
+              class="pi pi-info-circle history-icon"
+              [pTooltip]="
+                generateHistoryTooltip(editDefaultData()?.changes?.arrTime)
+              "
+              tooltipPosition="top"
+              [escape]="false"
+              tooltipStyleClass="history-tooltip"
+            >
+            </i>
+          </div>
 
           <!-- SE / ME -->
-          <div class="col-span-6">
-            <div class="grid grid-cols-2 gap-2">
+          <div class="col-span-6 form-item-container">
+            <div class="grid grid-cols-2 gap-2 w-full relative">
               <!-- SE -->
               <div class="radio-button-container">
                 <label for="se">SE</label>
@@ -146,63 +262,169 @@
                   value="ME"
                   formControlName="engineType"
                   inputId="me"
+                  [ngClass]="{ 'mr-6': checkCahngedField('engineType') }"
                 />
               </div>
             </div>
+
+            <i
+              *ngIf="checkCahngedField('engineType')"
+              class="pi pi-info-circle history-icon"
+              [pTooltip]="
+                generateHistoryTooltip(editDefaultData()?.changes?.engineType)
+              "
+              tooltipPosition="top"
+              [escape]="false"
+              tooltipStyleClass="history-tooltip"
+            >
+            </i>
           </div>
 
           <!-- Name PIC -->
-          <p-floatLabel class="custom-float-label-field col-span-6">
-            <input pInputText id="pic" formControlName="pic" />
-            <label for="pic">Name PIC</label>
-          </p-floatLabel>
+          <div class="col-span-6 form-item-container">
+            <p-floatLabel class="custom-float-label-field w-full">
+              <input pInputText id="pic" formControlName="pic" />
+              <label for="pic">Name PIC</label>
+            </p-floatLabel>
+
+            <i
+              *ngIf="checkCahngedField('pic')"
+              class="pi pi-info-circle history-icon"
+              [pTooltip]="
+                generateHistoryTooltip(editDefaultData()?.changes?.pic)
+              "
+              tooltipPosition="top"
+              [escape]="false"
+              tooltipStyleClass="history-tooltip"
+            >
+            </i>
+          </div>
 
           <!-- Multi Pilot Time -->
-          <p-floatLabel class="custom-float-label-field col-span-6">
-            <input
-              pInputText
-              id="multiPilotTime"
-              formControlName="multiPilotTime"
-            />
-            <label for="multiPilotTime">Multi Pilot Time</label>
-          </p-floatLabel>
+          <div class="col-span-6 form-item-container">
+            <p-floatLabel class="custom-float-label-field w-full">
+              <input
+                pInputText
+                id="multiPilotTime"
+                formControlName="multiPilotTime"
+              />
+              <label for="multiPilotTime">Multi Pilot Time</label>
+            </p-floatLabel>
+
+            <i
+              *ngIf="checkCahngedField('multiPilotTime')"
+              class="pi pi-info-circle history-icon"
+              [pTooltip]="
+                generateHistoryTooltip(
+                  editDefaultData()?.changes?.multiPilotTime
+                )
+              "
+              tooltipPosition="top"
+              [escape]="false"
+              tooltipStyleClass="history-tooltip"
+            ></i>
+          </div>
 
           <!-- Total Time -->
-          <p-floatLabel class="custom-float-label-field col-span-6">
-            <input pInputText id="totalTime" formControlName="totalTime" />
-            <label for="totalTime">Total Time</label>
-          </p-floatLabel>
+          <div class="col-span-6 form-item-container">
+            <p-floatLabel class="custom-float-label-field w-full">
+              <input pInputText id="totalTime" formControlName="totalTime" />
+              <label for="totalTime">Total Time</label>
+            </p-floatLabel>
+
+            <i
+              *ngIf="checkCahngedField('totalTime')"
+              class="pi pi-info-circle history-icon"
+              [pTooltip]="
+                generateHistoryTooltip(editDefaultData()?.changes?.totalTime)
+              "
+              tooltipPosition="top"
+              [escape]="false"
+              tooltipStyleClass="history-tooltip"
+            >
+            </i>
+          </div>
 
           <!-- Landing -->
           <div class="col-span-6">
             <p class="mb-5 flex justify-start">Landing</p>
             <div class="mb-5 grid grid-cols-2 gap-2">
               <!-- Day -->
-              <p-floatLabel class="custom-float-label-field">
-                <input
-                  pInputText
-                  id="dayLanding"
-                  formControlName="dayLanding"
-                />
-                <label for="dayLanding">Day</label>
-              </p-floatLabel>
+              <div class="form-item-container">
+                <p-floatLabel class="custom-float-label-field w-full">
+                  <input
+                    pInputText
+                    id="dayLanding"
+                    formControlName="dayLanding"
+                  />
+                  <label for="dayLanding">Day</label>
+                </p-floatLabel>
+
+                <i
+                  *ngIf="checkCahngedField('dayLanding')"
+                  class="pi pi-info-circle history-icon"
+                  [pTooltip]="
+                    generateHistoryTooltip(
+                      editDefaultData()?.changes?.dayLanding
+                    )
+                  "
+                  tooltipPosition="top"
+                  [escape]="false"
+                  tooltipStyleClass="history-tooltip"
+                >
+                </i>
+              </div>
 
               <!-- Night -->
-              <p-floatLabel class="custom-float-label-field">
-                <input
-                  pInputText
-                  id="nightLanding"
-                  formControlName="nightLanding"
-                />
-                <label for="nightLanding">Night</label>
-              </p-floatLabel>
+              <div class="form-item-container">
+                <p-floatLabel class="custom-float-label-field w-full">
+                  <input
+                    pInputText
+                    id="nightLanding"
+                    formControlName="nightLanding"
+                  />
+                  <label for="nightLanding">Night</label>
+                </p-floatLabel>
+
+                <i
+                  *ngIf="checkCahngedField('nightLanding')"
+                  class="pi pi-info-circle history-icon"
+                  [pTooltip]="
+                    generateHistoryTooltip(
+                      editDefaultData()?.changes?.nightLanding
+                    )
+                  "
+                  tooltipPosition="top"
+                  [escape]="false"
+                  tooltipStyleClass="history-tooltip"
+                >
+                </i>
+              </div>
             </div>
 
             <!-- Instructor -->
-            <p-floatLabel class="custom-float-label-field">
-              <input pInputText id="instructor" formControlName="instructor" />
-              <label for="instructor">Instructor</label>
-            </p-floatLabel>
+            <div class="form-item-container">
+              <p-floatLabel class="custom-float-label-field w-full">
+                <input
+                  pInputText
+                  id="instructor"
+                  formControlName="instructor"
+                />
+                <label for="instructor">Instructor</label>
+              </p-floatLabel>
+
+              <i
+                *ngIf="checkCahngedField('instructor')"
+                class="pi pi-info-circle history-icon"
+                [pTooltip]="
+                  generateHistoryTooltip(editDefaultData()?.changes?.instructor)
+                "
+                tooltipPosition="top"
+                [escape]="false"
+                tooltipStyleClass="history-tooltip"
+              >
+              </i>
+            </div>
           </div>
 
           <!-- Remarks -->
@@ -226,8 +448,8 @@
           </p>
 
           <!-- Date -->
-          <div class="mb-5">
-            <p-floatLabel class="custom-float-label-field">
+          <div class="form-item-container mb-5">
+            <p-floatLabel class="custom-float-label-field w-full">
               <input
                 pInputText
                 id="syntheticTrainingDate"
@@ -235,11 +457,25 @@
               />
               <label for="syntheticTrainingDate">Date</label>
             </p-floatLabel>
+
+            <i
+              *ngIf="checkCahngedField('syntheticTrainingDate')"
+              class="pi pi-info-circle history-icon"
+              [pTooltip]="
+                generateHistoryTooltip(
+                  editDefaultData()?.changes?.syntheticTrainingDate
+                )
+              "
+              tooltipPosition="top"
+              [escape]="false"
+              tooltipStyleClass="history-tooltip"
+            >
+            </i>
           </div>
 
           <!-- Type -->
-          <div class="mb-5">
-            <p-floatLabel class="custom-float-label-field">
+          <div class="form-item-container mb-5">
+            <p-floatLabel class="custom-float-label-field w-full">
               <input
                 pInputText
                 id="type"
@@ -247,11 +483,25 @@
               />
               <label for="type">Type</label>
             </p-floatLabel>
+
+            <i
+              *ngIf="checkCahngedField('syntheticTrainingType')"
+              class="pi pi-info-circle history-icon"
+              [pTooltip]="
+                generateHistoryTooltip(
+                  editDefaultData()?.changes?.syntheticTrainingType
+                )
+              "
+              tooltipPosition="top"
+              [escape]="false"
+              tooltipStyleClass="history-tooltip"
+            >
+            </i>
           </div>
 
           <!-- Time -->
-          <div class="mb-5">
-            <p-floatLabel class="custom-float-label-field">
+          <div class="form-item-container mb-5">
+            <p-floatLabel class="custom-float-label-field w-full">
               <input
                 pInputText
                 id="time"
@@ -259,6 +509,20 @@
               />
               <label for="time">Time</label>
             </p-floatLabel>
+
+            <i
+              *ngIf="checkCahngedField('syntheticTrainingTime')"
+              class="pi pi-info-circle history-icon"
+              [pTooltip]="
+                generateHistoryTooltip(
+                  editDefaultData()?.changes?.syntheticTrainingTime
+                )
+              "
+              tooltipPosition="top"
+              [escape]="false"
+              tooltipStyleClass="history-tooltip"
+            >
+            </i>
           </div>
         </div>
 
@@ -267,8 +531,8 @@
           <p class="form-cards-title mb-5">Pilot Function Time</p>
 
           <!-- PIC -->
-          <div class="mb-5">
-            <p-floatLabel class="custom-float-label-field">
+          <div class="form-item-container mb-5">
+            <p-floatLabel class="custom-float-label-field w-full">
               <input
                 pInputText
                 id="pilotFunctionPic"
@@ -276,11 +540,25 @@
               />
               <label for="pilotFunctionPic">PIC</label>
             </p-floatLabel>
+
+            <i
+              *ngIf="checkCahngedField('pilotFunctionPic')"
+              class="pi pi-info-circle history-icon"
+              [pTooltip]="
+                generateHistoryTooltip(
+                  editDefaultData()?.changes?.pilotFunctionPic
+                )
+              "
+              tooltipPosition="top"
+              [escape]="false"
+              tooltipStyleClass="history-tooltip"
+            >
+            </i>
           </div>
 
           <!-- CO-PILOT -->
-          <div class="mb-5">
-            <p-floatLabel class="custom-float-label-field">
+          <div class="form-item-container mb-5">
+            <p-floatLabel class="custom-float-label-field w-full">
               <input
                 pInputText
                 id="pilotFunctionCoPilot"
@@ -288,11 +566,25 @@
               />
               <label for="pilotFunctionCoPilot">CO-PILOT</label>
             </p-floatLabel>
+
+            <i
+              *ngIf="checkCahngedField('pilotFunctionCoPilot')"
+              class="pi pi-info-circle history-icon"
+              [pTooltip]="
+                generateHistoryTooltip(
+                  editDefaultData()?.changes?.pilotFunctionCoPilot
+                )
+              "
+              tooltipPosition="top"
+              [escape]="false"
+              tooltipStyleClass="history-tooltip"
+            >
+            </i>
           </div>
 
           <!-- Duty -->
-          <div class="mb-5">
-            <p-floatLabel class="custom-float-label-field">
+          <div class="form-item-container mb-5">
+            <p-floatLabel class="custom-float-label-field w-full">
               <input
                 pInputText
                 id="pilotFunctionDual"
@@ -300,6 +592,20 @@
               />
               <label for="pilotFunctionDual">Duty</label>
             </p-floatLabel>
+
+            <i
+              *ngIf="checkCahngedField('pilotFunctionDual')"
+              class="pi pi-info-circle history-icon"
+              [pTooltip]="
+                generateHistoryTooltip(
+                  editDefaultData()?.changes?.pilotFunctionDual
+                )
+              "
+              tooltipPosition="top"
+              [escape]="false"
+              tooltipStyleClass="history-tooltip"
+            >
+            </i>
           </div>
         </div>
 
@@ -308,19 +614,43 @@
           <p class="form-cards-title mb-5">Operation Condition Time</p>
 
           <!-- Night -->
-          <div class="mb-5">
-            <p-floatLabel class="custom-float-label-field">
+          <div class="form-item-container mb-5">
+            <p-floatLabel class="custom-float-label-field w-full">
               <input pInputText id="nightTime" formControlName="nightTime" />
               <label for="nightTime">Night</label>
             </p-floatLabel>
+
+            <i
+              *ngIf="checkCahngedField('nightTime')"
+              class="pi pi-info-circle history-icon"
+              [pTooltip]="
+                generateHistoryTooltip(editDefaultData()?.changes?.nightTime)
+              "
+              tooltipPosition="top"
+              [escape]="false"
+              tooltipStyleClass="history-tooltip"
+            >
+            </i>
           </div>
 
           <!-- IFR -->
-          <div class="mb-5">
-            <p-floatLabel class="custom-float-label-field">
+          <div class="form-item-container mb-5">
+            <p-floatLabel class="custom-float-label-field w-full">
               <input pInputText id="ifrTime" formControlName="ifrTime" />
               <label for="ifrTime">IFR</label>
             </p-floatLabel>
+
+            <i
+              *ngIf="checkCahngedField('ifrTime')"
+              class="pi pi-info-circle history-icon"
+              [pTooltip]="
+                generateHistoryTooltip(editDefaultData()?.changes?.ifrTime)
+              "
+              tooltipPosition="top"
+              [escape]="false"
+              tooltipStyleClass="history-tooltip"
+            >
+            </i>
           </div>
         </div>
       </section>
