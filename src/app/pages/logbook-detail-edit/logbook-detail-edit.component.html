@@ -79,9 +79,17 @@
               <label for="dutyType">Flight Version</label>
             </p-floatLabel>
 
-            <ng-container 
-              *ngTemplateOutlet="historyTooltipIcon; 
-              context: { fieldName:'dutyType', data: generateHistoryTooltip(editDefaultData()?.changes?.dutyType) }" />
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'dutyType',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.dutyType
+                  ),
+                }
+              "
+            />
           </div>
 
           <!-- Aircraft Type -->
@@ -95,9 +103,17 @@
               <label for="aircraftType">Aircraft Type</label>
             </p-floatLabel>
 
-            <ng-container 
-              *ngTemplateOutlet="historyTooltipIcon; 
-              context: { fieldName:'aircraftType', data: generateHistoryTooltip(editDefaultData()?.changes?.aircraftType) }" />
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'aircraftType',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.aircraftType
+                  ),
+                }
+              "
+            />
           </div>
 
           <!-- Date -->
@@ -107,9 +123,17 @@
               <label for="date">Date</label>
             </p-floatLabel>
 
-            <ng-container 
-              *ngTemplateOutlet="historyTooltipIcon; 
-              context: { fieldName:'date', data: generateHistoryTooltip(editDefaultData()?.changes?.date) }" />
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'date',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.date
+                  ),
+                }
+              "
+            />
           </div>
 
           <!-- Aircraft Reg -->
@@ -123,9 +147,17 @@
               <label for="aircraftReg">Aircraft Reg</label>
             </p-floatLabel>
 
-            <ng-container 
-              *ngTemplateOutlet="historyTooltipIcon; 
-              context: { fieldName:'aircraftReg', data: generateHistoryTooltip(editDefaultData()?.changes?.aircraftReg) }" />
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'aircraftReg',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.aircraftReg
+                  ),
+                }
+              "
+            />
           </div>
 
           <!-- Departure -->
@@ -135,9 +167,17 @@
               <label for="departure">Departure</label>
             </p-floatLabel>
 
-            <ng-container 
-              *ngTemplateOutlet="historyTooltipIcon; 
-              context: { fieldName:'departure', data: generateHistoryTooltip(editDefaultData()?.changes?.departure) }" />
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'departure',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.departure
+                  ),
+                }
+              "
+            />
           </div>
 
           <!-- Arrival -->
@@ -147,9 +187,17 @@
               <label for="arrival">Arrival</label>
             </p-floatLabel>
 
-            <ng-container 
-              *ngTemplateOutlet="historyTooltipIcon; 
-              context: { fieldName:'arrival', data: generateHistoryTooltip(editDefaultData()?.changes?.arrival) }" />
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'arrival',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.arrival
+                  ),
+                }
+              "
+            />
           </div>
 
           <!-- Departure Time -->
@@ -159,9 +207,17 @@
               <label for="depTime">Departure Time</label>
             </p-floatLabel>
 
-            <ng-container 
-              *ngTemplateOutlet="historyTooltipIcon; 
-              context: { fieldName:'depTime', data: generateHistoryTooltip(editDefaultData()?.changes?.depTime) }" />
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'depTime',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.depTime
+                  ),
+                }
+              "
+            />
           </div>
 
           <!-- Arrival Time -->
@@ -171,9 +227,17 @@
               <label for="arrTime">Arrival Time</label>
             </p-floatLabel>
 
-            <ng-container 
-              *ngTemplateOutlet="historyTooltipIcon; 
-              context: { fieldName:'arrTime', data: generateHistoryTooltip(editDefaultData()?.changes?.arrTime) }" />
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'arrTime',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.arrTime
+                  ),
+                }
+              "
+            />
           </div>
 
           <!-- SE / ME -->
@@ -203,9 +267,17 @@
               </div>
             </div>
 
-            <ng-container 
-              *ngTemplateOutlet="historyTooltipIcon; 
-              context: { fieldName:'engineType', data: generateHistoryTooltip(editDefaultData()?.changes?.engineType) }" />
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'engineType',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.engineType
+                  ),
+                }
+              "
+            />
           </div>
 
           <!-- Name PIC -->
@@ -215,9 +287,15 @@
               <label for="pic">Name PIC</label>
             </p-floatLabel>
 
-            <ng-container 
-              *ngTemplateOutlet="historyTooltipIcon; 
-              context: { fieldName:'pic', data: generateHistoryTooltip(editDefaultData()?.changes?.pic) }" />
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'pic',
+                  data: generateHistoryTooltip(editDefaultData()?.changes?.pic),
+                }
+              "
+            />
           </div>
 
           <!-- Multi Pilot Time -->
@@ -231,9 +309,17 @@
               <label for="multiPilotTime">Multi Pilot Time</label>
             </p-floatLabel>
 
-            <ng-container 
-              *ngTemplateOutlet="historyTooltipIcon; 
-              context: { fieldName:'multiPilotTime', data: generateHistoryTooltip(editDefaultData()?.changes?.multiPilotTime) }" />
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'multiPilotTime',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.multiPilotTime
+                  ),
+                }
+              "
+            />
           </div>
 
           <!-- Total Time -->
@@ -243,9 +329,17 @@
               <label for="totalTime">Total Time</label>
             </p-floatLabel>
 
-            <ng-container 
-            *ngTemplateOutlet="historyTooltipIcon; 
-            context: { fieldName:'totalTime', data: generateHistoryTooltip(editDefaultData()?.changes?.totalTime) }" />
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'totalTime',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.totalTime
+                  ),
+                }
+              "
+            />
           </div>
 
           <!-- Landing -->
@@ -263,9 +357,17 @@
                   <label for="dayLanding">Day</label>
                 </p-floatLabel>
 
-                <ng-container 
-                  *ngTemplateOutlet="historyTooltipIcon; 
-                  context: { fieldName:'dayLanding', data: generateHistoryTooltip(editDefaultData()?.changes?.dayLanding) }" />
+                <ng-container
+                  *ngTemplateOutlet="
+                    historyTooltipIcon;
+                    context: {
+                      fieldName: 'dayLanding',
+                      data: generateHistoryTooltip(
+                        editDefaultData()?.changes?.dayLanding
+                      ),
+                    }
+                  "
+                />
               </div>
 
               <!-- Night -->
@@ -279,9 +381,17 @@
                   <label for="nightLanding">Night</label>
                 </p-floatLabel>
 
-                <ng-container 
-                  *ngTemplateOutlet="historyTooltipIcon; 
-                  context: { fieldName:'nightLanding', data: generateHistoryTooltip(editDefaultData()?.changes?.nightLanding) }" />
+                <ng-container
+                  *ngTemplateOutlet="
+                    historyTooltipIcon;
+                    context: {
+                      fieldName: 'nightLanding',
+                      data: generateHistoryTooltip(
+                        editDefaultData()?.changes?.nightLanding
+                      ),
+                    }
+                  "
+                />
               </div>
             </div>
 
@@ -296,9 +406,17 @@
                 <label for="instructor">Instructor</label>
               </p-floatLabel>
 
-              <ng-container 
-                  *ngTemplateOutlet="historyTooltipIcon; 
-                  context: { fieldName:'instructor', data: generateHistoryTooltip(editDefaultData()?.changes?.instructor) }" />
+              <ng-container
+                *ngTemplateOutlet="
+                  historyTooltipIcon;
+                  context: {
+                    fieldName: 'instructor',
+                    data: generateHistoryTooltip(
+                      editDefaultData()?.changes?.instructor
+                    ),
+                  }
+                "
+              />
             </div>
           </div>
 
@@ -333,9 +451,17 @@
               <label for="syntheticTrainingDate">Date</label>
             </p-floatLabel>
 
-            <ng-container 
-                *ngTemplateOutlet="historyTooltipIcon; 
-                context: { fieldName:'syntheticTrainingDate', data: generateHistoryTooltip(editDefaultData()?.changes?.syntheticTrainingDate) }" />
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'syntheticTrainingDate',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.syntheticTrainingDate
+                  ),
+                }
+              "
+            />
           </div>
 
           <!-- Type -->
@@ -349,9 +475,17 @@
               <label for="type">Type</label>
             </p-floatLabel>
 
-            <ng-container 
-                *ngTemplateOutlet="historyTooltipIcon; 
-                context: { fieldName:'syntheticTrainingType', data: generateHistoryTooltip(editDefaultData()?.changes?.syntheticTrainingType) }" />
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'syntheticTrainingType',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.syntheticTrainingType
+                  ),
+                }
+              "
+            />
           </div>
 
           <!-- Time -->
@@ -365,9 +499,17 @@
               <label for="time">Time</label>
             </p-floatLabel>
 
-            <ng-container 
-                *ngTemplateOutlet="historyTooltipIcon; 
-                context: { fieldName:'syntheticTrainingTime', data: generateHistoryTooltip(editDefaultData()?.changes?.syntheticTrainingTime) }" />
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'syntheticTrainingTime',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.syntheticTrainingTime
+                  ),
+                }
+              "
+            />
           </div>
         </div>
 
@@ -386,9 +528,17 @@
               <label for="pilotFunctionPic">PIC</label>
             </p-floatLabel>
 
-            <ng-container 
-                *ngTemplateOutlet="historyTooltipIcon; 
-                context: { fieldName:'pilotFunctionPic', data: generateHistoryTooltip(editDefaultData()?.changes?.pilotFunctionPic) }" />
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'pilotFunctionPic',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.pilotFunctionPic
+                  ),
+                }
+              "
+            />
           </div>
 
           <!-- CO-PILOT -->
@@ -402,9 +552,17 @@
               <label for="pilotFunctionCoPilot">CO-PILOT</label>
             </p-floatLabel>
 
-            <ng-container 
-                *ngTemplateOutlet="historyTooltipIcon; 
-                context: { fieldName:'pilotFunctionCoPilot', data: generateHistoryTooltip(editDefaultData()?.changes?.pilotFunctionCoPilot) }" />
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'pilotFunctionCoPilot',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.pilotFunctionCoPilot
+                  ),
+                }
+              "
+            />
           </div>
 
           <!-- Duty -->
@@ -418,9 +576,17 @@
               <label for="pilotFunctionDual">Duty</label>
             </p-floatLabel>
 
-            <ng-container 
-                *ngTemplateOutlet="historyTooltipIcon; 
-                context: { fieldName:'pilotFunctionDual', data: generateHistoryTooltip(editDefaultData()?.changes?.pilotFunctionDual) }" />
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'pilotFunctionDual',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.pilotFunctionDual
+                  ),
+                }
+              "
+            />
           </div>
         </div>
 
@@ -435,9 +601,17 @@
               <label for="nightTime">Night</label>
             </p-floatLabel>
 
-            <ng-container 
-                *ngTemplateOutlet="historyTooltipIcon; 
-                context: { fieldName:'nightTime', data: generateHistoryTooltip(editDefaultData()?.changes?.nightTime) }" />
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'nightTime',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.nightTime
+                  ),
+                }
+              "
+            />
           </div>
 
           <!-- IFR -->
@@ -447,9 +621,17 @@
               <label for="ifrTime">IFR</label>
             </p-floatLabel>
 
-            <ng-container 
-                *ngTemplateOutlet="historyTooltipIcon; 
-                context: { fieldName:'ifrTime', data: generateHistoryTooltip(editDefaultData()?.changes?.ifrTime) }" />
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'ifrTime',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.ifrTime
+                  ),
+                }
+              "
+            />
           </div>
         </div>
       </section>
@@ -519,5 +701,4 @@
     >
     </i>
   </ng-template>
-
 </main>

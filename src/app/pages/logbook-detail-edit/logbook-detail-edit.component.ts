@@ -53,7 +53,7 @@ export class LogbookDetailEditComponent implements OnInit {
   confirmationService = inject(ConfirmationService);
 
   breadcrumbItems: MenuItem[] = [
-    { label: 'Logbook'},
+    { label: 'Logbook' },
     { label: 'Crew List' },
     { label: 'Logbook Detail List' },
     { label: 'Edit Logbook' },
