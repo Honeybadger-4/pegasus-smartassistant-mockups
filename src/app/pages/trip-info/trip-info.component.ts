@@ -10,7 +10,6 @@ import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { DropdownModule } from 'primeng/dropdown';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
-import { CalendarModule } from 'primeng/calendar';
 import { TripInfoService } from '@shared/services/trip-info.service';
 import {
   ITripInfoResponse,
@@ -20,6 +19,7 @@ import moment from 'moment';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
+import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
     selector: 'app-trip-info',
@@ -28,7 +28,7 @@ import { InputTextModule } from 'primeng/inputtext';
         FormsModule,
         DropdownModule,
         CustomTableComponent,
-        CalendarModule,
+        DatePickerModule,
         IconFieldModule,
         InputIconModule,
         InputTextModule,

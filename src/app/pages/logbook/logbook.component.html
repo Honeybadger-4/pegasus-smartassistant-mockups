@@ -1,13 +1,7 @@
 <div id="LogbookComponent">
   <section class="table-header-section">
     <span class="header-title">Logbook</span>
-    <p-dropdown
-      [options]="yearOptions()"
-      [(ngModel)]="selectedYear"
-      (ngModelChange)="this.getLogbookSummary()"
-      class="custom-dropdown period-dropdown"
-      placeholder="Select Year"
-    ></p-dropdown>
+    <p-select [options]="yearOptions()" [(ngModel)]="selectedYear" (ngModelChange)="this.getLogbookSummary()" placeholder="Select Year" class="custom-dropdown period-dropdown" />
   </section>
 
   <section>

@@ -14,13 +14,13 @@ import { ILogbookSummaryResponse } from '@shared/models/logbook-summary-response
 import { LogbookService } from '@shared/services/logbook.service';
 import { Column } from '@shared/models/columns';
 
-import { DropdownModule } from 'primeng/dropdown';
 import { SliderModule } from 'primeng/slider';
+import { SelectModule } from 'primeng/select';
 
 @Component({
     selector: 'app-logbook',
     imports: [
-        DropdownModule,
+        SelectModule,
         CommonModule,
         FormsModule,
         SliderModule,

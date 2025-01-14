@@ -8,6 +8,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
+import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
     selector: 'app-report',
@@ -16,7 +17,7 @@ import { InputTextModule } from 'primeng/inputtext';
         FormsModule,
         DropdownModule,
         CustomTableComponent,
-        CalendarModule,
+        DatePickerModule,
         IconFieldModule,
         InputIconModule,
         InputTextModule,
