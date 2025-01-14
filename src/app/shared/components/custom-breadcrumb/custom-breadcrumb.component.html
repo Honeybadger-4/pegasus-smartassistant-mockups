@@ -1,9 +1,9 @@
 <div class="custom-breadcrumb-component">
   <p-breadcrumb class="max-w-full" [model]="breadCrumbItems">
     <ng-template pTemplate="item" let-item>
-      <a [routerLink]="item.route" class="p-menuitem-link">
+      <span class="p-menuitem-link">
         <span class="item-text font-bold">{{ item.label }}</span>
-      </a>
+      </span>
     </ng-template>
   </p-breadcrumb>
 </div>

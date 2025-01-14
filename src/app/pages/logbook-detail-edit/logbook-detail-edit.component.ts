@@ -53,9 +53,9 @@ export class LogbookDetailEditComponent implements OnInit {
   confirmationService = inject(ConfirmationService);
 
   breadcrumbItems: MenuItem[] = [
-    { label: 'Logbook', route: '/logbook' },
-    { label: 'Crew List', route: '/logbook/crew-list' },
-    { label: 'Logbook Detail List', route: '/logbook/logbook-detail' },
+    { label: 'Logbook'},
+    { label: 'Crew List' },
+    { label: 'Logbook Detail List' },
     { label: 'Edit Logbook' },
   ];
   logId: number = 0;
@@ -233,7 +233,7 @@ export class LogbookDetailEditComponent implements OnInit {
     const changerForAdmin: any[] = [];
     const changerForOriginal: any[] = [];
 
-    data.map((item: any) => {
+    data?.map((item: any) => {
       if (item.changerType === 'USER') {
         changerForUser.push(item.value);
       } else if (item.changerType === 'ADMIN') {

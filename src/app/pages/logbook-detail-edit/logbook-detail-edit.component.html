@@ -79,17 +79,9 @@
               <label for="dutyType">Flight Version</label>
             </p-floatLabel>
 
-            <i
-              *ngIf="checkCahngedField('dutyType')"
-              class="pi pi-info-circle history-icon"
-              [pTooltip]="
-                generateHistoryTooltip(editDefaultData()?.changes?.dutyType)
-              "
-              tooltipPosition="top"
-              [escape]="false"
-              tooltipStyleClass="history-tooltip"
-            >
-            </i>
+            <ng-container 
+              *ngTemplateOutlet="historyTooltipIcon; 
+              context: { fieldName:'dutyType', data: generateHistoryTooltip(editDefaultData()?.changes?.dutyType) }" />
           </div>
 
           <!-- Aircraft Type -->
@@ -103,17 +95,9 @@
               <label for="aircraftType">Aircraft Type</label>
             </p-floatLabel>
 
-            <i
-              *ngIf="checkCahngedField('aircraftType')"
-              class="pi pi-info-circle history-icon"
-              [pTooltip]="
-                generateHistoryTooltip(editDefaultData()?.changes?.aircraftType)
-              "
-              tooltipPosition="top"
-              [escape]="false"
-              tooltipStyleClass="history-tooltip"
-            >
-            </i>
+            <ng-container 
+              *ngTemplateOutlet="historyTooltipIcon; 
+              context: { fieldName:'aircraftType', data: generateHistoryTooltip(editDefaultData()?.changes?.aircraftType) }" />
           </div>
 
           <!-- Date -->
@@ -123,17 +107,9 @@
               <label for="date">Date</label>
             </p-floatLabel>
 
-            <i
-              *ngIf="checkCahngedField('date')"
-              class="pi pi-info-circle history-icon"
-              [pTooltip]="
-                generateHistoryTooltip(editDefaultData()?.changes?.date)
-              "
-              tooltipPosition="top"
-              [escape]="false"
-              tooltipStyleClass="history-tooltip"
-            >
-            </i>
+            <ng-container 
+              *ngTemplateOutlet="historyTooltipIcon; 
+              context: { fieldName:'date', data: generateHistoryTooltip(editDefaultData()?.changes?.date) }" />
           </div>
 
           <!-- Aircraft Reg -->
@@ -147,17 +123,9 @@
               <label for="aircraftReg">Aircraft Reg</label>
             </p-floatLabel>
 
-            <i
-              *ngIf="checkCahngedField('aircraftReg')"
-              class="pi pi-info-circle history-icon"
-              [pTooltip]="
-                generateHistoryTooltip(editDefaultData()?.changes?.aircraftReg)
-              "
-              tooltipPosition="top"
-              [escape]="false"
-              tooltipStyleClass="history-tooltip"
-            >
-            </i>
+            <ng-container 
+              *ngTemplateOutlet="historyTooltipIcon; 
+              context: { fieldName:'aircraftReg', data: generateHistoryTooltip(editDefaultData()?.changes?.aircraftReg) }" />
           </div>
 
           <!-- Departure -->
@@ -167,17 +135,9 @@
               <label for="departure">Departure</label>
             </p-floatLabel>
 
-            <i
-              *ngIf="checkCahngedField('departure')"
-              class="pi pi-info-circle history-icon"
-              [pTooltip]="
-                generateHistoryTooltip(editDefaultData()?.changes?.departure)
-              "
-              tooltipPosition="top"
-              [escape]="false"
-              tooltipStyleClass="history-tooltip"
-            >
-            </i>
+            <ng-container 
+              *ngTemplateOutlet="historyTooltipIcon; 
+              context: { fieldName:'departure', data: generateHistoryTooltip(editDefaultData()?.changes?.departure) }" />
           </div>
 
           <!-- Arrival -->
@@ -187,17 +147,9 @@
               <label for="arrival">Arrival</label>
             </p-floatLabel>
 
-            <i
-              *ngIf="checkCahngedField('arrival')"
-              class="pi pi-info-circle history-icon"
-              [pTooltip]="
-                generateHistoryTooltip(editDefaultData()?.changes?.arrival)
-              "
-              tooltipPosition="top"
-              [escape]="false"
-              tooltipStyleClass="history-tooltip"
-            >
-            </i>
+            <ng-container 
+              *ngTemplateOutlet="historyTooltipIcon; 
+              context: { fieldName:'arrival', data: generateHistoryTooltip(editDefaultData()?.changes?.arrival) }" />
           </div>
 
           <!-- Departure Time -->
@@ -207,17 +159,9 @@
               <label for="depTime">Departure Time</label>
             </p-floatLabel>
 
-            <i
-              *ngIf="checkCahngedField('depTime')"
-              class="pi pi-info-circle history-icon"
-              [pTooltip]="
-                generateHistoryTooltip(editDefaultData()?.changes?.depTime)
-              "
-              tooltipPosition="top"
-              [escape]="false"
-              tooltipStyleClass="history-tooltip"
-            >
-            </i>
+            <ng-container 
+              *ngTemplateOutlet="historyTooltipIcon; 
+              context: { fieldName:'depTime', data: generateHistoryTooltip(editDefaultData()?.changes?.depTime) }" />
           </div>
 
           <!-- Arrival Time -->
@@ -227,17 +171,9 @@
               <label for="arrTime">Arrival Time</label>
             </p-floatLabel>
 
-            <i
-              *ngIf="checkCahngedField('arrTime')"
-              class="pi pi-info-circle history-icon"
-              [pTooltip]="
-                generateHistoryTooltip(editDefaultData()?.changes?.arrTime)
-              "
-              tooltipPosition="top"
-              [escape]="false"
-              tooltipStyleClass="history-tooltip"
-            >
-            </i>
+            <ng-container 
+              *ngTemplateOutlet="historyTooltipIcon; 
+              context: { fieldName:'arrTime', data: generateHistoryTooltip(editDefaultData()?.changes?.arrTime) }" />
           </div>
 
           <!-- SE / ME -->
@@ -267,17 +203,9 @@
               </div>
             </div>
 
-            <i
-              *ngIf="checkCahngedField('engineType')"
-              class="pi pi-info-circle history-icon"
-              [pTooltip]="
-                generateHistoryTooltip(editDefaultData()?.changes?.engineType)
-              "
-              tooltipPosition="top"
-              [escape]="false"
-              tooltipStyleClass="history-tooltip"
-            >
-            </i>
+            <ng-container 
+              *ngTemplateOutlet="historyTooltipIcon; 
+              context: { fieldName:'engineType', data: generateHistoryTooltip(editDefaultData()?.changes?.engineType) }" />
           </div>
 
           <!-- Name PIC -->
@@ -287,17 +215,9 @@
               <label for="pic">Name PIC</label>
             </p-floatLabel>
 
-            <i
-              *ngIf="checkCahngedField('pic')"
-              class="pi pi-info-circle history-icon"
-              [pTooltip]="
-                generateHistoryTooltip(editDefaultData()?.changes?.pic)
-              "
-              tooltipPosition="top"
-              [escape]="false"
-              tooltipStyleClass="history-tooltip"
-            >
-            </i>
+            <ng-container 
+              *ngTemplateOutlet="historyTooltipIcon; 
+              context: { fieldName:'pic', data: generateHistoryTooltip(editDefaultData()?.changes?.pic) }" />
           </div>
 
           <!-- Multi Pilot Time -->
@@ -311,18 +231,9 @@
               <label for="multiPilotTime">Multi Pilot Time</label>
             </p-floatLabel>
 
-            <i
-              *ngIf="checkCahngedField('multiPilotTime')"
-              class="pi pi-info-circle history-icon"
-              [pTooltip]="
-                generateHistoryTooltip(
-                  editDefaultData()?.changes?.multiPilotTime
-                )
-              "
-              tooltipPosition="top"
-              [escape]="false"
-              tooltipStyleClass="history-tooltip"
-            ></i>
+            <ng-container 
+              *ngTemplateOutlet="historyTooltipIcon; 
+              context: { fieldName:'multiPilotTime', data: generateHistoryTooltip(editDefaultData()?.changes?.multiPilotTime) }" />
           </div>
 
           <!-- Total Time -->
@@ -332,17 +243,9 @@
               <label for="totalTime">Total Time</label>
             </p-floatLabel>
 
-            <i
-              *ngIf="checkCahngedField('totalTime')"
-              class="pi pi-info-circle history-icon"
-              [pTooltip]="
-                generateHistoryTooltip(editDefaultData()?.changes?.totalTime)
-              "
-              tooltipPosition="top"
-              [escape]="false"
-              tooltipStyleClass="history-tooltip"
-            >
-            </i>
+            <ng-container 
+            *ngTemplateOutlet="historyTooltipIcon; 
+            context: { fieldName:'totalTime', data: generateHistoryTooltip(editDefaultData()?.changes?.totalTime) }" />
           </div>
 
           <!-- Landing -->
@@ -360,19 +263,9 @@
                   <label for="dayLanding">Day</label>
                 </p-floatLabel>
 
-                <i
-                  *ngIf="checkCahngedField('dayLanding')"
-                  class="pi pi-info-circle history-icon"
-                  [pTooltip]="
-                    generateHistoryTooltip(
-                      editDefaultData()?.changes?.dayLanding
-                    )
-                  "
-                  tooltipPosition="top"
-                  [escape]="false"
-                  tooltipStyleClass="history-tooltip"
-                >
-                </i>
+                <ng-container 
+                  *ngTemplateOutlet="historyTooltipIcon; 
+                  context: { fieldName:'dayLanding', data: generateHistoryTooltip(editDefaultData()?.changes?.dayLanding) }" />
               </div>
 
               <!-- Night -->
@@ -386,19 +279,9 @@
                   <label for="nightLanding">Night</label>
                 </p-floatLabel>
 
-                <i
-                  *ngIf="checkCahngedField('nightLanding')"
-                  class="pi pi-info-circle history-icon"
-                  [pTooltip]="
-                    generateHistoryTooltip(
-                      editDefaultData()?.changes?.nightLanding
-                    )
-                  "
-                  tooltipPosition="top"
-                  [escape]="false"
-                  tooltipStyleClass="history-tooltip"
-                >
-                </i>
+                <ng-container 
+                  *ngTemplateOutlet="historyTooltipIcon; 
+                  context: { fieldName:'nightLanding', data: generateHistoryTooltip(editDefaultData()?.changes?.nightLanding) }" />
               </div>
             </div>
 
@@ -413,17 +296,9 @@
                 <label for="instructor">Instructor</label>
               </p-floatLabel>
 
-              <i
-                *ngIf="checkCahngedField('instructor')"
-                class="pi pi-info-circle history-icon"
-                [pTooltip]="
-                  generateHistoryTooltip(editDefaultData()?.changes?.instructor)
-                "
-                tooltipPosition="top"
-                [escape]="false"
-                tooltipStyleClass="history-tooltip"
-              >
-              </i>
+              <ng-container 
+                  *ngTemplateOutlet="historyTooltipIcon; 
+                  context: { fieldName:'instructor', data: generateHistoryTooltip(editDefaultData()?.changes?.instructor) }" />
             </div>
           </div>
 
@@ -458,19 +333,9 @@
               <label for="syntheticTrainingDate">Date</label>
             </p-floatLabel>
 
-            <i
-              *ngIf="checkCahngedField('syntheticTrainingDate')"
-              class="pi pi-info-circle history-icon"
-              [pTooltip]="
-                generateHistoryTooltip(
-                  editDefaultData()?.changes?.syntheticTrainingDate
-                )
-              "
-              tooltipPosition="top"
-              [escape]="false"
-              tooltipStyleClass="history-tooltip"
-            >
-            </i>
+            <ng-container 
+                *ngTemplateOutlet="historyTooltipIcon; 
+                context: { fieldName:'syntheticTrainingDate', data: generateHistoryTooltip(editDefaultData()?.changes?.syntheticTrainingDate) }" />
           </div>
 
           <!-- Type -->
@@ -484,19 +349,9 @@
               <label for="type">Type</label>
             </p-floatLabel>
 
-            <i
-              *ngIf="checkCahngedField('syntheticTrainingType')"
-              class="pi pi-info-circle history-icon"
-              [pTooltip]="
-                generateHistoryTooltip(
-                  editDefaultData()?.changes?.syntheticTrainingType
-                )
-              "
-              tooltipPosition="top"
-              [escape]="false"
-              tooltipStyleClass="history-tooltip"
-            >
-            </i>
+            <ng-container 
+                *ngTemplateOutlet="historyTooltipIcon; 
+                context: { fieldName:'syntheticTrainingType', data: generateHistoryTooltip(editDefaultData()?.changes?.syntheticTrainingType) }" />
           </div>
 
           <!-- Time -->
@@ -510,19 +365,9 @@
               <label for="time">Time</label>
             </p-floatLabel>
 
-            <i
-              *ngIf="checkCahngedField('syntheticTrainingTime')"
-              class="pi pi-info-circle history-icon"
-              [pTooltip]="
-                generateHistoryTooltip(
-                  editDefaultData()?.changes?.syntheticTrainingTime
-                )
-              "
-              tooltipPosition="top"
-              [escape]="false"
-              tooltipStyleClass="history-tooltip"
-            >
-            </i>
+            <ng-container 
+                *ngTemplateOutlet="historyTooltipIcon; 
+                context: { fieldName:'syntheticTrainingTime', data: generateHistoryTooltip(editDefaultData()?.changes?.syntheticTrainingTime) }" />
           </div>
         </div>
 
@@ -541,19 +386,9 @@
               <label for="pilotFunctionPic">PIC</label>
             </p-floatLabel>
 
-            <i
-              *ngIf="checkCahngedField('pilotFunctionPic')"
-              class="pi pi-info-circle history-icon"
-              [pTooltip]="
-                generateHistoryTooltip(
-                  editDefaultData()?.changes?.pilotFunctionPic
-                )
-              "
-              tooltipPosition="top"
-              [escape]="false"
-              tooltipStyleClass="history-tooltip"
-            >
-            </i>
+            <ng-container 
+                *ngTemplateOutlet="historyTooltipIcon; 
+                context: { fieldName:'pilotFunctionPic', data: generateHistoryTooltip(editDefaultData()?.changes?.pilotFunctionPic) }" />
           </div>
 
           <!-- CO-PILOT -->
@@ -567,19 +402,9 @@
               <label for="pilotFunctionCoPilot">CO-PILOT</label>
             </p-floatLabel>
 
-            <i
-              *ngIf="checkCahngedField('pilotFunctionCoPilot')"
-              class="pi pi-info-circle history-icon"
-              [pTooltip]="
-                generateHistoryTooltip(
-                  editDefaultData()?.changes?.pilotFunctionCoPilot
-                )
-              "
-              tooltipPosition="top"
-              [escape]="false"
-              tooltipStyleClass="history-tooltip"
-            >
-            </i>
+            <ng-container 
+                *ngTemplateOutlet="historyTooltipIcon; 
+                context: { fieldName:'pilotFunctionCoPilot', data: generateHistoryTooltip(editDefaultData()?.changes?.pilotFunctionCoPilot) }" />
           </div>
 
           <!-- Duty -->
@@ -593,19 +418,9 @@
               <label for="pilotFunctionDual">Duty</label>
             </p-floatLabel>
 
-            <i
-              *ngIf="checkCahngedField('pilotFunctionDual')"
-              class="pi pi-info-circle history-icon"
-              [pTooltip]="
-                generateHistoryTooltip(
-                  editDefaultData()?.changes?.pilotFunctionDual
-                )
-              "
-              tooltipPosition="top"
-              [escape]="false"
-              tooltipStyleClass="history-tooltip"
-            >
-            </i>
+            <ng-container 
+                *ngTemplateOutlet="historyTooltipIcon; 
+                context: { fieldName:'pilotFunctionDual', data: generateHistoryTooltip(editDefaultData()?.changes?.pilotFunctionDual) }" />
           </div>
         </div>
 
@@ -620,17 +435,9 @@
               <label for="nightTime">Night</label>
             </p-floatLabel>
 
-            <i
-              *ngIf="checkCahngedField('nightTime')"
-              class="pi pi-info-circle history-icon"
-              [pTooltip]="
-                generateHistoryTooltip(editDefaultData()?.changes?.nightTime)
-              "
-              tooltipPosition="top"
-              [escape]="false"
-              tooltipStyleClass="history-tooltip"
-            >
-            </i>
+            <ng-container 
+                *ngTemplateOutlet="historyTooltipIcon; 
+                context: { fieldName:'nightTime', data: generateHistoryTooltip(editDefaultData()?.changes?.nightTime) }" />
           </div>
 
           <!-- IFR -->
@@ -640,17 +447,9 @@
               <label for="ifrTime">IFR</label>
             </p-floatLabel>
 
-            <i
-              *ngIf="checkCahngedField('ifrTime')"
-              class="pi pi-info-circle history-icon"
-              [pTooltip]="
-                generateHistoryTooltip(editDefaultData()?.changes?.ifrTime)
-              "
-              tooltipPosition="top"
-              [escape]="false"
-              tooltipStyleClass="history-tooltip"
-            >
-            </i>
+            <ng-container 
+                *ngTemplateOutlet="historyTooltipIcon; 
+                context: { fieldName:'ifrTime', data: generateHistoryTooltip(editDefaultData()?.changes?.ifrTime) }" />
           </div>
         </div>
       </section>
@@ -708,4 +507,17 @@
       </div>
     </div>
   </p-dialog>
+
+  <ng-template #historyTooltipIcon let-fieldName="fieldName" let-data="data">
+    <i
+      *ngIf="checkCahngedField(fieldName)"
+      class="pi pi-info-circle history-icon"
+      [pTooltip]="data"
+      tooltipPosition="top"
+      [escape]="false"
+      tooltipStyleClass="history-tooltip"
+    >
+    </i>
+  </ng-template>
+
 </main>
