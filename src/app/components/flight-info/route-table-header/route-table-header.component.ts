@@ -4,7 +4,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
-import { CalendarModule } from 'primeng/calendar';
+import { DatePicker } from 'primeng/datepicker';
 
 @Component({
     selector: 'app-route-table-header',
@@ -14,7 +14,7 @@ import { CalendarModule } from 'primeng/calendar';
         InputIconModule,
         InputTextModule,
         FormsModule,
-        CalendarModule,
+        DatePicker,
     ],
     templateUrl: './route-table-header.component.html',
     styleUrl: './route-table-header.component.scss'

@@ -16,7 +16,7 @@
       [rowsPerPageOptions]="[5, 10, 20]"
     >
       <!-- Table Header -->
-      <ng-template pTemplate="header" let-columns>
+      <ng-template #header let-columns>
         <tr>
           <th></th>
           <th *ngFor="let col of columns">
@@ -26,7 +26,7 @@
       </ng-template>
       <!-- Table Body -->
       <ng-template
-        pTemplate="body"
+        #body
         let-rowData
         let-columns="columns"
         let-expanded="expanded"
@@ -51,7 +51,7 @@
       </ng-template>
 
       <!-- Row Expansion Content -->
-      <ng-template pTemplate="rowexpansion">
+      <ng-template #expandedrow>
         <tr>
           <td colspan="12">
             <div>
