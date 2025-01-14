@@ -1,5 +1,67 @@
 <div id="FlightInfoComponent">
-  <app-table-header></app-table-header>
+  <section class="table-header-container lg:flex block">
+    <!-- Header Title -->
+    <p class="header-title">Flight Information List</p>
+    <form [formGroup]="filterFormGroup">
+
+
+
+      <div class="flex justify-between items-center gap-4">
+
+        <!-- Filter Inputs and Dropdown -->
+        <div class="grid grid-cols-10 gap-4 items-center">
+          <div class="lg:col-span-2 md:col-span-6 col-span-12">
+            <p-iconField iconPosition="right" class="custom-icon-field">
+              <input type="text" pInputText placeholder="Flight No" />
+            </p-iconField>
+          </div>
+
+          <!-- Dep Port Input -->
+          <div class="lg:col-span-2 md:col-span-6 col-span-12">
+            <p-iconField iconPosition="right" class="custom-icon-field">
+              <input type="text" pInputText placeholder="Dep Port" />
+            </p-iconField>
+          </div>
+
+          <!-- Arr Port Input -->
+          <div class="lg:col-span-2 md:col-span-6 col-span-12">
+            <p-iconField iconPosition="right" class="custom-icon-field">
+              <input type="text" pInputText placeholder="Arr Port" />
+            </p-iconField>
+          </div>
+
+          <!-- User Input -->
+          <div class="lg:col-span-2 md:col-span-6 col-span-12">
+            <p-iconField iconPosition="right" class="custom-icon-field">
+              <input type="text" pInputText placeholder="User" />
+            </p-iconField>
+          </div>
+
+          <!-- Calendar -->
+          <div class="lg:col-span-2 md:col-span-6 col-span-12">
+            <p-calendar
+              [(ngModel)]="dateRange"
+              selectionMode="range"
+              [showIcon]="false"
+              placeholder="Start Date - End Date"
+              dateFormat="dd/mm/yy"
+              class="custom-calendar"
+              [readonlyInput]="true"
+            ></p-calendar>
+          </div>
+        </div>
+
+        <div>
+          <p-button
+            type="submit"
+            icon="pi pi-search"
+            [rounded]="true"
+            class="filter-submit-btn"
+          />
+        </div>
+      </div>
+    </form>
+  </section>
 
   <section class="table-section custom-card">
     <p-table

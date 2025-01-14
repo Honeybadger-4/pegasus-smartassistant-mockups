@@ -8,9 +8,17 @@ import {
 import { ButtonModule } from 'primeng/button';
 import { Column } from '@shared/models/columns';
 import { TabViewModule } from 'primeng/tabview';
-import { TableHeaderComponent } from '../../components/flight-info/table-header/table-header.component';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
-
+import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 @Component({
   selector: 'app-flight-info',
   standalone: true,
@@ -19,8 +27,13 @@ import { CustomTableComponent } from '@shared/components/custom-table/custom-tab
     TableModule,
     ButtonModule,
     TabViewModule,
-    TableHeaderComponent,
-    CustomTableComponent,
+    CustomTableComponent,    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+    FormsModule,
+    CalendarModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './flight-info.component.html',
   styleUrl: './flight-info.component.scss',
@@ -34,6 +47,9 @@ export class FlightInfoComponent {
   loadSheetTableCGLimitsCellTemplate!: TemplateRef<any>;
   @ViewChild('tripInfoTableTripInfoCellTemplate', { static: true })
   tripInfoTableTripInfoCellTemplate!: TemplateRef<any>;
+
+  dateRange: Date[] = [];
+  filterFormGroup!: FormGroup;
 
   // Columns Variable
   mainCols!: Column[];
