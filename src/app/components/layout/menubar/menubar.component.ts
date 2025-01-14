@@ -1,15 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { RouterModule } from '@angular/router';
+
 import { LayoutMenuItem } from '@shared/models/layout-sidebar-menu';
+import { LoginService } from '@shared/services/login.service';
 
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { AvatarModule } from 'primeng/avatar';
-import { LoginService } from '@shared/services/login.service';
 
 @Component({
     selector: 'app-menubar',
-    imports: [CommonModule, MenubarModule, ButtonModule, AvatarModule],
+    imports: [CommonModule, RouterModule, MenubarModule, ButtonModule, AvatarModule],
     templateUrl: './menubar.component.html',
     styleUrl: './menubar.component.scss'
 })

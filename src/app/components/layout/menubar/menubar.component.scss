@@ -4,7 +4,7 @@
       margin-right: 30px;
     }
 
-    .p-menuitem-link {
+    .p-menubar-item-link {
       &:hover,
       &.active {
         background-color: #fffbed;
@@ -40,8 +40,8 @@
           color: black;
         }
 
-        .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus
-          > .p-menuitem-content {
+        .p-menubar:not(.p-highlight):not(.p-disabled).p-focus
+          > .p-menubar-content {
           background-color: transparent;
         }
       }

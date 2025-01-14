@@ -16,6 +16,9 @@ import { httpHeadersInterceptor } from '@shared/interceptors/http-header.interce
 import { errorInterceptor } from '@shared/interceptors/error.interceptor';
 
 import { MessageService } from 'primeng/api';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeng/themes/aura';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,5 +34,14 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([httpHeadersInterceptor, errorInterceptor]),
     ),
+    provideAnimationsAsync(),
+    providePrimeNG({
+      theme: {
+        preset: Aura,
+        options: {
+          darkModeSelector: false || 'none'
+      }
+      }
+    })
   ],
 };

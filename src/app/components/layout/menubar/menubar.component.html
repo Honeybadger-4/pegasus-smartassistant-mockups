@@ -1,6 +1,7 @@
 <div id="LayoutMenuComponent">
   <p-menubar [model]="menuItems" class="layout-menubar">
-    <ng-template pTemplate="start">
+
+    <ng-template #start>
       <img
         src="/images/pegasus_logo.svg"
         alt="Pegasus Logo"
@@ -8,13 +9,13 @@
       />
     </ng-template>
 
-    <ng-template pTemplate="item" let-item let-root="root" class="flex">
+    <ng-template #item let-item let-root="root" class="flex">
       <a
         pRipple
         routerLink="/{{ item.path }}"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
-        class="flex align-items-center p-menuitem-link"
+        class="flex align-items-center p-menubar-item-link"
       >
         <img
           src="/icons/{{ item.icon }}"
@@ -32,7 +33,7 @@
       </a>
     </ng-template>
 
-    <ng-template pTemplate="end">
+    <ng-template #end>
       <div class="flex items-center gap-5">
         <p-avatar
           image="/images/profile.png"
