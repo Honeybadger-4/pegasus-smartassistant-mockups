@@ -7,7 +7,7 @@ import {
 } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { Column } from '@shared/models/columns';
-import { TabViewModule } from 'primeng/tabview';
+import { TabsModule } from 'primeng/tabs';
 import { TableHeaderComponent } from '../../components/flight-info/table-header/table-header.component';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 
@@ -17,7 +17,7 @@ import { CustomTableComponent } from '@shared/components/custom-table/custom-tab
         CommonModule,
         TableModule,
         ButtonModule,
-        TabViewModule,
+        TabsModule,
         TableHeaderComponent,
         CustomTableComponent,
     ],
@@ -570,21 +570,25 @@ export class FlightInfoComponent {
         panelHeader: 'Crew',
         tableData: this.crewData,
         tableColumns: this.crewCols,
+        value: 0
       },
       {
         panelHeader: 'Flight Plan',
         tableData: this.flightPlanData,
         tableColumns: this.flightPlanCols,
+        value: 1
       },
       {
         panelHeader: 'Trip Info',
         tableData: this.tripInfoData,
         tableColumns: this.tripInfoCols,
+        value: 2
       },
       {
         panelHeader: 'Load Sheet',
         tableData: this.loadSheetData,
         tableColumns: this.loadSheetCols,
+        value: 3
       },
     ];
   }
