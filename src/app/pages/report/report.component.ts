@@ -10,20 +10,19 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
-  selector: 'app-report',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    DropdownModule,
-    CustomTableComponent,
-    CalendarModule,
-    IconFieldModule,
-    InputIconModule,
-    InputTextModule,
-  ],
-  templateUrl: './report.component.html',
-  styleUrl: './report.component.scss',
+    selector: 'app-report',
+    imports: [
+        CommonModule,
+        FormsModule,
+        DropdownModule,
+        CustomTableComponent,
+        CalendarModule,
+        IconFieldModule,
+        InputIconModule,
+        InputTextModule,
+    ],
+    templateUrl: './report.component.html',
+    styleUrl: './report.component.scss'
 })
 export class ReportComponent {
   @ViewChild('checkListCellBodyTemplate', { static: true })

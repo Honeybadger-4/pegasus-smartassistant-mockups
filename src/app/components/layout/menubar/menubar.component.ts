@@ -8,11 +8,10 @@ import { AvatarModule } from 'primeng/avatar';
 import { LoginService } from '@shared/services/login.service';
 
 @Component({
-  selector: 'app-menubar',
-  standalone: true,
-  imports: [CommonModule, MenubarModule, ButtonModule, AvatarModule],
-  templateUrl: './menubar.component.html',
-  styleUrl: './menubar.component.scss',
+    selector: 'app-menubar',
+    imports: [CommonModule, MenubarModule, ButtonModule, AvatarModule],
+    templateUrl: './menubar.component.html',
+    styleUrl: './menubar.component.scss'
 })
 export class MenubarComponent {
   loginService = inject(LoginService);

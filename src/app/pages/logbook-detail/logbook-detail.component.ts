@@ -42,28 +42,27 @@ import { ButtonModule } from 'primeng/button';
 import moment from 'moment';
 
 @Component({
-  selector: 'app-logbook',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    CustomTableComponent,
-    CustomBreadcrumbComponent,
-    DetailModalComponent,
-    TableModule,
-    ConfirmDialogModule,
-    CalendarModule,
-    DropdownModule,
-    DialogModule,
-    InputTextModule,
-    CheckboxModule,
-    ToastModule,
-    ButtonModule,
-  ],
-  templateUrl: './logbook-detail.component.html',
-  styleUrl: './logbook-detail.component.scss',
-  providers: [ConfirmationService, MessageService],
+    selector: 'app-logbook',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CustomTableComponent,
+        CustomBreadcrumbComponent,
+        DetailModalComponent,
+        TableModule,
+        ConfirmDialogModule,
+        CalendarModule,
+        DropdownModule,
+        DialogModule,
+        InputTextModule,
+        CheckboxModule,
+        ToastModule,
+        ButtonModule,
+    ],
+    templateUrl: './logbook-detail.component.html',
+    styleUrl: './logbook-detail.component.scss',
+    providers: [ConfirmationService, MessageService]
 })
 export class LogbookDetailComponent {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;

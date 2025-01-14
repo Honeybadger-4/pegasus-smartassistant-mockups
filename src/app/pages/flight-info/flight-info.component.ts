@@ -12,18 +12,17 @@ import { TableHeaderComponent } from '../../components/flight-info/table-header/
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 
 @Component({
-  selector: 'app-flight-info',
-  standalone: true,
-  imports: [
-    CommonModule,
-    TableModule,
-    ButtonModule,
-    TabViewModule,
-    TableHeaderComponent,
-    CustomTableComponent,
-  ],
-  templateUrl: './flight-info.component.html',
-  styleUrl: './flight-info.component.scss',
+    selector: 'app-flight-info',
+    imports: [
+        CommonModule,
+        TableModule,
+        ButtonModule,
+        TabViewModule,
+        TableHeaderComponent,
+        CustomTableComponent,
+    ],
+    templateUrl: './flight-info.component.html',
+    styleUrl: './flight-info.component.scss'
 })
 export class FlightInfoComponent {
   @ViewChild('flightPlanTableFlightPlanCellTemplate', { static: true })

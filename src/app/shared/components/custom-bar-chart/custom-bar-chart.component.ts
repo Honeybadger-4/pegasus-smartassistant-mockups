@@ -9,11 +9,10 @@ import {
 import { ChartModule } from 'primeng/chart';
 
 @Component({
-  selector: 'app-custom-bar-chart',
-  standalone: true,
-  imports: [ChartModule],
-  templateUrl: './custom-bar-chart.component.html',
-  styleUrl: './custom-bar-chart.component.scss',
+    selector: 'app-custom-bar-chart',
+    imports: [ChartModule],
+    templateUrl: './custom-bar-chart.component.html',
+    styleUrl: './custom-bar-chart.component.scss'
 })
 export class CustomBarChartComponent {
   @Input() data: any;

@@ -7,17 +7,16 @@ import { CalendarModule } from 'primeng/calendar';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-homepage',
-  standalone: true,
-  imports: [
-    TotalFlightsComponent,
-    GeneralInformationCardComponent,
-    TopAlternateRoutesCardComponent,
-    CalendarModule,
-    FormsModule,
-  ],
-  templateUrl: './homepage.component.html',
-  styleUrl: './homepage.component.scss',
+    selector: 'app-homepage',
+    imports: [
+        TotalFlightsComponent,
+        GeneralInformationCardComponent,
+        TopAlternateRoutesCardComponent,
+        CalendarModule,
+        FormsModule,
+    ],
+    templateUrl: './homepage.component.html',
+    styleUrl: './homepage.component.scss'
 })
 export class HomepageComponent {
   loginService = inject(LoginService);

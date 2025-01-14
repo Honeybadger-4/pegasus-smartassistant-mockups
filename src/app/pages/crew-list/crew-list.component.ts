@@ -27,20 +27,19 @@ import { PanelModule } from 'primeng/panel';
 import { MenuItem } from 'primeng/api';
 
 @Component({
-  selector: 'app-logbook',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    CustomBreadcrumbComponent,
-    CustomTableComponent,
-    IconFieldModule,
-    InputIconModule,
-    SliderModule,
-    PanelModule,
-  ],
-  templateUrl: './crew-list.component.html',
-  styleUrl: './crew-list.component.scss',
+    selector: 'app-logbook',
+    imports: [
+        CommonModule,
+        FormsModule,
+        CustomBreadcrumbComponent,
+        CustomTableComponent,
+        IconFieldModule,
+        InputIconModule,
+        SliderModule,
+        PanelModule,
+    ],
+    templateUrl: './crew-list.component.html',
+    styleUrl: './crew-list.component.scss'
 })
 export class CrewListComponent {
   @ViewChild('linkedNextPageTemplate', { static: true })

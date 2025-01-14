@@ -7,18 +7,17 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
 
 @Component({
-  selector: 'app-route-table-header',
-  standalone: true,
-  imports: [
-    CommonModule,
-    IconFieldModule,
-    InputIconModule,
-    InputTextModule,
-    FormsModule,
-    CalendarModule,
-  ],
-  templateUrl: './route-table-header.component.html',
-  styleUrl: './route-table-header.component.scss',
+    selector: 'app-route-table-header',
+    imports: [
+        CommonModule,
+        IconFieldModule,
+        InputIconModule,
+        InputTextModule,
+        FormsModule,
+        CalendarModule,
+    ],
+    templateUrl: './route-table-header.component.html',
+    styleUrl: './route-table-header.component.scss'
 })
 export class RouteTableHeaderComponent {
   dateRange: Date[] = [];

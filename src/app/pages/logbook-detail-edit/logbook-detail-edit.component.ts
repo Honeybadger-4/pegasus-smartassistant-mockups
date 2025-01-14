@@ -25,27 +25,26 @@ import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
-  selector: 'app-logbook-edit',
-  standalone: true,
-  imports: [
-    CommonModule,
-    BreadcrumbModule,
-    ButtonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    InputTextModule,
-    FloatLabelModule,
-    CustomBreadcrumbComponent,
-    ConfirmDialogModule,
-    DialogModule,
-    ToastModule,
-    RadioButtonModule,
-    ProgressSpinnerModule,
-    TooltipModule,
-  ],
-  providers: [ConfirmationService],
-  templateUrl: './logbook-detail-edit.component.html',
-  styleUrls: ['./logbook-detail-edit.component.scss'],
+    selector: 'app-logbook-edit',
+    imports: [
+        CommonModule,
+        BreadcrumbModule,
+        ButtonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        InputTextModule,
+        FloatLabelModule,
+        CustomBreadcrumbComponent,
+        ConfirmDialogModule,
+        DialogModule,
+        ToastModule,
+        RadioButtonModule,
+        ProgressSpinnerModule,
+        TooltipModule,
+    ],
+    providers: [ConfirmationService],
+    templateUrl: './logbook-detail-edit.component.html',
+    styleUrls: ['./logbook-detail-edit.component.scss']
 })
 export class LogbookDetailEditComponent implements OnInit {
   logbookService = inject(LogbookService);

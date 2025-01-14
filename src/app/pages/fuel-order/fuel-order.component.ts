@@ -23,21 +23,20 @@ import { InputTextModule } from 'primeng/inputtext';
 import moment from 'moment';
 
 @Component({
-  selector: 'app-fuel',
-  standalone: true,
-  imports: [
-    CommonModule,
-    DropdownModule,
-    IconFieldModule,
-    InputIconModule,
-    InputTextModule,
-    FormsModule,
-    ReactiveFormsModule,
-    CustomTableComponent,
-    CalendarModule,
-  ],
-  templateUrl: './fuel-order.component.html',
-  styleUrl: './fuel-order.component.scss',
+    selector: 'app-fuel',
+    imports: [
+        CommonModule,
+        DropdownModule,
+        IconFieldModule,
+        InputIconModule,
+        InputTextModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CustomTableComponent,
+        CalendarModule,
+    ],
+    templateUrl: './fuel-order.component.html',
+    styleUrl: './fuel-order.component.scss'
 })
 export class FuelOrderComponent {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;

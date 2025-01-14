@@ -11,11 +11,10 @@ import { Column } from '@shared/models/columns';
 import { Table, TableModule } from 'primeng/table';
 
 @Component({
-  selector: 'app-custom-table',
-  standalone: true,
-  imports: [CommonModule, TableModule],
-  templateUrl: './custom-table.component.html',
-  styleUrl: './custom-table.component.scss',
+    selector: 'app-custom-table',
+    imports: [CommonModule, TableModule],
+    templateUrl: './custom-table.component.html',
+    styleUrl: './custom-table.component.scss'
 })
 export class CustomTableComponent {
   @ViewChild('table') table!: Table;

@@ -5,11 +5,10 @@ import { ButtonModule } from 'primeng/button';
 import { IDetailedListContentData } from '@shared/models/detailed-list-response.model';
 
 @Component({
-  selector: 'app-detail-modal',
-  standalone: true,
-  imports: [CommonModule, DialogModule, ButtonModule],
-  templateUrl: './detail-modal.component.html',
-  styleUrl: './detail-modal.component.scss',
+    selector: 'app-detail-modal',
+    imports: [CommonModule, DialogModule, ButtonModule],
+    templateUrl: './detail-modal.component.html',
+    styleUrl: './detail-modal.component.scss'
 })
 export class DetailModalComponent {
   detailedListRowData = input<IDetailedListContentData | null>(null);

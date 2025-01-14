@@ -21,19 +21,18 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
-  selector: 'app-user-login-history',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    CustomTableComponent,
-    CalendarModule,
-    IconFieldModule,
-    InputIconModule,
-    InputTextModule,
-  ],
-  templateUrl: './user-login-history.component.html',
-  styleUrl: './user-login-history.component.scss',
+    selector: 'app-user-login-history',
+    imports: [
+        CommonModule,
+        FormsModule,
+        CustomTableComponent,
+        CalendarModule,
+        IconFieldModule,
+        InputIconModule,
+        InputTextModule,
+    ],
+    templateUrl: './user-login-history.component.html',
+    styleUrl: './user-login-history.component.scss'
 })
 export class UserLoginHistoryComponent {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;

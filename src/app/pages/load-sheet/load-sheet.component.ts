@@ -24,22 +24,21 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
-  selector: 'app-load-sheet',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    SliderModule,
-    CustomTableComponent,
-    CalendarModule,
-    LoadAndTrimSheetComponent,
-    DialogModule,
-    IconFieldModule,
-    InputIconModule,
-    InputTextModule,
-  ],
-  templateUrl: './load-sheet.component.html',
-  styleUrl: './load-sheet.component.scss',
+    selector: 'app-load-sheet',
+    imports: [
+        CommonModule,
+        FormsModule,
+        SliderModule,
+        CustomTableComponent,
+        CalendarModule,
+        LoadAndTrimSheetComponent,
+        DialogModule,
+        IconFieldModule,
+        InputIconModule,
+        InputTextModule,
+    ],
+    templateUrl: './load-sheet.component.html',
+    styleUrl: './load-sheet.component.scss'
 })
 export class LoadSheetComponent {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;

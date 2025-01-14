@@ -15,19 +15,18 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
-  selector: 'app-airport-info',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    InputTextModule,
-    FloatLabelModule,
-    ButtonModule,
-    CustomTableComponent,
-  ],
-  templateUrl: './airport-info.component.html',
-  styleUrl: './airport-info.component.scss',
+    selector: 'app-airport-info',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        InputTextModule,
+        FloatLabelModule,
+        ButtonModule,
+        CustomTableComponent,
+    ],
+    templateUrl: './airport-info.component.html',
+    styleUrl: './airport-info.component.scss'
 })
 export class AirportInfoComponent {
   columns: Column[] = [];
