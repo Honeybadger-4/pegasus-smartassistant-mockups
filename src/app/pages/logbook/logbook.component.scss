@@ -14,4 +14,72 @@
       width: 120px;
     }
   }
+
+  .chart-box-container {
+    border: 0.5px solid #9a9a9a;
+    border-radius: 5px;
+    height: 117px;
+    padding: 10px 20px 10px 20px;
+
+    .chart-box-header {
+      font-size: 16px;
+      font-weight: 700;
+      color: #444444;
+      margin-bottom: 15px;
+    }
+
+    .line-chart-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .chart-label,
+      .chart-description {
+        font-size: 12px;
+        font-weight: 300;
+        color: #4f4f4f;
+      }
+    }
+  }
+}
+
+::ng-deep {
+  #LogbookComponent {
+    .chart-box-container {
+      .line-chart-container {
+        .duty-chart {
+          .p-slider {
+            .p-slider-range {
+              background-color: #9f86c0;
+            }
+          }
+        }
+
+        .time-chart {
+          .p-slider {
+            .p-slider-range {
+              background-color: #4f772d;
+            }
+          }
+        }
+
+        .duty-chart,
+        .time-chart {
+          .p-slider {
+            background-color: transparent;
+            cursor: default;
+            pointer-events: none;
+
+            .p-slider-range {
+              border-radius: 20px;
+            }
+
+            .p-slider-handle {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
 }

@@ -73,60 +73,176 @@
 
         <div class="mt-5 grid grid-cols-12 gap-5 text-center">
           <!-- Flight Version -->
-          <p-floatLabel class="custom-float-label-field col-span-6">
-            <input pInputText id="dutyType" formControlName="dutyType" />
-            <label for="dutyType">Flight Version</label>
-          </p-floatLabel>
+          <div class="col-span-6 form-item-container">
+            <p-floatLabel class="custom-float-label-field w-full">
+              <input pInputText id="dutyType" formControlName="dutyType" />
+              <label for="dutyType">Flight Version</label>
+            </p-floatLabel>
+
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'dutyType',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.dutyType
+                  ),
+                }
+              "
+            />
+          </div>
 
           <!-- Aircraft Type -->
-          <p-floatLabel class="custom-float-label-field col-span-6">
-            <input
-              pInputText
-              id="aircraftType"
-              formControlName="aircraftType"
+          <div class="col-span-6 form-item-container">
+            <p-floatLabel class="custom-float-label-field w-full">
+              <input
+                pInputText
+                id="aircraftType"
+                formControlName="aircraftType"
+              />
+              <label for="aircraftType">Aircraft Type</label>
+            </p-floatLabel>
+
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'aircraftType',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.aircraftType
+                  ),
+                }
+              "
             />
-            <label for="aircraftType">Aircraft Type</label>
-          </p-floatLabel>
+          </div>
 
           <!-- Date -->
-          <p-floatLabel class="custom-float-label-field col-span-6">
-            <input pInputText id="date" formControlName="date" />
-            <label for="date">Date</label>
-          </p-floatLabel>
+          <div class="col-span-6 form-item-container">
+            <p-floatLabel class="custom-float-label-field w-full">
+              <input pInputText id="date" formControlName="date" />
+              <label for="date">Date</label>
+            </p-floatLabel>
+
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'date',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.date
+                  ),
+                }
+              "
+            />
+          </div>
 
           <!-- Aircraft Reg -->
-          <p-floatLabel class="custom-float-label-field col-span-6">
-            <input pInputText id="aircraftReg" formControlName="aircraftReg" />
-            <label for="aircraftReg">Aircraft Reg</label>
-          </p-floatLabel>
+          <div class="col-span-6 form-item-container">
+            <p-floatLabel class="custom-float-label-field w-full">
+              <input
+                pInputText
+                id="aircraftReg"
+                formControlName="aircraftReg"
+              />
+              <label for="aircraftReg">Aircraft Reg</label>
+            </p-floatLabel>
+
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'aircraftReg',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.aircraftReg
+                  ),
+                }
+              "
+            />
+          </div>
 
           <!-- Departure -->
-          <p-floatLabel class="custom-float-label-field col-span-6">
-            <input pInputText id="departure" formControlName="departure" />
-            <label for="departure">Departure</label>
-          </p-floatLabel>
+          <div class="col-span-6 form-item-container">
+            <p-floatLabel class="custom-float-label-field w-full">
+              <input pInputText id="departure" formControlName="departure" />
+              <label for="departure">Departure</label>
+            </p-floatLabel>
+
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'departure',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.departure
+                  ),
+                }
+              "
+            />
+          </div>
 
           <!-- Arrival -->
-          <p-floatLabel class="custom-float-label-field col-span-6">
-            <input pInputText id="arrival" formControlName="arrival" />
-            <label for="arrival">Arrival</label>
-          </p-floatLabel>
+          <div class="col-span-6 form-item-container">
+            <p-floatLabel class="custom-float-label-field w-full">
+              <input pInputText id="arrival" formControlName="arrival" />
+              <label for="arrival">Arrival</label>
+            </p-floatLabel>
+
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'arrival',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.arrival
+                  ),
+                }
+              "
+            />
+          </div>
 
           <!-- Departure Time -->
-          <p-floatLabel class="custom-float-label-field col-span-6">
-            <input pInputText id="depTime" formControlName="depTime" />
-            <label for="depTime">Departure Time</label>
-          </p-floatLabel>
+          <div class="col-span-6 form-item-container">
+            <p-floatLabel class="custom-float-label-field w-full">
+              <input pInputText id="depTime" formControlName="depTime" />
+              <label for="depTime">Departure Time</label>
+            </p-floatLabel>
+
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'depTime',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.depTime
+                  ),
+                }
+              "
+            />
+          </div>
 
           <!-- Arrival Time -->
-          <p-floatLabel class="custom-float-label-field col-span-6">
-            <input pInputText id="arrTime" formControlName="arrTime" />
-            <label for="arrTime">Arrival Time</label>
-          </p-floatLabel>
+          <div class="col-span-6 form-item-container">
+            <p-floatLabel class="custom-float-label-field w-full">
+              <input pInputText id="arrTime" formControlName="arrTime" />
+              <label for="arrTime">Arrival Time</label>
+            </p-floatLabel>
+
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'arrTime',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.arrTime
+                  ),
+                }
+              "
+            />
+          </div>
 
           <!-- SE / ME -->
-          <div class="col-span-6">
-            <div class="grid grid-cols-2 gap-2">
+          <div class="col-span-6 form-item-container">
+            <div class="grid grid-cols-2 gap-2 w-full relative">
               <!-- SE -->
               <div class="radio-button-container">
                 <label for="se">SE</label>
@@ -146,63 +262,162 @@
                   value="ME"
                   formControlName="engineType"
                   inputId="me"
+                  [ngClass]="{ 'mr-6': checkCahngedField('engineType') }"
                 />
               </div>
             </div>
+
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'engineType',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.engineType
+                  ),
+                }
+              "
+            />
           </div>
 
           <!-- Name PIC -->
-          <p-floatLabel class="custom-float-label-field col-span-6">
-            <input pInputText id="pic" formControlName="pic" />
-            <label for="pic">Name PIC</label>
-          </p-floatLabel>
+          <div class="col-span-6 form-item-container">
+            <p-floatLabel class="custom-float-label-field w-full">
+              <input pInputText id="pic" formControlName="pic" />
+              <label for="pic">Name PIC</label>
+            </p-floatLabel>
+
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'pic',
+                  data: generateHistoryTooltip(editDefaultData()?.changes?.pic),
+                }
+              "
+            />
+          </div>
 
           <!-- Multi Pilot Time -->
-          <p-floatLabel class="custom-float-label-field col-span-6">
-            <input
-              pInputText
-              id="multiPilotTime"
-              formControlName="multiPilotTime"
+          <div class="col-span-6 form-item-container">
+            <p-floatLabel class="custom-float-label-field w-full">
+              <input
+                pInputText
+                id="multiPilotTime"
+                formControlName="multiPilotTime"
+              />
+              <label for="multiPilotTime">Multi Pilot Time</label>
+            </p-floatLabel>
+
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'multiPilotTime',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.multiPilotTime
+                  ),
+                }
+              "
             />
-            <label for="multiPilotTime">Multi Pilot Time</label>
-          </p-floatLabel>
+          </div>
 
           <!-- Total Time -->
-          <p-floatLabel class="custom-float-label-field col-span-6">
-            <input pInputText id="totalTime" formControlName="totalTime" />
-            <label for="totalTime">Total Time</label>
-          </p-floatLabel>
+          <div class="col-span-6 form-item-container">
+            <p-floatLabel class="custom-float-label-field w-full">
+              <input pInputText id="totalTime" formControlName="totalTime" />
+              <label for="totalTime">Total Time</label>
+            </p-floatLabel>
+
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'totalTime',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.totalTime
+                  ),
+                }
+              "
+            />
+          </div>
 
           <!-- Landing -->
           <div class="col-span-6">
             <p class="mb-5 flex justify-start">Landing</p>
             <div class="mb-5 grid grid-cols-2 gap-2">
               <!-- Day -->
-              <p-floatLabel class="custom-float-label-field">
-                <input
-                  pInputText
-                  id="dayLanding"
-                  formControlName="dayLanding"
+              <div class="form-item-container">
+                <p-floatLabel class="custom-float-label-field w-full">
+                  <input
+                    pInputText
+                    id="dayLanding"
+                    formControlName="dayLanding"
+                  />
+                  <label for="dayLanding">Day</label>
+                </p-floatLabel>
+
+                <ng-container
+                  *ngTemplateOutlet="
+                    historyTooltipIcon;
+                    context: {
+                      fieldName: 'dayLanding',
+                      data: generateHistoryTooltip(
+                        editDefaultData()?.changes?.dayLanding
+                      ),
+                    }
+                  "
                 />
-                <label for="dayLanding">Day</label>
-              </p-floatLabel>
+              </div>
 
               <!-- Night -->
-              <p-floatLabel class="custom-float-label-field">
-                <input
-                  pInputText
-                  id="nightLanding"
-                  formControlName="nightLanding"
+              <div class="form-item-container">
+                <p-floatLabel class="custom-float-label-field w-full">
+                  <input
+                    pInputText
+                    id="nightLanding"
+                    formControlName="nightLanding"
+                  />
+                  <label for="nightLanding">Night</label>
+                </p-floatLabel>
+
+                <ng-container
+                  *ngTemplateOutlet="
+                    historyTooltipIcon;
+                    context: {
+                      fieldName: 'nightLanding',
+                      data: generateHistoryTooltip(
+                        editDefaultData()?.changes?.nightLanding
+                      ),
+                    }
+                  "
                 />
-                <label for="nightLanding">Night</label>
-              </p-floatLabel>
+              </div>
             </div>
 
             <!-- Instructor -->
-            <p-floatLabel class="custom-float-label-field">
-              <input pInputText id="instructor" formControlName="instructor" />
-              <label for="instructor">Instructor</label>
-            </p-floatLabel>
+            <div class="form-item-container">
+              <p-floatLabel class="custom-float-label-field w-full">
+                <input
+                  pInputText
+                  id="instructor"
+                  formControlName="instructor"
+                />
+                <label for="instructor">Instructor</label>
+              </p-floatLabel>
+
+              <ng-container
+                *ngTemplateOutlet="
+                  historyTooltipIcon;
+                  context: {
+                    fieldName: 'instructor',
+                    data: generateHistoryTooltip(
+                      editDefaultData()?.changes?.instructor
+                    ),
+                  }
+                "
+              />
+            </div>
           </div>
 
           <!-- Remarks -->
@@ -226,8 +441,8 @@
           </p>
 
           <!-- Date -->
-          <div class="mb-5">
-            <p-floatLabel class="custom-float-label-field">
+          <div class="form-item-container mb-5">
+            <p-floatLabel class="custom-float-label-field w-full">
               <input
                 pInputText
                 id="syntheticTrainingDate"
@@ -235,11 +450,23 @@
               />
               <label for="syntheticTrainingDate">Date</label>
             </p-floatLabel>
+
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'syntheticTrainingDate',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.syntheticTrainingDate
+                  ),
+                }
+              "
+            />
           </div>
 
           <!-- Type -->
-          <div class="mb-5">
-            <p-floatLabel class="custom-float-label-field">
+          <div class="form-item-container mb-5">
+            <p-floatLabel class="custom-float-label-field w-full">
               <input
                 pInputText
                 id="type"
@@ -247,11 +474,23 @@
               />
               <label for="type">Type</label>
             </p-floatLabel>
+
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'syntheticTrainingType',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.syntheticTrainingType
+                  ),
+                }
+              "
+            />
           </div>
 
           <!-- Time -->
-          <div class="mb-5">
-            <p-floatLabel class="custom-float-label-field">
+          <div class="form-item-container mb-5">
+            <p-floatLabel class="custom-float-label-field w-full">
               <input
                 pInputText
                 id="time"
@@ -259,6 +498,18 @@
               />
               <label for="time">Time</label>
             </p-floatLabel>
+
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'syntheticTrainingTime',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.syntheticTrainingTime
+                  ),
+                }
+              "
+            />
           </div>
         </div>
 
@@ -267,8 +518,8 @@
           <p class="form-cards-title mb-5">Pilot Function Time</p>
 
           <!-- PIC -->
-          <div class="mb-5">
-            <p-floatLabel class="custom-float-label-field">
+          <div class="form-item-container mb-5">
+            <p-floatLabel class="custom-float-label-field w-full">
               <input
                 pInputText
                 id="pilotFunctionPic"
@@ -276,11 +527,23 @@
               />
               <label for="pilotFunctionPic">PIC</label>
             </p-floatLabel>
+
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'pilotFunctionPic',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.pilotFunctionPic
+                  ),
+                }
+              "
+            />
           </div>
 
           <!-- CO-PILOT -->
-          <div class="mb-5">
-            <p-floatLabel class="custom-float-label-field">
+          <div class="form-item-container mb-5">
+            <p-floatLabel class="custom-float-label-field w-full">
               <input
                 pInputText
                 id="pilotFunctionCoPilot"
@@ -288,11 +551,23 @@
               />
               <label for="pilotFunctionCoPilot">CO-PILOT</label>
             </p-floatLabel>
+
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'pilotFunctionCoPilot',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.pilotFunctionCoPilot
+                  ),
+                }
+              "
+            />
           </div>
 
           <!-- Duty -->
-          <div class="mb-5">
-            <p-floatLabel class="custom-float-label-field">
+          <div class="form-item-container mb-5">
+            <p-floatLabel class="custom-float-label-field w-full">
               <input
                 pInputText
                 id="pilotFunctionDual"
@@ -300,6 +575,18 @@
               />
               <label for="pilotFunctionDual">Duty</label>
             </p-floatLabel>
+
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'pilotFunctionDual',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.pilotFunctionDual
+                  ),
+                }
+              "
+            />
           </div>
         </div>
 
@@ -308,19 +595,43 @@
           <p class="form-cards-title mb-5">Operation Condition Time</p>
 
           <!-- Night -->
-          <div class="mb-5">
-            <p-floatLabel class="custom-float-label-field">
+          <div class="form-item-container mb-5">
+            <p-floatLabel class="custom-float-label-field w-full">
               <input pInputText id="nightTime" formControlName="nightTime" />
               <label for="nightTime">Night</label>
             </p-floatLabel>
+
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'nightTime',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.nightTime
+                  ),
+                }
+              "
+            />
           </div>
 
           <!-- IFR -->
-          <div class="mb-5">
-            <p-floatLabel class="custom-float-label-field">
+          <div class="form-item-container mb-5">
+            <p-floatLabel class="custom-float-label-field w-full">
               <input pInputText id="ifrTime" formControlName="ifrTime" />
               <label for="ifrTime">IFR</label>
             </p-floatLabel>
+
+            <ng-container
+              *ngTemplateOutlet="
+                historyTooltipIcon;
+                context: {
+                  fieldName: 'ifrTime',
+                  data: generateHistoryTooltip(
+                    editDefaultData()?.changes?.ifrTime
+                  ),
+                }
+              "
+            />
           </div>
         </div>
       </section>
@@ -378,4 +689,16 @@
       </div>
     </div>
   </p-dialog>
+
+  <ng-template #historyTooltipIcon let-fieldName="fieldName" let-data="data">
+    <i
+      *ngIf="checkCahngedField(fieldName)"
+      class="pi pi-info-circle history-icon"
+      [pTooltip]="data"
+      tooltipPosition="top"
+      [escape]="false"
+      tooltipStyleClass="history-tooltip"
+    >
+    </i>
+  </ng-template>
 </main>

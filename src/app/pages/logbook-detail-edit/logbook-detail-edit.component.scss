@@ -46,6 +46,17 @@
       }
     }
 
+    .form-item-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      .history-icon {
+        position: absolute;
+        right: 20px;
+      }
+    }
+
     .radio-button-container {
       display: flex;
       justify-content: space-between;
@@ -127,6 +138,13 @@
       .p-button-label {
         font-weight: 500;
       }
+    }
+  }
+
+  .history-tooltip {
+    .p-tooltip-text {
+      width: 250px;
+      border-radius: 10px;
     }
   }
 

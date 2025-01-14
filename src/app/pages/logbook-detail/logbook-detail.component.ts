@@ -163,6 +163,7 @@ export class LogbookDetailComponent {
 
     const requestBody: IDetailedListRequest = {
       monthLogId: this.crewListTableData.monthlyLogbookId,
+      logbookType: this.crewListTableData.logbookType,
       status: status,
       startDate: formattedStartDate,
       endDate: formattedEndDate,
@@ -173,7 +174,7 @@ export class LogbookDetailComponent {
       .subscribe({
         next: (response) => {
           this.logbookDetailData.set(response);
-          this.logbookDetailTableData.set(response.content);
+          this.logbookDetailTableData.set(response.logbookDetails.content);
           this.selectedCheckbox.set([]);
           this.customTableComponent.clearSelectionData();
           this.tableLoading = false;
