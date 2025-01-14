@@ -18,10 +18,10 @@ import {
 import { DropdownModule } from 'primeng/dropdown';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
-import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
-import moment from 'moment';
 import { ButtonModule } from 'primeng/button';
+import { DatePicker } from 'primeng/datepicker';
+import moment from 'moment';
 
 @Component({
     selector: 'app-fuel',
@@ -34,7 +34,7 @@ import { ButtonModule } from 'primeng/button';
         InputIconModule,
         DropdownModule,
         IconFieldModule,
-        CalendarModule,
+        DatePicker,
         ButtonModule
     ],
     templateUrl: './fuel-order.component.html',
