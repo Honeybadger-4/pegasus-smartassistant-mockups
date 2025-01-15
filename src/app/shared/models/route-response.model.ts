@@ -12,8 +12,8 @@ export interface IRouteResponse {
     paged: boolean;
     unpaged: boolean;
   };
-  totalElements: number;
   totalPages: number;
+  totalElements: number;
   last: boolean;
   size: number;
   number: number;
@@ -29,7 +29,7 @@ export interface IRouteResponse {
 
 export interface IRouteTableData {
   flightPlanId: number;
-  legIsn: number | null;
+  legIsn: number;
   aircraftReg: string;
   flightNo: string;
   depPort: string;
