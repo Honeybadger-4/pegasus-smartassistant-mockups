@@ -7,43 +7,48 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  TableModule,
-  TableRowCollapseEvent,
-  TableRowExpandEvent,
-} from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
-import { Column } from '@shared/models/columns';
-import { TabViewModule } from 'primeng/tabview';
-import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
-import { CalendarModule } from 'primeng/calendar';
-import {
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { RouteService } from '@shared/services/route.service';
+import { Column } from '@shared/models/columns';
 import {
   IRouteResponse,
   IRouteTableData,
 } from '@shared/models/route-response.model';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
+import {
+  TableModule,
+  TableRowCollapseEvent,
+  TableRowExpandEvent,
+} from 'primeng/table';
+import { TabViewModule } from 'primeng/tabview';
+import { ButtonModule } from 'primeng/button';
 import moment from 'moment';
+
+
+
+
 
 @Component({
   selector: 'app-route',
   standalone: true,
   imports: [
     CommonModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
     TableModule,
     ButtonModule,
     TabViewModule,
     CustomTableComponent,
-    IconFieldModule,
-    InputIconModule,
-    InputTextModule,
+   
     FormsModule,
     CalendarModule,
     FormsModule,
@@ -52,12 +57,30 @@ import moment from 'moment';
   templateUrl: './route.component.html',
   styleUrl: './route.component.scss',
 })
+
+
+
+
+
 export class RouteComponent {
+  @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
+
   @ViewChild('expandableTableDocumentsIconTemplate', { static: true })
   expandableTableDocumentsIconTemplate!: TemplateRef<any>;
 
   formBuilder = inject(FormBuilder);
   routeService = inject(RouteService);
+
+  filterFormGroup!: FormGroup;
+  mainCols!: Column[];
+  detailsCols!: Column[];
+  dateRange: Date[] = [];
+  expandedRows = {};
+  currentPage = 0;
+  currentRows = 20;
+  tableLoading: boolean = false;
+
+
 
   detailsData = [
     {
@@ -138,14 +161,7 @@ export class RouteComponent {
     },
   ];
 
-  filterFormGroup!: FormGroup;
-  mainCols!: Column[];
-  detailsCols!: Column[];
-  dateRange: Date[] = [];
-  expandedRows = {};
-  currentPage = 0;
-  currentRows = 20;
-  tableLoading: boolean = false;
+ 
 
   routeHistoryData = signal<IRouteResponse | null>(null);
   routeHistoryTableData = signal<IRouteTableData[]>([]);
@@ -236,10 +252,10 @@ export class RouteComponent {
         this.currentRows,
         startDate,
         endDate,
-        username,
         flightNo,
         depPort,
         arrPort,
+        username,
       )
       .subscribe({
         next: (response) => {

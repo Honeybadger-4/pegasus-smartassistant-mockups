@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from '@environments/environment';
-import { IHttpResponseModel } from '@shared/models/http-response.model';
-import { IRouteResponse } from '@shared/models/route-response.model';
 import { map, Observable } from 'rxjs';
+import { IRouteResponse } from '@shared/models/route-response.model';
+import { IHttpResponseModel } from '@shared/models/http-response.model';
+import { environment } from '@environments/environment';
 
 @Injectable({
   providedIn: 'root',
