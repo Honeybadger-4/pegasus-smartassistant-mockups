@@ -22,19 +22,19 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
-    selector: 'app-trip-info',
-    imports: [
-        CommonModule,
-        FormsModule,
-        DropdownModule,
-        CustomTableComponent,
-        DatePickerModule,
-        IconFieldModule,
-        InputIconModule,
-        InputTextModule,
-    ],
-    templateUrl: './trip-info.component.html',
-    styleUrl: './trip-info.component.scss'
+  selector: 'app-trip-info',
+  imports: [
+    CommonModule,
+    FormsModule,
+    DropdownModule,
+    CustomTableComponent,
+    DatePickerModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+  ],
+  templateUrl: './trip-info.component.html',
+  styleUrl: './trip-info.component.scss',
 })
 export class TripInfoComponent {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;

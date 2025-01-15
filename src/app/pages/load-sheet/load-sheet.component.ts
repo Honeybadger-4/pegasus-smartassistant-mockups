@@ -25,21 +25,21 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
-    selector: 'app-load-sheet',
-    imports: [
-        CommonModule,
-        FormsModule,
-        SliderModule,
-        CustomTableComponent,
-        DatePickerModule,
-        LoadAndTrimSheetComponent,
-        DialogModule,
-        IconFieldModule,
-        InputIconModule,
-        InputTextModule,
-    ],
-    templateUrl: './load-sheet.component.html',
-    styleUrl: './load-sheet.component.scss'
+  selector: 'app-load-sheet',
+  imports: [
+    CommonModule,
+    FormsModule,
+    SliderModule,
+    CustomTableComponent,
+    DatePickerModule,
+    LoadAndTrimSheetComponent,
+    DialogModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+  ],
+  templateUrl: './load-sheet.component.html',
+  styleUrl: './load-sheet.component.scss',
 })
 export class LoadSheetComponent {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;

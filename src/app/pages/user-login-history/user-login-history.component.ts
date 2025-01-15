@@ -22,18 +22,18 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
-    selector: 'app-user-login-history',
-    imports: [
-        CommonModule,
-        FormsModule,
-        CustomTableComponent,
-        DatePickerModule,
-        IconFieldModule,
-        InputIconModule,
-        InputTextModule,
-    ],
-    templateUrl: './user-login-history.component.html',
-    styleUrl: './user-login-history.component.scss'
+  selector: 'app-user-login-history',
+  imports: [
+    CommonModule,
+    FormsModule,
+    CustomTableComponent,
+    DatePickerModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+  ],
+  templateUrl: './user-login-history.component.html',
+  styleUrl: './user-login-history.component.scss',
 })
 export class UserLoginHistoryComponent {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;

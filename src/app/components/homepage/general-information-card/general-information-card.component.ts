@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { CustomDonutChartComponent } from '@shared/components/custom-donut-chart/custom-donut-chart.component';
 
 @Component({
-    selector: 'app-combined-charts',
-    imports: [CommonModule, CustomDonutChartComponent],
-    templateUrl: './general-information-card.component.html',
-    styleUrls: ['./general-information-card.component.scss']
+  selector: 'app-combined-charts',
+  imports: [CommonModule, CustomDonutChartComponent],
+  templateUrl: './general-information-card.component.html',
+  styleUrls: ['./general-information-card.component.scss'],
 })
 export class GeneralInformationCardComponent implements OnInit {
   chartDataOne: any = {

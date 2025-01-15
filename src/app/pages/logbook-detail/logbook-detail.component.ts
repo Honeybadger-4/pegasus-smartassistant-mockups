@@ -42,27 +42,27 @@ import { DatePickerModule } from 'primeng/datepicker';
 import moment from 'moment';
 
 @Component({
-    selector: 'app-logbook',
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        CustomTableComponent,
-        CustomBreadcrumbComponent,
-        DetailModalComponent,
-        TableModule,
-        ConfirmDialogModule,
-        DatePickerModule,
-        SelectModule,
-        DialogModule,
-        InputTextModule,
-        CheckboxModule,
-        ToastModule,
-        ButtonModule,
-    ],
-    templateUrl: './logbook-detail.component.html',
-    styleUrl: './logbook-detail.component.scss',
-    providers: [ConfirmationService, MessageService]
+  selector: 'app-logbook',
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CustomTableComponent,
+    CustomBreadcrumbComponent,
+    DetailModalComponent,
+    TableModule,
+    ConfirmDialogModule,
+    DatePickerModule,
+    SelectModule,
+    DialogModule,
+    InputTextModule,
+    CheckboxModule,
+    ToastModule,
+    ButtonModule,
+  ],
+  templateUrl: './logbook-detail.component.html',
+  styleUrl: './logbook-detail.component.scss',
+  providers: [ConfirmationService, MessageService],
 })
 export class LogbookDetailComponent {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;

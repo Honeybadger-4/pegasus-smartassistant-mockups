@@ -14,10 +14,10 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
-    selector: 'app-login',
-    imports: [CommonModule, ReactiveFormsModule, ButtonModule, InputTextModule],
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+  selector: 'app-login',
+  imports: [CommonModule, ReactiveFormsModule, ButtonModule, InputTextModule],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
   router = inject(Router);

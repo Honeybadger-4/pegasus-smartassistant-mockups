@@ -8,16 +8,16 @@ import { FormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
-    selector: 'app-homepage',
-    imports: [
-        TotalFlightsComponent,
-        GeneralInformationCardComponent,
-        TopAlternateRoutesCardComponent,
-        DatePickerModule,
-        FormsModule,
-    ],
-    templateUrl: './homepage.component.html',
-    styleUrl: './homepage.component.scss'
+  selector: 'app-homepage',
+  imports: [
+    TotalFlightsComponent,
+    GeneralInformationCardComponent,
+    TopAlternateRoutesCardComponent,
+    DatePickerModule,
+    FormsModule,
+  ],
+  templateUrl: './homepage.component.html',
+  styleUrl: './homepage.component.scss',
 })
 export class HomepageComponent {
   loginService = inject(LoginService);

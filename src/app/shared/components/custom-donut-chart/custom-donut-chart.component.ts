@@ -9,10 +9,10 @@ import {
 import { ChartModule } from 'primeng/chart';
 
 @Component({
-    selector: 'app-custom-donut-chart',
-    imports: [ChartModule],
-    templateUrl: './custom-donut-chart.component.html',
-    styleUrl: './custom-donut-chart.component.scss'
+  selector: 'app-custom-donut-chart',
+  imports: [ChartModule],
+  templateUrl: './custom-donut-chart.component.html',
+  styleUrl: './custom-donut-chart.component.scss',
 })
 export class CustomDonutChartComponent {
   @Input() data: any;

@@ -24,21 +24,21 @@ import { DatePicker } from 'primeng/datepicker';
 import moment from 'moment';
 
 @Component({
-    selector: 'app-fuel',
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        CustomTableComponent,
-        InputTextModule,
-        InputIconModule,
-        DropdownModule,
-        IconFieldModule,
-        DatePicker,
-        ButtonModule
-    ],
-    templateUrl: './fuel-order.component.html',
-    styleUrl: './fuel-order.component.scss'
+  selector: 'app-fuel',
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CustomTableComponent,
+    InputTextModule,
+    InputIconModule,
+    DropdownModule,
+    IconFieldModule,
+    DatePicker,
+    ButtonModule,
+  ],
+  templateUrl: './fuel-order.component.html',
+  styleUrl: './fuel-order.component.scss',
 })
 export class FuelOrderComponent {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;

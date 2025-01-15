@@ -52,25 +52,25 @@
       </ng-template>
 
       <!-- Row Expansion Content -->
-      <ng-template #expandedrow >
+      <ng-template #expandedrow>
         <tr>
           <td colspan="12">
             <div>
               <p-tabs value="0">
                 <p-tablist>
-                    @for (tab of tableSubPanels; track tab.value) {
-                        <p-tab [value]="tab.value">{{ tab.panelHeader }}</p-tab>
-                    }
+                  @for (tab of tableSubPanels; track tab.value) {
+                    <p-tab [value]="tab.value">{{ tab.panelHeader }}</p-tab>
+                  }
                 </p-tablist>
                 <p-tabpanels>
-                    @for (tab of tableSubPanels; track tab.value) {
-                        <p-tabpanel [value]="tab.value">
-                          <app-custom-table
-                            [tableData]="tab.tableData"
-                            [tableColumns]="tab.tableColumns"
-                          ></app-custom-table>
-                        </p-tabpanel>
-                    }
+                  @for (tab of tableSubPanels; track tab.value) {
+                    <p-tabpanel [value]="tab.value">
+                      <app-custom-table
+                        [tableData]="tab.tableData"
+                        [tableColumns]="tab.tableColumns"
+                      ></app-custom-table>
+                    </p-tabpanel>
+                  }
                 </p-tabpanels>
               </p-tabs>
             </div>

@@ -13,10 +13,10 @@ import { ILoadSheetTableData } from '@shared/models/load-sheet-response.model';
 import { ILoadandTrimSheetResponse } from '@shared/models/load-and-trim-sheet-response.model';
 
 @Component({
-    selector: 'app-load-and-trim-sheet',
-    imports: [CommonModule, DialogModule],
-    templateUrl: './load-and-trim-sheet.component.html',
-    styleUrl: './load-and-trim-sheet.component.scss'
+  selector: 'app-load-and-trim-sheet',
+  imports: [CommonModule, DialogModule],
+  templateUrl: './load-and-trim-sheet.component.html',
+  styleUrl: './load-and-trim-sheet.component.scss',
 })
 export class LoadAndTrimSheetComponent {
   @Input() visible: boolean = true;

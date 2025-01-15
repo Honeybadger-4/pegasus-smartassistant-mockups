@@ -12,17 +12,17 @@ import { TabViewModule } from 'primeng/tabview';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 
 @Component({
-    selector: 'app-route',
-    imports: [
-        RouteTableHeaderComponent,
-        CommonModule,
-        TableModule,
-        ButtonModule,
-        TabViewModule,
-        CustomTableComponent,
-    ],
-    templateUrl: './route.component.html',
-    styleUrl: './route.component.scss'
+  selector: 'app-route',
+  imports: [
+    RouteTableHeaderComponent,
+    CommonModule,
+    TableModule,
+    ButtonModule,
+    TabViewModule,
+    CustomTableComponent,
+  ],
+  templateUrl: './route.component.html',
+  styleUrl: './route.component.scss',
 })
 export class RouteComponent {
   @ViewChild('expandableTableDocumentsIconTemplate', { static: true })

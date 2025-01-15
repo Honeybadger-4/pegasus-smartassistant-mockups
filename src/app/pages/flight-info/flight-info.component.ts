@@ -12,17 +12,17 @@ import { TableHeaderComponent } from '../../components/flight-info/table-header/
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 
 @Component({
-    selector: 'app-flight-info',
-    imports: [
-        CommonModule,
-        TableModule,
-        ButtonModule,
-        TabsModule,
-        TableHeaderComponent,
-        CustomTableComponent,
-    ],
-    templateUrl: './flight-info.component.html',
-    styleUrl: './flight-info.component.scss'
+  selector: 'app-flight-info',
+  imports: [
+    CommonModule,
+    TableModule,
+    ButtonModule,
+    TabsModule,
+    TableHeaderComponent,
+    CustomTableComponent,
+  ],
+  templateUrl: './flight-info.component.html',
+  styleUrl: './flight-info.component.scss',
 })
 export class FlightInfoComponent {
   @ViewChild('flightPlanTableFlightPlanCellTemplate', { static: true })
@@ -570,25 +570,25 @@ export class FlightInfoComponent {
         panelHeader: 'Crew',
         tableData: this.crewData,
         tableColumns: this.crewCols,
-        value: 0
+        value: 0,
       },
       {
         panelHeader: 'Flight Plan',
         tableData: this.flightPlanData,
         tableColumns: this.flightPlanCols,
-        value: 1
+        value: 1,
       },
       {
         panelHeader: 'Trip Info',
         tableData: this.tripInfoData,
         tableColumns: this.tripInfoCols,
-        value: 2
+        value: 2,
       },
       {
         panelHeader: 'Load Sheet',
         tableData: this.loadSheetData,
         tableColumns: this.loadSheetCols,
-        value: 3
+        value: 3,
       },
     ];
   }

@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { CustomBarChartComponent } from '../../../shared/components/custom-bar-chart/custom-bar-chart.component';
 
 @Component({
-    selector: 'app-top-alternate-routes-card',
-    imports: [CommonModule, CustomBarChartComponent],
-    templateUrl: './top-alternate-routes-card.component.html',
-    styleUrl: './top-alternate-routes-card.component.scss'
+  selector: 'app-top-alternate-routes-card',
+  imports: [CommonModule, CustomBarChartComponent],
+  templateUrl: './top-alternate-routes-card.component.html',
+  styleUrl: './top-alternate-routes-card.component.scss',
 })
 export class TopAlternateRoutesCardComponent {
   chartData: any = {

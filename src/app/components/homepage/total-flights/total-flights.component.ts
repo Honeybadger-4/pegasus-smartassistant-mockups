@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { CustomDonutChartComponent } from '../../../shared/components/custom-donut-chart/custom-donut-chart.component';
 
 @Component({
-    selector: 'app-total-flights',
-    imports: [CommonModule, CustomDonutChartComponent],
-    templateUrl: './total-flights.component.html',
-    styleUrls: ['./total-flights.component.scss']
+  selector: 'app-total-flights',
+  imports: [CommonModule, CustomDonutChartComponent],
+  templateUrl: './total-flights.component.html',
+  styleUrls: ['./total-flights.component.scss'],
 })
 export class TotalFlightsComponent implements OnInit {
   chartDataOne: any = {

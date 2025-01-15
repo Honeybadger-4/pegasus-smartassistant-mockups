@@ -11,19 +11,19 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
-    selector: 'app-report',
-    imports: [
-        CommonModule,
-        FormsModule,
-        DropdownModule,
-        CustomTableComponent,
-        DatePickerModule,
-        IconFieldModule,
-        InputIconModule,
-        InputTextModule,
-    ],
-    templateUrl: './report.component.html',
-    styleUrl: './report.component.scss'
+  selector: 'app-report',
+  imports: [
+    CommonModule,
+    FormsModule,
+    DropdownModule,
+    CustomTableComponent,
+    DatePickerModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+  ],
+  templateUrl: './report.component.html',
+  styleUrl: './report.component.scss',
 })
 export class ReportComponent {
   @ViewChild('checkListCellBodyTemplate', { static: true })
