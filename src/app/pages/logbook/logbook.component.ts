@@ -46,10 +46,9 @@ export class LogbookComponent {
     null,
   );
   yearOptions = signal<number[] | undefined>(undefined);
-
+  selectedYear!: number;
   columns!: Column[];
   tableLoading = false;
-  selectedYear!: number;
 
   ngOnInit() {
     this.defineColumns();

@@ -16,8 +16,9 @@
               <p class="chart-label">Duty</p>
               <p-slider
                 [ngModel]="boeingData()?.totalDuties"
+                max="500"
                 class="duty-chart"
-                styleClass="w-[230px] h-[5px]"
+                styleClass="w-[230px]"
               />
             </div>
             <p class="chart-description">
@@ -30,8 +31,9 @@
               <p class="chart-label">Time</p>
               <p-slider
                 [ngModel]="boeingData()?.totalHours"
+                max="500"
                 class="time-chart"
-                styleClass="w-[230px] h-[5px]"
+                styleClass="w-[230px]"
               />
             </div>
             <p class="chart-description">
@@ -60,8 +62,9 @@
               <p class="chart-label">Duty</p>
               <p-slider
                 [ngModel]="airbusData()?.totalDuties"
+                max="5000"
                 class="duty-chart"
-                styleClass="w-[230px] h-[5px]"
+                styleClass="w-[230px]"
               />
             </div>
             <p class="chart-description">
@@ -74,8 +77,9 @@
               <p class="chart-label">Time</p>
               <p-slider
                 [ngModel]="airbusData()?.totalHours"
+                max="5000"
                 class="time-chart"
-                styleClass="w-[230px] h-[5px]"
+                styleClass="w-[230px]"
               />
             </div>
             <p class="chart-description">
@@ -104,8 +108,9 @@
               <p class="chart-label">Duty</p>
               <p-slider
                 [ngModel]="trainingData()?.totalTrainings"
+                max="500"
                 class="duty-chart"
-                styleClass="w-[230px] h-[5px]"
+                styleClass="w-[230px]"
               />
             </div>
             <p class="chart-description">
@@ -118,8 +123,9 @@
               <p class="chart-label">Time</p>
               <p-slider
                 [ngModel]="trainingData()?.totalHours"
+                max="1000"
                 class="time-chart"
-                styleClass="w-[230px] h-[5px]"
+                styleClass="w-[230px]"
               />
             </div>
             <p class="chart-description">
