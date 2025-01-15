@@ -27,7 +27,7 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       {
-        path: 'homepage', // TODO: Sunumdan sonra path '' olarak güncellenecek.
+        path: '',
         component: HomepageComponent,
       },
       {
@@ -64,7 +64,7 @@ export const routes: Routes = [
         component: UserLoginHistoryComponent,
       },
       {
-        path: '', // TODO: Sunumdan sonra path logbook olarak güncellenecek.
+        path: 'logbook',
         children: [
           {
             path: '',

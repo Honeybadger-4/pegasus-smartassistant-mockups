@@ -18,16 +18,16 @@ import { SliderModule } from 'primeng/slider';
 import { SelectModule } from 'primeng/select';
 
 @Component({
-  selector: 'app-logbook',
-  imports: [
-    SelectModule,
-    CommonModule,
-    FormsModule,
-    SliderModule,
-    CustomTableComponent,
-  ],
-  templateUrl: './logbook.component.html',
-  styleUrl: './logbook.component.scss',
+    selector: 'app-logbook',
+    imports: [
+        SelectModule,
+        CommonModule,
+        FormsModule,
+        SliderModule,
+        CustomTableComponent,
+    ],
+    templateUrl: './logbook.component.html',
+    styleUrl: './logbook.component.scss'
 })
 export class LogbookComponent {
   @ViewChild('monthColumnsTemplate', { static: true })
