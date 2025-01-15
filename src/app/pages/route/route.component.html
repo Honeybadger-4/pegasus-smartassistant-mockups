@@ -21,7 +21,11 @@
           <!-- Dep Port Input -->
           <div class="lg:col-span-2 md:col-span-6 col-span-12">
             <p-iconField iconPosition="right" class="custom-icon-field">
-              <input type="text" pInputText placeholder="Dep Port"                 formControlName="depPort"
+              <input
+                type="text"
+                pInputText
+                placeholder="Dep Port"
+                formControlName="depPort"
               />
             </p-iconField>
           </div>
@@ -29,14 +33,24 @@
           <!-- Arr Port Input -->
           <div class="lg:col-span-2 md:col-span-6 col-span-12">
             <p-iconField iconPosition="right" class="custom-icon-field">
-              <input type="text" pInputText placeholder="Arr Port" formControlName="arrPort" />
+              <input
+                type="text"
+                pInputText
+                placeholder="Arr Port"
+                formControlName="arrPort"
+              />
             </p-iconField>
           </div>
 
           <!-- User Input -->
           <div class="lg:col-span-2 md:col-span-6 col-span-12">
             <p-iconField iconPosition="right" class="custom-icon-field">
-              <input type="text" pInputText placeholder="User" formControlName="username" />
+              <input
+                type="text"
+                pInputText
+                placeholder="User"
+                formControlName="username"
+              />
             </p-iconField>
           </div>
 
@@ -125,8 +139,13 @@
           <td colspan="12">
             <div>
               <app-custom-table
-                [tableData]="detailsData"
-                [tableColumns]="detailsCols"
+              [tableData]="routeDetailHistoryTableData()"
+              [tableColumns]="detailsCols"
+              [tableLoading]="tableLoading"
+      (pageEvent)="pageEvent($event)"
+
+
+                
               ></app-custom-table>
             </div>
           </td>
