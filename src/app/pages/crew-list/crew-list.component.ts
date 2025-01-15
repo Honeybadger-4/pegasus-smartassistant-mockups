@@ -28,7 +28,6 @@ import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-logbook',
-  standalone: true,
   imports: [
     CommonModule,
     FormsModule,

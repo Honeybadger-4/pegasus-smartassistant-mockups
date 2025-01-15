@@ -19,15 +19,15 @@ import moment from 'moment';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
+import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-user-login-history',
-  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
     CustomTableComponent,
-    CalendarModule,
+    DatePickerModule,
     IconFieldModule,
     InputIconModule,
     InputTextModule,

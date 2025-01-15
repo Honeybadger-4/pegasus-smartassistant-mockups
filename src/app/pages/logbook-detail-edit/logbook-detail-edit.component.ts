@@ -26,7 +26,6 @@ import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-logbook-edit',
-  standalone: true,
   imports: [
     CommonModule,
     BreadcrumbModule,

@@ -5,11 +5,10 @@ import { InputIconModule } from 'primeng/inputicon';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
-import { CalendarModule } from 'primeng/calendar';
+import { DatePicker } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-table-header',
-  standalone: true,
   imports: [
     CommonModule,
     DropdownModule,
@@ -17,11 +16,11 @@ import { CalendarModule } from 'primeng/calendar';
     InputIconModule,
     InputTextModule,
     FormsModule,
-    CalendarModule,
+    DatePicker,
   ],
   templateUrl: './table-header.component.html',
   styleUrls: ['./table-header.component.scss'],
 })
 export class TableHeaderComponent {
-  dateRange: Date[] = [];
+  dateRanges: Date[] = [];
 }

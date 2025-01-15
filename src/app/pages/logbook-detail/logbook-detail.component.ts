@@ -30,8 +30,6 @@ import { Column } from '@shared/models/columns';
 
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputTextModule } from 'primeng/inputtext';
-import { DropdownModule } from 'primeng/dropdown';
-import { CalendarModule } from 'primeng/calendar';
 import { ConfirmationService } from 'primeng/api';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
@@ -39,11 +37,12 @@ import { MessageService } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
+import { SelectModule } from 'primeng/select';
+import { DatePickerModule } from 'primeng/datepicker';
 import moment from 'moment';
 
 @Component({
   selector: 'app-logbook',
-  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
@@ -53,8 +52,8 @@ import moment from 'moment';
     DetailModalComponent,
     TableModule,
     ConfirmDialogModule,
-    CalendarModule,
-    DropdownModule,
+    DatePickerModule,
+    SelectModule,
     DialogModule,
     InputTextModule,
     CheckboxModule,

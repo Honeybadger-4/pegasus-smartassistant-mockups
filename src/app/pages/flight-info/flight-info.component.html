@@ -16,7 +16,7 @@
       [rowsPerPageOptions]="[20, 40, 80]"
     >
       <!-- Table Header -->
-      <ng-template pTemplate="header" let-columns>
+      <ng-template #header let-columns>
         <tr>
           <th></th>
           <th *ngFor="let col of columns">
@@ -27,7 +27,7 @@
 
       <!-- Table Body -->
       <ng-template
-        pTemplate="body"
+        #body
         let-rowData
         let-columns="columns"
         let-expanded="expanded"
@@ -52,23 +52,27 @@
       </ng-template>
 
       <!-- Row Expansion Content -->
-      <ng-template pTemplate="rowexpansion">
+      <ng-template #expandedrow>
         <tr>
           <td colspan="12">
             <div>
-              <p-tabView
-                [(activeIndex)]="activeTabIndex"
-                (activeIndexChange)="activeTabIndexChange($event)"
-              >
-                @for (item of tableSubPanels; track $index) {
-                  <p-tabPanel header="{{ item.panelHeader }}">
-                    <app-custom-table
-                      [tableData]="item.tableData"
-                      [tableColumns]="item.tableColumns"
-                    ></app-custom-table>
-                  </p-tabPanel>
-                }
-              </p-tabView>
+              <p-tabs value="0">
+                <p-tablist>
+                  @for (tab of tableSubPanels; track tab.value) {
+                    <p-tab [value]="tab.value">{{ tab.panelHeader }}</p-tab>
+                  }
+                </p-tablist>
+                <p-tabpanels>
+                  @for (tab of tableSubPanels; track tab.value) {
+                    <p-tabpanel [value]="tab.value">
+                      <app-custom-table
+                        [tableData]="tab.tableData"
+                        [tableColumns]="tab.tableColumns"
+                      ></app-custom-table>
+                    </p-tabpanel>
+                  }
+                </p-tabpanels>
+              </p-tabs>
             </div>
           </td>
         </tr>

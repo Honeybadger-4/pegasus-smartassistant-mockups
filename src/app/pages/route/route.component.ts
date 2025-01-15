@@ -13,7 +13,6 @@ import { CustomTableComponent } from '@shared/components/custom-table/custom-tab
 
 @Component({
   selector: 'app-route',
-  standalone: true,
   imports: [
     RouteTableHeaderComponent,
     CommonModule,

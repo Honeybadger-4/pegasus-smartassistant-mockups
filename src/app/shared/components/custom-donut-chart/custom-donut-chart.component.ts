@@ -10,7 +10,6 @@ import { ChartModule } from 'primeng/chart';
 
 @Component({
   selector: 'app-custom-donut-chart',
-  standalone: true,
   imports: [ChartModule],
   templateUrl: './custom-donut-chart.component.html',
   styleUrl: './custom-donut-chart.component.scss',

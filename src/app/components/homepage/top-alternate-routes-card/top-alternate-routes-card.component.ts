@@ -4,7 +4,6 @@ import { CustomBarChartComponent } from '../../../shared/components/custom-bar-c
 
 @Component({
   selector: 'app-top-alternate-routes-card',
-  standalone: true,
   imports: [CommonModule, CustomBarChartComponent],
   templateUrl: './top-alternate-routes-card.component.html',
   styleUrl: './top-alternate-routes-card.component.scss',

@@ -4,7 +4,6 @@ import { CustomDonutChartComponent } from '../../../shared/components/custom-don
 
 @Component({
   selector: 'app-total-flights',
-  standalone: true,
   imports: [CommonModule, CustomDonutChartComponent],
   templateUrl: './total-flights.component.html',
   styleUrls: ['./total-flights.component.scss'],

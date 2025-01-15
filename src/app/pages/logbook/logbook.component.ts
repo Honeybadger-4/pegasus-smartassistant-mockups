@@ -14,21 +14,20 @@ import { ILogbookSummaryResponse } from '@shared/models/logbook-summary-response
 import { LogbookService } from '@shared/services/logbook.service';
 import { Column } from '@shared/models/columns';
 
-import { DropdownModule } from 'primeng/dropdown';
 import { SliderModule } from 'primeng/slider';
+import { SelectModule } from 'primeng/select';
 
 @Component({
-  selector: 'app-logbook',
-  standalone: true,
-  imports: [
-    DropdownModule,
-    CommonModule,
-    FormsModule,
-    SliderModule,
-    CustomTableComponent,
-  ],
-  templateUrl: './logbook.component.html',
-  styleUrl: './logbook.component.scss',
+    selector: 'app-logbook',
+    imports: [
+        SelectModule,
+        CommonModule,
+        FormsModule,
+        SliderModule,
+        CustomTableComponent,
+    ],
+    templateUrl: './logbook.component.html',
+    styleUrl: './logbook.component.scss'
 })
 export class LogbookComponent {
   @ViewChild('monthColumnsTemplate', { static: true })
@@ -47,10 +46,9 @@ export class LogbookComponent {
     null,
   );
   yearOptions = signal<number[] | undefined>(undefined);
-
+  selectedYear!: number;
   columns!: Column[];
   tableLoading = false;
-  selectedYear!: number;
 
   ngOnInit() {
     this.defineColumns();
