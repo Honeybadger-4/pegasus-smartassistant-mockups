@@ -141,6 +141,16 @@
     }
   }
 
+  .form-item-container {
+    .datepicker {
+      input {
+        padding-top: 15px !important;
+        padding-left: 10px !important;
+        padding-bottom: 10px !important;
+      }
+    }
+  }
+
   .history-tooltip {
     .p-tooltip-text {
       width: 250px;

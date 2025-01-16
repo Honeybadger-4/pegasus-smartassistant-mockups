@@ -23,6 +23,8 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
+import { DatePickerModule } from 'primeng/datepicker';
+
 
 @Component({
   selector: 'app-logbook-edit',
@@ -41,6 +43,7 @@ import { TooltipModule } from 'primeng/tooltip';
     RadioButtonModule,
     ProgressSpinnerModule,
     TooltipModule,
+    DatePickerModule,
   ],
   providers: [ConfirmationService],
   templateUrl: './logbook-detail-edit.component.html',
@@ -80,8 +83,8 @@ export class LogbookDetailEditComponent implements OnInit {
       aircraftReg: [this.editDefaultData()?.aircraftReg],
       departure: [this.editDefaultData()?.departure],
       arrival: [this.editDefaultData()?.arrival],
-      depTime: [this.editDefaultData()?.depTime],
-      arrTime: [this.editDefaultData()?.arrTime],
+      departureTime: [this.editDefaultData()?.departureTime],
+      arrivalTime: [this.editDefaultData()?.arrivalTime],
       engineType: [this.editDefaultData()?.engineType],
       pic: [this.editDefaultData()?.pic],
       multiPilotTime: [this.editDefaultData()?.multiPilotTime],
@@ -100,8 +103,8 @@ export class LogbookDetailEditComponent implements OnInit {
       pilotFunctionCoPilot: [this.editDefaultData()?.pilotFunctionCoPilot],
       pilotFunctionDual: [this.editDefaultData()?.pilotFunctionDual],
       // Operation Condition Timek
-      nightTime: [this.editDefaultData()?.nightTime],
-      ifrTime: [this.editDefaultData()?.ifrTime],
+      night: [this.editDefaultData()?.night],
+      ifr: [this.editDefaultData()?.ifr],
     });
 
     this.logbookFormGroup.disable();

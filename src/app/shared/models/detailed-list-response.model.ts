@@ -41,9 +41,9 @@ export interface IDetailedListContentData {
   aircraftType: string;
   aircraftReg: string;
   departure: string;
-  depTime: string;
+  departureTime: string;
   arrival: string;
-  arrTime: string;
+  arrivalTime: string;
   totalTime: string;
   status: string;
   pic: string | null;
@@ -56,8 +56,8 @@ export interface IDetailedListContentData {
   pilotFunctionPic: string;
   pilotFunctionCoPilot: string;
   pilotFunctionDual: string | null;
-  nightTime: string | null;
-  ifrTime: string | null;
+  night: string | null;
+  ifr: string | null;
   engineType: string;
   instructor: string;
   remarksAndEndorsements: string;
