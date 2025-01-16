@@ -134,18 +134,13 @@
       </ng-template>
 
       <!-- Row Expansion Content -->
-      <ng-template pTemplate="rowexpansion">
+      <ng-template #expandedrow>
         <tr>
           <td colspan="12">
             <div>
               <app-custom-table
-              [tableData]="routeDetailHistoryTableData()"
-              [tableColumns]="detailsCols"
-              [tableLoading]="tableLoading"
-      (pageEvent)="pageEvent($event)"
-
-
-                
+                [tableData]="detailsData"
+                [tableColumns]="detailsCols"
               ></app-custom-table>
             </div>
           </td>

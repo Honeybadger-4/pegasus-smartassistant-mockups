@@ -13,19 +13,12 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
-
 import { RouteService } from '@shared/services/route.service';
 import { Column } from '@shared/models/columns';
 import {
   IRouteResponse,
   IRouteTableData,
 } from '@shared/models/route-response.model';
-
-import { FlightInfoRoutesService } from '@shared/services/route-details.service';
-import {
-  IRouteDetail,
-  IRouteDetailResponse,
-} from '@shared/models/ route-details-response.model';
 
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
@@ -52,7 +45,6 @@ import moment from 'moment';
     ButtonModule,
     TabViewModule,
     CustomTableComponent,
-
     FormsModule,
     CalendarModule,
     FormsModule,
@@ -62,29 +54,106 @@ import moment from 'moment';
   styleUrl: './route.component.scss',
 })
 export class RouteComponent {
-  @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
-
   @ViewChild('expandableTableDocumentsIconTemplate', { static: true })
   expandableTableDocumentsIconTemplate!: TemplateRef<any>;
+  detailsData = [
+    {
+      airway: 'UGB',
+      wpt: 'GOBIT',
+      mora: '86',
+      fl: 'CLB',
+      shr: '-',
+      avtt: '110',
+      wv: '269/02',
+      dist: '54',
+      rd: '152',
+      pf: '152',
+      fu: '-1042',
+      rf: '-823',
+      afDf: '00:00',
+      min: '00:00',
+      tw: '05:10',
+      atDt: '00:00',
+      acc: '05:10',
+    },
+    {
+      airway: 'UGB',
+      wpt: 'GOBIT',
+      mora: '86',
+      fl: 'CLB',
+      shr: '-',
+      avtt: '110',
+      wv: '269/02',
+      dist: '54',
+      rd: '152',
+      pf: '152',
+      fu: '-1042',
+      rf: '-823',
+      afDf: '00:00',
+      min: '00:00',
+      tw: '05:10',
+      atDt: '00:00',
+      acc: '05:10',
+    },
+    {
+      airway: 'UGB',
+      wpt: 'GOBIT',
+      mora: '86',
+      fl: 'CLB',
+      shr: '-',
+      avtt: '110',
+      wv: '269/02',
+      dist: '54',
+      rd: '152',
+      pf: '152',
+      fu: '-1042',
+      rf: '-823',
+      afDf: '00:00',
+      min: '00:00',
+      tw: '05:10',
+      atDt: '00:00',
+      acc: '05:10',
+    },
+    {
+      airway: 'UGB',
+      wpt: 'GOBIT',
+      mora: '86',
+      fl: 'CLB',
+      shr: '-',
+      avtt: '110',
+      wv: '269/02',
+      dist: '54',
+      rd: '152',
+      pf: '152',
+      fu: '-1042',
+      rf: '-823',
+      afDf: '00:00',
+      min: '00:00',
+      tw: '05:10',
+      atDt: '00:00',
+      acc: '05:10',
+    },
+  ];
+
+
+
 
   formBuilder = inject(FormBuilder);
   routeService = inject(RouteService);
-  flightInfoRoutesService = inject(FlightInfoRoutesService);
 
   filterFormGroup!: FormGroup;
   mainCols!: Column[];
   detailsCols!: Column[];
   dateRange: Date[] = [];
   expandedRows = {};
+
+
   currentPage = 0;
   currentRows = 20;
   tableLoading: boolean = false;
 
   routeHistoryData = signal<IRouteResponse | null>(null);
   routeHistoryTableData = signal<IRouteTableData[]>([]);
-
-  routeDetailHistoryData = signal<IRouteDetailResponse | null>(null);
-  routeDetailHistoryTableData = signal<IRouteDetail[]>([]);
 
   ngOnInit() {
     this.builder();
@@ -144,11 +213,12 @@ export class RouteComponent {
     ];
   }
 
+
   getRoute() {
     this.tableLoading = true;
 
     const formValues = this.filterFormGroup.value;
-    const username = formValues.username?.trim() || null;
+    const user = formValues.user?.trim() || null;
     const flightNo = formValues.flightNo?.trim() || null;
     const depPort = formValues.depPort?.trim() || null;
     const arrPort = formValues.arrPort?.trim() || null;
@@ -172,10 +242,10 @@ export class RouteComponent {
         this.currentRows,
         startDate,
         endDate,
+        user,
         flightNo,
         depPort,
         arrPort,
-        username,
       )
       .subscribe({
         next: (response) => {
@@ -189,18 +259,6 @@ export class RouteComponent {
       });
   }
 
-  getFlightInfoRoutes(flightPlanId: number) {
-    this.tableLoading = true;
-  
-  
-    this.flightInfoRoutesService.getFlightInfoRoutes(flightPlanId)
-      .subscribe((response: IRouteDetailResponse) => {
-        this.routeDetailHistoryData.set(response);
-        this.routeDetailHistoryTableData.set(response.routes[0]);
-        this.tableLoading = false;
-      });
-  }
-  
   onFilterSubmit() {
     this.getRoute();
   }
@@ -220,16 +278,8 @@ export class RouteComponent {
   }
 
   onRowExpand(event: TableRowExpandEvent) {
-    const flightPlanId = event.data.flightPlanId;
-    
-    this.flightInfoRoutesService.getFlightInfoRoutes(flightPlanId)
-      .subscribe((response: IRouteDetailResponse) => {
-        this.routeDetailHistoryData.set(response);
-        this.routeDetailHistoryTableData.set(response.routes[0]);
-        this.tableLoading = false;
-      });
+    console.log('Expanded: ', event);
   }
-  
 
   onRowCollapse(event: TableRowCollapseEvent) {
     console.log('Collapsed: ', event);
