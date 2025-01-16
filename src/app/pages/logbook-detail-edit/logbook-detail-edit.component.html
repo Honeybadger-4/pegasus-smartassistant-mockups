@@ -206,7 +206,11 @@
           <!-- Departure Time -->
           <div class="col-span-6 form-item-container">
             <p-floatLabel variant="on" class="custom-float-label-field w-full">
-              <input pInputText id="departureTime" formControlName="departureTime" />
+              <input
+                pInputText
+                id="departureTime"
+                formControlName="departureTime"
+              />
               <label for="departureTime">Departure Time</label>
             </p-floatLabel>
 
@@ -226,7 +230,11 @@
           <!-- Arrival Time -->
           <div class="col-span-6 form-item-container">
             <p-floatLabel variant="on" class="custom-float-label-field w-full">
-              <input pInputText id="arrivalTime" formControlName="arrivalTime" />
+              <input
+                pInputText
+                id="arrivalTime"
+                formControlName="arrivalTime"
+              />
               <label for="arrivalTime">Arrival Time</label>
             </p-floatLabel>
 
@@ -351,7 +359,10 @@
             <div class="mb-5 grid grid-cols-2 gap-2">
               <!-- Day -->
               <div class="form-item-container">
-                <p-floatLabel variant="on" class="custom-float-label-field w-full">
+                <p-floatLabel
+                  variant="on"
+                  class="custom-float-label-field w-full"
+                >
                   <input
                     pInputText
                     id="dayLanding"
@@ -375,7 +386,10 @@
 
               <!-- Night -->
               <div class="form-item-container">
-                <p-floatLabel variant="on" class="custom-float-label-field w-full">
+                <p-floatLabel
+                  variant="on"
+                  class="custom-float-label-field w-full"
+                >
                   <input
                     pInputText
                     id="nightLanding"
@@ -400,7 +414,10 @@
 
             <!-- Instructor -->
             <div class="form-item-container">
-              <p-floatLabel variant="on" class="custom-float-label-field w-full">
+              <p-floatLabel
+                variant="on"
+                class="custom-float-label-field w-full"
+              >
                 <input
                   pInputText
                   id="instructor"
@@ -629,9 +646,7 @@
                 historyTooltipIcon;
                 context: {
                   fieldName: 'ifr',
-                  data: generateHistoryTooltip(
-                    editDefaultData()?.changes?.ifr
-                  ),
+                  data: generateHistoryTooltip(editDefaultData()?.changes?.ifr),
                 }
               "
             />
@@ -641,7 +656,9 @@
     </form>
   </section>
 
-  <p-confirmDialog styleClass="custom-confirm-dialog-container"></p-confirmDialog>
+  <p-confirmDialog
+    styleClass="custom-confirm-dialog-container"
+  ></p-confirmDialog>
 
   <!-- Reject Reason Dialog -->
   <p-dialog

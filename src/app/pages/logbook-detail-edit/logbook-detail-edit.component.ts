@@ -25,7 +25,6 @@ import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 import { DatePickerModule } from 'primeng/datepicker';
 
-
 @Component({
   selector: 'app-logbook-edit',
   imports: [
