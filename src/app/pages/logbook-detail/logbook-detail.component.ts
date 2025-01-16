@@ -101,13 +101,13 @@ export class LogbookDetailComponent {
   statusOptions = signal<ILogbookStatusListResponse[]>([]);
   selectedCheckbox = signal<IDetailedListContentData[]>([]);
   displayPreviewDialog = signal<boolean>(false);
-  startDate = signal<string>("");
-  endDate = signal<string>("");
+  startDate = signal<string>('');
+  endDate = signal<string>('');
   statusFilter = '';
 
   ngOnInit() {
     this.crewListTableData = history.state.data;
-    this.startDate.set(this.dateRangeDefaultValue()[0].toString())
+    this.startDate.set(this.dateRangeDefaultValue()[0].toString());
     this.endDate.set(this.dateRangeDefaultValue()[1].toString());
 
     this.defineColumn();
@@ -210,7 +210,7 @@ export class LogbookDetailComponent {
     let year = new Date(this.crewListTableData.yearMonth).getFullYear();
     let month = new Date(this.crewListTableData.yearMonth).getMonth();
     let startDate = moment(new Date(year, month, 1)).format();
-    let endDate = moment(new Date(year, month + 1 , 0)).format();
+    let endDate = moment(new Date(year, month + 1, 0)).format();
 
     return [startDate, endDate];
   }

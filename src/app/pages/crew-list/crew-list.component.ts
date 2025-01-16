@@ -80,11 +80,11 @@ export class CrewListComponent {
       { field: 'companyId', header: 'Company ID' },
       { field: 'totalNumberOfLog', header: 'Total Number of Log' },
       ...(this.logbookDashboardData()?.logbookType !== 'TRAINING'
-      ? [{ field: 'flightLog', header: 'Flight Log' }]
-      : []),
-    ...(this.logbookDashboardData()?.logbookType === 'TRAINING'
-      ? [{ field: 'simulatorFlightLogs', header: 'Simulator Flight Logs' }]
-      : []),
+        ? [{ field: 'flightLog', header: 'Flight Log' }]
+        : []),
+      ...(this.logbookDashboardData()?.logbookType === 'TRAINING'
+        ? [{ field: 'simulatorFlightLogs', header: 'Simulator Flight Logs' }]
+        : []),
       { field: 'approvedLogs', header: 'Approved Logs' },
       { field: 'reassignedLogs', header: 'Reassing Logs' },
       { field: '', header: '', template: this.linkedNextPageTemplate },

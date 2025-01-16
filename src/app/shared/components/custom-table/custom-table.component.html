@@ -3,7 +3,7 @@
   [value]="tableData()"
   [columns]="tableColumns()"
   [dataKey]="dataKeyId()"
-  stripedRows 
+  stripedRows
   [loading]="tableLoading()"
   [lazy]="true"
   [paginator]="isPaginator()"
@@ -53,7 +53,7 @@
     <ng-container *ngTemplateOutlet="footerTemplate()"></ng-container>
   </ng-template>
 
-  <ng-template #emptymessage >
+  <ng-template #emptymessage>
     <tr>
       <td colspan="50">No data found.</td>
     </tr>
