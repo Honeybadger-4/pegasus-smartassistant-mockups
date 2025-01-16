@@ -2,21 +2,22 @@
   <div class="flex items-center justify-between">
     <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" />
 
-    <p-iconField
-      iconPosition="right"
-      class="custom-icon-field w-[234px] h-[24px]"
-    >
-      <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
-      <input
-        type="text"
-        #searchInput
-        [(ngModel)]="searchInputValue"
-        (ngModelChange)="onChangeSearch($event)"
-        pInputText
-        placeholder="Crew Name&Surname / Company ID"
-        class="h-full"
-      />
-    </p-iconField>
+    <div class=" w-[234px]">
+      <p-iconField
+        iconPosition="right"
+        class="custom-icon-field"
+      >
+        <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+        <input
+          type="text"
+          pInputText
+          #searchInput
+          [(ngModel)]="searchInputValue"
+          (ngModelChange)="onChangeSearch($event)"
+          placeholder="Crew Name&Surname / Company ID"
+        />
+      </p-iconField>
+    </div>
   </div>
 
   <section class="chart-panel-section mt-5">

@@ -25,6 +25,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { SliderModule } from 'primeng/slider';
 import { PanelModule } from 'primeng/panel';
 import { MenuItem } from 'primeng/api';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-logbook',
@@ -35,6 +36,7 @@ import { MenuItem } from 'primeng/api';
     CustomTableComponent,
     IconFieldModule,
     InputIconModule,
+    InputTextModule,
     SliderModule,
     PanelModule,
   ],
@@ -64,6 +66,7 @@ export class CrewListComponent {
 
   ngOnInit() {
     this.logbookDashboardData.set(history.state.data);
+    console.log(this.logbookDashboardData());
 
     this.defineColumns();
     this.getCrewList();
@@ -76,8 +79,12 @@ export class CrewListComponent {
       { field: 'crewNameSurname', header: 'Crew Name & Surname' },
       { field: 'companyId', header: 'Company ID' },
       { field: 'totalNumberOfLog', header: 'Total Number of Log' },
-      { field: 'flightLog', header: 'Flight Log' },
-      { field: 'simulatorFlightLogs', header: 'Simulator Flight Logs' },
+      ...(this.logbookDashboardData()?.logbookType !== 'TRAINING'
+      ? [{ field: 'flightLog', header: 'Flight Log' }]
+      : []),
+    ...(this.logbookDashboardData()?.logbookType === 'TRAINING'
+      ? [{ field: 'simulatorFlightLogs', header: 'Simulator Flight Logs' }]
+      : []),
       { field: 'approvedLogs', header: 'Approved Logs' },
       { field: 'reassignedLogs', header: 'Reassing Logs' },
       { field: '', header: '', template: this.linkedNextPageTemplate },
