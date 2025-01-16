@@ -2,7 +2,7 @@
   .button-group {
     .p-button {
       background-color: #feb914;
-      width: 100px;
+      width: 72px;
       color: #fff;
       border: none;
       border-radius: 5px;
@@ -10,73 +10,64 @@
     }
   }
 
-  .popup-content {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: 16px;
-    width: 740px;
-
-    .title {
-      border-bottom: 1px solid #4f4f4f;
-      padding-bottom: 8px;
-    }
-
-    .popup-header {
-      font-size: 16px;
-      color: #4f4f4f;
+  .reject-reason-dialog {
+    .popup-content {
       display: flex;
-      gap: 20px;
-      align-items: center;
-
-      p {
-        font-size: 14px;
-        color: #4f4f4f;
-        margin: 0;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px;
+      width: 740px;
+  
+      .title {
+        border-bottom: 1px solid #4f4f4f;
+        padding-bottom: 8px;
       }
-    }
-
-    .custom-textarea {
-      width: 100%;
-      border: 1px solid #4f4f4f;
-      border-radius: 8px;
-      padding: 12px;
-      background-color: #f5f5f5;
-    }
-
-    .popup-footer {
-      display: flex;
-      justify-content: flex-end;
-
-      .submit-button {
-        width: 145px;
-        background-color: #feb914;
-        color: #1f252c;
-        border: none;
-        border-radius: 8px;
-        padding: 10px 20px;
+  
+      .popup-info {
         font-size: 16px;
-        font-weight: 500;
+        color: #4f4f4f;
+        display: flex;
+        gap: 20px;
+        align-items: center;
+  
+        p {
+          font-size: 14px;
+          color: #4f4f4f;
+          margin: 0;
+        }
+      }
+  
+      .reject-reason-textarea {
+        width: 100%;
+        border: 1px solid #4f4f4f;
+        border-radius: 8px;
+        padding: 12px;
+        background-color: #f5f5f5;
+      }
+  
+      .popup-footer {
+        display: flex;
+        justify-content: flex-end;
+  
+        .submit-button {
+          width: 145px;
+          background-color: #feb914;
+          color: #1f252c;
+          border: none;
+          border-radius: 8px;
+          padding: 10px 20px;
+          font-size: 16px;
+          font-weight: 500;
+        }
       }
     }
   }
+
+
 }
 
 ::ng-deep {
   #LogbookDetailPage {
-    .filter-submit-btn {
-      .p-button {
-        background-color: #feb914;
-        border-color: #feb914;
-        width: 30px;
-        height: 30px;
-
-        .p-button-icon {
-          font-size: 14px;
-        }
-      }
-    }
-
     .p-confirm-dialog .p-dialog-footer {
       display: flex;
     }
@@ -88,6 +79,11 @@
     }
 
     // Table checbox style
+    .p-checkbox-checked .p-checkbox-box {
+      background: #feb914;
+      border-color: #feb914;
+    }
+
     .p-checkbox-box {
       width: 14px;
       height: 14px;
@@ -96,15 +92,6 @@
       transition: all 0.3s ease;
       outline: none !important;
       box-shadow: none;
-
-      &:hover {
-        border-color: #feb914;
-      }
-
-      &.p-highlight {
-        background: #feb914;
-        border-color: #feb914;
-      }
 
       .p-checkbox-icon {
         color: white;

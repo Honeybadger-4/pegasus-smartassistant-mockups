@@ -66,8 +66,10 @@ import moment from 'moment';
 })
 export class LogbookDetailComponent {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
-  @ViewChild('updatedDateCellBodyTemplate', { static: true })
-  updatedDateCellBodyTemplate!: TemplateRef<any>;
+  @ViewChild('dateColumnTemplate', { static: true })
+  dateColumnTemplate!: TemplateRef<any>;
+  @ViewChild('updatedDateColumnTemplate', { static: true })
+  updatedDateColumnTemplate!: TemplateRef<any>;
   @ViewChild('previewCellBodyTemplate', { static: true })
   previewCellBodyTemplate!: TemplateRef<any>;
   @ViewChild('editableCellBodyTemplate', { static: true })
@@ -79,17 +81,13 @@ export class LogbookDetailComponent {
   logbookService = inject(LogbookService);
   messageService = inject(MessageService);
   confirmationService = inject(ConfirmationService);
-  formBuilder = inject(FormBuilder);
   showToastService = inject(ShowToastService);
 
   breadcrumbItems = [
-    { label: 'Logbook', route: '/logbook' },
-    { label: 'Crew List', route: '/logbook/crew-list' },
+    { label: 'Logbook' },
+    { label: 'Crew List' },
     { label: 'Logbook Detail List' },
   ];
-  filterFormGroup!: FormGroup;
-  minDate = new Date();
-  maxDate = new Date();
   columns: Column[] = [];
   crewListTableData!: ILogbookCrewListContentData;
   currentPage = 0;
@@ -103,27 +101,23 @@ export class LogbookDetailComponent {
   statusOptions = signal<ILogbookStatusListResponse[]>([]);
   selectedCheckbox = signal<IDetailedListContentData[]>([]);
   displayPreviewDialog = signal<boolean>(false);
+  startDate = signal<string>("");
+  endDate = signal<string>("");
+  statusFilter = '';
 
   ngOnInit() {
     this.crewListTableData = history.state.data;
+    this.startDate.set(this.dateRangeDefaultValue()[0].toString())
+    this.endDate.set(this.dateRangeDefaultValue()[1].toString());
 
-    this.builder();
     this.defineColumn();
     this.getDetailedList();
     this.getLogbookStatusList();
-    this.setCalendarMinMaxDate();
-  }
-
-  builder() {
-    this.filterFormGroup = this.formBuilder.group({
-      status: [''],
-      dateRange: [this.dateRangeDefaultValue()],
-    });
   }
 
   defineColumn() {
     this.columns = [
-      { field: 'date', header: 'Date' },
+      { field: 'date', header: 'Date', template: this.dateColumnTemplate },
       { field: 'dutyType', header: 'Duty Type' },
       { field: 'aircraftType', header: 'A/C Type' },
       { field: 'aircraftReg', header: 'A/C Reg' },
@@ -132,10 +126,11 @@ export class LogbookDetailComponent {
       { field: 'arrival', header: 'Arrival' },
       { field: 'arrTime', header: 'Arrival Time' },
       { field: 'totalTime', header: 'Total Time' },
+      { field: 'multiPilotTime', header: 'Multi Pilot Time' },
       {
         field: 'updatedDate',
         header: 'Update Date',
-        template: this.updatedDateCellBodyTemplate,
+        template: this.updatedDateColumnTemplate,
       },
       { field: 'uploadReason', header: 'Comment' },
       { field: 'lastReviewedAdmin', header: 'Reviewed By' },
@@ -148,24 +143,13 @@ export class LogbookDetailComponent {
   // API Calls Operations
   getDetailedList() {
     this.tableLoading = true;
-    const status = this.filterFormGroup.get('status')?.value;
-    let formattedStartDate = '';
-    let formattedEndDate = '';
-    if (this.filterFormGroup.get('dateRange')?.value) {
-      const startDate = this.filterFormGroup.get('dateRange')?.value[0];
-      const endDate = this.filterFormGroup.get('dateRange')?.value[1];
-
-      formattedStartDate = startDate ? moment(startDate).format() : '';
-
-      formattedEndDate = endDate ? moment(endDate).format() : '';
-    }
 
     const requestBody: IDetailedListRequest = {
       monthLogId: this.crewListTableData.monthlyLogbookId,
       logbookType: this.crewListTableData.logbookType,
-      status: status,
-      startDate: formattedStartDate,
-      endDate: formattedEndDate,
+      status: this.statusFilter,
+      startDate: this.startDate(),
+      endDate: this.endDate(),
     };
 
     this.logbookService
@@ -225,28 +209,10 @@ export class LogbookDetailComponent {
     this.crewListTableData.yearMonth;
     let year = new Date(this.crewListTableData.yearMonth).getFullYear();
     let month = new Date(this.crewListTableData.yearMonth).getMonth();
-    let startDate = new Date(year, month, 1);
-    let endDate = new Date(year, month, 2);
+    let startDate = moment(new Date(year, month, 1)).format();
+    let endDate = moment(new Date(year, month + 1 , 0)).format();
 
     return [startDate, endDate];
-  }
-
-  setCalendarMinMaxDate() {
-    let defaultDate = new Date(this.crewListTableData.yearMonth);
-    this.minDate = new Date(
-      defaultDate.getFullYear(),
-      defaultDate.getMonth(),
-      1,
-    );
-    this.maxDate = new Date(
-      defaultDate.getFullYear(),
-      defaultDate.getMonth() + 1,
-      0,
-    );
-  }
-
-  onFilterSubmit() {
-    this.getDetailedList();
   }
 
   // Approve and Reject Operations
@@ -303,26 +269,6 @@ export class LogbookDetailComponent {
   }
 
   // Other Operations
-  dateTitleTemplate() {
-    let dateFormat = '';
-
-    if (this.crewListTableData.yearMonth) {
-      dateFormat = moment(this.crewListTableData.yearMonth).format('MMMM YYYY');
-    }
-
-    return dateFormat;
-  }
-
-  updatedDateTemplate(rowData: IDetailedListContentData) {
-    let dateFormat = '';
-
-    if (rowData.updatedDate) {
-      dateFormat = moment(rowData.updatedDate).format('DD/MM/YYYY hh:mm');
-    }
-
-    return dateFormat;
-  }
-
   goToLogBookDetailEditPage(data: IDetailedListContentData) {
     this.router.navigate(['logbook/logbook-detail-edit'], {
       state: { logId: data.logId },
