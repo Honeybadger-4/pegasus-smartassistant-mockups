@@ -60,13 +60,13 @@ export class CrewListComponent {
   columns!: Column[];
   currentPage = 0;
   currentRows = 20;
+  tableLoading: boolean = false;
   crewListData = signal<ILogbookCrewListResponse | null>(null);
   crewListContentData = signal<ILogbookCrewListContentData[]>([]);
   logbookDashboardData = signal<any>(null);
 
   ngOnInit() {
     this.logbookDashboardData.set(history.state.data);
-    console.log(this.logbookDashboardData());
 
     this.defineColumns();
     this.getCrewList();
@@ -92,6 +92,7 @@ export class CrewListComponent {
   }
 
   getCrewList() {
+    this.tableLoading = true;
     this.logbookService
       .getCrewList(
         this.logbookDashboardData()?.logbookType,
@@ -104,9 +105,11 @@ export class CrewListComponent {
         next: (response) => {
           this.crewListData.set(response);
           this.crewListContentData.set(response.content);
+          this.tableLoading = false;
         },
         error: (error) => {
           console.error(error);
+          this.tableLoading = false;
         },
       });
   }

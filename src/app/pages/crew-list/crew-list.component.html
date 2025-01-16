@@ -70,6 +70,7 @@
       [tableData]="crewListContentData()"
       [tableColumns]="columns"
       [totalRecords]="crewListData()?.totalElements || 0"
+      [tableLoading]="tableLoading"
       (pageEvent)="pageEvent($event)"
     ></app-custom-table>
   </section>
