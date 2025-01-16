@@ -97,6 +97,10 @@
       (onPage)="pageEvent($event)"
       (onRowExpand)="onRowExpand($event)"
       (onRowCollapse)="onRowCollapse($event)"
+      [expandedRowKeys]="expandedRows"
+     
+
+
     >
       <!-- Table Header -->
       <ng-template pTemplate="header" let-columns>
@@ -134,7 +138,7 @@
       </ng-template>
 
       <!-- Row Expansion Content -->
-      <ng-template #expandedrow>
+      <ng-template pTemplate="rowexpansion">
         <tr>
           <td colspan="12">
             <div>
