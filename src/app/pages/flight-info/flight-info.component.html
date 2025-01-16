@@ -2,13 +2,11 @@
   <section class="table-header-container lg:flex block">
     <!-- Header Title -->
     <p class="header-title">Flight Information List</p>
-    <form [formGroup]="filterFormGroup">
+        <!-- Filter Inputs -->
 
-
-
+    <form [formGroup]="filterFormGroup" (ngSubmit)="onFilterSubmit()">
       <div class="flex justify-between items-center gap-4">
 
-        <!-- Filter Inputs and Dropdown -->
         <div class="grid grid-cols-10 gap-4 items-center">
           <div class="lg:col-span-2 md:col-span-6 col-span-12">
             <p-iconField iconPosition="right" class="custom-icon-field">

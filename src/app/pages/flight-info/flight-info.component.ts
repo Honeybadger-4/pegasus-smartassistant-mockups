@@ -19,6 +19,7 @@ import {
 } from '@angular/forms';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+
 @Component({
   selector: 'app-flight-info',
   standalone: true,
@@ -27,7 +28,8 @@ import { InputIconModule } from 'primeng/inputicon';
     TableModule,
     ButtonModule,
     TabViewModule,
-    CustomTableComponent,    IconFieldModule,
+    CustomTableComponent,
+    IconFieldModule,
     InputIconModule,
     InputTextModule,
     FormsModule,
@@ -617,4 +619,8 @@ export class FlightInfoComponent {
   activeTabIndexChange(value: number) {
     console.log('Tab changed: ', value);
   }
+
+  onFilterSubmit() {
+  }
 }
+

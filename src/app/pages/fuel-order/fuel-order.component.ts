@@ -6,7 +6,6 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-
 import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
 import { FuelOrderService } from '@shared/services/fuel-order.service';
 import { Column } from '@shared/models/columns';
@@ -14,15 +13,11 @@ import {
   IFuelOrderResponse,
   IFuelOrderTableData,
 } from '@shared/models/fuel-order-response.model';
-
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
 import moment from 'moment';
-
-
-
 
 @Component({
   selector: 'app-fuel',
@@ -40,8 +35,6 @@ import moment from 'moment';
   templateUrl: './fuel-order.component.html',
   styleUrl: './fuel-order.component.scss',
 })
-
-
 export class FuelOrderComponent {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
   formBuilder = inject(FormBuilder);

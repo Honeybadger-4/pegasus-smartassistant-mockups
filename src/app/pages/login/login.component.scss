@@ -80,12 +80,13 @@ body {
     .error-text {
       color: #eb4d55;
       margin-top: 0.25rem;
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 500;
       line-height: 20px;
       text-align: left;
       width: 113px;
       height: 20px;
+      display: inline-block;
     }
   }
 }
