@@ -118,12 +118,13 @@
 
           <!-- Date -->
           <div class="col-span-6 form-item-container">
-            <p-datepicker
+            <p-floatlabel variant="on" class="w-full">
+              <p-datepicker
+              inputId="date"
               formControlName="date"
               [readonlyInput]="true"
               dateFormat="dd/mm/yy"
-              placeholder="Date"
-              class="custom-calendar datepicker w-full"
+              class="custom-calendar datepicker"
             />
 
             <ng-container
@@ -137,6 +138,8 @@
                 }
               "
             />
+            <label for="date">Date</label>
+          </p-floatlabel>
           </div>
 
           <!-- Aircraft Reg -->
@@ -255,7 +258,7 @@
           <div class="col-span-6 form-item-container">
             <div class="grid grid-cols-2 gap-2 w-full relative">
               <!-- SE -->
-              <div class="radio-button-container">
+              <div class="radio-button-container" [ngClass]="{'radio-button-container-disabled': logbookFormGroup.disabled}">
                 <label for="se">SE</label>
                 <p-radioButton
                   name="engineType"
@@ -266,7 +269,7 @@
               </div>
 
               <!-- ME -->
-              <div class="radio-button-container">
+              <div class="radio-button-container" [ngClass]="{'radio-button-container-disabled': logbookFormGroup.disabled}">
                 <label for="me">ME</label>
                 <p-radioButton
                   name="engineType"
@@ -356,7 +359,7 @@
           <!-- Landing -->
           <div class="col-span-6">
             <p class="mb-5 flex justify-start">Landing</p>
-            <div class="mb-5 grid grid-cols-2 gap-2">
+            <div class="mb-5 grid grid-cols-2 gap-4">                
               <!-- Day -->
               <div class="form-item-container">
                 <p-floatLabel
@@ -366,22 +369,11 @@
                   <input
                     pInputText
                     id="dayLanding"
-                    formControlName="dayLanding"
+                    [value]="editDefaultData()?.landing === 'DAY' ? 1 : '---'"
+                    [disabled]="true"
                   />
                   <label for="dayLanding">Day</label>
                 </p-floatLabel>
-
-                <ng-container
-                  *ngTemplateOutlet="
-                    historyTooltipIcon;
-                    context: {
-                      fieldName: 'dayLanding',
-                      data: generateHistoryTooltip(
-                        editDefaultData()?.changes?.dayLanding
-                      ),
-                    }
-                  "
-                />
               </div>
 
               <!-- Night -->
@@ -393,22 +385,11 @@
                   <input
                     pInputText
                     id="nightLanding"
-                    formControlName="nightLanding"
+                    [value]="editDefaultData()?.landing === 'NIGHT' ? 1 : '---'"
+                    [disabled]="true"
                   />
                   <label for="nightLanding">Night</label>
                 </p-floatLabel>
-
-                <ng-container
-                  *ngTemplateOutlet="
-                    historyTooltipIcon;
-                    context: {
-                      fieldName: 'nightLanding',
-                      data: generateHistoryTooltip(
-                        editDefaultData()?.changes?.nightLanding
-                      ),
-                    }
-                  "
-                />
               </div>
             </div>
 
@@ -441,15 +422,11 @@
           </div>
 
           <!-- Remarks -->
-          <p-floatLabel class="custom-float-label-field col-span-6">
-            <textarea
-              pInputTextarea
-              id="remarksAndEndorsements"
-              formControlName="remarksAndEndorsements"
-              class="w-full h-36 mt-1"
-            ></textarea>
-            <label for="remarksAndEndorsements">Remarks And Endorsements</label>
-          </p-floatLabel>
+          <div class="remarks-field col-span-6">
+            <p>Remarks And Endorsements</p>
+            <p>{{editDefaultData()?.signer}}</p>
+            <p>{{editDefaultData()?.signature}}</p>
+          </div>
         </div>
       </section>
 
@@ -715,8 +692,9 @@
       *ngIf="checkCahngedField(fieldName)"
       class="pi pi-info-circle history-icon"
       [pTooltip]="data"
-      tooltipPosition="top"
+      tooltipPosition="left"
       [escape]="false"
+      [autoHide]="false"
       tooltipStyleClass="history-tooltip"
     >
     </i>

@@ -88,11 +88,7 @@ export class LogbookDetailEditComponent implements OnInit {
       pic: [this.editDefaultData()?.pic],
       multiPilotTime: [this.editDefaultData()?.multiPilotTime],
       totalTime: [this.editDefaultData()?.totalTime],
-      // Landing
-      dayLanding: [this.editDefaultData()?.dayLanding],
-      nightLanding: [this.editDefaultData()?.nightLanding],
       instructor: [this.editDefaultData()?.instructor],
-      remarksAndEndorsements: [this.editDefaultData()?.remarksAndEndorsements],
       // Synthetic Training Devices Session
       syntheticTrainingDate: [this.editDefaultData()?.syntheticTrainingDate],
       syntheticTrainingType: [this.editDefaultData()?.syntheticTrainingType],

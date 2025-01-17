@@ -54,9 +54,9 @@
             <td>{{ detailedListRowData()?.aircraftReg }}</td>
             <td>{{ detailedListRowData()?.aircraftType }}</td>
             <td>{{ detailedListRowData()?.departure }}</td>
-            <td>{{ detailedListRowData()?.depTime }}</td>
+            <td>{{ detailedListRowData()?.departureTime }}</td>
             <td>{{ detailedListRowData()?.arrival }}</td>
-            <td>{{ detailedListRowData()?.arrTime }}</td>
+            <td>{{ detailedListRowData()?.arrivalTime }}</td>
             <td>
               @if (detailedListRowData()?.engineType === "SE") {
                 X
@@ -126,10 +126,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>{{ detailedListRowData()?.dayLanding }}</td>
-            <td>{{ detailedListRowData()?.nightLanding }}</td>
-            <td>{{ detailedListRowData()?.nightTime }}</td>
-            <td>{{ detailedListRowData()?.ifrTime }}</td>
+            <td>{{ detailedListRowData()?.landing === 'DAY' ? '1' : '---' }}</td>
+            <td>{{ detailedListRowData()?.landing === 'NIGHT' ? '1' : '---' }}</td>
+            <td>{{ detailedListRowData()?.night }}</td>
+            <td>{{ detailedListRowData()?.ifr }}</td>
             <td>{{ detailedListRowData()?.pilotFunctionPic }}</td>
             <td>{{ detailedListRowData()?.pilotFunctionCoPilot }}</td>
             <td>{{ detailedListRowData()?.pilotFunctionDual }}</td>

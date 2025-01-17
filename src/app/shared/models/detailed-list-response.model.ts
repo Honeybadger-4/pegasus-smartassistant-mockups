@@ -48,8 +48,7 @@ export interface IDetailedListContentData {
   status: string;
   pic: string | null;
   multiPilotTime: string;
-  dayLanding: string | null;
-  nightLanding: string | null;
+  landing: string;
   syntheticTrainingDate: string | null;
   syntheticTrainingType: string | null;
   syntheticTrainingTime: string | null;
@@ -60,10 +59,12 @@ export interface IDetailedListContentData {
   ifr: string | null;
   engineType: string;
   instructor: string;
-  remarksAndEndorsements: string;
   canReassign: boolean;
   lastReviewedAdmin: string;
   updatedDate: string;
   uploadReason: string;
   changes: any;
+  isSigned: boolean
+  signer: string,
+  signature: string,
 }

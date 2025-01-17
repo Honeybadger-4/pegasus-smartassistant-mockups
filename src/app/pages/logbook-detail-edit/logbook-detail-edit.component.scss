@@ -57,6 +57,17 @@
       }
     }
 
+    .remarks-field {
+      opacity: 0.6;
+      background-color: #f3f2f1;
+      border-color: #f3f2f1;
+      border-radius: 5px;
+      text-align: start;
+      padding: 10px;
+      height: 150px;
+      width: 100%;
+    }
+
     .radio-button-container {
       display: flex;
       justify-content: space-between;
@@ -66,9 +77,16 @@
       padding-left: 10px;
       padding-bottom: 10px;
       padding-top: 10px;
-      background-color: #f3f2f1;
+      background-color: #fff;
+      border: 1px solid #cbd5e1;
       border-radius: 5px;
       color: #4f4f4f;
+    }
+
+    .radio-button-container-disabled {
+      opacity: 0.6;
+      background-color: #f3f2f1;
+      border-color: #f3f2f1;
     }
 
     .custom-card {
@@ -152,11 +170,18 @@
   }
 
   .history-tooltip {
-    .p-tooltip-text {
-      width: 250px;
+      max-width: 300px;
       border-radius: 10px;
+      
+      .p-tooltip-text {
+        background-color: #fff !important;
+        color: #444444;
+      }
     }
-  }
+
+    .p-tooltip-left .p-tooltip-arrow {
+      border-left-color: #fff
+    }
 
   .custom-dialog-container {
     .p-dialog {
