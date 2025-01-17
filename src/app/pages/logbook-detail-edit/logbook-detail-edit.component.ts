@@ -286,4 +286,15 @@ export class LogbookDetailEditComponent implements OnInit {
     }
     return false;
   }
+
+  convertBase64ToImage(): string {
+    let signatureBase64 = this.editDefaultData()?.signature;
+
+    if(signatureBase64) {
+      let base64Obj = JSON.parse(signatureBase64)
+      return `data:image/jpeg;base64,${base64Obj.sign}`
+    }
+
+    return ""
+  }
 }

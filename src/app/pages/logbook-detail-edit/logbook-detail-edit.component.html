@@ -425,7 +425,7 @@
           <div class="remarks-field col-span-6">
             <p>Remarks And Endorsements</p>
             <p>{{editDefaultData()?.signer}}</p>
-            <p>{{editDefaultData()?.signature}}</p>
+            <img *ngIf="editDefaultData()?.isSigned" class="w-full h-[80px] object-cover" [src]="convertBase64ToImage()" />
           </div>
         </div>
       </section>
