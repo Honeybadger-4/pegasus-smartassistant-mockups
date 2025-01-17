@@ -1,39 +1,61 @@
 <main id="UserLoginHistoryPage">
   <section class="table-header-section lg:flex block">
-    <span class="header-title">User Login History</span>
+    <!-- Header Title -->
 
-    <!-- Filter Inputs and Dropdown -->
-    <div class="grid grid-cols-12 gap-4 items-center">
-      <!-- Username  Input -->
-      <div class="lg:col-span-4 md:col-span-6 col-span-12">
-        <p-iconField iconPosition="right" class="custom-icon-field">
-          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
-          <input type="text" pInputText placeholder="Username" />
-        </p-iconField>
-      </div>
+    <p class="header-title">User Login History</p>
 
-      <!-- Company Id Input -->
-      <div class="lg:col-span-4 md:col-span-6 col-span-12">
-        <p-iconField iconPosition="right" class="custom-icon-field">
-          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
-          <input type="text" pInputText placeholder="Company ID" />
-        </p-iconField>
-      </div>
+    <form [formGroup]="filterFormGroup" (ngSubmit)="onFilterSubmit()">
+      <div class="flex justify-between items-center gap-4">
+        <!-- Filter Inputs and Dropdown -->
+        <div class="grid grid-cols-12 gap-4 items-center">
+          <!-- Username  Input -->
+          <div class="lg:col-span-4 md:col-span-6 col-span-12">
+            <p-iconField iconPosition="right" class="custom-icon-field">
+              <input
+                type="text"
+                pInputText
+                placeholder="Username"
+                formControlName="username"
+              />
+            </p-iconField>
+          </div>
 
-      <!-- Calendar -->
-      <div class="lg:col-span-4 md:col-span-6 col-span-12">
-        <p-calendar
-          [(ngModel)]="dateRange"
-          (ngModelChange)="onDateRangeChange($event)"
-          selectionMode="range"
-          [showIcon]="false"
-          [readonlyInput]="true"
-          placeholder="Start Date - End Date"
-          dateFormat="dd/mm/yy"
-          class="custom-calendar"
-        ></p-calendar>
+          <!-- Company Id Input -->
+          <div class="lg:col-span-4 md:col-span-6 col-span-12">
+            <p-iconField iconPosition="right" class="custom-icon-field">
+              <input
+                type="text"
+                pInputText
+                placeholder="Company ID"
+                formControlName="companyID"
+              />
+            </p-iconField>
+          </div>
+
+          <!-- Calendar -->
+          <div class="lg:col-span-4 md:col-span-6 col-span-12">
+            <p-calendar
+              formControlName="dateRange"
+              selectionMode="range"
+              [showIcon]="false"
+              placeholder="Start Date - End Date"
+              dateFormat="dd/mm/yy"
+              class="custom-calendar"
+              readonlyInput
+            ></p-calendar>
+          </div>
+        </div>
+      <div>
+        <p-button
+          type="submit"
+          icon="pi pi-search"
+          [rounded]="true"
+          class="filter-submit-btn"
+        />
       </div>
     </div>
+
+    </form>
   </section>
 
   <section class="table-section custom-card">
