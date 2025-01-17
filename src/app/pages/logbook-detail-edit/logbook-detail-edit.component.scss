@@ -170,18 +170,18 @@
   }
 
   .history-tooltip {
-      max-width: 300px;
-      border-radius: 10px;
-      
-      .p-tooltip-text {
-        background-color: #fff !important;
-        color: #444444;
-      }
-    }
+    max-width: 300px;
+    border-radius: 10px;
 
-    .p-tooltip-left .p-tooltip-arrow {
-      border-left-color: #fff
+    .p-tooltip-text {
+      background-color: #fff !important;
+      color: #444444;
     }
+  }
+
+  .p-tooltip-left .p-tooltip-arrow {
+    border-left-color: #fff;
+  }
 
   .custom-dialog-container {
     .p-dialog {

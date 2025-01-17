@@ -120,26 +120,26 @@
           <div class="col-span-6 form-item-container">
             <p-floatlabel variant="on" class="w-full">
               <p-datepicker
-              inputId="date"
-              formControlName="date"
-              [readonlyInput]="true"
-              dateFormat="dd/mm/yy"
-              class="custom-calendar datepicker"
-            />
+                inputId="date"
+                formControlName="date"
+                [readonlyInput]="true"
+                dateFormat="dd/mm/yy"
+                class="custom-calendar datepicker"
+              />
 
-            <ng-container
-              *ngTemplateOutlet="
-                historyTooltipIcon;
-                context: {
-                  fieldName: 'date',
-                  data: generateHistoryTooltip(
-                    editDefaultData()?.changes?.date
-                  ),
-                }
-              "
-            />
-            <label for="date">Date</label>
-          </p-floatlabel>
+              <ng-container
+                *ngTemplateOutlet="
+                  historyTooltipIcon;
+                  context: {
+                    fieldName: 'date',
+                    data: generateHistoryTooltip(
+                      editDefaultData()?.changes?.date
+                    ),
+                  }
+                "
+              />
+              <label for="date">Date</label>
+            </p-floatlabel>
           </div>
 
           <!-- Aircraft Reg -->
@@ -258,7 +258,12 @@
           <div class="col-span-6 form-item-container">
             <div class="grid grid-cols-2 gap-2 w-full relative">
               <!-- SE -->
-              <div class="radio-button-container" [ngClass]="{'radio-button-container-disabled': logbookFormGroup.disabled}">
+              <div
+                class="radio-button-container"
+                [ngClass]="{
+                  'radio-button-container-disabled': logbookFormGroup.disabled,
+                }"
+              >
                 <label for="se">SE</label>
                 <p-radioButton
                   name="engineType"
@@ -269,7 +274,12 @@
               </div>
 
               <!-- ME -->
-              <div class="radio-button-container" [ngClass]="{'radio-button-container-disabled': logbookFormGroup.disabled}">
+              <div
+                class="radio-button-container"
+                [ngClass]="{
+                  'radio-button-container-disabled': logbookFormGroup.disabled,
+                }"
+              >
                 <label for="me">ME</label>
                 <p-radioButton
                   name="engineType"
@@ -359,7 +369,7 @@
           <!-- Landing -->
           <div class="col-span-6">
             <p class="mb-5 flex justify-start">Landing</p>
-            <div class="mb-5 grid grid-cols-2 gap-4">                
+            <div class="mb-5 grid grid-cols-2 gap-4">
               <!-- Day -->
               <div class="form-item-container">
                 <p-floatLabel
@@ -424,8 +434,12 @@
           <!-- Remarks -->
           <div class="remarks-field col-span-6">
             <p>Remarks And Endorsements</p>
-            <p>{{editDefaultData()?.signer}}</p>
-            <img *ngIf="editDefaultData()?.isSigned" class="w-full h-[80px] object-cover" [src]="convertBase64ToImage()" />
+            <p>{{ editDefaultData()?.signer }}</p>
+            <img
+              *ngIf="editDefaultData()?.isSigned"
+              class="w-full h-[80px] object-cover"
+              [src]="convertBase64ToImage()"
+            />
           </div>
         </div>
       </section>

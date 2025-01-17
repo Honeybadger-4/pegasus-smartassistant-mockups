@@ -64,7 +64,7 @@ export interface IDetailedListContentData {
   updatedDate: string;
   uploadReason: string;
   changes: any;
-  isSigned: boolean
-  signer: string,
-  signature: string,
+  isSigned: boolean;
+  signer: string;
+  signature: string;
 }

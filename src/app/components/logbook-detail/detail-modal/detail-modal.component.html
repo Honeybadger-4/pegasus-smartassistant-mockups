@@ -126,8 +126,12 @@
         </thead>
         <tbody>
           <tr>
-            <td>{{ detailedListRowData()?.landing === 'DAY' ? '1' : '---' }}</td>
-            <td>{{ detailedListRowData()?.landing === 'NIGHT' ? '1' : '---' }}</td>
+            <td>
+              {{ detailedListRowData()?.landing === "DAY" ? "1" : "---" }}
+            </td>
+            <td>
+              {{ detailedListRowData()?.landing === "NIGHT" ? "1" : "---" }}
+            </td>
             <td>{{ detailedListRowData()?.night }}</td>
             <td>{{ detailedListRowData()?.ifr }}</td>
             <td>{{ detailedListRowData()?.pilotFunctionPic }}</td>
