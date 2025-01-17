@@ -6,8 +6,12 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Column } from '@shared/models/columns';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';import { Column } from '@shared/models/columns';
 import { DropdownModule } from 'primeng/dropdown';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { CalendarModule } from 'primeng/calendar';
@@ -27,6 +31,7 @@ import { InputTextModule } from 'primeng/inputtext';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     DropdownModule,
     CustomTableComponent,
     CalendarModule,
@@ -44,21 +49,33 @@ export class TripInfoComponent {
   @ViewChild('downloadCellBodyTemplate', { static: true })
   downloadCellBodyTemplate!: TemplateRef<any>;
 
+  formBuilder = inject(FormBuilder);
   tripInfoService = inject(TripInfoService);
+
+  filterFormGroup!: FormGroup;
   columns: Column[] = [];
   dateRange: Date[] = [];
   currentPage = 0;
   currentRows = 20;
+  tableLoading: boolean = false;
+
 
   tripInfoData = signal<ITripInfoResponse | null>(null);
   tripInfoTableData = signal<ITripInfoTableData[]>([]);
 
   ngOnInit() {
+    this.builder();
     this.defineColumn();
-
-    const today = moment();
-    this.initialDateRangeValue();
     this.getTripInfo();
+  }
+  builder() {
+    this.filterFormGroup = this.formBuilder.group({
+      acReg: [''],
+      flightNo: [''],
+      depPort: [''],
+      arrPort: [''],
+      dateRange: [this.dateRangeDefaultValue()],
+    });
   }
 
   defineColumn() {
@@ -76,39 +93,60 @@ export class TripInfoComponent {
     ];
   }
 
-  initialDateRangeValue() {
-    const today = moment();
-    this.dateRange = [
-      today.clone().subtract(7, 'days').toDate(),
-      today.clone().add(7, 'days').toDate(),
-    ];
-  }
 
   getTripInfo() {
+    this.tableLoading = true;
+
+    const formValues = this.filterFormGroup.value;
+    const acReg = formValues.acReg?.trim() || null;
+    const flightNo = formValues.flightNo?.trim() || null;
+    const depPort = formValues.depPort?.trim() || null;
+    const arrPort = formValues.arrPort?.trim() || null;
+
     let startDate = '';
     let endDate = '';
 
     // Tarih aralığı kontrolü ve formatlama
-    if (this.dateRange.length === 2) {
-      const [start, end] = this.dateRange;
-
-      if (start && end) {
-        startDate = moment(start).format('YYYY-MM-DD');
-        endDate = moment(end).format('YYYY-MM-DD');
-      }
-    }
+        if (formValues.dateRange && formValues.dateRange.length === 2) {
+          const [start, end] = formValues.dateRange;
+    
+          if (start && end) {
+            startDate = moment(start).format('YYYY-MM-DD');
+            endDate = moment(end).format('YYYY-MM-DD');
+          }
+        }
 
     this.tripInfoService
-      .getTripInfo(startDate, endDate, this.currentPage, this.currentRows)
+      .getTripInfo(this.currentPage,
+        this.currentRows,
+        startDate,
+        endDate,
+        acReg,
+        flightNo,
+        depPort,
+        arrPort,)
       .subscribe({
         next: (response) => {
           this.tripInfoData.set(response);
           this.tripInfoTableData.set(response.content);
+          this.tableLoading = false;
+
         },
-        error: (error) => {
-          console.error(error);
+        error: () => {
+          this.tableLoading = false;
         },
       });
+  }
+
+ onFilterSubmit() {
+    this.getTripInfo();
+  }
+
+  dateRangeDefaultValue() {
+    const endDate = moment();
+    const startDate = moment().subtract(3, 'days');
+
+    return [startDate.toDate(), endDate.toDate()];
   }
 
   pageEvent(event: { first: number; rows: number }) {
@@ -116,15 +154,5 @@ export class TripInfoComponent {
     this.currentPage = page;
     this.currentRows = event.rows;
     this.getTripInfo();
-  }
-
-  onDateRangeChange(event: Event) {
-    const [startDate, endDate] = this.dateRange;
-
-    if (startDate && endDate) {
-      this.currentPage = 0;
-      this.customTableComponent.resetTableFirstValue();
-      this.getTripInfo();
-    }
   }
 }

@@ -135,9 +135,6 @@ export class RouteComponent {
     },
   ];
 
-
-
-
   formBuilder = inject(FormBuilder);
   routeService = inject(RouteService);
 
@@ -146,8 +143,6 @@ export class RouteComponent {
   detailsCols!: Column[];
   dateRange: Date[] = [];
   expandedRows = {};
-
-
   currentPage = 0;
   currentRows = 20;
   tableLoading: boolean = false;

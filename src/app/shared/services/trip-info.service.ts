@@ -13,23 +13,38 @@ export class TripInfoService {
   baseUrl = environment.baseApi;
 
   getTripInfo(
-    startDate: string,
-    endDate: string,
     page: number,
     size: number,
+    startDate: string,
+    endDate: string,
+    acReg?: string | null,
+    flightNo?: string | null,
+    depPort?: string | null,
+    arrPort?: string | null,
   ): Observable<ITripInfoResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/trip-info`;
 
     let params = new HttpParams()
-      .set('page', page.toString())
-      .set('size', size.toString());
+    .set('page', page)
+    .set('size', size)
+    .set('startDate', startDate)
+    .set('endDate', endDate);
 
-    if (startDate && endDate) {
-      params = params.set('startDate', startDate).set('endDate', endDate);
-    }
-
-    return this.http
-      .get<IHttpResponseModel>(apiUrl, { params })
-      .pipe(map((response) => response.data));
+  if (acReg) {
+    params = params.set('acReg', acReg);
   }
+  if (flightNo) {
+    params = params.set('flightNo', flightNo);
+  }
+  if (depPort) {
+    params = params.set('depPort', depPort);
+  }
+  if (arrPort) {
+    params = params.set('arrPort', arrPort);
+  }
+
+  return this.http
+    .get<IHttpResponseModel>(apiUrl, { params })
+    .pipe(map((response) => response.data));
+}
 }

@@ -3,12 +3,14 @@
     <!-- Header Title -->
     <span class="header-title">Trip Info</span>
 
-    <!-- Filter Inputs and Dropdown -->
+    <!-- Filter Inputs -->
+    <form [formGroup]="filterFormGroup" (ngSubmit)="onFilterSubmit()">
+      <div class="flex justify-between items-center gap-4">
+
     <div class="grid grid-cols-10 gap-4 items-center">
       <!-- Aircraft  Input -->
       <div class="lg:col-span-2 md:col-span-6 col-span-12">
         <p-iconField iconPosition="right" class="custom-icon-field">
-          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
           <input type="text" pInputText placeholder="Aircraft" />
         </p-iconField>
       </div>
@@ -16,7 +18,6 @@
       <!-- Flight No Input -->
       <div class="lg:col-span-2 md:col-span-6 col-span-12">
         <p-iconField iconPosition="right" class="custom-icon-field">
-          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
           <input type="text" pInputText placeholder="Flight No" />
         </p-iconField>
       </div>
@@ -24,7 +25,6 @@
       <!-- Dep Port Input -->
       <div class="lg:col-span-2 md:col-span-6 col-span-12">
         <p-iconField iconPosition="right" class="custom-icon-field">
-          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
           <input type="text" pInputText placeholder="Dep Port" />
         </p-iconField>
       </div>
@@ -32,7 +32,6 @@
       <!-- Arr Port Input -->
       <div class="lg:col-span-2 md:col-span-6 col-span-12">
         <p-iconField iconPosition="right" class="custom-icon-field">
-          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
           <input type="text" pInputText placeholder="Arr Port" />
         </p-iconField>
       </div>
@@ -40,18 +39,29 @@
       <!-- Calendar -->
       <div class="lg:col-span-2 md:col-span-6 col-span-12">
         <p-calendar
-          [(ngModel)]="dateRange"
-          (ngModelChange)="onDateRangeChange($event)"
-          selectionMode="range"
-          [showIcon]="false"
-          [readonlyInput]="true"
-          placeholder="Start Date - End Date"
-          dateFormat="dd/mm/yy"
-          class="custom-calendar"
-        ></p-calendar>
+        formControlName="dateRange"
+        selectionMode="range"
+        [showIcon]="false"
+        placeholder="Start Date - End Date"
+        dateFormat="dd/mm/yy"
+        class="custom-calendar"
+        readonlyInput
+      ></p-calendar>
       </div>
     </div>
+    <div>
+      <p-button
+        type="submit"
+        icon="pi pi-search"
+        [rounded]="true"
+        class="filter-submit-btn"
+      />
+    </div>
+  </div>
+</form>
   </section>
+
+
 
   <section class="table-section custom-card">
     <app-custom-table

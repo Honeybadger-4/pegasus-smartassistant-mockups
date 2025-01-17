@@ -1,3 +1,4 @@
+
 #TripInfoPage {
   .table-header-section {
     display: flex;
@@ -8,6 +9,27 @@
     .header-title {
       color: #4f4f4f;
       font-weight: bold;
+    }
+  }
+}
+
+
+::ng-deep {
+  #TripInfoPage {
+    .filter-submit-btn {
+      .p-button {
+        background-color: #feb914;
+        border-color: #feb914;
+        width: 30px;
+        height: 30px;
+        margin: 5px;
+        margin-left: 0;
+
+
+        .p-button-icon {
+          font-size: 14px;
+        }
+      }
     }
   }
 }
