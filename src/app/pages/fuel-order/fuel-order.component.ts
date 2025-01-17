@@ -15,13 +15,13 @@ import {
 } from '@shared/models/fuel-order-response.model';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
-import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { DatePicker } from 'primeng/datepicker';
 import moment from 'moment';
 
 @Component({
   selector: 'app-fuel',
-  standalone: true,
   imports: [
     CommonModule,
     IconFieldModule,
@@ -30,7 +30,11 @@ import moment from 'moment';
     FormsModule,
     ReactiveFormsModule,
     CustomTableComponent,
-    CalendarModule,
+    InputTextModule,
+    InputIconModule,
+    IconFieldModule,
+    DatePicker,
+    ButtonModule,
   ],
   templateUrl: './fuel-order.component.html',
   styleUrl: './fuel-order.component.scss',

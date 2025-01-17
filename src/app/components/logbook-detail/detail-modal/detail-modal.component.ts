@@ -6,7 +6,6 @@ import { IDetailedListContentData } from '@shared/models/detailed-list-response.
 
 @Component({
   selector: 'app-detail-modal',
-  standalone: true,
   imports: [CommonModule, DialogModule, ButtonModule],
   templateUrl: './detail-modal.component.html',
   styleUrl: './detail-modal.component.scss',

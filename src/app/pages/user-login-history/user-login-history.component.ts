@@ -25,20 +25,22 @@ import moment from 'moment';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
+import { DatePickerModule } from 'primeng/datepicker';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-user-login-history',
-  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
     CustomTableComponent,
-    CalendarModule,
+    DatePickerModule,
     IconFieldModule,
     InputIconModule,
     InputTextModule,
     FormsModule,
     ReactiveFormsModule,
+    ButtonModule
   ],
   templateUrl: './user-login-history.component.html',
   styleUrl: './user-login-history.component.scss',

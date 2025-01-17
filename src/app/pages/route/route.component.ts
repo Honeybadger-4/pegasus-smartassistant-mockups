@@ -35,7 +35,6 @@ import moment from 'moment';
 
 @Component({
   selector: 'app-route',
-  standalone: true,
   imports: [
     CommonModule,
     IconFieldModule,
@@ -213,7 +212,7 @@ export class RouteComponent {
     this.tableLoading = true;
 
     const formValues = this.filterFormGroup.value;
-    const user = formValues.user?.trim() || null;
+    const user = formValues.username?.trim() || null;
     const flightNo = formValues.flightNo?.trim() || null;
     const depPort = formValues.depPort?.trim() || null;
     const arrPort = formValues.arrPort?.trim() || null;
@@ -237,10 +236,10 @@ export class RouteComponent {
         this.currentRows,
         startDate,
         endDate,
-        user,
         flightNo,
         depPort,
         arrPort,
+        user,
       )
       .subscribe({
         next: (response) => {

@@ -4,7 +4,6 @@ import { CustomDonutChartComponent } from '@shared/components/custom-donut-chart
 
 @Component({
   selector: 'app-combined-charts',
-  standalone: true,
   imports: [CommonModule, CustomDonutChartComponent],
   templateUrl: './general-information-card.component.html',
   styleUrls: ['./general-information-card.component.scss'],

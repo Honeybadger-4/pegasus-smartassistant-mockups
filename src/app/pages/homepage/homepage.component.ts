@@ -5,15 +5,15 @@ import { TotalFlightsComponent } from 'src/app/components/homepage/total-flights
 import { LoginService } from '@shared/services/login.service';
 import { CalendarModule } from 'primeng/calendar';
 import { FormsModule } from '@angular/forms';
+import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-homepage',
-  standalone: true,
   imports: [
     TotalFlightsComponent,
     GeneralInformationCardComponent,
     TopAlternateRoutesCardComponent,
-    CalendarModule,
+    DatePickerModule,
     FormsModule,
   ],
   templateUrl: './homepage.component.html',

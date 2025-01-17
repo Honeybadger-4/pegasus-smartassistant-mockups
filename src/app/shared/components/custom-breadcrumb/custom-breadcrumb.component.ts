@@ -4,7 +4,6 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 @Component({
   selector: 'app-custom-breadcrumb',
-  standalone: true,
   imports: [BreadcrumbModule],
   templateUrl: './custom-breadcrumb.component.html',
   styleUrl: './custom-breadcrumb.component.scss',

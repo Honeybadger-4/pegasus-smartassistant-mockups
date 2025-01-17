@@ -14,7 +14,6 @@ import { ILoadandTrimSheetResponse } from '@shared/models/load-and-trim-sheet-re
 
 @Component({
   selector: 'app-load-and-trim-sheet',
-  standalone: true,
   imports: [CommonModule, DialogModule],
   templateUrl: './load-and-trim-sheet.component.html',
   styleUrl: './load-and-trim-sheet.component.scss',

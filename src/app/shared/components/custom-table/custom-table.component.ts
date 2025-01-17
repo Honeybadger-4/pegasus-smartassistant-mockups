@@ -12,7 +12,6 @@ import { Table, TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-custom-table',
-  standalone: true,
   imports: [CommonModule, TableModule],
   templateUrl: './custom-table.component.html',
   styleUrl: './custom-table.component.scss',

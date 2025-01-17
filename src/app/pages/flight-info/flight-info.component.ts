@@ -7,7 +7,7 @@ import {
 } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { Column } from '@shared/models/columns';
-import { TabViewModule } from 'primeng/tabview';
+import { TabsModule } from 'primeng/tabs';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
@@ -19,21 +19,21 @@ import {
 } from '@angular/forms';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-flight-info',
-  standalone: true,
   imports: [
     CommonModule,
     TableModule,
     ButtonModule,
-    TabViewModule,
+    TabsModule,
     CustomTableComponent,
     IconFieldModule,
     InputIconModule,
     InputTextModule,
     FormsModule,
-    CalendarModule,
+    DatePickerModule,
     FormsModule,
     ReactiveFormsModule,
   ],
@@ -589,21 +589,25 @@ export class FlightInfoComponent {
         panelHeader: 'Crew',
         tableData: this.crewData,
         tableColumns: this.crewCols,
+        value: 0,
       },
       {
         panelHeader: 'Flight Plan',
         tableData: this.flightPlanData,
         tableColumns: this.flightPlanCols,
+        value: 1,
       },
       {
         panelHeader: 'Trip Info',
         tableData: this.tripInfoData,
         tableColumns: this.tripInfoCols,
+        value: 2,
       },
       {
         panelHeader: 'Load Sheet',
         tableData: this.loadSheetData,
         tableColumns: this.loadSheetCols,
+        value: 3,
       },
     ];
   }

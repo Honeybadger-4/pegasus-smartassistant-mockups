@@ -34,18 +34,18 @@
 
           <!-- Calendar -->
           <div class="lg:col-span-4 md:col-span-6 col-span-12">
-            <p-calendar
+            <p-datepicker
               formControlName="dateRange"
               selectionMode="range"
-              [showIcon]="false"
-              placeholder="Start Date - End Date"
+              [readonlyInput]="true"
               dateFormat="dd/mm/yy"
+              placeholder="Start Date - End Date"
               class="custom-calendar"
-              readonlyInput
-            ></p-calendar>
+            />
           </div>
         </div>
       <div>
+        
         <p-button
           type="submit"
           icon="pi pi-search"

@@ -3,7 +3,6 @@
   [value]="tableData()"
   [columns]="tableColumns()"
   [dataKey]="dataKeyId()"
-  [tableStyle]="{ 'min-width': '50rem' }"
   styleClass="p-datatable-striped"
   [loading]="tableLoading()"
   [lazy]="true"
@@ -18,7 +17,7 @@
   (onPage)="pageChange($event)"
 >
   <!-- Table Header -->
-  <ng-template pTemplate="header" let-columns>
+  <ng-template #header let-columns>
     <tr>
       <th *ngIf="selectionMode() === 'multiple'" style="width: 4rem">
         <p-tableHeaderCheckbox />
@@ -30,7 +29,7 @@
   </ng-template>
 
   <!-- Table Body -->
-  <ng-template pTemplate="body" let-rowData>
+  <ng-template #body let-rowData>
     <tr (click)="rowClicked(rowData)">
       <td *ngIf="selectionMode() === 'multiple'">
         <p-tableCheckbox [value]="rowData" />
@@ -50,7 +49,7 @@
     </tr>
   </ng-template>
 
-  <ng-template pTemplate="emptymessage">
+  <ng-template #emptymessage >
     <tr>
       <td colspan="50">No data found.</td>
     </tr>

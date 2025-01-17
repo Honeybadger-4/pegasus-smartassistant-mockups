@@ -14,7 +14,6 @@ import {
 } from '@angular/forms';import { Column } from '@shared/models/columns';
 import { DropdownModule } from 'primeng/dropdown';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
-import { CalendarModule } from 'primeng/calendar';
 import { TripInfoService } from '@shared/services/trip-info.service';
 import {
   ITripInfoResponse,
@@ -24,20 +23,22 @@ import moment from 'moment';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
+import { DatePickerModule } from 'primeng/datepicker';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-trip-info',
-  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     DropdownModule,
     CustomTableComponent,
-    CalendarModule,
+    DatePickerModule,
     IconFieldModule,
     InputIconModule,
     InputTextModule,
+    ButtonModule
   ],
   templateUrl: './trip-info.component.html',
   styleUrl: './trip-info.component.scss',

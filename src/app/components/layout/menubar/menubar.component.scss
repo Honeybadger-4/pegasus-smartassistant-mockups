@@ -4,7 +4,7 @@
       margin-right: 30px;
     }
 
-    .p-menuitem-link {
+    .p-menubar-item-link {
       &:hover,
       &.active {
         background-color: #fffbed;
@@ -40,18 +40,16 @@
           color: black;
         }
 
-        .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus
-          > .p-menuitem-content {
+        .p-menubar:not(.p-highlight):not(.p-disabled).p-focus
+          > .p-menubar-content {
           background-color: transparent;
         }
       }
 
       .profile-avatar {
-        width: 47px;
-        height: 47px;
         .p-avatar {
-          width: 100%;
-          height: 100%;
+          width: 47px;
+          height: 47px;
           border: 2px solid #fed447;
           img {
             width: 100%;

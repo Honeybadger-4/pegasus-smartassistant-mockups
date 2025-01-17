@@ -16,7 +16,6 @@ import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-airport-info',
-  standalone: true,
   imports: [
     CommonModule,
     FormsModule,

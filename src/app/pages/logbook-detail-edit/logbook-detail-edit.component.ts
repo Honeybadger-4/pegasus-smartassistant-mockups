@@ -22,10 +22,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-logbook-edit',
-  standalone: true,
   imports: [
     CommonModule,
     BreadcrumbModule,
@@ -40,6 +40,7 @@ import { ToastModule } from 'primeng/toast';
     ToastModule,
     RadioButtonModule,
     ProgressSpinnerModule,
+    TooltipModule,
   ],
   providers: [ConfirmationService],
   templateUrl: './logbook-detail-edit.component.html',
@@ -51,9 +52,9 @@ export class LogbookDetailEditComponent implements OnInit {
   confirmationService = inject(ConfirmationService);
 
   breadcrumbItems: MenuItem[] = [
-    { label: 'Logbook', route: '/logbook' },
-    { label: 'Crew List', route: '/logbook/crew-list' },
-    { label: 'Logbook Detail List', route: '/logbook/logbook-detail' },
+    { label: 'Logbook' },
+    { label: 'Crew List' },
+    { label: 'Logbook Detail List' },
     { label: 'Edit Logbook' },
   ];
   logId: number = 0;
@@ -224,5 +225,67 @@ export class LogbookDetailEditComponent implements OnInit {
 
   rejectReasonDialogOnHide() {
     this.rejectReason = '';
+  }
+
+  generateHistoryTooltip(data: any): string {
+    const changerForUser: any[] = [];
+    const changerForAdmin: any[] = [];
+    const changerForOriginal: any[] = [];
+
+    data?.map((item: any) => {
+      if (item.changerType === 'USER') {
+        changerForUser.push(item.value);
+      } else if (item.changerType === 'ADMIN') {
+        changerForAdmin.push(item.value);
+      } else if (item.changerType === 'ORIGINAL') {
+        changerForOriginal.push(item.value);
+      }
+    });
+
+    // API den versiyon sırası ilk eleman en güncel olan olduğu için diziyi tersine çeviriyoruz.
+    changerForUser.reverse();
+    changerForAdmin.reverse();
+    changerForOriginal.reverse();
+
+    return `<div class="flex gap-5">
+              <div>
+                <p class="mb-5"></p>
+                <p class="font-semibold">User</p>
+                <p class="font-semibold">Admin</p>
+              </div>
+
+              <div>
+                <p class="font-semibold">Actual</p>
+                <p>${changerForOriginal[0] || '-'}</p>
+                <p>-</p>
+              </div>
+
+              <div>
+                <p class="font-semibold">V1</p>
+                <p>${changerForUser[0] || '-'}</p>
+                <p>${changerForAdmin[0] || '-'}</p>
+              </div>
+
+              <div>
+                <p class="font-semibold">V2</p>
+                <p>${changerForUser[1] || '-'}</p>
+                <p>${changerForAdmin[1] || '-'}</p>
+              </div>
+
+              <div>
+                <p class="font-semibold">V3</p>
+                <p>${changerForUser[2] || '-'}</p>
+                <p>${changerForAdmin[2] || '-'}</p>
+              </div>
+              
+            </div>`;
+  }
+
+  checkCahngedField(fieldName: string): boolean {
+    const changesField = this.editDefaultData()?.changes;
+    if (changesField) {
+      return Object.keys(changesField).includes(fieldName);
+    }
+    return false;
   }
 }
