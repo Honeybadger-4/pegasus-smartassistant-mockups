@@ -2,7 +2,6 @@
   <section class="table-header-section lg:flex block">
     <!-- Header Title -->
     <p class="header-title">Trip Info</p>
-
     <!-- Filter Inputs -->
     <form [formGroup]="filterFormGroup" (ngSubmit)="onFilterSubmit()">
       <div class="flex justify-between items-center gap-4">
@@ -55,7 +54,7 @@
             </p-iconField>
           </div>
 
-          <!-- Calendar -->
+          <!-- Date Picker -->
           <div class="lg:col-span-2 md:col-span-6 col-span-12">
             <p-datepicker
               formControlName="dateRange"

@@ -1,9 +1,8 @@
-<div id="FlightInfoComponent">
+<main id="FlightInfoComponent">
   <section class="table-header-container lg:flex block">
     <!-- Header Title -->
     <p class="header-title">Flight Information List</p>
     <!-- Filter Inputs -->
-
     <form [formGroup]="filterFormGroup" (ngSubmit)="onFilterSubmit()">
       <div class="flex justify-between items-center gap-4">
         <div class="grid grid-cols-10 gap-4 items-center">
@@ -34,7 +33,7 @@
             </p-iconField>
           </div>
 
-          <!-- Calendar -->
+          <!-- Date Picker -->
           <div class="lg:col-span-2 md:col-span-6 col-span-12">
             <p-datepicker
               [(ngModel)]="dateRange"
@@ -137,7 +136,7 @@
       </ng-template>
     </p-table>
   </section>
-</div>
+</main>
 
 <!-- Table Cell Templates -->
 <ng-template #flightPlanTableFlightPlanCellTemplate let-rowData="rowData">

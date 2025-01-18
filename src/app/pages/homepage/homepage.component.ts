@@ -3,7 +3,6 @@ import { GeneralInformationCardComponent } from 'src/app/components/homepage/gen
 import { TopAlternateRoutesCardComponent } from '../../components/homepage/top-alternate-routes-card/top-alternate-routes-card.component';
 import { TotalFlightsComponent } from 'src/app/components/homepage/total-flights/total-flights.component';
 import { LoginService } from '@shared/services/login.service';
-import { CalendarModule } from 'primeng/calendar';
 import { FormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 
@@ -20,8 +19,10 @@ import { DatePickerModule } from 'primeng/datepicker';
   styleUrl: './homepage.component.scss',
 })
 export class HomepageComponent {
-  loginService = inject(LoginService);
   dateRange: Date[] = [];
+
+  loginService = inject(LoginService);
+
 
   ngOnInit() {
     console.log(this.loginService.currentUser());

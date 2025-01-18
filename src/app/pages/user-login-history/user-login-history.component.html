@@ -1,9 +1,8 @@
 <main id="UserLoginHistoryPage">
   <section class="table-header-section lg:flex block">
     <!-- Header Title -->
-
     <p class="header-title">User Login History</p>
-
+    <!-- Filter Inputs -->
     <form [formGroup]="filterFormGroup" (ngSubmit)="onFilterSubmit()">
       <div class="flex justify-between items-center gap-4">
         <!-- Filter Inputs and Dropdown -->
@@ -32,7 +31,7 @@
             </p-iconField>
           </div>
 
-          <!-- Calendar -->
+          <!-- Date Picker -->
           <div class="lg:col-span-4 md:col-span-6 col-span-12">
             <p-datepicker
               formControlName="dateRange"

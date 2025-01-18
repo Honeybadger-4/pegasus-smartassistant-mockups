@@ -27,7 +27,6 @@ import { ShowToastService } from '@shared/services/helpers-services/show-toast.s
 import { IDetailedListRequest } from '@shared/models/detailed-list-request.model';
 import { LogbookService } from '@shared/services/logbook.service';
 import { Column } from '@shared/models/columns';
-
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmationService } from 'primeng/api';

@@ -10,7 +10,6 @@ import { Column } from '@shared/models/columns';
 import { TabsModule } from 'primeng/tabs';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { InputTextModule } from 'primeng/inputtext';
-import { CalendarModule } from 'primeng/calendar';
 import {
   FormBuilder,
   FormGroup,

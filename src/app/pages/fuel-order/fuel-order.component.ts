@@ -6,6 +6,11 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { DatePicker } from 'primeng/datepicker';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
 import { FuelOrderService } from '@shared/services/fuel-order.service';
 import { Column } from '@shared/models/columns';
@@ -13,26 +18,18 @@ import {
   IFuelOrderResponse,
   IFuelOrderTableData,
 } from '@shared/models/fuel-order-response.model';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
-import { ButtonModule } from 'primeng/button';
-import { DatePicker } from 'primeng/datepicker';
 import moment from 'moment';
 
 @Component({
   selector: 'app-fuel',
   imports: [
     CommonModule,
-    IconFieldModule,
-    InputIconModule,
-    InputTextModule,
     FormsModule,
     ReactiveFormsModule,
     CustomTableComponent,
-    InputTextModule,
-    InputIconModule,
     IconFieldModule,
+    InputIconModule,
+    InputTextModule,
     DatePicker,
     ButtonModule,
   ],
@@ -41,18 +38,19 @@ import moment from 'moment';
 })
 export class FuelOrderComponent {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
-  formBuilder = inject(FormBuilder);
-  fuelOrderService = inject(FuelOrderService);
 
   filterFormGroup!: FormGroup;
   columns!: Column[];
+  tableLoading: boolean = false;
   dateRange: Date[] = [];
   currentPage = 0;
   currentRows = 20;
-  tableLoading: boolean = false;
 
   fuelOrderHistoryData = signal<IFuelOrderResponse | null>(null);
   fuelOrderHistoryTableData = signal<IFuelOrderTableData[]>([]);
+
+  formBuilder = inject(FormBuilder);
+  fuelOrderService = inject(FuelOrderService);
 
   ngOnInit() {
     this.builder();
@@ -85,6 +83,7 @@ export class FuelOrderComponent {
     ];
   }
 
+  // API Calls Operations
   getFuelOrder() {
     this.tableLoading = true;
 
@@ -130,10 +129,7 @@ export class FuelOrderComponent {
       });
   }
 
-  onFilterSubmit() {
-    this.getFuelOrder();
-  }
-
+  // Filter Operations
   dateRangeDefaultValue() {
     const endDate = moment();
     const startDate = moment().subtract(3, 'days');
@@ -141,6 +137,11 @@ export class FuelOrderComponent {
     return [startDate.toDate(), endDate.toDate()];
   }
 
+  onFilterSubmit() {
+    this.getFuelOrder();
+  }
+
+  // Other Operations
   pageEvent(event: { first: number; rows: number }) {
     const page = event.first / event.rows;
     this.currentPage = page;

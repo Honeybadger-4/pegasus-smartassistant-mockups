@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   inject,
@@ -6,46 +5,45 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { Column } from '@shared/models/columns';
-import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
+import { LoadAndTrimSheetComponent } from '../../components/load-and-trim-sheet/load-and-trim-sheet.component';
+import { ButtonModule } from 'primeng/button';
+import { DatePickerModule } from 'primeng/datepicker';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 import { SliderModule } from 'primeng/slider';
+import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { LoadSheetService } from '@shared/services/load-sheet.service';
+import { Column } from '@shared/models/columns';
 import {
   ILoadSheetResponse,
   ILoadSheetTableData,
 } from '@shared/models/load-sheet-response.model';
-import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/dialog';
-import { LoadAndTrimSheetComponent } from '../../components/load-and-trim-sheet/load-and-trim-sheet.component';
 import moment from 'moment';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
-import { DatePickerModule } from 'primeng/datepicker';
-import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-load-sheet',
   imports: [
     CommonModule,
     FormsModule,
-    SliderModule,
-    CustomTableComponent,
-    DatePickerModule,
+    ReactiveFormsModule,
     LoadAndTrimSheetComponent,
-    DialogModule,
+    CustomTableComponent,
+    SliderModule,
     IconFieldModule,
     InputIconModule,
     InputTextModule,
+    DatePickerModule,
+    DialogModule,
     ButtonModule,
-    FormsModule,
-    ReactiveFormsModule,
   ],
   templateUrl: './load-sheet.component.html',
   styleUrl: './load-sheet.component.scss',
@@ -58,15 +56,13 @@ export class LoadSheetComponent {
   previewCellBodyTemplate!: TemplateRef<any>;
   @ViewChild('downloadCellBodyTemplate', { static: true })
   downloadCellBodyTemplate!: TemplateRef<any>;
-  formBuilder = inject(FormBuilder);
 
-  loadSheetService = inject(LoadSheetService);
+  filterFormGroup!: FormGroup;
   columns: Column[] = [];
   dateRange: Date[] = [];
   currentPage = 0;
   currentRows = 20;
   isDialogVisible = false;
-  filterFormGroup!: FormGroup;
   tableLoading: boolean = false;
 
   loadSheetData = signal<ILoadSheetResponse | null>(null);
@@ -75,11 +71,12 @@ export class LoadSheetComponent {
   approvedValue = signal<number>(0);
   declinedValue = signal<number>(0);
 
+  formBuilder = inject(FormBuilder);
+  loadSheetService = inject(LoadSheetService);
+
   ngOnInit() {
     this.builder();
-
     this.defineColumn();
-
     this.getLoadSheet();
   }
 
@@ -113,6 +110,7 @@ export class LoadSheetComponent {
     ];
   }
 
+  // API Calls Operations
   getLoadSheet() {
     this.tableLoading = true;
 
@@ -163,17 +161,7 @@ export class LoadSheetComponent {
       });
   }
 
-  onFilterSubmit() {
-    this.getLoadSheet();
-  }
-
-  pageEvent(event: { first: number; rows: number }) {
-    const page = event.first / event.rows;
-    this.currentPage = page;
-    this.currentRows = event.rows;
-    this.getLoadSheet();
-  }
-
+  // Filter Operations
   dateRangeDefaultValue() {
     const endDate = moment();
     const startDate = moment().subtract(3, 'days');
@@ -181,10 +169,22 @@ export class LoadSheetComponent {
     return [startDate.toDate(), endDate.toDate()];
   }
 
+  onFilterSubmit() {
+    this.getLoadSheet();
+  }
+
+  // Other Operations
   toggleLoadAndTrimSheetDialogVisible(
     rowData: ILoadSheetTableData | null = null,
   ) {
     this.isDialogVisible = !this.isDialogVisible;
     this.loadAndTrimSheetData.set(rowData);
+  }
+
+  pageEvent(event: { first: number; rows: number }) {
+    const page = event.first / event.rows;
+    this.currentPage = page;
+    this.currentRows = event.rows;
+    this.getLoadSheet();
   }
 }

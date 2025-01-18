@@ -23,7 +23,6 @@ import {
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
-import { CalendarModule } from 'primeng/calendar';
 import {
   TableModule,
   TableRowCollapseEvent,
@@ -31,6 +30,7 @@ import {
 } from 'primeng/table';
 import { TabViewModule } from 'primeng/tabview';
 import { ButtonModule } from 'primeng/button';
+import { DatePickerModule } from 'primeng/datepicker';
 import moment from 'moment';
 
 @Component({
@@ -45,9 +45,8 @@ import moment from 'moment';
     TabViewModule,
     CustomTableComponent,
     FormsModule,
-    CalendarModule,
-    FormsModule,
     ReactiveFormsModule,
+    DatePickerModule,
   ],
   templateUrl: './route.component.html',
   styleUrl: './route.component.scss',
@@ -55,6 +54,7 @@ import moment from 'moment';
 export class RouteComponent {
   @ViewChild('expandableTableDocumentsIconTemplate', { static: true })
   expandableTableDocumentsIconTemplate!: TemplateRef<any>;
+
   detailsData = [
     {
       airway: 'UGB',
@@ -134,9 +134,6 @@ export class RouteComponent {
     },
   ];
 
-  formBuilder = inject(FormBuilder);
-  routeService = inject(RouteService);
-
   filterFormGroup!: FormGroup;
   mainCols!: Column[];
   detailsCols!: Column[];
@@ -148,6 +145,9 @@ export class RouteComponent {
 
   routeHistoryData = signal<IRouteResponse | null>(null);
   routeHistoryTableData = signal<IRouteTableData[]>([]);
+
+  formBuilder = inject(FormBuilder);
+  routeService = inject(RouteService);
 
   ngOnInit() {
     this.builder();
@@ -207,6 +207,7 @@ export class RouteComponent {
     ];
   }
 
+  // API Calls Operations
   getRoute() {
     this.tableLoading = true;
 
@@ -252,10 +253,7 @@ export class RouteComponent {
       });
   }
 
-  onFilterSubmit() {
-    this.getRoute();
-  }
-
+  // Filter Operations
   dateRangeDefaultValue() {
     const endDate = moment();
     const startDate = moment().subtract(3, 'days');
@@ -263,18 +261,23 @@ export class RouteComponent {
     return [startDate.toDate(), endDate.toDate()];
   }
 
-  pageEvent(event: { first: number; rows: number }) {
-    const page = event.first / event.rows;
-    this.currentPage = page;
-    this.currentRows = event.rows;
+  onFilterSubmit() {
     this.getRoute();
   }
 
+  // Other Operations
   onRowExpand(event: TableRowExpandEvent) {
     console.log('Expanded: ', event);
   }
 
   onRowCollapse(event: TableRowCollapseEvent) {
     console.log('Collapsed: ', event);
+  }
+
+  pageEvent(event: { first: number; rows: number }) {
+    const page = event.first / event.rows;
+    this.currentPage = page;
+    this.currentRows = event.rows;
+    this.getRoute();
   }
 }

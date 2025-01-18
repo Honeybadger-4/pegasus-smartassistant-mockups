@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   inject,
@@ -6,27 +5,30 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
 import {
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-
-import { Column } from '@shared/models/columns';
+import { ButtonModule } from 'primeng/button';
+import { DatePickerModule } from 'primeng/datepicker';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { LoginInfoService } from '@shared/services/login-info.service';
+
+import { Column } from '@shared/models/columns';
 import {
   ILoginInfoResponse,
   ILoginInfoTableData,
 } from '@shared/models/login-info-response.model';
-import { CalendarModule } from 'primeng/calendar';
 import moment from 'moment';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
-import { DatePickerModule } from 'primeng/datepicker';
-import { ButtonModule } from 'primeng/button';
+
+
 
 @Component({
   selector: 'app-user-login-history',
