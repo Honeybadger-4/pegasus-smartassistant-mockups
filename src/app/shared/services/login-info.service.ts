@@ -23,10 +23,10 @@ export class LoginInfoService {
     const apiUrl = `${this.baseUrl}/api/v1/admin/login-info`;
 
     let params = new HttpParams()
-    .set('page', page)
-    .set('size', size)
-    .set('startDate', startDate)
-    .set('endDate', endDate);
+      .set('page', page)
+      .set('size', size)
+      .set('startDate', startDate)
+      .set('endDate', endDate);
 
     if (username) {
       params = params.set('username', username);
@@ -35,8 +35,7 @@ export class LoginInfoService {
       params = params.set('companyID', companyID);
     }
     return this.http
-    .get<IHttpResponseModel>(apiUrl, { params })
-    .pipe(map((response) => response.data));
+      .get<IHttpResponseModel>(apiUrl, { params })
+      .pipe(map((response) => response.data));
+  }
 }
-}
-

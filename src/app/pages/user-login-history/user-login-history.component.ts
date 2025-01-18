@@ -40,7 +40,7 @@ import { ButtonModule } from 'primeng/button';
     InputTextModule,
     FormsModule,
     ReactiveFormsModule,
-    ButtonModule
+    ButtonModule,
   ],
   templateUrl: './user-login-history.component.html',
   styleUrl: './user-login-history.component.scss',

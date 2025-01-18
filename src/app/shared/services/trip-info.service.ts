@@ -25,26 +25,26 @@ export class TripInfoService {
     const apiUrl = `${this.baseUrl}/api/v1/admin/trip-info`;
 
     let params = new HttpParams()
-    .set('page', page)
-    .set('size', size)
-    .set('startDate', startDate)
-    .set('endDate', endDate);
+      .set('page', page)
+      .set('size', size)
+      .set('startDate', startDate)
+      .set('endDate', endDate);
 
-  if (acReg) {
-    params = params.set('acReg', acReg);
-  }
-  if (flightNo) {
-    params = params.set('flightNo', flightNo);
-  }
-  if (depPort) {
-    params = params.set('depPort', depPort);
-  }
-  if (arrPort) {
-    params = params.set('arrPort', arrPort);
-  }
+    if (acReg) {
+      params = params.set('acReg', acReg);
+    }
+    if (flightNo) {
+      params = params.set('flightNo', flightNo);
+    }
+    if (depPort) {
+      params = params.set('depPort', depPort);
+    }
+    if (arrPort) {
+      params = params.set('arrPort', arrPort);
+    }
 
-  return this.http
-    .get<IHttpResponseModel>(apiUrl, { params })
-    .pipe(map((response) => response.data));
-}
+    return this.http
+      .get<IHttpResponseModel>(apiUrl, { params })
+      .pipe(map((response) => response.data));
+  }
 }

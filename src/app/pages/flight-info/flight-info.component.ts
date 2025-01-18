@@ -21,7 +21,6 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { DatePickerModule } from 'primeng/datepicker';
 
-
 @Component({
   selector: 'app-flight-info',
   imports: [
@@ -36,7 +35,8 @@ import { DatePickerModule } from 'primeng/datepicker';
     FormsModule,
     DatePickerModule,
     FormsModule,
-    ReactiveFormsModule,  ],
+    ReactiveFormsModule,
+  ],
   templateUrl: './flight-info.component.html',
   styleUrl: './flight-info.component.scss',
 })
@@ -624,7 +624,5 @@ export class FlightInfoComponent {
     console.log('Tab changed: ', value);
   }
 
-  onFilterSubmit() {
-  }
+  onFilterSubmit() {}
 }
-

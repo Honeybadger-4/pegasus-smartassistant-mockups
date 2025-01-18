@@ -207,7 +207,6 @@ export class RouteComponent {
     ];
   }
 
-
   getRoute() {
     this.tableLoading = true;
 
