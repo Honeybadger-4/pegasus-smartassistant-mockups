@@ -16,6 +16,8 @@ export class TotalFlightsComponent implements OnInit {
         data: [300, 50, 100],
         backgroundColor: ['#F79009', '#D62828', '#FED447'],
         hoverBackgroundColor: ['#F79009', '#D62828', '#FED447'],
+        borderWidth: 0, 
+
       },
     ],
   };
@@ -38,6 +40,8 @@ export class TotalFlightsComponent implements OnInit {
         data: [300, 50, 100],
         backgroundColor: ['#092FF7', '#3D348B', '#7678ED'],
         hoverBackgroundColor: ['#092FF7', '#3D348B', '#7678ED'],
+        borderWidth: 0, 
+
       },
     ],
   };

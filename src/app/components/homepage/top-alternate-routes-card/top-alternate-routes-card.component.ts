@@ -14,7 +14,7 @@ export class TopAlternateRoutesCardComponent {
     datasets: [
       {
         label: '',
-        data: [500, 400, 300, 200, 100],
+        data: [450, 350, 250, 200, 100],
         backgroundColor: [
           '#FED447',
           '#FED447',
@@ -25,6 +25,8 @@ export class TopAlternateRoutesCardComponent {
         borderColor: ['#FED447', '#FED447', '#FED447', '#FED447', '#FED447'],
         borderWidth: 1,
         barThickness: 60,
+        borderRadius: 5, 
+
       },
     ],
   };
@@ -57,3 +59,5 @@ export class TopAlternateRoutesCardComponent {
 
   ngOnInit() {}
 }
+
+
