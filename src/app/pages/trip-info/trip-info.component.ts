@@ -11,7 +11,8 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
-} from '@angular/forms';import { Column } from '@shared/models/columns';
+} from '@angular/forms';
+import { Column } from '@shared/models/columns';
 import { DropdownModule } from 'primeng/dropdown';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { TripInfoService } from '@shared/services/trip-info.service';
@@ -38,7 +39,7 @@ import { ButtonModule } from 'primeng/button';
     IconFieldModule,
     InputIconModule,
     InputTextModule,
-    ButtonModule
+    ButtonModule,
   ],
   templateUrl: './trip-info.component.html',
   styleUrl: './trip-info.component.scss',
@@ -59,7 +60,6 @@ export class TripInfoComponent {
   currentPage = 0;
   currentRows = 20;
   tableLoading: boolean = false;
-
 
   tripInfoData = signal<ITripInfoResponse | null>(null);
   tripInfoTableData = signal<ITripInfoTableData[]>([]);
@@ -94,7 +94,6 @@ export class TripInfoComponent {
     ];
   }
 
-
   getTripInfo() {
     this.tableLoading = true;
 
@@ -108,30 +107,31 @@ export class TripInfoComponent {
     let endDate = '';
 
     // Tarih aralığı kontrolü ve formatlama
-        if (formValues.dateRange && formValues.dateRange.length === 2) {
-          const [start, end] = formValues.dateRange;
-    
-          if (start && end) {
-            startDate = moment(start).format('YYYY-MM-DD');
-            endDate = moment(end).format('YYYY-MM-DD');
-          }
-        }
+    if (formValues.dateRange && formValues.dateRange.length === 2) {
+      const [start, end] = formValues.dateRange;
+
+      if (start && end) {
+        startDate = moment(start).format('YYYY-MM-DD');
+        endDate = moment(end).format('YYYY-MM-DD');
+      }
+    }
 
     this.tripInfoService
-      .getTripInfo(this.currentPage,
+      .getTripInfo(
+        this.currentPage,
         this.currentRows,
         startDate,
         endDate,
         acReg,
         flightNo,
         depPort,
-        arrPort,)
+        arrPort,
+      )
       .subscribe({
         next: (response) => {
           this.tripInfoData.set(response);
           this.tripInfoTableData.set(response.content);
           this.tableLoading = false;
-
         },
         error: () => {
           this.tableLoading = false;
@@ -139,7 +139,7 @@ export class TripInfoComponent {
       });
   }
 
- onFilterSubmit() {
+  onFilterSubmit() {
     this.getTripInfo();
   }
 
