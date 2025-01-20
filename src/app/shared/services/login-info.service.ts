@@ -18,7 +18,7 @@ export class LoginInfoService {
     startDate: string,
     endDate: string,
     username?: string | null,
-    companyID?: number | null,
+    companyId?: number | null,
   ): Observable<ILoginInfoResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/login-info`;
 
@@ -31,8 +31,8 @@ export class LoginInfoService {
     if (username) {
       params = params.set('username', username);
     }
-    if (companyID) {
-      params = params.set('companyID', companyID);
+    if (companyId) {
+      params = params.set('companyId', companyId);
     }
     return this.http
       .get<IHttpResponseModel>(apiUrl, { params })

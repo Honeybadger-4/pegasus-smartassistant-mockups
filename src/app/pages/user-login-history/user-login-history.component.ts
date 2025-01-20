@@ -73,7 +73,7 @@ export class UserLoginHistoryComponent {
   builder() {
     this.filterFormGroup = this.formBuilder.group({
       username: [''],
-      companyID: [''],
+      companyId: [''],
       dateRange: [this.dateRangeDefaultValue()],
     });
   }
@@ -104,7 +104,7 @@ export class UserLoginHistoryComponent {
 
     const formValues = this.filterFormGroup.value;
     const username = formValues.username?.trim() || null;
-    const companyID = formValues.companyID?.trim() || null;
+    const companyId = formValues.companyId?.trim() || null;
 
     let startDate = '';
     let endDate = '';
@@ -125,7 +125,7 @@ export class UserLoginHistoryComponent {
         startDate,
         endDate,
         username,
-        companyID,
+        companyId,
       )
       .subscribe({
         next: (response) => {

@@ -81,7 +81,7 @@ export class FuelOrderComponent {
       { field: 'depDateTime', header: 'Dep Date/Time' },
       { field: 'arrDateTime', header: 'Arr Date/Time' },
       { field: 'amount', header: 'Amount' },
-      { field: 'user', header: 'User' },
+      { field: 'userName', header: 'User' },
       { field: 'orderDateTime', header: 'Order Date / Time' },
     ];
   }
