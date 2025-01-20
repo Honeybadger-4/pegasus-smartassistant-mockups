@@ -59,7 +59,7 @@ export interface IDetailedListContentData {
   ifr: string | null;
   engineType: string;
   instructor: string;
-  canReassign: boolean;
+  isFinalReassign: boolean;
   lastReviewedAdmin: string;
   updatedDate: string;
   uploadReason: string;

@@ -146,7 +146,6 @@ export class LogbookDetailComponent {
 
     const requestBody: IDetailedListRequest = {
       monthLogId: this.crewListTableData.monthlyLogbookId,
-      logbookType: this.crewListTableData.logbookType,
       status: this.statusFilter,
       startDate: this.startDate(),
       endDate: this.endDate(),
