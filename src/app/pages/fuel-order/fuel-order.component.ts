@@ -1,4 +1,4 @@
-import { Component, inject, signal, ViewChild } from '@angular/core';
+import { Component, Inject, inject, signal, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -19,6 +19,7 @@ import {
   IFuelOrderTableData,
 } from '@shared/models/fuel-order-response.model';
 import moment from 'moment';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-fuel',
@@ -32,6 +33,7 @@ import moment from 'moment';
     InputTextModule,
     DatePicker,
     ButtonModule,
+    DatePipe
   ],
   templateUrl: './fuel-order.component.html',
   styleUrl: './fuel-order.component.scss',
@@ -49,8 +51,10 @@ export class FuelOrderComponent {
   fuelOrderHistoryData = signal<IFuelOrderResponse | null>(null);
   fuelOrderHistoryTableData = signal<IFuelOrderTableData[]>([]);
 
+
   formBuilder = inject(FormBuilder);
   fuelOrderService = inject(FuelOrderService);
+  
 
   ngOnInit() {
     this.builder();

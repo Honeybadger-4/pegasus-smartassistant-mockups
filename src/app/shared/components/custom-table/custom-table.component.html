@@ -3,7 +3,7 @@
   [value]="tableData()"
   [columns]="tableColumns()"
   [dataKey]="dataKeyId()"
-  styleClass="p-datatable-striped"
+  stripedRows
   [loading]="tableLoading()"
   [lazy]="true"
   [paginator]="isPaginator()"
@@ -43,10 +43,14 @@
         </ng-container>
 
         <ng-template #defaultCell>
-          {{ rowData[column.field] }}
+          {{ rowData[column.field] || "-" }}
         </ng-template>
       </td>
     </tr>
+  </ng-template>
+
+  <ng-template #footer>
+    <ng-container *ngTemplateOutlet="footerTemplate()"></ng-container>
   </ng-template>
 
   <ng-template #emptymessage>

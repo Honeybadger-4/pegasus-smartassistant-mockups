@@ -1,10 +1,12 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
 } from '@angular/forms';
 
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
@@ -23,6 +25,8 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
+import { DatePickerModule } from 'primeng/datepicker';
+import { InputMaskModule } from 'primeng/inputmask';
 
 @Component({
   selector: 'app-logbook-edit',
@@ -41,6 +45,8 @@ import { TooltipModule } from 'primeng/tooltip';
     RadioButtonModule,
     ProgressSpinnerModule,
     TooltipModule,
+    DatePickerModule,
+    InputMaskModule,
   ],
   providers: [ConfirmationService],
   templateUrl: './logbook-detail-edit.component.html',
@@ -80,28 +86,45 @@ export class LogbookDetailEditComponent implements OnInit {
       aircraftReg: [this.editDefaultData()?.aircraftReg],
       departure: [this.editDefaultData()?.departure],
       arrival: [this.editDefaultData()?.arrival],
-      depTime: [this.editDefaultData()?.depTime],
-      arrTime: [this.editDefaultData()?.arrTime],
+      departureTime: [
+        this.editDefaultData()?.departureTime,
+        [this.timeFieldControl],
+      ],
+      arrivalTime: [
+        this.editDefaultData()?.arrivalTime,
+        [this.timeFieldControl],
+      ],
       engineType: [this.editDefaultData()?.engineType],
       pic: [this.editDefaultData()?.pic],
-      multiPilotTime: [this.editDefaultData()?.multiPilotTime],
-      totalTime: [this.editDefaultData()?.totalTime],
-      // Landing
-      dayLanding: [this.editDefaultData()?.dayLanding],
-      nightLanding: [this.editDefaultData()?.nightLanding],
+      multiPilotTime: [
+        this.editDefaultData()?.multiPilotTime,
+        [this.timeFieldControl],
+      ],
+      totalTime: [this.editDefaultData()?.totalTime, [this.timeFieldControl]],
       instructor: [this.editDefaultData()?.instructor],
-      remarksAndEndorsements: [this.editDefaultData()?.remarksAndEndorsements],
       // Synthetic Training Devices Session
       syntheticTrainingDate: [this.editDefaultData()?.syntheticTrainingDate],
       syntheticTrainingType: [this.editDefaultData()?.syntheticTrainingType],
-      syntheticTrainingTime: [this.editDefaultData()?.syntheticTrainingTime],
+      syntheticTrainingTime: [
+        this.editDefaultData()?.syntheticTrainingTime,
+        [this.timeFieldControl],
+      ],
       // Pilot Function Time
-      pilotFunctionPic: [this.editDefaultData()?.pilotFunctionPic],
-      pilotFunctionCoPilot: [this.editDefaultData()?.pilotFunctionCoPilot],
-      pilotFunctionDual: [this.editDefaultData()?.pilotFunctionDual],
+      pilotFunctionPic: [
+        this.editDefaultData()?.pilotFunctionPic,
+        [this.timeFieldControl],
+      ],
+      pilotFunctionCoPilot: [
+        this.editDefaultData()?.pilotFunctionCoPilot,
+        [this.timeFieldControl],
+      ],
+      pilotFunctionDual: [
+        this.editDefaultData()?.pilotFunctionDual,
+        [this.timeFieldControl],
+      ],
       // Operation Condition Timek
-      nightTime: [this.editDefaultData()?.nightTime],
-      ifrTime: [this.editDefaultData()?.ifrTime],
+      night: [this.editDefaultData()?.night, [this.timeFieldControl]],
+      ifr: [this.editDefaultData()?.ifr, [this.timeFieldControl]],
     });
 
     this.logbookFormGroup.disable();
@@ -140,7 +163,7 @@ export class LogbookDetailEditComponent implements OnInit {
       const requestBody: ILogbookEditRequest = {
         logId: this.editDefaultData()?.logId || 0,
         changes: changesArr,
-        ...(this.editDefaultData()?.canReassign && {
+        ...(!this.editDefaultData()?.isFinalReassign && {
           uploadReason: this.rejectReason,
         }),
       };
@@ -177,31 +200,33 @@ export class LogbookDetailEditComponent implements OnInit {
   }
 
   onSave(): void {
-    const message = this.editDefaultData()?.canReassign
-      ? 'Do you want to reject the logbook document?'
-      : 'Do you want to approve the logbook document?';
+    const message = this.editDefaultData()?.isFinalReassign
+      ? 'Do you want to approve the logbook document?'
+      : 'Do you want to reject the logbook document?';
     this.confirmationService.confirm({
       message: `<div class="custom-confirm-content">
                   <div class="custom-confirm-icon">
-                    <img src="/icons/approve-icon.svg" alt="Approve Icon" />
+                    <img src="/icon/approve-icon.svg" alt="Approve Icon" />
                   </div>
                   <p class="custom-confirm-message">${message}</p>
                 </div>`,
       header: '',
       icon: '',
       closeOnEscape: false,
-      acceptLabel: this.editDefaultData()?.canReassign ? 'Reject' : 'Approve',
+      acceptLabel: this.editDefaultData()?.isFinalReassign
+        ? 'Approve'
+        : 'Reject',
       rejectLabel: 'Cancel',
       acceptIcon: 'none',
       rejectIcon: 'none',
       acceptButtonStyleClass: 'action-button',
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
-        if (this.editDefaultData()?.canReassign) {
-          this.displayRejectPopup = true;
-        } else {
+        if (this.editDefaultData()?.isFinalReassign) {
           this.formSubmit();
           this.toggleEditMode();
+        } else {
+          this.displayRejectPopup = true;
         }
       },
     });
@@ -287,5 +312,39 @@ export class LogbookDetailEditComponent implements OnInit {
       return Object.keys(changesField).includes(fieldName);
     }
     return false;
+  }
+
+  convertBase64ToImage(): string {
+    let signatureBase64 = this.editDefaultData()?.signature;
+
+    if (signatureBase64) {
+      let base64Obj = JSON.parse(signatureBase64);
+      return `data:image/jpeg;base64,${base64Obj.sign}`;
+    }
+
+    return '';
+  }
+
+  timeFieldControl(control: AbstractControl): ValidationErrors | null {
+    const value: string = control.value;
+
+    if (!value || value.length !== 5) {
+      return null;
+    }
+
+    const [hours, minutes] = value.split(':').map(Number);
+
+    if (
+      isNaN(hours) ||
+      isNaN(minutes) ||
+      hours < 0 ||
+      hours > 23 ||
+      minutes < 0 ||
+      minutes > 59
+    ) {
+      return { invalidTime: true };
+    }
+
+    return null;
   }
 }
