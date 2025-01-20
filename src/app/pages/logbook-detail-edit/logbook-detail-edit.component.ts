@@ -46,7 +46,7 @@ import { InputMaskModule } from 'primeng/inputmask';
     ProgressSpinnerModule,
     TooltipModule,
     DatePickerModule,
-    InputMaskModule
+    InputMaskModule,
   ],
   providers: [ConfirmationService],
   templateUrl: './logbook-detail-edit.component.html',
@@ -86,21 +86,42 @@ export class LogbookDetailEditComponent implements OnInit {
       aircraftReg: [this.editDefaultData()?.aircraftReg],
       departure: [this.editDefaultData()?.departure],
       arrival: [this.editDefaultData()?.arrival],
-      departureTime: [this.editDefaultData()?.departureTime, [this.timeFieldControl]],
-      arrivalTime: [this.editDefaultData()?.arrivalTime, [this.timeFieldControl]],
+      departureTime: [
+        this.editDefaultData()?.departureTime,
+        [this.timeFieldControl],
+      ],
+      arrivalTime: [
+        this.editDefaultData()?.arrivalTime,
+        [this.timeFieldControl],
+      ],
       engineType: [this.editDefaultData()?.engineType],
       pic: [this.editDefaultData()?.pic],
-      multiPilotTime: [this.editDefaultData()?.multiPilotTime, [this.timeFieldControl]],
+      multiPilotTime: [
+        this.editDefaultData()?.multiPilotTime,
+        [this.timeFieldControl],
+      ],
       totalTime: [this.editDefaultData()?.totalTime, [this.timeFieldControl]],
       instructor: [this.editDefaultData()?.instructor],
       // Synthetic Training Devices Session
       syntheticTrainingDate: [this.editDefaultData()?.syntheticTrainingDate],
       syntheticTrainingType: [this.editDefaultData()?.syntheticTrainingType],
-      syntheticTrainingTime: [this.editDefaultData()?.syntheticTrainingTime, [this.timeFieldControl]],
+      syntheticTrainingTime: [
+        this.editDefaultData()?.syntheticTrainingTime,
+        [this.timeFieldControl],
+      ],
       // Pilot Function Time
-      pilotFunctionPic: [this.editDefaultData()?.pilotFunctionPic, [this.timeFieldControl]],
-      pilotFunctionCoPilot: [this.editDefaultData()?.pilotFunctionCoPilot, [this.timeFieldControl]],
-      pilotFunctionDual: [this.editDefaultData()?.pilotFunctionDual, [this.timeFieldControl]],
+      pilotFunctionPic: [
+        this.editDefaultData()?.pilotFunctionPic,
+        [this.timeFieldControl],
+      ],
+      pilotFunctionCoPilot: [
+        this.editDefaultData()?.pilotFunctionCoPilot,
+        [this.timeFieldControl],
+      ],
+      pilotFunctionDual: [
+        this.editDefaultData()?.pilotFunctionDual,
+        [this.timeFieldControl],
+      ],
       // Operation Condition Timek
       night: [this.editDefaultData()?.night, [this.timeFieldControl]],
       ifr: [this.editDefaultData()?.ifr, [this.timeFieldControl]],
@@ -302,7 +323,7 @@ export class LogbookDetailEditComponent implements OnInit {
     return '';
   }
 
-  timeFieldControl(control: AbstractControl): ValidationErrors | null{
+  timeFieldControl(control: AbstractControl): ValidationErrors | null {
     const value: string = control.value;
 
     if (!value || value.length !== 5) {
@@ -312,9 +333,12 @@ export class LogbookDetailEditComponent implements OnInit {
     const [hours, minutes] = value.split(':').map(Number);
 
     if (
-      isNaN(hours) || isNaN(minutes) ||
-      hours < 0 || hours > 23 ||     
-      minutes < 0 || minutes > 59
+      isNaN(hours) ||
+      isNaN(minutes) ||
+      hours < 0 ||
+      hours > 23 ||
+      minutes < 0 ||
+      minutes > 59
     ) {
       return { invalidTime: true };
     }
