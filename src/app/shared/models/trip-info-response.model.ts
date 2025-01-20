@@ -36,4 +36,14 @@ export interface ITripInfoTableData {
   flightNo: string;
   aircraftReg: string;
   arrDateTime: string;
+
+  // Belirsizler
+  pantryCode: string;
+  crewVersion: string;
+  pax: string;
+  tripFuel: string;
+  taxiFuel: string;
+  eet: string;
+  takeOffTime: string;
+  status: string;
 }

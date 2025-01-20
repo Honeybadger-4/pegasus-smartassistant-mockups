@@ -92,19 +92,24 @@ export class LoadSheetComponent {
 
   defineColumn() {
     this.columns = [
-      { field: 'date', header: 'Date' },
       { field: 'aircraftReg', header: 'Aircraft' },
       { field: 'flightNo', header: 'Flight No' },
       { field: 'depPort', header: 'Departure' },
       { field: 'arrPort', header: 'Arrival' },
       { field: 'depDateTime', header: 'Dep Date/Time' },
       { field: 'arrDateTime', header: 'Arr Date/Time' },
+    
+      { field: 'preparedBy', header: 'Prepared By' },
+      { field: 'checkedBy', header: 'Checked By' },
+      { field: 'username', header: 'Approved By' },
+      { field: 'lmc', header: 'LMC' },
+      { field: 'crew', header: 'Crew' },
+      { field: 'version', header: 'Version' },
       {
         field: 'status',
         header: 'Status',
         template: this.statusCellBodyTemplate,
       },
-      { field: 'username', header: 'Username' },
       { field: '', header: '', template: this.previewCellBodyTemplate },
       { field: '', header: '', template: this.downloadCellBodyTemplate },
     ];

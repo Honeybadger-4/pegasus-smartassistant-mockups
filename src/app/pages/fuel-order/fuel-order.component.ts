@@ -70,7 +70,6 @@ export class FuelOrderComponent {
 
   defineColumns() {
     this.columns = [
-      { field: 'date', header: 'Date' },
       { field: 'aircraftReg', header: 'Aircraft' },
       { field: 'flightNo', header: 'Flight No' },
       { field: 'depPort', header: 'Departure' },

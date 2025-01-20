@@ -81,14 +81,21 @@ export class TripInfoComponent {
 
   defineColumn() {
     this.columns = [
-      { field: 'date', header: 'Date' },
       { field: 'aircraftReg', header: 'Aircraft' },
       { field: 'flightNo', header: 'Flight No' },
       { field: 'depPort', header: 'Departure' },
       { field: 'arrPort', header: 'Arrival' },
       { field: 'depDateTime', header: 'Dep Date/Time' },
       { field: 'arrDateTime', header: 'Arr Date/Time' },
-      { field: 'username', header: 'Username' },
+      { field: 'username', header: 'Send By' },
+      { field: 'pantryCode', header: 'Pantry Code' },
+      { field: 'crewVersion', header: 'Crew Version' },
+      { field: 'pax', header: 'Pax' },
+      { field: 'tripFuel', header: 'Trip Fuel' },
+      { field: 'taxiFuel', header: 'Taxi Fuel' },
+      { field: 'eet', header: 'EET' },
+      { field: 'takeOffTime', header: 'Take Off Time' },
+      { field: 'status', header: 'Status' },
       { field: '', header: '', template: this.previewCellBodyTemplate },
       { field: '', header: '', template: this.downloadCellBodyTemplate },
     ];

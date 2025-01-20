@@ -37,7 +37,6 @@ export class ReportComponent {
   columns: Column[] = [];
   reportData = [
     {
-      date: '02.02.2024',
       aircraft: 'TC-A329',
       flightNo: 'PC2009',
       departure: 'AYT',
@@ -48,7 +47,6 @@ export class ReportComponent {
       username: 'SAWBNCS1',
     },
     {
-      date: '02.02.2024',
       aircraft: 'TC-A329',
       flightNo: 'PC2009',
       departure: 'AYT',
@@ -59,7 +57,6 @@ export class ReportComponent {
       username: 'SAWBNCS2',
     },
     {
-      date: '02.02.2024',
       aircraft: 'TC-A329',
       flightNo: 'PC2009',
       departure: 'AYT',
@@ -70,7 +67,6 @@ export class ReportComponent {
       username: 'SAWBNCS3',
     },
     {
-      date: '02.02.2024',
       aircraft: 'TC-A329',
       flightNo: 'PC2009',
       departure: 'AYT',
@@ -81,7 +77,6 @@ export class ReportComponent {
       username: 'SAWBNCS4',
     },
     {
-      date: '02.02.2024',
       aircraft: 'TC-A329',
       flightNo: 'PC2009',
       departure: 'AYT',
@@ -92,7 +87,6 @@ export class ReportComponent {
       username: 'SAWBNCS5',
     },
     {
-      date: '02.02.2024',
       aircraft: 'TC-A329',
       flightNo: 'PC2009',
       departure: 'AYT',
@@ -110,7 +104,6 @@ export class ReportComponent {
 
   defineColumn() {
     this.columns = [
-      { field: 'date', header: 'Date' },
       { field: 'aircraft', header: 'Aircraft' },
       { field: 'flightNo', header: 'Flight No' },
       { field: 'departure', header: 'Departure' },
