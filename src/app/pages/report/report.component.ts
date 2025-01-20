@@ -27,10 +27,12 @@ import { DatePickerModule } from 'primeng/datepicker';
 export class ReportComponent {
   @ViewChild('checkListCellBodyTemplate', { static: true })
   checkListCellBodyTemplate!: TemplateRef<any>;
+
+
   @ViewChild('previewCellBodyTemplate', { static: true })
   previewCellBodyTemplate!: TemplateRef<any>;
-  @ViewChild('downloadCellBodyTemplate', { static: true })
-  downloadCellBodyTemplate!: TemplateRef<any>;
+
+
 
   dateRange: Date[] = [];
 
@@ -117,7 +119,6 @@ export class ReportComponent {
       },
       { field: 'username', header: 'Username' },
       { field: '', header: '', template: this.previewCellBodyTemplate },
-      { field: '', header: '', template: this.downloadCellBodyTemplate },
     ];
   }
 }

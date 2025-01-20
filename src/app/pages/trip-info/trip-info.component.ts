@@ -48,8 +48,7 @@ export class TripInfoComponent {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
   @ViewChild('previewCellBodyTemplate', { static: true })
   previewCellBodyTemplate!: TemplateRef<any>;
-  @ViewChild('downloadCellBodyTemplate', { static: true })
-  downloadCellBodyTemplate!: TemplateRef<any>;
+ 
 
   formBuilder = inject(FormBuilder);
   tripInfoService = inject(TripInfoService);
@@ -97,7 +96,6 @@ export class TripInfoComponent {
       { field: 'takeOffTime', header: 'Take Off Time' },
       { field: 'status', header: 'Status' },
       { field: '', header: '', template: this.previewCellBodyTemplate },
-      { field: '', header: '', template: this.downloadCellBodyTemplate },
     ];
   }
 

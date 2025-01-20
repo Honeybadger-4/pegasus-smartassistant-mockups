@@ -54,8 +54,7 @@ export class LoadSheetComponent {
   statusCellBodyTemplate!: TemplateRef<any>;
   @ViewChild('previewCellBodyTemplate', { static: true })
   previewCellBodyTemplate!: TemplateRef<any>;
-  @ViewChild('downloadCellBodyTemplate', { static: true })
-  downloadCellBodyTemplate!: TemplateRef<any>;
+
 
   filterFormGroup!: FormGroup;
   columns: Column[] = [];
@@ -111,7 +110,6 @@ export class LoadSheetComponent {
         template: this.statusCellBodyTemplate,
       },
       { field: '', header: '', template: this.previewCellBodyTemplate },
-      { field: '', header: '', template: this.downloadCellBodyTemplate },
     ];
   }
 
