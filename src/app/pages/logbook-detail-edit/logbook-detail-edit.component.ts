@@ -163,7 +163,7 @@ export class LogbookDetailEditComponent implements OnInit {
       const requestBody: ILogbookEditRequest = {
         logId: this.editDefaultData()?.logId || 0,
         changes: changesArr,
-        ...(!this.editDefaultData()?.isFinalReassign  && {
+        ...(!this.editDefaultData()?.isFinalReassign && {
           uploadReason: this.rejectReason,
         }),
       };
@@ -200,7 +200,7 @@ export class LogbookDetailEditComponent implements OnInit {
   }
 
   onSave(): void {
-    const message = this.editDefaultData()?.isFinalReassign 
+    const message = this.editDefaultData()?.isFinalReassign
       ? 'Do you want to approve the logbook document?'
       : 'Do you want to reject the logbook document?';
     this.confirmationService.confirm({
@@ -213,14 +213,16 @@ export class LogbookDetailEditComponent implements OnInit {
       header: '',
       icon: '',
       closeOnEscape: false,
-      acceptLabel: this.editDefaultData()?.isFinalReassign  ? 'Approve' : 'Reject',
+      acceptLabel: this.editDefaultData()?.isFinalReassign
+        ? 'Approve'
+        : 'Reject',
       rejectLabel: 'Cancel',
       acceptIcon: 'none',
       rejectIcon: 'none',
       acceptButtonStyleClass: 'action-button',
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
-        if (this.editDefaultData()?.isFinalReassign ) {
+        if (this.editDefaultData()?.isFinalReassign) {
           this.formSubmit();
           this.toggleEditMode();
         } else {
