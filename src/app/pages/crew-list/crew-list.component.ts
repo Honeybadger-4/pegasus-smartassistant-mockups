@@ -25,6 +25,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { SliderModule } from 'primeng/slider';
 import { PanelModule } from 'primeng/panel';
 import { MenuItem } from 'primeng/api';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-logbook',
@@ -35,6 +36,7 @@ import { MenuItem } from 'primeng/api';
     CustomTableComponent,
     IconFieldModule,
     InputIconModule,
+    InputTextModule,
     SliderModule,
     PanelModule,
   ],
@@ -58,6 +60,7 @@ export class CrewListComponent {
   columns!: Column[];
   currentPage = 0;
   currentRows = 20;
+  tableLoading: boolean = false;
   crewListData = signal<ILogbookCrewListResponse | null>(null);
   crewListContentData = signal<ILogbookCrewListContentData[]>([]);
   logbookDashboardData = signal<any>(null);
@@ -76,8 +79,12 @@ export class CrewListComponent {
       { field: 'crewNameSurname', header: 'Crew Name & Surname' },
       { field: 'companyId', header: 'Company ID' },
       { field: 'totalNumberOfLog', header: 'Total Number of Log' },
-      { field: 'flightLog', header: 'Flight Log' },
-      { field: 'simulatorFlightLogs', header: 'Simulator Flight Logs' },
+      ...(this.logbookDashboardData()?.logbookType !== 'TRAINING'
+        ? [{ field: 'flightLog', header: 'Flight Log' }]
+        : []),
+      ...(this.logbookDashboardData()?.logbookType === 'TRAINING'
+        ? [{ field: 'simulatorFlightLogs', header: 'Simulator Flight Logs' }]
+        : []),
       { field: 'approvedLogs', header: 'Approved Logs' },
       { field: 'reassignedLogs', header: 'Reassing Logs' },
       { field: '', header: '', template: this.linkedNextPageTemplate },
@@ -85,6 +92,7 @@ export class CrewListComponent {
   }
 
   getCrewList() {
+    this.tableLoading = true;
     this.logbookService
       .getCrewList(
         this.logbookDashboardData()?.logbookType,
@@ -97,9 +105,11 @@ export class CrewListComponent {
         next: (response) => {
           this.crewListData.set(response);
           this.crewListContentData.set(response.content);
+          this.tableLoading = false;
         },
         error: (error) => {
           console.error(error);
+          this.tableLoading = false;
         },
       });
   }

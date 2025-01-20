@@ -5,6 +5,7 @@ import {
   input,
   output,
   Output,
+  TemplateRef,
   ViewChild,
 } from '@angular/core';
 import { Column } from '@shared/models/columns';
@@ -26,6 +27,7 @@ export class CustomTableComponent {
   selectionMode = input<'single' | 'multiple' | null>();
   isPaginator = input<boolean>(true);
   totalRecords = input<number>(0);
+  footerTemplate = input<TemplateRef<any> | null>(null);
 
   pageEvent = output<any>();
   @Output() rowClickedEvent: EventEmitter<any> = new EventEmitter<any>();

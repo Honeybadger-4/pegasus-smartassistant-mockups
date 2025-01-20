@@ -17,7 +17,7 @@
         class="flex align-items-center p-menubar-item-link"
       >
         <img
-          src="/icons/{{ item.icon }}"
+          src="/icon/{{ item.icon }}"
           alt="{{ item.label }}"
           class="menu-item-icon"
         />
@@ -35,14 +35,11 @@
     <ng-template #end>
       <div class="flex items-center gap-5">
         <div class="profile-avatar">
-          <p-avatar
-            image="/images/profile.png"
-            shape="circle"
-          ></p-avatar>
+          <p-avatar image="/images/profile.png" shape="circle"></p-avatar>
         </div>
         <span class="role">Captain</span>
         <img
-          src="/icons/sign-out-icon.svg"
+          src="/icon/sign-out-icon.svg"
           alt="Sign Out Icon"
           class="sign-out-icon"
           (click)="logout()"

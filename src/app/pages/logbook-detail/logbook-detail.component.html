@@ -2,42 +2,23 @@
 <main id="LogbookDetailPage">
   <section class="flex justify-between items-center w-full mb-3">
     <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" />
-    <form [formGroup]="filterFormGroup" (ngSubmit)="onFilterSubmit()">
-      <div class="flex justify-end items-center w-full gap-6">
-        <div class="w-[122px]">
-          <p-datepicker
-            formControlName="dateRange"
-            selectionMode="range"
-            [readonlyInput]="true"
-            dateFormat="dd/mm/yy"
-            placeholder="Start Date - End Date"
-            class="custom-calendar"
-          />
-        </div>
-
-        <div class="w-[122px]">
-          <p-select
-            [options]="statusOptions()"
-            formControlName="status"
-            placeholder="Status"
-            class="custom-dropdown w-full"
-          />
-        </div>
-
-        <p-button
-          type="submit"
-          icon="pi pi-search"
-          [rounded]="true"
-          class="filter-submit-btn"
-        />
-      </div>
-    </form>
+    <div class="w-[160px]">
+      <p-select
+        [(ngModel)]="statusFilter"
+        [options]="statusOptions()"
+        placeholder="Status"
+        class="custom-dropdown w-full"
+        (ngModelChange)="getDetailedList()"
+      />
+    </div>
   </section>
 
   <section>
     <div class="flex items-center justify-between">
       <div class="text-[12px]">
-        <p class="font-bold">{{ dateTitleTemplate() }}</p>
+        <p class="font-bold">
+          {{ this.crewListTableData.yearMonth | date: "MMMM YYYY" }}
+        </p>
         <span class="font-bold">Crew Name&Surname / Company ID:</span>
         <span class="ml-2"
           >{{ crewListTableData.crewNameSurname }} /
@@ -66,7 +47,7 @@
     </div>
   </section>
 
-  <section class="table-section custom-card">
+  <section class="table-section custom-card mt-5">
     <app-custom-table
       [tableData]="logbookDetailTableData()"
       [tableColumns]="columns"
@@ -74,6 +55,7 @@
       selectionMode="multiple"
       [totalRecords]="logbookDetailData()?.logbookDetails?.totalElements || 0"
       [tableLoading]="tableLoading"
+      [footerTemplate]="tableFooterTemplate"
       (selectedCheckbox)="selectionCheckbox($event)"
       (pageEvent)="onPageChange($event)"
     ></app-custom-table>
@@ -84,14 +66,14 @@
     [modal]="true"
     [draggable]="false"
     [resizable]="false"
-    class="custom-confirm-dialog-container"
+    class="custom-confirm-dialog-container reject-reason-dialog"
   >
     <div class="popup-content">
       <!-- Header -->
       <p class="title">Upload Reason</p>
 
       @if (selectedCheckbox()[0]) {
-        <div class="popup-header">
+        <div class="popup-info">
           <p><b>Date:</b> {{ selectedCheckbox()[0].date }}</p>
           <p><b>A/C Type:</b> {{ selectedCheckbox()[0].aircraftType }}</p>
           <p><b>A/C Reg:</b> {{ selectedCheckbox()[0].aircraftReg }}</p>
@@ -102,7 +84,7 @@
       <textarea
         [(ngModel)]="rejectReason"
         placeholder="Enter reason"
-        class="custom-textarea"
+        class="reject-reason-textarea"
         rows="5"
         maxlength="500"
       ></textarea>
@@ -113,14 +95,17 @@
           type="button"
           pButton
           label="Submit"
-          (click)="onSubmitRejectReason()"
+          [disabled]="rejectReason.length <= 0"
           class="submit-button"
+          (click)="onSubmitRejectReason()"
         ></button>
       </div>
     </div>
   </p-dialog>
 
-  <p-confirmDialog class="custom-confirm-dialog-container"></p-confirmDialog>
+  <p-confirmDialog
+    styleClass="custom-confirm-dialog-container"
+  ></p-confirmDialog>
 
   <app-detail-modal
     [visible]="displayPreviewDialog()"
@@ -129,9 +114,13 @@
   ></app-detail-modal>
 </main>
 
-<!-- Table Cell Templates -->
-<ng-template #updatedDateCellBodyTemplate let-rowData="rowData">
-  {{ updatedDateTemplate(rowData) }}
+<!-- Table Templates -->
+<ng-template #dateColumnTemplate let-rowData="rowData">
+  {{ rowData.date | date: "dd/MM/YYYY" }}
+</ng-template>
+
+<ng-template #updatedDateColumnTemplate let-rowData="rowData">
+  {{ rowData.updatedDate | date: "dd/MM/YYYY - hh:mm" }}
 </ng-template>
 
 <ng-template #previewCellBodyTemplate let-rowData="rowData">
@@ -146,4 +135,35 @@
     class="pi pi-pen-to-square cursor-pointer"
     (click)="goToLogBookDetailEditPage(rowData)"
   ></i>
+</ng-template>
+
+<ng-template #tableFooterTemplate>
+  <tr>
+    <td colspan="8" class="!text-right font-bold p-3 pb-0">Page Total</td>
+    <td colspan="9" class="font-bold p-3 pb-0">
+      {{ logbookDetailData()?.currentPageTotal || "-" }}
+    </td>
+  </tr>
+
+  <!-- This data should only be shown on the last pages -->
+  <tr
+    *ngIf="logbookDetailData()?.logbookDetails?.totalPages == currentPage + 1"
+  >
+    <td colspan="8" class="!text-right font-bold p-3 pb-0">
+      Previous Page Total
+    </td>
+    <td colspan="9" class="font-bold p-3 pb-0">
+      {{ logbookDetailData()?.previousPagesTotal || "-" }}
+    </td>
+  </tr>
+
+  <!-- This data should only be shown on the last pages -->
+  <tr
+    *ngIf="logbookDetailData()?.logbookDetails?.totalPages == currentPage + 1"
+  >
+    <td colspan="8" class="!text-right font-bold p-3 pb-0">Total</td>
+    <td colspan="9" class="font-bold p-3 pb-0">
+      {{ logbookDetailData()?.allPagesTotal || "-" }}
+    </td>
+  </tr>
 </ng-template>
