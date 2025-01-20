@@ -9,6 +9,7 @@
         pButton
         type="button"
         [label]="isEditMode() ? 'Save' : 'Edit'"
+        [disabled]="logbookFormGroup.invalid"
         class="save-button"
         (click)="isEditMode() ? onSave() : toggleEditMode()"
       ></button>
@@ -209,11 +210,7 @@
           <!-- Departure Time -->
           <div class="col-span-6 form-item-container">
             <p-floatLabel variant="on" class="custom-float-label-field w-full">
-              <input
-                pInputText
-                id="departureTime"
-                formControlName="departureTime"
-              />
+              <p-inputmask mask="99:99" formControlName="departureTime" />
               <label for="departureTime">Departure Time</label>
             </p-floatLabel>
 
@@ -233,11 +230,7 @@
           <!-- Arrival Time -->
           <div class="col-span-6 form-item-container">
             <p-floatLabel variant="on" class="custom-float-label-field w-full">
-              <input
-                pInputText
-                id="arrivalTime"
-                formControlName="arrivalTime"
-              />
+              <p-inputmask mask="99:99" formControlName="arrivalTime" />
               <label for="arrivalTime">Arrival Time</label>
             </p-floatLabel>
 
@@ -325,11 +318,7 @@
           <!-- Multi Pilot Time -->
           <div class="col-span-6 form-item-container">
             <p-floatLabel variant="on" class="custom-float-label-field w-full">
-              <input
-                pInputText
-                id="multiPilotTime"
-                formControlName="multiPilotTime"
-              />
+              <p-inputmask mask="99:99" formControlName="multiPilotTime" />
               <label for="multiPilotTime">Multi Pilot Time</label>
             </p-floatLabel>
 
@@ -349,7 +338,7 @@
           <!-- Total Time -->
           <div class="col-span-6 form-item-container">
             <p-floatLabel variant="on" class="custom-float-label-field w-full">
-              <input pInputText id="totalTime" formControlName="totalTime" />
+              <p-inputmask mask="99:99" formControlName="totalTime" />
               <label for="totalTime">Total Time</label>
             </p-floatLabel>
 
@@ -502,11 +491,7 @@
           <!-- Time -->
           <div class="form-item-container mb-5">
             <p-floatLabel variant="on" class="custom-float-label-field w-full">
-              <input
-                pInputText
-                id="time"
-                formControlName="syntheticTrainingTime"
-              />
+              <p-inputmask mask="99:99" formControlName="syntheticTrainingTime" />
               <label for="time">Time</label>
             </p-floatLabel>
 
@@ -531,11 +516,7 @@
           <!-- PIC -->
           <div class="form-item-container mb-5">
             <p-floatLabel variant="on" class="custom-float-label-field w-full">
-              <input
-                pInputText
-                id="pilotFunctionPic"
-                formControlName="pilotFunctionPic"
-              />
+              <p-inputmask mask="99:99" id="pilotFunctionPic" formControlName="pilotFunctionPic" />
               <label for="pilotFunctionPic">PIC</label>
             </p-floatLabel>
 
@@ -555,11 +536,7 @@
           <!-- CO-PILOT -->
           <div class="form-item-container mb-5">
             <p-floatLabel variant="on" class="custom-float-label-field w-full">
-              <input
-                pInputText
-                id="pilotFunctionCoPilot"
-                formControlName="pilotFunctionCoPilot"
-              />
+              <p-inputmask mask="99:99" id="pilotFunctionCoPilot" formControlName="pilotFunctionCoPilot" />
               <label for="pilotFunctionCoPilot">CO-PILOT</label>
             </p-floatLabel>
 
@@ -579,11 +556,7 @@
           <!-- Duty -->
           <div class="form-item-container mb-5">
             <p-floatLabel variant="on" class="custom-float-label-field w-full">
-              <input
-                pInputText
-                id="pilotFunctionDual"
-                formControlName="pilotFunctionDual"
-              />
+              <p-inputmask mask="99:99" id="pilotFunctionDual" formControlName="pilotFunctionDual" />
               <label for="pilotFunctionDual">Duty</label>
             </p-floatLabel>
 
@@ -608,7 +581,7 @@
           <!-- Night -->
           <div class="form-item-container mb-5">
             <p-floatLabel variant="on" class="custom-float-label-field w-full">
-              <input pInputText id="night" formControlName="night" />
+              <p-inputmask mask="99:99" id="night" formControlName="night" />
               <label for="night">Night</label>
             </p-floatLabel>
 
@@ -628,7 +601,7 @@
           <!-- IFR -->
           <div class="form-item-container mb-5">
             <p-floatLabel variant="on" class="custom-float-label-field w-full">
-              <input pInputText id="ifr" formControlName="ifr" />
+              <p-inputmask mask="99:99" id="ifr" formControlName="ifr" />
               <label for="ifr">IFR</label>
             </p-floatLabel>
 
