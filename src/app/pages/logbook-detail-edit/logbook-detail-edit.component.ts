@@ -206,7 +206,7 @@ export class LogbookDetailEditComponent implements OnInit {
     this.confirmationService.confirm({
       message: `<div class="custom-confirm-content">
                   <div class="custom-confirm-icon">
-                    <img src="/icons/approve-icon.svg" alt="Approve Icon" />
+                    <img src="/icon/approve-icon.svg" alt="Approve Icon" />
                   </div>
                   <p class="custom-confirm-message">${message}</p>
                 </div>`,
