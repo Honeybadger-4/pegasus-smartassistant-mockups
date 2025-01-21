@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   inject,
@@ -6,37 +5,45 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Column } from '@shared/models/columns';
-import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
+import { CommonModule } from '@angular/common';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { LoadAndTrimSheetComponent } from '../../components/load-and-trim-sheet/load-and-trim-sheet.component';
+import { ButtonModule } from 'primeng/button';
+import { DatePickerModule } from 'primeng/datepicker';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 import { SliderModule } from 'primeng/slider';
+import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { LoadSheetService } from '@shared/services/load-sheet.service';
+import { Column } from '@shared/models/columns';
 import {
   ILoadSheetResponse,
   ILoadSheetTableData,
 } from '@shared/models/load-sheet-response.model';
-import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/dialog';
-import { LoadAndTrimSheetComponent } from '../../components/load-and-trim-sheet/load-and-trim-sheet.component';
 import moment from 'moment';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
-import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-load-sheet',
   imports: [
     CommonModule,
     FormsModule,
-    SliderModule,
-    CustomTableComponent,
-    DatePickerModule,
+    ReactiveFormsModule,
     LoadAndTrimSheetComponent,
-    DialogModule,
+    CustomTableComponent,
+    SliderModule,
     IconFieldModule,
     InputIconModule,
     InputTextModule,
+    DatePickerModule,
+    DialogModule,
+    ButtonModule,
   ],
   templateUrl: './load-sheet.component.html',
   styleUrl: './load-sheet.component.scss',
@@ -47,15 +54,14 @@ export class LoadSheetComponent {
   statusCellBodyTemplate!: TemplateRef<any>;
   @ViewChild('previewCellBodyTemplate', { static: true })
   previewCellBodyTemplate!: TemplateRef<any>;
-  @ViewChild('downloadCellBodyTemplate', { static: true })
-  downloadCellBodyTemplate!: TemplateRef<any>;
 
-  loadSheetService = inject(LoadSheetService);
+  filterFormGroup!: FormGroup;
   columns: Column[] = [];
   dateRange: Date[] = [];
   currentPage = 0;
   currentRows = 20;
   isDialogVisible = false;
+  tableLoading: boolean = false;
 
   loadSheetData = signal<ILoadSheetResponse | null>(null);
   loadSheetTableData = signal<ILoadSheetTableData[]>([]);
@@ -63,63 +69,87 @@ export class LoadSheetComponent {
   approvedValue = signal<number>(0);
   declinedValue = signal<number>(0);
 
-  ngOnInit() {
-    this.defineColumn();
+  formBuilder = inject(FormBuilder);
+  loadSheetService = inject(LoadSheetService);
 
-    const today = moment();
-    this.initialDateRangeValue();
+  ngOnInit() {
+    this.builder();
+    this.defineColumn();
     this.getLoadSheet();
+  }
+
+  builder() {
+    this.filterFormGroup = this.formBuilder.group({
+      acReg: [''],
+      flightNo: [''],
+      depPort: [''],
+      arrPort: [''],
+      dateRange: [this.dateRangeDefaultValue()],
+    });
   }
 
   defineColumn() {
     this.columns = [
-      { field: 'date', header: 'Date' },
       { field: 'aircraftReg', header: 'Aircraft' },
       { field: 'flightNo', header: 'Flight No' },
       { field: 'depPort', header: 'Departure' },
       { field: 'arrPort', header: 'Arrival' },
       { field: 'depDateTime', header: 'Dep Date/Time' },
       { field: 'arrDateTime', header: 'Arr Date/Time' },
+
+      { field: 'preparedBy', header: 'Prepared By' },
+      { field: 'checkedBy', header: 'Checked By' },
+      { field: 'username', header: 'Approved By' },
+      { field: 'lmc', header: 'LMC' },
+      { field: 'crew', header: 'Crew' },
+      { field: 'version', header: 'Version' },
       {
         field: 'status',
         header: 'Status',
         template: this.statusCellBodyTemplate,
       },
-      { field: 'username', header: 'Username' },
       { field: '', header: '', template: this.previewCellBodyTemplate },
-      { field: '', header: '', template: this.downloadCellBodyTemplate },
     ];
   }
 
-  initialDateRangeValue() {
-    const today = moment();
-    this.dateRange = [
-      today.clone().subtract(7, 'days').toDate(),
-      today.clone().add(7, 'days').toDate(),
-    ];
-  }
-
+  // API Calls Operations
   getLoadSheet() {
+    this.tableLoading = true;
+
+    const formValues = this.filterFormGroup.value;
+    const acReg = formValues.acReg?.trim() || null;
+    const flightNo = formValues.flightNo?.trim() || null;
+    const depPort = formValues.depPort?.trim() || null;
+    const arrPort = formValues.arrPort?.trim() || null;
     let startDate = '';
     let endDate = '';
 
     // Tarih aralığı kontrolü ve formatlama
-    if (this.dateRange.length === 2) {
-      const [start, end] = this.dateRange;
+    if (formValues.dateRange && formValues.dateRange.length === 2) {
+      const [start, end] = formValues.dateRange;
 
       if (start && end) {
         startDate = moment(start).format('YYYY-MM-DD');
         endDate = moment(end).format('YYYY-MM-DD');
       }
     }
-
     this.loadSheetService
-      .getLoadSheet(startDate, endDate, this.currentPage, this.currentRows)
+      .getLoadSheet(
+        this.currentPage,
+        this.currentRows,
+        startDate,
+        endDate,
+        acReg,
+        flightNo,
+        depPort,
+        arrPort,
+      )
       .subscribe({
         next: (response) => {
           this.loadSheetData.set(response);
           this.loadSheetTableData.set(response.loadSheets.content);
           this.approvedValue.set(response.approvedPercentage);
+          this.tableLoading = false;
 
           if (response.approvedPercentage === 0) {
             this.declinedValue.set(0);
@@ -127,10 +157,30 @@ export class LoadSheetComponent {
             this.declinedValue.set(100 - response.approvedPercentage);
           }
         },
-        error: (error) => {
-          console.error(error);
+        error: () => {
+          this.tableLoading = false;
         },
       });
+  }
+
+  // Filter Operations
+  dateRangeDefaultValue() {
+    const endDate = moment();
+    const startDate = moment().subtract(3, 'days');
+
+    return [startDate.toDate(), endDate.toDate()];
+  }
+
+  onFilterSubmit() {
+    this.getLoadSheet();
+  }
+
+  // Other Operations
+  toggleLoadAndTrimSheetDialogVisible(
+    rowData: ILoadSheetTableData | null = null,
+  ) {
+    this.isDialogVisible = !this.isDialogVisible;
+    this.loadAndTrimSheetData.set(rowData);
   }
 
   pageEvent(event: { first: number; rows: number }) {
@@ -138,12 +188,5 @@ export class LoadSheetComponent {
     this.currentPage = page;
     this.currentRows = event.rows;
     this.getLoadSheet();
-  }
-
-  toggleLoadAndTrimSheetDialogVisible(
-    rowData: ILoadSheetTableData | null = null,
-  ) {
-    this.isDialogVisible = !this.isDialogVisible;
-    this.loadAndTrimSheetData.set(rowData);
   }
 }

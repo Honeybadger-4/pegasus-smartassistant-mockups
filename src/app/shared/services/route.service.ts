@@ -1,26 +1,28 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from '@environments/environment';
-import { IHttpResponseModel } from '@shared/models/http-response.model';
-import { ILoginInfoResponse } from '@shared/models/login-info-response.model';
 import { map, Observable } from 'rxjs';
+import { IRouteResponse } from '@shared/models/route-response.model';
+import { IHttpResponseModel } from '@shared/models/http-response.model';
+import { environment } from '@environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
-export class LoginInfoService {
+export class RouteService {
   http = inject(HttpClient);
   baseUrl = environment.baseApi;
 
-  getAllLoginInfo(
+  getRoute(
     page: number,
     size: number,
     startDate: string,
     endDate: string,
+    flightNo?: string | null,
+    depPort?: string | null,
+    arrPort?: string | null,
     username?: string | null,
-    companyId?: number | null,
-  ): Observable<ILoginInfoResponse> {
-    const apiUrl = `${this.baseUrl}/api/v1/admin/login-info`;
+  ): Observable<IRouteResponse> {
+    const apiUrl = `${this.baseUrl}/api/v1/admin/routes`;
 
     let params = new HttpParams()
       .set('page', page)
@@ -28,12 +30,19 @@ export class LoginInfoService {
       .set('startDate', startDate)
       .set('endDate', endDate);
 
+    if (flightNo) {
+      params = params.set('flightNo', flightNo);
+    }
+    if (depPort) {
+      params = params.set('depPort', depPort);
+    }
+    if (arrPort) {
+      params = params.set('arrPort', arrPort);
+    }
     if (username) {
       params = params.set('username', username);
     }
-    if (companyId) {
-      params = params.set('companyId', companyId);
-    }
+
     return this.http
       .get<IHttpResponseModel>(apiUrl, { params })
       .pipe(map((response) => response.data));

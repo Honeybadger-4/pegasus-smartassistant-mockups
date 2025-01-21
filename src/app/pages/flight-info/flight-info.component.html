@@ -1,5 +1,62 @@
-<div id="FlightInfoComponent">
-  <app-table-header></app-table-header>
+<main id="FlightInfoComponent">
+  <section class="table-header-container lg:flex block">
+    <!-- Header Title -->
+    <p class="header-title">Flight Information List</p>
+    <!-- Filter Inputs -->
+    <form [formGroup]="filterFormGroup" (ngSubmit)="onFilterSubmit()">
+      <div class="flex justify-between items-center gap-4">
+        <div class="grid grid-cols-10 gap-4 items-center">
+          <div class="lg:col-span-2 md:col-span-6 col-span-12">
+            <p-iconField iconPosition="right" class="custom-icon-field">
+              <input type="text" pInputText placeholder="Flight No" />
+            </p-iconField>
+          </div>
+
+          <!-- Dep Port Input -->
+          <div class="lg:col-span-2 md:col-span-6 col-span-12">
+            <p-iconField iconPosition="right" class="custom-icon-field">
+              <input type="text" pInputText placeholder="Dep Port" />
+            </p-iconField>
+          </div>
+
+          <!-- Arr Port Input -->
+          <div class="lg:col-span-2 md:col-span-6 col-span-12">
+            <p-iconField iconPosition="right" class="custom-icon-field">
+              <input type="text" pInputText placeholder="Arr Port" />
+            </p-iconField>
+          </div>
+
+          <!-- User Input -->
+          <div class="lg:col-span-2 md:col-span-6 col-span-12">
+            <p-iconField iconPosition="right" class="custom-icon-field">
+              <input type="text" pInputText placeholder="User" />
+            </p-iconField>
+          </div>
+
+          <!-- Date Picker -->
+          <div class="lg:col-span-2 md:col-span-6 col-span-12">
+            <p-datepicker
+              [(ngModel)]="dateRange"
+              selectionMode="range"
+              [readonlyInput]="true"
+              dateFormat="dd/mm/yy"
+              placeholder="Start Date - End Date"
+              class="custom-calendar"
+            />
+          </div>
+        </div>
+
+        <div>
+          <p-button
+            type="submit"
+            icon="pi pi-search"
+            [rounded]="true"
+            class="filter-submit-btn"
+          />
+        </div>
+      </div>
+    </form>
+  </section>
 
   <section class="table-section custom-card">
     <p-table
@@ -79,7 +136,7 @@
       </ng-template>
     </p-table>
   </section>
-</div>
+</main>
 
 <!-- Table Cell Templates -->
 <ng-template #flightPlanTableFlightPlanCellTemplate let-rowData="rowData">

@@ -1,25 +1,52 @@
-import { RouteTableHeaderComponent } from '../../components/flight-info/route-table-header/route-table-header.component';
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
+import { RouteService } from '@shared/services/route.service';
+import { Column } from '@shared/models/columns';
+import {
+  IRouteResponse,
+  IRouteTableData,
+} from '@shared/models/route-response.model';
+
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 import {
   TableModule,
   TableRowCollapseEvent,
   TableRowExpandEvent,
 } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
-import { Column } from '@shared/models/columns';
 import { TabViewModule } from 'primeng/tabview';
-import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
+import { ButtonModule } from 'primeng/button';
+import { DatePickerModule } from 'primeng/datepicker';
+import moment from 'moment';
 
 @Component({
   selector: 'app-route',
   imports: [
-    RouteTableHeaderComponent,
     CommonModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
     TableModule,
     ButtonModule,
     TabViewModule,
     CustomTableComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    DatePickerModule,
   ],
   templateUrl: './route.component.html',
   styleUrl: './route.component.scss',
@@ -27,69 +54,7 @@ import { CustomTableComponent } from '@shared/components/custom-table/custom-tab
 export class RouteComponent {
   @ViewChild('expandableTableDocumentsIconTemplate', { static: true })
   expandableTableDocumentsIconTemplate!: TemplateRef<any>;
-  // Mock Data
-  routeData = [
-    {
-      id: '0',
-      aircraft: 'TC-A329',
-      flightNo: 'PC2009',
-      depPort: 'AYT',
-      arrPort: 'DUS',
-      depDateTime: '22/07/2025 13:30',
-      arrDateTime: '22/07/2025 16:30',
-      user: 'SAWBNCS1',
-      gpsLossForm: '+',
-      alternateRoute: '-',
-    },
-    {
-      id: '1',
-      aircraft: 'TC-A329',
-      flightNo: 'PC2004',
-      depPort: 'AYT',
-      arrPort: 'DUS',
-      depDateTime: '23/07/2025 13:30',
-      arrDateTime: '23/07/2025 16:30',
-      user: 'SAWBNCS2',
-      gpsLossForm: '+',
-      alternateRoute: '-',
-    },
-    {
-      id: '2',
-      aircraft: 'TC-A329',
-      flightNo: 'PC2009',
-      depPort: 'AYT',
-      arrPort: 'DUS',
-      depDateTime: '22/07/2025 13:30',
-      arrDateTime: '22/07/2025 16:30',
-      user: 'SAWBNCS1',
-      gpsLossForm: '+',
-      alternateRoute: 'LTBJ',
-    },
-    {
-      id: '3',
-      aircraft: 'TC-A329',
-      flightNo: 'PC2009',
-      depPort: 'AYT',
-      arrPort: 'DUS',
-      depDateTime: '22/07/2025 13:30',
-      arrDateTime: '22/07/2025 16:30',
-      user: 'SAWBNCS1',
-      gpsLossForm: '+',
-      alternateRoute: 'LTBJ',
-    },
-    {
-      id: '4',
-      aircraft: 'TC-A329',
-      flightNo: 'PC2009',
-      depPort: 'AYT',
-      arrPort: 'DUS',
-      depDateTime: '22/07/2025 13:30',
-      arrDateTime: '22/07/2025 16:30',
-      user: 'SAWBNCS1',
-      gpsLossForm: '+',
-      alternateRoute: 'LTBJ',
-    },
-  ];
+
   detailsData = [
     {
       airway: 'UGB',
@@ -169,20 +134,42 @@ export class RouteComponent {
     },
   ];
 
-  // Columns Variable
+  filterFormGroup!: FormGroup;
   mainCols!: Column[];
   detailsCols!: Column[];
+  dateRange: Date[] = [];
   expandedRows = {};
+  currentPage = 0;
+  currentRows = 20;
+  tableLoading: boolean = false;
+
+  routeHistoryData = signal<IRouteResponse | null>(null);
+  routeHistoryTableData = signal<IRouteTableData[]>([]);
+
+  formBuilder = inject(FormBuilder);
+  routeService = inject(RouteService);
 
   ngOnInit() {
+    this.builder();
     this.defineMainColumns();
     this.defineDetailsColumns();
+    this.getRoute();
+  }
+
+  builder() {
+    this.filterFormGroup = this.formBuilder.group({
+      flightNo: [''],
+      depPort: [''],
+      arrPort: [''],
+      username: [''],
+      dateRange: [this.dateRangeDefaultValue()],
+    });
   }
 
   // Define Columns Operation
   defineMainColumns() {
     this.mainCols = [
-      { field: 'aircraft', header: 'Aircraft' },
+      { field: 'aircraftReg', header: 'Aircraft' },
       { field: 'flightNo', header: 'Flight No' },
       { field: 'depPort', header: 'Dep Port' },
       { field: 'arrPort', header: 'Arr Port' },
@@ -193,7 +180,6 @@ export class RouteComponent {
       { field: 'alternateRoute', header: 'Alternate Route' },
     ];
   }
-
   defineDetailsColumns() {
     this.detailsCols = [
       { field: 'airway', header: 'Airway' },
@@ -221,11 +207,77 @@ export class RouteComponent {
     ];
   }
 
+  // API Calls Operations
+  getRoute() {
+    this.tableLoading = true;
+
+    const formValues = this.filterFormGroup.value;
+    const user = formValues.username?.trim() || null;
+    const flightNo = formValues.flightNo?.trim() || null;
+    const depPort = formValues.depPort?.trim() || null;
+    const arrPort = formValues.arrPort?.trim() || null;
+
+    let startDate = '';
+    let endDate = '';
+
+    // Tarih aralığı kontrolü ve formatlama
+    if (formValues.dateRange && formValues.dateRange.length === 2) {
+      const [start, end] = formValues.dateRange;
+
+      if (start && end) {
+        startDate = moment(start).format('YYYY-MM-DD');
+        endDate = moment(end).format('YYYY-MM-DD');
+      }
+    }
+
+    this.routeService
+      .getRoute(
+        this.currentPage,
+        this.currentRows,
+        startDate,
+        endDate,
+        flightNo,
+        depPort,
+        arrPort,
+        user,
+      )
+      .subscribe({
+        next: (response) => {
+          this.routeHistoryData.set(response);
+          this.routeHistoryTableData.set(response.content);
+          this.tableLoading = false;
+        },
+        error: () => {
+          this.tableLoading = false;
+        },
+      });
+  }
+
+  // Filter Operations
+  dateRangeDefaultValue() {
+    const endDate = moment();
+    const startDate = moment().subtract(3, 'days');
+
+    return [startDate.toDate(), endDate.toDate()];
+  }
+
+  onFilterSubmit() {
+    this.getRoute();
+  }
+
+  // Other Operations
   onRowExpand(event: TableRowExpandEvent) {
     console.log('Expanded: ', event);
   }
 
   onRowCollapse(event: TableRowCollapseEvent) {
     console.log('Collapsed: ', event);
+  }
+
+  pageEvent(event: { first: number; rows: number }) {
+    const page = event.first / event.rows;
+    this.currentPage = page;
+    this.currentRows = event.rows;
+    this.getRoute();
   }
 }

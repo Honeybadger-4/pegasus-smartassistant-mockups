@@ -1,8 +1,8 @@
-<div id="FuelOrderPage">
+<main id="FuelOrderPage">
   <section class="table-header-section lg:flex block">
     <!-- Header Title -->
     <p class="header-title">Fuel</p>
-    <!-- Filter Inputs and Dropdown -->
+    <!-- Filter Form -->
     <form [formGroup]="filterFormGroup" (ngSubmit)="onFilterSubmit()">
       <div class="flex justify-between items-center gap-4">
         <div class="grid grid-cols-10 gap-4 items-center">
@@ -50,7 +50,7 @@
               />
             </p-iconField>
           </div>
-          <!-- Calendar -->
+          <!-- Date Range Picker -->
           <div class="lg:col-span-2 md:col-span-6 col-span-12">
             <p-datepicker
               formControlName="dateRange"
@@ -62,7 +62,6 @@
             />
           </div>
         </div>
-
         <div>
           <p-button
             type="submit"
@@ -84,4 +83,4 @@
       (pageEvent)="pageEvent($event)"
     ></app-custom-table>
   </section>
-</div>
+</main>

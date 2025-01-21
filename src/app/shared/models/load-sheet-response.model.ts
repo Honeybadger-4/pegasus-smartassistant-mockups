@@ -31,11 +31,19 @@ export interface ILoadSheetResponse {
 }
 
 export interface ILoadSheetTableData {
-  status: string;
   username: string;
   legIsn: number;
   depPort: string;
   arrPort: string;
   flightNo: string;
   aircraftReg: string;
+  status: string;
+
+  // Belirsizler
+
+  preparedBy: string;
+  checkedBy: string;
+  lmc: string;
+  crew: string;
+  version: string;
 }

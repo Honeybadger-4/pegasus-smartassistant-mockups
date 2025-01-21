@@ -1,6 +1,6 @@
 <main id="ReportPage">
   <section class="table-header-section">
-    <span class="header-title">Report</span>
+    <p class="header-title">Report</p>
     <!-- Filter Inputs and Dropdown -->
     <div class="grid grid-cols-10 gap-4 items-center">
       <!-- Aircraft  Input -->
@@ -35,7 +35,7 @@
         </p-iconField>
       </div>
 
-      <!-- Calendar -->
+      <!-- Date Picker -->
       <div class="lg:col-span-2 md:col-span-6 col-span-12">
         <p-datepicker
           [(ngModel)]="dateRange"
@@ -64,8 +64,4 @@
 
 <ng-template #previewCellBodyTemplate>
   <i class="pi pi-eye"></i>
-</ng-template>
-
-<ng-template #downloadCellBodyTemplate>
-  <i class="pi pi-download"></i>
 </ng-template>

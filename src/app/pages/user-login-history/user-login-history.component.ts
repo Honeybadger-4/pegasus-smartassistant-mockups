@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   inject,
@@ -6,20 +5,28 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Column } from '@shared/models/columns';
+import { CommonModule } from '@angular/common';
+
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { DatePickerModule } from 'primeng/datepicker';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { LoginInfoService } from '@shared/services/login-info.service';
+
+import { Column } from '@shared/models/columns';
 import {
   ILoginInfoResponse,
   ILoginInfoTableData,
 } from '@shared/models/login-info-response.model';
-import { CalendarModule } from 'primeng/calendar';
 import moment from 'moment';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
-import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-user-login-history',
@@ -31,6 +38,9 @@ import { DatePickerModule } from 'primeng/datepicker';
     IconFieldModule,
     InputIconModule,
     InputTextModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ButtonModule,
   ],
   templateUrl: './user-login-history.component.html',
   styleUrl: './user-login-history.component.scss',
@@ -40,18 +50,30 @@ export class UserLoginHistoryComponent {
   @ViewChild('loggedInDateTemplate', { static: true })
   loggedInDateTemplate!: TemplateRef<any>;
   loginInfoService = inject(LoginInfoService);
+  formBuilder = inject(FormBuilder);
 
+  filterFormGroup!: FormGroup;
   columns: Column[] = [];
-  userLoginHistoryData = signal<ILoginInfoResponse | null>(null);
-  userLoginHistoryTableData = signal<ILoginInfoTableData[]>([]);
   currentPage = 0;
   currentRows = 20;
   dateRange: Date[] = [];
+  tableLoading: boolean = false;
+
+  userLoginHistoryData = signal<ILoginInfoResponse | null>(null);
+  userLoginHistoryTableData = signal<ILoginInfoTableData[]>([]);
 
   ngOnInit() {
+    this.builder();
     this.defineColumn();
-    const today = moment();
-    this.initialDateRangeValue();
+    this.getAllLoginInfo();
+  }
+
+  builder() {
+    this.filterFormGroup = this.formBuilder.group({
+      username: [''],
+      companyId: [''],
+      dateRange: [this.dateRangeDefaultValue()],
+    });
   }
 
   defineColumn() {
@@ -75,21 +97,19 @@ export class UserLoginHistoryComponent {
     ];
   }
 
-  initialDateRangeValue() {
-    const today = moment();
-    this.dateRange = [
-      today.clone().subtract(7, 'days').toDate(),
-      today.clone().add(7, 'days').toDate(),
-    ];
-  }
-
   getAllLoginInfo() {
+    this.tableLoading = true;
+
+    const formValues = this.filterFormGroup.value;
+    const username = formValues.username?.trim() || null;
+    const companyId = formValues.companyId?.trim() || null;
+
     let startDate = '';
     let endDate = '';
 
     // Tarih aralığı kontrolü ve formatlama
-    if (this.dateRange.length === 2) {
-      const [start, end] = this.dateRange;
+    if (formValues.dateRange && formValues.dateRange.length === 2) {
+      const [start, end] = formValues.dateRange;
 
       if (start && end) {
         startDate = moment(start).format('YYYY-MM-DD');
@@ -97,26 +117,35 @@ export class UserLoginHistoryComponent {
       }
     }
     this.loginInfoService
-      .getAllLoginInfo(startDate, endDate, this.currentPage, this.currentRows)
+      .getAllLoginInfo(
+        this.currentPage,
+        this.currentRows,
+        startDate,
+        endDate,
+        username,
+        companyId,
+      )
       .subscribe({
         next: (response) => {
           this.userLoginHistoryData.set(response);
           this.userLoginHistoryTableData.set(response.content);
+          this.tableLoading = false;
         },
-        error: (error) => {
-          console.error(error);
+        error: () => {
+          this.tableLoading = false;
         },
       });
   }
 
-  onDateRangeChange(event: Event) {
-    const [startDate, endDate] = this.dateRange;
+  onFilterSubmit() {
+    this.getAllLoginInfo();
+  }
 
-    if (startDate && endDate) {
-      this.currentPage = 0;
-      this.customTableComponent.resetTableFirstValue();
-      this.getAllLoginInfo();
-    }
+  dateRangeDefaultValue() {
+    const endDate = moment();
+    const startDate = moment().subtract(3, 'days');
+
+    return [startDate.toDate(), endDate.toDate()];
   }
 
   pageEvent(event: { first: number; rows: number }) {

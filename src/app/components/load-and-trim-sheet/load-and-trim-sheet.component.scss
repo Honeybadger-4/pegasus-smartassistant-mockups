@@ -3,3 +3,14 @@
   font-size: 14px;
   font-weight: 400;
 }
+
+::ng-deep {
+  #LoadAndTrimSheet {
+    .p-button.p-button-text {
+      color: #4f4f4f;
+    }
+    .p-button.p-button-text:not(:disabled):hover {
+      background-color: #f3f2f1;
+    }
+  }
+}

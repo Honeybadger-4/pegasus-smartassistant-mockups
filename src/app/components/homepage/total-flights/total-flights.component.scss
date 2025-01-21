@@ -2,7 +2,10 @@
   border: 0.5px solid #9a9a9a;
   padding: 15px;
   border-radius: 2px;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
+  .flex {
+    gap: 20px;
+  }
 
   .chart-container {
     width: 200px;
@@ -10,9 +13,12 @@
   }
 
   .charts-box {
-    padding: 10px 75px 10px 75px;
+    padding: 15px 150px 15px 150px;
+    gap: 140px;
 
     .chart-box-flight {
+      gap: 30px;
+
       .total-flights-title {
         font-size: 20px;
         color: #4f4f4f;

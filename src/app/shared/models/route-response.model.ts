@@ -1,5 +1,5 @@
-export interface ITripInfoResponse {
-  content: [ITripInfoTableData];
+export interface IRouteResponse {
+  content: [IRouteTableData];
   pageable: {
     pageNumber: number;
     pageSize: number;
@@ -12,8 +12,8 @@ export interface ITripInfoResponse {
     paged: boolean;
     unpaged: boolean;
   };
-  totalElements: number;
   totalPages: number;
+  totalElements: number;
   last: boolean;
   size: number;
   number: number;
@@ -27,23 +27,16 @@ export interface ITripInfoResponse {
   empty: boolean;
 }
 
-export interface ITripInfoTableData {
-  username: string;
+export interface IRouteTableData {
+  flightPlanId: number;
   legIsn: number;
-  depDateTime: string;
+  aircraftReg: string;
+  flightNo: string;
   depPort: string;
   arrPort: string;
-  flightNo: string;
-  aircraftReg: string;
+  depDateTime: string;
   arrDateTime: string;
-  pantryCode: string;
-  crewVersion: string;
-  tripFuel: number;
-  taxiFuel: number;
-  eet: string;
-
-  // Belirsizler
-  pax: string;
-  takeOffTime: string;
-  status: string;
+  user: string | null;
+  gpsLossForm: number | null;
+  alternateRoute: string | null;
 }

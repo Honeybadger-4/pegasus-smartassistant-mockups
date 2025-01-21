@@ -36,4 +36,5 @@ export interface IFuelOrderTableData {
   aircraftReg: string;
   arrDateTime: string;
   amount: number;
+  userName: string;
 }

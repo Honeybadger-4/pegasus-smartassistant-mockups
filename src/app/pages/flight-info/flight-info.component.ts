@@ -8,8 +8,17 @@ import {
 import { ButtonModule } from 'primeng/button';
 import { Column } from '@shared/models/columns';
 import { TabsModule } from 'primeng/tabs';
-import { TableHeaderComponent } from '../../components/flight-info/table-header/table-header.component';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
+import { InputTextModule } from 'primeng/inputtext';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-flight-info',
@@ -18,8 +27,14 @@ import { CustomTableComponent } from '@shared/components/custom-table/custom-tab
     TableModule,
     ButtonModule,
     TabsModule,
-    TableHeaderComponent,
     CustomTableComponent,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+    FormsModule,
+    DatePickerModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './flight-info.component.html',
   styleUrl: './flight-info.component.scss',
@@ -33,6 +48,9 @@ export class FlightInfoComponent {
   loadSheetTableCGLimitsCellTemplate!: TemplateRef<any>;
   @ViewChild('tripInfoTableTripInfoCellTemplate', { static: true })
   tripInfoTableTripInfoCellTemplate!: TemplateRef<any>;
+
+  dateRange: Date[] = [];
+  filterFormGroup!: FormGroup;
 
   // Columns Variable
   mainCols!: Column[];
@@ -604,4 +622,6 @@ export class FlightInfoComponent {
   activeTabIndexChange(value: number) {
     console.log('Tab changed: ', value);
   }
+
+  onFilterSubmit() {}
 }

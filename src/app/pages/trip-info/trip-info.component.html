@@ -1,54 +1,81 @@
 <main id="TripInfoPage">
   <section class="table-header-section lg:flex block">
     <!-- Header Title -->
-    <span class="header-title">Trip Info</span>
+    <p class="header-title">Trip Info</p>
+    <!-- Filter Inputs -->
+    <form [formGroup]="filterFormGroup" (ngSubmit)="onFilterSubmit()">
+      <div class="flex justify-between items-center gap-4">
+        <div class="grid grid-cols-10 gap-4 items-center">
+          <!-- Aircraft  Input -->
+          <div class="lg:col-span-2 md:col-span-6 col-span-12">
+            <p-iconField iconPosition="right" class="custom-icon-field">
+              <input
+                type="text"
+                pInputText
+                placeholder="Aircraft"
+                formControlName="acReg"
+              />
+            </p-iconField>
+          </div>
 
-    <!-- Filter Inputs and Dropdown -->
-    <div class="grid grid-cols-10 gap-4 items-center">
-      <!-- Aircraft  Input -->
-      <div class="lg:col-span-2 md:col-span-6 col-span-12">
-        <p-iconField iconPosition="right" class="custom-icon-field">
-          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
-          <input type="text" pInputText placeholder="Aircraft" />
-        </p-iconField>
-      </div>
+          <!-- Flight No Input -->
+          <div class="lg:col-span-2 md:col-span-6 col-span-12">
+            <p-iconField iconPosition="right" class="custom-icon-field">
+              <input
+                type="text"
+                pInputText
+                placeholder="Flight No"
+                formControlName="flightNo"
+              />
+            </p-iconField>
+          </div>
 
-      <!-- Flight No Input -->
-      <div class="lg:col-span-2 md:col-span-6 col-span-12">
-        <p-iconField iconPosition="right" class="custom-icon-field">
-          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
-          <input type="text" pInputText placeholder="Flight No" />
-        </p-iconField>
-      </div>
+          <!-- Dep Port Input -->
+          <div class="lg:col-span-2 md:col-span-6 col-span-12">
+            <p-iconField iconPosition="right" class="custom-icon-field">
+              <input
+                type="text"
+                pInputText
+                placeholder="Dep Port"
+                formControlName="depPort"
+              />
+            </p-iconField>
+          </div>
 
-      <!-- Dep Port Input -->
-      <div class="lg:col-span-2 md:col-span-6 col-span-12">
-        <p-iconField iconPosition="right" class="custom-icon-field">
-          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
-          <input type="text" pInputText placeholder="Dep Port" />
-        </p-iconField>
-      </div>
+          <!-- Arr Port Input -->
+          <div class="lg:col-span-2 md:col-span-6 col-span-12">
+            <p-iconField iconPosition="right" class="custom-icon-field">
+              <input
+                type="text"
+                pInputText
+                placeholder="Arr Port"
+                formControlName="arrPort"
+              />
+            </p-iconField>
+          </div>
 
-      <!-- Arr Port Input -->
-      <div class="lg:col-span-2 md:col-span-6 col-span-12">
-        <p-iconField iconPosition="right" class="custom-icon-field">
-          <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
-          <input type="text" pInputText placeholder="Arr Port" />
-        </p-iconField>
+          <!-- Date Picker -->
+          <div class="lg:col-span-2 md:col-span-6 col-span-12">
+            <p-datepicker
+              formControlName="dateRange"
+              selectionMode="range"
+              [readonlyInput]="true"
+              dateFormat="dd/mm/yy"
+              placeholder="Start Date - End Date"
+              class="custom-calendar"
+            />
+          </div>
+        </div>
+        <div>
+          <p-button
+            type="submit"
+            icon="pi pi-search"
+            [rounded]="true"
+            class="filter-submit-btn"
+          />
+        </div>
       </div>
-
-      <!-- Calendar -->
-      <div class="lg:col-span-2 md:col-span-6 col-span-12">
-        <p-datepicker
-          [(ngModel)]="dateRange"
-          selectionMode="range"
-          [readonlyInput]="true"
-          dateFormat="dd/mm/yy"
-          placeholder="Start Date - End Date"
-          class="custom-calendar"
-        />
-      </div>
-    </div>
+    </form>
   </section>
 
   <section class="table-section custom-card">
@@ -64,8 +91,4 @@
 <!-- Table Cell Templates -->
 <ng-template #previewCellBodyTemplate>
   <i class="pi pi-eye"></i>
-</ng-template>
-
-<ng-template #downloadCellBodyTemplate>
-  <i class="pi pi-download"></i>
 </ng-template>

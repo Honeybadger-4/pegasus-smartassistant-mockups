@@ -1,11 +1,18 @@
-<div id="LayoutMenuComponent">
-  <p-menubar [model]="menuItems" class="layout-menubar">
+<section id="LayoutMenuComponent">
+  <p-menubar
+    [model]="menuItems"
+    class="layout-menubar"
+    [autoDisplay]="true"
+    [autoHide]="true"
+  >
     <ng-template #start>
-      <img
-        src="/images/pegasus_logo.svg"
-        alt="Pegasus Logo"
-        class="menu-logo"
-      />
+      <a routerLink="/">
+        <img
+          src="/images/pegasus_logo.svg"
+          alt="Pegasus Logo"
+          class="menu-logo"
+        />
+      </a>
     </ng-template>
 
     <ng-template #item let-item let-root="root" class="flex">
@@ -47,4 +54,4 @@
       </div>
     </ng-template>
   </p-menubar>
-</div>
+</section>

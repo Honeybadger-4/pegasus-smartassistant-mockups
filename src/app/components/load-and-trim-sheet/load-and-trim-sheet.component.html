@@ -1,4 +1,4 @@
-<div id="LoadAndTrimSheet">
+<section id="LoadAndTrimSheet">
   <p-dialog
     [(visible)]="visible"
     header="Load Sheet"
@@ -10,6 +10,12 @@
     (onHide)="close()"
     (onShow)="dialogOpened()"
   >
+    <ng-template pTemplate="header">
+      <div class="flex justify-end w-full">
+        <p-button icon="pi pi-download" [text]="true" class="download-button" />
+      </div>
+    </ng-template>
+
     <div
       class="content-container"
       *ngIf="loadAndTrimSheetData()?.loadAndTrimSheet"
@@ -576,4 +582,4 @@
       <p>END OF LOADSHEET</p>
     </div>
   </p-dialog>
-</div>
+</section>

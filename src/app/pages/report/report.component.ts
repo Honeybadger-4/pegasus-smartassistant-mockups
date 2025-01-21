@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { DropdownModule } from 'primeng/dropdown';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
-import { CalendarModule } from 'primeng/calendar';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
@@ -28,17 +27,15 @@ import { DatePickerModule } from 'primeng/datepicker';
 export class ReportComponent {
   @ViewChild('checkListCellBodyTemplate', { static: true })
   checkListCellBodyTemplate!: TemplateRef<any>;
+
   @ViewChild('previewCellBodyTemplate', { static: true })
   previewCellBodyTemplate!: TemplateRef<any>;
-  @ViewChild('downloadCellBodyTemplate', { static: true })
-  downloadCellBodyTemplate!: TemplateRef<any>;
 
   dateRange: Date[] = [];
 
   columns: Column[] = [];
   reportData = [
     {
-      date: '02.02.2024',
       aircraft: 'TC-A329',
       flightNo: 'PC2009',
       departure: 'AYT',
@@ -49,7 +46,6 @@ export class ReportComponent {
       username: 'SAWBNCS1',
     },
     {
-      date: '02.02.2024',
       aircraft: 'TC-A329',
       flightNo: 'PC2009',
       departure: 'AYT',
@@ -60,7 +56,6 @@ export class ReportComponent {
       username: 'SAWBNCS2',
     },
     {
-      date: '02.02.2024',
       aircraft: 'TC-A329',
       flightNo: 'PC2009',
       departure: 'AYT',
@@ -71,7 +66,6 @@ export class ReportComponent {
       username: 'SAWBNCS3',
     },
     {
-      date: '02.02.2024',
       aircraft: 'TC-A329',
       flightNo: 'PC2009',
       departure: 'AYT',
@@ -82,7 +76,6 @@ export class ReportComponent {
       username: 'SAWBNCS4',
     },
     {
-      date: '02.02.2024',
       aircraft: 'TC-A329',
       flightNo: 'PC2009',
       departure: 'AYT',
@@ -93,7 +86,6 @@ export class ReportComponent {
       username: 'SAWBNCS5',
     },
     {
-      date: '02.02.2024',
       aircraft: 'TC-A329',
       flightNo: 'PC2009',
       departure: 'AYT',
@@ -111,7 +103,6 @@ export class ReportComponent {
 
   defineColumn() {
     this.columns = [
-      { field: 'date', header: 'Date' },
       { field: 'aircraft', header: 'Aircraft' },
       { field: 'flightNo', header: 'Flight No' },
       { field: 'departure', header: 'Departure' },
@@ -125,7 +116,6 @@ export class ReportComponent {
       },
       { field: 'username', header: 'Username' },
       { field: '', header: '', template: this.previewCellBodyTemplate },
-      { field: '', header: '', template: this.downloadCellBodyTemplate },
     ];
   }
 }
