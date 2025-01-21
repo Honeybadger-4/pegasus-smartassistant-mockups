@@ -8,34 +8,55 @@
         <div class="grid grid-cols-10 gap-4 items-center">
           <div class="lg:col-span-2 md:col-span-6 col-span-12">
             <p-iconField iconPosition="right" class="custom-icon-field">
-              <input type="text" pInputText placeholder="Flight No" />
+              <input
+                type="text"
+                pInputText
+                placeholder="Flight No"
+                formControlName="flightNo"
+              />
             </p-iconField>
           </div>
 
           <!-- Dep Port Input -->
           <div class="lg:col-span-2 md:col-span-6 col-span-12">
             <p-iconField iconPosition="right" class="custom-icon-field">
-              <input type="text" pInputText placeholder="Dep Port" />
+              <input
+                type="text"
+                pInputText
+                placeholder="Dep Port"
+                formControlName="depPort"
+              />
             </p-iconField>
           </div>
 
           <!-- Arr Port Input -->
           <div class="lg:col-span-2 md:col-span-6 col-span-12">
             <p-iconField iconPosition="right" class="custom-icon-field">
-              <input type="text" pInputText placeholder="Arr Port" />
+              <input
+                type="text"
+                pInputText
+                placeholder="Arr Port"
+                formControlName="arrPort"
+              />
             </p-iconField>
           </div>
 
           <!-- User Input -->
           <div class="lg:col-span-2 md:col-span-6 col-span-12">
             <p-iconField iconPosition="right" class="custom-icon-field">
-              <input type="text" pInputText placeholder="User" />
+              <input
+                type="text"
+                pInputText
+                placeholder="User"
+                formControlName="username"
+              />
             </p-iconField>
           </div>
 
           <!-- Date Picker -->
           <div class="lg:col-span-2 md:col-span-6 col-span-12">
             <p-datepicker
+              formControlName="dateRange"
               [(ngModel)]="dateRange"
               selectionMode="range"
               [readonlyInput]="true"
@@ -60,17 +81,31 @@
 
   <section class="table-section custom-card">
     <p-table
-      [value]="flightsData"
+      [value]="flightInformatioHistoryTableData()"
       [columns]="mainCols"
-      dataKey="id"
+      dataKey="flightPlanId"
       [tableStyle]="{ 'min-width': '50rem' }"
-      styleClass="p-datatable-striped"
-      [expandedRowKeys]="expandedRows"
+      stripedRows
+      [loading]="tableLoading"
+      [paginator]="true"
+      [rows]="currentRows"
+
+
+
+      [totalRecords]="flightInformationHistoryData()?.totalElements || 0"
+      [lazy]="true"
+      [rowsPerPageOptions]="[20, 40, 80]"
+
+
+      [first]="currentPage * currentRows"
+
+
+      
+      (onPage)="pageEvent($event)"
       (onRowExpand)="onRowExpand($event)"
       (onRowCollapse)="onRowCollapse($event)"
+      [expandedRowKeys]="expandedRows"
       [paginator]="true"
-      [rows]="20"
-      [rowsPerPageOptions]="[20, 40, 80]"
     >
       <!-- Table Header -->
       <ng-template #header let-columns>

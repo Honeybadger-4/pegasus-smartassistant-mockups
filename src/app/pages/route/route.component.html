@@ -2,7 +2,7 @@
   <section class="table-header-section lg:flex block">
     <!-- Header Title -->
     <p class="header-title">Route</p>
-    <!-- Filter Inputs and Dropdown -->
+    <!-- Filter Inputs -->
     <form [formGroup]="filterFormGroup" (ngSubmit)="onFilterSubmit()">
       <div class="flex justify-between items-center gap-4">
         <div class="grid grid-cols-10 gap-4 items-center">
@@ -89,10 +89,19 @@
       [loading]="tableLoading"
       [paginator]="true"
       [rows]="currentRows"
+
+
+
+
+
       [totalRecords]="routeHistoryData()?.totalElements || 0"
       [lazy]="true"
       [rowsPerPageOptions]="[20, 40, 80]"
+
+
       [first]="currentPage * currentRows"
+
+      
       (onPage)="pageEvent($event)"
       (onRowExpand)="onRowExpand($event)"
       (onRowCollapse)="onRowCollapse($event)"
