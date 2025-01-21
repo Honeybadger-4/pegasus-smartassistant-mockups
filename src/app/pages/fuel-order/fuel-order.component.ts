@@ -1,4 +1,4 @@
-import { Component, Inject, inject, signal, ViewChild } from '@angular/core';
+import { Component, inject, signal, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -6,11 +6,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { DatePicker } from 'primeng/datepicker';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
+
 import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
 import { FuelOrderService } from '@shared/services/fuel-order.service';
 import { Column } from '@shared/models/columns';
@@ -18,8 +14,13 @@ import {
   IFuelOrderResponse,
   IFuelOrderTableData,
 } from '@shared/models/fuel-order-response.model';
+
+import { InputIconModule } from 'primeng/inputicon';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputTextModule } from 'primeng/inputtext';
+import { DatePicker } from 'primeng/datepicker';
+import { ButtonModule } from 'primeng/button';
 import moment from 'moment';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-fuel',
@@ -33,7 +34,6 @@ import { DatePipe } from '@angular/common';
     InputTextModule,
     DatePicker,
     ButtonModule,
-    DatePipe,
   ],
   templateUrl: './fuel-order.component.html',
   styleUrl: './fuel-order.component.scss',
