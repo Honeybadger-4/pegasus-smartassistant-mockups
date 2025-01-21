@@ -28,23 +28,41 @@
               placeholder="Enter your email address or username"
               pInputText
             />
-            @if (loginForm.get("username")?.invalid && loginForm.get("username")?.touched) {
+            @if (
+              loginForm.get("username")?.invalid &&
+              loginForm.get("username")?.touched
+            ) {
               <div class="error-text">Required username</div>
             }
           </div>
-          
+
           <div class="form-group">
             <label for="password">Password</label>
             <div class="w-full">
-              <p-password id="password" formControlName="password" [feedback]="false" [toggleMask]="true" placeholder="Enter your password" class="password-field" />
+              <p-password
+                id="password"
+                formControlName="password"
+                [feedback]="false"
+                [toggleMask]="true"
+                placeholder="Enter your password"
+                class="password-field"
+              />
             </div>
-            @if (loginForm.get("password")?.invalid && loginForm.get("password")?.touched) {
+            @if (
+              loginForm.get("password")?.invalid &&
+              loginForm.get("password")?.touched
+            ) {
               <div class="error-text">Required password</div>
             }
           </div>
         </div>
 
-        <p-button type="submit" label="Sign in" [loading]="btnLoading()" class="sign-in-btn"></p-button>
+        <p-button
+          type="submit"
+          label="Sign in"
+          [loading]="btnLoading()"
+          class="sign-in-btn"
+        ></p-button>
       </form>
     </div>
   </section>

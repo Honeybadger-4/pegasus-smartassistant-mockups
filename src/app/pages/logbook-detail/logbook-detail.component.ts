@@ -61,7 +61,7 @@ import { TruncateTextPipe } from '@shared/pipes/truncate-text.pipe';
     ToastModule,
     ButtonModule,
     TooltipModule,
-    TruncateTextPipe
+    TruncateTextPipe,
   ],
   templateUrl: './logbook-detail.component.html',
   styleUrl: './logbook-detail.component.scss',
@@ -138,7 +138,11 @@ export class LogbookDetailComponent {
         header: 'Update Date',
         template: this.updatedDateColumnTemplate,
       },
-      { field: 'uploadReason', header: 'Comment', template: this.commentColumnTemplate },
+      {
+        field: 'uploadReason',
+        header: 'Comment',
+        template: this.commentColumnTemplate,
+      },
       { field: 'lastReviewedAdmin', header: 'Reviewed By' },
       { field: 'status', header: 'Status' },
       { field: '', header: '', template: this.previewCellBodyTemplate },

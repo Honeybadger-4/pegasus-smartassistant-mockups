@@ -132,17 +132,17 @@
 
 <ng-template #commentColumnTemplate let-rowData="rowData">
   <div class="comment-cell">
-    <span 
-        pTooltip="{{ rowData.uploadReason }}" 
-        tooltipPosition="top"
-        tooltipStyleClass="comment-context-tooltip"
-        [escape]="false"
-        [autoHide]="false"
-        [tooltipDisabled]="rowData.uploadReason?.length <= maxCharCount">
-        {{ rowData.uploadReason || "-" | truncateText:maxCharCount }}
-      </span>
+    <span
+      pTooltip="{{ rowData.uploadReason }}"
+      tooltipPosition="top"
+      tooltipStyleClass="comment-context-tooltip"
+      [escape]="false"
+      [autoHide]="false"
+      [tooltipDisabled]="rowData.uploadReason?.length <= maxCharCount"
+    >
+      {{ rowData.uploadReason || "-" | truncateText: maxCharCount }}
+    </span>
   </div>
-
 </ng-template>
 
 <ng-template #editableCellBodyTemplate let-rowData="rowData">
