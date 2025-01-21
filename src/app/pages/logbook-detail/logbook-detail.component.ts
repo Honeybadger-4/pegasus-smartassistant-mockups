@@ -208,7 +208,7 @@ export class LogbookDetailComponent {
     let year = new Date(this.crewListTableData.yearMonth).getFullYear();
     let month = new Date(this.crewListTableData.yearMonth).getMonth();
     let startDate = moment(new Date(year, month, 1)).format();
-    let endDate = moment(new Date(year, month + 1, 0)).format();
+    let endDate = moment(new Date(year, month + 1, 1)).format();
 
     return [startDate, endDate];
   }
