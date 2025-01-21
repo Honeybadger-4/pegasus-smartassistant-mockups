@@ -28,11 +28,8 @@ export class ReportComponent {
   @ViewChild('checkListCellBodyTemplate', { static: true })
   checkListCellBodyTemplate!: TemplateRef<any>;
 
-
   @ViewChild('previewCellBodyTemplate', { static: true })
   previewCellBodyTemplate!: TemplateRef<any>;
-
-
 
   dateRange: Date[] = [];
 

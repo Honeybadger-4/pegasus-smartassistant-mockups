@@ -39,7 +39,6 @@ export interface ILoadSheetTableData {
   aircraftReg: string;
   status: string;
 
-
   // Belirsizler
 
   preparedBy: string;

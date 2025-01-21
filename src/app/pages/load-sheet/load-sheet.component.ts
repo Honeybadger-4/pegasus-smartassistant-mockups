@@ -55,7 +55,6 @@ export class LoadSheetComponent {
   @ViewChild('previewCellBodyTemplate', { static: true })
   previewCellBodyTemplate!: TemplateRef<any>;
 
-
   filterFormGroup!: FormGroup;
   columns: Column[] = [];
   dateRange: Date[] = [];
@@ -97,7 +96,7 @@ export class LoadSheetComponent {
       { field: 'arrPort', header: 'Arrival' },
       { field: 'depDateTime', header: 'Dep Date/Time' },
       { field: 'arrDateTime', header: 'Arr Date/Time' },
-    
+
       { field: 'preparedBy', header: 'Prepared By' },
       { field: 'checkedBy', header: 'Checked By' },
       { field: 'username', header: 'Approved By' },

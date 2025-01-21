@@ -25,8 +25,7 @@ export class TopAlternateRoutesCardComponent {
         borderColor: ['#FED447', '#FED447', '#FED447', '#FED447', '#FED447'],
         borderWidth: 1,
         barThickness: 60,
-        borderRadius: 5, 
-
+        borderRadius: 5,
       },
     ],
   };
@@ -59,5 +58,3 @@ export class TopAlternateRoutesCardComponent {
 
   ngOnInit() {}
 }
-
-

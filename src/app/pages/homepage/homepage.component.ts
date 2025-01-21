@@ -23,7 +23,6 @@ export class HomepageComponent {
 
   loginService = inject(LoginService);
 
-
   ngOnInit() {
     console.log(this.loginService.currentUser());
   }

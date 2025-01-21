@@ -15,7 +15,7 @@ import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-load-and-trim-sheet',
-  imports: [CommonModule, DialogModule,ButtonModule],
+  imports: [CommonModule, DialogModule, ButtonModule],
   templateUrl: './load-and-trim-sheet.component.html',
   styleUrl: './load-and-trim-sheet.component.scss',
 })

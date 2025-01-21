@@ -33,7 +33,7 @@ import { DatePipe } from '@angular/common';
     InputTextModule,
     DatePicker,
     ButtonModule,
-    DatePipe
+    DatePipe,
   ],
   templateUrl: './fuel-order.component.html',
   styleUrl: './fuel-order.component.scss',
@@ -51,10 +51,8 @@ export class FuelOrderComponent {
   fuelOrderHistoryData = signal<IFuelOrderResponse | null>(null);
   fuelOrderHistoryTableData = signal<IFuelOrderTableData[]>([]);
 
-
   formBuilder = inject(FormBuilder);
   fuelOrderService = inject(FuelOrderService);
-  
 
   ngOnInit() {
     this.builder();

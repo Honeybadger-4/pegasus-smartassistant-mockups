@@ -20,7 +20,7 @@ import { InputTextModule } from 'primeng/inputtext';
 export class LoginComponent {
   router = inject(Router);
   loginService = inject(LoginService);
-  
+
   loginForm: FormGroup = new FormGroup({});
 
   constructor(private formbuilder: FormBuilder) {}

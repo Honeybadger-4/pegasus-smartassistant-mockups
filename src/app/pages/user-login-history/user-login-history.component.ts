@@ -28,8 +28,6 @@ import {
 } from '@shared/models/login-info-response.model';
 import moment from 'moment';
 
-
-
 @Component({
   selector: 'app-user-login-history',
   imports: [

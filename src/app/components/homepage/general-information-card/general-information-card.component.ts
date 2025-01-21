@@ -16,8 +16,7 @@ export class GeneralInformationCardComponent implements OnInit {
         data: [300, 50, 100],
         backgroundColor: ['#ECF39E', '#90A955', '#4F772D', '#31572C'],
         hoverBackgroundColor: ['#ECF39E', '#90A955', '#4F772D', '#31572C'],
-        borderWidth: 0, 
-
+        borderWidth: 0,
       },
     ],
   };
@@ -40,8 +39,7 @@ export class GeneralInformationCardComponent implements OnInit {
         data: [300, 50, 100],
         backgroundColor: ['#5E548E', '#E0B1CB', '#BE95C4', '#9F86C0'],
         hoverBackgroundColor: ['#5E548E', '#E0B1CB', '#BE95C4', '#9F86C0'],
-        borderWidth: 0, 
-
+        borderWidth: 0,
       },
     ],
   };

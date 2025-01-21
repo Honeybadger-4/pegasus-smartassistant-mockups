@@ -48,7 +48,6 @@ export class TripInfoComponent {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
   @ViewChild('previewCellBodyTemplate', { static: true })
   previewCellBodyTemplate!: TemplateRef<any>;
- 
 
   formBuilder = inject(FormBuilder);
   tripInfoService = inject(TripInfoService);
