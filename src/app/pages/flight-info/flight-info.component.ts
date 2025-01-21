@@ -20,10 +20,8 @@ import {
   IFlightInformationTableData,
 } from '@shared/models/flight-information-response.model';
 import { InputTextModule } from 'primeng/inputtext';
-
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
-
 import {
   TableModule,
   TableRowCollapseEvent,
@@ -31,9 +29,7 @@ import {
 } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { TabsModule } from 'primeng/tabs';
-
 import { DatePickerModule } from 'primeng/datepicker';
-
 import moment from 'moment';
 
 @Component({

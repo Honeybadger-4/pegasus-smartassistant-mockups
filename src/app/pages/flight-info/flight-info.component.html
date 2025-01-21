@@ -57,7 +57,6 @@
           <div class="lg:col-span-2 md:col-span-6 col-span-12">
             <p-datepicker
               formControlName="dateRange"
-              [(ngModel)]="dateRange"
               selectionMode="range"
               [readonlyInput]="true"
               dateFormat="dd/mm/yy"
@@ -89,18 +88,10 @@
       [loading]="tableLoading"
       [paginator]="true"
       [rows]="currentRows"
-
-
-
       [totalRecords]="flightInformationHistoryData()?.totalElements || 0"
       [lazy]="true"
       [rowsPerPageOptions]="[20, 40, 80]"
-
-
       [first]="currentPage * currentRows"
-
-
-      
       (onPage)="pageEvent($event)"
       (onRowExpand)="onRowExpand($event)"
       (onRowCollapse)="onRowCollapse($event)"
