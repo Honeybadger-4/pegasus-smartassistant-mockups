@@ -97,4 +97,16 @@
       }
     }
   }
+
+  .comment-context-tooltip {
+    .p-tooltip-text {
+      background-color: #fff !important;
+      color: #444444;
+    }
+
+    .p-tooltip-arrow {
+      border-top-color: #fff;
+      border-bottom-color: #fff;
+    }
+  }
 }

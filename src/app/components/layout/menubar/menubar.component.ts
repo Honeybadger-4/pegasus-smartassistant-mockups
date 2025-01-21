@@ -37,6 +37,11 @@ export class MenubarComponent {
         path: '',
       },
       {
+        label: 'Logbook',
+        icon: 'open-book.svg',
+        path: 'logbook',
+      },
+      {
         label: 'Flight Info',
         icon: 'flight-icon.svg',
         path: 'flight-information',
@@ -77,11 +82,6 @@ export class MenubarComponent {
         label: 'User Login History',
         icon: 'user-icon.svg',
         path: 'user-login-history',
-      },
-      {
-        label: 'Logbook',
-        icon: 'open-book.svg',
-        path: 'logbook',
       },
       {
         label: 'Aircraft Database',

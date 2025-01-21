@@ -232,6 +232,11 @@ export class LogbookDetailEditComponent implements OnInit {
     });
   }
 
+  onCancel(): void {
+    this.toggleEditMode();
+    this.builder();
+  }
+
   onSubmitRejectReason(): void {
     this.formSubmit();
     this.toggleEditMode();

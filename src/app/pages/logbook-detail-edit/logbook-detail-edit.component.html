@@ -5,14 +5,25 @@
     <div class="page-header">
       <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" />
 
-      <button
-        pButton
-        type="button"
-        [label]="isEditMode() ? 'Save' : 'Edit'"
-        [disabled]="logbookFormGroup.invalid"
-        class="save-button"
-        (click)="isEditMode() ? onSave() : toggleEditMode()"
-      ></button>
+      <div class="flex gap-3">
+        <button
+          *ngIf="isEditMode()"
+          pButton
+          type="button"
+          label="Cancel"
+          class="cancel-button"
+          (click)="onCancel()"
+        ></button>
+
+        <button
+          pButton
+          type="button"
+          [label]="isEditMode() ? 'Save' : 'Edit'"
+          [disabled]="logbookFormGroup.invalid"
+          class="save-button"
+          (click)="isEditMode() ? onSave() : toggleEditMode()"
+        ></button>
+      </div>
     </div>
   </section>
 

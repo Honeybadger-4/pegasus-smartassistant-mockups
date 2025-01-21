@@ -5,8 +5,8 @@
     align-items: center;
     margin-bottom: 10px;
 
-    .save-button {
-      background-color: #feb914;
+    .save-button,
+    .cancel-button {
       border: none;
       font-size: 14px;
       border-radius: 5px;
@@ -15,6 +15,15 @@
       span {
         font-weight: 500;
       }
+    }
+
+    .save-button {
+      background-color: #feb914;
+    }
+
+    .cancel-button {
+      background-color: #f5f5f5;
+      color: #4f4f4f;
     }
   }
 
@@ -161,10 +170,14 @@
 
   .form-item-container {
     .datepicker {
+      height: 100%;
       input {
         padding-top: 15px !important;
         padding-left: 10px !important;
         padding-bottom: 10px !important;
+        height: 100%;
+        font-size: 12px;
+        font-weight: 400;
       }
     }
   }
@@ -177,10 +190,10 @@
       background-color: #fff !important;
       color: #444444;
     }
-  }
 
-  .p-tooltip-left .p-tooltip-arrow {
-    border-left-color: #fff;
+    .p-tooltip-arrow {
+      border-left-color: #fff;
+    }
   }
 
   .custom-dialog-container {
