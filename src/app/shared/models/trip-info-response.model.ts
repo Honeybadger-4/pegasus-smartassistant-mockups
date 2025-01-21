@@ -41,7 +41,7 @@ export interface ITripInfoTableData {
   tripFuel: number;
   taxiFuel: number;
   eet: string;
-  
+
   // Belirsizler
   pax: string;
   takeOffTime: string;
