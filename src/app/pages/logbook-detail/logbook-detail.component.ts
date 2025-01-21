@@ -39,6 +39,8 @@ import { ButtonModule } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import moment from 'moment';
+import { TooltipModule } from 'primeng/tooltip';
+import { TruncateTextPipe } from '@shared/pipes/truncate-text.pipe';
 
 @Component({
   selector: 'app-logbook',
@@ -58,6 +60,8 @@ import moment from 'moment';
     CheckboxModule,
     ToastModule,
     ButtonModule,
+    TooltipModule,
+    TruncateTextPipe
   ],
   templateUrl: './logbook-detail.component.html',
   styleUrl: './logbook-detail.component.scss',
@@ -75,6 +79,8 @@ export class LogbookDetailComponent {
   editableCellBodyTemplate!: TemplateRef<any>;
   @ViewChild('checkboxCellBodyTemplate', { static: true })
   checkboxCellBodyTemplate!: TemplateRef<any>;
+  @ViewChild('commentColumnTemplate', { static: true })
+  commentColumnTemplate!: TemplateRef<any>;
 
   router = inject(Router);
   logbookService = inject(LogbookService);
@@ -103,6 +109,7 @@ export class LogbookDetailComponent {
   startDate = signal<string>('');
   endDate = signal<string>('');
   statusFilter = '';
+  maxCharCount = 20;
 
   ngOnInit() {
     this.crewListTableData = history.state.data;
@@ -131,7 +138,7 @@ export class LogbookDetailComponent {
         header: 'Update Date',
         template: this.updatedDateColumnTemplate,
       },
-      { field: 'uploadReason', header: 'Comment' },
+      { field: 'uploadReason', header: 'Comment', template: this.commentColumnTemplate },
       { field: 'lastReviewedAdmin', header: 'Reviewed By' },
       { field: 'status', header: 'Status' },
       { field: '', header: '', template: this.previewCellBodyTemplate },
