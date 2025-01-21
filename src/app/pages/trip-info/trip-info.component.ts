@@ -12,20 +12,23 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { Column } from '@shared/models/columns';
-import { DropdownModule } from 'primeng/dropdown';
+
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
+import { Column } from '@shared/models/columns';
 import { TripInfoService } from '@shared/services/trip-info.service';
 import {
   ITripInfoResponse,
   ITripInfoTableData,
 } from '@shared/models/trip-info-response.model';
-import moment from 'moment';
+
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { DatePickerModule } from 'primeng/datepicker';
 import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
+import moment from 'moment';
+
 
 @Component({
   selector: 'app-trip-info',

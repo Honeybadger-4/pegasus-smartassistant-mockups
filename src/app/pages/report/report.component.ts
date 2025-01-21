@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Column } from '@shared/models/columns';
-import { DropdownModule } from 'primeng/dropdown';
+
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
+import { Column } from '@shared/models/columns';
+import { FormsModule } from '@angular/forms';
+
+import { DropdownModule } from 'primeng/dropdown';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';

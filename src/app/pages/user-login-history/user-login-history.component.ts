@@ -6,26 +6,26 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import {
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+
+import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
+import { Column } from '@shared/models/columns';
+import { LoginInfoService } from '@shared/services/login-info.service';
+import {
+  ILoginInfoResponse,
+  ILoginInfoTableData,
+} from '@shared/models/login-info-response.model';
+
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
-import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
-import { LoginInfoService } from '@shared/services/login-info.service';
-
-import { Column } from '@shared/models/columns';
-import {
-  ILoginInfoResponse,
-  ILoginInfoTableData,
-} from '@shared/models/login-info-response.model';
 import moment from 'moment';
 
 @Component({

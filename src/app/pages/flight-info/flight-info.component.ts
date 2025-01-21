@@ -12,6 +12,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { FlightInformationService } from '@shared/services/flight-information.service';
 import { Column } from '@shared/models/columns';
@@ -19,6 +20,7 @@ import {
   IFlightInformationResponse,
   IFlightInformationTableData,
 } from '@shared/models/flight-information-response.model';
+
 import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';

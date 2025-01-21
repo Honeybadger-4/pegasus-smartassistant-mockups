@@ -10,7 +10,7 @@
     (onHide)="close()"
     (onShow)="dialogOpened()"
   >
-    <ng-template pTemplate="header">
+    <ng-template #header>
       <div class="flex justify-end w-full">
         <p-button icon="pi pi-download" [text]="true" class="download-button" />
       </div>

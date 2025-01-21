@@ -12,13 +12,8 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+
 import { LoadAndTrimSheetComponent } from '../../components/load-and-trim-sheet/load-and-trim-sheet.component';
-import { ButtonModule } from 'primeng/button';
-import { DatePickerModule } from 'primeng/datepicker';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
-import { SliderModule } from 'primeng/slider';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { LoadSheetService } from '@shared/services/load-sheet.service';
 import { Column } from '@shared/models/columns';
@@ -26,6 +21,13 @@ import {
   ILoadSheetResponse,
   ILoadSheetTableData,
 } from '@shared/models/load-sheet-response.model';
+
+import { ButtonModule } from 'primeng/button';
+import { DatePickerModule } from 'primeng/datepicker';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { SliderModule } from 'primeng/slider';
 import { DialogModule } from 'primeng/dialog';
 import moment from 'moment';
 
