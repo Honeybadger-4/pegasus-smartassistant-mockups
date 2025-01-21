@@ -29,7 +29,6 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import moment from 'moment';
 
-
 @Component({
   selector: 'app-trip-info',
   imports: [

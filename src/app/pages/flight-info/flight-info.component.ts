@@ -78,7 +78,9 @@ export class FlightInfoComponent {
   tableSubPanels!: any[];
   activeTabIndex = 0;
 
-  flightInformationHistoryData = signal<IFlightInformationResponse | null>(null);
+  flightInformationHistoryData = signal<IFlightInformationResponse | null>(
+    null,
+  );
   flightInformatioHistoryTableData = signal<IFlightInformationTableData[]>([]);
 
   formBuilder = inject(FormBuilder);
