@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { LayoutMenuItem } from '@shared/models/layout-sidebar-menu';
@@ -24,9 +24,16 @@ import { AvatarModule } from 'primeng/avatar';
 export class MenubarComponent {
   loginService = inject(LoginService);
   menuItems: LayoutMenuItem[] = [];
+  username: string = '';
 
   ngOnInit() {
+    this.getUserInfo();
     this.definedMenu();
+  }
+
+  getUserInfo() {
+    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+    this.username = userData.username;
   }
 
   definedMenu() {
