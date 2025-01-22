@@ -70,9 +70,10 @@ body {
     }
   }
 
-  &:has(input:focus) label, 
-  &:has(input:-webkit-autofill) label, 
-  &:has(textarea:focus) label, &:has(.p-inputwrapper-focus) label {
+  &:has(input:focus) label,
+  &:has(input:-webkit-autofill) label,
+  &:has(textarea:focus) label,
+  &:has(.p-inputwrapper-focus) label {
     color: $base-text-color !important;
   }
 }
