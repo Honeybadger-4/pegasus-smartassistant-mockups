@@ -14,12 +14,12 @@ import {
 } from '@angular/forms';
 
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
-import { FlightInformationService } from '@shared/services/flight-information.service';
+import { FlightInformationService } from '@shared/services/flight-info-services/flight-information.service';
 import { Column } from '@shared/models/columns';
 import {
   IFlightInformationResponse,
   IFlightInformationTableData,
-} from '@shared/models/flight-information-response.model';
+} from '@shared/models/flight-info-response-models/flight-information-response.model';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';

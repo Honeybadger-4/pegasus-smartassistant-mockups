@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { IHttpResponseModel } from '@shared/models/http-response.model';
 import { map, Observable } from 'rxjs';
-import { IFlightInformationResponse } from '@shared/models/flight-information-response.model';
+import { IFlightInformationResponse } from '@shared/models/flight-info-response-models/flight-information-response.model';
 
 @Injectable({ providedIn: 'root' })
 export class FlightInformationService {
