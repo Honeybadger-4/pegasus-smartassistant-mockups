@@ -1,9 +1,10 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { LayoutMenuItem } from '@shared/models/layout-sidebar-menu';
 import { LoginService } from '@shared/services/login.service';
+import { UserProfileService } from '@shared/services/user-profile.service';
 
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
@@ -19,14 +20,38 @@ import { AvatarModule } from 'primeng/avatar';
     AvatarModule,
   ],
   templateUrl: './menubar.component.html',
-  styleUrl: './menubar.component.scss',
+  styleUrls: ['./menubar.component.scss'],
 })
 export class MenubarComponent {
   loginService = inject(LoginService);
+  userProfileService = inject(UserProfileService);
   menuItems: LayoutMenuItem[] = [];
+  username: string = '';
+  profilePhotoUrl: string | null = null; 
+  platformId = inject(PLATFORM_ID); 
 
   ngOnInit() {
+    this.getUserInfo();
     this.definedMenu();
+  }
+
+  getUserInfo() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.username = this.loginService?.currentUser()?.username || '{}';
+      this.loadProfilePhoto();
+    }
+  }
+
+  loadProfilePhoto() {
+    this.userProfileService.getProfilePhoto().subscribe({
+      next: (photoBlob) => {
+        this.profilePhotoUrl = URL.createObjectURL(photoBlob);
+      },
+      error: (err) => {
+        console.error('Profil fotoğrafı alınamadı:', err);
+        this.profilePhotoUrl = null;
+      },
+    });
   }
 
   definedMenu() {
