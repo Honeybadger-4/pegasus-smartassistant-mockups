@@ -41,8 +41,8 @@
 
     <ng-template #end>
       <div class="flex items-center gap-5">
-        <div class="profile-avatar">
-          <p-avatar image="/images/profile.png" shape="circle"></p-avatar>
+        <div *ngIf="profilePhotoUrl" class="profile-avatar">
+          <p-avatar [image]="profilePhotoUrl" shape="circle"></p-avatar>
         </div>
         <span class="text-sm">{{ username }}</span>
         <img
@@ -55,5 +55,3 @@
     </ng-template>
   </p-menubar>
 </section>
-
-
