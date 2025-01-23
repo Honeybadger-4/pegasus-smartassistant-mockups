@@ -130,7 +130,7 @@
 
           <!-- Date -->
           <div class="col-span-6 form-item-container">
-            <p-floatlabel variant="on" class="w-full">
+            <p-floatlabel variant="on" class="custom-float-label-field w-full">
               <p-datepicker
                 inputId="date"
                 formControlName="date"
@@ -274,6 +274,7 @@
                   value="SE"
                   formControlName="engineType"
                   inputId="se"
+                  class="custom-radio-button"
                 />
               </div>
 
@@ -290,6 +291,7 @@
                   value="ME"
                   formControlName="engineType"
                   inputId="me"
+                  class="custom-radio-button"
                   [ngClass]="{ 'mr-6': checkCahngedField('engineType') }"
                 />
               </div>

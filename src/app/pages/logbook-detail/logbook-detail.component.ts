@@ -96,7 +96,7 @@ export class LogbookDetailComponent {
   columns: Column[] = [];
   crewListTableData!: ILogbookCrewListContentData;
   currentPage = 0;
-  currentRows = 20;
+  currentRows = 10;
   tableLoading = false;
   displayRejectPopup = false;
   rejectReason = '';
@@ -108,7 +108,7 @@ export class LogbookDetailComponent {
   displayPreviewDialog = signal<boolean>(false);
   startDate = signal<string>('');
   endDate = signal<string>('');
-  statusFilter = '';
+  statusFilter!: string;
   maxCharCount = 20;
 
   ngOnInit() {
