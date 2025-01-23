@@ -27,8 +27,8 @@ export class MenubarComponent {
   userProfileService = inject(UserProfileService);
   menuItems: LayoutMenuItem[] = [];
   username: string = '';
-  profilePhotoUrl: string | null = null; 
-  platformId = inject(PLATFORM_ID); 
+  profilePhotoUrl: string | null = null;
+  platformId = inject(PLATFORM_ID);
 
   ngOnInit() {
     this.getUserInfo();
