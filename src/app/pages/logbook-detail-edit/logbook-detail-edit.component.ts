@@ -220,7 +220,7 @@ export class LogbookDetailEditComponent implements OnInit {
       acceptButtonStyleClass: 'action-button',
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
-          this.displayRejectPopup = true;
+        this.displayRejectPopup = true;
       },
     });
   }
@@ -348,6 +348,8 @@ export class LogbookDetailEditComponent implements OnInit {
   onInputUpperCase(event: Event, formControlName: string): void {
     const inputElement = event.target as HTMLInputElement;
     const uppercaseValue = inputElement.value.toUpperCase();
-    this.logbookFormGroup.get(formControlName)?.setValue(uppercaseValue, { emitEvent: false });
+    this.logbookFormGroup
+      .get(formControlName)
+      ?.setValue(uppercaseValue, { emitEvent: false });
   }
 }
