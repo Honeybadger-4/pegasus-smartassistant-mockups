@@ -1,7 +1,7 @@
 #LayoutMenuComponent {
   .layout-menubar {
     .menu-logo {
-      margin-right: 30px;
+      margin-right: 10px;
     }
 
     .p-menubar-item-link {
@@ -18,7 +18,6 @@
         }
       }
       .menu-item-label {
-        margin-left: 10px;
         font-size: 12px;
       }
 
@@ -60,7 +59,7 @@
       }
 
       .p-menubar-root-list {
-        gap: 0;
+        gap: 1;
       }
     }
   }
