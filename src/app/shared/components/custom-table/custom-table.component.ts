@@ -34,7 +34,7 @@ export class CustomTableComponent {
   @Output() selectedCheckbox: EventEmitter<any> = new EventEmitter<any>();
   selectionData: any[] = [];
 
-  rows = 10;
+  rows = 20;
 
   rowClicked(rowData: any) {
     this.rowClickedEvent.emit(rowData);
