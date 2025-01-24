@@ -16,13 +16,15 @@
         ></button>
 
         <button
-          pButton
-          type="button"
-          [label]="isEditMode() ? 'Save' : 'Edit'"
-          [disabled]="logbookFormGroup.invalid"
-          class="save-button"
-          (click)="isEditMode() ? onSave() : toggleEditMode()"
-        ></button>
+        pButton
+        type="button"
+        [label]="isEditMode() ? 'Save' : 'Edit'"
+        [disabled]="
+          logbookFormGroup.invalid || editDefaultData()?.status === 'APPROVED'
+        "
+        class="save-button"
+        (click)="isEditMode() ? onSave() : toggleEditMode()"
+      ></button>
       </div>
     </div>
   </section>
