@@ -183,7 +183,7 @@
           <!-- Departure -->
           <div class="col-span-6 form-item-container">
             <p-floatLabel variant="on" class="custom-float-label-field w-full">
-              <input pInputText id="departure" formControlName="departure" />
+              <input pInputText id="departure" formControlName="departure" maxlength="3" (input)="onInputUpperCase($event, 'departure')" />
               <label for="departure">Departure</label>
             </p-floatLabel>
 
@@ -203,7 +203,7 @@
           <!-- Arrival -->
           <div class="col-span-6 form-item-container">
             <p-floatLabel variant="on" class="custom-float-label-field w-full">
-              <input pInputText id="arrival" formControlName="arrival" />
+              <input pInputText id="arrival" formControlName="arrival" maxlength="3" (input)="onInputUpperCase($event, 'arrival')" />
               <label for="arrival">Arrival</label>
             </p-floatLabel>
 

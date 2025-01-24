@@ -163,9 +163,7 @@ export class LogbookDetailEditComponent implements OnInit {
       const requestBody: ILogbookEditRequest = {
         logId: this.editDefaultData()?.logId || 0,
         changes: changesArr,
-        ...(!this.editDefaultData()?.isFinalReassign && {
-          uploadReason: this.rejectReason,
-        }),
+        uploadReason: this.rejectReason,
       };
 
       this.logbookService.putEdit(requestBody).subscribe({
@@ -222,12 +220,7 @@ export class LogbookDetailEditComponent implements OnInit {
       acceptButtonStyleClass: 'action-button',
       rejectButtonStyleClass: 'cancel-button',
       accept: () => {
-        if (this.editDefaultData()?.isFinalReassign) {
-          this.formSubmit();
-          this.toggleEditMode();
-        } else {
           this.displayRejectPopup = true;
-        }
       },
     });
   }
@@ -323,8 +316,7 @@ export class LogbookDetailEditComponent implements OnInit {
     let signatureBase64 = this.editDefaultData()?.signature;
 
     if (signatureBase64) {
-      let base64Obj = JSON.parse(signatureBase64);
-      return `data:image/jpeg;base64,${base64Obj}`;
+      return `data:image/jpeg;base64,${signatureBase64}`;
     }
 
     return '';
@@ -351,5 +343,11 @@ export class LogbookDetailEditComponent implements OnInit {
     }
 
     return null;
+  }
+
+  onInputUpperCase(event: Event, formControlName: string): void {
+    const inputElement = event.target as HTMLInputElement;
+    const uppercaseValue = inputElement.value.toUpperCase();
+    this.logbookFormGroup.get(formControlName)?.setValue(uppercaseValue, { emitEvent: false });
   }
 }
