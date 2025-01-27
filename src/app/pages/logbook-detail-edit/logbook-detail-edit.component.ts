@@ -28,6 +28,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputMaskModule } from 'primeng/inputmask';
 import { KeyFilterModule } from 'primeng/keyfilter';
+import { LogbookService } from '@shared/services/logbook.service';
 
 
 @Component({
@@ -57,6 +58,7 @@ import { KeyFilterModule } from 'primeng/keyfilter';
 })
 export class LogbookDetailEditComponent implements OnInit {
   adminLogbookService = inject(AdminLogbookService);
+  logbookService = inject(LogbookService);
   formBuilder = inject(FormBuilder);
   confirmationService = inject(ConfirmationService);
 
@@ -73,11 +75,13 @@ export class LogbookDetailEditComponent implements OnInit {
   editDefaultData = signal<IDetailedListContentData | null>(null);
   formDataLoading = signal<boolean>(false);
   isEditMode = signal<boolean>(false);
+  updateableFields = signal<string[]>([]);
 
   ngOnInit() {
     this.logId = history.state.logId;
 
     this.getLogByLogId();
+    this.getUpdateableFields();
     this.builder();
   }
 
@@ -146,6 +150,14 @@ export class LogbookDetailEditComponent implements OnInit {
         this.formDataLoading.set(false);
       },
     });
+  }
+
+  getUpdateableFields() {
+    this.logbookService.getUpdateableFields().subscribe({
+      next: (response) => {
+        this.updateableFields.set(response);
+      }
+    })
   }
 
   formSubmit() {
@@ -243,7 +255,9 @@ export class LogbookDetailEditComponent implements OnInit {
     this.isEditMode.set(!this.isEditMode());
 
     if (this.isEditMode()) {
-      this.logbookFormGroup.enable();
+      this.updateableFields().map((item: string) => {
+        this.logbookFormGroup.controls[item]?.enable();
+      });
     } else {
       this.logbookFormGroup.disable();
     }
