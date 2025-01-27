@@ -19,7 +19,9 @@
           pButton
           type="button"
           [label]="isEditMode() ? 'Save' : 'Edit'"
-          [disabled]="logbookFormGroup.invalid"
+          [disabled]="
+            logbookFormGroup.invalid || editDefaultData()?.status === 'APPROVED'
+          "
           class="save-button"
           (click)="isEditMode() ? onSave() : toggleEditMode()"
         ></button>
@@ -130,7 +132,7 @@
 
           <!-- Date -->
           <div class="col-span-6 form-item-container">
-            <p-floatlabel variant="on" class="w-full">
+            <p-floatlabel variant="on" class="custom-float-label-field w-full">
               <p-datepicker
                 inputId="date"
                 formControlName="date"
@@ -181,7 +183,13 @@
           <!-- Departure -->
           <div class="col-span-6 form-item-container">
             <p-floatLabel variant="on" class="custom-float-label-field w-full">
-              <input pInputText id="departure" formControlName="departure" />
+              <input
+                pInputText
+                id="departure"
+                formControlName="departure"
+                maxlength="3"
+                (input)="onInputUpperCase($event, 'departure')"
+              />
               <label for="departure">Departure</label>
             </p-floatLabel>
 
@@ -201,7 +209,13 @@
           <!-- Arrival -->
           <div class="col-span-6 form-item-container">
             <p-floatLabel variant="on" class="custom-float-label-field w-full">
-              <input pInputText id="arrival" formControlName="arrival" />
+              <input
+                pInputText
+                id="arrival"
+                formControlName="arrival"
+                maxlength="3"
+                (input)="onInputUpperCase($event, 'arrival')"
+              />
               <label for="arrival">Arrival</label>
             </p-floatLabel>
 
@@ -274,6 +288,7 @@
                   value="SE"
                   formControlName="engineType"
                   inputId="se"
+                  class="custom-radio-button"
                 />
               </div>
 
@@ -290,6 +305,7 @@
                   value="ME"
                   formControlName="engineType"
                   inputId="me"
+                  class="custom-radio-button"
                   [ngClass]="{ 'mr-6': checkCahngedField('engineType') }"
                 />
               </div>
@@ -437,7 +453,7 @@
             <p>{{ editDefaultData()?.signer }}</p>
             <img
               *ngIf="editDefaultData()?.isSigned"
-              class="w-full h-[80px] object-cover"
+              class="h-[85px] w-[450px] object-cover"
               [src]="convertBase64ToImage()"
             />
           </div>

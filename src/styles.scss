@@ -15,6 +15,12 @@
 // Fonts
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
+// Variables
+$input-focus-border-color: rgba(0, 0, 0, 1);
+$input-disabled-bg-color: rgba(243, 242, 241, 1);
+$input-disabled-border-color: rgba(243, 242, 241, 1);
+$base-text-color: rgba(79, 79, 79, 1);
+
 body {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
@@ -31,16 +37,20 @@ body {
     border-radius: 5px;
     font-size: 8px !important;
     font-weight: 300;
-    color: #4f4f4f;
+    color: $base-text-color;
     padding-left: 10px;
     outline: none !important;
+  }
+
+  .p-inputtext:enabled:focus {
+    border-color: $input-focus-border-color;
   }
 }
 
 .custom-float-label-field {
   input,
   textarea {
-    color: #4f4f4f;
+    color: $base-text-color;
     border-radius: 5px;
     padding-top: 15px;
     padding-left: 10px;
@@ -49,23 +59,40 @@ body {
     font-size: 12px;
   }
 
-  .p-inputtext:disabled {
-    background-color: #f3f2f1;
-    border-color: #f3f2f1;
+  .p-inputtext {
+    &:enabled:focus {
+      border-color: $input-focus-border-color !important;
+    }
+
+    &:disabled {
+      background-color: $input-disabled-bg-color;
+      border-color: $input-disabled-border-color;
+    }
+  }
+
+  &:has(input:focus) label,
+  &:has(input:-webkit-autofill) label,
+  &:has(textarea:focus) label,
+  &:has(.p-inputwrapper-focus) label {
+    color: $base-text-color !important;
   }
 }
 
 .custom-dropdown {
   width: 100%;
-  height: 25px;
+  height: 100%;
   align-items: center;
   border-radius: 5px;
+
+  &:not(.p-disabled).p-focus {
+    border-color: $input-focus-border-color !important;
+  }
 
   .p-select-label {
     width: 100%;
     font-size: 8px;
     font-weight: 300;
-    color: #4f4f4f;
+    color: $base-text-color;
   }
 
   .p-select-option {
@@ -82,14 +109,20 @@ body {
     border-radius: 5px;
     font-size: 8px;
     font-weight: 300;
-    color: #4f4f4f;
+    color: $base-text-color;
     padding-left: 10px;
     outline: none !important;
   }
 
-  .p-inputtext:disabled {
-    background-color: #f3f2f1;
-    border-color: #f3f2f1;
+  .p-inputtext {
+    &:enabled:focus {
+      border-color: $input-focus-border-color;
+    }
+
+    &:disabled {
+      background-color: $input-disabled-bg-color;
+      border-color: $input-disabled-border-color;
+    }
   }
 
   .p-datepicker {
@@ -121,6 +154,19 @@ body {
   padding: 10px 16px 10px 16px;
 }
 
+// Raido Button
+.custom-radio-button {
+  .p-radiobutton-checked .p-radiobutton-box {
+    border-color: #feb914 !important;
+    background: #feb914 !important;
+  }
+
+  &:not(.p-disabled):has(.p-radiobutton-input:hover) .p-radiobutton-box {
+    border-color: #feb914 !important;
+    background: #feb914 !important;
+  }
+}
+
 .p-component {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
@@ -129,8 +175,8 @@ body {
 
 // Table styles
 .p-datatable .p-datatable-thead > tr > th {
-  font-weight: 400;
-  color: black;
+  font-weight: 500;
+  color: $base-text-color;
   font-size: 12px;
   padding: 7px;
 }
@@ -194,7 +240,7 @@ body {
 
   .action-button {
     background-color: #feb914 !important;
-    color: #4f4f4f !important;
+    color: $base-text-color !important;
     border: none !important;
   }
 

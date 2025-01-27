@@ -7,6 +7,7 @@
         [(ngModel)]="statusFilter"
         [options]="statusOptions()"
         placeholder="Status"
+        [showClear]="true"
         class="custom-dropdown w-full"
         (ngModelChange)="getDetailedList()"
       />
@@ -153,7 +154,7 @@
 </ng-template>
 
 <ng-template #tableFooterTemplate>
-  <tr>
+  <tr *ngIf="logbookDetailData()?.logbookDetails?.totalPages !== 1">
     <td colspan="8" class="!text-right font-bold p-3 pb-0">Page Total</td>
     <td colspan="9" class="font-bold p-3 pb-0">
       {{ logbookDetailData()?.currentPageTotal || "-" }}
@@ -162,7 +163,10 @@
 
   <!-- This data should only be shown on the last pages -->
   <tr
-    *ngIf="logbookDetailData()?.logbookDetails?.totalPages == currentPage + 1"
+    *ngIf="
+      logbookDetailData()?.logbookDetails?.totalPages == currentPage + 1 &&
+      logbookDetailData()?.logbookDetails?.totalPages !== 1
+    "
   >
     <td colspan="8" class="!text-right font-bold p-3 pb-0">
       Previous Page Total

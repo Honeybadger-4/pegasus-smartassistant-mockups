@@ -108,7 +108,7 @@ export class LogbookDetailComponent {
   displayPreviewDialog = signal<boolean>(false);
   startDate = signal<string>('');
   endDate = signal<string>('');
-  statusFilter = '';
+  statusFilter!: string;
   maxCharCount = 20;
 
   ngOnInit() {
