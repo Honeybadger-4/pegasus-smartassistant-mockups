@@ -11,11 +11,12 @@ import { Router } from '@angular/router';
 
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { ILogbookSummaryResponse } from '@shared/models/logbook-summary-response.model';
-import { LogbookService } from '@shared/services/logbook.service';
+import { AdminLogbookService } from '@shared/services/admin-logbook.service';
 import { Column } from '@shared/models/columns';
 
 import { SliderModule } from 'primeng/slider';
 import { SelectModule } from 'primeng/select';
+import { StateManagement } from '@shared/services/helpers-services/state-management.service';
 
 @Component({
   selector: 'app-logbook',
@@ -36,8 +37,10 @@ export class LogbookComponent {
   dutyColumnsTemplate!: TemplateRef<any>;
   @ViewChild('linkedNextPageTemplate', { static: true })
   linkedNextPageTemplate!: TemplateRef<any>;
+
   router = inject(Router);
-  logbookService = inject(LogbookService);
+  adminLogbookService = inject(AdminLogbookService);
+  stateManagement = inject(StateManagement);
 
   logbookSummaryData = signal<ILogbookSummaryResponse | null>(null);
   boeingData = signal<ILogbookSummaryResponse['boeingSummary'] | null>(null);
@@ -73,7 +76,7 @@ export class LogbookComponent {
 
   getLogbookSummary() {
     this.tableLoading = true;
-    this.logbookService.getLogbookSummary(this.selectedYear).subscribe({
+    this.adminLogbookService.getLogbookSummary(this.selectedYear).subscribe({
       next: (response) => {
         this.logbookSummaryData.set(response);
         this.boeingData.set(response.boeingSummary);
@@ -88,7 +91,7 @@ export class LogbookComponent {
   }
 
   getAvailableYears() {
-    this.logbookService.getAvailableYears().subscribe({
+    this.adminLogbookService.getAvailableYears().subscribe({
       next: (response) => {
         this.yearOptions.set(response);
         this.selectedYear = response[0];
@@ -99,8 +102,7 @@ export class LogbookComponent {
   }
 
   onNextPage(rowData: any) {
-    this.router.navigate(['logbook/crew-list'], {
-      state: { data: rowData },
-    });
+    this.stateManagement.setState('logbookSummaryPage', rowData);
+    this.router.navigate(['logbook/crew-list']);
   }
 }

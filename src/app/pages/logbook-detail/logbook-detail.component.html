@@ -6,6 +6,8 @@
       <p-select
         [(ngModel)]="statusFilter"
         [options]="statusOptions()"
+        optionLabel="label"
+        optionValue="value"
         placeholder="Status"
         [showClear]="true"
         class="custom-dropdown w-full"
@@ -144,6 +146,18 @@
       {{ rowData.uploadReason || "-" | truncateText: maxCharCount }}
     </span>
   </div>
+</ng-template>
+
+<ng-template #reviewedByColumnTemplate let-rowData="rowData">
+  <p>{{ rowData.lastReviewedAdmin || "-" | uppercase }}</p>
+</ng-template>
+
+<ng-template #statusColumnTemplate let-rowData="rowData">
+  @if (rowData.status === "WAITING_APPROVAL") {
+    <p>WAITING APPROVAL</p>
+  } @else {
+    <p>{{ rowData.status || "-" }}</p>
+  }
 </ng-template>
 
 <ng-template #editableCellBodyTemplate let-rowData="rowData">

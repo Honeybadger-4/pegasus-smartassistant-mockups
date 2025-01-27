@@ -6,12 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import {
@@ -25,8 +20,10 @@ import { CustomTableComponent } from '@shared/components/custom-table/custom-tab
 import { ILogbookCrewListContentData } from '@shared/models/logbook-crew-list-response.model';
 import { ShowToastService } from '@shared/services/helpers-services/show-toast.service';
 import { IDetailedListRequest } from '@shared/models/detailed-list-request.model';
-import { LogbookService } from '@shared/services/logbook.service';
+import { AdminLogbookService } from '@shared/services/admin-logbook.service';
+import { TruncateTextPipe } from '@shared/pipes/truncate-text.pipe';
 import { Column } from '@shared/models/columns';
+
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmationService } from 'primeng/api';
@@ -38,9 +35,9 @@ import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
-import moment from 'moment';
 import { TooltipModule } from 'primeng/tooltip';
-import { TruncateTextPipe } from '@shared/pipes/truncate-text.pipe';
+import moment from 'moment';
+import { StateManagement } from '@shared/services/helpers-services/state-management.service';
 
 @Component({
   selector: 'app-logbook',
@@ -81,16 +78,21 @@ export class LogbookDetailComponent {
   checkboxCellBodyTemplate!: TemplateRef<any>;
   @ViewChild('commentColumnTemplate', { static: true })
   commentColumnTemplate!: TemplateRef<any>;
+  @ViewChild('reviewedByColumnTemplate', { static: true })
+  reviewedByColumnTemplate!: TemplateRef<any>;
+  @ViewChild('statusColumnTemplate', { static: true })
+  statusColumnTemplate!: TemplateRef<any>;
 
   router = inject(Router);
-  logbookService = inject(LogbookService);
+  adminLogbookService = inject(AdminLogbookService);
   messageService = inject(MessageService);
   confirmationService = inject(ConfirmationService);
   showToastService = inject(ShowToastService);
+  stateManagement = inject(StateManagement);
 
   breadcrumbItems = [
-    { label: 'Logbook' },
-    { label: 'Crew List' },
+    { label: 'Logbook', routerLink: '/logbook' },
+    { label: 'Crew List', routerLink: '/logbook/crew-list' },
     { label: 'Logbook Detail List' },
   ];
   columns: Column[] = [];
@@ -112,7 +114,7 @@ export class LogbookDetailComponent {
   maxCharCount = 20;
 
   ngOnInit() {
-    this.crewListTableData = history.state.data;
+    this.crewListTableData = this.stateManagement.getState('crewListPage');
     this.startDate.set(this.dateRangeDefaultValue()[0].toString());
     this.endDate.set(this.dateRangeDefaultValue()[1].toString());
 
@@ -143,8 +145,16 @@ export class LogbookDetailComponent {
         header: 'Comment',
         template: this.commentColumnTemplate,
       },
-      { field: 'lastReviewedAdmin', header: 'Reviewed By' },
-      { field: 'status', header: 'Status' },
+      {
+        field: 'lastReviewedAdmin',
+        header: 'Reviewed By',
+        template: this.reviewedByColumnTemplate,
+      },
+      {
+        field: 'status',
+        header: 'Status',
+        template: this.statusColumnTemplate,
+      },
       { field: '', header: '', template: this.previewCellBodyTemplate },
       { field: '', header: '', template: this.editableCellBodyTemplate },
     ];
@@ -161,7 +171,7 @@ export class LogbookDetailComponent {
       endDate: this.endDate(),
     };
 
-    this.logbookService
+    this.adminLogbookService
       .getDetailedList(requestBody, this.currentPage, this.currentRows)
       .subscribe({
         next: (response) => {
@@ -179,7 +189,7 @@ export class LogbookDetailComponent {
   }
 
   getLogbookStatusList() {
-    this.logbookService.getLogbookStatusList().subscribe({
+    this.adminLogbookService.getLogbookStatusList().subscribe({
       next: (response) => {
         this.statusOptions.set(response);
       },
@@ -189,7 +199,7 @@ export class LogbookDetailComponent {
   putApprove() {
     const logIds = this.selectedCheckbox().map((item) => item.logId);
 
-    this.logbookService.putApprove(logIds).subscribe({
+    this.adminLogbookService.putApprove(logIds).subscribe({
       next: () => {
         this.getDetailedList();
         this.showToastService.showSuccessToast(
@@ -202,7 +212,7 @@ export class LogbookDetailComponent {
   putReject() {
     const logId = this.selectedCheckbox().map((item) => item.logId)[0];
 
-    this.logbookService.putReject(logId, this.rejectReason).subscribe({
+    this.adminLogbookService.putReject(logId, this.rejectReason).subscribe({
       next: () => {
         this.getDetailedList();
         this.rejectReason = '';
@@ -279,9 +289,8 @@ export class LogbookDetailComponent {
 
   // Other Operations
   goToLogBookDetailEditPage(data: IDetailedListContentData) {
-    this.router.navigate(['logbook/logbook-detail-edit'], {
-      state: { logId: data.logId },
-    });
+    this.stateManagement.setState('logbookDetailPage', { logId: data.logId });
+    this.router.navigate(['logbook/logbook-detail-edit']);
   }
 
   togglePreviewDialog(rowData?: IDetailedListContentData) {
