@@ -139,23 +139,22 @@
         <tr>
           <td colspan="12">
             <div>
-              <p-tabs value="0">
+              <p-tabs [value]="0">
                 <p-tablist>
-                  @for (tab of tableSubPanels; track tab.value) {
-                    <p-tab [value]="tab.value">{{ tab.panelHeader }}</p-tab>
-                  }
+                  <p-tab *ngFor="let tab of tableSubPanels; index as i" [value]="i">
+                    {{ tab.panelHeader }}
+                  </p-tab>
                 </p-tablist>
                 <p-tabpanels>
-                  @for (tab of tableSubPanels; track tab.value) {
-                    <p-tabpanel [value]="tab.value">
-                      <app-custom-table
-                        [tableData]="tab.tableData"
-                        [tableColumns]="tab.tableColumns"
-                      ></app-custom-table>
-                    </p-tabpanel>
-                  }
+                  <p-tabpanel *ngFor="let tab of tableSubPanels; index as i" [value]="i">
+                    <app-custom-table
+                      [tableData]="tab.tableData"
+                      [tableColumns]="tab.tableColumns"
+                    ></app-custom-table>
+                  </p-tabpanel>
                 </p-tabpanels>
               </p-tabs>
+              
             </div>
           </td>
         </tr>
