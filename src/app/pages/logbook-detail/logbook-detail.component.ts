@@ -37,6 +37,7 @@ import { SelectModule } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { TooltipModule } from 'primeng/tooltip';
 import moment from 'moment';
+import { StateManagement } from '@shared/services/helpers-services/state-management.service';
 
 @Component({
   selector: 'app-logbook',
@@ -87,10 +88,11 @@ export class LogbookDetailComponent {
   messageService = inject(MessageService);
   confirmationService = inject(ConfirmationService);
   showToastService = inject(ShowToastService);
+  stateManagement = inject(StateManagement);
 
   breadcrumbItems = [
-    { label: 'Logbook' },
-    { label: 'Crew List' },
+    { label: 'Logbook', routerLink: '/logbook' },
+    { label: 'Crew List', routerLink: '/logbook/crew-list' },
     { label: 'Logbook Detail List' },
   ];
   columns: Column[] = [];
@@ -112,7 +114,7 @@ export class LogbookDetailComponent {
   maxCharCount = 20;
 
   ngOnInit() {
-    this.crewListTableData = history.state.data;
+    this.crewListTableData = this.stateManagement.getState('crewListPage');
     this.startDate.set(this.dateRangeDefaultValue()[0].toString());
     this.endDate.set(this.dateRangeDefaultValue()[1].toString());
 
@@ -279,9 +281,8 @@ export class LogbookDetailComponent {
 
   // Other Operations
   goToLogBookDetailEditPage(data: IDetailedListContentData) {
-    this.router.navigate(['logbook/logbook-detail-edit'], {
-      state: { logId: data.logId },
-    });
+    this.stateManagement.setState('logbookDetailPage', {logId: data.logId} );
+    this.router.navigate(['logbook/logbook-detail-edit']);
   }
 
   togglePreviewDialog(rowData?: IDetailedListContentData) {

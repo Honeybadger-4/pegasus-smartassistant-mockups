@@ -29,6 +29,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { InputMaskModule } from 'primeng/inputmask';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { LogbookService } from '@shared/services/logbook.service';
+import { StateManagement } from '@shared/services/helpers-services/state-management.service';
 
 
 @Component({
@@ -61,11 +62,12 @@ export class LogbookDetailEditComponent implements OnInit {
   logbookService = inject(LogbookService);
   formBuilder = inject(FormBuilder);
   confirmationService = inject(ConfirmationService);
+  stateManagement = inject(StateManagement);
 
   breadcrumbItems: MenuItem[] = [
-    { label: 'Logbook' },
-    { label: 'Crew List' },
-    { label: 'Logbook Detail List' },
+    { label: 'Logbook', routerLink: '/logbook' },
+    { label: 'Crew List', routerLink: '/logbook/crew-list' },
+    { label: 'Logbook Detail List', routerLink: '/logbook/logbook-detail' },
     { label: 'Edit Logbook' },
   ];
   logId: number = 0;
@@ -78,7 +80,7 @@ export class LogbookDetailEditComponent implements OnInit {
   updateableFields = signal<string[]>([]);
 
   ngOnInit() {
-    this.logId = history.state.logId;
+    this.logId = this.stateManagement.getState('logbookDetailPage')?.logId;
 
     this.getLogByLogId();
     this.getUpdateableFields();
