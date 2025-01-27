@@ -11,7 +11,7 @@ import {
 
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
 import { IDetailedListContentData } from '@shared/models/detailed-list-response.model';
-import { LogbookService } from '@shared/services/logbook.service';
+import { AdminLogbookService } from '@shared/services/admin-logbook.service';
 import { ILogbookEditRequest } from '@shared/models/logbook-edit-request.model';
 
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
@@ -56,7 +56,7 @@ import { KeyFilterModule } from 'primeng/keyfilter';
   styleUrls: ['./logbook-detail-edit.component.scss'],
 })
 export class LogbookDetailEditComponent implements OnInit {
-  logbookService = inject(LogbookService);
+  adminLogbookService = inject(AdminLogbookService);
   formBuilder = inject(FormBuilder);
   confirmationService = inject(ConfirmationService);
 
@@ -136,7 +136,7 @@ export class LogbookDetailEditComponent implements OnInit {
   getLogByLogId() {
     this.formDataLoading.set(true);
 
-    this.logbookService.getLogByLogId(this.logId).subscribe({
+    this.adminLogbookService.getLogByLogId(this.logId).subscribe({
       next: (response) => {
         this.editDefaultData.set(response);
         this.formDataLoading.set(false);
@@ -169,7 +169,7 @@ export class LogbookDetailEditComponent implements OnInit {
         uploadReason: this.rejectReason,
       };
 
-      this.logbookService.putEdit(requestBody).subscribe({
+      this.adminLogbookService.putEdit(requestBody).subscribe({
         next: () => {
           this.getLogByLogId();
         },

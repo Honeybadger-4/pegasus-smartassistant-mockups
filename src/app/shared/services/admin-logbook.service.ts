@@ -17,7 +17,7 @@ import { ILogbookSummaryResponse } from '@shared/models/logbook-summary-response
 @Injectable({
   providedIn: 'root',
 })
-export class LogbookService {
+export class AdminLogbookService {
   http = inject(HttpClient);
   baseUrl = environment.baseApi;
 

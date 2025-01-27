@@ -20,7 +20,7 @@ import { CustomTableComponent } from '@shared/components/custom-table/custom-tab
 import { ILogbookCrewListContentData } from '@shared/models/logbook-crew-list-response.model';
 import { ShowToastService } from '@shared/services/helpers-services/show-toast.service';
 import { IDetailedListRequest } from '@shared/models/detailed-list-request.model';
-import { LogbookService } from '@shared/services/logbook.service';
+import { AdminLogbookService } from '@shared/services/admin-logbook.service';
 import { TruncateTextPipe } from '@shared/pipes/truncate-text.pipe';
 import { Column } from '@shared/models/columns';
 
@@ -83,7 +83,7 @@ export class LogbookDetailComponent {
   statusColumnTemplate!: TemplateRef<any>;
 
   router = inject(Router);
-  logbookService = inject(LogbookService);
+  adminLogbookService = inject(AdminLogbookService);
   messageService = inject(MessageService);
   confirmationService = inject(ConfirmationService);
   showToastService = inject(ShowToastService);
@@ -161,7 +161,7 @@ export class LogbookDetailComponent {
       endDate: this.endDate(),
     };
 
-    this.logbookService
+    this.adminLogbookService
       .getDetailedList(requestBody, this.currentPage, this.currentRows)
       .subscribe({
         next: (response) => {
@@ -179,7 +179,7 @@ export class LogbookDetailComponent {
   }
 
   getLogbookStatusList() {
-    this.logbookService.getLogbookStatusList().subscribe({
+    this.adminLogbookService.getLogbookStatusList().subscribe({
       next: (response) => {
         this.statusOptions.set(response);
       },
@@ -189,7 +189,7 @@ export class LogbookDetailComponent {
   putApprove() {
     const logIds = this.selectedCheckbox().map((item) => item.logId);
 
-    this.logbookService.putApprove(logIds).subscribe({
+    this.adminLogbookService.putApprove(logIds).subscribe({
       next: () => {
         this.getDetailedList();
         this.showToastService.showSuccessToast(
@@ -202,7 +202,7 @@ export class LogbookDetailComponent {
   putReject() {
     const logId = this.selectedCheckbox().map((item) => item.logId)[0];
 
-    this.logbookService.putReject(logId, this.rejectReason).subscribe({
+    this.adminLogbookService.putReject(logId, this.rejectReason).subscribe({
       next: () => {
         this.getDetailedList();
         this.rejectReason = '';

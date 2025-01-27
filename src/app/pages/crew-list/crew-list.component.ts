@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
 import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
-import { LogbookService } from '@shared/services/logbook.service';
+import { AdminLogbookService } from '@shared/services/admin-logbook.service';
 import { Column } from '@shared/models/columns';
 import {
   ILogbookCrewListContentData,
@@ -50,7 +50,7 @@ export class CrewListComponent {
   @ViewChild('searchInput', { static: true }) searchInput!: ElementRef;
 
   router = inject(Router);
-  logbookService = inject(LogbookService);
+  adminLogbookService = inject(AdminLogbookService);
 
   breadcrumbItems: MenuItem[] = [
     { label: 'Logbook', route: '/logbook' },
@@ -93,7 +93,7 @@ export class CrewListComponent {
 
   getCrewList() {
     this.tableLoading = true;
-    this.logbookService
+    this.adminLogbookService
       .getCrewList(
         this.logbookDashboardData()?.logbookType,
         this.logbookDashboardData()?.yearMonth,

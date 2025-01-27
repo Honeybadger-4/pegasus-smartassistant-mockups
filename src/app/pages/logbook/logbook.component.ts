@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { ILogbookSummaryResponse } from '@shared/models/logbook-summary-response.model';
-import { LogbookService } from '@shared/services/logbook.service';
+import { AdminLogbookService } from '@shared/services/admin-logbook.service';
 import { Column } from '@shared/models/columns';
 
 import { SliderModule } from 'primeng/slider';
@@ -37,7 +37,7 @@ export class LogbookComponent {
   @ViewChild('linkedNextPageTemplate', { static: true })
   linkedNextPageTemplate!: TemplateRef<any>;
   router = inject(Router);
-  logbookService = inject(LogbookService);
+  adminLogbookService = inject(AdminLogbookService);
 
   logbookSummaryData = signal<ILogbookSummaryResponse | null>(null);
   boeingData = signal<ILogbookSummaryResponse['boeingSummary'] | null>(null);
@@ -73,7 +73,7 @@ export class LogbookComponent {
 
   getLogbookSummary() {
     this.tableLoading = true;
-    this.logbookService.getLogbookSummary(this.selectedYear).subscribe({
+    this.adminLogbookService.getLogbookSummary(this.selectedYear).subscribe({
       next: (response) => {
         this.logbookSummaryData.set(response);
         this.boeingData.set(response.boeingSummary);
@@ -88,7 +88,7 @@ export class LogbookComponent {
   }
 
   getAvailableYears() {
-    this.logbookService.getAvailableYears().subscribe({
+    this.adminLogbookService.getAvailableYears().subscribe({
       next: (response) => {
         this.yearOptions.set(response);
         this.selectedYear = response[0];
