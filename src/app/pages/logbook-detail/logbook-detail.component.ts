@@ -6,12 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import {
@@ -26,7 +21,9 @@ import { ILogbookCrewListContentData } from '@shared/models/logbook-crew-list-re
 import { ShowToastService } from '@shared/services/helpers-services/show-toast.service';
 import { IDetailedListRequest } from '@shared/models/detailed-list-request.model';
 import { LogbookService } from '@shared/services/logbook.service';
+import { TruncateTextPipe } from '@shared/pipes/truncate-text.pipe';
 import { Column } from '@shared/models/columns';
+
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmationService } from 'primeng/api';
@@ -38,9 +35,8 @@ import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
-import moment from 'moment';
 import { TooltipModule } from 'primeng/tooltip';
-import { TruncateTextPipe } from '@shared/pipes/truncate-text.pipe';
+import moment from 'moment';
 
 @Component({
   selector: 'app-logbook',
@@ -81,6 +77,8 @@ export class LogbookDetailComponent {
   checkboxCellBodyTemplate!: TemplateRef<any>;
   @ViewChild('commentColumnTemplate', { static: true })
   commentColumnTemplate!: TemplateRef<any>;
+  @ViewChild('reviewedByColumnTemplate', { static: true })
+  reviewedByColumnTemplate!: TemplateRef<any>;
 
   router = inject(Router);
   logbookService = inject(LogbookService);
@@ -143,7 +141,7 @@ export class LogbookDetailComponent {
         header: 'Comment',
         template: this.commentColumnTemplate,
       },
-      { field: 'lastReviewedAdmin', header: 'Reviewed By' },
+      { field: 'lastReviewedAdmin', header: 'Reviewed By', template: this.reviewedByColumnTemplate },
       { field: 'status', header: 'Status' },
       { field: '', header: '', template: this.previewCellBodyTemplate },
       { field: '', header: '', template: this.editableCellBodyTemplate },

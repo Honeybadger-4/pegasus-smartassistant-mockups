@@ -146,6 +146,10 @@
   </div>
 </ng-template>
 
+<ng-template #reviewedByColumnTemplate let-rowData="rowData">
+  <p>{{rowData.lastReviewedAdmin || "-" | uppercase}}</p>
+</ng-template>
+
 <ng-template #editableCellBodyTemplate let-rowData="rowData">
   <i
     class="pi pi-pen-to-square cursor-pointer"
