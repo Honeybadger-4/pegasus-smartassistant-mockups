@@ -11,7 +11,7 @@ import {
 
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
 import { IDetailedListContentData } from '@shared/models/detailed-list-response.model';
-import { LogbookService } from '@shared/services/logbook.service';
+import { AdminLogbookService } from '@shared/services/admin-logbook.service';
 import { ILogbookEditRequest } from '@shared/models/logbook-edit-request.model';
 
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
@@ -27,6 +27,9 @@ import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputMaskModule } from 'primeng/inputmask';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { LogbookService } from '@shared/services/logbook.service';
+import { StateManagement } from '@shared/services/helpers-services/state-management.service';
 
 @Component({
   selector: 'app-logbook-edit',
@@ -47,20 +50,23 @@ import { InputMaskModule } from 'primeng/inputmask';
     TooltipModule,
     DatePickerModule,
     InputMaskModule,
+    KeyFilterModule,
   ],
   providers: [ConfirmationService],
   templateUrl: './logbook-detail-edit.component.html',
   styleUrls: ['./logbook-detail-edit.component.scss'],
 })
 export class LogbookDetailEditComponent implements OnInit {
+  adminLogbookService = inject(AdminLogbookService);
   logbookService = inject(LogbookService);
   formBuilder = inject(FormBuilder);
   confirmationService = inject(ConfirmationService);
+  stateManagement = inject(StateManagement);
 
   breadcrumbItems: MenuItem[] = [
-    { label: 'Logbook' },
-    { label: 'Crew List' },
-    { label: 'Logbook Detail List' },
+    { label: 'Logbook', routerLink: '/logbook' },
+    { label: 'Crew List', routerLink: '/logbook/crew-list' },
+    { label: 'Logbook Detail List', routerLink: '/logbook/logbook-detail' },
     { label: 'Edit Logbook' },
   ];
   logId: number = 0;
@@ -70,11 +76,13 @@ export class LogbookDetailEditComponent implements OnInit {
   editDefaultData = signal<IDetailedListContentData | null>(null);
   formDataLoading = signal<boolean>(false);
   isEditMode = signal<boolean>(false);
+  updateableFields = signal<string[]>([]);
 
   ngOnInit() {
-    this.logId = history.state.logId;
+    this.logId = this.stateManagement.getState('logbookDetailPage')?.logId;
 
     this.getLogByLogId();
+    this.getUpdateableFields();
     this.builder();
   }
 
@@ -82,7 +90,7 @@ export class LogbookDetailEditComponent implements OnInit {
     this.logbookFormGroup = this.formBuilder.group({
       dutyType: [this.editDefaultData()?.dutyType],
       aircraftType: [this.editDefaultData()?.aircraftType],
-      date: [this.editDefaultData()?.date || ''],
+      date: [this.parseDate(this.editDefaultData()?.date)],
       aircraftReg: [this.editDefaultData()?.aircraftReg],
       departure: [this.editDefaultData()?.departure],
       arrival: [this.editDefaultData()?.arrival],
@@ -103,7 +111,9 @@ export class LogbookDetailEditComponent implements OnInit {
       totalTime: [this.editDefaultData()?.totalTime, [this.timeFieldControl]],
       instructor: [this.editDefaultData()?.instructor],
       // Synthetic Training Devices Session
-      syntheticTrainingDate: [this.editDefaultData()?.syntheticTrainingDate],
+      syntheticTrainingDate: [
+        this.parseDate(this.editDefaultData()?.syntheticTrainingDate),
+      ],
       syntheticTrainingType: [this.editDefaultData()?.syntheticTrainingType],
       syntheticTrainingTime: [
         this.editDefaultData()?.syntheticTrainingTime,
@@ -133,7 +143,7 @@ export class LogbookDetailEditComponent implements OnInit {
   getLogByLogId() {
     this.formDataLoading.set(true);
 
-    this.logbookService.getLogByLogId(this.logId).subscribe({
+    this.adminLogbookService.getLogByLogId(this.logId).subscribe({
       next: (response) => {
         this.editDefaultData.set(response);
         this.formDataLoading.set(false);
@@ -141,6 +151,14 @@ export class LogbookDetailEditComponent implements OnInit {
       },
       error: (error) => {
         this.formDataLoading.set(false);
+      },
+    });
+  }
+
+  getUpdateableFields() {
+    this.logbookService.getUpdateableFields().subscribe({
+      next: (response) => {
+        this.updateableFields.set(response);
       },
     });
   }
@@ -166,7 +184,7 @@ export class LogbookDetailEditComponent implements OnInit {
         uploadReason: this.rejectReason,
       };
 
-      this.logbookService.putEdit(requestBody).subscribe({
+      this.adminLogbookService.putEdit(requestBody).subscribe({
         next: () => {
           this.getLogByLogId();
         },
@@ -225,22 +243,24 @@ export class LogbookDetailEditComponent implements OnInit {
     });
   }
 
-  onCancel(): void {
-    this.toggleEditMode();
-    this.builder();
-  }
-
-  onSubmitRejectReason(): void {
+  onSubmitReason(): void {
     this.formSubmit();
     this.toggleEditMode();
     this.displayRejectPopup = false;
+  }
+
+  onCancel(): void {
+    this.toggleEditMode();
+    this.builder();
   }
 
   toggleEditMode(): void {
     this.isEditMode.set(!this.isEditMode());
 
     if (this.isEditMode()) {
-      this.logbookFormGroup.enable();
+      this.updateableFields().map((item: string) => {
+        this.logbookFormGroup.controls[item]?.enable();
+      });
     } else {
       this.logbookFormGroup.disable();
     }
@@ -351,5 +371,9 @@ export class LogbookDetailEditComponent implements OnInit {
     this.logbookFormGroup
       .get(formControlName)
       ?.setValue(uppercaseValue, { emitEvent: false });
+  }
+
+  parseDate(dateString: any): Date | null {
+    return dateString ? new Date(dateString) : null;
   }
 }

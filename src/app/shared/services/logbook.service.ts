@@ -1,18 +1,8 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
-
-import { ILogbookStatusListResponse } from '@shared/models/logbook-status-list-response.model';
-import { ILogbookCrewListResponse } from '@shared/models/logbook-crew-list-response.model';
-import {
-  IDetailedListContentData,
-  IDetailedListResponse,
-} from '@shared/models/detailed-list-response.model';
-import { IDetailedListRequest } from '@shared/models/detailed-list-request.model';
-import { IHttpResponseModel } from '@shared/models/http-response.model';
 import { environment } from '@environments/environment';
-import { ILogbookEditRequest } from '@shared/models/logbook-edit-request.model';
-import { ILogbookSummaryResponse } from '@shared/models/logbook-summary-response.model';
+import { IHttpResponseModel } from '@shared/models/http-response.model';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -21,94 +11,8 @@ export class LogbookService {
   http = inject(HttpClient);
   baseUrl = environment.baseApi;
 
-  getLogbookSummary(year: number): Observable<ILogbookSummaryResponse> {
-    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/logbook-summary?year=${year}`;
-
-    return this.http
-      .get<IHttpResponseModel>(apiUrl)
-      .pipe(map((response) => response.data));
-  }
-
-  getAvailableYears(): Observable<number[]> {
-    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/available-years`;
-
-    return this.http
-      .get<IHttpResponseModel>(apiUrl)
-      .pipe(map((response) => response.data));
-  }
-
-  getCrewList(
-    logbookType: string,
-    yearMonth: number,
-    page: number,
-    size: number,
-    searchValue?: string | null,
-  ): Observable<ILogbookCrewListResponse> {
-    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/crewList`;
-
-    let params = new HttpParams()
-      .set('logbookType', logbookType)
-      .set('yearMonth', yearMonth)
-      .set('page', page)
-      .set('size', size);
-
-    if (searchValue) {
-      params = params.set('searchValue', searchValue);
-    }
-
-    return this.http
-      .get<IHttpResponseModel>(apiUrl, { params })
-      .pipe(map((response) => response.data));
-  }
-
-  getDetailedList(
-    requestBody: IDetailedListRequest,
-    page: number,
-    size: number,
-  ): Observable<IDetailedListResponse> {
-    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/detailedList?page=${page}&size=${size}`;
-
-    return this.http
-      .post<IHttpResponseModel>(apiUrl, requestBody)
-      .pipe(map((response) => response.data));
-  }
-
-  getLogbookStatusList(): Observable<ILogbookStatusListResponse[]> {
-    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/logbook-statuses`;
-
-    return this.http
-      .get<IHttpResponseModel>(apiUrl)
-      .pipe(map((response) => response.data));
-  }
-
-  putApprove(legIds: number[]): Observable<any> {
-    const joinLegIds = legIds.join(',');
-
-    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/approve?logIds=${joinLegIds}`;
-
-    return this.http
-      .put<IHttpResponseModel>(apiUrl, null)
-      .pipe(map((response) => response.data));
-  }
-
-  putReject(logId: number, reason: string): Observable<any> {
-    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/reject?logId=${logId}&reason=${reason}`;
-
-    return this.http
-      .put<IHttpResponseModel>(apiUrl, null)
-      .pipe(map((response) => response.data));
-  }
-
-  putEdit(requestBody: ILogbookEditRequest) {
-    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/edit`;
-
-    return this.http
-      .put<IHttpResponseModel>(apiUrl, requestBody)
-      .pipe(map((response) => response.data));
-  }
-
-  getLogByLogId(logId: number): Observable<IDetailedListContentData> {
-    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/${logId}`;
+  getUpdateableFields() {
+    const apiUrl = `${this.baseUrl}/api/v1/logbook/updatable-fields?dutyType=flight`;
 
     return this.http
       .get<IHttpResponseModel>(apiUrl)

@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
 import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
-import { LogbookService } from '@shared/services/logbook.service';
+import { AdminLogbookService } from '@shared/services/admin-logbook.service';
 import { Column } from '@shared/models/columns';
 import {
   ILogbookCrewListContentData,
@@ -26,6 +26,7 @@ import { SliderModule } from 'primeng/slider';
 import { PanelModule } from 'primeng/panel';
 import { MenuItem } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
+import { StateManagement } from '@shared/services/helpers-services/state-management.service';
 
 @Component({
   selector: 'app-logbook',
@@ -50,10 +51,11 @@ export class CrewListComponent {
   @ViewChild('searchInput', { static: true }) searchInput!: ElementRef;
 
   router = inject(Router);
-  logbookService = inject(LogbookService);
+  adminLogbookService = inject(AdminLogbookService);
+  stateManagement = inject(StateManagement);
 
   breadcrumbItems: MenuItem[] = [
-    { label: 'Logbook', route: '/logbook' },
+    { label: 'Logbook', routerLink: '/logbook' },
     { label: 'Crew List' },
   ];
   searchInputValue = '';
@@ -66,7 +68,9 @@ export class CrewListComponent {
   logbookDashboardData = signal<any>(null);
 
   ngOnInit() {
-    this.logbookDashboardData.set(history.state.data);
+    this.logbookDashboardData.set(
+      this.stateManagement.getState('logbookSummaryPage'),
+    );
 
     this.defineColumns();
     this.getCrewList();
@@ -93,7 +97,7 @@ export class CrewListComponent {
 
   getCrewList() {
     this.tableLoading = true;
-    this.logbookService
+    this.adminLogbookService
       .getCrewList(
         this.logbookDashboardData()?.logbookType,
         this.logbookDashboardData()?.yearMonth,
@@ -137,9 +141,8 @@ export class CrewListComponent {
 
   // Table Operations
   tableRowSelected(event: any) {
-    this.router.navigate(['logbook/logbook-detail'], {
-      state: { data: event },
-    });
+    this.stateManagement.setState('crewListPage', event);
+    this.router.navigate(['logbook/logbook-detail']);
   }
 
   pageEvent(event: { first: number; rows: number }) {
