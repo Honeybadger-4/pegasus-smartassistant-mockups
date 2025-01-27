@@ -6,6 +6,8 @@
       <p-select
         [(ngModel)]="statusFilter"
         [options]="statusOptions()"
+        optionLabel="label"
+        optionValue="value"
         placeholder="Status"
         [showClear]="true"
         class="custom-dropdown w-full"
