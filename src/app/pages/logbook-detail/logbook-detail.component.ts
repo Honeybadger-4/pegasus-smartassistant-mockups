@@ -79,6 +79,8 @@ export class LogbookDetailComponent {
   commentColumnTemplate!: TemplateRef<any>;
   @ViewChild('reviewedByColumnTemplate', { static: true })
   reviewedByColumnTemplate!: TemplateRef<any>;
+  @ViewChild('statusColumnTemplate', { static: true })
+  statusColumnTemplate!: TemplateRef<any>;
 
   router = inject(Router);
   logbookService = inject(LogbookService);
@@ -142,7 +144,7 @@ export class LogbookDetailComponent {
         template: this.commentColumnTemplate,
       },
       { field: 'lastReviewedAdmin', header: 'Reviewed By', template: this.reviewedByColumnTemplate },
-      { field: 'status', header: 'Status' },
+      { field: 'status', header: 'Status', template: this.statusColumnTemplate },
       { field: '', header: '', template: this.previewCellBodyTemplate },
       { field: '', header: '', template: this.editableCellBodyTemplate },
     ];
