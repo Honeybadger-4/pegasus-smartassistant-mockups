@@ -12,7 +12,9 @@ export class FlightInfoLoadSheetService {
   http = inject(HttpClient);
   baseUrl = environment.baseApi;
 
-  getLoadAndTrimSheet(legIsn: number): Observable<IFlightInfoLoadSheetResponse> {
+  getLoadAndTrimSheet(
+    legIsn: number,
+  ): Observable<IFlightInfoLoadSheetResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/external/flybus/loadandtrimsheet?legIsn=${legIsn}`;
 
     return this.http
@@ -20,5 +22,3 @@ export class FlightInfoLoadSheetService {
       .pipe(map((response) => response.data));
   }
 }
-
-
