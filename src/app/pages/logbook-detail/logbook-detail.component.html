@@ -149,14 +149,14 @@
 </ng-template>
 
 <ng-template #reviewedByColumnTemplate let-rowData="rowData">
-  <p>{{rowData.lastReviewedAdmin || "-" | uppercase}}</p>
+  <p>{{ rowData.lastReviewedAdmin || "-" | uppercase }}</p>
 </ng-template>
 
 <ng-template #statusColumnTemplate let-rowData="rowData">
-  @if(rowData.status === 'WAITING_APPROVAL') {
+  @if (rowData.status === "WAITING_APPROVAL") {
     <p>WAITING APPROVAL</p>
-  }@else {
-    <p>{{rowData.status || "-"}}</p>
+  } @else {
+    <p>{{ rowData.status || "-" }}</p>
   }
 </ng-template>
 

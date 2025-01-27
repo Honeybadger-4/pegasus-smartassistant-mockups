@@ -31,7 +31,6 @@ import { KeyFilterModule } from 'primeng/keyfilter';
 import { LogbookService } from '@shared/services/logbook.service';
 import { StateManagement } from '@shared/services/helpers-services/state-management.service';
 
-
 @Component({
   selector: 'app-logbook-edit',
   imports: [
@@ -50,8 +49,8 @@ import { StateManagement } from '@shared/services/helpers-services/state-managem
     ProgressSpinnerModule,
     TooltipModule,
     DatePickerModule,
-    InputMaskModule, 
-    KeyFilterModule
+    InputMaskModule,
+    KeyFilterModule,
   ],
   providers: [ConfirmationService],
   templateUrl: './logbook-detail-edit.component.html',
@@ -112,7 +111,9 @@ export class LogbookDetailEditComponent implements OnInit {
       totalTime: [this.editDefaultData()?.totalTime, [this.timeFieldControl]],
       instructor: [this.editDefaultData()?.instructor],
       // Synthetic Training Devices Session
-      syntheticTrainingDate: [this.parseDate(this.editDefaultData()?.syntheticTrainingDate)],
+      syntheticTrainingDate: [
+        this.parseDate(this.editDefaultData()?.syntheticTrainingDate),
+      ],
       syntheticTrainingType: [this.editDefaultData()?.syntheticTrainingType],
       syntheticTrainingTime: [
         this.editDefaultData()?.syntheticTrainingTime,
@@ -158,8 +159,8 @@ export class LogbookDetailEditComponent implements OnInit {
     this.logbookService.getUpdateableFields().subscribe({
       next: (response) => {
         this.updateableFields.set(response);
-      }
-    })
+      },
+    });
   }
 
   formSubmit() {

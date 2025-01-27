@@ -68,7 +68,9 @@ export class CrewListComponent {
   logbookDashboardData = signal<any>(null);
 
   ngOnInit() {
-    this.logbookDashboardData.set(this.stateManagement.getState('logbookSummaryPage'));
+    this.logbookDashboardData.set(
+      this.stateManagement.getState('logbookSummaryPage'),
+    );
 
     this.defineColumns();
     this.getCrewList();

@@ -145,8 +145,16 @@ export class LogbookDetailComponent {
         header: 'Comment',
         template: this.commentColumnTemplate,
       },
-      { field: 'lastReviewedAdmin', header: 'Reviewed By', template: this.reviewedByColumnTemplate },
-      { field: 'status', header: 'Status', template: this.statusColumnTemplate },
+      {
+        field: 'lastReviewedAdmin',
+        header: 'Reviewed By',
+        template: this.reviewedByColumnTemplate,
+      },
+      {
+        field: 'status',
+        header: 'Status',
+        template: this.statusColumnTemplate,
+      },
       { field: '', header: '', template: this.previewCellBodyTemplate },
       { field: '', header: '', template: this.editableCellBodyTemplate },
     ];
@@ -281,7 +289,7 @@ export class LogbookDetailComponent {
 
   // Other Operations
   goToLogBookDetailEditPage(data: IDetailedListContentData) {
-    this.stateManagement.setState('logbookDetailPage', {logId: data.logId} );
+    this.stateManagement.setState('logbookDetailPage', { logId: data.logId });
     this.router.navigate(['logbook/logbook-detail-edit']);
   }
 
