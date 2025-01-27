@@ -185,6 +185,7 @@
             <p-floatLabel variant="on" class="custom-float-label-field w-full">
               <input
                 pInputText
+                pKeyFilter="alpha"
                 id="departure"
                 formControlName="departure"
                 maxlength="3"
@@ -211,6 +212,7 @@
             <p-floatLabel variant="on" class="custom-float-label-field w-full">
               <input
                 pInputText
+                pKeyFilter="alpha"
                 id="arrival"
                 formControlName="arrival"
                 maxlength="3"
@@ -469,26 +471,28 @@
 
           <!-- Date -->
           <div class="form-item-container mb-5">
-            <p-floatLabel variant="on" class="custom-float-label-field w-full">
-              <input
-                pInputText
-                id="syntheticTrainingDate"
+            <p-floatlabel variant="on" class="custom-float-label-field w-full">
+              <p-datepicker
+                inputId="syntheticTrainingDate"
                 formControlName="syntheticTrainingDate"
+                [readonlyInput]="true"
+                dateFormat="dd/mm/yy"
+                class="custom-calendar datepicker"
+              />
+
+              <ng-container
+                *ngTemplateOutlet="
+                  historyTooltipIcon;
+                  context: {
+                    fieldName: 'date',
+                    data: generateHistoryTooltip(
+                      editDefaultData()?.changes?.syntheticTrainingDate
+                    ),
+                  }
+                "
               />
               <label for="syntheticTrainingDate">Date</label>
-            </p-floatLabel>
-
-            <ng-container
-              *ngTemplateOutlet="
-                historyTooltipIcon;
-                context: {
-                  fieldName: 'syntheticTrainingDate',
-                  data: generateHistoryTooltip(
-                    editDefaultData()?.changes?.syntheticTrainingDate
-                  ),
-                }
-              "
-            />
+            </p-floatlabel>
           </div>
 
           <!-- Type -->
@@ -710,7 +714,7 @@
           label="Submit"
           [disabled]="rejectReason.length == 0"
           class="submit-button"
-          (click)="onSubmitRejectReason()"
+          (click)="onSubmitReason()"
         ></button>
       </div>
     </div>

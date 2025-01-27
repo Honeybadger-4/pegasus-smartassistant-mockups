@@ -27,6 +27,8 @@ import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputMaskModule } from 'primeng/inputmask';
+import { KeyFilterModule } from 'primeng/keyfilter';
+
 
 @Component({
   selector: 'app-logbook-edit',
@@ -46,7 +48,8 @@ import { InputMaskModule } from 'primeng/inputmask';
     ProgressSpinnerModule,
     TooltipModule,
     DatePickerModule,
-    InputMaskModule,
+    InputMaskModule, 
+    KeyFilterModule
   ],
   providers: [ConfirmationService],
   templateUrl: './logbook-detail-edit.component.html',
@@ -82,7 +85,7 @@ export class LogbookDetailEditComponent implements OnInit {
     this.logbookFormGroup = this.formBuilder.group({
       dutyType: [this.editDefaultData()?.dutyType],
       aircraftType: [this.editDefaultData()?.aircraftType],
-      date: [this.editDefaultData()?.date || ''],
+      date: [this.parseDate(this.editDefaultData()?.date)],
       aircraftReg: [this.editDefaultData()?.aircraftReg],
       departure: [this.editDefaultData()?.departure],
       arrival: [this.editDefaultData()?.arrival],
@@ -103,7 +106,7 @@ export class LogbookDetailEditComponent implements OnInit {
       totalTime: [this.editDefaultData()?.totalTime, [this.timeFieldControl]],
       instructor: [this.editDefaultData()?.instructor],
       // Synthetic Training Devices Session
-      syntheticTrainingDate: [this.editDefaultData()?.syntheticTrainingDate],
+      syntheticTrainingDate: [this.parseDate(this.editDefaultData()?.syntheticTrainingDate)],
       syntheticTrainingType: [this.editDefaultData()?.syntheticTrainingType],
       syntheticTrainingTime: [
         this.editDefaultData()?.syntheticTrainingTime,
@@ -225,15 +228,15 @@ export class LogbookDetailEditComponent implements OnInit {
     });
   }
 
-  onCancel(): void {
-    this.toggleEditMode();
-    this.builder();
-  }
-
-  onSubmitRejectReason(): void {
+  onSubmitReason(): void {
     this.formSubmit();
     this.toggleEditMode();
     this.displayRejectPopup = false;
+  }
+
+  onCancel(): void {
+    this.toggleEditMode();
+    this.builder();
   }
 
   toggleEditMode(): void {
@@ -351,5 +354,9 @@ export class LogbookDetailEditComponent implements OnInit {
     this.logbookFormGroup
       .get(formControlName)
       ?.setValue(uppercaseValue, { emitEvent: false });
+  }
+
+  parseDate(dateString: any): Date | null {
+    return dateString ? new Date(dateString) : null;
   }
 }
