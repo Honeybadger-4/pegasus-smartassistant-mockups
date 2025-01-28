@@ -605,7 +605,7 @@ export class FlightInfoComponent {
   activeTabIndexChange(value: number) {
     console.log('Tab changed: ', value);
   }
-  
+
   pageEvent(event: { first: number; rows: number }) {
     const page = event.first / event.rows;
     this.currentPage = page;
