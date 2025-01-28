@@ -1,24 +1,38 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
-  TableModule,
-  TableRowCollapseEvent,
-  TableRowExpandEvent,
-} from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
-import { Column } from '@shared/models/columns';
-import { TabsModule } from 'primeng/tabs';
-import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
-import { InputTextModule } from 'primeng/inputtext';
+  Component,
+  inject,
+  signal,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+
+import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
+import { FlightInformationService } from '@shared/services/flight-information.service';
+import { Column } from '@shared/models/columns';
+import {
+  IFlightInformationResponse,
+  IFlightInformationTableData,
+} from '@shared/models/flight-information-response.model';
+
+import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import {
+  TableModule,
+  TableRowCollapseEvent,
+  TableRowExpandEvent,
+} from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { TabsModule } from 'primeng/tabs';
 import { DatePickerModule } from 'primeng/datepicker';
+import moment from 'moment';
 
 @Component({
   selector: 'app-flight-info',
@@ -32,9 +46,9 @@ import { DatePickerModule } from 'primeng/datepicker';
     InputIconModule,
     InputTextModule,
     FormsModule,
+    ReactiveFormsModule,
     DatePickerModule,
     FormsModule,
-    ReactiveFormsModule,
   ],
   templateUrl: './flight-info.component.html',
   styleUrl: './flight-info.component.scss',
@@ -49,129 +63,29 @@ export class FlightInfoComponent {
   @ViewChild('tripInfoTableTripInfoCellTemplate', { static: true })
   tripInfoTableTripInfoCellTemplate!: TemplateRef<any>;
 
-  dateRange: Date[] = [];
   filterFormGroup!: FormGroup;
-
-  // Columns Variable
   mainCols!: Column[];
   crewCols!: Column[];
   flightPlanCols!: Column[];
   tripInfoCols!: Column[];
   loadSheetCols!: Column[];
-  // /Columns Variable
+  dateRange: Date[] = [];
+  expandedRows = {};
+  currentPage = 0;
+  currentRows = 20;
+  tableLoading: boolean = false;
 
   tableSubPanels!: any[];
-  expandedRows = {};
   activeTabIndex = 0;
 
-  // Mock Data
-  flightsData = [
-    {
-      id: '0',
-      aircraft: 'TC-A329',
-      flightNo: 'PC2009',
-      depPort: 'AYT',
-      arrPort: 'DUS',
-      depDateTime: '22/07/2025 13:30',
-      arrDateTime: '22/07/2025 16:30',
-      user: 'SAWBNCS1',
-      flightPlan: 'OK',
-      altRoute: 'LGHB',
-      fuelOrder: '9999 Kg',
-      loadSheet: 'X',
-      tripInfo: 'X',
-    },
-    {
-      id: '1',
-      aircraft: 'TC-A330',
-      flightNo: 'PC2009',
-      depPort: 'AYT',
-      arrPort: 'DUS',
-      depDateTime: '22/07/2025 13:30',
-      arrDateTime: '22/07/2025 16:30',
-      user: 'SAWBNCS1',
-      flightPlan: 'OK',
-      altRoute: '-',
-      fuelOrder: '9999 Kg',
-      loadSheet: 'X',
-      tripInfo: 'X',
-    },
-    {
-      id: '2',
-      aircraft: 'TC-A330',
-      flightNo: 'PC2009',
-      depPort: 'AYT',
-      arrPort: 'DUS',
-      depDateTime: '22/07/2025 13:30',
-      arrDateTime: '22/07/2025 16:30',
-      user: 'SAWBNCS1',
-      flightPlan: 'OK',
-      altRoute: '-',
-      fuelOrder: '9999 Kg',
-      loadSheet: 'X',
-      tripInfo: 'X',
-    },
-    {
-      id: '3',
-      aircraft: 'TC-A330',
-      flightNo: 'PC2009',
-      depPort: 'AYT',
-      arrPort: 'DUS',
-      depDateTime: '22/07/2025 13:30',
-      arrDateTime: '22/07/2025 16:30',
-      user: 'SAWBNCS1',
-      flightPlan: 'OK',
-      altRoute: '-',
-      fuelOrder: '9999 Kg',
-      loadSheet: 'X',
-      tripInfo: 'X',
-    },
-    {
-      id: '4',
-      aircraft: 'TC-A330',
-      flightNo: 'PC2009',
-      depPort: 'AYT',
-      arrPort: 'DUS',
-      depDateTime: '22/07/2025 13:30',
-      arrDateTime: '22/07/2025 16:30',
-      user: 'SAWBNCS1',
-      flightPlan: 'OK',
-      altRoute: '-',
-      fuelOrder: '9999 Kg',
-      loadSheet: 'X',
-      tripInfo: 'X',
-    },
-    {
-      id: '5',
-      aircraft: 'TC-A330',
-      flightNo: 'PC2009',
-      depPort: 'AYT',
-      arrPort: 'DUS',
-      depDateTime: '22/07/2025 13:30',
-      arrDateTime: '22/07/2025 16:30',
-      user: 'SAWBNCS1',
-      flightPlan: 'OK',
-      altRoute: '-',
-      fuelOrder: '9999 Kg',
-      loadSheet: 'X',
-      tripInfo: 'X',
-    },
-    {
-      id: '6',
-      aircraft: 'TC-A330',
-      flightNo: 'PC2009',
-      depPort: 'AYT',
-      arrPort: 'DUS',
-      depDateTime: '22/07/2025 13:30',
-      arrDateTime: '22/07/2025 16:30',
-      user: 'SAWBNCS1',
-      flightPlan: 'OK',
-      altRoute: '-',
-      fuelOrder: '9999 Kg',
-      loadSheet: 'X',
-      tripInfo: 'X',
-    },
-  ];
+  flightInformationHistoryData = signal<IFlightInformationResponse | null>(
+    null,
+  );
+  flightInformatioHistoryTableData = signal<IFlightInformationTableData[]>([]);
+
+  formBuilder = inject(FormBuilder);
+  flightInformationService = inject(FlightInformationService);
+
   crewData = [
     {
       name: 'Mert Inan',
@@ -319,85 +233,85 @@ export class FlightInfoComponent {
   tripInfoData = [
     {
       sendBy: 'SAWBNCS01',
-      crewVersion: '2/4',
-      pantryCode: 'Domestic',
-      taxiFuel: '999.999',
-      tripFuel: '999.999',
-      takeOffTime: '13:30',
+      crew_version: '2/4',
+      pantry_code: 'Domestic',
+      taxi_fuel: '999.999',
+      trip_fuel: '999.999',
+      takeoff_time: '13:30',
       eet: '00:35',
-      eicAdj: 'X',
+      eic_adj: 'X',
       pax: '186Y',
       tripInfo: '-',
     },
     {
       sendBy: 'SAWBNCS02',
-      crewVersion: '2/4',
-      pantryCode: 'Domestic',
-      taxiFuel: '999.999',
-      tripFuel: '999.999',
-      takeOffTime: '13:30',
+      crew_version: '2/4',
+      pantry_code: 'Domestic',
+      taxi_fuel: '999.999',
+      trip_fuel: '999.999',
+      takeoff_time: '13:30',
       eet: '00:35',
-      eicAdj: 'X',
+      eic_adj: 'X',
       pax: '186Y',
       tripInfo: '-',
     },
     {
       sendBy: 'SAWBNCS02',
-      crewVersion: '2/4',
-      pantryCode: 'Domestic',
-      taxiFuel: '999.999',
-      tripFuel: '999.999',
-      takeOffTime: '13:30',
+      crew_version: '2/4',
+      pantry_code: 'Domestic',
+      taxi_fuel: '999.999',
+      trip_fuel: '999.999',
+      takeoff_time: '13:30',
       eet: '00:35',
-      eicAdj: 'X',
+      eic_adj: 'X',
       pax: '186Y',
       tripInfo: '-',
     },
     {
       sendBy: 'SAWBNCS02',
-      crewVersion: '2/4',
-      pantryCode: 'Domestic',
-      taxiFuel: '999.999',
-      tripFuel: '999.999',
-      takeOffTime: '13:30',
+      crew_version: '2/4',
+      pantry_code: 'Domestic',
+      taxi_fuel: '999.999',
+      trip_fuel: '999.999',
+      takeoff_time: '13:30',
       eet: '00:35',
-      eicAdj: 'X',
+      eic_adj: 'X',
       pax: '186Y',
       tripInfo: '-',
     },
     {
       sendBy: 'SAWBNCS02',
-      crewVersion: '2/4',
-      pantryCode: 'Domestic',
-      taxiFuel: '999.999',
-      tripFuel: '999.999',
-      takeOffTime: '13:30',
+      crew_version: '2/4',
+      pantry_code: 'Domestic',
+      taxi_fuel: '999.999',
+      trip_fuel: '999.999',
+      takeoff_time: '13:30',
       eet: '00:35',
-      eicAdj: 'X',
+      eic_adj: 'X',
       pax: '186Y',
       tripInfo: '-',
     },
     {
       sendBy: 'SAWBNCS02',
-      crewVersion: '2/4',
-      pantryCode: 'Domestic',
-      taxiFuel: '999.999',
-      tripFuel: '999.999',
-      takeOffTime: '13:30',
+      crew_version: '2/4',
+      pantry_code: 'Domestic',
+      taxi_fuel: '999.999',
+      trip_fuel: '999.999',
+      takeoff_time: '13:30',
       eet: '00:35',
-      eicAdj: 'X',
+      eic_adj: 'X',
       pax: '186Y',
       tripInfo: '-',
     },
     {
       sendBy: 'SAWBNCS02',
-      crewVersion: '2/4',
-      pantryCode: 'Domestic',
-      taxiFuel: '999.999',
-      tripFuel: '999.999',
-      takeOffTime: '13:30',
+      crew_version: '2/4',
+      pantry_code: 'Domestic',
+      taxi_fuel: '999.999',
+      trip_fuel: '999.999',
+      takeoff_time: '13:30',
       eet: '00:35',
-      eicAdj: 'X',
+      eic_adj: 'X',
       pax: '186Y',
       tripInfo: '-',
     },
@@ -410,7 +324,7 @@ export class FlightInfoComponent {
       lmc: 'X',
       acType: 'A320-251',
       version: '186Y',
-      crew: '2/4',
+      crewConfiguration: '2/4',
       loadSheet: '-',
       cgLimits: '-',
     },
@@ -421,7 +335,7 @@ export class FlightInfoComponent {
       lmc: 'X',
       acType: 'A320-251',
       version: '186Y',
-      crew: '2/4',
+      crewConfiguration: '2/4',
       loadSheet: '-',
       cgLimits: '-',
     },
@@ -432,7 +346,7 @@ export class FlightInfoComponent {
       lmc: 'X',
       acType: 'A320-251',
       version: '186Y',
-      crew: '2/4',
+      crewConfiguration: '2/4',
       loadSheet: '-',
       cgLimits: '-',
     },
@@ -443,7 +357,7 @@ export class FlightInfoComponent {
       lmc: 'X',
       acType: 'A320-251',
       version: '186Y',
-      crew: '2/4',
+      crewConfiguration: '2/4',
       loadSheet: '-',
       cgLimits: '-',
     },
@@ -454,7 +368,7 @@ export class FlightInfoComponent {
       lmc: 'X',
       acType: 'A320-251',
       version: '186Y',
-      crew: '2/4',
+      crewConfiguration: '2/4',
       loadSheet: '-',
       cgLimits: '-',
     },
@@ -465,7 +379,7 @@ export class FlightInfoComponent {
       lmc: 'X',
       acType: 'A320-251',
       version: '186Y',
-      crew: '2/4',
+      crewConfiguration: '2/4',
       loadSheet: '-',
       cgLimits: '-',
     },
@@ -476,14 +390,14 @@ export class FlightInfoComponent {
       lmc: 'X',
       acType: 'A320-251',
       version: '186Y',
-      crew: '2/4',
+      crewConfiguration: '2/4',
       loadSheet: '-',
       cgLimits: '-',
     },
   ];
-  // /Mock Data
 
   ngOnInit() {
+    this.builder();
     this.defineMainColumns();
     this.defineCrewColumns();
     this.defineFlightPlanColums();
@@ -491,23 +405,34 @@ export class FlightInfoComponent {
     this.defineLoadSheetColums();
     this.activeTabIndexChange(0);
     this.defineTableSubPanels();
+    this.getFlightInfo();
+  }
+
+  builder() {
+    this.filterFormGroup = this.formBuilder.group({
+      flightNo: [''],
+      depPort: [''],
+      arrPort: [''],
+      username: [''],
+      dateRange: [this.dateRangeDefaultValue()],
+    });
   }
 
   // Define Columns Operation
   defineMainColumns() {
     this.mainCols = [
-      { field: 'aircraft', header: 'Aircraft' },
+      { field: 'aircraftReg', header: 'Aircraft' },
       { field: 'flightNo', header: 'Flight No' },
       { field: 'depPort', header: 'Dep Port' },
       { field: 'arrPort', header: 'Arr Port' },
       { field: 'depDateTime', header: 'Dep Date/Time' },
       { field: 'arrDateTime', header: 'Arr Date/Time' },
       { field: 'user', header: 'User' },
-      { field: 'flightPlan', header: 'Flight Plan' },
+      { field: 'flightPlanStatus', header: 'Flight Plan' },
       { field: 'altRoute', header: 'Alt Route' },
       { field: 'fuelOrder', header: 'Fuel Order' },
-      { field: 'loadSheet', header: 'Load Sheet' },
-      { field: 'tripInfo', header: 'Trip Info' },
+      { field: 'loadSheetStatus', header: 'Load Sheet' },
+      { field: 'isTripInfoSent', header: 'Trip Info' },
     ];
   }
 
@@ -544,13 +469,13 @@ export class FlightInfoComponent {
   defineTripInfoColums() {
     this.tripInfoCols = [
       { field: 'sendBy', header: 'Send By' },
-      { field: 'crewVersion', header: 'Crew Version' },
-      { field: 'pantryCode', header: 'Pantry Code' },
-      { field: 'taxiFuel', header: 'Taxi Fuel' },
-      { field: 'tripFuel', header: 'Trip Fuel' },
-      { field: 'takeOffTime', header: 'Take Off Time' },
+      { field: 'crew_version', header: 'Crew Version' },
+      { field: 'pantry_code', header: 'Pantry Code' },
+      { field: 'taxi_fuel', header: 'Taxi Fuel' },
+      { field: 'trip_fuel', header: 'Trip Fuel' },
+      { field: 'takeoff_time', header: 'Take Off Time' },
       { field: 'eet', header: 'EET' },
-      { field: 'eicAdj', header: 'EIC Adj' },
+      { field: 'eic_adj', header: 'EIC Adj' },
       { field: 'pax', header: 'Pax' },
       {
         field: 'tripInfo',
@@ -568,7 +493,7 @@ export class FlightInfoComponent {
       { field: 'lmc', header: 'LMC' },
       { field: 'acType', header: 'A/C Type' },
       { field: 'version', header: 'Version' },
-      { field: 'crew', header: 'Crew' },
+      { field: 'crewConfiguration', header: 'Crew' },
       {
         field: 'loadSheet',
         header: 'Load Sheet',
@@ -611,6 +536,64 @@ export class FlightInfoComponent {
     ];
   }
 
+  // API Calls Operations
+  getFlightInfo() {
+    this.tableLoading = true;
+
+    const formValues = this.filterFormGroup.value;
+    const flightNo = formValues.flightNo?.trim() || null;
+    const depPort = formValues.depPort?.trim() || null;
+    const arrPort = formValues.arrPort?.trim() || null;
+    const username = formValues.username?.trim() || null;
+
+    let startDate = '';
+    let endDate = '';
+
+    // Tarih aralığı kontrolü ve formatlama
+    if (formValues.dateRange && formValues.dateRange.length === 2) {
+      const [start, end] = formValues.dateRange;
+
+      if (start && end) {
+        startDate = moment(start).format('YYYY-MM-DD');
+        endDate = moment(end).format('YYYY-MM-DD');
+      }
+    }
+
+    this.flightInformationService
+      .getFlightInfo(
+        this.currentPage,
+        this.currentRows,
+        startDate,
+        endDate,
+        flightNo,
+        depPort,
+        arrPort,
+        username,
+      )
+      .subscribe({
+        next: (response) => {
+          this.flightInformationHistoryData.set(response);
+          this.flightInformatioHistoryTableData.set(response.content);
+          this.tableLoading = false;
+        },
+        error: () => {
+          this.tableLoading = false;
+        },
+      });
+  }
+
+  // Filter Operations
+  dateRangeDefaultValue() {
+    const endDate = moment();
+    const startDate = moment().subtract(3, 'days');
+
+    return [startDate.toDate(), endDate.toDate()];
+  }
+
+  onFilterSubmit() {
+    this.getFlightInfo();
+  }
+
   onRowExpand(event: TableRowExpandEvent) {
     console.log('Expanded: ', event);
   }
@@ -623,5 +606,10 @@ export class FlightInfoComponent {
     console.log('Tab changed: ', value);
   }
 
-  onFilterSubmit() {}
+  pageEvent(event: { first: number; rows: number }) {
+    const page = event.first / event.rows;
+    this.currentPage = page;
+    this.currentRows = event.rows;
+    this.getFlightInfo();
+  }
 }

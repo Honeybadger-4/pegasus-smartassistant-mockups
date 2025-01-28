@@ -7,10 +7,12 @@ import {
   signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DialogModule } from 'primeng/dialog';
+
 import { LoadAndTrimSheetService } from '@shared/services/load-and-trim-sheet.service';
 import { ILoadSheetTableData } from '@shared/models/load-sheet-response.model';
 import { ILoadandTrimSheetResponse } from '@shared/models/load-and-trim-sheet-response.model';
+
+import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 
 @Component({

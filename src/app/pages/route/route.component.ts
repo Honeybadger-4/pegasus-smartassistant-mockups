@@ -12,6 +12,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { RouteService } from '@shared/services/route.service';
 import { Column } from '@shared/models/columns';
@@ -20,15 +21,15 @@ import {
   IRouteTableData,
 } from '@shared/models/route-response.model';
 
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
 import {
   TableModule,
   TableRowCollapseEvent,
   TableRowExpandEvent,
 } from 'primeng/table';
 import { TabViewModule } from 'primeng/tabview';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import moment from 'moment';
