@@ -2,7 +2,7 @@
 <main id="LogbookDetailPage">
   <section class="flex justify-between items-center w-full mb-3">
     <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" />
-    <div class="w-[160px]">
+    <div class="w-[150px]">
       <p-select
         [(ngModel)]="statusFilter"
         [options]="statusOptions()"
@@ -29,23 +29,41 @@
         >
       </div>
 
-      <div class="button-group flex items-center gap-4">
-        <button
-          pButton
+      <div class="flex items-center gap-3">
+        <p-button
           type="button"
-          label="Approve"
+          [rounded]="true"
           [disabled]="selectedCheckbox().length <= 0"
+          icon="pi pi-check"
+          [pTooltip]="'Approve'"
+          tooltipPosition="bottom"
+          severity="success"
           (click)="onApprove()"
-        ></button>
-        <button
-          pButton
+        />
+
+        <p-button
           type="button"
-          label="Reject"
+          [rounded]="true"
           [disabled]="
             selectedCheckbox().length > 1 || selectedCheckbox().length <= 0
           "
+          icon="pi pi-times"
+          [pTooltip]="'Reject'"
+          tooltipPosition="bottom"
+          severity="danger"
           (click)="displayRejectPopup = true"
-        ></button>
+        />
+
+        <!-- TODO: Export servisi gelince eklenmeli. -->
+        <p-button
+          type="button"
+          [rounded]="true"
+          [outlined]="true"
+          icon="pi pi-download"
+          [pTooltip]="'Download All Document'"
+          tooltipPosition="bottom"
+          [style]="{ color: 'black' }"
+        />
       </div>
     </div>
   </section>
@@ -161,10 +179,20 @@
 </ng-template>
 
 <ng-template #editableCellBodyTemplate let-rowData="rowData">
-  <i
-    class="pi pi-pen-to-square cursor-pointer"
+  <p-button
+    icon="pi pi-pen-to-square cursor-pointer"
+    [rounded]="true"
+    [text]="true"
+    [disabled]="rowData.status === 'APPROVED'"
+    [pTooltip]="
+      rowData.status === 'APPROVED'
+        ? 'Approved records cannot be edited. Please use the preview.'
+        : ''
+    "
+    tooltipPosition="left"
     (click)="goToLogBookDetailEditPage(rowData)"
-  ></i>
+    [style]="{ color: 'black' }"
+  />
 </ng-template>
 
 <ng-template #tableFooterTemplate>

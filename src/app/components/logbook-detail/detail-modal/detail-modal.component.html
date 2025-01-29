@@ -8,17 +8,6 @@
     [style]="{ width: '75vw' }"
     (onHide)="close()"
   >
-    <ng-template pTemplate="header">
-      <div class="flex justify-end w-full">
-        <p-button
-          icon="pi pi-download"
-          [text]="true"
-          class="download-button"
-          (click)="generatePDF()"
-        />
-      </div>
-    </ng-template>
-
     <div #tableToPdf>
       <table class="detail-table">
         <thead>
