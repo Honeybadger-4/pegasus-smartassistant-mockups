@@ -45,10 +45,12 @@ import { StateManagement } from '@shared/services/helpers-services/state-managem
   styleUrl: './crew-list.component.scss',
 })
 export class CrewListComponent {
-  @ViewChild('linkedNextPageTemplate', { static: true })
-  linkedNextPageTemplate!: TemplateRef<any>;
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
   @ViewChild('searchInput', { static: true }) searchInput!: ElementRef;
+  @ViewChild('linkedNextPageTemplate', { static: true })
+  linkedNextPageTemplate!: TemplateRef<any>;
+  @ViewChild('exportDataIconTemplate', { static: true })
+  exportDataIconTemplate!: TemplateRef<any>;
 
   router = inject(Router);
   adminLogbookService = inject(AdminLogbookService);
@@ -92,6 +94,8 @@ export class CrewListComponent {
       { field: 'approvedLogs', header: 'Approved Logs' },
       { field: 'reassignedLogs', header: 'Reassing Logs' },
       { field: '', header: '', template: this.linkedNextPageTemplate },
+      // TODO: Export servisi gelince aktif edilecek.
+      // { field: '', header: '', template: this.exportDataIconTemplate },
     ];
   }
 
