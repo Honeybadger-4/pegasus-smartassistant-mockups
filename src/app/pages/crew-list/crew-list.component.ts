@@ -27,6 +27,7 @@ import { PanelModule } from 'primeng/panel';
 import { MenuItem } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
 import { StateManagement } from '@shared/services/helpers-services/state-management.service';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-logbook',
@@ -40,6 +41,7 @@ import { StateManagement } from '@shared/services/helpers-services/state-managem
     InputTextModule,
     SliderModule,
     PanelModule,
+    TooltipModule,
   ],
   templateUrl: './crew-list.component.html',
   styleUrl: './crew-list.component.scss',
@@ -47,8 +49,11 @@ import { StateManagement } from '@shared/services/helpers-services/state-managem
 export class CrewListComponent {
   @ViewChild('linkedNextPageTemplate', { static: true })
   linkedNextPageTemplate!: TemplateRef<any>;
+
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
   @ViewChild('searchInput', { static: true }) searchInput!: ElementRef;
+  @ViewChild('approvedStatusTemplate', { static: true })
+  approvedStatusTemplate!: TemplateRef<any>;
 
   router = inject(Router);
   adminLogbookService = inject(AdminLogbookService);
@@ -91,6 +96,11 @@ export class CrewListComponent {
         : []),
       { field: 'approvedLogs', header: 'Approved Logs' },
       { field: 'reassignedLogs', header: 'Reassing Logs' },
+      {
+        field: 'approvedStatus',
+        header: 'Approval Status',
+        template: this.approvedStatusTemplate,
+      },
       { field: '', header: '', template: this.linkedNextPageTemplate },
     ];
   }

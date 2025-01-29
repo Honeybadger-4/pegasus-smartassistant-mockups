@@ -79,3 +79,15 @@
     (click)="tableRowSelected(rowData)"
   ></i>
 </ng-template>
+
+
+<ng-template #approvedStatusTemplate let-rowData="rowData">
+  <i
+    *ngIf="rowData.totalNumberOfLog === rowData.approvedLogs"
+    class="pi pi-check-circle text-green-500"
+    pTooltip="All logs for this crew member have been approved"
+    tooltipPosition="top"
+    tooltipStyleClass="comment-context-tooltip"
+
+  ></i>
+</ng-template>
