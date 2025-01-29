@@ -52,8 +52,8 @@
           (click)="displayRejectPopup = true"
         />
 
-        <!-- TODO: Export servisi gelince aktif edilecek. -->
-        <!-- <p-button
+        <!-- TODO: Export servisi gelince eklenmeli. -->
+        <p-button
           type="button"
           [rounded]="true"
           [outlined]="true"
@@ -61,7 +61,7 @@
           [pTooltip]="'Download All Document'"
           tooltipPosition="bottom"
           [style]="{color: 'black'}"
-        /> -->
+        />
       </div>
     </div>
   </section>
@@ -182,7 +182,7 @@
     [rounded]="true" 
     [text]="true" 
     [disabled]="rowData.status === 'APPROVED'"  
-    [pTooltip]="rowData.status === 'APPROVED' ? 'You cannot view the edit screen because this record is approved. To see the record details, view the preview.' : '' "
+    [pTooltip]="rowData.status === 'APPROVED' ? 'Approved records cannot be edited. Please use the preview.' : '' "
     tooltipPosition="left"
     (click)="goToLogBookDetailEditPage(rowData)" 
     [style]="{color: 'black'}"

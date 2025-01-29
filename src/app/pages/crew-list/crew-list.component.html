@@ -74,9 +74,15 @@
 </div>
 
 <ng-template #exportDataIconTemplate let-rowData="rowData">
-  <i
-    class="pi pi-download cursor-pointer"
-  ></i>
+  <p-button
+          type="button"
+          [text]="true"
+          [rounded]="true"
+          icon="pi pi-download"
+          [pTooltip]="'Download All Document'"
+          tooltipPosition="bottom"
+          [style]="{color: 'black'}"
+        />
 </ng-template>
 
 <ng-template #linkedNextPageTemplate let-rowData="rowData">
@@ -84,4 +90,8 @@
     class="pi pi-angle-right cursor-pointer"
     (click)="tableRowSelected(rowData)"
   ></i>
+</ng-template>
+
+<ng-template #totalHoursOfLogColumnTemplate let-rowData="rowData">
+  <span>{{ rowData?.totalHours ? rowData?.totalHours + ' hours' : '-' }}</span>
 </ng-template>
