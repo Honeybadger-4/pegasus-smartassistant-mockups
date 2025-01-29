@@ -45,12 +45,8 @@
           <p-avatar [image]="profilePhotoUrl" shape="circle"></p-avatar>
         </div>
         <span class="text-sm">{{ username }}</span>
-        <img
-          src="/icon/sign-out-icon.svg"
-          alt="Sign Out Icon"
-          class="sign-out-icon"
-          (click)="logout()"
-        />
+
+        <i class="pi pi-sign-out cursor-pointer" (click)="logout()"></i>
       </div>
     </ng-template>
   </p-menubar>

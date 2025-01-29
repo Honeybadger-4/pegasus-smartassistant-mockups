@@ -57,6 +57,8 @@ export class CrewListComponent {
   exportDataIconTemplate!: TemplateRef<any>;
   @ViewChild('totalHoursOfLogColumnTemplate', { static: true })
   totalHoursOfLogColumnTemplate!: TemplateRef<any>;
+  @ViewChild('approvedStatusTemplate', { static: true })
+  approvedStatusTemplate!: TemplateRef<any>;
 
   router = inject(Router);
   adminLogbookService = inject(AdminLogbookService);
@@ -98,6 +100,11 @@ export class CrewListComponent {
       },
       { field: 'approvedLogs', header: 'Approved Logs' },
       { field: 'reassignedLogs', header: 'Reassing Logs' },
+      {
+        field: 'approvedStatus',
+        header: 'Approval Status',
+        template: this.approvedStatusTemplate,
+      },
       { field: '', header: '', template: this.linkedNextPageTemplate },
       { field: '', header: '', template: this.exportDataIconTemplate },
     ];
