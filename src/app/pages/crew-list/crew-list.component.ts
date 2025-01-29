@@ -28,6 +28,7 @@ import { MenuItem } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
 import { StateManagement } from '@shared/services/helpers-services/state-management.service';
 import { TooltipModule } from 'primeng/tooltip';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-logbook',
@@ -42,16 +43,20 @@ import { TooltipModule } from 'primeng/tooltip';
     SliderModule,
     PanelModule,
     TooltipModule,
+    ButtonModule,
   ],
   templateUrl: './crew-list.component.html',
   styleUrl: './crew-list.component.scss',
 })
 export class CrewListComponent {
-  @ViewChild('linkedNextPageTemplate', { static: true })
-  linkedNextPageTemplate!: TemplateRef<any>;
-
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
   @ViewChild('searchInput', { static: true }) searchInput!: ElementRef;
+  @ViewChild('linkedNextPageTemplate', { static: true })
+  linkedNextPageTemplate!: TemplateRef<any>;
+  @ViewChild('exportDataIconTemplate', { static: true })
+  exportDataIconTemplate!: TemplateRef<any>;
+  @ViewChild('totalHoursOfLogColumnTemplate', { static: true })
+  totalHoursOfLogColumnTemplate!: TemplateRef<any>;
   @ViewChild('approvedStatusTemplate', { static: true })
   approvedStatusTemplate!: TemplateRef<any>;
 
@@ -88,12 +93,11 @@ export class CrewListComponent {
       { field: 'crewNameSurname', header: 'Crew Name & Surname' },
       { field: 'companyId', header: 'Company ID' },
       { field: 'totalNumberOfLog', header: 'Total Number of Log' },
-      ...(this.logbookDashboardData()?.logbookType !== 'TRAINING'
-        ? [{ field: 'flightLog', header: 'Flight Log' }]
-        : []),
-      ...(this.logbookDashboardData()?.logbookType === 'TRAINING'
-        ? [{ field: 'simulatorFlightLogs', header: 'Simulator Flight Logs' }]
-        : []),
+      {
+        field: 'totalHours',
+        header: 'Total Hours of Log',
+        template: this.totalHoursOfLogColumnTemplate,
+      },
       { field: 'approvedLogs', header: 'Approved Logs' },
       { field: 'reassignedLogs', header: 'Reassing Logs' },
       {
@@ -102,6 +106,7 @@ export class CrewListComponent {
         template: this.approvedStatusTemplate,
       },
       { field: '', header: '', template: this.linkedNextPageTemplate },
+      { field: '', header: '', template: this.exportDataIconTemplate },
     ];
   }
 
