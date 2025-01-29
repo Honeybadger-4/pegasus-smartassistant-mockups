@@ -59,7 +59,6 @@ import { StateManagement } from '@shared/services/helpers-services/state-managem
     ButtonModule,
     TooltipModule,
     TruncateTextPipe,
-    ButtonModule
   ],
   templateUrl: './logbook-detail.component.html',
   styleUrl: './logbook-detail.component.scss',

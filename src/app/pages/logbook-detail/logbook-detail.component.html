@@ -177,10 +177,16 @@
 </ng-template>
 
 <ng-template #editableCellBodyTemplate let-rowData="rowData">
-  <i
-    class="pi pi-pen-to-square cursor-pointer"
-    (click)="goToLogBookDetailEditPage(rowData)"
-  ></i>
+  <p-button 
+    icon="pi pi-pen-to-square cursor-pointer" 
+    [rounded]="true" 
+    [text]="true" 
+    [disabled]="rowData.status === 'APPROVED'"  
+    [pTooltip]="rowData.status === 'APPROVED' ? 'You cannot view the edit screen because this record is approved. To see the record details, view the preview.' : '' "
+    tooltipPosition="left"
+    (click)="goToLogBookDetailEditPage(rowData)" 
+    [style]="{color: 'black'}"
+  />
 </ng-template>
 
 <ng-template #tableFooterTemplate>
