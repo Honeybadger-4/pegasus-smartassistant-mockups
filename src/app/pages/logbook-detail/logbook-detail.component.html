@@ -44,7 +44,9 @@
         <p-button
           type="button"
           [rounded]="true"
-          [disabled]="selectedCheckbox().length > 1 || selectedCheckbox().length <= 0"
+          [disabled]="
+            selectedCheckbox().length > 1 || selectedCheckbox().length <= 0
+          "
           icon="pi pi-times"
           [pTooltip]="'Reject'"
           tooltipPosition="bottom"
@@ -60,7 +62,7 @@
           icon="pi pi-download"
           [pTooltip]="'Download All Document'"
           tooltipPosition="bottom"
-          [style]="{color: 'black'}"
+          [style]="{ color: 'black' }"
         />
       </div>
     </div>
@@ -177,15 +179,19 @@
 </ng-template>
 
 <ng-template #editableCellBodyTemplate let-rowData="rowData">
-  <p-button 
-    icon="pi pi-pen-to-square cursor-pointer" 
-    [rounded]="true" 
-    [text]="true" 
-    [disabled]="rowData.status === 'APPROVED'"  
-    [pTooltip]="rowData.status === 'APPROVED' ? 'Approved records cannot be edited. Please use the preview.' : '' "
+  <p-button
+    icon="pi pi-pen-to-square cursor-pointer"
+    [rounded]="true"
+    [text]="true"
+    [disabled]="rowData.status === 'APPROVED'"
+    [pTooltip]="
+      rowData.status === 'APPROVED'
+        ? 'Approved records cannot be edited. Please use the preview.'
+        : ''
+    "
     tooltipPosition="left"
-    (click)="goToLogBookDetailEditPage(rowData)" 
-    [style]="{color: 'black'}"
+    (click)="goToLogBookDetailEditPage(rowData)"
+    [style]="{ color: 'black' }"
   />
 </ng-template>
 

@@ -43,7 +43,7 @@ import { ButtonModule } from 'primeng/button';
     SliderModule,
     PanelModule,
     TooltipModule,
-    ButtonModule
+    ButtonModule,
   ],
   templateUrl: './crew-list.component.html',
   styleUrl: './crew-list.component.scss',
@@ -91,7 +91,11 @@ export class CrewListComponent {
       { field: 'crewNameSurname', header: 'Crew Name & Surname' },
       { field: 'companyId', header: 'Company ID' },
       { field: 'totalNumberOfLog', header: 'Total Number of Log' },
-      { field: 'totalHours', header: 'Total Hours of Log', template: this.totalHoursOfLogColumnTemplate },
+      {
+        field: 'totalHours',
+        header: 'Total Hours of Log',
+        template: this.totalHoursOfLogColumnTemplate,
+      },
       { field: 'approvedLogs', header: 'Approved Logs' },
       { field: 'reassignedLogs', header: 'Reassing Logs' },
       { field: '', header: '', template: this.linkedNextPageTemplate },
