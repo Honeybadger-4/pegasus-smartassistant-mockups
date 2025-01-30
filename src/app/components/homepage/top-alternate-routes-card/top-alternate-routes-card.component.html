@@ -3,7 +3,12 @@
     <div class="flex item-center gap-3">
       <p class="text-sm font-bold mb-6">Top 5 Alternate Routes</p>
       <div *ngIf="topAlternatesCardLoading()">
-        <p-progress-spinner strokeWidth="8" fill="transparent" animationDuration=".5s" [style]="{ width: '20px', height: '20px' }" />
+        <p-progress-spinner
+          strokeWidth="8"
+          fill="transparent"
+          animationDuration=".5s"
+          [style]="{ width: '20px', height: '20px' }"
+        />
       </div>
     </div>
 

@@ -1,4 +1,4 @@
 export interface ITopAlternatesResponse {
-    airportICAOCode: string,
-    frequency: number
+  airportICAOCode: string;
+  frequency: number;
 }

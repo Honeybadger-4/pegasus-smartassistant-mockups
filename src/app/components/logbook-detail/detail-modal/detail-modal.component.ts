@@ -22,7 +22,7 @@ export class DetailModalComponent {
   detailedListRowData = input<IDetailedListContentData | null>(null);
   @Input() visible: boolean = false;
   @Output() closeModal = new EventEmitter<void>();
-  
+
   close() {
     this.closeModal.emit();
   }

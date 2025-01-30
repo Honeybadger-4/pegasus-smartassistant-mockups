@@ -56,14 +56,14 @@ export class HomepageComponent {
       error: (error) => {
         console.error(error);
         this.topAlternatesCardLoading.set(false);
-      }
+      },
     });
   }
 
   onDateRangeChange(event: any) {
     const [start, end] = event;
 
-    if(start && end) {
+    if (start && end) {
       this.getTopAlternates();
     }
   }
@@ -71,8 +71,7 @@ export class HomepageComponent {
   dateRangeDefaultValue() {
     const startDate = moment().startOf('month');
     const endDate = moment().endOf('month');
-    
+
     return [startDate.toDate(), endDate.toDate()];
   }
-
 }

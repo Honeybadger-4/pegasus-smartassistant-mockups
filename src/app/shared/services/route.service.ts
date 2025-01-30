@@ -49,9 +49,15 @@ export class RouteService {
       .pipe(map((response) => response.data));
   }
 
-  getTopAlternates(startDate: string, endDate: string, count: number ): Observable<ITopAlternatesResponse[]> {
-    const apiUrl = `${this.baseUrl}/api/v1/admin/routes/top-alternates?startDate=${startDate}&endDate=${endDate}&count=${count}`
+  getTopAlternates(
+    startDate: string,
+    endDate: string,
+    count: number,
+  ): Observable<ITopAlternatesResponse[]> {
+    const apiUrl = `${this.baseUrl}/api/v1/admin/routes/top-alternates?startDate=${startDate}&endDate=${endDate}&count=${count}`;
 
-    return this.http.get<IHttpResponseModel>(apiUrl).pipe(map((response) => response.data));
+    return this.http
+      .get<IHttpResponseModel>(apiUrl)
+      .pipe(map((response) => response.data));
   }
 }
