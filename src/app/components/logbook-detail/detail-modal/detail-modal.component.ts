@@ -22,8 +22,7 @@ export class DetailModalComponent {
   detailedListRowData = input<IDetailedListContentData | null>(null);
   @Input() visible: boolean = false;
   @Output() closeModal = new EventEmitter<void>();
-  @ViewChild('tableToPdf', { static: false }) tableToPdf!: ElementRef;
-
+  
   close() {
     this.closeModal.emit();
   }
