@@ -8,16 +8,23 @@
         dateFormat="dd/mm/yy"
         placeholder="Start Date - End Date"
         class="custom-calendar"
+        (ngModelChange)="onDateRangeChange($event)"
       />
     </div>
   </section>
+
   <app-total-flights></app-total-flights>
+
   <div class="grid grid-cols-12 gap-4">
     <app-combined-charts
       class="lg:col-span-7 col-span-12"
     ></app-combined-charts>
+
     <app-top-alternate-routes-card
+      [topAlternatesData]="topAlternatesData()"
+      [topAlternatesCardLoading]="topAlternatesCardLoading()"
       class="lg:col-span-5 col-span-12"
     ></app-top-alternate-routes-card>
+
   </div>
 </main>
