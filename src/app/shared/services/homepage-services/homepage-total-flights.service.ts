@@ -16,7 +16,7 @@ export class HomepageTotalFlightsService {
     startDate: string,
     endDate: string,
   ): Observable<IHomepageTotalFlightsResponse> {
-      const apiUrl = `${this.baseUrl}/api/v1/admin/flight-info/stats`;
+    const apiUrl = `${this.baseUrl}/api/v1/admin/flight-info/stats`;
 
     let params = new HttpParams()
       .set('startDate', startDate)

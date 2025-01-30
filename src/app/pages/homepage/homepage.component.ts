@@ -1,12 +1,14 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 
 import { GeneralInformationCardComponent } from 'src/app/components/homepage/general-information-card/general-information-card.component';
 import { TopAlternateRoutesCardComponent } from '../../components/homepage/top-alternate-routes-card/top-alternate-routes-card.component';
 import { TotalFlightsComponent } from 'src/app/components/homepage/total-flights/total-flights.component';
-import { LoginService } from '@shared/services/login.service';
 
 import { FormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
+import { RouteService } from '@shared/services/route.service';
+import moment from 'moment';
+import { ITopAlternatesResponse } from '@shared/models/top-alternates-response.model';
 
 @Component({
   selector: 'app-homepage',
@@ -21,11 +23,55 @@ import { DatePickerModule } from 'primeng/datepicker';
   styleUrl: './homepage.component.scss',
 })
 export class HomepageComponent {
+  routeService = inject(RouteService);
+
+  topAlternatesData = signal<ITopAlternatesResponse[]>([]);
+  topAlternatesCardLoading = signal<boolean>(false);
   dateRange: Date[] = [];
 
-  loginService = inject(LoginService);
-
   ngOnInit() {
-    console.log(this.loginService.currentUser());
+    this.dateRange = this.dateRangeDefaultValue();
+    this.getTopAlternates();
+  }
+
+  getTopAlternates() {
+    this.topAlternatesCardLoading.set(true);
+    let startDate = '';
+    let endDate = '';
+
+    if (this.dateRange) {
+      const [start, end] = this.dateRange;
+
+      if (start && end) {
+        startDate = moment(start).format('YYYY-MM-DD');
+        endDate = moment(end).format('YYYY-MM-DD');
+      }
+    }
+
+    this.routeService.getTopAlternates(startDate, endDate, 5).subscribe({
+      next: (response) => {
+        this.topAlternatesData.set(response);
+        this.topAlternatesCardLoading.set(false);
+      },
+      error: (error) => {
+        console.error(error);
+        this.topAlternatesCardLoading.set(false);
+      },
+    });
+  }
+
+  onDateRangeChange(event: any) {
+    const [start, end] = event;
+
+    if (start && end) {
+      this.getTopAlternates();
+    }
+  }
+
+  dateRangeDefaultValue() {
+    const startDate = moment().startOf('month');
+    const endDate = moment().endOf('month');
+
+    return [startDate.toDate(), endDate.toDate()];
   }
 }
