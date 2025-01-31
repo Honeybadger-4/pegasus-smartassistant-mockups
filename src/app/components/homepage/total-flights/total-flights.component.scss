@@ -3,78 +3,76 @@
   padding: 15px;
   border-radius: 2px;
   margin-bottom: 20px;
-  .flex {
-    gap: 20px;
-  }
-
-  .chart-container {
-    width: 200px;
-    height: 200px;
-  }
 
   .charts-box {
     padding: 15px 150px 15px 150px;
-    gap: 140px;
 
-    .chart-box-flight {
-      gap: 30px;
+    .total-flights-title {
+      font-size: 20px;
+       color: #4f4f4f;
+    }
 
-      .total-flights-title {
-        font-size: 20px;
+    .total-flights-number {
+      font-size: 48px;
+      font-weight: 500;
+       color: #4f4f4f;
+    }
+
+    .chart-container {
+      width: 200px;
+      height: 200px;
+    }
+
+    .chart-labels-container {
+      li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+        font-size: 14px;
         color: #4f4f4f;
-      }
-
-      .total-flights-number {
-        font-size: 48px;
-        font-weight: 500;
-        color: #4f4f4f;
+    
+        .dot {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          margin-right: 8px;
+          display: inline-block;
+        }
+    
+        .flight-plan-dot {
+          background-color: #f79009;
+        }
+    
+        .load-sheet-dot {
+          background-color: #fed447;
+        }
+    
+        .trip-info-dot {
+          background-color: #d62828;
+        }
+    
+        .fuel-order-dot {
+          background-color: #3d348b;
+        }
+    
+        .lmc-dot {
+          background-color: #7678ed;
+        }
+    
+        .gps-loss-form-dot {
+          background-color: #092ff7;
+        }
       }
     }
   }
 }
 
-.legend-section {
-  li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-    font-size: 14px;
-    color: #4f4f4f;
 
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      margin-right: 8px;
-      display: inline-block;
-    }
-  }
 
-  &.legend-flights {
-    .flight-plan {
-      background-color: #f79009;
-    }
-
-    .load-sheet {
-      background-color: #fed447;
-    }
-
-    .trip-info {
-      background-color: #d62828;
-    }
-  }
-
-  &.legend-fuel {
-    .fuel-order {
-      background-color: #3d348b;
-    }
-
-    .lmc {
-      background-color: #7678ed;
-    }
-
-    .gps-loss-form {
-      background-color: #092ff7;
+@media screen and (max-width: 768px) {
+  .graph-container {
+    .charts-box {
+      padding: 0;
     }
   }
 }

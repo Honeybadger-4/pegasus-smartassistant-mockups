@@ -11,34 +11,37 @@
     </div>
   </div>
 
-  <div *ngIf="!totalFlightsCardLoading()" class="charts-box grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
+  <div
+    *ngIf="!totalFlightsCardLoading()"
+    class="charts-box grid grid-cols-12"
+  >
     <!-- Flight Chart -->
-    <div class="chart-box-flight lg:flex sm: block">
-      <div class="left-content">
+    <div class="flex gap-5 lg:col-span-6 col-span-12">
+      <div>
         <div class="total-flights-title">Total Flights</div>
-        <div class="total-flights-number">{{ totalFlightsData()?.totalFlights }}</div>
+        <div class="total-flights-number">
+          {{ totalFlightsData()?.totalFlights }}
+        </div>
       </div>
 
-      <div class="flex">
-        <div class="chart-container">
-          <app-custom-donut-chart
-            [data]="chartDataOne()"
-            [options]="chartOptionsOne"
-          />
-        </div>
+      <div class="chart-container">
+        <app-custom-donut-chart
+          [data]="chartDataOne()"
+          [options]="chartOptionsOne"
+        />
+      </div>
 
-        <div class="legend-section legend-flights">
-          <ul>
-            <li><span class="dot flight-plan"></span> Flight Plan</li>
-            <li><span class="dot load-sheet"></span> Load Sheet</li>
-            <li><span class="dot trip-info"></span> Trip Info</li>
-          </ul>
-        </div>
+      <div class="chart-labels-container">
+        <ul>
+          <li><span class="dot flight-plan-dot"></span> Flight Plan</li>
+          <li><span class="dot load-sheet-dot"></span> Load Sheet</li>
+          <li><span class="dot trip-info-dot"></span> Trip Info</li>
+        </ul>
       </div>
     </div>
 
     <!-- Fuel Chart -->
-    <div class="flex">
+    <div class="flex gap-5 lg:col-span-6 col-span-12 sm:col-start-4">
       <div class="chart-container">
         <app-custom-donut-chart
           [data]="chartDataTwo()"
@@ -46,13 +49,14 @@
         />
       </div>
 
-      <div class="legend-section legend-fuel">
+      <div class="chart-labels-container">
         <ul>
-          <li><span class="dot fuel-order"></span> Fuel Order</li>
-          <li><span class="dot lmc"></span> LMC</li>
-          <li><span class="dot gps-loss-form"></span> GPS Loss Form</li>
+          <li><span class="dot fuel-order-dot"></span> Fuel Order</li>
+          <li><span class="dot lmc-dot"></span> LMC</li>
+          <li><span class="dot gps-loss-form-dot"></span> GPS Loss Form</li>
         </ul>
       </div>
     </div>
   </div>
+
 </section>
