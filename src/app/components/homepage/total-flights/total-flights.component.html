@@ -1,17 +1,28 @@
 <section class="graph-container">
-  <p class="text-sm font-bold">Total Flights</p>
-  <div class="charts-box grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
+  <div class="flex items-center gap-3">
+    <p class="text-sm font-bold">Total Flights</p>
+    <div *ngIf="totalFlightsCardLoading()">
+      <p-progress-spinner
+        strokeWidth="8"
+        fill="transparent"
+        animationDuration=".5s"
+        [style]="{ width: '20px', height: '20px' }"
+      />
+    </div>
+  </div>
+
+  <div *ngIf="!totalFlightsCardLoading()" class="charts-box grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
     <!-- Flight Chart -->
     <div class="chart-box-flight lg:flex sm: block">
       <div class="left-content">
         <div class="total-flights-title">Total Flights</div>
-        <div class="total-flights-number">2,345</div>
+        <div class="total-flights-number">{{ totalFlightsData()?.totalFlights }}</div>
       </div>
 
       <div class="flex">
         <div class="chart-container">
           <app-custom-donut-chart
-            [data]="chartDataOne"
+            [data]="chartDataOne()"
             [options]="chartOptionsOne"
           />
         </div>
@@ -30,7 +41,7 @@
     <div class="flex">
       <div class="chart-container">
         <app-custom-donut-chart
-          [data]="chartDataTwo"
+          [data]="chartDataTwo()"
           [options]="chartOptionsTwo"
         />
       </div>

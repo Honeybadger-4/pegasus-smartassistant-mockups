@@ -29,7 +29,7 @@ export class HomepageComponent {
   flightInfoService = inject(FlightInformationService);
 
   totalFlightsData = signal<IFlightInfoStatsResponse | null>(null);
-  totalFlightCardLoading = signal<boolean>(false);
+  totalFlightsCardLoading = signal<boolean>(false);
   topAlternatesData = signal<ITopAlternatesResponse[]>([]);
   topAlternatesCardLoading = signal<boolean>(false);
 
@@ -44,18 +44,18 @@ export class HomepageComponent {
   }
 
   getTotalFlights() {
-    this.totalFlightCardLoading.set(true);
+    this.totalFlightsCardLoading.set(true);
 
     this.flightInfoService
       .getFlightInfoStats(this.startDate(), this.endDate())
       .subscribe({
         next: (response) => {
           this.totalFlightsData.set(response);
-          this.totalFlightCardLoading.set(false);
+          this.totalFlightsCardLoading.set(false);
         },
         error: (error) => {
           console.error(error);
-          this.totalFlightCardLoading.set(false);
+          this.totalFlightsCardLoading.set(false);
         },
       });
   }
