@@ -17,7 +17,7 @@ export class TotalFlightsComponent implements OnInit {
   chartDataOne = signal<any>({
     datasets: [
       {
-        data: [0, 0 ,0],
+        data: [0, 0, 0],
         backgroundColor: ['#F79009', '#FED447', '#D62828'],
         hoverBackgroundColor: ['#F79009', '#FED447', '#D62828'],
         borderWidth: 0,
@@ -40,8 +40,8 @@ export class TotalFlightsComponent implements OnInit {
     datasets: [
       {
         data: [0, 0, 0],
-        backgroundColor: ['#3D348B','#7678ED', '#092FF7'],
-        hoverBackgroundColor: ['#3D348B','#7678ED', '#092FF7'],
+        backgroundColor: ['#3D348B', '#7678ED', '#092FF7'],
+        hoverBackgroundColor: ['#3D348B', '#7678ED', '#092FF7'],
         borderWidth: 0,
       },
     ],
@@ -68,51 +68,67 @@ export class TotalFlightsComponent implements OnInit {
   ngOnInit(): void {}
 
   defineChartDataOne() {
-    if(this.totalFlightsData()) {
+    if (this.totalFlightsData()) {
       this.chartDataOne.update((chartData) => {
         console.log(chartData);
         return {
           ...chartData,
-          datasets: [{
-            ...chartData.datasets[0],
-            data: [this.totalFlightsData()?.approvedFlightPlans, this.totalFlightsData()?.approvedLoadSheets, this.totalFlightsData()?.sentTripInfo],
-          }]
-        }
-      })
-    }else {
+          datasets: [
+            {
+              ...chartData.datasets[0],
+              data: [
+                this.totalFlightsData()?.approvedFlightPlans,
+                this.totalFlightsData()?.approvedLoadSheets,
+                this.totalFlightsData()?.sentTripInfo,
+              ],
+            },
+          ],
+        };
+      });
+    } else {
       this.chartDataOne.update((chartData) => {
         return {
           ...chartData,
-          datasets: [{
-            ...chartData.datasets[0],
-            data: [0, 0, 0],
-          }]
-        }
-      })
+          datasets: [
+            {
+              ...chartData.datasets[0],
+              data: [0, 0, 0],
+            },
+          ],
+        };
+      });
     }
   }
 
   defineChartDataTwo() {
-    if(this.totalFlightsData()) {
+    if (this.totalFlightsData()) {
       this.chartDataTwo.update((chartData) => {
         return {
           ...chartData,
-          datasets: [{
-            ...chartData.datasets[0],
-            data: [this.totalFlightsData()?.sentFuelOrder, this.totalFlightsData()?.lmcLoadSheets, this.totalFlightsData()?.gpsLossForm],            
-          }]
-        }
-      })
-    }else {
+          datasets: [
+            {
+              ...chartData.datasets[0],
+              data: [
+                this.totalFlightsData()?.sentFuelOrder,
+                this.totalFlightsData()?.lmcLoadSheets,
+                this.totalFlightsData()?.gpsLossForm,
+              ],
+            },
+          ],
+        };
+      });
+    } else {
       this.chartDataTwo.update((chartData) => {
         return {
           ...chartData,
-          datasets: [{
-            ...chartData.datasets[0],
-            data: [0, 0, 0],
-          }]
-        }
-      })
+          datasets: [
+            {
+              ...chartData.datasets[0],
+              data: [0, 0, 0],
+            },
+          ],
+        };
+      });
     }
   }
 }
