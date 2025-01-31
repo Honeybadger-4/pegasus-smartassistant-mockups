@@ -1,4 +1,4 @@
-export interface IHomepageTotalFlightsResponse {
+export interface IFlightInfoStatsResponse {
   totalFlights: number;
   approvedFlightPlans: number;
   approvedLoadSheets: number;

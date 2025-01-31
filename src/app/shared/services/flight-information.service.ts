@@ -4,6 +4,7 @@ import { environment } from '@environments/environment';
 import { IHttpResponseModel } from '@shared/models/http-response.model';
 import { map, Observable } from 'rxjs';
 import { IFlightInformationResponse } from '@shared/models/flight-information-response.model';
+import { IFlightInfoStatsResponse } from '@shared/models/flight-info-stats-response.model';
 
 @Injectable({ providedIn: 'root' })
 export class FlightInformationService {
@@ -40,6 +41,21 @@ export class FlightInformationService {
     if (username) {
       params = params.set('username', username);
     }
+
+    return this.http
+      .get<IHttpResponseModel>(apiUrl, { params })
+      .pipe(map((response) => response.data));
+  }
+
+  getFlightInfoStats(
+    startDate: string,
+    endDate: string,
+  ): Observable<IFlightInfoStatsResponse> {
+    const apiUrl = `${this.baseUrl}/api/v1/admin/flight-info/stats`;
+
+    let params = new HttpParams()
+      .set('startDate', startDate)
+      .set('endDate', endDate);
 
     return this.http
       .get<IHttpResponseModel>(apiUrl, { params })
