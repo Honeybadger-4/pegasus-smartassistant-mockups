@@ -46,31 +46,35 @@ export class HomepageComponent {
   getTotalFlights() {
     this.totalFlightCardLoading.set(true);
 
-    this.flightInfoService.getFlightInfoStats(this.startDate(), this.endDate()).subscribe({
-      next: (response) => {
-        this.totalFlightsData.set(response);
-        this.totalFlightCardLoading.set(false);
-      },
-      error: (error) => {
-        console.error(error);
-        this.totalFlightCardLoading.set(false);
-      },
-    });
+    this.flightInfoService
+      .getFlightInfoStats(this.startDate(), this.endDate())
+      .subscribe({
+        next: (response) => {
+          this.totalFlightsData.set(response);
+          this.totalFlightCardLoading.set(false);
+        },
+        error: (error) => {
+          console.error(error);
+          this.totalFlightCardLoading.set(false);
+        },
+      });
   }
 
   getTopAlternates() {
     this.topAlternatesCardLoading.set(true);
 
-    this.routeService.getTopAlternates(this.startDate(), this.endDate(), 5).subscribe({
-      next: (response) => {
-        this.topAlternatesData.set(response);
-        this.topAlternatesCardLoading.set(false);
-      },
-      error: (error) => {
-        console.error(error);
-        this.topAlternatesCardLoading.set(false);
-      },
-    });
+    this.routeService
+      .getTopAlternates(this.startDate(), this.endDate(), 5)
+      .subscribe({
+        next: (response) => {
+          this.topAlternatesData.set(response);
+          this.topAlternatesCardLoading.set(false);
+        },
+        error: (error) => {
+          console.error(error);
+          this.topAlternatesCardLoading.set(false);
+        },
+      });
   }
 
   onDateRangeChange(event: any) {
@@ -87,8 +91,8 @@ export class HomepageComponent {
 
   dateRangeDefaultValue() {
     const startDate = moment().startOf('month');
-    const  endDate = moment().endOf('month');
-    
+    const endDate = moment().endOf('month');
+
     this.startDate.set(moment(startDate).format('YYYY-MM-DD'));
     this.endDate.set(moment(endDate).format('YYYY-MM-DD'));
 
