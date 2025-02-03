@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 import { IHttpResponseModel } from '@shared/models/http-response.model';
 import { ILoginResponse } from '@shared/models/login-response.model';
 import { map, Observable } from 'rxjs';
@@ -18,7 +18,9 @@ export class LoginService {
   private userDataStorageKey = 'userData';
 
   constructor(private http: HttpClient) {
-    this.loadUserData();
+    if (isPlatformBrowser(this.platformId)) {
+      this.loadUserData();
+    }
   }
 
   login(username: string, password: string): Observable<any> {
@@ -37,46 +39,43 @@ export class LoginService {
   }
 
   logout(): void {
-    localStorage.removeItem(this.userDataStorageKey);
+    if(isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem(this.userDataStorageKey);
+    }
+
     this.currentUser.set(null);
     this.router.navigate(['/login']);
   }
 
   loadUserData(): void {
     if (isPlatformBrowser(this.platformId)) {
-      const userJson = JSON.parse(
-        localStorage.getItem(this.userDataStorageKey) || '{}',
-      );
-      this.currentUser.set(userJson);
-    } else {
-      this.currentUser.set(null);
+      const userJson = localStorage.getItem(this.userDataStorageKey);
+      if (userJson) {
+        this.currentUser.set(JSON.parse(userJson));
+      }
     }
   }
 
   private setUserData(data: ILoginResponse): void {
-    localStorage.setItem(this.userDataStorageKey, JSON.stringify(data));
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem(this.userDataStorageKey, JSON.stringify(data));
+    }
   }
 
   isAuthenticated(): boolean {
-    const userData: ILoginResponse = JSON.parse(
-      localStorage?.getItem(this.userDataStorageKey) || '{}',
-    );
-
-    const token = userData?.efbToken;
-
-    if (!token) {
+    if (!isPlatformBrowser(this.platformId)) {
       return false;
     }
 
-    const expireTime = this.getTokenExpireTime(token);
+    const user = this.currentUser();
+    if (!user || !user.efbToken) {
+      return false;
+    }
+
+    const expireTime = this.getTokenExpireTime(user.efbToken);
     const now = Date.now();
 
-    if (expireTime < now) {
-      localStorage.removeItem(this.userDataStorageKey);
-      return false;
-    }
-
-    return true;
+    return expireTime > now;
   }
 
   getTokenExpireTime(token: string): number {

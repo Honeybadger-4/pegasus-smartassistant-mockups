@@ -9,7 +9,7 @@ import {
   provideClientHydration,
 } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 
 import { routes } from './app.routes';
 import { httpHeadersInterceptor } from '@shared/interceptors/http-header.interceptor';
@@ -32,7 +32,8 @@ export const appConfig: ApplicationConfig = {
     ),
     MessageService,
     provideHttpClient(
-      withInterceptors([httpHeadersInterceptor, errorInterceptor]),
+      withFetch(),
+      withInterceptors([httpHeadersInterceptor, errorInterceptor])
     ),
     provideAnimationsAsync(),
     providePrimeNG({

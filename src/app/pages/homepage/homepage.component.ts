@@ -16,7 +16,7 @@ import { IFlightInfoStatsResponse } from '@shared/models/flight-info-stats-respo
   selector: 'app-homepage',
   imports: [
     TotalFlightsComponent,
-    GeneralInformationCardComponent,
+    //GeneralInformationCardComponent,
     TopAlternateRoutesCardComponent,
     DatePickerModule,
     FormsModule,
@@ -90,8 +90,11 @@ export class HomepageComponent {
   }
 
   dateRangeDefaultValue() {
-    const startDate = moment().startOf('month');
-    const endDate = moment().endOf('month');
+    // const startDate = moment().startOf('month');
+    // const endDate = moment().endOf('month');
+
+    const startDate = moment(new Date())
+    const endDate = moment(new Date())
 
     this.startDate.set(moment(startDate).format('YYYY-MM-DD'));
     this.endDate.set(moment(endDate).format('YYYY-MM-DD'));
