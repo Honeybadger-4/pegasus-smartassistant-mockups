@@ -90,6 +90,7 @@ export class HomepageComponent {
   }
 
   dateRangeDefaultValue() {
+    // TODO: Ayın ilk ve son günü seçilmeli default olarak.
     // const startDate = moment().startOf('month');
     // const endDate = moment().endOf('month');
 
