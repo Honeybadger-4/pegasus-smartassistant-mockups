@@ -39,7 +39,7 @@ export class LoginService {
   }
 
   logout(): void {
-    if(isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem(this.userDataStorageKey);
     }
 
