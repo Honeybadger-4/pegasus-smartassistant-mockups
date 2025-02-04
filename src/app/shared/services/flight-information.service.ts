@@ -21,7 +21,7 @@ export class FlightInformationService {
     arrPort?: string | null,
     username?: string | null,
   ): Observable<IFlightInformationResponse> {
-    const apiUrl = `${this.baseUrl}/api/v1/admin/flight-info`;
+    const apiUrl = `${this.baseUrl}/api/v1/admin/flights`;
 
     let params = new HttpParams()
       .set('page', page)
@@ -51,7 +51,7 @@ export class FlightInformationService {
     startDate: string,
     endDate: string,
   ): Observable<IFlightInfoStatsResponse> {
-    const apiUrl = `${this.baseUrl}/api/v1/admin/flight-info/stats`;
+    const apiUrl = `${this.baseUrl}/api/v1/admin/flights/stats`;
 
     let params = new HttpParams()
       .set('startDate', startDate)
