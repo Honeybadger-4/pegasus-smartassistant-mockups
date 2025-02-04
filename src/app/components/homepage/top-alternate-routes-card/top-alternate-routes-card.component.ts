@@ -1,20 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, effect, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomBarChartComponent } from '../../../shared/components/custom-bar-chart/custom-bar-chart.component';
+import { ITopAlternatesResponse } from '@shared/models/top-alternates-response.model';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-top-alternate-routes-card',
-  imports: [CommonModule, CustomBarChartComponent],
+  imports: [CommonModule, CustomBarChartComponent, ProgressSpinnerModule],
   templateUrl: './top-alternate-routes-card.component.html',
   styleUrl: './top-alternate-routes-card.component.scss',
 })
 export class TopAlternateRoutesCardComponent {
-  chartData: any = {
-    labels: ['LTBJ', 'LTBS', 'LTAY', 'LTAI', 'LTAI'],
+  topAlternatesData = input<ITopAlternatesResponse[]>([]);
+  topAlternatesCardLoading = input<boolean>(false);
+
+  chartData = signal<any>({
+    labels: [],
     datasets: [
       {
         label: '',
-        data: [450, 350, 250, 200, 100],
+        data: [],
         backgroundColor: [
           '#FED447',
           '#FED447',
@@ -28,7 +33,7 @@ export class TopAlternateRoutesCardComponent {
         borderRadius: 5,
       },
     ],
-  };
+  });
 
   chartOptions: any = {
     scales: {
@@ -56,5 +61,41 @@ export class TopAlternateRoutesCardComponent {
     },
   };
 
+  constructor() {
+    effect(() => {
+      this.defineChartData();
+    });
+  }
+
   ngOnInit() {}
+
+  defineChartData() {
+    if (this.topAlternatesData().length > 0) {
+      this.chartData.update((chart) => {
+        return {
+          ...chart,
+          labels: this.topAlternatesData().map((item) => item.airportICAOCode),
+          datasets: [
+            {
+              ...chart.datasets[0],
+              data: this.topAlternatesData().map((item) => item.frequency),
+            },
+          ],
+        };
+      });
+    } else {
+      this.chartData.update((chart) => {
+        return {
+          ...chart,
+          labels: [],
+          datasets: [
+            {
+              ...chart.datasets[0],
+              data: [],
+            },
+          ],
+        };
+      });
+    }
+  }
 }
