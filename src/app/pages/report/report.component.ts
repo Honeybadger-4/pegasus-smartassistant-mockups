@@ -1,27 +1,36 @@
 import { CommonModule } from '@angular/common';
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { Column } from '@shared/models/columns';
-import { FormsModule } from '@angular/forms';
 
+import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { DatePickerModule } from 'primeng/datepicker';
+import moment from 'moment';
 
 @Component({
   selector: 'app-report',
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     DropdownModule,
     CustomTableComponent,
     DatePickerModule,
     IconFieldModule,
     InputIconModule,
     InputTextModule,
+    ButtonModule,
   ],
   templateUrl: './report.component.html',
   styleUrl: './report.component.scss',
@@ -32,7 +41,9 @@ export class ReportComponent {
 
   @ViewChild('previewCellBodyTemplate', { static: true })
   previewCellBodyTemplate!: TemplateRef<any>;
+  formBuilder = inject(FormBuilder);
 
+  filterFormGroup!: FormGroup;
   dateRange: Date[] = [];
 
   columns: Column[] = [];
@@ -100,8 +111,21 @@ export class ReportComponent {
   ];
 
   ngOnInit() {
+    this.builder();
     this.defineColumn();
   }
+
+  builder() {
+    this.filterFormGroup = this.formBuilder.group({
+      aircraft: [''],
+      flightNo: [''],
+      depPort: [''],
+      arrPort: [''],
+      dateRange: [this.dateRangeDefaultValue()],
+    });
+  }
+
+  onFilterSubmit() {}
 
   defineColumn() {
     this.columns = [
@@ -119,5 +143,12 @@ export class ReportComponent {
       { field: 'username', header: 'Username' },
       { field: '', header: '', template: this.previewCellBodyTemplate },
     ];
+  }
+
+  dateRangeDefaultValue() {
+    const endDate = moment();
+    const startDate = moment().subtract(3, 'days');
+
+    return [startDate.toDate(), endDate.toDate()];
   }
 }
