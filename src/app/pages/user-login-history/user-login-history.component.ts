@@ -38,7 +38,6 @@ import moment from 'moment';
     IconFieldModule,
     InputIconModule,
     InputTextModule,
-    FormsModule,
     ReactiveFormsModule,
     ButtonModule,
   ],
