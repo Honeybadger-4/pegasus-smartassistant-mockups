@@ -90,12 +90,8 @@ export class HomepageComponent {
   }
 
   dateRangeDefaultValue() {
-    // TODO: Ayın ilk ve son günü seçilmeli default olarak.
-    // const startDate = moment().startOf('month');
-    // const endDate = moment().endOf('month');
-
-    const startDate = moment(new Date());
-    const endDate = moment(new Date());
+    const startDate = moment().startOf('month');
+    const endDate = moment().endOf('month');
 
     this.startDate.set(moment(startDate).format('YYYY-MM-DD'));
     this.endDate.set(moment(endDate).format('YYYY-MM-DD'));
