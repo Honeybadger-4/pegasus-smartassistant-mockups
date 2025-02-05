@@ -65,7 +65,7 @@ export class FlightInformationService {
 
   getFlightInformationTripInfo(
     flightISN: number,
-  ): Observable<IFlightInformationTripInfoResponse> {
+  ): Observable<IFlightInformationTripInfoResponse[]> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/flights/${flightISN}/trip-info`;
 
     return this.http

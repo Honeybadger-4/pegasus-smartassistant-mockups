@@ -82,7 +82,7 @@
     <p-table
       [value]="flightInformatioHistoryTableData()"
       [columns]="mainCols"
-      dataKey="flightPlanId"
+      dataKey="legIsn"
       [tableStyle]="{ 'min-width': '50rem' }"
       stripedRows
       [loading]="tableLoading"
@@ -156,6 +156,8 @@
                     <app-custom-table
                       [tableData]="tab.tableData"
                       [tableColumns]="tab.tableColumns"
+                      [tableLoading]="tab.tableLoading"
+                      [isPaginator]="false"
                     ></app-custom-table>
                   </p-tabpanel>
                 </p-tabpanels>

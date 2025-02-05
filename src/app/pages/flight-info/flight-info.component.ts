@@ -1,5 +1,6 @@
 import {
   Component,
+  effect,
   inject,
   signal,
   TemplateRef,
@@ -33,6 +34,7 @@ import { ButtonModule } from 'primeng/button';
 import { TabsModule } from 'primeng/tabs';
 import { DatePickerModule } from 'primeng/datepicker';
 import moment from 'moment';
+import { IFlightInformationTripInfoResponse } from '@shared/models/flight-info-trip-info-response.model';
 
 @Component({
   selector: 'app-flight-info',
@@ -76,12 +78,13 @@ export class FlightInfoComponent {
   tableLoading: boolean = false;
 
   tableSubPanels!: any[];
-  activeTabIndex = 0;
 
   flightInformationHistoryData = signal<IFlightInformationResponse | null>(
     null,
   );
   flightInformatioHistoryTableData = signal<IFlightInformationTableData[]>([]);
+  tripInfoData = signal<IFlightInformationTripInfoResponse[]>([]);
+  tripInfoDataLoading = signal<boolean>(false);
 
   formBuilder = inject(FormBuilder);
   flightInformationService = inject(FlightInformationService);
@@ -230,92 +233,7 @@ export class FlightInfoComponent {
       flightPlan: '-',
     },
   ];
-  tripInfoData = [
-    {
-      sendBy: 'SAWBNCS01',
-      crew_version: '2/4',
-      pantry_code: 'Domestic',
-      taxi_fuel: '999.999',
-      trip_fuel: '999.999',
-      takeoff_time: '13:30',
-      eet: '00:35',
-      eic_adj: 'X',
-      pax: '186Y',
-      tripInfo: '-',
-    },
-    {
-      sendBy: 'SAWBNCS02',
-      crew_version: '2/4',
-      pantry_code: 'Domestic',
-      taxi_fuel: '999.999',
-      trip_fuel: '999.999',
-      takeoff_time: '13:30',
-      eet: '00:35',
-      eic_adj: 'X',
-      pax: '186Y',
-      tripInfo: '-',
-    },
-    {
-      sendBy: 'SAWBNCS02',
-      crew_version: '2/4',
-      pantry_code: 'Domestic',
-      taxi_fuel: '999.999',
-      trip_fuel: '999.999',
-      takeoff_time: '13:30',
-      eet: '00:35',
-      eic_adj: 'X',
-      pax: '186Y',
-      tripInfo: '-',
-    },
-    {
-      sendBy: 'SAWBNCS02',
-      crew_version: '2/4',
-      pantry_code: 'Domestic',
-      taxi_fuel: '999.999',
-      trip_fuel: '999.999',
-      takeoff_time: '13:30',
-      eet: '00:35',
-      eic_adj: 'X',
-      pax: '186Y',
-      tripInfo: '-',
-    },
-    {
-      sendBy: 'SAWBNCS02',
-      crew_version: '2/4',
-      pantry_code: 'Domestic',
-      taxi_fuel: '999.999',
-      trip_fuel: '999.999',
-      takeoff_time: '13:30',
-      eet: '00:35',
-      eic_adj: 'X',
-      pax: '186Y',
-      tripInfo: '-',
-    },
-    {
-      sendBy: 'SAWBNCS02',
-      crew_version: '2/4',
-      pantry_code: 'Domestic',
-      taxi_fuel: '999.999',
-      trip_fuel: '999.999',
-      takeoff_time: '13:30',
-      eet: '00:35',
-      eic_adj: 'X',
-      pax: '186Y',
-      tripInfo: '-',
-    },
-    {
-      sendBy: 'SAWBNCS02',
-      crew_version: '2/4',
-      pantry_code: 'Domestic',
-      taxi_fuel: '999.999',
-      trip_fuel: '999.999',
-      takeoff_time: '13:30',
-      eet: '00:35',
-      eic_adj: 'X',
-      pax: '186Y',
-      tripInfo: '-',
-    },
-  ];
+
   loadSheetData = [
     {
       preparedBy: 'Lorem ipsum',
@@ -396,6 +314,12 @@ export class FlightInfoComponent {
     },
   ];
 
+  constructor() {
+    effect(() => {
+      this.defineTableSubPanels();
+    });
+  }
+
   ngOnInit() {
     this.builder();
     this.defineMainColumns();
@@ -403,7 +327,6 @@ export class FlightInfoComponent {
     this.defineFlightPlanColums();
     this.defineTripInfoColums();
     this.defineLoadSheetColums();
-    this.activeTabIndexChange(0);
     this.defineTableSubPanels();
     this.getFlightInfo();
   }
@@ -523,8 +446,9 @@ export class FlightInfoComponent {
       },
       {
         panelHeader: 'Trip Info',
-        tableData: this.tripInfoData,
+        tableData: this.tripInfoData(),
         tableColumns: this.tripInfoCols,
+        tableLoading: this.tripInfoDataLoading(),
         value: 2,
       },
       {
@@ -582,6 +506,20 @@ export class FlightInfoComponent {
       });
   }
 
+  getFlightInformationTripInfo(legIsn: number) {
+    this.tripInfoDataLoading.set(true);
+    this.flightInformationService.getFlightInformationTripInfo(legIsn).subscribe({
+      next: (response) => {
+        this.tripInfoData.set(response);
+        this.tripInfoDataLoading.set(false);
+      },
+      error: (error) => {
+        console.log(error);
+        this.tripInfoDataLoading.set(false);
+      }
+    })
+  }
+
   // Filter Operations
   dateRangeDefaultValue() {
     const endDate = moment();
@@ -595,15 +533,11 @@ export class FlightInfoComponent {
   }
 
   onRowExpand(event: TableRowExpandEvent) {
-    console.log('Expanded: ', event);
+    this.getFlightInformationTripInfo(event.data.legIsn);
   }
 
   onRowCollapse(event: TableRowCollapseEvent) {
     console.log('Collapsed: ', event);
-  }
-
-  activeTabIndexChange(value: number) {
-    console.log('Tab changed: ', value);
   }
 
   pageEvent(event: { first: number; rows: number }) {
