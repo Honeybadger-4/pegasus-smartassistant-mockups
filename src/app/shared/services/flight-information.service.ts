@@ -5,6 +5,7 @@ import { IHttpResponseModel } from '@shared/models/http-response.model';
 import { map, Observable } from 'rxjs';
 import { IFlightInformationResponse } from '@shared/models/flight-information-response.model';
 import { IFlightInfoStatsResponse } from '@shared/models/flight-info-stats-response.model';
+import { IFlightInformationTripInfoResponse } from '@shared/models/flight-info-trip-info-response.model';
 
 @Injectable({ providedIn: 'root' })
 export class FlightInformationService {
@@ -59,6 +60,16 @@ export class FlightInformationService {
 
     return this.http
       .get<IHttpResponseModel>(apiUrl, { params })
+      .pipe(map((response) => response.data));
+  }
+
+  getFlightInformationTripInfo(
+    flightISN: number,
+  ): Observable<IFlightInformationTripInfoResponse> {
+    const apiUrl = `${this.baseUrl}/api/v1/admin/flights/${flightISN}/trip-info`;
+
+    return this.http
+      .get<IHttpResponseModel>(apiUrl)
       .pipe(map((response) => response.data));
   }
 }

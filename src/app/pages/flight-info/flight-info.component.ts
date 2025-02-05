@@ -468,12 +468,12 @@ export class FlightInfoComponent {
 
   defineTripInfoColums() {
     this.tripInfoCols = [
-      { field: 'sendBy', header: 'Send By' },
-      { field: 'crew_version', header: 'Crew Version' },
-      { field: 'pantry_code', header: 'Pantry Code' },
-      { field: 'taxi_fuel', header: 'Taxi Fuel' },
-      { field: 'trip_fuel', header: 'Trip Fuel' },
-      { field: 'takeoff_time', header: 'Take Off Time' },
+      { field: 'username', header: 'Send By' },
+      { field: 'crewVersion', header: 'Crew Version' },
+      { field: 'pantryCode', header: 'Pantry Code' },
+      { field: 'taxiFuel', header: 'Taxi Fuel' },
+      { field: 'tripFuel', header: 'Trip Fuel' },
+      { field: 'takeOffTime', header: 'Take Off Time' },
       { field: 'eet', header: 'EET' },
       { field: 'eic_adj', header: 'EIC Adj' },
       { field: 'pax', header: 'Pax' },
