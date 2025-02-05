@@ -1,7 +1,7 @@
 export interface IFlightInformationTripInfoResponse {
   legIsn: number;
   aircraftReg: string;
-  flightNo:string;
+  flightNo: string;
   depPort: string;
   arrPort: string;
   username: string;

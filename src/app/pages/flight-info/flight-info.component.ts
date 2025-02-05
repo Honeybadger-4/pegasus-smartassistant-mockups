@@ -508,16 +508,18 @@ export class FlightInfoComponent {
 
   getFlightInformationTripInfo(legIsn: number) {
     this.tripInfoDataLoading.set(true);
-    this.flightInformationService.getFlightInformationTripInfo(legIsn).subscribe({
-      next: (response) => {
-        this.tripInfoData.set(response);
-        this.tripInfoDataLoading.set(false);
-      },
-      error: (error) => {
-        console.log(error);
-        this.tripInfoDataLoading.set(false);
-      }
-    })
+    this.flightInformationService
+      .getFlightInformationTripInfo(legIsn)
+      .subscribe({
+        next: (response) => {
+          this.tripInfoData.set(response);
+          this.tripInfoDataLoading.set(false);
+        },
+        error: (error) => {
+          console.log(error);
+          this.tripInfoDataLoading.set(false);
+        },
+      });
   }
 
   // Filter Operations
