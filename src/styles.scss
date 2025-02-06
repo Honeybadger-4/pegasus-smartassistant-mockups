@@ -20,6 +20,8 @@ $input-focus-border-color: rgba(0, 0, 0, 1);
 $input-disabled-bg-color: rgba(243, 242, 241, 1);
 $input-disabled-border-color: rgba(243, 242, 241, 1);
 $base-text-color: rgba(79, 79, 79, 1);
+$option-hover-bg: rgba(254, 184, 20, 0.247);
+$option-selected-bg: rgba(254, 184, 20, 0.478);
 
 body {
   font-family: "Roboto", sans-serif;
@@ -104,6 +106,14 @@ body {
   .p-select-option {
     font-size: 8px;
   }
+
+  .p-select-option:not(.p-select-option-selected):not(.p-disabled).p-focus {
+    background-color: $option-hover-bg !important;
+  }
+
+  .p-select-option.p-select-option-selected {
+    background-color: $option-selected-bg !important;
+  }
 }
 
 .custom-calendar {
@@ -140,15 +150,15 @@ body {
   }
 
   .p-datepicker-day-selected-range {
-    background-color: #feb8143f;
+    background-color: $option-hover-bg;
   }
 
   .p-datepicker-day:not(.p-datepicker-day-selected):not(.p-disabled):hover {
-    background-color: #feb8143f !important;
+    background-color: $option-hover-bg !important;
   }
 
   .p-datepicker-today > .p-datepicker-day {
-    background-color: #feb8147a;
+    background-color: $option-selected-bg;
   }
 
   .p-button-text {
