@@ -158,7 +158,11 @@
 </ng-template>
 
 <ng-template #dutyColumnsTemplate let-rowData="rowData">
-  <span>{{ rowData.dutyCount }} / {{ rowData.totalHours }} hours</span>
+  @if (rowData.dutyCount) {
+    <span>{{ rowData.dutyCount }} / {{ rowData.totalHours }} hours</span>
+  } @else {
+    <span>-</span>
+  }
 </ng-template>
 
 <ng-template #linkedNextPageTemplate let-rowData="rowData">

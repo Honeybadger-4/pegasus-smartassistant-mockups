@@ -81,6 +81,7 @@
     icon="pi pi-download"
     [pTooltip]="'Download All Document'"
     tooltipPosition="bottom"
+    tooltipStyleClass="custom-tooltip"
     [style]="{ color: 'black' }"
   />
 </ng-template>
@@ -98,7 +99,7 @@
     class="pi pi-check-circle text-green-500 text-lg"
     pTooltip="All logs for this crew member have been approved"
     tooltipPosition="top"
-    tooltipStyleClass="comment-context-tooltip"
+    tooltipStyleClass="custom-tooltip"
   ></i>
 
   <i
@@ -106,7 +107,7 @@
     class="pi pi-times-circle text-red-500 text-lg"
     pTooltip="Some logs are still pending approval"
     tooltipPosition="top"
-    tooltipStyleClass="comment-context-tooltip"
+    tooltipStyleClass="custom-tooltip"
   ></i>
 </ng-template>
 

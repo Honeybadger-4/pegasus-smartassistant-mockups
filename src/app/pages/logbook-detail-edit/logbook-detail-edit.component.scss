@@ -1,10 +1,5 @@
 #LogbookDetailEditPage {
   .page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-
     .save-button,
     .cancel-button {
       border: none;
@@ -28,8 +23,6 @@
   }
 
   .form-section {
-    margin-bottom: 20px;
-
     .title {
       font-size: 16px;
       font-weight: 500;
