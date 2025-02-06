@@ -38,12 +38,11 @@ export interface ILoadSheetTableData {
   flightNo: string;
   aircraftReg: string;
   status: string;
-
-  // Belirsizler
-
   preparedBy: string;
   checkedBy: string;
   lmc: string;
   crew: string;
   version: string;
+  depDateTime: string;
+  arrDateTime: string;
 }

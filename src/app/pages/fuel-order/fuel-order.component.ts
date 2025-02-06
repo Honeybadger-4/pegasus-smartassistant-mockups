@@ -120,8 +120,17 @@ export class FuelOrderComponent {
       )
       .subscribe({
         next: (response) => {
+          const formattedData = response.content.map((item) => ({
+            ...item,
+            depDateTime: moment(item.depDateTime).format('DD/MM/YYYY - HH:mm'),
+            arrDateTime: moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm'),
+            orderDateTime: moment(item.orderDateTime).format(
+              'DD/MM/YYYY - HH:mm',
+            ),
+          }));
+
           this.fuelOrderHistoryData.set(response);
-          this.fuelOrderHistoryTableData.set(response.content);
+          this.fuelOrderHistoryTableData.set(formattedData);
           this.tableLoading = false;
         },
         error: () => {
