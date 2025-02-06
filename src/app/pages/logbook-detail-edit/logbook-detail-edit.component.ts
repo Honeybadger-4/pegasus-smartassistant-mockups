@@ -376,4 +376,13 @@ export class LogbookDetailEditComponent implements OnInit {
   parseDate(dateString: any): Date | null {
     return dateString ? new Date(dateString) : null;
   }
+
+  statusTemplate(value?: string) {
+    if(value === 'WAITING_APPROVAL') {
+      return "WAITING APPROVAL"
+    }else {
+      return value
+    }
+  }
+  
 }

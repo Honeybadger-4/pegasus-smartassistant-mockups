@@ -1,24 +1,12 @@
 <p-toast></p-toast>
 <main id="LogbookDetailPage">
-  <section class="flex justify-between items-center w-full mb-3">
-    <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" />
-    <div class="w-[150px]">
-      <p-select
-        [(ngModel)]="statusFilter"
-        [options]="statusOptions()"
-        optionLabel="label"
-        optionValue="value"
-        placeholder="Status"
-        [showClear]="true"
-        class="custom-dropdown w-full"
-        (ngModelChange)="getDetailedList()"
-      />
-    </div>
-  </section>
+  <!-- Header and Filter Section -->
+  <section class="grid grid-cols-12 items-center gap-4">
+    <!-- Breadcrumb and Info -->
+    <div class="lg:col-span-6 md:col-span-6 col-span-12">
+      <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" />
 
-  <section>
-    <div class="flex items-center justify-between">
-      <div class="text-[12px]">
+      <div class="text-[12px] mt-4">
         <p class="font-bold">
           {{ this.crewListTableData.yearMonth | date: "MMMM YYYY" }}
         </p>
@@ -28,16 +16,33 @@
           {{ crewListTableData.companyId }}</span
         >
       </div>
+    </div>
+    
+    <!-- Filter and Action Buttons -->
+    <div class="lg:col-span-6 md:col-span-6 col-span-12 lg:justify-items-end md:justify-items-end">
+      <div class="w-[160px]">
+        <p-select
+          [(ngModel)]="statusFilter"
+          [options]="statusOptions()"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Status"
+          [showClear]="true"
+          class="custom-dropdown w-full"
+          (ngModelChange)="getDetailedList()"
+        />
+      </div>
 
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-5 mt-4">
         <p-button
           type="button"
           [rounded]="true"
           [disabled]="selectedCheckbox().length <= 0"
           icon="pi pi-check"
+          severity="success"
           [pTooltip]="'Approve'"
           tooltipPosition="bottom"
-          severity="success"
+          tooltipStyleClass="custom-tooltip"
           (click)="onApprove()"
         />
 
@@ -48,9 +53,10 @@
             selectedCheckbox().length > 1 || selectedCheckbox().length <= 0
           "
           icon="pi pi-times"
+          severity="danger"
           [pTooltip]="'Reject'"
           tooltipPosition="bottom"
-          severity="danger"
+          tooltipStyleClass="custom-tooltip"
           (click)="displayRejectPopup = true"
         />
 
@@ -61,7 +67,8 @@
           [outlined]="true"
           icon="pi pi-download"
           [pTooltip]="'Download All Document'"
-          tooltipPosition="bottom"
+          tooltipPosition="left"
+          tooltipStyleClass="custom-tooltip"
           [style]="{ color: 'black' }"
         />
       </div>
@@ -160,6 +167,7 @@
       [escape]="false"
       [autoHide]="false"
       [tooltipDisabled]="rowData.uploadReason?.length <= maxCharCount"
+      tooltipStyleClass="custom-tooltip"
     >
       {{ rowData.uploadReason || "-" | truncateText: maxCharCount }}
     </span>
@@ -190,6 +198,7 @@
         : ''
     "
     tooltipPosition="left"
+    tooltipStyleClass="custom-tooltip"
     (click)="goToLogBookDetailEditPage(rowData)"
     [style]="{ color: 'black' }"
   />

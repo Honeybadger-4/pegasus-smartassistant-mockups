@@ -1,65 +1,67 @@
 <p-toast></p-toast>
 <main id="LogbookDetailEditPage">
   <!-- Header -->
-  <section>
-    <div class="page-header">
-      <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" />
+  <section class="page-header">
+    <div class="grid grid-cols-12 items-center gap-4">
+      <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" class="lg:col-span-6 md:col-span-6 col-span-12" />
 
-      <div class="flex gap-3">
-        <button
-          *ngIf="isEditMode()"
-          pButton
-          type="button"
-          label="Cancel"
-          class="cancel-button"
-          (click)="onCancel()"
-        ></button>
-
-        <button
-          pButton
-          type="button"
-          [label]="isEditMode() ? 'Save' : 'Edit'"
-          [disabled]="
-            logbookFormGroup.invalid || editDefaultData()?.status === 'APPROVED'
-          "
-          class="save-button"
-          (click)="isEditMode() ? onSave() : toggleEditMode()"
-        ></button>
+      <div class="lg:col-span-6 md:col-span-6 col-span-12 lg:justify-items-end md:justify-items-end">
+        <div class="flex gap-3">
+          <button
+            *ngIf="isEditMode()"
+            pButton
+            type="button"
+            label="Cancel"
+            class="cancel-button"
+            (click)="onCancel()"
+          ></button>
+  
+          <button
+            pButton
+            type="button"
+            [label]="isEditMode() ? 'Save' : 'Edit'"
+            [disabled]="
+              logbookFormGroup.invalid || editDefaultData()?.status === 'APPROVED'
+            "
+            class="save-button"
+            (click)="isEditMode() ? onSave() : toggleEditMode()"
+          ></button>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Form -->
-  <section class="form-section">
+  <section class="form-section mt-4 mb-5">
     <form [formGroup]="logbookFormGroup">
       <section class="custom-card">
-        <div class="flex items-center gap-5 mb-5">
+        <div class="flex items-center gap-5">
           <p class="title">Flight</p>
           <p-progressSpinner
             *ngIf="formDataLoading()"
             ariaLabel="loading"
-            ngClass="flex justify-center"
-            class="title-loading"
             strokeWidth="8"
+            ngClass="flex justify-center"
             styleClass="w-[20px] h-[20px]"
           />
         </div>
+
         <!-- Summary -->
-        <div class="summary-container grid grid-cols-12">
+        <div class="summary-container grid grid-cols-12 lg:gap-0 gap-4 mt-5">
           <!-- Crew Name -->
-          <div class="summary-box col-span-2">
+          <div class="summary-box lg:col-span-2 md:col-span-3 col-span-6">
             <p class="summary-title">Crew Name & Surname</p>
             <p class="summary-value">{{ editDefaultData()?.crewName }}</p>
           </div>
 
           <!-- Company ID -->
-          <div class="summary-box col-span-2">
+          <div class="summary-box lg:col-span-2 md:col-span-3 col-span-6">
             <p class="summary-title">Company ID</p>
             <p class="summary-value">{{ editDefaultData()?.companyId }}</p>
           </div>
 
           <!-- Updated Date -->
-          <div class="summary-box col-span-2">
+          <div class="summary-box lg:col-span-2 md:col-span-3 col-span-6">
             <p class="summary-title">Updated Date</p>
             <p class="summary-value">
               {{ editDefaultData()?.updatedDate | date: "dd/MM/YYYY" }}
@@ -67,25 +69,27 @@
           </div>
 
           <!-- A/C Type -->
-          <div class="summary-box col-span-2">
+          <div class="summary-box lg:col-span-2 md:col-span-3 col-span-6">
             <p class="summary-title">A/C Type</p>
             <p class="summary-value">{{ editDefaultData()?.aircraftType }}</p>
           </div>
 
           <!-- A/C Reg -->
-          <div class="summary-box col-span-2">
+          <div class="summary-box lg:col-span-2 md:col-span-3 col-span-6">
             <p class="summary-title">A/C Reg</p>
             <p class="summary-value">{{ editDefaultData()?.aircraftReg }}</p>
           </div>
 
           <!-- Status -->
-          <div class="summary-box col-span-2">
+          <div class="summary-box lg:col-span-2 md:col-span-3 col-span-6">
             <p class="summary-title">Status</p>
-            <p class="summary-value">{{ editDefaultData()?.status }}</p>
+            <p class="summary-value">{{ statusTemplate(editDefaultData()?.status) }}</p>
           </div>
         </div>
 
-        <div class="mt-5 grid grid-cols-12 gap-5 text-center">
+        <hr class="mt-5 mb-5"/>
+
+        <div class="grid grid-cols-12 gap-5 mt-5 text-center">
           <!-- Duty Type -->
           <div class="col-span-6 form-item-container">
             <p-floatLabel variant="on" class="custom-float-label-field w-full">
@@ -385,7 +389,7 @@
           </div>
 
           <!-- Landing -->
-          <div class="col-span-6">
+          <div class="lg:col-span-6 md:cols-pan-6 col-span-12">
             <p class="mb-5 flex justify-start">Landing</p>
             <div class="mb-5 grid grid-cols-2 gap-4">
               <!-- Day -->
@@ -450,7 +454,7 @@
           </div>
 
           <!-- Remarks -->
-          <div class="remarks-field col-span-6">
+          <div class="remarks-field lg:col-span-6 md:cols-pan-6 col-span-12">
             <p>Remarks And Endorsements</p>
             <p>{{ editDefaultData()?.signer }}</p>
             <img

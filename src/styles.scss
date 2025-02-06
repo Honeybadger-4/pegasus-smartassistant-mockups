@@ -27,6 +27,12 @@ body {
   font-style: normal;
 }
 
+.p-component {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
 // Input
 .custom-icon-field {
   input {
@@ -167,10 +173,25 @@ body {
   }
 }
 
-.p-component {
-  font-family: "Roboto", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+// Tooltip
+.custom-tooltip {
+  .p-tooltip-text {
+    background-color: #fff !important;
+    color: #444444;
+  }
+}
+
+.custom-tooltip, .p-tooltip-top .p-tooltip-arrow {
+  border-top-color: #fff !important;
+  border-bottom-color: #fff !important;
+}
+.custom-tooltip, .p-tooltip-left .p-tooltip-arrow {
+  border-left-color: #fff !important
+}
+
+.p-tooltip-bottom .p-tooltip-arrow {
+  border-top-color: #fff !important;
+  border-bottom-color: #fff !important;
 }
 
 // Table styles

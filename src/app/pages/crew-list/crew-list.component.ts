@@ -59,10 +59,10 @@ export class CrewListComponent {
   totalHoursOfLogColumnTemplate!: TemplateRef<any>;
   @ViewChild('approvedStatusTemplate', { static: true })
   approvedStatusTemplate!: TemplateRef<any>;
-
-  router = inject(Router);
+  
   adminLogbookService = inject(AdminLogbookService);
   stateManagement = inject(StateManagement);
+  router = inject(Router);
 
   breadcrumbItems: MenuItem[] = [
     { label: 'Logbook', routerLink: '/logbook' },
