@@ -134,6 +134,26 @@ body {
   .p-datepicker {
     display: flex;
   }
+
+  .p-datepicker-day-selected, .p-datepicker-year-selected {
+    background-color: #feb914 !important;
+  }
+
+  .p-datepicker-day-selected-range {
+    background-color: #feb8143f;
+  }
+
+  .p-datepicker-day:not(.p-datepicker-day-selected):not(.p-disabled):hover {
+    background-color: #feb8143f !important;
+  }
+
+  .p-datepicker-today > .p-datepicker-day {
+    background-color: #feb8147a;
+  }
+
+  .p-button-text {
+    color: $base-text-color !important;
+  }
 }
 
 .p-dropdown-panel {
@@ -284,4 +304,9 @@ body {
       color: #feb914;
     }
   }
+}
+
+// Buttons 
+.p-button-text:not(:disabled):hover {
+  background: rgb(241, 241, 241) !important;
 }
