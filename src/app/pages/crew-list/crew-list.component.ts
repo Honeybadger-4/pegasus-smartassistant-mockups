@@ -59,7 +59,7 @@ export class CrewListComponent {
   totalHoursOfLogColumnTemplate!: TemplateRef<any>;
   @ViewChild('approvedStatusTemplate', { static: true })
   approvedStatusTemplate!: TemplateRef<any>;
-  
+
   adminLogbookService = inject(AdminLogbookService);
   stateManagement = inject(StateManagement);
   router = inject(Router);

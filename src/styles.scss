@@ -145,7 +145,8 @@ body {
     display: flex;
   }
 
-  .p-datepicker-day-selected, .p-datepicker-year-selected {
+  .p-datepicker-day-selected,
+  .p-datepicker-year-selected {
     background-color: #feb914 !important;
   }
 
@@ -211,12 +212,14 @@ body {
   }
 }
 
-.custom-tooltip, .p-tooltip-top .p-tooltip-arrow {
+.custom-tooltip,
+.p-tooltip-top .p-tooltip-arrow {
   border-top-color: #fff !important;
   border-bottom-color: #fff !important;
 }
-.custom-tooltip, .p-tooltip-left .p-tooltip-arrow {
-  border-left-color: #fff !important
+.custom-tooltip,
+.p-tooltip-left .p-tooltip-arrow {
+  border-left-color: #fff !important;
 }
 
 .p-tooltip-bottom .p-tooltip-arrow {
@@ -316,7 +319,7 @@ body {
   }
 }
 
-// Buttons 
+// Buttons
 .p-button-text:not(:disabled):hover {
   background: rgb(241, 241, 241) !important;
 }

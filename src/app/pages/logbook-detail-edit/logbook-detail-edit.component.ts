@@ -378,11 +378,10 @@ export class LogbookDetailEditComponent implements OnInit {
   }
 
   statusTemplate(value?: string) {
-    if(value === 'WAITING_APPROVAL') {
-      return "WAITING APPROVAL"
-    }else {
-      return value
+    if (value === 'WAITING_APPROVAL') {
+      return 'WAITING APPROVAL';
+    } else {
+      return value;
     }
   }
-  
 }
