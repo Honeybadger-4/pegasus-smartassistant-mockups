@@ -98,7 +98,6 @@ export class LoadSheetComponent {
       { field: 'arrPort', header: 'Arrival' },
       { field: 'depDateTime', header: 'Dep Date/Time' },
       { field: 'arrDateTime', header: 'Arr Date/Time' },
-
       { field: 'preparedBy', header: 'Prepared By' },
       { field: 'checkedBy', header: 'Checked By' },
       { field: 'username', header: 'Approved By' },
@@ -148,8 +147,14 @@ export class LoadSheetComponent {
       )
       .subscribe({
         next: (response) => {
+          const formattedData = response.loadSheets.content.map((item) => ({
+            ...item,
+            depDateTime: moment(item.depDateTime).format('DD/MM/YYYY - HH:mm'),
+            arrDateTime: moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm'),
+          }));
+
           this.loadSheetData.set(response);
-          this.loadSheetTableData.set(response.loadSheets.content);
+          this.loadSheetTableData.set(formattedData);
           this.approvedValue.set(response.approvedPercentage);
           this.tableLoading = false;
 

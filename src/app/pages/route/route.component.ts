@@ -244,8 +244,14 @@ export class RouteComponent {
       )
       .subscribe({
         next: (response) => {
+          const formattedData = response.content.map((item) => ({
+            ...item,
+            depDateTime: moment(item.depDateTime).format('DD/MM/YYYY - HH:mm'),
+            arrDateTime: moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm'),
+          }));
+
           this.routeHistoryData.set(response);
-          this.routeHistoryTableData.set(response.content);
+          this.routeHistoryTableData.set(formattedData);
           this.tableLoading = false;
         },
         error: () => {

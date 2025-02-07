@@ -37,4 +37,5 @@ export interface IFuelOrderTableData {
   arrDateTime: string;
   amount: number;
   userName: string;
+  orderDateTime:string;
 }
