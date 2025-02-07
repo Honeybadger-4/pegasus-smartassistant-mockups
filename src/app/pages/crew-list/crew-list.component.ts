@@ -135,7 +135,6 @@ export class CrewListComponent {
       });
   }
 
-
   downloadPdf(rowData: any) {
     const companyId = rowData.companyId;
     const yearMonth = this.logbookDashboardData()?.yearMonth;
@@ -187,6 +186,4 @@ export class CrewListComponent {
     this.currentRows = event.rows;
     this.getCrewList();
   }
-
-
 }
