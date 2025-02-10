@@ -83,20 +83,19 @@
       [value]="flightInformatioHistoryTableData()"
       [columns]="mainCols"
       dataKey="legIsn"
-      [tableStyle]="{ 'min-width': '50rem' }"
-      stripedRows
       [loading]="tableLoading"
+      [expandedRowKeys]="expandedRows"
       [paginator]="true"
       [rows]="currentRows"
-      [totalRecords]="flightInformationHistoryData()?.totalElements || 0"
-      [lazy]="true"
       [rowsPerPageOptions]="[20, 40, 80]"
+      [totalRecords]="flightInformationHistoryData()?.totalElements || 0"
       [first]="currentPage * currentRows"
+      [lazy]="true"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      stripedRows
       (onPage)="pageEvent($event)"
       (onRowExpand)="onRowExpand($event)"
       (onRowCollapse)="onRowCollapse($event)"
-      [expandedRowKeys]="expandedRows"
-      [paginator]="true"
     >
       <!-- Table Header -->
       <ng-template #header let-columns>
@@ -137,9 +136,9 @@
       <!-- Row Expansion Content -->
       <ng-template #expandedrow>
         <tr>
-          <td colspan="12">
+          <td colspan="13">
             <div>
-              <p-tabs [value]="0">
+              <p-tabs [value]="0" class="custom-tabs">
                 <p-tablist>
                   <p-tab
                     *ngFor="let tab of tableSubPanels; index as i"

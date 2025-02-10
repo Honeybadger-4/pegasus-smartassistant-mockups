@@ -323,3 +323,14 @@ body {
 .p-button-text:not(:disabled):hover {
   background: rgb(241, 241, 241) !important;
 }
+
+// Tabs
+.custom-tabs {
+  .p-tab-active {
+    color: $option-selected-bg;
+  }
+
+  .p-tablist-active-bar {
+    background-color: $option-selected-bg;
+  }
+}
