@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
 import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
 import { AdminLogbookService } from '@shared/services/admin-logbook.service';
+import { PdfExportService } from '@shared/services/pdf-export.service';
 import { Column } from '@shared/models/columns';
 import {
   ILogbookCrewListContentData,
@@ -61,6 +62,7 @@ export class CrewListComponent {
   approvedStatusTemplate!: TemplateRef<any>;
 
   adminLogbookService = inject(AdminLogbookService);
+  pdfExportService = inject(PdfExportService);
   stateManagement = inject(StateManagement);
   router = inject(Router);
 
@@ -131,6 +133,25 @@ export class CrewListComponent {
           this.tableLoading = false;
         },
       });
+  }
+
+  // Download Pdf
+  downloadPdf(rowData: any) {
+    const companyId = rowData.companyId;
+    const yearMonth = this.logbookDashboardData()?.yearMonth;
+
+    this.pdfExportService.getPdfExport(companyId, yearMonth).subscribe({
+      next: (pdfBlob) => {
+        const blob = new Blob([pdfBlob], { type: 'application/pdf' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = `Logbook_${companyId}_${yearMonth}.pdf`;
+        link.click();
+      },
+      error: (error) => {
+        console.error('PDF Download Error:', error);
+      },
+    });
   }
 
   // Search Operations

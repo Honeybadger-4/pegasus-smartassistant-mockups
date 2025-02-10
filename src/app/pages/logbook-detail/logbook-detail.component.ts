@@ -21,6 +21,7 @@ import { ILogbookCrewListContentData } from '@shared/models/logbook-crew-list-re
 import { ShowToastService } from '@shared/services/helpers-services/show-toast.service';
 import { IDetailedListRequest } from '@shared/models/detailed-list-request.model';
 import { AdminLogbookService } from '@shared/services/admin-logbook.service';
+import { PdfExportService } from '@shared/services/pdf-export.service';
 import { TruncateTextPipe } from '@shared/pipes/truncate-text.pipe';
 import { Column } from '@shared/models/columns';
 
@@ -88,6 +89,7 @@ export class LogbookDetailComponent {
   messageService = inject(MessageService);
   confirmationService = inject(ConfirmationService);
   showToastService = inject(ShowToastService);
+  pdfExportService = inject(PdfExportService);
   stateManagement = inject(StateManagement);
 
   breadcrumbItems = [
@@ -130,9 +132,9 @@ export class LogbookDetailComponent {
       { field: 'aircraftType', header: 'A/C Type' },
       { field: 'aircraftReg', header: 'A/C Reg' },
       { field: 'departure', header: 'Departure' },
-      { field: 'depTime', header: 'Departure Time' },
+      { field: 'departureTime', header: 'Departure Time' },
       { field: 'arrival', header: 'Arrival' },
-      { field: 'arrTime', header: 'Arrival Time' },
+      { field: 'arrivalTime', header: 'Arrival Time' },
       { field: 'totalTime', header: 'Total Time' },
       { field: 'multiPilotTime', header: 'Multi Pilot Time' },
       {
@@ -303,5 +305,23 @@ export class LogbookDetailComponent {
     this.currentPage = page;
     this.currentRows = event.rows;
     this.getDetailedList();
+  }
+
+  downloadPdf() {
+    const companyId = this.crewListTableData.companyId;
+    const yearMonth = this.crewListTableData.yearMonth;
+
+    this.pdfExportService.getPdfExport(companyId, yearMonth).subscribe({
+      next: (pdfBlob) => {
+        const blob = new Blob([pdfBlob], { type: 'application/pdf' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = `Logbook_${companyId}_${yearMonth}.pdf`;
+        link.click();
+      },
+      error: (error) => {
+        console.error('PDF Download Error:', error);
+      },
+    });
   }
 }
