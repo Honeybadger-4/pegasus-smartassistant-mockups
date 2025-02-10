@@ -316,7 +316,7 @@ export class LogbookDetailComponent {
         const blob = new Blob([pdfBlob], { type: 'application/pdf' });
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
-        link.download = `Logbook_Detail_${companyId}_${yearMonth}.pdf`;
+        link.download = `Logbook_${companyId}_${yearMonth}.pdf`;
         link.click();
       },
       error: (error) => {

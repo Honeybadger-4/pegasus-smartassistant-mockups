@@ -145,7 +145,7 @@ export class CrewListComponent {
         const blob = new Blob([pdfBlob], { type: 'application/pdf' });
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
-        link.download = `Crew_Logbook_${companyId}_${yearMonth}.pdf`;
+        link.download = `Logbook_${companyId}_${yearMonth}.pdf`;
         link.click();
       },
       error: (error) => {
