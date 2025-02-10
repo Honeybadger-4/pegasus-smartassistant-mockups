@@ -40,5 +40,3 @@ export interface IRouteTableData {
   gpsLossForm: number | null;
   alternateRoute: string | null;
 }
-
-

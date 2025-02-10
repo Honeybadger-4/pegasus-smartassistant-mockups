@@ -45,6 +45,3 @@ export interface ITripInfoTableData {
   takeOffTime: string;
   status: string;
 }
-
-
-

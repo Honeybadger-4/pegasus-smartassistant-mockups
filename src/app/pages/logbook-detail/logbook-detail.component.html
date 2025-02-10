@@ -62,7 +62,6 @@
           (click)="displayRejectPopup = true"
         />
 
-        <!-- TODO: Export servisi gelince eklenmeli. -->
         <p-button
           type="button"
           [rounded]="true"
@@ -72,6 +71,7 @@
           tooltipPosition="left"
           tooltipStyleClass="custom-tooltip"
           [style]="{ color: 'black' }"
+          (click)="downloadPdf()"
         />
       </div>
     </div>
