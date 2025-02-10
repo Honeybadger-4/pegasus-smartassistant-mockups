@@ -72,7 +72,7 @@ export class FlightInfoComponent {
   tripInfoCols!: Column[];
   loadSheetCols!: Column[];
   dateRange: Date[] = [];
-  expandedRows = {};
+  expandedRows: { [key: string]: boolean } = {};
   currentPage = 0;
   currentRows = 20;
   tableLoading: boolean = false;
@@ -541,11 +541,13 @@ export class FlightInfoComponent {
   }
 
   onRowExpand(event: TableRowExpandEvent) {
+    this.expandedRows = {};
+    this.expandedRows[event.data.legIsn] = true;
     this.getFlightInformationTripInfo(event.data.legIsn);
   }
 
   onRowCollapse(event: TableRowCollapseEvent) {
-    console.log('Collapsed: ', event);
+    delete this.expandedRows[event.data.legIsn];
   }
 
   pageEvent(event: { first: number; rows: number }) {

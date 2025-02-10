@@ -30,32 +30,24 @@
       expandIcon="pi pi-angle-up"
       collapseIcon="pi pi-angle-down"
     >
-      <div class="grid grid-cols-12">
-        <div class="line-chart-container lg:col-span-6 col-span-12">
-          <p class="chart-label">Duty</p>
-          <p-slider
-            [ngModel]="logbookDashboardData()?.dutyCount"
-            class="duty-chart"
-            styleClass="lg:w-[565px] sm:w-full h-[5px]"
-          />
-          <p class="chart-description">
-            {{ logbookDashboardData()?.dutyCount }} duty
-          </p>
+      <div class="total-card-content">
+        <div>
+          <p class="total-card-item-label">Duty</p>
+          <div>
+            <span class="total-card-item-count">{{
+              logbookDashboardData()?.dutyCount
+            }}</span>
+            <small class="font-light">times</small>
+          </div>
         </div>
 
-        <div
-          class="line-chart-container lg:col-span-6 col-span-12 lg:flex lg:justify-end"
-        >
+        <div>
+          <p class="total-card-item-label">Time</p>
           <div>
-            <p class="chart-label">Time</p>
-            <p-slider
-              [ngModel]="logbookDashboardData()?.totalHours"
-              class="time-chart"
-              styleClass="lg:w-[565px] sm:w-full h-[5px]"
-            />
-            <p class="chart-description">
-              {{ logbookDashboardData()?.totalHours }} hours
-            </p>
+            <span class="total-card-item-count">{{
+              logbookDashboardData()?.totalHours
+            }}</span>
+            <small class="font-light">hours</small>
           </div>
         </div>
       </div>

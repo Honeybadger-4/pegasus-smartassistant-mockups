@@ -14,37 +14,29 @@
     <div class="grid grid-cols-12 lg:gap-20 md:gap-20">
       <!-- BOEING -->
       <div class="lg:col-span-4 md:col-span-6 col-span-12 mb-5">
-        <div class="chart-box-container">
-          <div class="chart-box-header">Boeing / {{ selectedYear }}</div>
+        <div class="total-card-container">
+          <div class="total-card-header">Boeing / {{ selectedYear }}</div>
 
-          <div class="line-chart-container mb-4">
-            <div class="flex items-center gap-2">
-              <p class="chart-label">Duty</p>
-              <p-slider
-                [ngModel]="boeingData()?.totalDuties"
-                max="500"
-                class="duty-chart"
-                styleClass="w-[230px]"
-              />
+          <div class="total-card-content">
+            <div>
+              <p class="total-card-item-label">Duty</p>
+              <div>
+                <span class="total-card-item-count">{{
+                  boeingData()?.totalDuties
+                }}</span>
+                <small class="font-light">times</small>
+              </div>
             </div>
-            <p class="chart-description">
-              {{ boeingData()?.totalDuties }} duty
-            </p>
-          </div>
 
-          <div class="line-chart-container">
-            <div class="flex items-center gap-2">
-              <p class="chart-label">Time</p>
-              <p-slider
-                [ngModel]="boeingData()?.totalHours"
-                max="500"
-                class="time-chart"
-                styleClass="w-[230px]"
-              />
+            <div>
+              <p class="total-card-item-label">Time</p>
+              <div>
+                <span class="total-card-item-count">{{
+                  boeingData()?.totalHours
+                }}</span>
+                <small class="font-light">hours</small>
+              </div>
             </div>
-            <p class="chart-description">
-              {{ boeingData()?.totalHours }} hours
-            </p>
           </div>
         </div>
 
@@ -60,37 +52,29 @@
 
       <!-- AIRBUS -->
       <div class="lg:col-span-4 md:col-span-6 col-span-12 mb-5">
-        <div class="chart-box-container">
-          <div class="chart-box-header">Airbus / {{ selectedYear }}</div>
+        <div class="total-card-container">
+          <div class="total-card-header">Airbus / {{ selectedYear }}</div>
 
-          <div class="line-chart-container mb-4">
-            <div class="flex items-center gap-2">
-              <p class="chart-label">Duty</p>
-              <p-slider
-                [ngModel]="airbusData()?.totalDuties"
-                max="5000"
-                class="duty-chart"
-                styleClass="w-[230px]"
-              />
+          <div class="total-card-content">
+            <div>
+              <p class="total-card-item-label">Duty</p>
+              <div>
+                <span class="total-card-item-count">{{
+                  airbusData()?.totalDuties
+                }}</span>
+                <small class="font-light">times</small>
+              </div>
             </div>
-            <p class="chart-description">
-              {{ airbusData()?.totalDuties }} duty
-            </p>
-          </div>
 
-          <div class="line-chart-container">
-            <div class="flex items-center gap-2">
-              <p class="chart-label">Time</p>
-              <p-slider
-                [ngModel]="airbusData()?.totalHours"
-                max="5000"
-                class="time-chart"
-                styleClass="w-[230px]"
-              />
+            <div>
+              <p class="total-card-item-label">Time</p>
+              <div>
+                <span class="total-card-item-count">{{
+                  airbusData()?.totalHours
+                }}</span>
+                <small class="font-light">hours</small>
+              </div>
             </div>
-            <p class="chart-description">
-              {{ airbusData()?.totalHours }} hours
-            </p>
           </div>
         </div>
 
@@ -106,37 +90,29 @@
 
       <!-- TRAINING -->
       <div class="lg:col-span-4 md:col-span-6 col-span-12 mb-5">
-        <div class="chart-box-container">
-          <div class="chart-box-header">Training / {{ selectedYear }}</div>
+        <div class="total-card-container">
+          <div class="total-card-header">Training / {{ selectedYear }}</div>
 
-          <div class="line-chart-container mb-4">
-            <div class="flex items-center gap-2">
-              <p class="chart-label">Duty</p>
-              <p-slider
-                [ngModel]="trainingData()?.totalTrainings"
-                max="500"
-                class="duty-chart"
-                styleClass="w-[230px]"
-              />
+          <div class="total-card-content">
+            <div>
+              <p class="total-card-item-label">Duty</p>
+              <div>
+                <span class="total-card-item-count">{{
+                  trainingData()?.totalTrainings
+                }}</span>
+                <small class="font-light">times</small>
+              </div>
             </div>
-            <p class="chart-description">
-              {{ trainingData()?.totalTrainings }} duty
-            </p>
-          </div>
 
-          <div class="line-chart-container">
-            <div class="flex items-center gap-2">
-              <p class="chart-label">Time</p>
-              <p-slider
-                [ngModel]="trainingData()?.totalHours"
-                max="1000"
-                class="time-chart"
-                styleClass="w-[230px]"
-              />
+            <div>
+              <p class="total-card-item-label">Time</p>
+              <div>
+                <span class="total-card-item-count">{{
+                  trainingData()?.totalHours
+                }}</span>
+                <small class="font-light">hours</small>
+              </div>
             </div>
-            <p class="chart-description">
-              {{ trainingData()?.totalHours }} hours
-            </p>
           </div>
         </div>
 
