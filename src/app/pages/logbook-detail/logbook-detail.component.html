@@ -22,60 +22,60 @@
     <div
       class="lg:col-span-6 md:col-span-6 col-span-12 flex lg:justify-end md:justify-end"
     >
-    <div>
-      <div class="w-[160px]">
-        <p-select
-          [(ngModel)]="statusFilter"
-          [options]="statusOptions()"
-          optionLabel="label"
-          optionValue="value"
-          placeholder="Status"
-          [showClear]="true"
-          class="custom-dropdown w-full"
-          (ngModelChange)="getDetailedList()"
-        />
+      <div>
+        <div class="w-[160px]">
+          <p-select
+            [(ngModel)]="statusFilter"
+            [options]="statusOptions()"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Status"
+            [showClear]="true"
+            class="custom-dropdown w-full"
+            (ngModelChange)="getDetailedList()"
+          />
+        </div>
+
+        <div class="flex items-center gap-5 mt-4">
+          <p-button
+            type="button"
+            [rounded]="true"
+            [disabled]="selectedCheckbox().length <= 0"
+            icon="pi pi-check"
+            severity="success"
+            [pTooltip]="'Approve'"
+            tooltipPosition="bottom"
+            tooltipStyleClass="custom-tooltip"
+            (click)="onApprove()"
+          />
+
+          <p-button
+            type="button"
+            [rounded]="true"
+            [disabled]="
+              selectedCheckbox().length > 1 || selectedCheckbox().length <= 0
+            "
+            icon="pi pi-times"
+            severity="danger"
+            [pTooltip]="'Reject'"
+            tooltipPosition="bottom"
+            tooltipStyleClass="custom-tooltip"
+            (click)="displayRejectPopup = true"
+          />
+
+          <p-button
+            type="button"
+            [rounded]="true"
+            [outlined]="true"
+            icon="pi pi-download"
+            [pTooltip]="'Download All Document'"
+            tooltipPosition="left"
+            tooltipStyleClass="custom-tooltip"
+            [style]="{ color: 'black' }"
+            (click)="downloadPdf()"
+          />
+        </div>
       </div>
-
-      <div class="flex items-center gap-5 mt-4">
-        <p-button
-          type="button"
-          [rounded]="true"
-          [disabled]="selectedCheckbox().length <= 0"
-          icon="pi pi-check"
-          severity="success"
-          [pTooltip]="'Approve'"
-          tooltipPosition="bottom"
-          tooltipStyleClass="custom-tooltip"
-          (click)="onApprove()"
-        />
-
-        <p-button
-          type="button"
-          [rounded]="true"
-          [disabled]="
-            selectedCheckbox().length > 1 || selectedCheckbox().length <= 0
-          "
-          icon="pi pi-times"
-          severity="danger"
-          [pTooltip]="'Reject'"
-          tooltipPosition="bottom"
-          tooltipStyleClass="custom-tooltip"
-          (click)="displayRejectPopup = true"
-        />
-
-        <p-button
-          type="button"
-          [rounded]="true"
-          [outlined]="true"
-          icon="pi pi-download"
-          [pTooltip]="'Download All Document'"
-          tooltipPosition="left"
-          tooltipStyleClass="custom-tooltip"
-          [style]="{ color: 'black' }"
-          (click)="downloadPdf()"
-        />
-      </div>
-    </div>
     </div>
   </section>
 

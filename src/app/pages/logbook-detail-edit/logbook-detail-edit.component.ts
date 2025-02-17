@@ -70,6 +70,7 @@ export class LogbookDetailEditComponent implements OnInit {
     { label: 'Edit Logbook' },
   ];
   logId: number = 0;
+  dutyType = signal<string>('');
   logbookFormGroup!: FormGroup;
   rejectReason: string = '';
   displayRejectPopup: boolean = false;
@@ -82,7 +83,7 @@ export class LogbookDetailEditComponent implements OnInit {
     this.logId = this.stateManagement.getState('logbookDetailPage')?.logId;
 
     this.getLogByLogId();
-    this.getUpdateableFields();
+
     this.builder();
   }
 
@@ -147,7 +148,10 @@ export class LogbookDetailEditComponent implements OnInit {
       next: (response) => {
         this.editDefaultData.set(response);
         this.formDataLoading.set(false);
+        this.dutyType.set(response.dutyType);
         this.builder();
+
+        this.getUpdateableFields();
       },
       error: (error) => {
         this.formDataLoading.set(false);
@@ -156,7 +160,7 @@ export class LogbookDetailEditComponent implements OnInit {
   }
 
   getUpdateableFields() {
-    this.logbookService.getUpdateableFields().subscribe({
+    this.logbookService.getUpdateableFields(this.dutyType()).subscribe({
       next: (response) => {
         this.updateableFields.set(response);
       },

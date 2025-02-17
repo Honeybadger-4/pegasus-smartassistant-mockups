@@ -11,8 +11,8 @@ export class LogbookService {
   http = inject(HttpClient);
   baseUrl = environment.baseApi;
 
-  getUpdateableFields() {
-    const apiUrl = `${this.baseUrl}/api/v1/logbook/updatable-fields?dutyType=flight`;
+  getUpdateableFields(dutyType: string) {
+    const apiUrl = `${this.baseUrl}/api/v1/logbook/updatable-fields?dutyType=${dutyType}`;
 
     return this.http
       .get<IHttpResponseModel>(apiUrl)
