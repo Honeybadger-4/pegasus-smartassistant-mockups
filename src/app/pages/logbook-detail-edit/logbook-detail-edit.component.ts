@@ -83,7 +83,7 @@ export class LogbookDetailEditComponent implements OnInit {
     this.logId = this.stateManagement.getState('logbookDetailPage')?.logId;
 
     this.getLogByLogId();
-    
+
     this.builder();
   }
 
@@ -150,7 +150,7 @@ export class LogbookDetailEditComponent implements OnInit {
         this.formDataLoading.set(false);
         this.dutyType.set(response.dutyType);
         this.builder();
-        
+
         this.getUpdateableFields();
       },
       error: (error) => {
