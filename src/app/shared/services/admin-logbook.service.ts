@@ -1,18 +1,17 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { ILogbookStatusListResponse } from '@shared/models/logbook-status-list-response.model';
-import { ILogbookCrewListResponse } from '@shared/models/logbook-crew-list-response.model';
-import {
-  IDetailedListContentData,
-  IDetailedListResponse,
-} from '@shared/models/detailed-list-response.model';
-import { IDetailedListRequest } from '@shared/models/detailed-list-request.model';
-import { IHttpResponseModel } from '@shared/models/http-response.model';
 import { environment } from '@environments/environment';
+
+import { IHttpResponseModel } from '@shared/models/http-response.model';
 import { ILogbookEditRequest } from '@shared/models/logbook-edit-request.model';
+import { IDetailedListRequest } from '@shared/models/detailed-list-request.model';
 import { ILogbookSummaryResponse } from '@shared/models/logbook-summary-response.model';
+import { ILogbookCrewListResponse } from '@shared/models/logbook-crew-list-response.model';
+import { ILogbookGetCrewListByFilterResponse } from '@shared/models/get-crews-response.model';
+import { ILogbookStatusListResponse } from '@shared/models/logbook-status-list-response.model';
+import { IDetailedListContentData, IDetailedListResponse } from '@shared/models/detailed-list-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -59,6 +58,21 @@ export class AdminLogbookService {
     return this.http
       .get<IHttpResponseModel>(apiUrl, { params })
       .pipe(map((response) => response.data));
+  }
+
+  getCrewListByFilterForCurrentMonth(
+    page: number,
+    size: number,
+    searchValue?: string | null,
+  ): Observable<ILogbookGetCrewListByFilterResponse> {
+    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/crews/filter`;
+
+    let params = new HttpParams()
+      .set('page', page)
+      .set('size', size)
+      .set('filter', searchValue || '');
+
+    return this.http.post<any>(apiUrl, null , {params}).pipe(map((response) => response));
   }
 
   getDetailedList(
