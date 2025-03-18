@@ -2,21 +2,20 @@ import {
   Component,
   inject,
   signal,
-  TemplateRef,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
-import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
-import { ILogbookSummaryResponse } from '@shared/models/logbook-summary-response.model';
-import { AdminLogbookService } from '@shared/services/admin-logbook.service';
 import { Column } from '@shared/models/columns';
+import { AdminLogbookService } from '@shared/services/admin-logbook.service';
+import { ILogbookSummaryResponse } from '@shared/models/logbook-summary-response.model';
+import { StateManagement } from '@shared/services/helpers-services/state-management.service';
+import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 
 import { SliderModule } from 'primeng/slider';
 import { SelectModule } from 'primeng/select';
-import { StateManagement } from '@shared/services/helpers-services/state-management.service';
 
 @Component({
   selector: 'app-logbook',
@@ -31,61 +30,64 @@ import { StateManagement } from '@shared/services/helpers-services/state-managem
   styleUrl: './logbook.component.scss',
 })
 export class LogbookComponent {
-  @ViewChild('monthColumnsTemplate', { static: true })
-  monthColumnsTemplate!: TemplateRef<any>;
-  @ViewChild('dutyColumnsTemplate', { static: true })
-  dutyColumnsTemplate!: TemplateRef<any>;
-  @ViewChild('linkedNextPageTemplate', { static: true })
-  linkedNextPageTemplate!: TemplateRef<any>;
+  dutyColumnsTemplate = viewChild.required('dutyColumnsTemplate');
+  monthColumnsTemplate = viewChild.required('monthColumnsTemplate');
+  linkedNextPageTemplate = viewChild.required('linkedNextPageTemplate');
 
   router = inject(Router);
-  adminLogbookService = inject(AdminLogbookService);
   stateManagement = inject(StateManagement);
+  adminLogbookService = inject(AdminLogbookService);
 
+  columns = signal<Column[]>([]);
+  tableLoading = signal<boolean>(false);
+  
   logbookSummaryData = signal<ILogbookSummaryResponse | null>(null);
   boeingData = signal<ILogbookSummaryResponse['boeingSummary'] | null>(null);
   airbusData = signal<ILogbookSummaryResponse['airbusSummary'] | null>(null);
-  trainingData = signal<ILogbookSummaryResponse['trainingSummary'] | null>(
-    null,
-  );
+  trainingData = signal<ILogbookSummaryResponse['trainingSummary'] | null>(null);
+  
+  currentMonth = signal<string | null>(null);
+  
+  selectedYear = signal<number>(0);
   yearOptions = signal<number[] | undefined>(undefined);
-  selectedYear!: number;
-  columns!: Column[];
-  tableLoading = false;
 
   ngOnInit() {
     this.defineColumns();
     this.getAvailableYears();
+
+    const year = new Date().getFullYear();
+    const month = new Date().getMonth() + 1
+    this.currentMonth.set(year + "-" + month);
   }
 
   defineColumns() {
-    this.columns = [
+    this.columns.set([
       {
         field: 'yearMonth',
         header: 'Month',
-        template: this.monthColumnsTemplate,
+        template: this.monthColumnsTemplate(),
       },
       {
         field: 'dutyCount',
         header: 'Duty',
-        template: this.dutyColumnsTemplate,
+        template: this.dutyColumnsTemplate(),
       },
-      { field: '', header: '', template: this.linkedNextPageTemplate },
-    ];
+      { field: '', header: '', template: this.linkedNextPageTemplate() },
+    ]);
   }
 
   getLogbookSummary() {
-    this.tableLoading = true;
-    this.adminLogbookService.getLogbookSummary(this.selectedYear).subscribe({
+    this.tableLoading.set(true);
+    this.adminLogbookService.getLogbookSummary(this.selectedYear()).subscribe({
       next: (response) => {
         this.logbookSummaryData.set(response);
         this.boeingData.set(response.boeingSummary);
         this.airbusData.set(response.airbusSummary);
         this.trainingData.set(response.trainingSummary);
-        this.tableLoading = false;
+        this.tableLoading.set(false);
       },
-      error: (error) => {
-        this.tableLoading = false;
+      error: () => {
+        this.tableLoading.set(false);
       },
     });
   }
@@ -94,15 +96,15 @@ export class LogbookComponent {
     this.adminLogbookService.getAvailableYears().subscribe({
       next: (response) => {
         this.yearOptions.set(response);
-        this.selectedYear = response[0];
+        this.selectedYear.set(response[0]);
         this.getLogbookSummary();
-      },
-      error: (error) => {},
+      }
     });
   }
 
-  onNextPage(rowData: any) {
-    this.stateManagement.setState('logbookSummaryPage', rowData);
-    this.router.navigate(['logbook/crew-list']);
+  onNextPage(rowData?: any, isCurrentMonth = false) {
+      this.stateManagement.setState('isLogbookCurrentMonth', isCurrentMonth);
+      this.stateManagement.setState('logbookSummaryPage', rowData);
+      this.router.navigate(['logbook/crew-list']);
   }
 }

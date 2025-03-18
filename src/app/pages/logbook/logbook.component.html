@@ -15,7 +15,7 @@
       <!-- BOEING -->
       <div class="lg:col-span-4 md:col-span-6 col-span-12 mb-5">
         <div class="total-card-container">
-          <div class="total-card-header">Boeing / {{ selectedYear }}</div>
+          <div class="total-card-header">Boeing / {{ selectedYear() }}</div>
 
           <div class="total-card-content">
             <div>
@@ -43,17 +43,23 @@
         <div class="custom-card mt-5">
           <app-custom-table
             [tableData]="boeingData()?.monthlyDetails"
-            [tableColumns]="columns"
-            [tableLoading]="tableLoading"
+            [tableColumns]="columns()"
+            [tableLoading]="tableLoading()"
             [isPaginator]="false"
           />
+
+          <div class="current-month-container mt-1">
+            <p class="text-[12px]">{{currentMonth() | date: 'MMMM'}} (Current)</p>
+            <i class="pi pi-angle-right cursor-pointer" (click)="onNextPage({logbookType: 'BOEING', yearMonth: currentMonth()}, true)"></i>
+          </div>
+          
         </div>
       </div>
 
       <!-- AIRBUS -->
       <div class="lg:col-span-4 md:col-span-6 col-span-12 mb-5">
         <div class="total-card-container">
-          <div class="total-card-header">Airbus / {{ selectedYear }}</div>
+          <div class="total-card-header">Airbus / {{ selectedYear() }}</div>
 
           <div class="total-card-content">
             <div>
@@ -81,17 +87,22 @@
         <div class="custom-card mt-5">
           <app-custom-table
             [tableData]="airbusData()?.monthlyDetails"
-            [tableColumns]="columns"
-            [tableLoading]="tableLoading"
+            [tableColumns]="columns()"
+            [tableLoading]="tableLoading()"
             [isPaginator]="false"
           />
+
+          <div class="current-month-container mt-1">
+            <p class="text-[12px]">{{currentMonth() | date: 'MMMM'}} (Current)</p>
+            <i class="pi pi-angle-right cursor-pointer" (click)="onNextPage({logbookType: 'AIRBUS', yearMonth: currentMonth()}, true)"></i>
+          </div>
         </div>
       </div>
 
       <!-- TRAINING -->
       <div class="lg:col-span-4 md:col-span-6 col-span-12 mb-5">
         <div class="total-card-container">
-          <div class="total-card-header">Training / {{ selectedYear }}</div>
+          <div class="total-card-header">Training / {{ selectedYear() }}</div>
 
           <div class="total-card-content">
             <div>
@@ -119,10 +130,15 @@
         <div class="custom-card mt-5">
           <app-custom-table
             [tableData]="trainingData()?.monthlyDetails"
-            [tableColumns]="columns"
-            [tableLoading]="tableLoading"
+            [tableColumns]="columns()"
+            [tableLoading]="tableLoading()"
             [isPaginator]="false"
           />
+
+          <div class="current-month-container mt-1">
+            <p class="text-[12px]">{{currentMonth() | date: 'MMMM'}} (Current)</p>
+            <i class="pi pi-angle-right cursor-pointer" (click)="onNextPage({logbookType: 'SIM', yearMonth: currentMonth()}, true)"></i>
+          </div>
         </div>
       </div>
     </div>
@@ -142,5 +158,5 @@
 </ng-template>
 
 <ng-template #linkedNextPageTemplate let-rowData="rowData">
-  <i class="pi pi-angle-right cursor-pointer" (click)="onNextPage(rowData)"></i>
+  <i class="pi pi-angle-right cursor-pointer w-full !flex justify-end" (click)="onNextPage(rowData)"></i>
 </ng-template>
