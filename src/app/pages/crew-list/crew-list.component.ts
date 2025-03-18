@@ -6,30 +6,28 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 
-import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
-import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
-import { AdminLogbookService } from '@shared/services/admin-logbook.service';
-import { PdfExportService } from '@shared/services/pdf-export.service';
 import { Column } from '@shared/models/columns';
-import {
-  ILogbookCrewListContentData,
-  ILogbookCrewListResponse,
-} from '@shared/models/logbook-crew-list-response.model';
+import { PdfExportService } from '@shared/services/pdf-export.service';
+import { AdminLogbookService } from '@shared/services/admin-logbook.service';
+import { ILogbookCrewListResponse } from '@shared/models/logbook-crew-list-response.model';
+import { StateManagement } from '@shared/services/helpers-services/state-management.service';
+import { ILogbookGetCrewListByFilterResponse } from '@shared/models/get-crews-response.model';
+import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
+import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
 
+import { MenuItem } from 'primeng/api';
+import { PanelModule } from 'primeng/panel';
+import { ButtonModule } from 'primeng/button';
+import { SliderModule } from 'primeng/slider';
+import { TooltipModule } from 'primeng/tooltip';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
-import { SliderModule } from 'primeng/slider';
-import { PanelModule } from 'primeng/panel';
-import { MenuItem } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
-import { StateManagement } from '@shared/services/helpers-services/state-management.service';
-import { TooltipModule } from 'primeng/tooltip';
-import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-logbook',
@@ -50,6 +48,7 @@ import { ButtonModule } from 'primeng/button';
   styleUrl: './crew-list.component.scss',
 })
 export class CrewListComponent {
+  // TODO: viewChild ile refactor edilmeli @ViewChild decaratörleri.
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
   @ViewChild('searchInput', { static: true }) searchInput!: ElementRef;
   @ViewChild('linkedNextPageTemplate', { static: true })
@@ -61,10 +60,10 @@ export class CrewListComponent {
   @ViewChild('approvedStatusTemplate', { static: true })
   approvedStatusTemplate!: TemplateRef<any>;
 
-  adminLogbookService = inject(AdminLogbookService);
-  pdfExportService = inject(PdfExportService);
-  stateManagement = inject(StateManagement);
   router = inject(Router);
+  stateManagement = inject(StateManagement);
+  pdfExportService = inject(PdfExportService);
+  adminLogbookService = inject(AdminLogbookService);
 
   breadcrumbItems: MenuItem[] = [
     { label: 'Logbook', routerLink: '/logbook' },
@@ -75,41 +74,59 @@ export class CrewListComponent {
   currentPage = 0;
   currentRows = 20;
   tableLoading: boolean = false;
-  crewListData = signal<ILogbookCrewListResponse | null>(null);
-  crewListContentData = signal<ILogbookCrewListContentData[]>([]);
+  crewListData = signal<ILogbookCrewListResponse | ILogbookGetCrewListByFilterResponse | null>(null);
+  crewListContentData = signal<ILogbookCrewListResponse['content']  | ILogbookGetCrewListByFilterResponse['content'] | null>(null);
   logbookDashboardData = signal<any>(null);
+  isLogbookCurrentMonth = signal<boolean>(false);
 
   ngOnInit() {
     this.logbookDashboardData.set(
       this.stateManagement.getState('logbookSummaryPage'),
     );
 
+    this.isLogbookCurrentMonth.set(
+      this.stateManagement.getState('isLogbookCurrentMonth')
+    );
+
     this.defineColumns();
-    this.getCrewList();
     this.setupSearchListener();
+
+    if(this.isLogbookCurrentMonth()) {
+      this.getCrewListByFilterForCurrentMonth();
+    }else {
+      this.getCrewList();
+    }
   }
 
   // Define Operations
   defineColumns() {
-    this.columns = [
-      { field: 'crewNameSurname', header: 'Crew Name & Surname' },
-      { field: 'companyId', header: 'Company ID' },
-      { field: 'totalNumberOfLog', header: 'Total Number of Log' },
-      {
-        field: 'totalHours',
-        header: 'Total Hours of Log',
-        template: this.totalHoursOfLogColumnTemplate,
-      },
-      { field: 'approvedLogs', header: 'Approved Logs' },
-      { field: 'reassignedLogs', header: 'Reassing Logs' },
-      {
-        field: 'approvedStatus',
-        header: 'Approval Status',
-        template: this.approvedStatusTemplate,
-      },
-      { field: '', header: '', template: this.linkedNextPageTemplate },
-      { field: '', header: '', template: this.exportDataIconTemplate },
-    ];
+    if(this.isLogbookCurrentMonth()) {
+      this.columns = [
+        { field: 'fullName', header: 'Crew Name & Surname' },
+        { field: 'companyId', header: 'Company ID' },
+        { field: '', header: '', template: this.linkedNextPageTemplate },
+      ];
+    } else {
+      this.columns = [
+        { field: 'crewNameSurname', header: 'Crew Name & Surname' },
+        { field: 'companyId', header: 'Company ID' },
+        { field: 'totalNumberOfLog', header: 'Total Number of Log' },
+        {
+          field: 'totalHours',
+          header: 'Total Hours of Log',
+          template: this.totalHoursOfLogColumnTemplate,
+        },
+        { field: 'approvedLogs', header: 'Approved Logs' },
+        { field: 'reassignedLogs', header: 'Reassing Logs' },
+        {
+          field: 'approvedStatus',
+          header: 'Approval Status',
+          template: this.approvedStatusTemplate,
+        },
+        { field: '', header: '', template: this.linkedNextPageTemplate },
+        { field: '', header: '', template: this.exportDataIconTemplate },
+      ];
+    }
   }
 
   getCrewList() {
@@ -124,6 +141,7 @@ export class CrewListComponent {
       )
       .subscribe({
         next: (response) => {
+          console.log(response);
           this.crewListData.set(response);
           this.crewListContentData.set(response.content);
           this.tableLoading = false;
@@ -133,6 +151,25 @@ export class CrewListComponent {
           this.tableLoading = false;
         },
       });
+  }
+
+  getCrewListByFilterForCurrentMonth() {
+    this.tableLoading = true;
+    this.adminLogbookService.getCrewListByFilterForCurrentMonth(
+      this.currentPage,
+      this.currentRows,
+      this.searchInputValue
+    ).subscribe({
+      next: (response) => {
+        this.crewListData.set(response);
+        this.crewListContentData.set(response.content);
+        this.tableLoading = false;
+      },
+      error: (error) => {
+        console.error(error);
+        this.tableLoading = false;
+      },
+    })
   }
 
   // Download Pdf
@@ -166,7 +203,12 @@ export class CrewListComponent {
         if (searchText.trim() || searchText === '') {
           this.currentPage = 0;
           this.customTableComponent.resetTableFirstValue();
-          this.getCrewList();
+
+          if(this.isLogbookCurrentMonth()) {
+            this.getCrewListByFilterForCurrentMonth();
+          }else {
+            this.getCrewList();
+          }
         }
       });
   }
@@ -185,6 +227,11 @@ export class CrewListComponent {
     const page = event.first / event.rows;
     this.currentPage = page;
     this.currentRows = event.rows;
-    this.getCrewList();
+    
+    if(this.isLogbookCurrentMonth()) {
+      this.getCrewListByFilterForCurrentMonth();
+    }else {
+      this.getCrewList();
+    }
   }
 }

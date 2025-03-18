@@ -18,40 +18,48 @@
   </div>
 
   <section class="chart-panel-section mt-5">
-    <p-panel
-      [header]="
+    @if(isLogbookCurrentMonth()) {
+      <p class="font-bold text-[16px]">{{ 
         logbookDashboardData()?.logbookType +
         ' / ' +
-        (logbookDashboardData()?.yearMonth | date: 'MMMM-YYYY')
-      "
-      [toggleable]="true"
-      collapsed="true"
-      iconPos="start"
-      expandIcon="pi pi-angle-up"
-      collapseIcon="pi pi-angle-down"
-    >
-      <div class="total-card-content">
-        <div>
-          <p class="total-card-item-label">Duty</p>
+        (logbookDashboardData()?.yearMonth | date: 'MMMM-YYYY') }}</p>
+    }
+    @else {
+      <p-panel
+        [header]="
+          logbookDashboardData()?.logbookType +
+          ' / ' +
+          (logbookDashboardData()?.yearMonth | date: 'MMMM-YYYY')
+        "
+        [toggleable]="true"
+        collapsed="true"
+        iconPos="start"
+        expandIcon="pi pi-angle-up"
+        collapseIcon="pi pi-angle-down"
+      >
+        <div class="total-card-content">
           <div>
-            <span class="total-card-item-count">{{
-              logbookDashboardData()?.dutyCount
-            }}</span>
-            <small class="font-light">times</small>
+            <p class="total-card-item-label">Duty</p>
+            <div>
+              <span class="total-card-item-count">{{
+                logbookDashboardData()?.dutyCount
+              }}</span>
+              <small class="font-light">times</small>
+            </div>
+          </div>
+  
+          <div>
+            <p class="total-card-item-label">Time</p>
+            <div>
+              <span class="total-card-item-count">{{
+                logbookDashboardData()?.totalHours
+              }}</span>
+              <small class="font-light">hours</small>
+            </div>
           </div>
         </div>
-
-        <div>
-          <p class="total-card-item-label">Time</p>
-          <div>
-            <span class="total-card-item-count">{{
-              logbookDashboardData()?.totalHours
-            }}</span>
-            <small class="font-light">hours</small>
-          </div>
-        </div>
-      </div>
-    </p-panel>
+      </p-panel>
+    }
   </section>
 
   <section class="table-section custom-card mt-5">
@@ -81,7 +89,7 @@
 
 <ng-template #linkedNextPageTemplate let-rowData="rowData">
   <i
-    class="pi pi-angle-right cursor-pointer"
+    class="pi pi-angle-right !flex justify-end cursor-pointer w-full"
     (click)="tableRowSelected(rowData)"
   ></i>
 </ng-template>
