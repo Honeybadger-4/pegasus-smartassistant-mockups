@@ -49,10 +49,19 @@
           />
 
           <div class="current-month-container mt-1">
-            <p class="text-[12px]">{{currentMonth() | date: 'MMMM'}} (Current)</p>
-            <i class="pi pi-angle-right cursor-pointer" (click)="onNextPage({logbookType: 'BOEING', yearMonth: currentMonth()}, true)"></i>
+            <p class="text-[12px]">
+              {{ currentMonth() | date: "MMMM" }} (Current)
+            </p>
+            <i
+              class="pi pi-angle-right cursor-pointer"
+              (click)="
+                onNextPage(
+                  { logbookType: 'BOEING', yearMonth: currentMonth() },
+                  true
+                )
+              "
+            ></i>
           </div>
-          
         </div>
       </div>
 
@@ -93,8 +102,18 @@
           />
 
           <div class="current-month-container mt-1">
-            <p class="text-[12px]">{{currentMonth() | date: 'MMMM'}} (Current)</p>
-            <i class="pi pi-angle-right cursor-pointer" (click)="onNextPage({logbookType: 'AIRBUS', yearMonth: currentMonth()}, true)"></i>
+            <p class="text-[12px]">
+              {{ currentMonth() | date: "MMMM" }} (Current)
+            </p>
+            <i
+              class="pi pi-angle-right cursor-pointer"
+              (click)="
+                onNextPage(
+                  { logbookType: 'AIRBUS', yearMonth: currentMonth() },
+                  true
+                )
+              "
+            ></i>
           </div>
         </div>
       </div>
@@ -136,8 +155,18 @@
           />
 
           <div class="current-month-container mt-1">
-            <p class="text-[12px]">{{currentMonth() | date: 'MMMM'}} (Current)</p>
-            <i class="pi pi-angle-right cursor-pointer" (click)="onNextPage({logbookType: 'SIM', yearMonth: currentMonth()}, true)"></i>
+            <p class="text-[12px]">
+              {{ currentMonth() | date: "MMMM" }} (Current)
+            </p>
+            <i
+              class="pi pi-angle-right cursor-pointer"
+              (click)="
+                onNextPage(
+                  { logbookType: 'SIM', yearMonth: currentMonth() },
+                  true
+                )
+              "
+            ></i>
           </div>
         </div>
       </div>
@@ -158,5 +187,8 @@
 </ng-template>
 
 <ng-template #linkedNextPageTemplate let-rowData="rowData">
-  <i class="pi pi-angle-right cursor-pointer w-full !flex justify-end" (click)="onNextPage(rowData)"></i>
+  <i
+    class="pi pi-angle-right cursor-pointer w-full !flex justify-end"
+    (click)="onNextPage(rowData)"
+  ></i>
 </ng-template>

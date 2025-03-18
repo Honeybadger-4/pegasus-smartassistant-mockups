@@ -11,7 +11,10 @@ import { ILogbookSummaryResponse } from '@shared/models/logbook-summary-response
 import { ILogbookCrewListResponse } from '@shared/models/logbook-crew-list-response.model';
 import { ILogbookGetCrewListByFilterResponse } from '@shared/models/get-crews-response.model';
 import { ILogbookStatusListResponse } from '@shared/models/logbook-status-list-response.model';
-import { IDetailedListContentData, IDetailedListResponse } from '@shared/models/detailed-list-response.model';
+import {
+  IDetailedListContentData,
+  IDetailedListResponse,
+} from '@shared/models/detailed-list-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -72,7 +75,9 @@ export class AdminLogbookService {
       .set('size', size)
       .set('filter', searchValue || '');
 
-    return this.http.post<any>(apiUrl, null , {params}).pipe(map((response) => response));
+    return this.http
+      .post<any>(apiUrl, null, { params })
+      .pipe(map((response) => response));
   }
 
   getDetailedList(

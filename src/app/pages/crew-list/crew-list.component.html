@@ -18,13 +18,15 @@
   </div>
 
   <section class="chart-panel-section mt-5">
-    @if(isLogbookCurrentMonth()) {
-      <p class="font-bold text-[16px]">{{ 
-        logbookDashboardData()?.logbookType +
-        ' / ' +
-        (logbookDashboardData()?.yearMonth | date: 'MMMM-YYYY') }}</p>
-    }
-    @else {
+    @if (isLogbookCurrentMonth()) {
+      <p class="font-bold text-[16px]">
+        {{
+          logbookDashboardData()?.logbookType +
+            " / " +
+            (logbookDashboardData()?.yearMonth | date: "MMMM-YYYY")
+        }}
+      </p>
+    } @else {
       <p-panel
         [header]="
           logbookDashboardData()?.logbookType +
@@ -47,7 +49,7 @@
               <small class="font-light">times</small>
             </div>
           </div>
-  
+
           <div>
             <p class="total-card-item-label">Time</p>
             <div>

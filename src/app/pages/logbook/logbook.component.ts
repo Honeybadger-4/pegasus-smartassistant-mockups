@@ -1,9 +1,4 @@
-import {
-  Component,
-  inject,
-  signal,
-  viewChild,
-} from '@angular/core';
+import { Component, inject, signal, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -40,14 +35,16 @@ export class LogbookComponent {
 
   columns = signal<Column[]>([]);
   tableLoading = signal<boolean>(false);
-  
+
   logbookSummaryData = signal<ILogbookSummaryResponse | null>(null);
   boeingData = signal<ILogbookSummaryResponse['boeingSummary'] | null>(null);
   airbusData = signal<ILogbookSummaryResponse['airbusSummary'] | null>(null);
-  trainingData = signal<ILogbookSummaryResponse['trainingSummary'] | null>(null);
-  
+  trainingData = signal<ILogbookSummaryResponse['trainingSummary'] | null>(
+    null,
+  );
+
   currentMonth = signal<string | null>(null);
-  
+
   selectedYear = signal<number>(0);
   yearOptions = signal<number[] | undefined>(undefined);
 
@@ -56,8 +53,8 @@ export class LogbookComponent {
     this.getAvailableYears();
 
     const year = new Date().getFullYear();
-    const month = new Date().getMonth() + 1
-    this.currentMonth.set(year + "-" + month);
+    const month = new Date().getMonth() + 1;
+    this.currentMonth.set(year + '-' + month);
   }
 
   defineColumns() {
@@ -98,13 +95,13 @@ export class LogbookComponent {
         this.yearOptions.set(response);
         this.selectedYear.set(response[0]);
         this.getLogbookSummary();
-      }
+      },
     });
   }
 
   onNextPage(rowData?: any, isCurrentMonth = false) {
-      this.stateManagement.setState('isLogbookCurrentMonth', isCurrentMonth);
-      this.stateManagement.setState('logbookSummaryPage', rowData);
-      this.router.navigate(['logbook/crew-list']);
+    this.stateManagement.setState('isLogbookCurrentMonth', isCurrentMonth);
+    this.stateManagement.setState('logbookSummaryPage', rowData);
+    this.router.navigate(['logbook/crew-list']);
   }
 }

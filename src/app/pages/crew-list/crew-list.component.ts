@@ -74,8 +74,14 @@ export class CrewListComponent {
   currentPage = 0;
   currentRows = 20;
   tableLoading: boolean = false;
-  crewListData = signal<ILogbookCrewListResponse | ILogbookGetCrewListByFilterResponse | null>(null);
-  crewListContentData = signal<ILogbookCrewListResponse['content']  | ILogbookGetCrewListByFilterResponse['content'] | null>(null);
+  crewListData = signal<
+    ILogbookCrewListResponse | ILogbookGetCrewListByFilterResponse | null
+  >(null);
+  crewListContentData = signal<
+    | ILogbookCrewListResponse['content']
+    | ILogbookGetCrewListByFilterResponse['content']
+    | null
+  >(null);
   logbookDashboardData = signal<any>(null);
   isLogbookCurrentMonth = signal<boolean>(false);
 
@@ -85,22 +91,22 @@ export class CrewListComponent {
     );
 
     this.isLogbookCurrentMonth.set(
-      this.stateManagement.getState('isLogbookCurrentMonth')
+      this.stateManagement.getState('isLogbookCurrentMonth'),
     );
 
     this.defineColumns();
     this.setupSearchListener();
 
-    if(this.isLogbookCurrentMonth()) {
+    if (this.isLogbookCurrentMonth()) {
       this.getCrewListByFilterForCurrentMonth();
-    }else {
+    } else {
       this.getCrewList();
     }
   }
 
   // Define Operations
   defineColumns() {
-    if(this.isLogbookCurrentMonth()) {
+    if (this.isLogbookCurrentMonth()) {
       this.columns = [
         { field: 'fullName', header: 'Crew Name & Surname' },
         { field: 'companyId', header: 'Company ID' },
@@ -155,21 +161,23 @@ export class CrewListComponent {
 
   getCrewListByFilterForCurrentMonth() {
     this.tableLoading = true;
-    this.adminLogbookService.getCrewListByFilterForCurrentMonth(
-      this.currentPage,
-      this.currentRows,
-      this.searchInputValue
-    ).subscribe({
-      next: (response) => {
-        this.crewListData.set(response);
-        this.crewListContentData.set(response.content);
-        this.tableLoading = false;
-      },
-      error: (error) => {
-        console.error(error);
-        this.tableLoading = false;
-      },
-    })
+    this.adminLogbookService
+      .getCrewListByFilterForCurrentMonth(
+        this.currentPage,
+        this.currentRows,
+        this.searchInputValue,
+      )
+      .subscribe({
+        next: (response) => {
+          this.crewListData.set(response);
+          this.crewListContentData.set(response.content);
+          this.tableLoading = false;
+        },
+        error: (error) => {
+          console.error(error);
+          this.tableLoading = false;
+        },
+      });
   }
 
   // Download Pdf
@@ -204,9 +212,9 @@ export class CrewListComponent {
           this.currentPage = 0;
           this.customTableComponent.resetTableFirstValue();
 
-          if(this.isLogbookCurrentMonth()) {
+          if (this.isLogbookCurrentMonth()) {
             this.getCrewListByFilterForCurrentMonth();
-          }else {
+          } else {
             this.getCrewList();
           }
         }
@@ -227,10 +235,10 @@ export class CrewListComponent {
     const page = event.first / event.rows;
     this.currentPage = page;
     this.currentRows = event.rows;
-    
-    if(this.isLogbookCurrentMonth()) {
+
+    if (this.isLogbookCurrentMonth()) {
       this.getCrewListByFilterForCurrentMonth();
-    }else {
+    } else {
       this.getCrewList();
     }
   }
