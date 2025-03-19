@@ -64,6 +64,8 @@ export class FlightInfoComponent {
   loadSheetTableCGLimitsCellTemplate!: TemplateRef<any>;
   @ViewChild('tripInfoTableTripInfoCellTemplate', { static: true })
   tripInfoTableTripInfoCellTemplate!: TemplateRef<any>;
+  @ViewChild('routeTableDocumentsCellTemplate', { static: true })
+  routeTableDocumentsCellTemplate!: TemplateRef<any>;
 
   filterFormGroup!: FormGroup;
   mainCols!: Column[];
@@ -71,6 +73,7 @@ export class FlightInfoComponent {
   flightPlanCols!: Column[];
   tripInfoCols!: Column[];
   loadSheetCols!: Column[];
+  routeCols!: Column[];
   dateRange: Date[] = [];
   expandedRows: { [key: string]: boolean } = {};
   currentPage = 0;
@@ -314,6 +317,123 @@ export class FlightInfoComponent {
     },
   ];
 
+  routeData = [
+    {
+      airway: 'UGB',
+      wpt: 'GOBIT',
+      mora: '86',
+      fl: 'CLB',
+      shr: '-',
+      avtt: '110',
+      wV: '269/02',
+      dist: '54',
+      rd: '152',
+      pf: '152',
+      fu: '-1042',
+      rf: '-823',
+      afDf: '00:00',
+      min: '00:00',
+      tW: '05:10',
+      atDt: '00:00',
+      acc: '05:10',
+    },
+    {
+      airway: 'UGB',
+      wpt: 'GOBIT',
+      mora: '86',
+      fl: 'CLB',
+      shr: '-',
+      avtt: '110',
+      wV: '269/02',
+      dist: '54',
+      rd: '152',
+      pf: '152',
+      fu: '-1042',
+      rf: '-823',
+      afDf: '00:00',
+      min: '00:00',
+      tW: '05:10',
+      atDt: '00:00',
+      acc: '05:10',
+    },
+    {
+      airway: 'UGB',
+      wpt: 'GOBIT',
+      mora: '86',
+      fl: 'CLB',
+      shr: '-',
+      avtt: '110',
+      wV: '269/02',
+      dist: '54',
+      rd: '152',
+      pf: '152',
+      fu: '-1042',
+      rf: '-823',
+      afDf: '00:00',
+      min: '00:00',
+      tW: '05:10',
+      atDt: '00:00',
+      acc: '05:10',
+    },
+    {
+      airway: 'UGB',
+      wpt: 'GOBIT',
+      mora: '86',
+      fl: 'CLB',
+      shr: '-',
+      avtt: '110',
+      wV: '269/02',
+      dist: '54',
+      rd: '152',
+      pf: '152',
+      fu: '-1042',
+      rf: '-823',
+      afDf: '00:00',
+      min: '00:00',
+      tW: '05:10',
+      atDt: '00:00',
+      acc: '05:10',
+    },
+    {
+      airway: 'UGB',
+      wpt: 'GOBIT',
+      mora: '86',
+      fl: 'CLB',
+      shr: '-',
+      avtt: '110',
+      wV: '269/02',
+      dist: '54',
+      rd: '152',
+      pf: '152',
+      fu: '-1042',
+      rf: '-823',
+      afDf: '00:00',
+      min: '00:00',
+      tW: '05:10',
+      atDt: '00:00',
+      acc: '05:10',
+    },
+    {
+      airway: 'UGB',
+      wpt: 'GOBIT',
+      mora: '86',
+      fl: 'CLB',
+      shr: '-',
+      avtt: '110',
+      wV: '269/02',
+      dist: '54',
+      rd: '152',
+      pf: '152',
+      fu: '-1042',
+      rf: '-823',
+      afDf: '00:00',
+      min: '00:00',
+      tW: '05:10',
+      atDt: '00:00',
+      acc: '05:10',
+    },
+  ];
+
   constructor() {
     effect(() => {
       this.defineTableSubPanels();
@@ -327,6 +447,7 @@ export class FlightInfoComponent {
     this.defineFlightPlanColums();
     this.defineTripInfoColums();
     this.defineLoadSheetColums();
+    this.defineRouteColums();
     this.defineTableSubPanels();
     this.getFlightInfo();
   }
@@ -430,6 +551,33 @@ export class FlightInfoComponent {
     ];
   }
 
+  defineRouteColums() {
+    this.routeCols = [
+      { field: 'airway', header: 'Airway' },
+      { field: 'wpt', header: 'WPT' },
+      { field: 'mora', header: 'MORA' },
+      { field: 'fl', header: 'FL' },
+      { field: 'shr', header: 'SHR' },
+      { field: 'avtt', header: 'AVTT' },
+      { field: 'wV', header: 'W/V' },
+      { field: 'dist', header: 'DIST' },
+      { field: 'rd', header: 'RD' },
+      { field: 'pf', header: 'PF' },
+      { field: 'fu', header: 'FU' },
+      { field: 'rf', header: 'RF' },
+      { field: 'afDf', header: 'AF-DF' },
+      { field: 'min', header: 'MIN' },
+      { field: 'tW', header: 'T/W' },
+      { field: 'atDt', header: 'AT-DT' },
+      { field: 'acc', header: 'ACC' },
+      {
+        field: '',
+        header: '',
+        template: this.routeTableDocumentsCellTemplate,
+      },
+    ];
+  }
+
   defineTableSubPanels() {
     this.tableSubPanels = [
       {
@@ -456,6 +604,12 @@ export class FlightInfoComponent {
         tableData: this.loadSheetData,
         tableColumns: this.loadSheetCols,
         value: 3,
+      },
+      {
+        panelHeader: 'Route',
+        tableData: this.routeData,
+        tableColumns: this.routeCols,
+        value: 4,
       },
     ];
   }
