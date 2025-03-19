@@ -101,7 +101,11 @@ export class AdminLogbookService {
       .pipe(map((response) => response.data));
   }
 
-  pdfExportCurrentMonth(companyId: number, fullName: string, requestBody: IGetCurrentMonthResponse | null): Observable<Blob> {
+  pdfExportCurrentMonth(
+    companyId: number,
+    fullName: string,
+    requestBody: IGetCurrentMonthResponse | null,
+  ): Observable<Blob> {
     const url = `${this.baseUrl}/api/v1/admin/logbook/export-currentMonth-pdf?companyId=${companyId}&fullName=${fullName}`;
     return this.http.post(url, requestBody, { responseType: 'blob' });
   }

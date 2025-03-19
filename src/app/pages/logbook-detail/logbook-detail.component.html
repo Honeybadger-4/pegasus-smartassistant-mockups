@@ -74,7 +74,9 @@
             tooltipPosition="left"
             tooltipStyleClass="custom-tooltip"
             [style]="{ color: 'black' }"
-            (click)="isLogbookCurrentMonth() ? pdfExportForCurrentMonth() : pdfExport()"
+            (click)="
+              isLogbookCurrentMonth() ? pdfExportForCurrentMonth() : pdfExport()
+            "
           />
         </div>
       </div>
@@ -83,10 +85,18 @@
 
   <section class="table-section custom-card mt-5">
     <app-custom-table
-      [tableData]="isLogbookCurrentMonth() ? getCurrentMonthData()?.pairings : logbookDetailTableData()"
+      [tableData]="
+        isLogbookCurrentMonth()
+          ? getCurrentMonthData()?.pairings
+          : logbookDetailTableData()
+      "
       [tableColumns]="columns()"
       [selectionMode]="isLogbookCurrentMonth() ? 'single' : 'multiple'"
-      [totalRecords]="isLogbookCurrentMonth() ? getCurrentMonthData()?.pairings?.length || 0 : logbookDetailData()?.logbookDetails?.totalElements || 0"
+      [totalRecords]="
+        isLogbookCurrentMonth()
+          ? getCurrentMonthData()?.pairings?.length || 0
+          : logbookDetailData()?.logbookDetails?.totalElements || 0
+      "
       [tableLoading]="tableLoading()"
       [footerTemplate]="tableFooterTemplate"
       (selectedCheckbox)="selectionCheckbox($event)"
@@ -210,14 +220,14 @@
 </ng-template>
 
 <ng-template #tableFooterTemplate>
-  @if(!isLogbookCurrentMonth()) {
+  @if (!isLogbookCurrentMonth()) {
     <tr *ngIf="logbookDetailData()?.logbookDetails?.totalPages !== 1">
       <td colspan="8" class="!text-right font-bold p-3 pb-0">Page Total</td>
       <td colspan="9" class="font-bold p-3 pb-0">
         {{ logbookDetailData()?.currentPageTotal || "-" }}
       </td>
     </tr>
-  
+
     <!-- This data should only be shown on the last pages -->
     <tr
       *ngIf="
@@ -232,10 +242,12 @@
         {{ logbookDetailData()?.previousPagesTotal || "-" }}
       </td>
     </tr>
-  
+
     <!-- This data should only be shown on the last pages -->
     <tr
-      *ngIf="logbookDetailData()?.logbookDetails?.totalPages == currentPage() + 1"
+      *ngIf="
+        logbookDetailData()?.logbookDetails?.totalPages == currentPage() + 1
+      "
     >
       <td colspan="8" class="!text-right font-bold p-3 pb-0">Total</td>
       <td colspan="9" class="font-bold p-3 pb-0">

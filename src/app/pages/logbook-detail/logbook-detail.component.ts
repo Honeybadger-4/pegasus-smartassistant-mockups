@@ -1,9 +1,4 @@
-import {
-  Component,
-  inject,
-  signal,
-  viewChild,
-} from '@angular/core';
+import { Component, inject, signal, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -89,7 +84,7 @@ export class LogbookDetailComponent {
   currentRows = signal<number>(20);
   tableLoading = signal<boolean>(false);
   selectedCheckbox = signal<IDetailedListContentData[]>([]);
-  logbookDetailData = signal<IDetailedListResponse |  null>(null);
+  logbookDetailData = signal<IDetailedListResponse | null>(null);
   logbookDetailTableData = signal<IDetailedListContentData[]>([]);
   getCurrentMonthData = signal<IGetCurrentMonthResponse | null>(null);
   startDate = signal<string>('');
@@ -108,17 +103,19 @@ export class LogbookDetailComponent {
   ];
 
   ngOnInit() {
-    this.isLogbookCurrentMonth.set(this.stateManagement.getState('isLogbookCurrentMonth'));
+    this.isLogbookCurrentMonth.set(
+      this.stateManagement.getState('isLogbookCurrentMonth'),
+    );
     this.crewListTableData.set(this.stateManagement.getState('crewListPage'));
-    
+
     this.defineColumn();
 
     this.startDate.set(this.dateRangeDefaultValue()[0].toString());
     this.endDate.set(this.dateRangeDefaultValue()[1].toString());
 
-    if(this.isLogbookCurrentMonth()) {
+    if (this.isLogbookCurrentMonth()) {
       this.getDetailedListForCurrentMonth(this.crewListTableData().companyId);
-    }else {
+    } else {
       this.getDetailedList();
       this.getLogbookStatusList();
     }
@@ -156,8 +153,12 @@ export class LogbookDetailComponent {
         header: 'Status',
         template: this.statusColumnTemplate(),
       },
-      ...( !this.isLogbookCurrentMonth() ? [{ field: '', header: '', template: this.previewCellBodyTemplate() }] : [] ),
-      ...( !this.isLogbookCurrentMonth() ? [{ field: '', header: '', template: this.editableCellBodyTemplate() }] : [] ),
+      ...(!this.isLogbookCurrentMonth()
+        ? [{ field: '', header: '', template: this.previewCellBodyTemplate() }]
+        : []),
+      ...(!this.isLogbookCurrentMonth()
+        ? [{ field: '', header: '', template: this.editableCellBodyTemplate() }]
+        : []),
     ]);
   }
 
@@ -206,8 +207,8 @@ export class LogbookDetailComponent {
       },
       error: () => {
         this.tableLoading.set(false);
-      }
-    })
+      },
+    });
   }
 
   putApprove() {
@@ -317,7 +318,7 @@ export class LogbookDetailComponent {
     this.currentPage.set(page);
     this.currentRows.set(event.rows);
 
-    if(!this.isLogbookCurrentMonth()) {
+    if (!this.isLogbookCurrentMonth()) {
       this.getDetailedList();
     }
   }
@@ -342,17 +343,23 @@ export class LogbookDetailComponent {
 
   pdfExportForCurrentMonth() {
     const companyId = this.crewListTableData().companyId;
-    this.adminLogbookService.pdfExportCurrentMonth(companyId, this.crewListTableData().fullName, this.getCurrentMonthData()).subscribe({
-      next: (pdfBlob) => {
-        const blob = new Blob([pdfBlob], { type: 'application/pdf' });
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = `Logbook_${companyId}.pdf`;
-        link.click();
-      },
-      error: (error) => {
-        console.error('PDF Download Error:', error);
-      },
-    })
+    this.adminLogbookService
+      .pdfExportCurrentMonth(
+        companyId,
+        this.crewListTableData().fullName,
+        this.getCurrentMonthData(),
+      )
+      .subscribe({
+        next: (pdfBlob) => {
+          const blob = new Blob([pdfBlob], { type: 'application/pdf' });
+          const link = document.createElement('a');
+          link.href = window.URL.createObjectURL(blob);
+          link.download = `Logbook_${companyId}.pdf`;
+          link.click();
+        },
+        error: (error) => {
+          console.error('PDF Download Error:', error);
+        },
+      });
   }
 }

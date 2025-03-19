@@ -52,7 +52,9 @@ export class CrewListComponent {
   linkedNextPageTemplate = viewChild.required('linkedNextPageTemplate');
   exportDataIconTemplate = viewChild.required('exportDataIconTemplate');
   approvedStatusTemplate = viewChild.required('approvedStatusTemplate');
-  totalHoursOfLogColumnTemplate = viewChild.required('totalHoursOfLogColumnTemplate');
+  totalHoursOfLogColumnTemplate = viewChild.required(
+    'totalHoursOfLogColumnTemplate',
+  );
 
   router = inject(Router);
   stateManagement = inject(StateManagement);
