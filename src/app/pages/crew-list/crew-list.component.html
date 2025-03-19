@@ -67,9 +67,9 @@
   <section class="table-section custom-card mt-5">
     <app-custom-table
       [tableData]="crewListContentData()"
-      [tableColumns]="columns"
+      [tableColumns]="columns()"
       [totalRecords]="crewListData()?.totalElements || 0"
-      [tableLoading]="tableLoading"
+      [tableLoading]="tableLoading()"
       (pageEvent)="pageEvent($event)"
     ></app-custom-table>
   </section>
@@ -92,7 +92,7 @@
 <ng-template #linkedNextPageTemplate let-rowData="rowData">
   <i
     class="pi pi-angle-right !flex justify-end cursor-pointer w-full"
-    (click)="tableRowSelected(rowData)"
+    (click)="navigateLogbookDetail(rowData)"
   ></i>
 </ng-template>
 
