@@ -8,12 +8,12 @@
 
       <div class="text-[12px] mt-4">
         <p class="font-bold">
-          {{ this.crewListTableData.yearMonth | date: "MMMM YYYY" }}
+          {{ this.crewListTableData().yearMonth | date: "MMMM YYYY" }}
         </p>
         <span class="font-bold">Crew Name&Surname / Company ID:</span>
         <span class="ml-2"
-          >{{ crewListTableData.crewNameSurname }} /
-          {{ crewListTableData.companyId }}</span
+          >{{ crewListTableData().crewNameSurname }} /
+          {{ crewListTableData().companyId }}</span
         >
       </div>
     </div>
@@ -82,11 +82,11 @@
   <section class="table-section custom-card mt-5">
     <app-custom-table
       [tableData]="logbookDetailTableData()"
-      [tableColumns]="columns"
+      [tableColumns]="columns()"
       dataKeyId="logId"
       selectionMode="multiple"
       [totalRecords]="logbookDetailData()?.logbookDetails?.totalElements || 0"
-      [tableLoading]="tableLoading"
+      [tableLoading]="tableLoading()"
       [footerTemplate]="tableFooterTemplate"
       (selectedCheckbox)="selectionCheckbox($event)"
       (pageEvent)="onPageChange($event)"
@@ -170,10 +170,10 @@
       tooltipStyleClass="comment-context-tooltip"
       [escape]="false"
       [autoHide]="false"
-      [tooltipDisabled]="rowData.uploadReason?.length <= maxCharCount"
+      [tooltipDisabled]="rowData.uploadReason?.length <= maxCharCount()"
       tooltipStyleClass="custom-tooltip"
     >
-      {{ rowData.uploadReason || "-" | truncateText: maxCharCount }}
+      {{ rowData.uploadReason || "-" | truncateText: maxCharCount() }}
     </span>
   </div>
 </ng-template>
@@ -219,7 +219,7 @@
   <!-- This data should only be shown on the last pages -->
   <tr
     *ngIf="
-      logbookDetailData()?.logbookDetails?.totalPages == currentPage + 1 &&
+      logbookDetailData()?.logbookDetails?.totalPages == currentPage() + 1 &&
       logbookDetailData()?.logbookDetails?.totalPages !== 1
     "
   >
@@ -233,7 +233,7 @@
 
   <!-- This data should only be shown on the last pages -->
   <tr
-    *ngIf="logbookDetailData()?.logbookDetails?.totalPages == currentPage + 1"
+    *ngIf="logbookDetailData()?.logbookDetails?.totalPages == currentPage() + 1"
   >
     <td colspan="8" class="!text-right font-bold p-3 pb-0">Total</td>
     <td colspan="9" class="font-bold p-3 pb-0">

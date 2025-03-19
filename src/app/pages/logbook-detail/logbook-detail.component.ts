@@ -2,43 +2,41 @@ import {
   Component,
   inject,
   signal,
-  TemplateRef,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 
+import { Column } from '@shared/models/columns';
 import {
   IDetailedListContentData,
   IDetailedListResponse,
 } from '@shared/models/detailed-list-response.model';
-import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
-import { DetailModalComponent } from '../../components/logbook-detail/detail-modal/detail-modal.component';
-import { ILogbookStatusListResponse } from '@shared/models/logbook-status-list-response.model';
-import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
-import { ILogbookCrewListContentData } from '@shared/models/logbook-crew-list-response.model';
-import { ShowToastService } from '@shared/services/helpers-services/show-toast.service';
-import { IDetailedListRequest } from '@shared/models/detailed-list-request.model';
-import { AdminLogbookService } from '@shared/services/admin-logbook.service';
-import { PdfExportService } from '@shared/services/pdf-export.service';
 import { TruncateTextPipe } from '@shared/pipes/truncate-text.pipe';
-import { Column } from '@shared/models/columns';
+import { PdfExportService } from '@shared/services/pdf-export.service';
+import { AdminLogbookService } from '@shared/services/admin-logbook.service';
+import { IDetailedListRequest } from '@shared/models/detailed-list-request.model';
+import { ShowToastService } from '@shared/services/helpers-services/show-toast.service';
+import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
+import { StateManagement } from '@shared/services/helpers-services/state-management.service';
+import { ILogbookStatusListResponse } from '@shared/models/logbook-status-list-response.model';
+import { DetailModalComponent } from '../../components/logbook-detail/detail-modal/detail-modal.component';
+import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
+import moment from 'moment';
 
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { InputTextModule } from 'primeng/inputtext';
-import { ConfirmationService } from 'primeng/api';
-import { CheckboxModule } from 'primeng/checkbox';
-import { DialogModule } from 'primeng/dialog';
-import { MessageService } from 'primeng/api';
-import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
+import { TableModule } from 'primeng/table';
+import { MessageService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
-import { DatePickerModule } from 'primeng/datepicker';
 import { TooltipModule } from 'primeng/tooltip';
-import moment from 'moment';
-import { StateManagement } from '@shared/services/helpers-services/state-management.service';
+import { ConfirmationService } from 'primeng/api';
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputTextModule } from 'primeng/inputtext';
+import { DatePickerModule } from 'primeng/datepicker';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-logbook',
@@ -66,68 +64,67 @@ import { StateManagement } from '@shared/services/helpers-services/state-managem
   providers: [ConfirmationService, MessageService],
 })
 export class LogbookDetailComponent {
-  @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
-  @ViewChild('dateColumnTemplate', { static: true })
-  dateColumnTemplate!: TemplateRef<any>;
-  @ViewChild('updatedDateColumnTemplate', { static: true })
-  updatedDateColumnTemplate!: TemplateRef<any>;
-  @ViewChild('previewCellBodyTemplate', { static: true })
-  previewCellBodyTemplate!: TemplateRef<any>;
-  @ViewChild('editableCellBodyTemplate', { static: true })
-  editableCellBodyTemplate!: TemplateRef<any>;
-  @ViewChild('checkboxCellBodyTemplate', { static: true })
-  checkboxCellBodyTemplate!: TemplateRef<any>;
-  @ViewChild('commentColumnTemplate', { static: true })
-  commentColumnTemplate!: TemplateRef<any>;
-  @ViewChild('reviewedByColumnTemplate', { static: true })
-  reviewedByColumnTemplate!: TemplateRef<any>;
-  @ViewChild('statusColumnTemplate', { static: true })
-  statusColumnTemplate!: TemplateRef<any>;
+  customTableComponent = viewChild.required(CustomTableComponent);
+  dateColumnTemplate = viewChild.required('dateColumnTemplate');
+  statusColumnTemplate = viewChild.required('statusColumnTemplate');
+  commentColumnTemplate = viewChild.required('commentColumnTemplate');
+  previewCellBodyTemplate = viewChild.required('previewCellBodyTemplate');
+  editableCellBodyTemplate = viewChild.required('editableCellBodyTemplate');
+  reviewedByColumnTemplate = viewChild.required('reviewedByColumnTemplate');
+  updatedDateColumnTemplate = viewChild.required('updatedDateColumnTemplate');
 
   router = inject(Router);
-  adminLogbookService = inject(AdminLogbookService);
   messageService = inject(MessageService);
-  confirmationService = inject(ConfirmationService);
+  stateManagement = inject(StateManagement);
   showToastService = inject(ShowToastService);
   pdfExportService = inject(PdfExportService);
-  stateManagement = inject(StateManagement);
+  adminLogbookService = inject(AdminLogbookService);
+  confirmationService = inject(ConfirmationService);
 
+  isLogbookCurrentMonth = signal<boolean>(false);
+  crewListTableData = signal<any>(null);
+  columns = signal<Column[]>([]);
+  currentPage = signal<number>(0);
+  currentRows = signal<number>(20);
+  tableLoading = signal<boolean>(false);
+  selectedCheckbox = signal<IDetailedListContentData[]>([]);
+  logbookDetailData = signal<IDetailedListResponse | null>(null);
+  logbookDetailTableData = signal<IDetailedListContentData[]>([]);
+  startDate = signal<string>('');
+  endDate = signal<string>('');
+  statusFilter = signal<string>('');
+  statusOptions = signal<ILogbookStatusListResponse[]>([]);
+  maxCharCount = signal<number>(20);
+  displayPreviewDialog = signal<boolean>(false);
+  detailedListPreviewModalData = signal<IDetailedListContentData | null>(null);
+  displayRejectPopup = false;
+  rejectReason = '';
   breadcrumbItems = [
     { label: 'Logbook', routerLink: '/logbook' },
     { label: 'Crew List', routerLink: '/logbook/crew-list' },
     { label: 'Logbook Detail List' },
   ];
-  columns: Column[] = [];
-  crewListTableData!: ILogbookCrewListContentData;
-  currentPage = 0;
-  currentRows = 20;
-  tableLoading = false;
-  displayRejectPopup = false;
-  rejectReason = '';
-  logbookDetailData = signal<IDetailedListResponse | null>(null);
-  logbookDetailTableData = signal<IDetailedListContentData[]>([]);
-  detailedListPreviewModalData = signal<IDetailedListContentData | null>(null);
-  statusOptions = signal<ILogbookStatusListResponse[]>([]);
-  selectedCheckbox = signal<IDetailedListContentData[]>([]);
-  displayPreviewDialog = signal<boolean>(false);
-  startDate = signal<string>('');
-  endDate = signal<string>('');
-  statusFilter!: string;
-  maxCharCount = 20;
 
   ngOnInit() {
-    this.crewListTableData = this.stateManagement.getState('crewListPage');
+    this.isLogbookCurrentMonth.set(this.stateManagement.getState('isLogbookCurrentMonth'));
+    this.crewListTableData.set(this.stateManagement.getState('crewListPage'));
+    
+    this.defineColumn();
+
     this.startDate.set(this.dateRangeDefaultValue()[0].toString());
     this.endDate.set(this.dateRangeDefaultValue()[1].toString());
 
-    this.defineColumn();
-    this.getDetailedList();
-    this.getLogbookStatusList();
+    if(this.isLogbookCurrentMonth()) {
+      // TODO: Current month ise getCurrentMonth api isteği yapılamlı.
+    }else {
+      this.getDetailedList();
+      this.getLogbookStatusList();
+    }
   }
 
   defineColumn() {
-    this.columns = [
-      { field: 'date', header: 'Date', template: this.dateColumnTemplate },
+    this.columns.set([
+      { field: 'date', header: 'Date', template: this.dateColumnTemplate() },
       { field: 'dutyType', header: 'Duty Type' },
       { field: 'aircraftType', header: 'A/C Type' },
       { field: 'aircraftReg', header: 'A/C Reg' },
@@ -140,52 +137,52 @@ export class LogbookDetailComponent {
       {
         field: 'updatedDate',
         header: 'Update Date',
-        template: this.updatedDateColumnTemplate,
+        template: this.updatedDateColumnTemplate(),
       },
       {
         field: 'uploadReason',
         header: 'Comment',
-        template: this.commentColumnTemplate,
+        template: this.commentColumnTemplate(),
       },
       {
         field: 'lastReviewedAdmin',
         header: 'Reviewed By',
-        template: this.reviewedByColumnTemplate,
+        template: this.reviewedByColumnTemplate(),
       },
       {
         field: 'status',
         header: 'Status',
-        template: this.statusColumnTemplate,
+        template: this.statusColumnTemplate(),
       },
-      { field: '', header: '', template: this.previewCellBodyTemplate },
-      { field: '', header: '', template: this.editableCellBodyTemplate },
-    ];
+      { field: '', header: '', template: this.previewCellBodyTemplate() },
+      { field: '', header: '', template: this.editableCellBodyTemplate() },
+    ]);
   }
 
   // API Calls Operations
   getDetailedList() {
-    this.tableLoading = true;
+    this.tableLoading.set(true);
 
     const requestBody: IDetailedListRequest = {
-      monthLogId: this.crewListTableData.monthlyLogbookId,
-      status: this.statusFilter,
+      monthLogId: this.crewListTableData()?.monthlyLogbookId,
+      status: this.statusFilter(),
       startDate: this.startDate(),
       endDate: this.endDate(),
     };
 
     this.adminLogbookService
-      .getDetailedList(requestBody, this.currentPage, this.currentRows)
+      .getDetailedList(requestBody, this.currentPage(), this.currentRows())
       .subscribe({
         next: (response) => {
           this.logbookDetailData.set(response);
           this.logbookDetailTableData.set(response.logbookDetails.content);
           this.selectedCheckbox.set([]);
-          this.customTableComponent.clearSelectionData();
-          this.tableLoading = false;
+          this.customTableComponent().clearSelectionData();
+          this.tableLoading.set(false);
         },
         error: (error) => {
           console.error(error);
-          this.tableLoading = false;
+          this.tableLoading.set(false);
         },
       });
   }
@@ -227,9 +224,9 @@ export class LogbookDetailComponent {
 
   // Filter Operations
   dateRangeDefaultValue() {
-    this.crewListTableData.yearMonth;
-    let year = new Date(this.crewListTableData.yearMonth).getFullYear();
-    let month = new Date(this.crewListTableData.yearMonth).getMonth();
+    this.crewListTableData().yearMonth;
+    let year = new Date(this.crewListTableData().yearMonth).getFullYear();
+    let month = new Date(this.crewListTableData().yearMonth).getMonth();
     let startDate = moment(new Date(year, month, 1)).format();
     let endDate = moment(new Date(year, month + 1, 1)).format();
 
@@ -302,14 +299,14 @@ export class LogbookDetailComponent {
 
   onPageChange(event: { first: number; rows: number }) {
     const page = event.first / event.rows;
-    this.currentPage = page;
-    this.currentRows = event.rows;
+    this.currentPage.set(page);
+    this.currentRows.set(event.rows);
     this.getDetailedList();
   }
 
   downloadPdf() {
-    const companyId = this.crewListTableData.companyId;
-    const yearMonth = this.crewListTableData.yearMonth;
+    const companyId = this.crewListTableData().companyId;
+    const yearMonth = this.crewListTableData().yearMonth;
 
     this.pdfExportService.getPdfExport(companyId, yearMonth).subscribe({
       next: (pdfBlob) => {
