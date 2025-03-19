@@ -18,6 +18,7 @@ import { PdfExportService } from '@shared/services/pdf-export.service';
 import { AdminLogbookService } from '@shared/services/admin-logbook.service';
 import { IDetailedListRequest } from '@shared/models/detailed-list-request.model';
 import { ShowToastService } from '@shared/services/helpers-services/show-toast.service';
+import { IGetCurrentMonthResponse } from '@shared/models/get-current-month-response.model';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { StateManagement } from '@shared/services/helpers-services/state-management.service';
 import { ILogbookStatusListResponse } from '@shared/models/logbook-status-list-response.model';
@@ -88,8 +89,9 @@ export class LogbookDetailComponent {
   currentRows = signal<number>(20);
   tableLoading = signal<boolean>(false);
   selectedCheckbox = signal<IDetailedListContentData[]>([]);
-  logbookDetailData = signal<IDetailedListResponse | null>(null);
+  logbookDetailData = signal<IDetailedListResponse |  null>(null);
   logbookDetailTableData = signal<IDetailedListContentData[]>([]);
+  getCurrentMonthData = signal<IGetCurrentMonthResponse | null>(null);
   startDate = signal<string>('');
   endDate = signal<string>('');
   statusFilter = signal<string>('');
@@ -115,7 +117,7 @@ export class LogbookDetailComponent {
     this.endDate.set(this.dateRangeDefaultValue()[1].toString());
 
     if(this.isLogbookCurrentMonth()) {
-      // TODO: Current month ise getCurrentMonth api isteği yapılamlı.
+      this.getDetailedListForCurrentMonth(this.crewListTableData().companyId);
     }else {
       this.getDetailedList();
       this.getLogbookStatusList();
@@ -154,12 +156,20 @@ export class LogbookDetailComponent {
         header: 'Status',
         template: this.statusColumnTemplate(),
       },
-      { field: '', header: '', template: this.previewCellBodyTemplate() },
-      { field: '', header: '', template: this.editableCellBodyTemplate() },
+      ...( !this.isLogbookCurrentMonth() ? [{ field: '', header: '', template: this.previewCellBodyTemplate() }] : [] ),
+      ...( !this.isLogbookCurrentMonth() ? [{ field: '', header: '', template: this.editableCellBodyTemplate() }] : [] ),
     ]);
   }
 
   // API Calls Operations
+  getLogbookStatusList() {
+    this.adminLogbookService.getLogbookStatusList().subscribe({
+      next: (response) => {
+        this.statusOptions.set(response);
+      },
+    });
+  }
+
   getDetailedList() {
     this.tableLoading.set(true);
 
@@ -187,12 +197,17 @@ export class LogbookDetailComponent {
       });
   }
 
-  getLogbookStatusList() {
-    this.adminLogbookService.getLogbookStatusList().subscribe({
+  getDetailedListForCurrentMonth(companyId: number) {
+    this.tableLoading.set(true);
+    this.adminLogbookService.getCurrentMonth(companyId).subscribe({
       next: (response) => {
-        this.statusOptions.set(response);
+        this.getCurrentMonthData.set(response);
+        this.tableLoading.set(false);
       },
-    });
+      error: () => {
+        this.tableLoading.set(false);
+      }
+    })
   }
 
   putApprove() {
@@ -301,10 +316,13 @@ export class LogbookDetailComponent {
     const page = event.first / event.rows;
     this.currentPage.set(page);
     this.currentRows.set(event.rows);
-    this.getDetailedList();
+
+    if(!this.isLogbookCurrentMonth()) {
+      this.getDetailedList();
+    }
   }
 
-  downloadPdf() {
+  pdfExport() {
     const companyId = this.crewListTableData().companyId;
     const yearMonth = this.crewListTableData().yearMonth;
 
@@ -320,5 +338,21 @@ export class LogbookDetailComponent {
         console.error('PDF Download Error:', error);
       },
     });
+  }
+
+  pdfExportForCurrentMonth() {
+    const companyId = this.crewListTableData().companyId;
+    this.adminLogbookService.pdfExportCurrentMonth(companyId, this.crewListTableData().fullName, this.getCurrentMonthData()).subscribe({
+      next: (pdfBlob) => {
+        const blob = new Blob([pdfBlob], { type: 'application/pdf' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = `Logbook_${companyId}.pdf`;
+        link.click();
+      },
+      error: (error) => {
+        console.error('PDF Download Error:', error);
+      },
+    })
   }
 }
