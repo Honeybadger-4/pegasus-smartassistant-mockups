@@ -1,4 +1,4 @@
-<div id="CrewListPage">
+<div id="crew-list-page">
   <div class="flex items-center justify-between">
     <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" />
 
@@ -18,48 +18,54 @@
   </div>
 
   <section class="chart-panel-section mt-5">
-    <p-panel
-      [header]="
-        logbookDashboardData()?.logbookType +
-        ' / ' +
-        (logbookDashboardData()?.yearMonth | date: 'MMMM-YYYY')
-      "
-      [toggleable]="true"
-      collapsed="true"
-      iconPos="start"
-      expandIcon="pi pi-angle-up"
-      collapseIcon="pi pi-angle-down"
-    >
-      <div class="total-card-content">
-        <div>
-          <p class="total-card-item-label">Duty</p>
+    @if (isLogbookCurrentMonth()) {
+      <p class="font-bold text-[16px]">
+        {{ logbookDashboardData()?.yearMonth | date: "MMMM-YYYY" }}
+      </p>
+    } @else {
+      <p-panel
+        [header]="
+          logbookDashboardData()?.logbookType +
+          ' / ' +
+          (logbookDashboardData()?.yearMonth | date: 'MMMM-YYYY')
+        "
+        [toggleable]="true"
+        collapsed="true"
+        iconPos="start"
+        expandIcon="pi pi-angle-up"
+        collapseIcon="pi pi-angle-down"
+      >
+        <div class="total-card-content">
           <div>
-            <span class="total-card-item-count">{{
-              logbookDashboardData()?.dutyCount
-            }}</span>
-            <small class="font-light">times</small>
+            <p class="total-card-item-label">Duty</p>
+            <div>
+              <span class="total-card-item-count">{{
+                logbookDashboardData()?.dutyCount
+              }}</span>
+              <small class="font-light">times</small>
+            </div>
           </div>
-        </div>
 
-        <div>
-          <p class="total-card-item-label">Time</p>
           <div>
-            <span class="total-card-item-count">{{
-              logbookDashboardData()?.totalHours
-            }}</span>
-            <small class="font-light">hours</small>
+            <p class="total-card-item-label">Time</p>
+            <div>
+              <span class="total-card-item-count">{{
+                logbookDashboardData()?.totalHours
+              }}</span>
+              <small class="font-light">hours</small>
+            </div>
           </div>
         </div>
-      </div>
-    </p-panel>
+      </p-panel>
+    }
   </section>
 
   <section class="table-section custom-card mt-5">
     <app-custom-table
       [tableData]="crewListContentData()"
-      [tableColumns]="columns"
+      [tableColumns]="columns()"
       [totalRecords]="crewListData()?.totalElements || 0"
-      [tableLoading]="tableLoading"
+      [tableLoading]="tableLoading()"
       (pageEvent)="pageEvent($event)"
     ></app-custom-table>
   </section>
@@ -81,8 +87,8 @@
 
 <ng-template #linkedNextPageTemplate let-rowData="rowData">
   <i
-    class="pi pi-angle-right cursor-pointer"
-    (click)="tableRowSelected(rowData)"
+    class="pi pi-angle-right !flex justify-end cursor-pointer w-full"
+    (click)="navigateLogbookDetail(rowData)"
   ></i>
 </ng-template>
 

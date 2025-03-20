@@ -1,13 +1,21 @@
-<div id="LogbookComponent">
+<div id="logbook-page">
   <section class="table-header-section">
     <span class="header-title">Logbook</span>
-    <p-select
-      [options]="yearOptions()"
-      [(ngModel)]="selectedYear"
-      (ngModelChange)="this.getLogbookSummary()"
-      placeholder="Select Year"
-      class="custom-dropdown period-dropdown"
-    />
+    <div class="flex items-center gap-2">
+      <p-select
+        [options]="yearOptions()"
+        [(ngModel)]="selectedYear"
+        (ngModelChange)="this.getLogbookSummary()"
+        placeholder="Select Year"
+        class="custom-dropdown period-dropdown"
+      />
+
+      <p-button
+        label="Current Month Breakdown"
+        class="current-month-btn"
+        (click)="onNextPage({ yearMonth: currentMonth() }, true)"
+      />
+    </div>
   </section>
 
   <section>
@@ -15,7 +23,7 @@
       <!-- BOEING -->
       <div class="lg:col-span-4 md:col-span-6 col-span-12 mb-5">
         <div class="total-card-container">
-          <div class="total-card-header">Boeing / {{ selectedYear }}</div>
+          <div class="total-card-header">Boeing / {{ selectedYear() }}</div>
 
           <div class="total-card-content">
             <div>
@@ -43,8 +51,8 @@
         <div class="custom-card mt-5">
           <app-custom-table
             [tableData]="boeingData()?.monthlyDetails"
-            [tableColumns]="columns"
-            [tableLoading]="tableLoading"
+            [tableColumns]="columns()"
+            [tableLoading]="tableLoading()"
             [isPaginator]="false"
           />
         </div>
@@ -53,7 +61,7 @@
       <!-- AIRBUS -->
       <div class="lg:col-span-4 md:col-span-6 col-span-12 mb-5">
         <div class="total-card-container">
-          <div class="total-card-header">Airbus / {{ selectedYear }}</div>
+          <div class="total-card-header">Airbus / {{ selectedYear() }}</div>
 
           <div class="total-card-content">
             <div>
@@ -81,8 +89,8 @@
         <div class="custom-card mt-5">
           <app-custom-table
             [tableData]="airbusData()?.monthlyDetails"
-            [tableColumns]="columns"
-            [tableLoading]="tableLoading"
+            [tableColumns]="columns()"
+            [tableLoading]="tableLoading()"
             [isPaginator]="false"
           />
         </div>
@@ -91,7 +99,7 @@
       <!-- TRAINING -->
       <div class="lg:col-span-4 md:col-span-6 col-span-12 mb-5">
         <div class="total-card-container">
-          <div class="total-card-header">Training / {{ selectedYear }}</div>
+          <div class="total-card-header">Training / {{ selectedYear() }}</div>
 
           <div class="total-card-content">
             <div>
@@ -119,8 +127,8 @@
         <div class="custom-card mt-5">
           <app-custom-table
             [tableData]="trainingData()?.monthlyDetails"
-            [tableColumns]="columns"
-            [tableLoading]="tableLoading"
+            [tableColumns]="columns()"
+            [tableLoading]="tableLoading()"
             [isPaginator]="false"
           />
         </div>
@@ -142,5 +150,8 @@
 </ng-template>
 
 <ng-template #linkedNextPageTemplate let-rowData="rowData">
-  <i class="pi pi-angle-right cursor-pointer" (click)="onNextPage(rowData)"></i>
+  <i
+    class="pi pi-angle-right cursor-pointer w-full !flex justify-end"
+    (click)="onNextPage(rowData)"
+  ></i>
 </ng-template>

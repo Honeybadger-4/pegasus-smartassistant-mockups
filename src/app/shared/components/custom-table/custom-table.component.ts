@@ -27,6 +27,7 @@ export class CustomTableComponent {
   selectionMode = input<'single' | 'multiple' | null>();
   isPaginator = input<boolean>(true);
   totalRecords = input<number>(0);
+  lazy = input<boolean>(true);
   footerTemplate = input<TemplateRef<any> | null>(null);
 
   pageEvent = output<any>();
