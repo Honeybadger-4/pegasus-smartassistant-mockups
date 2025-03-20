@@ -11,6 +11,7 @@ import { CustomTableComponent } from '@shared/components/custom-table/custom-tab
 
 import { SliderModule } from 'primeng/slider';
 import { SelectModule } from 'primeng/select';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-logbook',
@@ -19,6 +20,7 @@ import { SelectModule } from 'primeng/select';
     CommonModule,
     FormsModule,
     SliderModule,
+    ButtonModule,
     CustomTableComponent,
   ],
   templateUrl: './logbook.component.html',

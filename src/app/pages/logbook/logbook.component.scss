@@ -1,4 +1,4 @@
-#LogbookComponent {
+#logbook-page {
   .table-header-section {
     display: flex;
     align-items: center;
@@ -52,5 +52,18 @@
     justify-content: space-between;
     padding-left: 8px;
     padding-right: 8px;
+  }
+}
+
+::ng-deep {
+  #logbook-page {
+    .current-month-btn {
+      button {
+        font-size: 14px;
+        background-color: #FEB914;
+        border-color: #FEB914;
+        height: 30px;
+      }
+    }
   }
 }

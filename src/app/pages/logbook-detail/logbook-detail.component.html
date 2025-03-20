@@ -97,6 +97,7 @@
           ? getCurrentMonthData()?.pairings?.length || 0
           : logbookDetailData()?.logbookDetails?.totalElements || 0
       "
+      [lazy]="!isLogbookCurrentMonth()"
       [tableLoading]="tableLoading()"
       [footerTemplate]="tableFooterTemplate"
       (selectedCheckbox)="selectionCheckbox($event)"

@@ -1,13 +1,17 @@
-<div id="LogbookComponent">
+<div id="logbook-page">
   <section class="table-header-section">
     <span class="header-title">Logbook</span>
-    <p-select
-      [options]="yearOptions()"
-      [(ngModel)]="selectedYear"
-      (ngModelChange)="this.getLogbookSummary()"
-      placeholder="Select Year"
-      class="custom-dropdown period-dropdown"
-    />
+    <div class="flex items-center gap-2">
+      <p-select
+        [options]="yearOptions()"
+        [(ngModel)]="selectedYear"
+        (ngModelChange)="this.getLogbookSummary()"
+        placeholder="Select Year"
+        class="custom-dropdown period-dropdown"
+      />
+  
+      <p-button label="Current Month Breakdown" class="current-month-btn" (click)="onNextPage({ yearMonth: currentMonth() },true)" />
+    </div>
   </section>
 
   <section>
@@ -47,21 +51,6 @@
             [tableLoading]="tableLoading()"
             [isPaginator]="false"
           />
-
-          <div class="current-month-container mt-1">
-            <p class="text-[12px]">
-              {{ currentMonth() | date: "MMMM" }} (Current)
-            </p>
-            <i
-              class="pi pi-angle-right cursor-pointer"
-              (click)="
-                onNextPage(
-                  { logbookType: 'BOEING', yearMonth: currentMonth() },
-                  true
-                )
-              "
-            ></i>
-          </div>
         </div>
       </div>
 
@@ -100,21 +89,6 @@
             [tableLoading]="tableLoading()"
             [isPaginator]="false"
           />
-
-          <div class="current-month-container mt-1">
-            <p class="text-[12px]">
-              {{ currentMonth() | date: "MMMM" }} (Current)
-            </p>
-            <i
-              class="pi pi-angle-right cursor-pointer"
-              (click)="
-                onNextPage(
-                  { logbookType: 'AIRBUS', yearMonth: currentMonth() },
-                  true
-                )
-              "
-            ></i>
-          </div>
         </div>
       </div>
 
@@ -153,21 +127,6 @@
             [tableLoading]="tableLoading()"
             [isPaginator]="false"
           />
-
-          <div class="current-month-container mt-1">
-            <p class="text-[12px]">
-              {{ currentMonth() | date: "MMMM" }} (Current)
-            </p>
-            <i
-              class="pi pi-angle-right cursor-pointer"
-              (click)="
-                onNextPage(
-                  { logbookType: 'SIM', yearMonth: currentMonth() },
-                  true
-                )
-              "
-            ></i>
-          </div>
         </div>
       </div>
     </div>
