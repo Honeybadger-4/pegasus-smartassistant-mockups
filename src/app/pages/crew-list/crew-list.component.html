@@ -1,4 +1,4 @@
-<div id="CrewListPage">
+<div id="crew-list-page">
   <div class="flex items-center justify-between">
     <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" />
 
@@ -21,8 +21,6 @@
     @if (isLogbookCurrentMonth()) {
       <p class="font-bold text-[16px]">
         {{
-          logbookDashboardData()?.logbookType +
-            " / " +
             (logbookDashboardData()?.yearMonth | date: "MMMM-YYYY")
         }}
       </p>
