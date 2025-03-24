@@ -102,6 +102,7 @@
       [footerTemplate]="tableFooterTemplate"
       (selectedCheckbox)="selectionCheckbox($event)"
       (pageEvent)="onPageChange($event)"
+      [noDataFoundMsg]="'There were no data entries for this user this month.'"
     ></app-custom-table>
   </section>
 

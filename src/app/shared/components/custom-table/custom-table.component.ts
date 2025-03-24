@@ -28,6 +28,7 @@ export class CustomTableComponent {
   isPaginator = input<boolean>(true);
   totalRecords = input<number>(0);
   lazy = input<boolean>(true);
+  noDataFoundMsg = input<string>('No data found.');
   footerTemplate = input<TemplateRef<any> | null>(null);
 
   pageEvent = output<any>();
