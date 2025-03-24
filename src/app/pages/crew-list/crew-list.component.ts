@@ -8,7 +8,13 @@ import {
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  firstValueFrom,
+  fromEvent,
+  map,
+} from 'rxjs';
 
 import { Column } from '@shared/models/columns';
 import { PdfExportService } from '@shared/services/pdf-export.service';
@@ -27,6 +33,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
+import { FileSaverService } from '@shared/services/helpers-services/file-saver.service';
 
 @Component({
   selector: 'app-logbook',
@@ -47,6 +54,8 @@ import { InputTextModule } from 'primeng/inputtext';
   styleUrl: './crew-list.component.scss',
 })
 export class CrewListComponent {
+  constructor(private fileSaverService: FileSaverService) {}
+
   customTableComponent = viewChild.required(CustomTableComponent);
   searchInput = viewChild.required<ElementRef>('searchInput');
   linkedNextPageTemplate = viewChild.required('linkedNextPageTemplate');
@@ -174,23 +183,20 @@ export class CrewListComponent {
       });
   }
 
-  // Download Pdf
-  downloadPdf(rowData: any) {
+  async downloadPdf(rowData: any) {
     const companyId = rowData.companyId;
     const yearMonth = this.logbookDashboardData()?.yearMonth;
-
-    this.pdfExportService.getPdfExport(companyId, yearMonth).subscribe({
-      next: (pdfBlob) => {
-        const blob = new Blob([pdfBlob], { type: 'application/pdf' });
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = `Logbook_${companyId}_${yearMonth}.pdf`;
-        link.click();
-      },
-      error: (error) => {
-        console.error('PDF Download Error:', error);
-      },
-    });
+    try {
+      const res = await firstValueFrom(
+        this.pdfExportService.getPdfExport(companyId, yearMonth),
+      );
+      this.fileSaverService.getFileSaver(
+        res,
+        `Logbook_${companyId}_${yearMonth}.pdf`,
+      );
+    } catch (error) {
+      console.error('PDF Download Error:', error);
+    }
   }
 
   // Search Operations
