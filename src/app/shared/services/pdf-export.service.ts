@@ -11,7 +11,7 @@ export class PdfExportService {
   baseUrl = environment.baseApi;
 
   getPdfExport(companyId: number, yearMonth: string): Observable<Blob> {
-    const url = `${this.baseUrl}/api/v1/monthlyLogbook/export-pdf?companyId=${companyId}&yearMonth=${yearMonth}`;
+    const url = `${this.baseUrl}/api/v1/admin/logbook/export-pdf?companyId=${companyId}&yearMonth=${yearMonth}`;
     return this.http.get(url, { responseType: 'blob' });
   }
 }

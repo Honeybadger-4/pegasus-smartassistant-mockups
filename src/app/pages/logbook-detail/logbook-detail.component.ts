@@ -33,6 +33,8 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { DatePickerModule } from 'primeng/datepicker';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { FileSaverService } from '@shared/services/helpers-services/file-saver.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-logbook',
@@ -60,6 +62,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
   providers: [ConfirmationService, MessageService],
 })
 export class LogbookDetailComponent {
+  constructor(private fileSaverService: FileSaverService) {}
+
   customTableComponent = viewChild.required(CustomTableComponent);
   dateColumnTemplate = viewChild.required('dateColumnTemplate');
   statusColumnTemplate = viewChild.required('statusColumnTemplate');
@@ -323,43 +327,36 @@ export class LogbookDetailComponent {
     }
   }
 
-  pdfExport() {
+  async pdfExport() {
     const companyId = this.crewListTableData().companyId;
     const yearMonth = this.crewListTableData().yearMonth;
 
-    this.pdfExportService.getPdfExport(companyId, yearMonth).subscribe({
-      next: (pdfBlob) => {
-        const blob = new Blob([pdfBlob], { type: 'application/pdf' });
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = `Logbook_${companyId}_${yearMonth}.pdf`;
-        link.click();
-      },
-      error: (error) => {
-        console.error('PDF Download Error:', error);
-      },
-    });
+    try {
+      const res = await firstValueFrom(
+        this.pdfExportService.getPdfExport(companyId, yearMonth),
+      );
+      this.fileSaverService.getFileSaver(
+        res,
+        `Logbook_${companyId}_${yearMonth}.pdf`,
+      );
+    } catch (error) {
+      console.error('PDF Download Error:', error);
+    }
   }
 
-  pdfExportForCurrentMonth() {
+  async pdfExportForCurrentMonth() {
     const companyId = this.crewListTableData().companyId;
-    this.adminLogbookService
-      .pdfExportCurrentMonth(
-        companyId,
-        this.crewListTableData().fullName,
-        this.getCurrentMonthData(),
-      )
-      .subscribe({
-        next: (pdfBlob) => {
-          const blob = new Blob([pdfBlob], { type: 'application/pdf' });
-          const link = document.createElement('a');
-          link.href = window.URL.createObjectURL(blob);
-          link.download = `Logbook_${companyId}.pdf`;
-          link.click();
-        },
-        error: (error) => {
-          console.error('PDF Download Error:', error);
-        },
-      });
+    try {
+      const res = await firstValueFrom(
+        this.adminLogbookService.pdfExportCurrentMonth(
+          companyId,
+          this.crewListTableData().fullName,
+          this.getCurrentMonthData(),
+        ),
+      );
+      this.fileSaverService.getFileSaver(res, `Logbook_${companyId}.pdf`);
+    } catch (error) {
+      console.error('PDF Download Error:', error);
+    }
   }
 }
