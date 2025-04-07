@@ -66,7 +66,7 @@
       [tableColumns]="columns()"
       [totalRecords]="crewListData()?.totalElements || 0"
       [tableLoading]="tableLoading()"
-      (pageEvent)="pageEvent($event)"
+      (lazyLoadEvent)="lazyLoadEvent($event)"
     ></app-custom-table>
   </section>
 </div>

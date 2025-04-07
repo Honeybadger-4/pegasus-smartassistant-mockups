@@ -111,16 +111,17 @@ export class CrewListComponent {
       ]);
     } else {
       this.columns.set([
-        { field: 'crewNameSurname', header: 'Crew Name & Surname' },
-        { field: 'companyId', header: 'Company ID' },
-        { field: 'totalNumberOfLog', header: 'Total Number of Log' },
+        { field: 'crewNameSurname', header: 'Crew Name & Surname', isFilter: true },
+        { field: 'companyId', header: 'Company ID', isFilter: true },
+        { field: 'totalNumberOfLog', header: 'Total Number of Log', isFilter: true },
         {
           field: 'totalHours',
           header: 'Total Hours of Log',
           template: this.totalHoursOfLogColumnTemplate(),
+          isFilter: true
         },
-        { field: 'approvedLogs', header: 'Approved Logs' },
-        { field: 'reassignedLogs', header: 'Reassing Logs' },
+        { field: 'approvedLogs', header: 'Approved Logs', isFilter: true },
+        { field: 'reassignedLogs', header: 'Reassing Logs', isFilter: true },
         {
           field: 'approvedStatus',
           header: 'Approval Status',
@@ -198,7 +199,7 @@ export class CrewListComponent {
     this.router.navigate(['logbook/logbook-detail']);
   }
 
-  pageEvent(event: { first: number; rows: number }) {
+  lazyLoadEvent(event: any) {
     const page = event.first / event.rows;
     this.currentPage.set(page);
     this.currentRows.set(event.rows);

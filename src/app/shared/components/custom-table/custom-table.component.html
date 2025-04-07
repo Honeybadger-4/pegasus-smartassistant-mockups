@@ -2,9 +2,8 @@
   #table
   [value]="tableData()"
   [columns]="tableColumns()"
-  stripedRows
   [loading]="tableLoading()"
-  [lazy]="lazy()"
+  [lazy]="true"
   [paginator]="isPaginator()"
   [rows]="rows"
   [first]="0"
@@ -13,7 +12,8 @@
   [selectionMode]="selectionMode()"
   [(selection)]="selectionData"
   (selectionChange)="selectionChange($event)"
-  (onPage)="pageChange($event)"
+  stripedRows
+  (onLazyLoad)="onLazyLoad($event)"
 >
   <!-- Table Header -->
   <ng-template #header let-columns>
@@ -22,14 +22,28 @@
         <p-tableHeaderCheckbox />
       </th>
       <th *ngFor="let col of columns">
-        {{ col.header }}
+        <div class="flex items-center">
+          {{ col.header }}
+        <p-columnFilter
+          *ngIf="col.isFilter"
+          type="text"
+          [field]="col.field"
+          display="menu"
+          matchMode="contains"
+          [showMatchModes]="false"
+          [showOperator]="false"
+          [showAddButton]="false"
+          placeholder="Search"
+          ariaLabel="Filter"
+        />
+        </div>
       </th>
     </tr>
   </ng-template>
 
   <!-- Table Body -->
   <ng-template #body let-rowData>
-    <tr (click)="rowClicked(rowData)">
+    <tr>
       <td *ngIf="selectionMode() === 'multiple'">
         <p-tableCheckbox [value]="rowData" />
       </td>
