@@ -317,7 +317,7 @@ export class LogbookDetailComponent {
     this.detailedListPreviewModalData.set(rowData ? rowData : null);
   }
 
-  onPageChange(event: { first: number; rows: number }) {
+  lazyLoadEvent(event: any) {
     const page = event.first / event.rows;
     this.currentPage.set(page);
     this.currentRows.set(event.rows);

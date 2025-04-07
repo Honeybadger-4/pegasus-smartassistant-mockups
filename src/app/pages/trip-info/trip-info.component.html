@@ -83,7 +83,7 @@
       [tableData]="tripInfoTableData()"
       [tableColumns]="columns"
       [totalRecords]="tripInfoData()?.totalElements || 0"
-      (pageEvent)="pageEvent($event)"
+      (lazyLoadEvent)="lazyLoadEvent($event)"
     ></app-custom-table>
   </section>
 </main>

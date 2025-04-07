@@ -152,7 +152,7 @@ export class FuelOrderComponent {
   }
 
   // Other Operations
-  pageEvent(event: { first: number; rows: number }) {
+  lazyLoadEvent(event: any) {
     const page = event.first / event.rows;
     this.currentPage = page;
     this.currentRows = event.rows;

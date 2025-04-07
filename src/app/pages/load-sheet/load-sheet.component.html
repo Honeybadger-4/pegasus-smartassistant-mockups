@@ -107,7 +107,7 @@
       [tableData]="loadSheetTableData()"
       [tableColumns]="columns"
       [totalRecords]="loadSheetData()?.loadSheets?.totalElements || 0"
-      (pageEvent)="pageEvent($event)"
+      (lazyLoadEvent)="lazyLoadEvent($event)"
     ></app-custom-table>
   </section>
 

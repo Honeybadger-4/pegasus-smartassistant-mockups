@@ -97,11 +97,10 @@
           ? getCurrentMonthData()?.pairings?.length || 0
           : logbookDetailData()?.logbookDetails?.totalElements || 0
       "
-      [lazy]="!isLogbookCurrentMonth()"
       [tableLoading]="tableLoading()"
       [footerTemplate]="tableFooterTemplate"
       (selectedCheckbox)="selectionCheckbox($event)"
-      (pageEvent)="onPageChange($event)"
+      (lazyLoadEvent)="lazyLoadEvent($event)"
       [noDataFoundMsg]="'There were no data entries for this user this month.'"
     ></app-custom-table>
   </section>

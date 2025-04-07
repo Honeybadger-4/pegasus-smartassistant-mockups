@@ -90,7 +90,6 @@
       [paginator]="true"
       [rows]="currentRows"
       [totalRecords]="routeHistoryData()?.totalElements || 0"
-      [lazy]="true"
       [rowsPerPageOptions]="[20, 40, 80]"
       [first]="currentPage * currentRows"
       (onPage)="pageEvent($event)"
