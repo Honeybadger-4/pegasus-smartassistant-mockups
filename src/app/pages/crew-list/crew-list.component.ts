@@ -126,6 +126,7 @@ export class CrewListComponent {
           field: 'approvedStatus',
           header: 'Approval Status',
           template: this.approvedStatusTemplate(),
+          isFilter: true
         },
         { field: '', header: '', template: this.linkedNextPageTemplate() },
         { field: '', header: '', template: this.exportDataIconTemplate() },
