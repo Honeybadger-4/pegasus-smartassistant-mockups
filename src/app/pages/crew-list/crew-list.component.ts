@@ -93,8 +93,11 @@ export class CrewListComponent {
   ];
 
   ngOnInit() {
-    this.logbookDashboardData = this.stateManagement.getState('logbookSummaryPage')
-    this.isLogbookCurrentMonth = this.stateManagement.getState('isLogbookCurrentMonth');
+    this.logbookDashboardData =
+      this.stateManagement.getState('logbookSummaryPage');
+    this.isLogbookCurrentMonth = this.stateManagement.getState(
+      'isLogbookCurrentMonth',
+    );
 
     this.defineColumns();
     this.setupSearchListener();
@@ -111,14 +114,22 @@ export class CrewListComponent {
       ]);
     } else {
       this.columns.set([
-        { field: 'crewNameSurname', header: 'Crew Name & Surname', isFilter: true },
+        {
+          field: 'crewNameSurname',
+          header: 'Crew Name & Surname',
+          isFilter: true,
+        },
         { field: 'companyId', header: 'Company ID', isFilter: true },
-        { field: 'totalNumberOfLog', header: 'Total Number of Log', isFilter: true },
+        {
+          field: 'totalNumberOfLog',
+          header: 'Total Number of Log',
+          isFilter: true,
+        },
         {
           field: 'totalHours',
           header: 'Total Hours of Log',
           template: this.totalHoursOfLogColumnTemplate(),
-          isFilter: true
+          isFilter: true,
         },
         { field: 'approvedLogs', header: 'Approved Logs', isFilter: true },
         { field: 'reassignedLogs', header: 'Reassing Logs', isFilter: true },
@@ -126,7 +137,7 @@ export class CrewListComponent {
           field: 'approvedStatus',
           header: 'Approval Status',
           template: this.approvedStatusTemplate(),
-          isFilter: true
+          isFilter: true,
         },
         { field: '', header: '', template: this.linkedNextPageTemplate() },
         { field: '', header: '', template: this.exportDataIconTemplate() },
@@ -184,7 +195,7 @@ export class CrewListComponent {
         if (searchText.trim() || searchText === '') {
           this.currentPage.set(0);
           this.customTableComponent().resetTableFirstValue();
-          
+
           this.getCrewList();
         }
       });

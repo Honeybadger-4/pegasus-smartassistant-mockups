@@ -20,7 +20,11 @@
   <section class="chart-panel-section mt-5">
     @if (isLogbookCurrentMonth) {
       <p class="font-bold text-[16px]">
-        {{ logbookDashboardData?.logbookType + ' / ' + (logbookDashboardData?.yearMonth | date: "MMMM-YYYY") }}
+        {{
+          logbookDashboardData?.logbookType +
+            " / " +
+            (logbookDashboardData?.yearMonth | date: "MMMM-YYYY")
+        }}
       </p>
     } @else {
       <p-panel

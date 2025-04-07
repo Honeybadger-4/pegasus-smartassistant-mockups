@@ -24,18 +24,18 @@
       <th *ngFor="let col of columns">
         <div class="flex items-center">
           {{ col.header }}
-        <p-columnFilter
-          *ngIf="col.isFilter"
-          type="text"
-          [field]="col.field"
-          display="menu"
-          matchMode="contains"
-          [showMatchModes]="false"
-          [showOperator]="false"
-          [showAddButton]="false"
-          placeholder="Search"
-          ariaLabel="Filter"
-        />
+          <p-columnFilter
+            *ngIf="col.isFilter"
+            type="text"
+            [field]="col.field"
+            display="menu"
+            matchMode="contains"
+            [showMatchModes]="false"
+            [showOperator]="false"
+            [showAddButton]="false"
+            placeholder="Search"
+            ariaLabel="Filter"
+          />
         </div>
       </th>
     </tr>
