@@ -19,6 +19,7 @@ import {
 import { Column } from '@shared/models/columns';
 import { PdfExportService } from '@shared/services/pdf-export.service';
 import { AdminLogbookService } from '@shared/services/admin-logbook.service';
+import { FileSaverService } from '@shared/services/helpers-services/file-saver.service';
 import { ILogbookCrewListResponse } from '@shared/models/logbook-crew-list-response.model';
 import { StateManagement } from '@shared/services/helpers-services/state-management.service';
 import { ILogbookGetCrewListByFilterResponse } from '@shared/models/get-crews-response.model';
@@ -33,7 +34,6 @@ import { TooltipModule } from 'primeng/tooltip';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
-import { FileSaverService } from '@shared/services/helpers-services/file-saver.service';
 
 @Component({
   selector: 'app-logbook',
@@ -83,8 +83,9 @@ export class CrewListComponent {
     | null
   >(null);
   searchInputValue = signal<string>('');
-  logbookDashboardData = signal<any>(null);
-  isLogbookCurrentMonth = signal<boolean>(false);
+
+  logbookDashboardData: any = [];
+  isLogbookCurrentMonth = false;
 
   breadcrumbItems: MenuItem[] = [
     { label: 'Logbook', routerLink: '/logbook' },
@@ -92,29 +93,19 @@ export class CrewListComponent {
   ];
 
   ngOnInit() {
-    this.logbookDashboardData.set(
-      this.stateManagement.getState('logbookSummaryPage'),
-    );
-
-    this.isLogbookCurrentMonth.set(
-      this.stateManagement.getState('isLogbookCurrentMonth'),
-    );
+    this.logbookDashboardData = this.stateManagement.getState('logbookSummaryPage')
+    this.isLogbookCurrentMonth = this.stateManagement.getState('isLogbookCurrentMonth');
 
     this.defineColumns();
     this.setupSearchListener();
-
-    if (this.isLogbookCurrentMonth()) {
-      this.getCrewListByFilterForCurrentMonth();
-    } else {
-      this.getCrewList();
-    }
+    this.getCrewList();
   }
 
   // Define Operations
   defineColumns() {
-    if (this.isLogbookCurrentMonth()) {
+    if (this.isLogbookCurrentMonth) {
       this.columns.set([
-        { field: 'fullName', header: 'Crew Name & Surname' },
+        { field: 'crewNameSurname', header: 'Crew Name & Surname' },
         { field: 'companyId', header: 'Company ID' },
         { field: '', header: '', template: this.linkedNextPageTemplate() },
       ]);
@@ -145,28 +136,8 @@ export class CrewListComponent {
     this.tableLoading.set(true);
     this.adminLogbookService
       .getCrewList(
-        this.logbookDashboardData()?.logbookType,
-        this.logbookDashboardData()?.yearMonth,
-        this.currentPage(),
-        this.currentRows(),
-        this.searchInputValue(),
-      )
-      .subscribe({
-        next: (response) => {
-          this.crewListData.set(response);
-          this.crewListContentData.set(response.content);
-          this.tableLoading.set(false);
-        },
-        error: () => {
-          this.tableLoading.set(false);
-        },
-      });
-  }
-
-  getCrewListByFilterForCurrentMonth() {
-    this.tableLoading.set(true);
-    this.adminLogbookService
-      .getCrewListByFilterForCurrentMonth(
+        this.logbookDashboardData?.logbookType,
+        this.logbookDashboardData?.yearMonth,
         this.currentPage(),
         this.currentRows(),
         this.searchInputValue(),
@@ -185,7 +156,7 @@ export class CrewListComponent {
 
   async downloadPdf(rowData: any) {
     const companyId = rowData.companyId;
-    const yearMonth = this.logbookDashboardData()?.yearMonth;
+    const yearMonth = this.logbookDashboardData?.yearMonth;
     try {
       const res = await firstValueFrom(
         this.pdfExportService.getPdfExport(companyId, yearMonth),
@@ -211,12 +182,8 @@ export class CrewListComponent {
         if (searchText.trim() || searchText === '') {
           this.currentPage.set(0);
           this.customTableComponent().resetTableFirstValue();
-
-          if (this.isLogbookCurrentMonth()) {
-            this.getCrewListByFilterForCurrentMonth();
-          } else {
-            this.getCrewList();
-          }
+          
+          this.getCrewList();
         }
       });
   }
@@ -236,10 +203,6 @@ export class CrewListComponent {
     this.currentPage.set(page);
     this.currentRows.set(event.rows);
 
-    if (this.isLogbookCurrentMonth()) {
-      this.getCrewListByFilterForCurrentMonth();
-    } else {
-      this.getCrewList();
-    }
+    this.getCrewList();
   }
 }

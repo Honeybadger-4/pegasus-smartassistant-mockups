@@ -46,24 +46,23 @@
     }
   }
 
-  .current-month-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-left: 8px;
-    padding-right: 8px;
+  .status-badge {
+    padding: 6px;
+    border-radius: 20px;
+    font-size: 10px;
   }
-}
+  .status-badge-approved {
+    background-color: #B2CCBD;
+    color: #0E8345;
+  }
 
-::ng-deep {
-  #logbook-page {
-    .current-month-btn {
-      button {
-        font-size: 14px;
-        background-color: #feb914;
-        border-color: #feb914;
-        height: 30px;
-      }
-    }
+  .status-badge-not-approved {
+    background-color: #F8D9AB;
+    color: #FF8D2A;
+  }
+
+  .status-badge-inactive {
+    background-color: #CFCFCF;
+    color: #6F7883;
   }
 }

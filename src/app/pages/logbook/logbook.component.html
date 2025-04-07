@@ -1,7 +1,6 @@
 <div id="logbook-page">
   <section class="table-header-section">
     <span class="header-title">Logbook</span>
-    <div class="flex items-center gap-2">
       <p-select
         [options]="yearOptions()"
         [(ngModel)]="selectedYear"
@@ -9,13 +8,6 @@
         placeholder="Select Year"
         class="custom-dropdown period-dropdown"
       />
-
-      <p-button
-        label="Current Month Breakdown"
-        class="current-month-btn"
-        (click)="onNextPage({ yearMonth: currentMonth() }, true)"
-      />
-    </div>
   </section>
 
   <section>
@@ -138,7 +130,12 @@
 </div>
 
 <ng-template #monthColumnsTemplate let-rowData="rowData">
-  <span>{{ rowData.yearMonth | date: "MMMM" }}</span>
+  @if(rowData.yearMonth == currentMonth) {
+    <span class="font-bold">{{ rowData.yearMonth | date: "MMMM" }} (Current)</span>
+  } @else {
+    <span>{{ rowData.yearMonth | date: "MMMM" }}</span>
+  }
+  
 </ng-template>
 
 <ng-template #dutyColumnsTemplate let-rowData="rowData">
@@ -149,9 +146,36 @@
   }
 </ng-template>
 
+<!-- TODO: Servise status parametresi eklenince kontrol edilmeli.
+TODO: Servise notApprovedCount bilgisi eklenince kontrol edilmeli. -->
+<ng-template #statusTemplate let-rowData="rowData">
+    @if(rowData.status === 'APPROVED') {
+      <span class="status-badge status-badge-approved">
+        {{ rowData.status }}
+      </span>
+    } @else if(rowData.status === 'NOT_APPROVED') {
+      <span class="status-badge status-badge-not-approved">
+        {{ rowData.status }} ( {{rowData.notApprovedCount}} )
+      </span>
+    } @else if(rowData.status === 'INACTIVE') {
+      <span class="status-badge status-badge-inactive">
+        {{ rowData.status }}
+      </span>
+    } @else {
+      <span>-</span>
+    }
+</ng-template>
+
 <ng-template #linkedNextPageTemplate let-rowData="rowData">
-  <i
+  @if(rowData.yearMonth == currentMonth) {
+    <i
+    class="pi pi-angle-right cursor-pointer w-full !flex justify-end"
+    (click)="onNextPage(rowData, true)"
+    ></i>
+  } @else {
+    <i
     class="pi pi-angle-right cursor-pointer w-full !flex justify-end"
     (click)="onNextPage(rowData)"
-  ></i>
+    ></i>
+  }
 </ng-template>

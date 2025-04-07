@@ -30,6 +30,7 @@ export class LogbookComponent {
   dutyColumnsTemplate = viewChild.required('dutyColumnsTemplate');
   monthColumnsTemplate = viewChild.required('monthColumnsTemplate');
   linkedNextPageTemplate = viewChild.required('linkedNextPageTemplate');
+  statusTemplate = viewChild.required('statusTemplate');
 
   router = inject(Router);
   stateManagement = inject(StateManagement);
@@ -45,7 +46,7 @@ export class LogbookComponent {
     null,
   );
 
-  currentMonth = signal<string | null>(null);
+  currentMonth: string = '';
 
   selectedYear = signal<number>(0);
   yearOptions = signal<number[] | undefined>(undefined);
@@ -56,7 +57,7 @@ export class LogbookComponent {
 
     const year = new Date().getFullYear();
     const month = new Date().getMonth() + 1;
-    this.currentMonth.set(year + '-' + month);
+    this.currentMonth = year + '-' + month.toString().padStart(2, '0');
   }
 
   defineColumns() {
@@ -71,6 +72,7 @@ export class LogbookComponent {
         header: 'Duty',
         template: this.dutyColumnsTemplate(),
       },
+      { field: 'status', header: 'Status', template: this.statusTemplate() },
       { field: '', header: '', template: this.linkedNextPageTemplate() },
     ]);
   }
