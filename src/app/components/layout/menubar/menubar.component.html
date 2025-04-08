@@ -17,9 +17,8 @@
 
     <ng-template #item let-item let-root="root" class="flex">
       <a
-      pRipple
-      [routerLink]="item.path === '' ? '/' : '/' + item.path"
-    
+        pRipple
+        [routerLink]="item.path === '' ? '/' : '/' + item.path"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
         class="flex align-items-center p-menubar-item-link"

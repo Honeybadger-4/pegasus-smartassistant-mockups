@@ -126,8 +126,6 @@ export class MenubarComponent {
             path: 'operational-reports/gps-loss-form',
           },
 
-        
-
           {
             label: 'Alternate Routes',
             icon: '',
