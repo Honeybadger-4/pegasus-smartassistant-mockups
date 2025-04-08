@@ -22,7 +22,6 @@ import { AdminLogbookService } from '@shared/services/admin-logbook.service';
 import { FileSaverService } from '@shared/services/helpers-services/file-saver.service';
 import { ILogbookCrewListResponse } from '@shared/models/logbook-crew-list-response.model';
 import { StateManagement } from '@shared/services/helpers-services/state-management.service';
-import { ILogbookGetCrewListByFilterResponse } from '@shared/models/get-crews-response.model';
 import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
 
@@ -56,7 +55,7 @@ import { InputTextModule } from 'primeng/inputtext';
   styleUrl: './crew-list.component.scss',
 })
 export class CrewListComponent {
-  constructor(private fileSaverService: FileSaverService) {}
+  constructor(private fileSaverService: FileSaverService) { }
 
   customTableComponent = viewChild.required(CustomTableComponent);
   searchInput = viewChild.required<ElementRef>('searchInput');
@@ -76,19 +75,12 @@ export class CrewListComponent {
   currentPage = signal<number>(0);
   currentRows = signal<number>(20);
   tableLoading = signal<boolean>(false);
-  crewListData = signal<
-    ILogbookCrewListResponse | ILogbookGetCrewListByFilterResponse | null
-  >(null);
-  crewListContentData = signal<
-    | ILogbookCrewListResponse['content']
-    | ILogbookGetCrewListByFilterResponse['content']
-    | null
-  >(null);
+  crewListData = signal<ILogbookCrewListResponse | null>(null);
+  crewListContentData = signal<ILogbookCrewListResponse['content']| null>(null);
   searchInputValue = signal<string>('');
 
   logbookDashboardData: any = [];
   isLogbookCurrentMonth = false;
-
   breadcrumbItems: MenuItem[] = [
     { label: 'Logbook', routerLink: '/logbook' },
     { label: 'Crew List' },
@@ -131,8 +123,8 @@ export class CrewListComponent {
           header: 'Total Hours of Log',
           template: this.totalHoursOfLogColumnTemplate()
         },
-        { field: 'approvedLogs', header: 'Approved Logs', isFilter: true },
-        { field: 'reassignedLogs', header: 'Reassing Logs', isFilter: true },
+        { field: 'approvedLogs', header: 'Approved Logs' },
+        { field: 'reassignedLogs', header: 'Reassing Logs' },
         {
           field: 'approvedStatus',
           header: 'Approval Status',

@@ -86,6 +86,7 @@ body {
   }
 }
 
+// DROPDOWN
 .custom-dropdown {
   width: 100%;
   height: 100%;
@@ -116,6 +117,7 @@ body {
   }
 }
 
+// CALENDAR
 .custom-calendar {
   input {
     width: 100%;
@@ -185,13 +187,14 @@ body {
   }
 }
 
+// CARD
 .custom-card {
   background-color: #f2f2f24d;
   border-radius: 10px;
   padding: 10px 16px 10px 16px;
 }
 
-// Raido Button
+// RADIO BUTTON
 .custom-radio-button {
   .p-radiobutton-checked .p-radiobutton-box {
     border-color: #feb914 !important;
@@ -204,7 +207,7 @@ body {
   }
 }
 
-// Tooltip
+// TOOLTIP
 .custom-tooltip {
   .p-tooltip-text {
     background-color: #fff !important;
@@ -227,7 +230,7 @@ body {
   border-bottom-color: #fff !important;
 }
 
-// Table styles
+// TABLE
 .p-datatable .p-datatable-thead > tr > th {
   font-weight: 500;
   color: $base-text-color;
@@ -261,7 +264,7 @@ p-columnfilterformelement {
   }
 }
 
-// Confirm Dialog
+// CONFIRM DIALOG
 .custom-confirm-dialog-container {
   .custom-confirm-content {
     text-align: center;
@@ -326,7 +329,7 @@ p-columnfilterformelement {
   }
 }
 
-// Toast
+// TOAST
 .p-toast {
   .p-toast-message-warn {
     background-color: white;
@@ -340,12 +343,12 @@ p-columnfilterformelement {
   }
 }
 
-// Buttons
+// BUTTON
 .p-button-text:not(:disabled):hover {
   background: rgb(241, 241, 241) !important;
 }
 
-// Tabs
+// TABS
 .custom-tabs {
   .p-tab-active {
     color: $option-selected-bg;
@@ -356,7 +359,7 @@ p-columnfilterformelement {
   }
 }
 
-// Chips
+// CHIPS
 .green-chip {
   background-color: #0E8345 !important;
   color: #fff !important;

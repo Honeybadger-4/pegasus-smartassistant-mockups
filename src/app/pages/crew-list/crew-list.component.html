@@ -1,5 +1,6 @@
 <div id="crew-list-page">
-  <div class="flex items-center justify-between">
+  <!-- Breadcrumb and Filter -->
+  <section class="flex items-center justify-between">
     <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" />
 
     <div class="w-[234px]">
@@ -15,8 +16,9 @@
         />
       </p-iconField>
     </div>
-  </div>
+  </section>
 
+  <!-- Summary Panel -->
   <section class="chart-panel-section mt-5">
     @if (isLogbookCurrentMonth) {
       <p class="font-bold text-[16px]">
@@ -64,6 +66,7 @@
     }
   </section>
 
+  <!-- Table -->
   <section class="table-section custom-card mt-5">
     <app-custom-table
       [tableData]="crewListContentData()"
@@ -75,6 +78,7 @@
   </section>
 </div>
 
+<!-- Templates -->
 <ng-template #exportDataIconTemplate let-rowData="rowData">
   <p-button
     type="button"
