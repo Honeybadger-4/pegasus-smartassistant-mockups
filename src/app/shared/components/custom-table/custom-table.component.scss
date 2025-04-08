@@ -1,0 +1,15 @@
+::ng-deep {
+  .p-datatable-filter-buttonbar {
+    .p-button {
+      background-color: #feb914 !important;
+      border: 1px solid #feb914 !important;
+      color: #fff !important;
+    }
+
+    .p-button-outlined {
+      background-color: transparent !important;
+      border: 1px solid #feb914 !important;
+      color: #feb914 !important;
+    }
+  }
+}
