@@ -102,10 +102,10 @@
 
 <ng-template #approvedStatusTemplate let-rowData="rowData">
   @switch (rowData.status) {
-    @case ('APPROVED') {
+    @case ("APPROVED") {
       <p-chip label="Approved" class="green-chip" />
     }
-    @case ('NOT_APPROVED') {
+    @case ("NOT_APPROVED") {
       <p-chip label="Not Approved" class="gray-chip" />
     }
     @default {

@@ -49,13 +49,13 @@ import { InputTextModule } from 'primeng/inputtext';
     PanelModule,
     TooltipModule,
     ButtonModule,
-    Chip
+    Chip,
   ],
   templateUrl: './crew-list.component.html',
   styleUrl: './crew-list.component.scss',
 })
 export class CrewListComponent {
-  constructor(private fileSaverService: FileSaverService) { }
+  constructor(private fileSaverService: FileSaverService) {}
 
   customTableComponent = viewChild.required(CustomTableComponent);
   searchInput = viewChild.required<ElementRef>('searchInput');
@@ -76,7 +76,9 @@ export class CrewListComponent {
   currentRows = signal<number>(20);
   tableLoading = signal<boolean>(false);
   crewListData = signal<ILogbookCrewListResponse | null>(null);
-  crewListContentData = signal<ILogbookCrewListResponse['content']| null>(null);
+  crewListContentData = signal<ILogbookCrewListResponse['content'] | null>(
+    null,
+  );
   searchInputValue = signal<string>('');
 
   logbookDashboardData: any = [];
@@ -102,7 +104,11 @@ export class CrewListComponent {
   defineColumns() {
     if (this.isLogbookCurrentMonth) {
       this.columns.set([
-        { field: 'crewNameSurname', header: 'Crew Name & Surname', isFilter: true },
+        {
+          field: 'crewNameSurname',
+          header: 'Crew Name & Surname',
+          isFilter: true,
+        },
         { field: 'companyId', header: 'Company ID', isFilter: true },
         { field: '', header: '', template: this.linkedNextPageTemplate() },
       ]);
@@ -116,12 +122,12 @@ export class CrewListComponent {
         { field: 'companyId', header: 'Company ID', isFilter: true },
         {
           field: 'totalNumberOfLog',
-          header: 'Total Number of Log'
+          header: 'Total Number of Log',
         },
         {
           field: 'totalHours',
           header: 'Total Hours of Log',
-          template: this.totalHoursOfLogColumnTemplate()
+          template: this.totalHoursOfLogColumnTemplate(),
         },
         { field: 'approvedLogs', header: 'Approved Logs' },
         { field: 'reassignedLogs', header: 'Reassing Logs' },

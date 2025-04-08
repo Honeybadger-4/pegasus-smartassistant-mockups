@@ -196,10 +196,10 @@
 
 <ng-template #statusColumnTemplate let-rowData="rowData">
   @switch (rowData.status) {
-    @case ('APPROVED') {
+    @case ("APPROVED") {
       <p-chip label="Approved" class="green-chip" />
     }
-    @case ('WAITING_APPROVAL') {
+    @case ("WAITING_APPROVAL") {
       <p-chip label="Waiting for Approve" class="yellow-chip" />
     }
     @default {

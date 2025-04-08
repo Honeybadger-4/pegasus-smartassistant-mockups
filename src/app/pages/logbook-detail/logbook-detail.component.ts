@@ -57,7 +57,7 @@ import { firstValueFrom } from 'rxjs';
     ButtonModule,
     TooltipModule,
     TruncateTextPipe,
-    Chip
+    Chip,
   ],
   templateUrl: './logbook-detail.component.html',
   styleUrl: './logbook-detail.component.scss',
