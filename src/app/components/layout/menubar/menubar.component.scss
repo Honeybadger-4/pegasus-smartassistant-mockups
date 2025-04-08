@@ -1,48 +1,68 @@
-#LayoutMenuComponent {
-  .layout-menubar {
-    .menu-logo {
-      margin-right: 10px;
-    }
-
-    .p-menubar-item-link {
-      &:hover,
-      &.active {
-        background-color: #fffbed;
-        .menu-item-label {
-          color: #fed447;
-        }
-        .menu-item-icon {
-          color: #fed447;
-          filter: invert(97%) sepia(22%) saturate(7475%) hue-rotate(320deg)
-            brightness(105%) contrast(99%);
-        }
-      }
-      .menu-item-label {
-        font-size: 12px;
-      }
-
-      .menu-item-icon {
-        width: 16px;
-        height: 16px;
-      }
-    }
-  }
-}
-
 ::ng-deep {
   #LayoutMenuComponent {
     .layout-menubar {
       .p-menubar {
-        padding: 10px 20px 10px 20px;
+        padding: 10px 20px;
 
         .p-menubar-button {
           color: black;
         }
 
-        .p-menubar:not(.p-highlight):not(.p-disabled).p-focus
-          > .p-menubar-content {
+        &:not(.p-highlight):not(.p-disabled).p-focus > .p-menubar-content {
           background-color: transparent;
         }
+
+        .p-menubar-root-list {
+          gap: 1;
+
+          > .p-menubar-item {
+            > .p-menubar-item-content,
+            &:hover > .p-menubar-item-content,
+            &.p-highlight > .p-menubar-item-content {
+              background: transparent !important;
+              box-shadow: none !important;
+            }
+          }
+        }
+      }
+
+      .p-menubar-item-link {
+        background: transparent !important;
+        box-shadow: none !important;
+
+        &:hover,
+        &.active {
+          &.mainmenu-item {
+            background-color: #fdf2dc !important;
+            border-radius: 44px;
+
+            .menu-item-label {
+              color: #0d0f11;
+              font-weight: 600;
+            }
+          }
+
+          &.submenu-item {
+            background-color: #f4f6f8;
+
+            .menu-item-label {
+              font-weight: 400;
+            }
+          }
+        }
+
+        .menu-item-label {
+          font-size: 14px;
+        }
+
+        .menu-item-icon {
+          width: 16px;
+          height: 16px;
+        }
+      }
+
+      .menu-logo {
+        margin-right: 10px;
       }
 
       .profile-avatar {
@@ -50,16 +70,13 @@
           width: 47px;
           height: 47px;
           border: 2px solid #fed447;
+
           img {
             width: 100%;
             height: 100%;
             object-fit: cover;
           }
         }
-      }
-
-      .p-menubar-root-list {
-        gap: 1;
       }
     }
   }

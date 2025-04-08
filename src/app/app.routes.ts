@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
-import { HomepageComponent } from './pages/homepage/homepage.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LoginComponent } from './pages/login/login.component';
 import { FlightInfoComponent } from './pages/flight-info/flight-info.component';
 import { TripInfoComponent } from './pages/trip-info/trip-info.component';
@@ -28,41 +28,25 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        component: HomepageComponent,
+        component: DashboardComponent,
       },
+
       {
         path: 'flight-information',
+        component: FlightInfoComponent,
+      },
+
+      {
+        path: 'operational-reports',
         children: [
-          {
-            path: '',
-            component: FlightInfoComponent,
-          },
-          {
-            path: 'trip-information',
-            component: TripInfoComponent,
-          },
-          {
-            path: 'fuel',
-            component: FuelOrderComponent,
-          },
-          {
-            path: 'route',
-            component: RouteComponent,
-          },
-          {
-            path: 'load-sheet',
-            component: LoadSheetComponent,
-          },
+          { path: 'fuel', component: FuelOrderComponent },
+          { path: 'route', component: RouteComponent },
+          { path: 'trip-information', component: TripInfoComponent },
+          { path: 'load-sheet', component: LoadSheetComponent },
+          { path: 'report', component: ReportComponent },
         ],
       },
-      {
-        path: 'report',
-        component: ReportComponent,
-      },
-      {
-        path: 'user-login-history',
-        component: UserLoginHistoryComponent,
-      },
+
       {
         path: 'logbook',
         children: [
@@ -87,6 +71,10 @@ export const routes: Routes = [
       {
         path: 'airport-information',
         component: AirportInfoComponent,
+      },
+      {
+        path: 'user-login-history',
+        component: UserLoginHistoryComponent,
       },
     ],
   },

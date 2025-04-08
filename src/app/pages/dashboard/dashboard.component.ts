@@ -1,8 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 
-import { GeneralInformationCardComponent } from 'src/app/components/homepage/general-information-card/general-information-card.component';
-import { TopAlternateRoutesCardComponent } from '../../components/homepage/top-alternate-routes-card/top-alternate-routes-card.component';
-import { TotalFlightsComponent } from 'src/app/components/homepage/total-flights/total-flights.component';
+import { GeneralInformationCardComponent } from 'src/app/components/dashboard/general-information-card/general-information-card.component';
+import { TopAlternateRoutesCardComponent } from '../../components/dashboard/top-alternate-routes-card/top-alternate-routes-card.component';
+import { TotalFlightsComponent } from 'src/app/components/dashboard/total-flights/total-flights.component';
 
 import { FormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -13,7 +13,7 @@ import { FlightInformationService } from '@shared/services/flight-information.se
 import { IFlightInfoStatsResponse } from '@shared/models/flight-info-stats-response.model';
 
 @Component({
-  selector: 'app-homepage',
+  selector: 'app-dashboard',
   imports: [
     TotalFlightsComponent,
     //GeneralInformationCardComponent,
@@ -21,10 +21,10 @@ import { IFlightInfoStatsResponse } from '@shared/models/flight-info-stats-respo
     DatePickerModule,
     FormsModule,
   ],
-  templateUrl: './homepage.component.html',
-  styleUrl: './homepage.component.scss',
+  templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.scss',
 })
-export class HomepageComponent {
+export class DashboardComponent {
   routeService = inject(RouteService);
   flightInfoService = inject(FlightInformationService);
 
