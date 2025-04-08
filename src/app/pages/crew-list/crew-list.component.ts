@@ -26,6 +26,7 @@ import { ILogbookGetCrewListByFilterResponse } from '@shared/models/get-crews-re
 import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
 
+import { Chip } from 'primeng/chip';
 import { MenuItem } from 'primeng/api';
 import { PanelModule } from 'primeng/panel';
 import { ButtonModule } from 'primeng/button';
@@ -49,6 +50,7 @@ import { InputTextModule } from 'primeng/inputtext';
     PanelModule,
     TooltipModule,
     ButtonModule,
+    Chip
   ],
   templateUrl: './crew-list.component.html',
   styleUrl: './crew-list.component.scss',
@@ -108,8 +110,8 @@ export class CrewListComponent {
   defineColumns() {
     if (this.isLogbookCurrentMonth) {
       this.columns.set([
-        { field: 'crewNameSurname', header: 'Crew Name & Surname' },
-        { field: 'companyId', header: 'Company ID' },
+        { field: 'crewNameSurname', header: 'Crew Name & Surname', isFilter: true },
+        { field: 'companyId', header: 'Company ID', isFilter: true },
         { field: '', header: '', template: this.linkedNextPageTemplate() },
       ]);
     } else {
@@ -122,14 +124,12 @@ export class CrewListComponent {
         { field: 'companyId', header: 'Company ID', isFilter: true },
         {
           field: 'totalNumberOfLog',
-          header: 'Total Number of Log',
-          isFilter: true,
+          header: 'Total Number of Log'
         },
         {
           field: 'totalHours',
           header: 'Total Hours of Log',
-          template: this.totalHoursOfLogColumnTemplate(),
-          isFilter: true,
+          template: this.totalHoursOfLogColumnTemplate()
         },
         { field: 'approvedLogs', header: 'Approved Logs', isFilter: true },
         { field: 'reassignedLogs', header: 'Reassing Logs', isFilter: true },

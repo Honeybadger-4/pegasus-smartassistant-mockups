@@ -21,6 +21,7 @@ import { DetailModalComponent } from '../../components/logbook-detail/detail-mod
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
 import moment from 'moment';
 
+import { Chip } from 'primeng/chip';
 import { ToastModule } from 'primeng/toast';
 import { TableModule } from 'primeng/table';
 import { MessageService } from 'primeng/api';
@@ -56,6 +57,7 @@ import { firstValueFrom } from 'rxjs';
     ButtonModule,
     TooltipModule,
     TruncateTextPipe,
+    Chip
   ],
   templateUrl: './logbook-detail.component.html',
   styleUrl: './logbook-detail.component.scss',

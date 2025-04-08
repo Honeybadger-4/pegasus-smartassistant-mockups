@@ -97,21 +97,17 @@
 </ng-template>
 
 <ng-template #approvedStatusTemplate let-rowData="rowData">
-  <i
-    *ngIf="rowData.totalNumberOfLog === rowData.approvedLogs"
-    class="pi pi-check-circle text-green-500 text-lg"
-    pTooltip="All logs for this crew member have been approved"
-    tooltipPosition="top"
-    tooltipStyleClass="custom-tooltip"
-  ></i>
-
-  <i
-    *ngIf="rowData.totalNumberOfLog !== rowData.approvedLogs"
-    class="pi pi-times-circle text-red-500 text-lg"
-    pTooltip="Some logs are still pending approval"
-    tooltipPosition="top"
-    tooltipStyleClass="custom-tooltip"
-  ></i>
+  @switch (rowData.status) {
+    @case ('APPROVED') {
+      <p-chip label="Approved" class="green-chip" />
+    }
+    @case ('NOT_APPROVED') {
+      <p-chip label="Not Approved" class="gray-chip" />
+    }
+    @default {
+      -
+    }
+  }
 </ng-template>
 
 <ng-template #totalHoursOfLogColumnTemplate let-rowData="rowData">

@@ -240,6 +240,27 @@ body {
   font-size: 12px;
 }
 
+p-columnfilterformelement {
+  input {
+    font-size: 12px !important;
+    width: 100% !important;
+  }
+}
+
+.p-datatable-filter-buttonbar {
+  .p-button {
+    background-color: #feb914 !important;
+    border: 1px solid #feb914 !important;
+    color: #fff !important;
+  }
+
+  .p-button-outlined {
+    background-color: transparent !important;
+    border: 1px solid #feb914 !important;
+    color: #feb914 !important;
+  }
+}
+
 // Confirm Dialog
 .custom-confirm-dialog-container {
   .custom-confirm-content {
@@ -305,7 +326,7 @@ body {
   }
 }
 
-/* Toast */
+// Toast
 .p-toast {
   .p-toast-message-warn {
     background-color: white;
@@ -333,4 +354,20 @@ body {
   .p-tablist-active-bar {
     background-color: $option-selected-bg;
   }
+}
+
+// Chips
+.green-chip {
+  background-color: #0E8345 !important;
+  color: #fff !important;
+}
+
+.gray-chip {
+  background-color: #DFE3E9 !important;
+  color: #515B66 !important;
+}
+
+.yellow-chip {
+  background-color: #FEB914 !important;
+  color: #515B66 !important;
 }
