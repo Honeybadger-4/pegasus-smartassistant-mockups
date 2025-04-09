@@ -231,16 +231,18 @@ body {
 }
 
 // TABLE
-.p-datatable .p-datatable-thead > tr > th {
-  font-weight: 500;
-  color: $base-text-color;
-  font-size: 12px;
-  padding: 7px;
-}
+.p-datatable {
+  .p-datatable-thead > tr > th {
+    font-weight: 500;
+    color: $base-text-color;
+    font-size: 12px;
+    padding: 7px;
+  }
 
-.p-datatable .p-datatable-tbody > tr > td {
-  padding: 7px;
-  font-size: 12px;
+  .p-datatable-tbody > tr > td {
+    padding: 7px;
+    font-size: 12px;
+  }
 }
 
 p-columnfilterformelement {
