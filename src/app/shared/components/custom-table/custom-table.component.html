@@ -25,18 +25,30 @@
         <th *ngFor="let col of columns">
           <div class="flex items-center">
             {{ col.header }}
-            <p-columnFilter
-              *ngIf="col.isFilter"
-              type="text"
-              [field]="col.field"
-              display="menu"
-              matchMode="contains"
-              [showMatchModes]="false"
-              [showOperator]="false"
-              [showAddButton]="false"
-              placeholder="Search"
-              ariaLabel="Filter"
-            />
+            @if(col.isFilter && col.filterType === 'select') {
+              <p-columnFilter [field]="col.field" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                <ng-template #filter let-value let-filter="filterCallback">
+                    <p-select [ngModel]="value" [options]="col.filterOptions" (onChange)="filter($event.value)" placeholder="Select One" styleClass="w-full">
+                        <ng-template let-option #item>
+                            <span>{{ option.label }}</span>
+                        </ng-template>
+                    </p-select>
+                </ng-template>
+            </p-columnFilter>
+            }@else if(col.isFilter) {
+              <p-columnFilter
+                *ngIf="col.isFilter"
+                type="text"
+                [field]="col.field"
+                display="menu"
+                matchMode="contains"
+                [showMatchModes]="false"
+                [showOperator]="false"
+                [showAddButton]="false"
+                placeholder="Search"
+                ariaLabel="Filter"
+              />
+            }
           </div>
         </th>
       </tr>

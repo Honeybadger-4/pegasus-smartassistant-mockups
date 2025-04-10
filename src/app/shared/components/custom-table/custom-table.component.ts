@@ -8,12 +8,14 @@ import {
   TemplateRef,
   viewChild,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
+import { SelectModule } from 'primeng/select';
 import { Table, TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-custom-table',
-  imports: [CommonModule, TableModule],
+  imports: [CommonModule, FormsModule, TableModule, SelectModule],
   templateUrl: './custom-table.component.html',
   styleUrl: './custom-table.component.scss',
 })

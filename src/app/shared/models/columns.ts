@@ -3,4 +3,6 @@ export interface Column {
   header: string;
   template?: any;
   isFilter?: boolean;
+  filterType?: string;
+  filterOptions?: any[];
 }
