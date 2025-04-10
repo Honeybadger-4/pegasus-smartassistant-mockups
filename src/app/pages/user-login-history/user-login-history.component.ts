@@ -147,7 +147,7 @@ export class UserLoginHistoryComponent {
     return [startDate.toDate(), endDate.toDate()];
   }
 
-  pageEvent(event: { first: number; rows: number }) {
+  lazyLoadEvent(event: any) {
     const page = event.first / event.rows;
     this.currentPage = page;
     this.currentRows = event.rows;

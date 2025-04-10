@@ -86,6 +86,7 @@ body {
   }
 }
 
+// DROPDOWN
 .custom-dropdown {
   width: 100%;
   height: 100%;
@@ -116,6 +117,7 @@ body {
   }
 }
 
+// CALENDAR
 .custom-calendar {
   input {
     width: 100%;
@@ -185,13 +187,14 @@ body {
   }
 }
 
+// CARD
 .custom-card {
   background-color: #f2f2f24d;
   border-radius: 10px;
   padding: 10px 16px 10px 16px;
 }
 
-// Raido Button
+// RADIO BUTTON
 .custom-radio-button {
   .p-radiobutton-checked .p-radiobutton-box {
     border-color: #feb914 !important;
@@ -204,7 +207,7 @@ body {
   }
 }
 
-// Tooltip
+// TOOLTIP
 .custom-tooltip {
   .p-tooltip-text {
     background-color: #fff !important;
@@ -227,20 +230,48 @@ body {
   border-bottom-color: #fff !important;
 }
 
-// Table styles
-.p-datatable .p-datatable-thead > tr > th {
-  font-weight: 500;
-  color: $base-text-color;
-  font-size: 12px;
-  padding: 7px;
+// TABLE
+.p-datatable {
+  .p-datatable-thead > tr > th {
+    font-weight: 500;
+    color: $base-text-color;
+    font-size: 12px;
+    padding: 7px;
+  }
+
+  .p-datatable-tbody > tr > td {
+    padding: 7px;
+    font-size: 12px;
+  }
 }
 
-.p-datatable .p-datatable-tbody > tr > td {
-  padding: 7px;
-  font-size: 12px;
+p-columnfilterformelement {
+  input {
+    font-size: 12px !important;
+    width: 100% !important;
+  }
+
+  .p-select {
+    font-size: 12px !important;
+    width: 100% !important;
+  }
 }
 
-// Confirm Dialog
+.p-datatable-filter-buttonbar {
+  .p-button {
+    background-color: #feb914 !important;
+    border: 1px solid #feb914 !important;
+    color: #fff !important;
+  }
+
+  .p-button-outlined {
+    background-color: transparent !important;
+    border: 1px solid #feb914 !important;
+    color: #feb914 !important;
+  }
+}
+
+// CONFIRM DIALOG
 .custom-confirm-dialog-container {
   .custom-confirm-content {
     text-align: center;
@@ -305,7 +336,7 @@ body {
   }
 }
 
-/* Toast */
+// TOAST
 .p-toast {
   .p-toast-message-warn {
     background-color: white;
@@ -319,12 +350,12 @@ body {
   }
 }
 
-// Buttons
+// BUTTON
 .p-button-text:not(:disabled):hover {
   background: rgb(241, 241, 241) !important;
 }
 
-// Tabs
+// TABS
 .custom-tabs {
   .p-tab-active {
     color: $option-selected-bg;
@@ -333,4 +364,20 @@ body {
   .p-tablist-active-bar {
     background-color: $option-selected-bg;
   }
+}
+
+// CHIPS
+.green-chip {
+  background-color: #0e8345 !important;
+  color: #fff !important;
+}
+
+.gray-chip {
+  background-color: #dfe3e9 !important;
+  color: #515b66 !important;
+}
+
+.yellow-chip {
+  background-color: #feb914 !important;
+  color: #515b66 !important;
 }

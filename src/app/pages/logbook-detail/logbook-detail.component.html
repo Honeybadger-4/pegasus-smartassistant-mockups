@@ -97,11 +97,10 @@
           ? getCurrentMonthData()?.pairings?.length || 0
           : logbookDetailData()?.logbookDetails?.totalElements || 0
       "
-      [lazy]="!isLogbookCurrentMonth()"
       [tableLoading]="tableLoading()"
       [footerTemplate]="tableFooterTemplate"
       (selectedCheckbox)="selectionCheckbox($event)"
-      (pageEvent)="onPageChange($event)"
+      (lazyLoadEvent)="lazyLoadEvent($event)"
       [noDataFoundMsg]="'There were no data entries for this user this month.'"
     ></app-custom-table>
   </section>
@@ -196,10 +195,16 @@
 </ng-template>
 
 <ng-template #statusColumnTemplate let-rowData="rowData">
-  @if (rowData.status === "WAITING_APPROVAL") {
-    <p>WAITING APPROVAL</p>
-  } @else {
-    <p>{{ rowData.status || "-" }}</p>
+  @switch (rowData.status) {
+    @case ("APPROVED") {
+      <p-chip label="Approved" class="green-chip" />
+    }
+    @case ("WAITING_APPROVAL") {
+      <p-chip label="Waiting for Approve" class="yellow-chip" />
+    }
+    @default {
+      -
+    }
   }
 </ng-template>
 

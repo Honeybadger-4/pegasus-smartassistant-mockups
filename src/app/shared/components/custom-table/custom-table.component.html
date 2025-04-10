@@ -1,60 +1,101 @@
-<p-table
-  #table
-  [value]="tableData()"
-  [columns]="tableColumns()"
-  stripedRows
-  [loading]="tableLoading()"
-  [lazy]="lazy()"
-  [paginator]="isPaginator()"
-  [rows]="rows"
-  [first]="0"
-  [totalRecords]="totalRecords()"
-  [rowsPerPageOptions]="[20, 40, 80]"
-  [selectionMode]="selectionMode()"
-  [(selection)]="selectionData"
-  (selectionChange)="selectionChange($event)"
-  (onPage)="pageChange($event)"
->
-  <!-- Table Header -->
-  <ng-template #header let-columns>
-    <tr>
-      <th *ngIf="selectionMode() === 'multiple'" style="width: 4rem">
-        <p-tableHeaderCheckbox />
-      </th>
-      <th *ngFor="let col of columns">
-        {{ col.header }}
-      </th>
-    </tr>
-  </ng-template>
+<div id="custom-table-component">
+  <p-table
+    #table
+    [value]="tableData()"
+    [columns]="tableColumns()"
+    [loading]="tableLoading()"
+    [lazy]="true"
+    [paginator]="isPaginator()"
+    [rows]="rows"
+    [first]="0"
+    [totalRecords]="totalRecords()"
+    [rowsPerPageOptions]="[20, 40, 80]"
+    [selectionMode]="selectionMode()"
+    [(selection)]="selectionData"
+    (selectionChange)="selectionChange($event)"
+    stripedRows
+    (onLazyLoad)="onLazyLoad($event)"
+  >
+    <!-- Table Header -->
+    <ng-template #header let-columns>
+      <tr>
+        <th *ngIf="selectionMode() === 'multiple'" style="width: 4rem">
+          <p-tableHeaderCheckbox />
+        </th>
+        <th *ngFor="let col of columns">
+          <div class="flex items-center">
+            {{ col.header }}
+            @if (col.isFilter && col.filterType === "selectbox") {
+              <p-columnFilter
+                [field]="col.field"
+                matchMode="equals"
+                display="menu"
+                [showMatchModes]="false"
+                [showOperator]="false"
+                [showAddButton]="false"
+              >
+                <ng-template #filter let-value let-filter="filterCallback">
+                  <p-select
+                    [ngModel]="value"
+                    [options]="col.filterOptions"
+                    (onChange)="filter($event.value)"
+                    placeholder="Select One"
+                    styleClass="w-full"
+                  >
+                    <ng-template let-option #item>
+                      <span>{{ option.label }}</span>
+                    </ng-template>
+                  </p-select>
+                </ng-template>
+              </p-columnFilter>
+            } @else if (col.isFilter) {
+              <p-columnFilter
+                *ngIf="col.isFilter"
+                type="text"
+                [field]="col.field"
+                display="menu"
+                matchMode="contains"
+                [showMatchModes]="false"
+                [showOperator]="false"
+                [showAddButton]="false"
+                placeholder="Search"
+                ariaLabel="Filter"
+              />
+            }
+          </div>
+        </th>
+      </tr>
+    </ng-template>
 
-  <!-- Table Body -->
-  <ng-template #body let-rowData>
-    <tr (click)="rowClicked(rowData)">
-      <td *ngIf="selectionMode() === 'multiple'">
-        <p-tableCheckbox [value]="rowData" />
-      </td>
+    <!-- Table Body -->
+    <ng-template #body let-rowData>
+      <tr>
+        <td *ngIf="selectionMode() === 'multiple'">
+          <p-tableCheckbox [value]="rowData" />
+        </td>
 
-      <td *ngFor="let column of tableColumns()">
-        <ng-container *ngIf="column.template; else defaultCell">
-          <ng-container
-            *ngTemplateOutlet="column.template; context: { rowData: rowData }"
-          ></ng-container>
-        </ng-container>
+        <td *ngFor="let column of tableColumns()">
+          <ng-container *ngIf="column.template; else defaultCell">
+            <ng-container
+              *ngTemplateOutlet="column.template; context: { rowData: rowData }"
+            ></ng-container>
+          </ng-container>
 
-        <ng-template #defaultCell>
-          {{ rowData[column.field] || "-" }}
-        </ng-template>
-      </td>
-    </tr>
-  </ng-template>
+          <ng-template #defaultCell>
+            {{ rowData[column.field] || "-" }}
+          </ng-template>
+        </td>
+      </tr>
+    </ng-template>
 
-  <ng-template #footer>
-    <ng-container *ngTemplateOutlet="footerTemplate()"></ng-container>
-  </ng-template>
+    <ng-template #footer>
+      <ng-container *ngTemplateOutlet="footerTemplate()"></ng-container>
+    </ng-template>
 
-  <ng-template #emptymessage>
-    <tr>
-      <td colspan="50">{{ noDataFoundMsg() }}</td>
-    </tr>
-  </ng-template>
-</p-table>
+    <ng-template #emptymessage>
+      <tr>
+        <td colspan="50">{{ noDataFoundMsg() }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
