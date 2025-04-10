@@ -98,7 +98,6 @@ export class CrewListComponent {
 
     this.defineColumns();
     this.setupSearchListener();
-    this.getCrewList();
   }
 
   defineColumns() {
@@ -216,9 +215,14 @@ export class CrewListComponent {
     this.currentRows.set(event.rows);
 
     this.tableFilters.set({
-      filterCompanyId: event.filters?.companyId[0]?.value,
-      filterCrewFullName: event.filters?.crewNameSurname[0]?.value,
-      filterApprovalStatus: event.filters?.approvedStatus[0]?.value,
+      filterCompanyId:
+        event.filters?.companyId && event.filters?.companyId[0]?.value,
+      filterCrewFullName:
+        event.filters?.crewNameSurname &&
+        event.filters?.crewNameSurname[0]?.value,
+      filterApprovalStatus:
+        event.filters?.approvedStatus &&
+        event.filters?.approvedStatus[0]?.value,
     });
 
     this.getCrewList();
