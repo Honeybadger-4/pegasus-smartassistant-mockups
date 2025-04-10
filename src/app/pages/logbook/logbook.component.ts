@@ -14,7 +14,6 @@ import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
 import { ChipModule } from 'primeng/chip';
 
-
 @Component({
   selector: 'app-logbook',
   imports: [

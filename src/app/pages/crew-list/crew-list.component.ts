@@ -141,7 +141,7 @@ export class CrewListComponent {
             { label: 'Approved', value: 'APPROVED' },
             { label: 'Not Approved', value: 'NOT_APPROVED' },
             { label: 'Inactive', value: 'INACTIVE' },
-          ]
+          ],
         },
         { field: '', header: '', template: this.linkedNextPageTemplate() },
         { field: '', header: '', template: this.exportDataIconTemplate() },
@@ -223,10 +223,9 @@ export class CrewListComponent {
 
     this.getCrewList();
   }
-  
+
   navigateLogbookDetail(event: any) {
     this.stateManagement.setState('crewListPage', event);
     this.router.navigate(['logbook/logbook-detail']);
   }
-
 }

@@ -149,11 +149,14 @@
 
 <ng-template #statusTemplate let-rowData="rowData">
   @if (rowData.status === "APPROVED") {
-      <p-chip label="Approved" class="green-chip" />
+    <p-chip label="Approved" class="green-chip" />
   } @else if (rowData.status === "NOT_APPROVED") {
-    <p-chip [label]="'Not Approved (' + rowData.unapprovedUserCount + ')' " class="yellow-chip" />
+    <p-chip
+      [label]="'Not Approved (' + rowData.unapprovedUserCount + ')'"
+      class="yellow-chip"
+    />
   } @else if (rowData.status === "INACTIVE") {
-      <p-chip label="Inactive" class="gray-chip" />
+    <p-chip label="Inactive" class="gray-chip" />
   } @else {
     <span>-</span>
   }
