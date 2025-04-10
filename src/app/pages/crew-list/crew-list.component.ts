@@ -55,8 +55,6 @@ import { InputTextModule } from 'primeng/inputtext';
   styleUrl: './crew-list.component.scss',
 })
 export class CrewListComponent {
-  constructor(private fileSaverService: FileSaverService) {}
-
   customTableComponent = viewChild.required(CustomTableComponent);
   searchInput = viewChild.required<ElementRef>('searchInput');
   linkedNextPageTemplate = viewChild.required('linkedNextPageTemplate');
@@ -80,6 +78,7 @@ export class CrewListComponent {
     null,
   );
   searchInputValue = signal<string>('');
+  tableFilters = signal<any>({});
 
   logbookDashboardData: any = [];
   isLogbookCurrentMonth = false;
@@ -87,6 +86,8 @@ export class CrewListComponent {
     { label: 'Logbook', routerLink: '/logbook' },
     { label: 'Crew List' },
   ];
+
+  constructor(private fileSaverService: FileSaverService) {}
 
   ngOnInit() {
     this.logbookDashboardData =
@@ -100,7 +101,6 @@ export class CrewListComponent {
     this.getCrewList();
   }
 
-  // Define Operations
   defineColumns() {
     if (this.isLogbookCurrentMonth) {
       this.columns.set([
@@ -136,6 +136,12 @@ export class CrewListComponent {
           header: 'Approval Status',
           template: this.approvedStatusTemplate(),
           isFilter: true,
+          filterType: 'selectbox',
+          filterOptions: [
+            { label: 'Approved', value: 'APPROVED' },
+            { label: 'Not Approved', value: 'NOT_APPROVED' },
+            { label: 'Inactive', value: 'INACTIVE' },
+          ]
         },
         { field: '', header: '', template: this.linkedNextPageTemplate() },
         { field: '', header: '', template: this.exportDataIconTemplate() },
@@ -152,6 +158,7 @@ export class CrewListComponent {
         this.currentPage(),
         this.currentRows(),
         this.searchInputValue(),
+        this.tableFilters(),
       )
       .subscribe({
         next: (response) => {
@@ -181,7 +188,7 @@ export class CrewListComponent {
     }
   }
 
-  // Search Operations
+  // Table Operations
   setupSearchListener() {
     fromEvent<Event>(this.searchInput().nativeElement, 'input')
       .pipe(
@@ -203,17 +210,23 @@ export class CrewListComponent {
     this.searchInputValue.set(value.toUpperCase());
   }
 
-  // Table Operations
-  navigateLogbookDetail(event: any) {
-    this.stateManagement.setState('crewListPage', event);
-    this.router.navigate(['logbook/logbook-detail']);
-  }
-
   lazyLoadEvent(event: any) {
     const page = event.first / event.rows;
     this.currentPage.set(page);
     this.currentRows.set(event.rows);
 
+    this.tableFilters.set({
+      filterCompanyId: event.filters?.companyId[0]?.value,
+      filterCrewFullName: event.filters?.crewNameSurname[0]?.value,
+      filterApprovalStatus: event.filters?.approvedStatus[0]?.value,
+    });
+
     this.getCrewList();
   }
+  
+  navigateLogbookDetail(event: any) {
+    this.stateManagement.setState('crewListPage', event);
+    this.router.navigate(['logbook/logbook-detail']);
+  }
+
 }

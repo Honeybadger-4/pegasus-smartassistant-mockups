@@ -16,6 +16,7 @@ import {
   IDetailedListContentData,
   IDetailedListResponse,
 } from '@shared/models/detailed-list-response.model';
+import { RequestParamsControlService } from './helpers-services/request-params-control.service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,8 @@ import {
 export class AdminLogbookService {
   http = inject(HttpClient);
   baseUrl = environment.baseApi;
+
+  constructor(private requestParamsControlService: RequestParamsControlService) {}
 
   getLogbookSummary(year: number): Observable<ILogbookSummaryResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/logbook-summary?year=${year}`;
@@ -46,6 +49,7 @@ export class AdminLogbookService {
     page: number,
     size: number,
     searchValue?: string | null,
+    tableFilters?: {filterCompanyId: string, filterCrewFullName: string, filterApprovalStatus: string} | null,
   ): Observable<ILogbookCrewListResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/crewList`;
 
@@ -53,11 +57,18 @@ export class AdminLogbookService {
       .set('logbookType', logbookType)
       .set('yearMonth', yearMonth)
       .set('page', page)
-      .set('size', size);
+      .set('size', size)
 
-    if (searchValue) {
-      params = params.set('searchValue', searchValue);
-    }
+      const optionalParams: { key: string, value: any }[] = [
+        { key: 'searchValue', value: searchValue },
+        { key: 'filterCompanyId', value: tableFilters?.filterCompanyId },
+        { key: 'filterCrewFullName', value: tableFilters?.filterCrewFullName },
+        { key: 'filterApprovalStatus', value: tableFilters?.filterApprovalStatus }
+      ];
+
+      this.requestParamsControlService.paramsControl(optionalParams).map(( { key, value } ) => {
+        params = params.set(key, value);
+      });
 
     return this.http
       .get<IHttpResponseModel>(apiUrl, { params })

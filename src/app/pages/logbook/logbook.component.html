@@ -147,21 +147,13 @@
   }
 </ng-template>
 
-<!-- TODO: Servise status parametresi eklenince kontrol edilmeli.
-TODO: Servise notApprovedCount bilgisi eklenince kontrol edilmeli. -->
 <ng-template #statusTemplate let-rowData="rowData">
   @if (rowData.status === "APPROVED") {
-    <span class="status-badge status-badge-approved">
-      {{ rowData.status }}
-    </span>
+      <p-chip label="Approved" class="green-chip" />
   } @else if (rowData.status === "NOT_APPROVED") {
-    <span class="status-badge status-badge-not-approved">
-      {{ rowData.status }} ( {{ rowData.notApprovedCount }} )
-    </span>
+    <p-chip [label]="'Not Approved (' + rowData.unapprovedUserCount + ')' " class="yellow-chip" />
   } @else if (rowData.status === "INACTIVE") {
-    <span class="status-badge status-badge-inactive">
-      {{ rowData.status }}
-    </span>
+      <p-chip label="Inactive" class="gray-chip" />
   } @else {
     <span>-</span>
   }

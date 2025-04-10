@@ -25,7 +25,7 @@
         <th *ngFor="let col of columns">
           <div class="flex items-center">
             {{ col.header }}
-            @if(col.isFilter && col.filterType === 'select') {
+            @if(col.isFilter && col.filterType === 'selectbox') {
               <p-columnFilter [field]="col.field" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template #filter let-value let-filter="filterCallback">
                     <p-select [ngModel]="value" [options]="col.filterOptions" (onChange)="filter($event.value)" placeholder="Select One" styleClass="w-full">
@@ -35,7 +35,8 @@
                     </p-select>
                 </ng-template>
             </p-columnFilter>
-            }@else if(col.isFilter) {
+            }
+            @else if(col.isFilter) {
               <p-columnFilter
                 *ngIf="col.isFilter"
                 type="text"
