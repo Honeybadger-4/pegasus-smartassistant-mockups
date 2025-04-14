@@ -12,26 +12,23 @@
     color: #0d0f11;
   }
 
-  .table-box {
-    height: 160px;
-    overflow-y: auto;
+  .stats-box {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-
-      th {
-        text-align: left;
+    .stat {
+      .value {
+        font-size: 28px;
         font-weight: 600;
-        font-size: 14px;
-        padding-bottom: 12px;
         color: #0d0f11;
+        line-height: 1.2;
       }
 
-      td {
+      .label {
         font-size: 14px;
-        padding-bottom: 10px;
-        color: #515B66;
+        color: #515b66;
+        line-height: 1.2;
       }
     }
   }

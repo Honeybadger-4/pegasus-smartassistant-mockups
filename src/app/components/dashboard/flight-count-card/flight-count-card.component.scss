@@ -1,0 +1,18 @@
+.card-placeholder {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  height: 250px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+
+  .title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #0d0f11;
+  }
+
+  .chart-box {
+    height: 160px;
+  }
+}

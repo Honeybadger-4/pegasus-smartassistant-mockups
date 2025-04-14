@@ -8,8 +8,9 @@ describe('TopAlternateRoutesCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TopAlternateRoutesCardComponent],
-    }).compileComponents();
+      imports: [TopAlternateRoutesCardComponent]
+    })
+    .compileComponents();
 
     fixture = TestBed.createComponent(TopAlternateRoutesCardComponent);
     component = fixture.componentInstance;

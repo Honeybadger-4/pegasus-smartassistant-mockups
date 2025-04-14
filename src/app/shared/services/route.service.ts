@@ -4,7 +4,6 @@ import { map, Observable } from 'rxjs';
 import { IRouteResponse } from '@shared/models/route-response.model';
 import { IHttpResponseModel } from '@shared/models/http-response.model';
 import { environment } from '@environments/environment';
-import { ITopAlternatesResponse } from '@shared/models/top-alternates-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -49,15 +48,4 @@ export class RouteService {
       .pipe(map((response) => response.data));
   }
 
-  getTopAlternates(
-    startDate: string,
-    endDate: string,
-    count: number,
-  ): Observable<ITopAlternatesResponse[]> {
-    const apiUrl = `${this.baseUrl}/api/v1/admin/routes/top-alternates?startDate=${startDate}&endDate=${endDate}&count=${count}`;
-
-    return this.http
-      .get<IHttpResponseModel>(apiUrl)
-      .pipe(map((response) => response.data));
-  }
 }

@@ -1,0 +1,9 @@
+<div class="card-placeholder">
+  <p class="title">Flight Count (Last {{ selectedRange === 'today' ? 'Day' : selectedRange === '1month' ? '1 Month' : '6 Months' }})</p>
+  <div class="chart-box">
+    <app-custom-line-chart
+      [data]="chartData()"
+      [options]="chartOptions()"
+    />
+  </div>
+</div>
