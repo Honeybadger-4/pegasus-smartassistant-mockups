@@ -1,8 +1,8 @@
-import { Component, Input, signal, inject, effect } from '@angular/core';
+import { Component, Input, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomLineChartComponent } from '@shared/components/custom-line-chart/custom-line-chart.component';
 import { FlightInformationService } from '@shared/services/flight-information.service';
-import { IDailyCountItem } from '@shared/models/daily-count-request.model';
+import { DateRangeType } from 'src/app/pages/dashboard/dashboard.component';
 import moment from 'moment';
 
 @Component({
@@ -10,17 +10,26 @@ import moment from 'moment';
   standalone: true,
   imports: [CommonModule, CustomLineChartComponent],
   templateUrl: './flight-count-card.component.html',
-  styleUrl: './flight-count-card.component.scss',
+  styleUrl: './flight-count-card.component.scss'
 })
-export class FlightCountCardComponent {
-  @Input() selectedRange: string = '6months';
-
-  private flightService = inject(FlightInformationService);
-  private dailyCounts = signal<IDailyCountItem[]>([]);
+export class FlightCountCardComponent implements OnInit {
+  @Input() selectedRange: DateRangeType = '6months';
+  flightService = inject(FlightInformationService);
 
   chartData = signal<any>({
     labels: [],
-    datasets: [],
+    datasets: [
+      {
+        label: 'Flight Count',
+        data: [],
+        fill: false,
+        borderColor: '#FEB914',
+        backgroundColor: '#FEB914',
+        tension: 0.4,
+        pointRadius: 2,
+        borderWidth: 2,
+      },
+    ],
   });
 
   chartOptions = signal<any>({
@@ -69,64 +78,60 @@ export class FlightCountCardComponent {
     },
   });
 
-  constructor() {
-    effect(() => {
-      const { startDate, endDate } = this.getDateRange(this.selectedRange);
+  ngOnInit(): void {
+    this.fetchData();
+  }
 
-      this.flightService.getDailyCount(startDate, endDate).subscribe({
-        next: (response) => {
-          this.dailyCounts.set(response);
-          this.updateChartData();
-        },
-        error: (err) => {
-          console.error('Daily count fetch error', err);
-        },
-      });
+  ngOnChanges(): void {
+    this.fetchData();
+  }
+
+  fetchData() {
+    const { startDate, endDate } = this.getDateRange(this.selectedRange);
+
+    this.flightService.getDailyCount(startDate, endDate).subscribe({
+      next: (res) => {
+        const groupedByMonth = this.groupByMonth(res);
+        this.chartData.set({
+          labels: groupedByMonth.map((i) => i.label),
+          datasets: [
+            {
+              ...this.chartData().datasets[0],
+              data: groupedByMonth.map((i) => i.total),
+            },
+          ],
+        });
+      },
+      error: (err) => console.error(err),
     });
   }
 
-  private getDateRange(range: string): { startDate: string; endDate: string } {
+  getDateRange(range: DateRangeType): { startDate: string; endDate: string } {
     const today = moment();
-    let startDate = today.clone();
-
-    if (range === '1month') {
-      startDate = today.clone().subtract(1, 'month');
-    } else if (range === '6months') {
-      startDate = today.clone().subtract(6, 'month');
+    switch (range) {
+      case 'today':
+        return { startDate: today.format('YYYY-MM-DD'), endDate: today.format('YYYY-MM-DD') };
+      case '1month':
+        return {
+          startDate: today.clone().subtract(1, 'months').format('YYYY-MM-DD'),
+          endDate: today.format('YYYY-MM-DD'),
+        };
+      case '6months':
+      default:
+        return {
+          startDate: today.clone().subtract(6, 'months').format('YYYY-MM-DD'),
+          endDate: today.format('YYYY-MM-DD'),
+        };
     }
-
-    return {
-      startDate: startDate.format('YYYY-MM-DD'),
-      endDate: today.format('YYYY-MM-DD'),
-    };
   }
 
-  private updateChartData() {
-    const dailyData = this.dailyCounts();
-
-    const monthlyGroups = dailyData.reduce((acc, item) => {
-      const monthLabel = moment(item.day).format('MMMM');
-      acc[monthLabel] = (acc[monthLabel] || 0) + item.total;
-      return acc;
-    }, {} as Record<string, number>);
-
-    const labels = Object.keys(monthlyGroups);
-    const totals = Object.values(monthlyGroups);
-
-    this.chartData.set({
-      labels,
-      datasets: [
-        {
-          label: 'Flight Count',
-          data: totals,
-          fill: false,
-          borderColor: '#FEB914',
-          tension: 0.4,
-          backgroundColor: '#FEB914',
-          pointRadius: 2,
-          borderWidth: 2,
-        },
-      ],
+  groupByMonth(data: { day: string; total: number }[]) {
+    const map = new Map<string, number>();
+    data.forEach((item) => {
+      const month = moment(item.day).format('MMM');
+      map.set(month, (map.get(month) || 0) + item.total);
     });
+
+    return Array.from(map.entries()).map(([label, total]) => ({ label, total }));
   }
 }

@@ -1,22 +1,21 @@
 <main id="DashboardPage">
-    <div class="dashboard-header">
-        <p class="dashboard-title">Dashboard</p>
-        <div class="date-range-tabs">
-          <button [class.active]="selectedRange === 'today'" (click)="selectRange('today')">Today</button>
-          <button [class.active]="selectedRange === '1month'" (click)="selectRange('1month')">1 Month</button>
-          <button [class.active]="selectedRange === '6months'" (click)="selectRange('6months')">6 Months</button>
-        </div>
-      </div>
-      
-      <div class="grid grid-cols-12 gap-4">
-        <app-flight-count-card [selectedRange]="selectedRange" class="col-span-12 md:col-span-4" />
-        <app-total-fuel-ordered-card class="col-span-12 md:col-span-4" />
-        <app-gps-signal-loss-card class="col-span-12 md:col-span-4" />
-      </div>
-      
-      <div class="grid grid-cols-12 gap-4 mt-4">
-        <app-top-alternate-routes-card class="col-span-12 md:col-span-6" />
-        <app-key-stats-card class="col-span-12 md:col-span-6" />
-      </div>
-      
+  <div class="dashboard-header">
+    <p class="dashboard-title">Dashboard</p>
+    <div class="date-range-tabs">
+      <button [class.active]="selectedRange === 'today'" (click)="selectRange('today')">Today</button>
+      <button [class.active]="selectedRange === '1month'" (click)="selectRange('1month')">1 Month</button>
+      <button [class.active]="selectedRange === '6months'" (click)="selectRange('6months')">6 Months</button>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-12 gap-4">
+    <app-flight-count-card [selectedRange]="selectedRange" class="col-span-12 md:col-span-4" />
+    <app-total-fuel-ordered-card [selectedRange]="selectedRange" class="col-span-12 md:col-span-4" />
+    <app-gps-signal-loss-card class="col-span-12 md:col-span-4" />
+  </div>
+
+  <div class="grid grid-cols-12 gap-4 mt-4">
+    <app-top-alternate-routes-card [selectedRange]="selectedRange" class="col-span-12 md:col-span-6" />
+    <app-key-stats-card [selectedRange]="selectedRange" class="col-span-12 md:col-span-6" />
+  </div>
 </main>

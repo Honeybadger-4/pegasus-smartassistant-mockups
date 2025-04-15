@@ -5,7 +5,8 @@ import { IHttpResponseModel } from '@shared/models/http-response.model';
 import { map, Observable } from 'rxjs';
 import { IFlightInformationResponse } from '@shared/models/flight-information-response.model';
 import { IFlightInformationTripInfoResponse } from '@shared/models/flight-info-trip-info-response.model';
-import { IDailyCountItem, IDailyCountResponse } from '@shared/models/daily-count-request.model';
+import { IDailyCountResponse } from '@shared/models/daily-count-response.model';
+import { IKeyStatsResponse } from '@shared/models/key-stats-response.model';
 
 @Injectable({ providedIn: 'root' })
 export class FlightInformationService {
@@ -58,16 +59,33 @@ export class FlightInformationService {
       .pipe(map((response) => response.data));
   }
 
-  getDailyCount(startDate: string, endDate: string): Observable<IDailyCountItem[]> {
+  getDailyCount(
+    startDate: string,
+    endDate: string,
+  ): Observable<IDailyCountResponse[]> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/flights/daily-count`;
-  
+
     const params = new HttpParams()
       .set('startDate', startDate)
       .set('endDate', endDate);
-  
+
     return this.http
       .get<IHttpResponseModel>(apiUrl, { params })
       .pipe(map((response) => response.data));
   }
-  
+
+  getFlightInfoStats(
+    startDate: string,
+    endDate: string,
+  ): Observable<IKeyStatsResponse> {
+    const apiUrl = `${this.baseUrl}/api/v1/admin/flights/stats`;
+
+    const params = new HttpParams()
+      .set('startDate', startDate)
+      .set('endDate', endDate);
+
+    return this.http
+      .get<IHttpResponseModel>(apiUrl, { params })
+      .pipe(map((response) => response.data));
+  }
 }

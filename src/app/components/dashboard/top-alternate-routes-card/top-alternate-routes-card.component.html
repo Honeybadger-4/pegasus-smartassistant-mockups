@@ -1,6 +1,6 @@
 <div class="card-placeholder">
-  <p class="title">Top 5 Most Used Alternate Routes (Last 6 Months)</p>
-  
+  <p class="title">{{ titleText }}</p>
+
   <div class="table-box">
     <table>
       <thead>
@@ -11,7 +11,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of routeList()">
+        <tr *ngFor="let item of mappedData">
           <td>{{ item.route }}</td>
           <td>{{ item.fromTo }}</td>
           <td>{{ item.count }}</td>

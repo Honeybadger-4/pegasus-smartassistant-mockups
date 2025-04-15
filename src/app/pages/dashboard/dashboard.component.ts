@@ -27,6 +27,5 @@ export class DashboardComponent {
 
   selectRange(range: DateRangeType) {
     this.selectedRange = range;
-    // Şimdilik UI tarafında sınıf değişimi yeterli, veri daha sonra bağlanacak
   }
 }

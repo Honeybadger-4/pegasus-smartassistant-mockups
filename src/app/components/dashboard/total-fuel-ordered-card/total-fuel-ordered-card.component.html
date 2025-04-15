@@ -1,5 +1,11 @@
 <div class="card-placeholder">
-  <p class="title">Total Fuel Ordered (Last 6 Months)</p>
+  <p class="title">
+    Total Fuel Ordered
+    <span *ngIf="selectedRange === 'today'">(Today)</span>
+    <span *ngIf="selectedRange === '1month'">(Last 1 Month)</span>
+    <span *ngIf="selectedRange === '6months'">(Last 6 Months)</span>
+  </p>
+
   <div class="chart-box">
     <app-custom-line-chart
       [data]="chartData()"
