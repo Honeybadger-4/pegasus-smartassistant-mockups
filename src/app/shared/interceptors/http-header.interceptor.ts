@@ -1,5 +1,5 @@
 import { HttpInterceptorFn } from '@angular/common/http';
-import { inject, signal } from '@angular/core';
+import { inject } from '@angular/core';
 import { LoginService } from '@shared/services/login.service';
 import { UAParser } from 'ua-parser-js';
 

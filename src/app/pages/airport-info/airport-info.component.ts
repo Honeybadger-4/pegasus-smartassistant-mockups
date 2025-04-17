@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -28,7 +28,7 @@ import { ButtonModule } from 'primeng/button';
   templateUrl: './airport-info.component.html',
   styleUrl: './airport-info.component.scss',
 })
-export class AirportInfoComponent {
+export class AirportInfoComponent implements OnInit {
   columns: Column[] = [];
   airportInfoFormGroup!: FormGroup;
 

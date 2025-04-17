@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   inject,
+  OnInit,
   signal,
   viewChild,
 } from '@angular/core';
@@ -54,7 +55,7 @@ import { InputTextModule } from 'primeng/inputtext';
   templateUrl: './crew-list.component.html',
   styleUrl: './crew-list.component.scss',
 })
-export class CrewListComponent {
+export class CrewListComponent implements OnInit {
   customTableComponent = viewChild.required(CustomTableComponent);
   searchInput = viewChild.required<ElementRef>('searchInput');
   linkedNextPageTemplate = viewChild.required('linkedNextPageTemplate');

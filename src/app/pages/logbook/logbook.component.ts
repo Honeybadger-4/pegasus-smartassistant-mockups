@@ -1,4 +1,4 @@
-import { Component, inject, signal, viewChild } from '@angular/core';
+import { Component, inject, OnInit, signal, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -28,7 +28,7 @@ import { ChipModule } from 'primeng/chip';
   templateUrl: './logbook.component.html',
   styleUrl: './logbook.component.scss',
 })
-export class LogbookComponent {
+export class LogbookComponent implements OnInit {
   dutyColumnsTemplate = viewChild.required('dutyColumnsTemplate');
   monthColumnsTemplate = viewChild.required('monthColumnsTemplate');
   linkedNextPageTemplate = viewChild.required('linkedNextPageTemplate');
@@ -48,7 +48,7 @@ export class LogbookComponent {
     null,
   );
 
-  currentMonth: string = '';
+  currentMonth = '';
 
   selectedYear = signal<number>(0);
   yearOptions = signal<number[] | undefined>(undefined);

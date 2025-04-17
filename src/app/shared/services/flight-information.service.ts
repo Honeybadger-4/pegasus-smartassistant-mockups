@@ -54,7 +54,7 @@ export class FlightInformationService {
   ): Observable<IFlightInfoStatsResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/flights/stats`;
 
-    let params = new HttpParams()
+    const params = new HttpParams()
       .set('startDate', startDate)
       .set('endDate', endDate);
 

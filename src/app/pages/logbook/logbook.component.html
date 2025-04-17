@@ -130,7 +130,7 @@
 </div>
 
 <ng-template #monthColumnsTemplate let-rowData="rowData">
-  @if (rowData.yearMonth == currentMonth) {
+  @if (rowData.yearMonth === currentMonth) {
     <span class="font-bold"
       >{{ rowData.yearMonth | date: "MMMM" }} (Current)</span
     >
@@ -163,7 +163,7 @@
 </ng-template>
 
 <ng-template #linkedNextPageTemplate let-rowData="rowData">
-  @if (rowData.yearMonth == currentMonth) {
+  @if (rowData.yearMonth === currentMonth) {
     <i
       class="pi pi-angle-right cursor-pointer w-full !flex justify-end"
       (click)="onNextPage(rowData, true)"

@@ -471,6 +471,7 @@
               *ngIf="editDefaultData()?.isSigned"
               class="h-[85px] w-[450px] object-cover"
               [src]="convertBase64ToImage()"
+              alt="signature"
             />
           </div>
         </div>
@@ -726,7 +727,7 @@
           pButton
           type="button"
           label="Submit"
-          [disabled]="rejectReason.length == 0"
+          [disabled]="rejectReason.length === 0"
           class="submit-button"
           (click)="onSubmitReason()"
         ></button>

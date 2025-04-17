@@ -10,7 +10,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
   templateUrl: './total-flights.component.html',
   styleUrls: ['./total-flights.component.scss'],
 })
-export class TotalFlightsComponent implements OnInit {
+export class TotalFlightsComponent {
   totalFlightsData = input<IFlightInfoStatsResponse | null>(null);
   totalFlightsCardLoading = input<boolean>(false);
 
@@ -64,8 +64,6 @@ export class TotalFlightsComponent implements OnInit {
       this.defineChartDataTwo();
     });
   }
-
-  ngOnInit(): void {}
 
   defineChartDataOne() {
     if (this.totalFlightsData()) {

@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 interface IOptionalParams {
   key: string;
@@ -10,7 +10,7 @@ interface IOptionalParams {
 })
 export class RequestParamsControlService {
   paramsControl(optionalParams: IOptionalParams[]) {
-    let params: any[] = [];
+    const params: any[] = [];
     optionalParams.map(({ key, value }) => {
       if (value !== undefined && value !== null && value !== '') {
         params.push({ key, value });

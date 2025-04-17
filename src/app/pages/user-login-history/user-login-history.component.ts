@@ -1,6 +1,7 @@
 import {
   Component,
   inject,
+  OnInit,
   signal,
   TemplateRef,
   ViewChild,
@@ -44,7 +45,7 @@ import moment from 'moment';
   templateUrl: './user-login-history.component.html',
   styleUrl: './user-login-history.component.scss',
 })
-export class UserLoginHistoryComponent {
+export class UserLoginHistoryComponent implements OnInit {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
   @ViewChild('loggedInDateTemplate', { static: true })
   loggedInDateTemplate!: TemplateRef<any>;
@@ -56,7 +57,7 @@ export class UserLoginHistoryComponent {
   currentPage = 0;
   currentRows = 20;
   dateRange: Date[] = [];
-  tableLoading: boolean = false;
+  tableLoading = false;
 
   userLoginHistoryData = signal<ILoginInfoResponse | null>(null);
   userLoginHistoryTableData = signal<ILoginInfoTableData[]>([]);

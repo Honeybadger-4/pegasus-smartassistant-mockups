@@ -1,4 +1,4 @@
-import { Component, effect, input, signal } from '@angular/core';
+import { Component, effect, input, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomBarChartComponent } from '../../../shared/components/custom-bar-chart/custom-bar-chart.component';
 import { ITopAlternatesResponse } from '@shared/models/top-alternates-response.model';
@@ -66,8 +66,6 @@ export class TopAlternateRoutesCardComponent {
       this.defineChartData();
     });
   }
-
-  ngOnInit() {}
 
   defineChartData() {
     if (this.topAlternatesData().length > 0) {

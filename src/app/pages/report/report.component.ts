@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -35,7 +35,7 @@ import moment from 'moment';
   templateUrl: './report.component.html',
   styleUrl: './report.component.scss',
 })
-export class ReportComponent {
+export class ReportComponent implements OnInit {
   @ViewChild('checkListCellBodyTemplate', { static: true })
   checkListCellBodyTemplate!: TemplateRef<any>;
 

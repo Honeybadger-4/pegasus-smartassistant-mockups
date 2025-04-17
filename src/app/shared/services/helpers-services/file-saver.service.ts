@@ -5,8 +5,6 @@ import FileSaver from 'file-saver';
   providedIn: 'root',
 })
 export class FileSaverService {
-  constructor() {}
-
   public getFileSaver(res: BlobPart, fileName: string) {
     const file = new File([res], fileName, { type: 'application/pdf' });
     FileSaver.saveAs(file);

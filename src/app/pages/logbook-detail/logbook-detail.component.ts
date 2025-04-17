@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal, viewChild } from '@angular/core';
+import { Component, effect, inject, OnInit, signal, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -61,7 +61,7 @@ import { firstValueFrom } from 'rxjs';
   styleUrl: './logbook-detail.component.scss',
   providers: [ConfirmationService, MessageService],
 })
-export class LogbookDetailComponent {
+export class LogbookDetailComponent implements OnInit {
   customTableComponent = viewChild.required(CustomTableComponent);
   dateColumnTemplate = viewChild.required('dateColumnTemplate');
   statusColumnTemplate = viewChild.required('statusColumnTemplate');

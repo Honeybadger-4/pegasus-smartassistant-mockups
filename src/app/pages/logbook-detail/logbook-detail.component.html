@@ -214,7 +214,7 @@
     <!-- This data should only be shown on the last pages -->
     <tr
       *ngIf="
-        logbookDetailData()?.logbookDetails?.totalPages == currentPage() + 1 &&
+        logbookDetailData()?.logbookDetails?.totalPages === currentPage() + 1 &&
         logbookDetailData()?.logbookDetails?.totalPages !== 1
       "
     >
@@ -229,7 +229,7 @@
     <!-- This data should only be shown on the last pages -->
     <tr
       *ngIf="
-        logbookDetailData()?.logbookDetails?.totalPages == currentPage() + 1
+        logbookDetailData()?.logbookDetails?.totalPages === currentPage() + 1
       "
     >
       <td colspan="8" class="!text-right font-bold p-3 pb-0">Total</td>

@@ -91,7 +91,7 @@ export class AdminLogbookService {
   ): Observable<ILogbookGetCrewListByFilterResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/crews/filter`;
 
-    let params = new HttpParams()
+    const params = new HttpParams()
       .set('page', page)
       .set('size', size)
       .set('filter', searchValue || '');

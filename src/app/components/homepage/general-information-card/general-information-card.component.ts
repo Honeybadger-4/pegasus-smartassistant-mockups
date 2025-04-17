@@ -8,7 +8,7 @@ import { CustomDonutChartComponent } from '@shared/components/custom-donut-chart
   templateUrl: './general-information-card.component.html',
   styleUrls: ['./general-information-card.component.scss'],
 })
-export class GeneralInformationCardComponent implements OnInit {
+export class GeneralInformationCardComponent {
   chartDataOne: any = {
     //labels: ['A', 'B', 'C'],
     datasets: [
@@ -54,6 +54,4 @@ export class GeneralInformationCardComponent implements OnInit {
       },
     },
   };
-
-  ngOnInit(): void {}
 }

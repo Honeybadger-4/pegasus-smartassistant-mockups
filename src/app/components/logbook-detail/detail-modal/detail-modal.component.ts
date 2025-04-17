@@ -1,11 +1,9 @@
 import {
   Component,
-  ElementRef,
   EventEmitter,
   input,
   Input,
   Output,
-  ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
@@ -20,7 +18,7 @@ import { IDetailedListContentData } from '@shared/models/detailed-list-response.
 })
 export class DetailModalComponent {
   detailedListRowData = input<IDetailedListContentData | null>(null);
-  @Input() visible: boolean = false;
+  @Input() visible = false;
   @Output() closeModal = new EventEmitter<void>();
 
   close() {
