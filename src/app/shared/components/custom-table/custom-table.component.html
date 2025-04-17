@@ -49,7 +49,10 @@
               <!-- Default Text Filter -->
               <ng-container *ngSwitchDefault>
                 <ng-container
-                  *ngTemplateOutlet="defaultFilterTemplate; context: { $implicit: col }"
+                  *ngTemplateOutlet="
+                    defaultFilterTemplate;
+                    context: { $implicit: col }
+                  "
                 />
               </ng-container>
             </ng-container>
@@ -90,7 +93,7 @@
     </ng-template>
 
     <!-- Filters Template -->
-     <!-- Default Text Filter -->
+    <!-- Default Text Filter -->
     <ng-template #defaultFilterTemplate let-col>
       <ng-container *ngIf="col.isFilter">
         <p-columnFilter
@@ -120,7 +123,7 @@
       >
         <ng-template #filter let-value let-filter="filterCallback">
           <p-select
-            (ngModel)="value"
+            (ngModel)="(value)"
             [options]="col.filterOptions"
             styleClass="w-full"
             placeholder="Select One"

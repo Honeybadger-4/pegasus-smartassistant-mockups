@@ -101,10 +101,10 @@ export class LogbookDetailComponent {
     { label: 'Logbook Detail List' },
   ];
 
-  constructor (private fileSaverService: FileSaverService) {
+  constructor(private fileSaverService: FileSaverService) {
     effect(() => {
       this.defineColumn();
-    })
+    });
   }
 
   ngOnInit() {
@@ -119,7 +119,13 @@ export class LogbookDetailComponent {
 
   defineColumn() {
     this.columns.set([
-      { field: 'date', header: 'Date', template: this.dateColumnTemplate(), isFilter: true, filterType: 'datepicker' },
+      {
+        field: 'date',
+        header: 'Date',
+        template: this.dateColumnTemplate(),
+        isFilter: true,
+        filterType: 'datepicker',
+      },
       { field: 'dutyType', header: 'Duty Type' },
       { field: 'aircraftType', header: 'A/C Type', isFilter: true },
       { field: 'aircraftReg', header: 'A/C Reg', isFilter: true },
@@ -143,7 +149,7 @@ export class LogbookDetailComponent {
         field: 'lastReviewedAdmin',
         header: 'Reviewed By',
         template: this.reviewedByColumnTemplate(),
-        isFilter: true
+        isFilter: true,
       },
       {
         field: 'status',
@@ -183,8 +189,9 @@ export class LogbookDetailComponent {
       departureTime: this.tableFilters()?.departureTime?.[0]?.value || '',
       arrival: this.tableFilters()?.arrival?.[0]?.value || '',
       arrivalTime: this.tableFilters()?.arrivalTime?.[0]?.value || '',
-      lastReviewedAdmin: this.tableFilters()?.lastReviewedAdmin?.[0]?.value || '',
-      status: this.tableFilters()?.status?.[0]?.value || ''
+      lastReviewedAdmin:
+        this.tableFilters()?.lastReviewedAdmin?.[0]?.value || '',
+      status: this.tableFilters()?.status?.[0]?.value || '',
     };
 
     this.adminLogbookService
@@ -321,6 +328,4 @@ export class LogbookDetailComponent {
     this.displayPreviewDialog.set(!this.displayPreviewDialog());
     this.detailedListPreviewModalData.set(rowData ? rowData : null);
   }
-
-  
 }

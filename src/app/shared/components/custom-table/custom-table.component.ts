@@ -20,7 +20,15 @@ import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-custom-table',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, TableModule, SelectModule, DatePickerModule, InputTextModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TableModule,
+    SelectModule,
+    DatePickerModule,
+    InputTextModule,
+  ],
   templateUrl: './custom-table.component.html',
   styleUrl: './custom-table.component.scss',
 })
@@ -60,7 +68,7 @@ export class CustomTableComponent {
   clearSelectionData() {
     this.selectionData = [];
   }
-  
+
   filterDateControl(selectedDate: any) {
     return moment(selectedDate).format('YYYY-MM-DD');
   }
