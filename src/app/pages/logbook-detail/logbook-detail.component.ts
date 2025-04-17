@@ -92,7 +92,6 @@ export class LogbookDetailComponent {
   selectedCheckbox = signal<IDetailedListContentData[]>([]);
   logbookDetailData = signal<IDetailedListResponse | null>(null);
   logbookDetailTableData = signal<IDetailedListContentData[]>([]);
-  getCurrentMonthData = signal<IGetCurrentMonthResponse | null>(null);
   startDate = signal<string>('');
   endDate = signal<string>('');
   statusFilter = signal<string>('');
@@ -119,12 +118,8 @@ export class LogbookDetailComponent {
     this.startDate.set(this.dateRangeDefaultValue()[0].toString());
     this.endDate.set(this.dateRangeDefaultValue()[1].toString());
 
-    if (this.isLogbookCurrentMonth()) {
-      this.getDetailedListForCurrentMonth(this.crewListTableData().companyId);
-    } else {
-      this.getDetailedList();
-      this.getLogbookStatusList();
-    }
+    this.getDetailedList();
+    this.getLogbookStatusList();
   }
 
   defineColumn() {
@@ -202,19 +197,6 @@ export class LogbookDetailComponent {
           this.tableLoading.set(false);
         },
       });
-  }
-
-  getDetailedListForCurrentMonth(companyId: number) {
-    this.tableLoading.set(true);
-    this.adminLogbookService.getCurrentMonth(companyId).subscribe({
-      next: (response) => {
-        this.getCurrentMonthData.set(response);
-        this.tableLoading.set(false);
-      },
-      error: () => {
-        this.tableLoading.set(false);
-      },
-    });
   }
 
   putApprove() {
@@ -324,9 +306,8 @@ export class LogbookDetailComponent {
     this.currentPage.set(page);
     this.currentRows.set(event.rows);
 
-    if (!this.isLogbookCurrentMonth()) {
-      this.getDetailedList();
-    }
+    
+    this.getDetailedList();
   }
 
   async pdfExport() {
@@ -341,22 +322,6 @@ export class LogbookDetailComponent {
         res,
         `Logbook_${companyId}_${yearMonth}.pdf`,
       );
-    } catch (error) {
-      console.error('PDF Download Error:', error);
-    }
-  }
-
-  async pdfExportForCurrentMonth() {
-    const companyId = this.crewListTableData().companyId;
-    try {
-      const res = await firstValueFrom(
-        this.adminLogbookService.pdfExportCurrentMonth(
-          companyId,
-          this.crewListTableData().fullName,
-          this.getCurrentMonthData(),
-        ),
-      );
-      this.fileSaverService.getFileSaver(res, `Logbook_${companyId}.pdf`);
     } catch (error) {
       console.error('PDF Download Error:', error);
     }

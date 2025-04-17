@@ -74,9 +74,7 @@
             tooltipPosition="left"
             tooltipStyleClass="custom-tooltip"
             [style]="{ color: 'black' }"
-            (click)="
-              isLogbookCurrentMonth() ? pdfExportForCurrentMonth() : pdfExport()
-            "
+            (click)="pdfExport()"
           />
         </div>
       </div>
@@ -85,18 +83,10 @@
 
   <section class="table-section custom-card mt-5">
     <app-custom-table
-      [tableData]="
-        isLogbookCurrentMonth()
-          ? getCurrentMonthData()?.pairings
-          : logbookDetailTableData()
-      "
+      [tableData]="logbookDetailTableData()"
       [tableColumns]="columns()"
       [selectionMode]="isLogbookCurrentMonth() ? 'single' : 'multiple'"
-      [totalRecords]="
-        isLogbookCurrentMonth()
-          ? getCurrentMonthData()?.pairings?.length || 0
-          : logbookDetailData()?.logbookDetails?.totalElements || 0
-      "
+      [totalRecords]="logbookDetailData()?.logbookDetails?.totalElements || 0"
       [tableLoading]="tableLoading()"
       [footerTemplate]="tableFooterTemplate"
       (selectedCheckbox)="selectionCheckbox($event)"
