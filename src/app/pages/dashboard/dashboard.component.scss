@@ -1,33 +1,29 @@
-#DashboardPage {
-  .dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
+#dashboard-page {
+  .dashboard-title {
+    font-size: 18px;
+    font-weight: 400;
+    color: #333333;
+  }
+}
+::ng-deep {
+  #dashboard-page {
+    .p-button.custom-range-button {
+      background: none !important;
+      border: none;
+      padding: 10px 20px;
+      font-size: 14px;
+      color: #515b66;
 
-    .dashboard-title {
-      font-size: 18px;
-      font-weight: 600;
-      color: #0d0f11;
-    }
+      &.active {
+        color: #0d0f11;
 
-    .date-range-tabs {
-      button {
-        background: none;
-        border: none;
-        padding: 10px 20px;
-        font-size: 14px;
-        color: #515b66;
-        cursor: pointer;
-
-        &.active {
-          color: #0d0f11;
-          font-weight: 600;
+        .p-button-label {
+          font-weight: 600 !important;
         }
+      }
 
-        &:hover {
-          color: #0d0f11;
-        }
+      &:hover {
+        color: #0d0f11;
       }
     }
   }

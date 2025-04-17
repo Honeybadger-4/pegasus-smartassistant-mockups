@@ -1,10 +1,18 @@
-<div class="card-placeholder">
-  <p class="title">Key Stats ({{ getTitleSuffix() }})</p>
+<div id="key-stats-card-component">
+  <div class="card-placeholder">
+    <p class="title">Key Stats ({{ titleSuffix }})</p>
 
-  <div class="stats-box">
-    <div class="stat" *ngFor="let item of stats()">
-      <div class="value">{{ item.value }}</div>
-      <div class="label">{{ item.label }}</div>
+    <div class="stats-box">
+      <div class="stat" *ngIf="rawStats() as stats">
+        <div class="value">{{ stats.totalFlightHours }}</div>
+        <div class="label mb-3">Total Flight Time</div>
+
+        <div class="value">{{ stats.gpsLossForm }}</div>
+        <div class="label mb-3">GPS Loss Form Created</div>
+
+        <div class="value">{{ stats.flightPlans }}</div>
+        <div class="label">Flight Plan Created</div>
+      </div>
     </div>
   </div>
 </div>

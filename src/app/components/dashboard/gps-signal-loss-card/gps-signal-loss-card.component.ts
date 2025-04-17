@@ -16,16 +16,16 @@ export class GpsSignalLossCardComponent {
   chartData = signal<any>({
     datasets: [
       {
-        data: [312, 264, 347, 654, 633],
-        backgroundColor: ['#F4B740', '#C86DD7', '#1479F2', '#2DCCD3', '#7ED321'],
-        hoverBackgroundColor: ['#F4B740', '#C86DD7', '#1479F2', '#2DCCD3', '#7ED321'],
+        data: [500, 400, 300, 200, 100],
+        backgroundColor: ['#FEB914', '#E142BC', '#068BEE', '#01B8CA', '#96DB33'],
+        hoverBackgroundColor: ['#FEB914', '#E142BC', '#068BEE', '#01B8CA', '#96DB33'],
         borderWidth: 0,
       },
     ],
   });
 
   chartOptions = signal<any>({
-    cutout: '65%',
+    cutout: '70%',
     plugins: {
       legend: {
         display: false,
@@ -34,10 +34,10 @@ export class GpsSignalLossCardComponent {
   });
 
   types = signal([
-    { label: 'Type 1', value: 312, color: '#F4B740' },
-    { label: 'Type 2', value: 264, color: '#C86DD7' },
-    { label: 'Type 3', value: 347, color: '#1479F2' },
-    { label: 'Type 4', value: 654, color: '#2DCCD3' },
-    { label: 'Type 5', value: 633, color: '#7ED321' },
+    { label: 'Type 1', value: 500, color: '#FEB914' },
+    { label: 'Type 2', value: 400, color: '#E142BC' },
+    { label: 'Type 3', value: 300, color: '#068BEE' },
+    { label: 'Type 4', value: 200, color: '#01B8CA' },
+    { label: 'Type 5', value: 100, color: '#96DB33' },
   ]);
 }

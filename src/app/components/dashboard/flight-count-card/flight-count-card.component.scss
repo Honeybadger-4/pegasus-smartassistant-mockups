@@ -1,18 +1,29 @@
-.card-placeholder {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  height: 250px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+#flight-count-card-component {
+  .card-placeholder {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 4px;
+    height: 262px;
+    border: 1px solid #dfe3e9;
 
-  .title {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 12px;
-    color: #0d0f11;
+    .title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #0d0f11;
+      margin-bottom: 15px;
+    }
   }
+}
 
-  .chart-box {
-    height: 160px;
+::ng-deep {
+  #flight-count-card-component {
+    .chart-box {
+      height: 182px !important;
+    }
+
+    canvas {
+      height: 100% !important;
+      width: 100% !important;
+    }
   }
 }

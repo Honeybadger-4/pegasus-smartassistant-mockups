@@ -1,22 +1,24 @@
-<div class="card-placeholder">
-  <p class="title">{{ titleText }}</p>
+<div id="top-alternate-routes-card-component">
+  <div class="card-placeholder">
+    <p class="title">Top 5 Most Used Alternate Routes ({{ titleSuffix }})</p>
 
-  <div class="table-box">
-    <table>
-      <thead>
-        <tr>
-          <th>Route</th>
-          <th>From-To</th>
-          <th>Count</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of mappedData">
-          <td>{{ item.route }}</td>
-          <td>{{ item.fromTo }}</td>
-          <td>{{ item.count }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-box">
+      <p-table [value]="alternateRoutes()" class="custom-table">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Route</th>
+            <th>From-To</th>
+            <th>Count</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-row>
+          <tr>
+            <td>{{ row.airportICAOCode }}</td>
+            <td>{{ row.depPort }} - {{ row.arrPort }}</td>
+            <td>{{ row.frequency }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
   </div>
 </div>

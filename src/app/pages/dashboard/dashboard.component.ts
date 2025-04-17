@@ -5,6 +5,7 @@ import { TotalFuelOrderedCardComponent } from 'src/app/components/dashboard/tota
 import { GpsSignalLossCardComponent } from 'src/app/components/dashboard/gps-signal-loss-card/gps-signal-loss-card.component';
 import { TopAlternateRoutesCardComponent } from 'src/app/components/dashboard/top-alternate-routes-card/top-alternate-routes-card.component';
 import { KeyStatsCardComponent } from 'src/app/components/dashboard/key-stats-card/key-stats-card.component';
+import { ButtonModule } from 'primeng/button';
 
 export type DateRangeType = 'today' | '1month' | '6months';
 
@@ -13,6 +14,7 @@ export type DateRangeType = 'today' | '1month' | '6months';
   standalone: true,
   imports: [
     CommonModule,
+    ButtonModule,
     FlightCountCardComponent,
     TotalFuelOrderedCardComponent,
     GpsSignalLossCardComponent,
