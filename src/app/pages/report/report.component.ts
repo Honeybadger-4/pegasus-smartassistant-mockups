@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,

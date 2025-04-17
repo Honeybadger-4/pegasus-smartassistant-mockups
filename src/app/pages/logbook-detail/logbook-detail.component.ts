@@ -1,4 +1,11 @@
-import { Component, effect, inject, OnInit, signal, viewChild } from '@angular/core';
+import {
+  Component,
+  effect,
+  inject,
+  OnInit,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
