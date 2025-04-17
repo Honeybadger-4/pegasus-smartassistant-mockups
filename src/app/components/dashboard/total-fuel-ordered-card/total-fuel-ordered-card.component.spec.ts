@@ -8,9 +8,8 @@ describe('TotalFuelOrderedCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TotalFuelOrderedCardComponent]
-    })
-    .compileComponents();
+      imports: [TotalFuelOrderedCardComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TotalFuelOrderedCardComponent);
     component = fixture.componentInstance;

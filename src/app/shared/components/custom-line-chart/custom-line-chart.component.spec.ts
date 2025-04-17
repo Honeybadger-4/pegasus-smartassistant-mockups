@@ -8,9 +8,8 @@ describe('CustomLineChartComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CustomLineChartComponent]
-    })
-    .compileComponents();
+      imports: [CustomLineChartComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CustomLineChartComponent);
     component = fixture.componentInstance;

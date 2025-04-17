@@ -8,9 +8,8 @@ describe('GpsSignalLossCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GpsSignalLossCardComponent]
-    })
-    .compileComponents();
+      imports: [GpsSignalLossCardComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(GpsSignalLossCardComponent);
     component = fixture.componentInstance;

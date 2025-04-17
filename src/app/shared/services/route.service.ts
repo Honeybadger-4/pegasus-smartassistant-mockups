@@ -49,17 +49,18 @@ export class RouteService {
       .pipe(map((response) => response.data));
   }
 
+  getTopAlternates(
+    startDate: string,
+    endDate: string,
+  ): Observable<ITopAlternatesResponse[]> {
+    const apiUrl = `${this.baseUrl}/api/v1/admin/routes/top-alternates`;
 
-  getTopAlternates(startDate: string, endDate: string): Observable<ITopAlternatesResponse[]> {
-      const apiUrl = `${this.baseUrl}/api/v1/admin/routes/top-alternates`;
-    
-      const params = new HttpParams()
-        .set('startDate', startDate)
-        .set('endDate', endDate);
-    
-      return this.http
-        .get<IHttpResponseModel>(apiUrl, { params })
-        .pipe(map((response) => response.data));
-    }
+    const params = new HttpParams()
+      .set('startDate', startDate)
+      .set('endDate', endDate);
 
+    return this.http
+      .get<IHttpResponseModel>(apiUrl, { params })
+      .pipe(map((response) => response.data));
+  }
 }

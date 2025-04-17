@@ -1,5 +1,4 @@
 export interface IDailyCountResponse {
-    day: string;
-    total: number;
-  }
-  
+  day: string;
+  total: number;
+}

@@ -4,7 +4,7 @@ import {
   Component,
   Input,
   PLATFORM_ID,
-  inject
+  inject,
 } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 

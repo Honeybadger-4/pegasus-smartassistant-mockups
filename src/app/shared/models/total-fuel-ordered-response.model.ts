@@ -1,5 +1,4 @@
 export interface ITotalFuelOrderedResponse {
-    day: string;
-    total: number;
-  }
-  
+  day: string;
+  total: number;
+}

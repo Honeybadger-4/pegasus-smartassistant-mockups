@@ -1,4 +1,11 @@
-import { Component, Input, OnChanges, SimpleChanges, inject, signal } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  inject,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomLineChartComponent } from '@shared/components/custom-line-chart/custom-line-chart.component';
 import { FuelOrderService } from '@shared/services/fuel-order.service';
@@ -63,8 +70,8 @@ export class TotalFuelOrderedCardComponent implements OnChanges {
         maintainAspectRatio: false,
         layout: {
           padding: {
-            bottom: 15, 
-          }
+            bottom: 15,
+          },
         },
         plugins: {
           legend: {

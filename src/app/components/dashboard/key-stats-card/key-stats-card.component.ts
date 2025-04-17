@@ -37,8 +37,10 @@ export class KeyStatsCardComponent implements OnChanges {
   getStats(): void {
     const { startDate, endDate } = getDateRange(this.selectedRange);
 
-    this.flightService.getFlightInfoStats(startDate, endDate).subscribe((data) => {
-      this.rawStats.set(data);
-    });
+    this.flightService
+      .getFlightInfoStats(startDate, endDate)
+      .subscribe((data) => {
+        this.rawStats.set(data);
+      });
   }
 }

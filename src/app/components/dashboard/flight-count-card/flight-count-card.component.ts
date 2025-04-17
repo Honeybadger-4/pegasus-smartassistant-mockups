@@ -1,4 +1,11 @@
-import { Component, Input, OnChanges, SimpleChanges, inject, signal } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  inject,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomLineChartComponent } from '@shared/components/custom-line-chart/custom-line-chart.component';
 import { FlightInformationService } from '@shared/services/flight-information.service';
@@ -32,74 +39,79 @@ export class FlightCountCardComponent implements OnChanges {
   loadFlightData(): void {
     const { startDate, endDate } = getDateRange(this.selectedRange);
 
-    this.flightService.getDailyCount(startDate, endDate).subscribe((response) => {
-      const groupedFlights = new Map<string, number>();
+    this.flightService
+      .getDailyCount(startDate, endDate)
+      .subscribe((response) => {
+        const groupedFlights = new Map<string, number>();
 
-      response.forEach((flight) => {
-        const monthLabel = moment(flight.day).format('MMM');
-        groupedFlights.set(monthLabel, (groupedFlights.get(monthLabel) || 0) + flight.total);
-      });
+        response.forEach((flight) => {
+          const monthLabel = moment(flight.day).format('MMM');
+          groupedFlights.set(
+            monthLabel,
+            (groupedFlights.get(monthLabel) || 0) + flight.total,
+          );
+        });
 
-      const labels = Array.from(groupedFlights.keys());
-      const values = Array.from(groupedFlights.values());
+        const labels = Array.from(groupedFlights.keys());
+        const values = Array.from(groupedFlights.values());
 
-      this.chartData.set({
-        labels,
-        datasets: [
-          {
-            label: 'Flight Count',
-            data: values,
-            fill: false,
-            borderColor: '#FEB914',
-            backgroundColor: '#FEB914',
-            tension: 0.4,
-            pointRadius: 2,
-            borderWidth: 2,
-          },
-        ],
-      });
+        this.chartData.set({
+          labels,
+          datasets: [
+            {
+              label: 'Flight Count',
+              data: values,
+              fill: false,
+              borderColor: '#FEB914',
+              backgroundColor: '#FEB914',
+              tension: 0.4,
+              pointRadius: 2,
+              borderWidth: 2,
+            },
+          ],
+        });
 
-      this.chartOptions.set({
-        responsive: true,
-        maintainAspectRatio: false,
-        layout: {
-          padding: {
-            bottom: 15, 
-          }
-        },
-
-        plugins: {
-          legend: {
-            display: true,
-            position: 'bottom',
-            align: 'start',
-            labels: {
-              usePointStyle: true,
-              pointStyle: 'rect',
-              boxWidth: 10,
-              boxHeight: 10,
-              color: '#515B66',
-
+        this.chartOptions.set({
+          responsive: true,
+          maintainAspectRatio: false,
+          layout: {
+            padding: {
+              bottom: 15,
             },
           },
-        },
-        scales: {
-          x: {
-            ticks: { color: '#515B66' },
-            grid: { display: false },
-          },
-          y: {
-            min: 0,
-            max: 30000,
-            ticks: {
-              stepSize: 15000,
-              color: '#515B66',
-              callback: (val: number) => (val === 0 ? '00' : val / 1000 + 'k'),
+
+          plugins: {
+            legend: {
+              display: true,
+              position: 'bottom',
+              align: 'start',
+              labels: {
+                usePointStyle: true,
+                pointStyle: 'rect',
+                boxWidth: 10,
+                boxHeight: 10,
+                color: '#515B66',
+              },
             },
-            grid: { color: '#e0e0e0' },
           },
-        },
+          scales: {
+            x: {
+              ticks: { color: '#515B66' },
+              grid: { display: false },
+            },
+            y: {
+              min: 0,
+              max: 30000,
+              ticks: {
+                stepSize: 15000,
+                color: '#515B66',
+                callback: (val: number) =>
+                  val === 0 ? '00' : val / 1000 + 'k',
+              },
+              grid: { color: '#e0e0e0' },
+            },
+          },
+        });
       });
-    });
   }
 }

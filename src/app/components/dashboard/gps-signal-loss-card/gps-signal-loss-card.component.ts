@@ -8,7 +8,7 @@ import { DateRangeType } from 'src/app/pages/dashboard/dashboard.component';
   standalone: true,
   imports: [CommonModule, CustomDonutChartComponent],
   templateUrl: './gps-signal-loss-card.component.html',
-  styleUrl: './gps-signal-loss-card.component.scss'
+  styleUrl: './gps-signal-loss-card.component.scss',
 })
 export class GpsSignalLossCardComponent {
   @Input() selectedRange: DateRangeType = '6months';
@@ -17,8 +17,20 @@ export class GpsSignalLossCardComponent {
     datasets: [
       {
         data: [500, 400, 300, 200, 100],
-        backgroundColor: ['#FEB914', '#E142BC', '#068BEE', '#01B8CA', '#96DB33'],
-        hoverBackgroundColor: ['#FEB914', '#E142BC', '#068BEE', '#01B8CA', '#96DB33'],
+        backgroundColor: [
+          '#FEB914',
+          '#E142BC',
+          '#068BEE',
+          '#01B8CA',
+          '#96DB33',
+        ],
+        hoverBackgroundColor: [
+          '#FEB914',
+          '#E142BC',
+          '#068BEE',
+          '#01B8CA',
+          '#96DB33',
+        ],
         borderWidth: 0,
       },
     ],

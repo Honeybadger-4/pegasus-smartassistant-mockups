@@ -1,4 +1,11 @@
-import { Component, Input, OnChanges, SimpleChanges, inject, signal } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  inject,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouteService } from '@shared/services/route.service';
 import { DateRangeType } from 'src/app/pages/dashboard/dashboard.component';
@@ -6,11 +13,10 @@ import { ITopAlternatesResponse } from '@shared/models/top-alternates-response.m
 import { getDateRange, getTitleSuffix } from '@shared/utils/date-range.util';
 import { TableModule } from 'primeng/table';
 
-
 @Component({
   selector: 'app-top-alternate-routes-card',
   standalone: true,
-  imports: [CommonModule,TableModule],
+  imports: [CommonModule, TableModule],
   templateUrl: './top-alternate-routes-card.component.html',
   styleUrl: './top-alternate-routes-card.component.scss',
 })
@@ -32,8 +38,10 @@ export class TopAlternateRoutesCardComponent implements OnChanges {
   loadAlternateRoutes(): void {
     const { startDate, endDate } = getDateRange(this.selectedRange);
 
-    this.routeService.getTopAlternates(startDate, endDate).subscribe((response) => {
-      this.alternateRoutes.set(response);
-    });
+    this.routeService
+      .getTopAlternates(startDate, endDate)
+      .subscribe((response) => {
+        this.alternateRoutes.set(response);
+      });
   }
 }

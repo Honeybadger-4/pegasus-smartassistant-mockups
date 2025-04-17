@@ -8,9 +8,8 @@ describe('FlightCountCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FlightCountCardComponent]
-    })
-    .compileComponents();
+      imports: [FlightCountCardComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(FlightCountCardComponent);
     component = fixture.componentInstance;

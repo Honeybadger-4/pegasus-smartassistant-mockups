@@ -16,8 +16,7 @@
     .chart-box {
       display: flex;
       height: 160px;
-      align-items: center; 
-
+      align-items: center;
 
       .chart-area {
         width: 145px;
@@ -27,15 +26,14 @@
       .legend-area {
         display: flex;
         flex-wrap: wrap;
-        margin-left: 60px; 
-        gap: 10px 10px; 
+        margin-left: 60px;
+        gap: 10px 10px;
 
         .legend-item {
           display: flex;
           align-items: center;
           gap: 15px;
-          min-width: 90px; 
-
+          min-width: 90px;
 
           .dot {
             width: 4px;

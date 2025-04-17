@@ -1,11 +1,17 @@
 import moment from 'moment';
 import { DateRangeType } from 'src/app/pages/dashboard/dashboard.component';
 
-export function getDateRange(range: DateRangeType): { startDate: string; endDate: string } {
+export function getDateRange(range: DateRangeType): {
+  startDate: string;
+  endDate: string;
+} {
   const today = moment();
   switch (range) {
     case 'today':
-      return { startDate: today.format('YYYY-MM-DD'), endDate: today.format('YYYY-MM-DD') };
+      return {
+        startDate: today.format('YYYY-MM-DD'),
+        endDate: today.format('YYYY-MM-DD'),
+      };
     case '1month':
       return {
         startDate: today.clone().subtract(1, 'month').format('YYYY-MM-DD'),
