@@ -30,6 +30,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { LogbookService } from '@shared/services/logbook.service';
 import { StateManagement } from '@shared/services/helpers-services/state-management.service';
+import { ILogbookLogID } from '@shared/models/logbooks-logId-respone.interface';
 
 @Component({
   selector: 'app-logbook-edit',
@@ -74,7 +75,7 @@ export class LogbookDetailEditComponent implements OnInit {
   logbookFormGroup!: FormGroup;
   rejectReason: string = '';
   displayRejectPopup: boolean = false;
-  editDefaultData = signal<IDetailedListContentData | null>(null);
+  editDefaultData = signal<ILogbookLogID | null>(null);
   formDataLoading = signal<boolean>(false);
   isEditMode = signal<boolean>(false);
   updateableFields = signal<string[]>([]);

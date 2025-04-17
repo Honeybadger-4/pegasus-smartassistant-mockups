@@ -13,10 +13,10 @@ import { IGetCurrentMonthResponse } from '@shared/models/get-current-month-respo
 import { ILogbookGetCrewListByFilterResponse } from '@shared/models/get-crews-response.model';
 import { ILogbookStatusListResponse } from '@shared/models/logbook-status-list-response.model';
 import {
-  IDetailedListContentData,
   IDetailedListResponse,
 } from '@shared/models/detailed-list-response.model';
 import { RequestParamsControlService } from './helpers-services/request-params-control.service';
+import { ILogbookLogID } from '@shared/models/logbooks-logId-respone.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -166,7 +166,7 @@ export class AdminLogbookService {
       .pipe(map((response) => response.data));
   }
 
-  getLogByLogId(logId: number): Observable<IDetailedListContentData> {
+  getLogByLogId(logId: number): Observable<ILogbookLogID> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/${logId}`;
 
     return this.http

@@ -465,6 +465,8 @@
           <div class="remarks-field lg:col-span-6 md:cols-pan-6 col-span-12">
             <p>Remarks And Endorsements</p>
             <p>{{ editDefaultData()?.signer }}</p>
+            <p>{{ editDefaultData()?.remarksAndEndorsement }}</p>
+            <p>{{ editDefaultData()?.syntheticTrainingDescription }}</p>
             <img
               *ngIf="editDefaultData()?.isSigned"
               class="h-[85px] w-[450px] object-cover"
