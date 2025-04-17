@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomDonutChartComponent } from '@shared/components/custom-donut-chart/custom-donut-chart.component';
 
