@@ -67,8 +67,6 @@ export class TopAlternateRoutesCardComponent {
     });
   }
 
-  ngOnInit() {}
-
   defineChartData() {
     if (this.topAlternatesData().length > 0) {
       this.chartData.update((chart) => {

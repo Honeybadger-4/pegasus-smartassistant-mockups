@@ -11,7 +11,7 @@
   </section>
 
   <section>
-    <div class="grid grid-cols-12 lg:gap-20 md:gap-20">
+    <div class="grid grid-cols-12 lg:gap-10 md:gap-10">
       <!-- BOEING -->
       <div class="lg:col-span-4 md:col-span-6 col-span-12 mb-5">
         <div class="total-card-container">
@@ -130,7 +130,7 @@
 </div>
 
 <ng-template #monthColumnsTemplate let-rowData="rowData">
-  @if (rowData.yearMonth == currentMonth) {
+  @if (rowData.yearMonth === currentMonth) {
     <span class="font-bold"
       >{{ rowData.yearMonth | date: "MMMM" }} (Current)</span
     >
@@ -152,7 +152,7 @@
     <p-chip label="Approved" class="green-chip" />
   } @else if (rowData.status === "NOT_APPROVED") {
     <p-chip
-      [label]="'Not Approved (' + rowData.unapprovedUserCount + ')'"
+      [label]="'Not Approved ' + '(' + rowData.unapprovedUserCount + ')'"
       class="yellow-chip"
     />
   } @else if (rowData.status === "INACTIVE") {
@@ -163,7 +163,7 @@
 </ng-template>
 
 <ng-template #linkedNextPageTemplate let-rowData="rowData">
-  @if (rowData.yearMonth == currentMonth) {
+  @if (rowData.yearMonth === currentMonth) {
     <i
       class="pi pi-angle-right cursor-pointer w-full !flex justify-end"
       (click)="onNextPage(rowData, true)"

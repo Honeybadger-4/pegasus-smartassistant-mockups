@@ -1,6 +1,5 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 
-import { GeneralInformationCardComponent } from 'src/app/components/homepage/general-information-card/general-information-card.component';
 import { TopAlternateRoutesCardComponent } from '../../components/homepage/top-alternate-routes-card/top-alternate-routes-card.component';
 import { TotalFlightsComponent } from 'src/app/components/homepage/total-flights/total-flights.component';
 
@@ -16,7 +15,6 @@ import { IFlightInfoStatsResponse } from '@shared/models/flight-info-stats-respo
   selector: 'app-homepage',
   imports: [
     TotalFlightsComponent,
-    //GeneralInformationCardComponent,
     TopAlternateRoutesCardComponent,
     DatePickerModule,
     FormsModule,
@@ -24,7 +22,7 @@ import { IFlightInfoStatsResponse } from '@shared/models/flight-info-stats-respo
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.scss',
 })
-export class HomepageComponent {
+export class HomepageComponent implements OnInit {
   routeService = inject(RouteService);
   flightInfoService = inject(FlightInformationService);
 

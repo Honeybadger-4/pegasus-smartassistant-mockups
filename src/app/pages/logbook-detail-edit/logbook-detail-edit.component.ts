@@ -30,6 +30,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { LogbookService } from '@shared/services/logbook.service';
 import { StateManagement } from '@shared/services/helpers-services/state-management.service';
+import { ILogbookLogID } from '@shared/models/logbooks-logId-respone.interface';
 
 @Component({
   selector: 'app-logbook-edit',
@@ -69,12 +70,12 @@ export class LogbookDetailEditComponent implements OnInit {
     { label: 'Logbook Detail List', routerLink: '/logbook/logbook-detail' },
     { label: 'Edit Logbook' },
   ];
-  logId: number = 0;
+  logId = 0;
   dutyType = signal<string>('');
   logbookFormGroup!: FormGroup;
-  rejectReason: string = '';
-  displayRejectPopup: boolean = false;
-  editDefaultData = signal<IDetailedListContentData | null>(null);
+  rejectReason = '';
+  displayRejectPopup = false;
+  editDefaultData = signal<ILogbookLogID | null>(null);
   formDataLoading = signal<boolean>(false);
   isEditMode = signal<boolean>(false);
   updateableFields = signal<string[]>([]);
@@ -153,7 +154,7 @@ export class LogbookDetailEditComponent implements OnInit {
 
         this.getUpdateableFields();
       },
-      error: (error) => {
+      error: () => {
         this.formDataLoading.set(false);
       },
     });
@@ -337,7 +338,7 @@ export class LogbookDetailEditComponent implements OnInit {
   }
 
   convertBase64ToImage(): string {
-    let signatureBase64 = this.editDefaultData()?.signature;
+    const signatureBase64 = this.editDefaultData()?.signature;
 
     if (signatureBase64) {
       return `data:image/jpeg;base64,${signatureBase64}`;

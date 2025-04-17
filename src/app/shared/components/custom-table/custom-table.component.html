@@ -25,43 +25,37 @@
         <th *ngFor="let col of columns">
           <div class="flex items-center">
             {{ col.header }}
-            @if (col.isFilter && col.filterType === "selectbox") {
-              <p-columnFilter
-                [field]="col.field"
-                matchMode="equals"
-                display="menu"
-                [showMatchModes]="false"
-                [showOperator]="false"
-                [showAddButton]="false"
-              >
-                <ng-template #filter let-value let-filter="filterCallback">
-                  <p-select
-                    [ngModel]="value"
-                    [options]="col.filterOptions"
-                    (onChange)="filter($event.value)"
-                    placeholder="Select One"
-                    styleClass="w-full"
-                  >
-                    <ng-template let-option #item>
-                      <span>{{ option.label }}</span>
-                    </ng-template>
-                  </p-select>
-                </ng-template>
-              </p-columnFilter>
-            } @else if (col.isFilter) {
-              <p-columnFilter
-                *ngIf="col.isFilter"
-                type="text"
-                [field]="col.field"
-                display="menu"
-                matchMode="contains"
-                [showMatchModes]="false"
-                [showOperator]="false"
-                [showAddButton]="false"
-                placeholder="Search"
-                ariaLabel="Filter"
-              />
-            }
+            <ng-container [ngSwitch]="col.filterType">
+              <!-- Selectbox Filter -->
+              <ng-container *ngSwitchCase="'selectbox'">
+                <ng-container
+                  *ngTemplateOutlet="
+                    selectFilterTemplate;
+                    context: { $implicit: col }
+                  "
+                />
+              </ng-container>
+
+              <!-- Datepicker Filter -->
+              <ng-container *ngSwitchCase="'datepicker'">
+                <ng-container
+                  *ngTemplateOutlet="
+                    dateFilterTemplate;
+                    context: { $implicit: col }
+                  "
+                />
+              </ng-container>
+
+              <!-- Default Text Filter -->
+              <ng-container *ngSwitchDefault>
+                <ng-container
+                  *ngTemplateOutlet="
+                    defaultFilterTemplate;
+                    context: { $implicit: col }
+                  "
+                />
+              </ng-container>
+            </ng-container>
           </div>
         </th>
       </tr>
@@ -96,6 +90,74 @@
       <tr>
         <td colspan="50">{{ noDataFoundMsg() }}</td>
       </tr>
+    </ng-template>
+
+    <!-- Filters Template -->
+    <!-- Default Text Filter -->
+    <ng-template #defaultFilterTemplate let-col>
+      <ng-container *ngIf="col.isFilter">
+        <p-columnFilter
+          type="text"
+          [field]="col.field"
+          display="menu"
+          matchMode="contains"
+          [showMatchModes]="false"
+          [showOperator]="false"
+          [showAddButton]="false"
+          [placeholder]="'Search by ' + col.header"
+          ariaLabel="Filter"
+        />
+      </ng-container>
+    </ng-template>
+
+    <!-- Selectbox Template -->
+    <ng-template #selectFilterTemplate let-col>
+      <p-columnFilter
+        [field]="col.field"
+        matchMode="equals"
+        display="menu"
+        [showMatchModes]="false"
+        [showOperator]="false"
+        [showAddButton]="false"
+        [showApplyButton]="false"
+      >
+        <ng-template #filter let-value let-filter="filterCallback">
+          <p-select
+            (ngModel)="(value)"
+            [options]="col.filterOptions"
+            styleClass="w-full"
+            placeholder="Select One"
+            (onChange)="filter($event.value)"
+          >
+            <ng-template let-option #item>
+              <span>{{ option.label }}</span>
+            </ng-template>
+          </p-select>
+        </ng-template>
+      </p-columnFilter>
+    </ng-template>
+
+    <!-- Datepicker Template -->
+    <ng-template #dateFilterTemplate let-col>
+      <p-columnFilter
+        [field]="col.field"
+        matchMode="equals"
+        display="menu"
+        [showMatchModes]="false"
+        [showOperator]="false"
+        [showAddButton]="false"
+        [showApplyButton]="false"
+      >
+        <ng-template #filter let-value let-filter="filterCallback">
+          <p-datepicker
+            [readonlyInput]="true"
+            dateFormat="dd/mm/yy"
+            placeholder="Select a Date"
+            class="custom-calendar"
+            (onSelect)="filter(filterDateControl($event))"
+          />
+        </ng-template>
+      </p-columnFilter>
     </ng-template>
   </p-table>
 </div>

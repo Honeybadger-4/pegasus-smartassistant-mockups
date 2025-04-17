@@ -2,6 +2,7 @@ import {
   Component,
   effect,
   inject,
+  OnInit,
   signal,
   TemplateRef,
   ViewChild,
@@ -55,7 +56,7 @@ import { IFlightInformationTripInfoResponse } from '@shared/models/flight-info-t
   templateUrl: './flight-info.component.html',
   styleUrl: './flight-info.component.scss',
 })
-export class FlightInfoComponent {
+export class FlightInfoComponent implements OnInit {
   @ViewChild('flightPlanTableFlightPlanCellTemplate', { static: true })
   flightPlanTableFlightPlanCellTemplate!: TemplateRef<any>;
   @ViewChild('loadSheetTableLoadSheetCellTemplate', { static: true })
@@ -78,7 +79,7 @@ export class FlightInfoComponent {
   expandedRows: { [key: string]: boolean } = {};
   currentPage = 0;
   currentRows = 20;
-  tableLoading: boolean = false;
+  tableLoading = false;
 
   tableSubPanels!: any[];
 
