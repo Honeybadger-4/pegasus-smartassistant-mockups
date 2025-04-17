@@ -3,6 +3,6 @@ export interface Column {
   header: string;
   template?: any;
   isFilter?: boolean;
-  filterType?: 'selectbox';
+  filterType?: 'selectbox' | 'datepicker';
   filterOptions?: any[];
 }

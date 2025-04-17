@@ -23,19 +23,6 @@
       class="lg:col-span-6 md:col-span-6 col-span-12 flex lg:justify-end md:justify-end"
     >
       <div>
-        <div *ngIf="!isLogbookCurrentMonth()" class="w-[160px]">
-          <p-select
-            [(ngModel)]="statusFilter"
-            [options]="statusOptions()"
-            optionLabel="label"
-            optionValue="value"
-            placeholder="Status"
-            [showClear]="true"
-            class="custom-dropdown w-full"
-            (ngModelChange)="getDetailedList()"
-          />
-        </div>
-
         <div class="flex items-center gap-5 mt-4">
           <p-button
             *ngIf="!isLogbookCurrentMonth()"

@@ -1,4 +1,4 @@
-import { Component, inject, signal, viewChild } from '@angular/core';
+import { Component, effect, inject, signal, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,13 +13,11 @@ import { PdfExportService } from '@shared/services/pdf-export.service';
 import { AdminLogbookService } from '@shared/services/admin-logbook.service';
 import { IDetailedListRequest } from '@shared/models/detailed-list-request.model';
 import { ShowToastService } from '@shared/services/helpers-services/show-toast.service';
-import { IGetCurrentMonthResponse } from '@shared/models/get-current-month-response.model';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { StateManagement } from '@shared/services/helpers-services/state-management.service';
 import { ILogbookStatusListResponse } from '@shared/models/logbook-status-list-response.model';
 import { DetailModalComponent } from '../../components/logbook-detail/detail-modal/detail-modal.component';
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
-import moment from 'moment';
 
 import { Chip } from 'primeng/chip';
 import { ToastModule } from 'primeng/toast';
@@ -64,8 +62,6 @@ import { firstValueFrom } from 'rxjs';
   providers: [ConfirmationService, MessageService],
 })
 export class LogbookDetailComponent {
-  constructor(private fileSaverService: FileSaverService) {}
-
   customTableComponent = viewChild.required(CustomTableComponent);
   dateColumnTemplate = viewChild.required('dateColumnTemplate');
   statusColumnTemplate = viewChild.required('statusColumnTemplate');
@@ -89,12 +85,10 @@ export class LogbookDetailComponent {
   currentPage = signal<number>(0);
   currentRows = signal<number>(20);
   tableLoading = signal<boolean>(false);
+  tableFilters = signal<any>({});
   selectedCheckbox = signal<IDetailedListContentData[]>([]);
   logbookDetailData = signal<IDetailedListResponse | null>(null);
   logbookDetailTableData = signal<IDetailedListContentData[]>([]);
-  startDate = signal<string>('');
-  endDate = signal<string>('');
-  statusFilter = signal<string>('');
   statusOptions = signal<ILogbookStatusListResponse[]>([]);
   maxCharCount = signal<number>(20);
   displayPreviewDialog = signal<boolean>(false);
@@ -107,6 +101,12 @@ export class LogbookDetailComponent {
     { label: 'Logbook Detail List' },
   ];
 
+  constructor (private fileSaverService: FileSaverService) {
+    effect(() => {
+      this.defineColumn();
+    })
+  }
+
   ngOnInit() {
     this.isLogbookCurrentMonth.set(
       this.stateManagement.getState('isLogbookCurrentMonth'),
@@ -114,24 +114,19 @@ export class LogbookDetailComponent {
     this.crewListTableData.set(this.stateManagement.getState('crewListPage'));
 
     this.defineColumn();
-
-    this.startDate.set(this.dateRangeDefaultValue()[0].toString());
-    this.endDate.set(this.dateRangeDefaultValue()[1].toString());
-
-    this.getDetailedList();
     this.getLogbookStatusList();
   }
 
   defineColumn() {
     this.columns.set([
-      { field: 'date', header: 'Date', template: this.dateColumnTemplate() },
+      { field: 'date', header: 'Date', template: this.dateColumnTemplate(), isFilter: true, filterType: 'datepicker' },
       { field: 'dutyType', header: 'Duty Type' },
-      { field: 'aircraftType', header: 'A/C Type' },
-      { field: 'aircraftReg', header: 'A/C Reg' },
-      { field: 'departure', header: 'Departure' },
-      { field: 'departureTime', header: 'Departure Time' },
-      { field: 'arrival', header: 'Arrival' },
-      { field: 'arrivalTime', header: 'Arrival Time' },
+      { field: 'aircraftType', header: 'A/C Type', isFilter: true },
+      { field: 'aircraftReg', header: 'A/C Reg', isFilter: true },
+      { field: 'departure', header: 'Departure', isFilter: true },
+      { field: 'departureTime', header: 'Departure Time', isFilter: true },
+      { field: 'arrival', header: 'Arrival', isFilter: true },
+      { field: 'arrivalTime', header: 'Arrival Time', isFilter: true },
       { field: 'totalTime', header: 'Total Time' },
       { field: 'multiPilotTime', header: 'Multi Pilot Time' },
       {
@@ -148,11 +143,15 @@ export class LogbookDetailComponent {
         field: 'lastReviewedAdmin',
         header: 'Reviewed By',
         template: this.reviewedByColumnTemplate(),
+        isFilter: true
       },
       {
         field: 'status',
         header: 'Status',
         template: this.statusColumnTemplate(),
+        isFilter: true,
+        filterType: 'selectbox',
+        filterOptions: this.statusOptions(),
       },
       ...(!this.isLogbookCurrentMonth()
         ? [{ field: '', header: '', template: this.previewCellBodyTemplate() }]
@@ -177,9 +176,15 @@ export class LogbookDetailComponent {
 
     const requestBody: IDetailedListRequest = {
       monthLogId: this.crewListTableData()?.monthlyLogbookId,
-      status: this.statusFilter(),
-      startDate: this.startDate(),
-      endDate: this.endDate(),
+      date: this.tableFilters()?.date?.[0]?.value || '',
+      aircraftType: this.tableFilters()?.aircraftType?.[0]?.value || '',
+      aircraftReg: this.tableFilters()?.aircraftReg?.[0]?.value || '',
+      departure: this.tableFilters()?.departure?.[0]?.value || '',
+      departureTime: this.tableFilters()?.departureTime?.[0]?.value || '',
+      arrival: this.tableFilters()?.arrival?.[0]?.value || '',
+      arrivalTime: this.tableFilters()?.arrivalTime?.[0]?.value || '',
+      lastReviewedAdmin: this.tableFilters()?.lastReviewedAdmin?.[0]?.value || '',
+      status: this.tableFilters()?.status?.[0]?.value || ''
     };
 
     this.adminLogbookService
@@ -226,15 +231,31 @@ export class LogbookDetailComponent {
     });
   }
 
-  // Filter Operations
-  dateRangeDefaultValue() {
-    this.crewListTableData().yearMonth;
-    let year = new Date(this.crewListTableData().yearMonth).getFullYear();
-    let month = new Date(this.crewListTableData().yearMonth).getMonth();
-    let startDate = moment(new Date(year, month, 1)).format();
-    let endDate = moment(new Date(year, month + 1, 1)).format();
+  async pdfExport() {
+    const companyId = this.crewListTableData().companyId;
+    const yearMonth = this.crewListTableData().yearMonth;
 
-    return [startDate, endDate];
+    try {
+      const res = await firstValueFrom(
+        this.pdfExportService.getPdfExport(companyId, yearMonth),
+      );
+      this.fileSaverService.getFileSaver(
+        res,
+        `Logbook_${companyId}_${yearMonth}.pdf`,
+      );
+    } catch (error) {
+      console.error('PDF Download Error:', error);
+    }
+  }
+
+  // Filter Operations
+  lazyLoadEvent(event: any) {
+    const page = event.first / event.rows;
+    this.currentPage.set(page);
+    this.currentRows.set(event.rows);
+    this.tableFilters.set(event.filters);
+
+    this.getDetailedList();
   }
 
   // Approve and Reject Operations
@@ -301,29 +322,5 @@ export class LogbookDetailComponent {
     this.detailedListPreviewModalData.set(rowData ? rowData : null);
   }
 
-  lazyLoadEvent(event: any) {
-    const page = event.first / event.rows;
-    this.currentPage.set(page);
-    this.currentRows.set(event.rows);
-
-    
-    this.getDetailedList();
-  }
-
-  async pdfExport() {
-    const companyId = this.crewListTableData().companyId;
-    const yearMonth = this.crewListTableData().yearMonth;
-
-    try {
-      const res = await firstValueFrom(
-        this.pdfExportService.getPdfExport(companyId, yearMonth),
-      );
-      this.fileSaverService.getFileSaver(
-        res,
-        `Logbook_${companyId}_${yearMonth}.pdf`,
-      );
-    } catch (error) {
-      console.error('PDF Download Error:', error);
-    }
-  }
+  
 }
