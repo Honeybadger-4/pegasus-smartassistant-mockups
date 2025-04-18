@@ -22,6 +22,7 @@ import moment from 'moment';
 })
 export class TotalFuelOrderedCardComponent implements OnChanges {
   @Input() selectedRange: DateRangeType = '6months';
+
   fuelOrderService = inject(FuelOrderService);
 
   chartData = signal<any>(null);
@@ -31,34 +32,31 @@ export class TotalFuelOrderedCardComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selectedRange']) {
       this.titleSuffix = getTitleSuffix(this.selectedRange);
-      this.fetchFuelData();
+      this.loadFuelData();
     }
   }
 
-  fetchFuelData() {
+  loadFuelData(): void {
     const { startDate, endDate } = getDateRange(this.selectedRange);
 
-    this.fuelOrderService.getDailySum(startDate, endDate).subscribe((res) => {
-      const grouped: { [month: string]: number } = {};
+    this.fuelOrderService.getDailySum(startDate, endDate).subscribe((response) => {
+      const monthlyTotal = new Map<string, number>();
 
-      res.forEach((item) => {
-        const month = moment(item.day).format('MMM');
-        grouped[month] = (grouped[month] || 0) + item.total;
+      response.forEach((item) => {
+        const month = moment(item.day).format('MMMM');
+        monthlyTotal.set(month, (monthlyTotal.get(month) || 0) + item.total);
       });
 
-      const labels = Object.keys(grouped);
-      const data = Object.values(grouped);
-
       this.chartData.set({
-        labels,
+        labels: Array.from(monthlyTotal.keys()),
         datasets: [
           {
             label: 'Fuel Order',
-            data,
+            data: Array.from(monthlyTotal.values()),
             fill: false,
             borderColor: '#E142BC',
-            tension: 0.4,
             backgroundColor: '#D946EF',
+            tension: 0.4,
             pointRadius: 2,
             borderWidth: 2,
           },
@@ -69,9 +67,7 @@ export class TotalFuelOrderedCardComponent implements OnChanges {
         responsive: true,
         maintainAspectRatio: false,
         layout: {
-          padding: {
-            bottom: 15,
-          },
+          padding: { bottom: 15 },
         },
         plugins: {
           legend: {
@@ -94,7 +90,11 @@ export class TotalFuelOrderedCardComponent implements OnChanges {
           },
           y: {
             beginAtZero: true,
-            ticks: { color: '#515B66' },
+            ticks: {
+              color: '#515B66',
+              callback: (val: number) =>
+                val === 0 ? '00' : `${val / 1000}k`,
+            },
             grid: { color: '#e0e0e0' },
           },
         },
