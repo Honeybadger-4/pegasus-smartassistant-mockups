@@ -1,4 +1,4 @@
-import { Component, inject, signal, viewChild } from '@angular/core';
+import { Component, inject, OnInit, signal, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -12,6 +12,7 @@ import { CustomTableComponent } from '@shared/components/custom-table/custom-tab
 import { SliderModule } from 'primeng/slider';
 import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
+import { ChipModule } from 'primeng/chip';
 
 @Component({
   selector: 'app-logbook',
@@ -21,15 +22,17 @@ import { ButtonModule } from 'primeng/button';
     FormsModule,
     SliderModule,
     ButtonModule,
+    ChipModule,
     CustomTableComponent,
   ],
   templateUrl: './logbook.component.html',
   styleUrl: './logbook.component.scss',
 })
-export class LogbookComponent {
+export class LogbookComponent implements OnInit {
   dutyColumnsTemplate = viewChild.required('dutyColumnsTemplate');
   monthColumnsTemplate = viewChild.required('monthColumnsTemplate');
   linkedNextPageTemplate = viewChild.required('linkedNextPageTemplate');
+  statusTemplate = viewChild.required('statusTemplate');
 
   router = inject(Router);
   stateManagement = inject(StateManagement);
@@ -45,7 +48,7 @@ export class LogbookComponent {
     null,
   );
 
-  currentMonth = signal<string | null>(null);
+  currentMonth = '';
 
   selectedYear = signal<number>(0);
   yearOptions = signal<number[] | undefined>(undefined);
@@ -56,7 +59,7 @@ export class LogbookComponent {
 
     const year = new Date().getFullYear();
     const month = new Date().getMonth() + 1;
-    this.currentMonth.set(year + '-' + month);
+    this.currentMonth = year + '-' + month.toString().padStart(2, '0');
   }
 
   defineColumns() {
@@ -71,6 +74,7 @@ export class LogbookComponent {
         header: 'Duty',
         template: this.dutyColumnsTemplate(),
       },
+      { field: 'status', header: 'Status', template: this.statusTemplate() },
       { field: '', header: '', template: this.linkedNextPageTemplate() },
     ]);
   }

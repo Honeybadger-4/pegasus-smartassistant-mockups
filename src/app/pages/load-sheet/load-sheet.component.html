@@ -107,7 +107,7 @@
       [tableData]="loadSheetTableData()"
       [tableColumns]="columns"
       [totalRecords]="loadSheetData()?.loadSheets?.totalElements || 0"
-      (pageEvent)="pageEvent($event)"
+      (lazyLoadEvent)="lazyLoadEvent($event)"
     ></app-custom-table>
   </section>
 
@@ -121,9 +121,9 @@
 
 <!-- Table Cell Templates -->
 <ng-template #statusCellBodyTemplate let-rowData="rowData">
-  @if (rowData.status == "LOADSHEET_APPROVED") {
+  @if (rowData.status === "LOADSHEET_APPROVED") {
     <span class="font-bold">APPROVED</span>
-  } @else if (rowData.status == "LOADSHEET_DECLINED") {
+  } @else if (rowData.status === "LOADSHEET_DECLINED") {
     <span class="font-bold">DECLINED</span>
   }
 </ng-template>

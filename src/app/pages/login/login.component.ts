@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import {
@@ -26,7 +26,7 @@ import { PasswordModule } from 'primeng/password';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   router = inject(Router);
   loginService = inject(LoginService);
 
@@ -57,7 +57,7 @@ export class LoginComponent {
           this.router.navigate(['/']);
           this.btnLoading.set(false);
         },
-        error: (err) => {
+        error: () => {
           this.btnLoading.set(false);
         },
       });

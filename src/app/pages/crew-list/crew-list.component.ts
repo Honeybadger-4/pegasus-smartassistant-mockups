@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   inject,
+  OnInit,
   signal,
   viewChild,
 } from '@angular/core';
@@ -19,12 +20,13 @@ import {
 import { Column } from '@shared/models/columns';
 import { PdfExportService } from '@shared/services/pdf-export.service';
 import { AdminLogbookService } from '@shared/services/admin-logbook.service';
+import { FileSaverService } from '@shared/services/helpers-services/file-saver.service';
 import { ILogbookCrewListResponse } from '@shared/models/logbook-crew-list-response.model';
 import { StateManagement } from '@shared/services/helpers-services/state-management.service';
-import { ILogbookGetCrewListByFilterResponse } from '@shared/models/get-crews-response.model';
 import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
 
+import { Chip } from 'primeng/chip';
 import { MenuItem } from 'primeng/api';
 import { PanelModule } from 'primeng/panel';
 import { ButtonModule } from 'primeng/button';
@@ -33,7 +35,6 @@ import { TooltipModule } from 'primeng/tooltip';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
-import { FileSaverService } from '@shared/services/helpers-services/file-saver.service';
 
 @Component({
   selector: 'app-logbook',
@@ -49,13 +50,12 @@ import { FileSaverService } from '@shared/services/helpers-services/file-saver.s
     PanelModule,
     TooltipModule,
     ButtonModule,
+    Chip,
   ],
   templateUrl: './crew-list.component.html',
   styleUrl: './crew-list.component.scss',
 })
-export class CrewListComponent {
-  constructor(private fileSaverService: FileSaverService) {}
-
+export class CrewListComponent implements OnInit {
   customTableComponent = viewChild.required(CustomTableComponent);
   searchInput = viewChild.required<ElementRef>('searchInput');
   linkedNextPageTemplate = viewChild.required('linkedNextPageTemplate');
@@ -74,55 +74,56 @@ export class CrewListComponent {
   currentPage = signal<number>(0);
   currentRows = signal<number>(20);
   tableLoading = signal<boolean>(false);
-  crewListData = signal<
-    ILogbookCrewListResponse | ILogbookGetCrewListByFilterResponse | null
-  >(null);
-  crewListContentData = signal<
-    | ILogbookCrewListResponse['content']
-    | ILogbookGetCrewListByFilterResponse['content']
-    | null
-  >(null);
+  crewListData = signal<ILogbookCrewListResponse | null>(null);
+  crewListContentData = signal<ILogbookCrewListResponse['content'] | null>(
+    null,
+  );
   searchInputValue = signal<string>('');
-  logbookDashboardData = signal<any>(null);
-  isLogbookCurrentMonth = signal<boolean>(false);
+  tableFilters = signal<any>({});
 
+  logbookDashboardData: any = [];
+  isLogbookCurrentMonth = false;
   breadcrumbItems: MenuItem[] = [
     { label: 'Logbook', routerLink: '/logbook' },
     { label: 'Crew List' },
   ];
 
-  ngOnInit() {
-    this.logbookDashboardData.set(
-      this.stateManagement.getState('logbookSummaryPage'),
-    );
+  constructor(private fileSaverService: FileSaverService) {}
 
-    this.isLogbookCurrentMonth.set(
-      this.stateManagement.getState('isLogbookCurrentMonth'),
+  ngOnInit() {
+    this.logbookDashboardData =
+      this.stateManagement.getState('logbookSummaryPage');
+    this.isLogbookCurrentMonth = this.stateManagement.getState(
+      'isLogbookCurrentMonth',
     );
 
     this.defineColumns();
     this.setupSearchListener();
-
-    if (this.isLogbookCurrentMonth()) {
-      this.getCrewListByFilterForCurrentMonth();
-    } else {
-      this.getCrewList();
-    }
   }
 
-  // Define Operations
   defineColumns() {
-    if (this.isLogbookCurrentMonth()) {
+    if (this.isLogbookCurrentMonth) {
       this.columns.set([
-        { field: 'fullName', header: 'Crew Name & Surname' },
-        { field: 'companyId', header: 'Company ID' },
+        {
+          field: 'crewNameSurname',
+          header: 'Crew Name & Surname',
+          isFilter: true,
+        },
+        { field: 'companyId', header: 'Company ID', isFilter: true },
         { field: '', header: '', template: this.linkedNextPageTemplate() },
       ]);
     } else {
       this.columns.set([
-        { field: 'crewNameSurname', header: 'Crew Name & Surname' },
-        { field: 'companyId', header: 'Company ID' },
-        { field: 'totalNumberOfLog', header: 'Total Number of Log' },
+        {
+          field: 'crewNameSurname',
+          header: 'Crew Name & Surname',
+          isFilter: true,
+        },
+        { field: 'companyId', header: 'Company ID', isFilter: true },
+        {
+          field: 'totalNumberOfLog',
+          header: 'Total Number of Log',
+        },
         {
           field: 'totalHours',
           header: 'Total Hours of Log',
@@ -134,6 +135,13 @@ export class CrewListComponent {
           field: 'approvedStatus',
           header: 'Approval Status',
           template: this.approvedStatusTemplate(),
+          isFilter: true,
+          filterType: 'selectbox',
+          filterOptions: [
+            { label: 'Approved', value: 'APPROVED' },
+            { label: 'Not Approved', value: 'NOT_APPROVED' },
+            { label: 'Inactive', value: 'INACTIVE' },
+          ],
         },
         { field: '', header: '', template: this.linkedNextPageTemplate() },
         { field: '', header: '', template: this.exportDataIconTemplate() },
@@ -145,31 +153,12 @@ export class CrewListComponent {
     this.tableLoading.set(true);
     this.adminLogbookService
       .getCrewList(
-        this.logbookDashboardData()?.logbookType,
-        this.logbookDashboardData()?.yearMonth,
+        this.logbookDashboardData?.logbookType,
+        this.logbookDashboardData?.yearMonth,
         this.currentPage(),
         this.currentRows(),
         this.searchInputValue(),
-      )
-      .subscribe({
-        next: (response) => {
-          this.crewListData.set(response);
-          this.crewListContentData.set(response.content);
-          this.tableLoading.set(false);
-        },
-        error: () => {
-          this.tableLoading.set(false);
-        },
-      });
-  }
-
-  getCrewListByFilterForCurrentMonth() {
-    this.tableLoading.set(true);
-    this.adminLogbookService
-      .getCrewListByFilterForCurrentMonth(
-        this.currentPage(),
-        this.currentRows(),
-        this.searchInputValue(),
+        this.tableFilters(),
       )
       .subscribe({
         next: (response) => {
@@ -185,7 +174,7 @@ export class CrewListComponent {
 
   async downloadPdf(rowData: any) {
     const companyId = rowData.companyId;
-    const yearMonth = this.logbookDashboardData()?.yearMonth;
+    const yearMonth = this.logbookDashboardData?.yearMonth;
     try {
       const res = await firstValueFrom(
         this.pdfExportService.getPdfExport(companyId, yearMonth),
@@ -199,7 +188,7 @@ export class CrewListComponent {
     }
   }
 
-  // Search Operations
+  // Table Operations
   setupSearchListener() {
     fromEvent<Event>(this.searchInput().nativeElement, 'input')
       .pipe(
@@ -212,11 +201,7 @@ export class CrewListComponent {
           this.currentPage.set(0);
           this.customTableComponent().resetTableFirstValue();
 
-          if (this.isLogbookCurrentMonth()) {
-            this.getCrewListByFilterForCurrentMonth();
-          } else {
-            this.getCrewList();
-          }
+          this.getCrewList();
         }
       });
   }
@@ -225,21 +210,27 @@ export class CrewListComponent {
     this.searchInputValue.set(value.toUpperCase());
   }
 
-  // Table Operations
-  navigateLogbookDetail(event: any) {
-    this.stateManagement.setState('crewListPage', event);
-    this.router.navigate(['logbook/logbook-detail']);
-  }
-
-  pageEvent(event: { first: number; rows: number }) {
+  lazyLoadEvent(event: any) {
     const page = event.first / event.rows;
     this.currentPage.set(page);
     this.currentRows.set(event.rows);
 
-    if (this.isLogbookCurrentMonth()) {
-      this.getCrewListByFilterForCurrentMonth();
-    } else {
-      this.getCrewList();
-    }
+    this.tableFilters.set({
+      filterCompanyId:
+        event.filters?.companyId && event.filters?.companyId[0]?.value,
+      filterCrewFullName:
+        event.filters?.crewNameSurname &&
+        event.filters?.crewNameSurname[0]?.value,
+      filterApprovalStatus:
+        event.filters?.approvedStatus &&
+        event.filters?.approvedStatus[0]?.value,
+    });
+
+    this.getCrewList();
+  }
+
+  navigateLogbookDetail(event: any) {
+    this.stateManagement.setState('crewListPage', event);
+    this.router.navigate(['logbook/logbook-detail']);
   }
 }

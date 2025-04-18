@@ -1,6 +1,7 @@
 import {
   Component,
   inject,
+  OnInit,
   signal,
   TemplateRef,
   ViewChild,
@@ -50,7 +51,7 @@ import moment from 'moment';
   templateUrl: './load-sheet.component.html',
   styleUrl: './load-sheet.component.scss',
 })
-export class LoadSheetComponent {
+export class LoadSheetComponent implements OnInit {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
   @ViewChild('statusCellBodyTemplate', { static: true })
   statusCellBodyTemplate!: TemplateRef<any>;
@@ -63,7 +64,7 @@ export class LoadSheetComponent {
   currentPage = 0;
   currentRows = 20;
   isDialogVisible = false;
-  tableLoading: boolean = false;
+  tableLoading = false;
 
   loadSheetData = signal<ILoadSheetResponse | null>(null);
   loadSheetTableData = signal<ILoadSheetTableData[]>([]);
@@ -190,7 +191,7 @@ export class LoadSheetComponent {
     this.loadAndTrimSheetData.set(rowData);
   }
 
-  pageEvent(event: { first: number; rows: number }) {
+  lazyLoadEvent(event: any) {
     const page = event.first / event.rows;
     this.currentPage = page;
     this.currentRows = event.rows;

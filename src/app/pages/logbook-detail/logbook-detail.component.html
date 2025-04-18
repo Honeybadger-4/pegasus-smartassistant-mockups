@@ -23,19 +23,6 @@
       class="lg:col-span-6 md:col-span-6 col-span-12 flex lg:justify-end md:justify-end"
     >
       <div>
-        <div *ngIf="!isLogbookCurrentMonth()" class="w-[160px]">
-          <p-select
-            [(ngModel)]="statusFilter"
-            [options]="statusOptions()"
-            optionLabel="label"
-            optionValue="value"
-            placeholder="Status"
-            [showClear]="true"
-            class="custom-dropdown w-full"
-            (ngModelChange)="getDetailedList()"
-          />
-        </div>
-
         <div class="flex items-center gap-5 mt-4">
           <p-button
             *ngIf="!isLogbookCurrentMonth()"
@@ -74,9 +61,7 @@
             tooltipPosition="left"
             tooltipStyleClass="custom-tooltip"
             [style]="{ color: 'black' }"
-            (click)="
-              isLogbookCurrentMonth() ? pdfExportForCurrentMonth() : pdfExport()
-            "
+            (click)="pdfExport()"
           />
         </div>
       </div>
@@ -85,23 +70,14 @@
 
   <section class="table-section custom-card mt-5">
     <app-custom-table
-      [tableData]="
-        isLogbookCurrentMonth()
-          ? getCurrentMonthData()?.pairings
-          : logbookDetailTableData()
-      "
+      [tableData]="logbookDetailTableData()"
       [tableColumns]="columns()"
       [selectionMode]="isLogbookCurrentMonth() ? 'single' : 'multiple'"
-      [totalRecords]="
-        isLogbookCurrentMonth()
-          ? getCurrentMonthData()?.pairings?.length || 0
-          : logbookDetailData()?.logbookDetails?.totalElements || 0
-      "
-      [lazy]="!isLogbookCurrentMonth()"
+      [totalRecords]="logbookDetailData()?.logbookDetails?.totalElements || 0"
       [tableLoading]="tableLoading()"
       [footerTemplate]="tableFooterTemplate"
       (selectedCheckbox)="selectionCheckbox($event)"
-      (pageEvent)="onPageChange($event)"
+      (lazyLoadEvent)="lazyLoadEvent($event)"
       [noDataFoundMsg]="'There were no data entries for this user this month.'"
     ></app-custom-table>
   </section>
@@ -196,10 +172,16 @@
 </ng-template>
 
 <ng-template #statusColumnTemplate let-rowData="rowData">
-  @if (rowData.status === "WAITING_APPROVAL") {
-    <p>WAITING APPROVAL</p>
-  } @else {
-    <p>{{ rowData.status || "-" }}</p>
+  @switch (rowData.status) {
+    @case ("APPROVED") {
+      <p-chip label="Approved" class="green-chip" />
+    }
+    @case ("WAITING_APPROVAL") {
+      <p-chip label="Waiting for Approve" class="yellow-chip" />
+    }
+    @default {
+      -
+    }
   }
 </ng-template>
 
@@ -232,7 +214,7 @@
     <!-- This data should only be shown on the last pages -->
     <tr
       *ngIf="
-        logbookDetailData()?.logbookDetails?.totalPages == currentPage() + 1 &&
+        logbookDetailData()?.logbookDetails?.totalPages === currentPage() + 1 &&
         logbookDetailData()?.logbookDetails?.totalPages !== 1
       "
     >
@@ -247,7 +229,7 @@
     <!-- This data should only be shown on the last pages -->
     <tr
       *ngIf="
-        logbookDetailData()?.logbookDetails?.totalPages == currentPage() + 1
+        logbookDetailData()?.logbookDetails?.totalPages === currentPage() + 1
       "
     >
       <td colspan="8" class="!text-right font-bold p-3 pb-0">Total</td>

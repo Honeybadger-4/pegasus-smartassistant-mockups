@@ -1,6 +1,7 @@
 import {
   Component,
   inject,
+  OnInit,
   signal,
   TemplateRef,
   ViewChild,
@@ -52,7 +53,7 @@ import moment from 'moment';
   templateUrl: './route.component.html',
   styleUrl: './route.component.scss',
 })
-export class RouteComponent {
+export class RouteComponent implements OnInit {
   @ViewChild('expandableTableDocumentsIconTemplate', { static: true })
   expandableTableDocumentsIconTemplate!: TemplateRef<any>;
 
@@ -142,7 +143,7 @@ export class RouteComponent {
   expandedRows = {};
   currentPage = 0;
   currentRows = 20;
-  tableLoading: boolean = false;
+  tableLoading = false;
 
   routeHistoryData = signal<IRouteResponse | null>(null);
   routeHistoryTableData = signal<IRouteTableData[]>([]);

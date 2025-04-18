@@ -59,7 +59,7 @@
       [tableData]="userLoginHistoryTableData()"
       [tableColumns]="columns"
       [totalRecords]="userLoginHistoryData()?.totalElements || 0"
-      (pageEvent)="pageEvent($event)"
+      (lazyLoadEvent)="lazyLoadEvent($event)"
     ></app-custom-table>
   </section>
 </div>

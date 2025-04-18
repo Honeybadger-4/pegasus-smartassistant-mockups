@@ -1,4 +1,4 @@
-import { Component, inject, PLATFORM_ID } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -22,11 +22,11 @@ import { AvatarModule } from 'primeng/avatar';
   templateUrl: './menubar.component.html',
   styleUrls: ['./menubar.component.scss'],
 })
-export class MenubarComponent {
+export class MenubarComponent implements OnInit {
   loginService = inject(LoginService);
   userProfileService = inject(UserProfileService);
   menuItems: LayoutMenuItem[] = [];
-  username: string = '';
+  username = '';
   profilePhotoUrl: string | null = null;
   platformId = inject(PLATFORM_ID);
 

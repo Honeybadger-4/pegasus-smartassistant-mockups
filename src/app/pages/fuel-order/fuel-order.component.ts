@@ -1,4 +1,4 @@
-import { Component, inject, signal, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -38,12 +38,12 @@ import moment from 'moment';
   templateUrl: './fuel-order.component.html',
   styleUrl: './fuel-order.component.scss',
 })
-export class FuelOrderComponent {
+export class FuelOrderComponent implements OnInit {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
 
   filterFormGroup!: FormGroup;
   columns!: Column[];
-  tableLoading: boolean = false;
+  tableLoading = false;
   dateRange: Date[] = [];
   currentPage = 0;
   currentRows = 20;
@@ -152,7 +152,7 @@ export class FuelOrderComponent {
   }
 
   // Other Operations
-  pageEvent(event: { first: number; rows: number }) {
+  lazyLoadEvent(event: any) {
     const page = event.first / event.rows;
     this.currentPage = page;
     this.currentRows = event.rows;

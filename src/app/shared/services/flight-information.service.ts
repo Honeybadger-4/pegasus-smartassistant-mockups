@@ -49,6 +49,24 @@ export class FlightInformationService {
       .pipe(map((response) => response.data));
   }
 
+<<<<<<< HEAD
+=======
+  getFlightInfoStats(
+    startDate: string,
+    endDate: string,
+  ): Observable<IFlightInfoStatsResponse> {
+    const apiUrl = `${this.baseUrl}/api/v1/admin/flights/stats`;
+
+    const params = new HttpParams()
+      .set('startDate', startDate)
+      .set('endDate', endDate);
+
+    return this.http
+      .get<IHttpResponseModel>(apiUrl, { params })
+      .pipe(map((response) => response.data));
+  }
+
+>>>>>>> e9a505a9d344d2685ee5fe4d9d15080fb2c9c2bc
   getFlightInformationTripInfo(
     flightISN: number,
   ): Observable<IFlightInformationTripInfoResponse[]> {

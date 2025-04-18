@@ -22,7 +22,7 @@ import { ButtonModule } from 'primeng/button';
   styleUrl: './load-and-trim-sheet.component.scss',
 })
 export class LoadAndTrimSheetComponent {
-  @Input() visible: boolean = true;
+  @Input() visible = true;
   @Input() loadSheetRowData: ILoadSheetTableData | null = null;
   @Output() closeModal = new EventEmitter<void>();
 

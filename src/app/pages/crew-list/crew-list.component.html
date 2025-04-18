@@ -1,5 +1,6 @@
 <div id="crew-list-page">
-  <div class="flex items-center justify-between">
+  <!-- Breadcrumb and Filter -->
+  <section class="flex items-center justify-between">
     <app-custom-breadcrumb [breadCrumbItems]="breadcrumbItems" />
 
     <div class="w-[234px]">
@@ -15,19 +16,24 @@
         />
       </p-iconField>
     </div>
-  </div>
+  </section>
 
+  <!-- Summary Panel -->
   <section class="chart-panel-section mt-5">
-    @if (isLogbookCurrentMonth()) {
+    @if (isLogbookCurrentMonth) {
       <p class="font-bold text-[16px]">
-        {{ logbookDashboardData()?.yearMonth | date: "MMMM-YYYY" }}
+        {{
+          logbookDashboardData?.logbookType +
+            " / " +
+            (logbookDashboardData?.yearMonth | date: "MMMM-YYYY")
+        }}
       </p>
     } @else {
       <p-panel
         [header]="
-          logbookDashboardData()?.logbookType +
+          logbookDashboardData?.logbookType +
           ' / ' +
-          (logbookDashboardData()?.yearMonth | date: 'MMMM-YYYY')
+          (logbookDashboardData?.yearMonth | date: 'MMMM-YYYY')
         "
         [toggleable]="true"
         collapsed="true"
@@ -40,7 +46,7 @@
             <p class="total-card-item-label">Duty</p>
             <div>
               <span class="total-card-item-count">{{
-                logbookDashboardData()?.dutyCount
+                logbookDashboardData?.dutyCount
               }}</span>
               <small class="font-light">times</small>
             </div>
@@ -50,7 +56,7 @@
             <p class="total-card-item-label">Time</p>
             <div>
               <span class="total-card-item-count">{{
-                logbookDashboardData()?.totalHours
+                logbookDashboardData?.totalHours
               }}</span>
               <small class="font-light">hours</small>
             </div>
@@ -60,17 +66,19 @@
     }
   </section>
 
+  <!-- Table -->
   <section class="table-section custom-card mt-5">
     <app-custom-table
       [tableData]="crewListContentData()"
       [tableColumns]="columns()"
       [totalRecords]="crewListData()?.totalElements || 0"
       [tableLoading]="tableLoading()"
-      (pageEvent)="pageEvent($event)"
+      (lazyLoadEvent)="lazyLoadEvent($event)"
     ></app-custom-table>
   </section>
 </div>
 
+<!-- Templates -->
 <ng-template #exportDataIconTemplate let-rowData="rowData">
   <p-button
     type="button"
@@ -93,21 +101,17 @@
 </ng-template>
 
 <ng-template #approvedStatusTemplate let-rowData="rowData">
-  <i
-    *ngIf="rowData.totalNumberOfLog === rowData.approvedLogs"
-    class="pi pi-check-circle text-green-500 text-lg"
-    pTooltip="All logs for this crew member have been approved"
-    tooltipPosition="top"
-    tooltipStyleClass="custom-tooltip"
-  ></i>
-
-  <i
-    *ngIf="rowData.totalNumberOfLog !== rowData.approvedLogs"
-    class="pi pi-times-circle text-red-500 text-lg"
-    pTooltip="Some logs are still pending approval"
-    tooltipPosition="top"
-    tooltipStyleClass="custom-tooltip"
-  ></i>
+  @switch (rowData.status) {
+    @case ("APPROVED") {
+      <p-chip label="Approved" class="green-chip" />
+    }
+    @case ("NOT_APPROVED") {
+      <p-chip label="Not Approved" class="gray-chip" />
+    }
+    @default {
+      -
+    }
+  }
 </ng-template>
 
 <ng-template #totalHoursOfLogColumnTemplate let-rowData="rowData">

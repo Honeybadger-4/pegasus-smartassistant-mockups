@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   inject,
+  OnInit,
   signal,
   TemplateRef,
   ViewChild,
@@ -46,7 +47,7 @@ import moment from 'moment';
   templateUrl: './trip-info.component.html',
   styleUrl: './trip-info.component.scss',
 })
-export class TripInfoComponent {
+export class TripInfoComponent implements OnInit {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
   @ViewChild('previewCellBodyTemplate', { static: true })
   previewCellBodyTemplate!: TemplateRef<any>;
@@ -59,7 +60,7 @@ export class TripInfoComponent {
   dateRange: Date[] = [];
   currentPage = 0;
   currentRows = 20;
-  tableLoading: boolean = false;
+  tableLoading = false;
 
   tripInfoData = signal<ITripInfoResponse | null>(null);
   tripInfoTableData = signal<ITripInfoTableData[]>([]);
@@ -162,7 +163,7 @@ export class TripInfoComponent {
     return [startDate.toDate(), endDate.toDate()];
   }
 
-  pageEvent(event: { first: number; rows: number }) {
+  lazyLoadEvent(event: any) {
     const page = event.first / event.rows;
     this.currentPage = page;
     this.currentRows = event.rows;

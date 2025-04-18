@@ -4,6 +4,7 @@ import {
   Component,
   inject,
   Input,
+  OnInit,
   PLATFORM_ID,
 } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
@@ -14,7 +15,7 @@ import { ChartModule } from 'primeng/chart';
   templateUrl: './custom-donut-chart.component.html',
   styleUrl: './custom-donut-chart.component.scss',
 })
-export class CustomDonutChartComponent {
+export class CustomDonutChartComponent implements OnInit {
   @Input() data: any;
   @Input() options: any;
 
