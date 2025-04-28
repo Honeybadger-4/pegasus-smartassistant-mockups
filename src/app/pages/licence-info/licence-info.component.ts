@@ -13,7 +13,7 @@ import { CustomTableComponent } from '../../shared/components/custom-table/custo
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
-import { LicenceModalComponent } from './components/licence-modal/licence-modal.component';
+import { LicenceModalComponent } from '../../components/licence-modal/licence-modal.component';
 import { Column } from '@shared/models/columns';
 
 @Component({
