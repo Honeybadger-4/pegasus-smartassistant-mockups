@@ -38,7 +38,7 @@ export class LicenceInfoComponent implements OnInit {
   searchInputValue = '';
   columns = signal<Column[]>([]);
   showLicenceModal = signal(false);
-  selectedRowData: any = null; 
+  selectedRowData: any = null;
 
   licenceInfoData = [
     {
@@ -76,7 +76,11 @@ export class LicenceInfoComponent implements OnInit {
       { field: 'acReg', header: 'Ac Reg', isFilter: true },
       { field: 'flightNo', header: 'Flight No', isFilter: true },
       { field: 'depDateTime', header: 'Dep Date - Time', isFilter: true },
-      { field: 'checkedDateTime', header: 'Checked Date - Time', isFilter: true },
+      {
+        field: 'checkedDateTime',
+        header: 'Checked Date - Time',
+        isFilter: true,
+      },
       { field: 'checkedBy', header: 'Checked By', isFilter: true },
       {
         field: 'licences',
@@ -97,9 +101,8 @@ export class LicenceInfoComponent implements OnInit {
   get licenceModalVisible() {
     return this.showLicenceModal();
   }
-  
+
   set licenceModalVisible(value: boolean) {
     this.showLicenceModal.set(value);
   }
-  
 }

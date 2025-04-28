@@ -8,9 +8,8 @@ describe('LicenceModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LicenceModalComponent]
-    })
-    .compileComponents();
+      imports: [LicenceModalComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LicenceModalComponent);
     component = fixture.componentInstance;

@@ -23,7 +23,11 @@ export class LicenceModalComponent {
   licenceModalData = [
     { licenceName: 'OPC', issueDate: '01/01/2020', expireDate: '01/01/2020' },
     { licenceName: 'CGO', issueDate: '01/01/2020', expireDate: '01/01/2020' },
-    { licenceName: 'Line Check', issueDate: '01/01/2020', expireDate: '01/01/2020' },
+    {
+      licenceName: 'Line Check',
+      issueDate: '01/01/2020',
+      expireDate: '01/01/2020',
+    },
     { licenceName: 'LPC', issueDate: '01/01/2020', expireDate: '01/01/2020' },
   ];
 

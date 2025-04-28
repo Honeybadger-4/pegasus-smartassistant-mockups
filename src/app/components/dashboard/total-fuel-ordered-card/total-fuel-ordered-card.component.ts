@@ -39,66 +39,68 @@ export class TotalFuelOrderedCardComponent implements OnChanges {
   loadFuelData(): void {
     const { startDate, endDate } = getDateRange(this.selectedRange);
 
-    this.fuelOrderService.getDailySum(startDate, endDate).subscribe((response) => {
-      const monthlyTotal = new Map<string, number>();
+    this.fuelOrderService
+      .getDailySum(startDate, endDate)
+      .subscribe((response) => {
+        const monthlyTotal = new Map<string, number>();
 
-      response.forEach((item) => {
-        const month = moment(item.day).format('MMMM');
-        monthlyTotal.set(month, (monthlyTotal.get(month) || 0) + item.total);
-      });
+        response.forEach((item) => {
+          const month = moment(item.day).format('MMMM');
+          monthlyTotal.set(month, (monthlyTotal.get(month) || 0) + item.total);
+        });
 
-      this.chartData.set({
-        labels: Array.from(monthlyTotal.keys()),
-        datasets: [
-          {
-            label: 'Fuel Order',
-            data: Array.from(monthlyTotal.values()),
-            fill: false,
-            borderColor: '#E142BC',
-            backgroundColor: '#D946EF',
-            tension: 0.4,
-            pointRadius: 2,
-            borderWidth: 2,
+        this.chartData.set({
+          labels: Array.from(monthlyTotal.keys()),
+          datasets: [
+            {
+              label: 'Fuel Order',
+              data: Array.from(monthlyTotal.values()),
+              fill: false,
+              borderColor: '#E142BC',
+              backgroundColor: '#D946EF',
+              tension: 0.4,
+              pointRadius: 2,
+              borderWidth: 2,
+            },
+          ],
+        });
+
+        this.chartOptions.set({
+          responsive: true,
+          maintainAspectRatio: false,
+          layout: {
+            padding: { bottom: 15 },
           },
-        ],
-      });
-
-      this.chartOptions.set({
-        responsive: true,
-        maintainAspectRatio: false,
-        layout: {
-          padding: { bottom: 15 },
-        },
-        plugins: {
-          legend: {
-            display: true,
-            position: 'bottom',
-            align: 'start',
-            labels: {
-              usePointStyle: true,
-              pointStyle: 'rect',
-              boxWidth: 10,
-              boxHeight: 10,
-              color: '#515B66',
+          plugins: {
+            legend: {
+              display: true,
+              position: 'bottom',
+              align: 'start',
+              labels: {
+                usePointStyle: true,
+                pointStyle: 'rect',
+                boxWidth: 10,
+                boxHeight: 10,
+                color: '#515B66',
+              },
             },
           },
-        },
-        scales: {
-          x: {
-            ticks: { color: '#515B66' },
-            grid: { display: false },
-          },
-          y: {
-            beginAtZero: true,
-            ticks: {
-              color: '#515B66',
-              callback: (val: number) =>
-                val === 0 ? '00' : `${val / 1000}k`,
+          scales: {
+            x: {
+              ticks: { color: '#515B66' },
+              grid: { display: false },
             },
-            grid: { color: '#e0e0e0' },
+            y: {
+              beginAtZero: true,
+              ticks: {
+                color: '#515B66',
+                callback: (val: number) =>
+                  val === 0 ? '00' : `${val / 1000}k`,
+              },
+              grid: { color: '#e0e0e0' },
+            },
           },
-        },
+        });
       });
-    });
   }
 }

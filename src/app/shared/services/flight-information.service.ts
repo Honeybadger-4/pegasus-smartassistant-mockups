@@ -99,31 +99,31 @@ export class FlightInformationService {
     } | null,
   ): Observable<IPersonalChecklistsResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/flights/personal-checkList`;
-  
-    let params = new HttpParams()
-      .set('page', page)
-      .set('size', size);
-  
+
+    let params = new HttpParams().set('page', page).set('size', size);
+
     const optionalParams: { key: string; value: any }[] = [
       { key: 'sortBy', value: tableFilters?.sortBy },
       { key: 'sortDir', value: tableFilters?.sortDir },
       { key: 'aircraftReg', value: tableFilters?.aircraftReg },
       { key: 'status', value: tableFilters?.status },
       { key: 'flightNo', value: tableFilters?.flightNo },
-      { key: 'checklistConfirmedBy', value: tableFilters?.checklistConfirmedBy },
+      {
+        key: 'checklistConfirmedBy',
+        value: tableFilters?.checklistConfirmedBy,
+      },
       { key: 'depDateTime', value: tableFilters?.depDateTime },
       { key: 'arrDateTime', value: tableFilters?.arrDateTime },
     ];
-  
+
     this.requestParamsControlService
       .paramsControl(optionalParams)
       .map(({ key, value }) => {
         params = params.set(key, value);
       });
-  
+
     return this.http
       .get<IHttpResponseModel>(apiUrl, { params })
       .pipe(map((response) => response.data));
   }
-  
 }

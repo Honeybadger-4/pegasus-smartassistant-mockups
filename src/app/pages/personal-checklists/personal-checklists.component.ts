@@ -18,7 +18,6 @@ import { IPersonalChecklistsResponse } from '@shared/models/personal-checklists-
 import { FlightInformationService } from '@shared/services/flight-information.service';
 import { Chip } from 'primeng/chip';
 
-
 @Component({
   selector: 'app-personal-checklists',
   standalone: true,
@@ -29,7 +28,7 @@ import { Chip } from 'primeng/chip';
     IconFieldModule,
     InputIconModule,
     InputTextModule,
-    Chip
+    Chip,
   ],
   templateUrl: './personal-checklists.component.html',
   styleUrl: './personal-checklists.component.scss',
@@ -43,7 +42,9 @@ export class PersonalChecklistsComponent implements OnInit {
   searchInputValue = signal<string>('');
 
   personalChecklistsData = signal<IPersonalChecklistsResponse | null>(null);
-  personalChecklistsContentData = signal<IPersonalChecklistsResponse['content'] | null>(null);
+  personalChecklistsContentData = signal<
+    IPersonalChecklistsResponse['content'] | null
+  >(null);
 
   columns = signal<Column[]>([]);
   currentPage = signal<number>(0);
@@ -63,26 +64,26 @@ export class PersonalChecklistsComponent implements OnInit {
     this.columns.set([
       { field: 'aircraftReg', header: 'Aircraft', isFilter: true },
       { field: 'flightNo', header: 'Flight No', isFilter: true },
-      { field: 'depDateTime', header: 'Dep Date - Time', isFilter: true }, 
-      { field: 'arrDateTime', header: 'Approve Date - Time', isFilter: true }, 
+      { field: 'depDateTime', header: 'Dep Date - Time', isFilter: true },
+      { field: 'arrDateTime', header: 'Approve Date - Time', isFilter: true },
       { field: 'checklistConfirmed', header: 'Approved By', isFilter: true },
-      { field: 'status', header: 'Status', isFilter: true, template: this.statusColumnTemplate() },
+      {
+        field: 'status',
+        header: 'Status',
+        isFilter: true,
+        template: this.statusColumnTemplate(),
+      },
     ]);
   }
-  
 
   getPersonalChecklists() {
     this.tableLoading.set(true);
     this.flightInformationService
-      .getPersonalCheckList(
-        this.currentPage(),
-        this.currentRows(),
-        {
-          sortBy: this.currentSortBy(),
-          sortDir: this.currentSortDir(),
-          ...this.tableFilters(),
-        }
-      )
+      .getPersonalCheckList(this.currentPage(), this.currentRows(), {
+        sortBy: this.currentSortBy(),
+        sortDir: this.currentSortDir(),
+        ...this.tableFilters(),
+      })
       .subscribe({
         next: (response: IPersonalChecklistsResponse) => {
           this.personalChecklistsData.set(response);
@@ -95,8 +96,7 @@ export class PersonalChecklistsComponent implements OnInit {
       });
   }
 
-  onChangeSearch(value: string) {
-  }
+  onChangeSearch(value: string) {}
 
   lazyLoadEvent(event: any) {
     const page = event.first / event.rows;

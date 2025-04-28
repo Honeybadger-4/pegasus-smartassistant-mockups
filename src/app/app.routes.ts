@@ -42,7 +42,10 @@ export const routes: Routes = [
       {
         path: 'operational-reports',
         children: [
-          { path: 'personal-checklists', component: PersonalChecklistsComponent },
+          {
+            path: 'personal-checklists',
+            component: PersonalChecklistsComponent,
+          },
           { path: 'licence-info', component: LicenceInfoComponent },
           { path: 'flight-plans', component: FlightPlansComponent },
 
