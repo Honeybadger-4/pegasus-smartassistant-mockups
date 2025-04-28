@@ -5,4 +5,5 @@ export interface Column {
   isFilter?: boolean;
   filterType?: 'selectbox' | 'datepicker';
   filterOptions?: any[];
+  sortable?: boolean;
 }

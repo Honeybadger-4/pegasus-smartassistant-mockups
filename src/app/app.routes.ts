@@ -15,6 +15,8 @@ import { LogbookDetailEditComponent } from './pages/logbook-detail-edit/logbook-
 import { RouteComponent } from './pages/route/route.component';
 import { authGuard } from '@shared/guards/auth.guard';
 import { LogbookComponent } from './pages/logbook/logbook.component';
+import { PersonalChecklistsComponent } from './pages/personal-checklists/personal-checklists.component';
+import { LicenceInfoComponent } from './pages/licence-info/licence-info.component';
 
 export const routes: Routes = [
   {
@@ -39,6 +41,9 @@ export const routes: Routes = [
       {
         path: 'operational-reports',
         children: [
+          { path: 'personal-checklists', component: PersonalChecklistsComponent },
+          { path: 'licence-info', component: LicenceInfoComponent },
+
           { path: 'fuel', component: FuelOrderComponent },
           { path: 'route', component: RouteComponent },
           { path: 'trip-information', component: TripInfoComponent },

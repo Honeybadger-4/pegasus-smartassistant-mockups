@@ -40,10 +40,10 @@ body {
 .custom-icon-field {
   input {
     width: 100%;
-    height: 25px;
+    height: 32px;
     display: grid;
     align-items: center;
-    border-radius: 5px;
+    border-radius: 4px;
     font-size: 10px !important;
     color: $base-text-color;
     padding-left: 10px;
@@ -234,14 +234,14 @@ body {
 .p-datatable {
   .p-datatable-thead > tr > th {
     font-weight: 500;
-    color: $base-text-color;
-    font-size: 12px;
-    padding: 7px 2px;
+    color: #8D8D8D;
+    font-size: 14px;
+    padding: 7px 15px;
   }
 
   .p-datatable-tbody > tr > td {
-    padding: 7px 2px;
-    font-size: 12px;
+    padding: 7px 15px;
+    font-size: 14px;
   }
 }
 

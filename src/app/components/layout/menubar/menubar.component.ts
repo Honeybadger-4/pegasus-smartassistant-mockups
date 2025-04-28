@@ -83,7 +83,7 @@ export class MenubarComponent implements OnInit {
           {
             label: 'Licence Infos',
             icon: '',
-            path: 'operational-reports/licence-infos',
+            path: 'operational-reports/licence-info',
           },
           {
             label: 'Flight Plans',

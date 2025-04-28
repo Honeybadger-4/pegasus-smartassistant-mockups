@@ -1,0 +1,46 @@
+<div id="personal-checklists-page">
+  <!-- Page Header -->
+  <section class="flex items-center justify-between">
+    <p class="header-title">Personal Checklists</p>
+
+    <div class="w-[210px]">
+      <p-iconField iconPosition="right" class="custom-icon-field">
+        <input
+          type="text"
+          pInputText
+          #searchInput
+          [(ngModel)]="searchInputValue"
+          (ngModelChange)="onChangeSearch($event)"
+          placeholder="Find Aircraft or Flight No"
+        />
+
+        <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+      </p-iconField>
+    </div>
+  </section>
+
+  <!-- Table -->
+  <section class="table-section custom-card mt-5">
+    <app-custom-table
+      [tableData]="personalChecklistsContentData()"
+      [tableColumns]="columns()"
+      [totalRecords]="personalChecklistsData()?.totalElements || 0"
+      [tableLoading]="tableLoading()"
+      (lazyLoadEvent)="lazyLoadEvent($event)"
+    ></app-custom-table>
+  </section>
+</div>
+
+<ng-template #statusColumnTemplate let-rowData="rowData">
+  @switch (rowData.status) {
+    @case ("APPROVED") {
+      <p-chip label="Approved" class="green-chip" />
+    }
+    @case ("WAITING_APPROVAL") {
+      <p-chip label="Waiting for Approve" class="yellow-chip" />
+    }
+    @default {
+      <p-chip label="{{ rowData.status || '-' }}" class="gray-chip" />
+    }
+  }
+</ng-template>
