@@ -17,6 +17,7 @@ import { authGuard } from '@shared/guards/auth.guard';
 import { LogbookComponent } from './pages/logbook/logbook.component';
 import { PersonalChecklistsComponent } from './pages/personal-checklists/personal-checklists.component';
 import { LicenceInfoComponent } from './pages/licence-info/licence-info.component';
+import { FlightPlansComponent } from './pages/flight-plans/flight-plans.component';
 
 export const routes: Routes = [
   {
@@ -43,6 +44,7 @@ export const routes: Routes = [
         children: [
           { path: 'personal-checklists', component: PersonalChecklistsComponent },
           { path: 'licence-info', component: LicenceInfoComponent },
+          { path: 'flight-plans', component: FlightPlansComponent },
 
           { path: 'fuel', component: FuelOrderComponent },
           { path: 'route', component: RouteComponent },

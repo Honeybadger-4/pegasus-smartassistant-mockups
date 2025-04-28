@@ -234,7 +234,7 @@ body {
 .p-datatable {
   .p-datatable-thead > tr > th {
     font-weight: 500;
-    color: #8D8D8D;
+    color: #8d8d8d;
     font-size: 14px;
     padding: 7px 15px;
   }
@@ -380,4 +380,28 @@ p-columnfilterformelement {
 .yellow-chip {
   background-color: #feb914 !important;
   color: #515b66 !important;
+}
+
+
+
+.light-green-chip {
+  background-color: #34c759 !important;
+  color: #fff !important;
+}
+
+
+.red-chip {
+  background-color: #EB4D55 !important;
+  color: #fff !important;
+}
+
+
+.orange-chip{
+  background-color: #EA9655 !important;
+  color: #fff !important;
+}
+
+.black-chip{
+  background-color: #515B66 !important;
+  color: #fff !important;
 }
