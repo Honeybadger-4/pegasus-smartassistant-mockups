@@ -1,0 +1,8 @@
+<div id="flight-count-card-component">
+  <div class="card-placeholder">
+    <p class="title">Flight Count ({{ titleSuffix() }})</p>
+    <div class="chart-box">
+      <app-custom-line-chart [data]="chartData()" [options]="chartOptions()" />
+    </div>
+  </div>
+</div>

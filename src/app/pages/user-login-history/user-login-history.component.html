@@ -1,4 +1,4 @@
-<main id="UserLoginHistoryPage">
+<div id="UserLoginHistoryPage">
   <section class="table-header-section lg:flex block">
     <!-- Header Title -->
     <p class="header-title">User Login History</p>
@@ -62,7 +62,7 @@
       (lazyLoadEvent)="lazyLoadEvent($event)"
     ></app-custom-table>
   </section>
-</main>
+</div>
 
 <ng-template #loggedInDateTemplate let-rowData="rowData">
   <span>{{ rowData.loggedInDate | date: "dd/MM/YYYY - HH:mm" }}</span>

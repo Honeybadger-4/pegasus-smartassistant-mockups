@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HomepageComponent } from './homepage.component';
+import { LicenceModalComponent } from './licence-modal.component';
 
-describe('HomepageComponent', () => {
-  let component: HomepageComponent;
-  let fixture: ComponentFixture<HomepageComponent>;
+describe('LicenceModalComponent', () => {
+  let component: LicenceModalComponent;
+  let fixture: ComponentFixture<LicenceModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HomepageComponent],
+      imports: [LicenceModalComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(HomepageComponent);
+    fixture = TestBed.createComponent(LicenceModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

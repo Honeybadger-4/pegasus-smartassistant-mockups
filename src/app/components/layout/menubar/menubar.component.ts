@@ -57,9 +57,81 @@ export class MenubarComponent implements OnInit {
   definedMenu() {
     this.menuItems = [
       {
-        label: 'Homepage',
-        icon: 'home-icon.svg',
-        path: '',
+        label: 'Dashboard',
+        icon: 'dashboard-icon.svg',
+        path: '/',
+      },
+      {
+        label: 'Flights',
+        icon: 'flight-icon.svg',
+        path: 'flight-information',
+      },
+      {
+        label: 'Operational Reports',
+        icon: 'operational-reports-icon.svg',
+        items: [
+          {
+            label: 'Personal Checklists',
+            icon: '',
+            path: 'operational-reports/personal-checklists',
+          },
+          {
+            label: 'Aircraft Checklists',
+            icon: '',
+            path: 'operational-reports/aircraft-checklists',
+          },
+          {
+            label: 'Licence Infos',
+            icon: '',
+            path: 'operational-reports/licence-info',
+          },
+          {
+            label: 'Flight Plans',
+            icon: '',
+            path: 'operational-reports/flight-plans',
+          },
+
+          {
+            label: 'Trip Infos',
+            icon: '',
+            path: 'operational-reports/trip-information',
+          },
+
+          {
+            label: 'Load Sheets',
+            icon: '',
+            path: 'operational-reports/load-sheet',
+          },
+
+          {
+            label: 'Fuel Orders',
+            icon: '',
+            path: 'operational-reports/fuel',
+          },
+
+          {
+            label: 'Crews',
+            icon: '',
+            path: 'operational-reports/crews',
+          },
+          {
+            label: 'Reports',
+            icon: '',
+            path: 'operational-reports/report',
+          },
+
+          {
+            label: 'GPS Loss Forms',
+            icon: '',
+            path: 'operational-reports/gps-loss-form',
+          },
+
+          {
+            label: 'Alternate Routes',
+            icon: '',
+            path: 'operational-reports/route',
+          },
+        ],
       },
       {
         label: 'Logbook',
@@ -67,46 +139,9 @@ export class MenubarComponent implements OnInit {
         path: 'logbook',
       },
       {
-        label: 'Flight Info',
-        icon: 'flight-icon.svg',
-        path: 'flight-information',
-        items: [
-          {
-            label: 'Fuel',
-            icon: 'fuel-icon.svg',
-            path: 'flight-information/fuel',
-          },
-          {
-            label: 'Route',
-            icon: 'route-icon.svg',
-            path: 'flight-information/route',
-          },
-          {
-            label: 'Trip Info',
-            icon: 'trip-icon.svg',
-            path: 'flight-information/trip-information',
-          },
-          {
-            label: 'Load Sheet',
-            icon: 'loadsheet-icon.svg',
-            path: 'flight-information/load-sheet',
-          },
-        ],
-      },
-      {
         label: 'Airport Information',
         icon: 'airport-icon.svg',
         path: 'airport-information',
-      },
-      {
-        label: 'Report',
-        icon: 'report-icon.svg',
-        path: 'report',
-      },
-      {
-        label: 'User Login History',
-        icon: 'user-icon.svg',
-        path: 'user-login-history',
       },
       {
         label: 'Aircraft Database',
@@ -114,9 +149,9 @@ export class MenubarComponent implements OnInit {
         path: 'aircraft-database',
       },
       {
-        label: 'Management',
-        icon: 'management-icon.svg',
-        path: 'management',
+        label: 'User Login History',
+        icon: 'user-icon.svg',
+        path: 'user-login-history',
       },
     ];
   }

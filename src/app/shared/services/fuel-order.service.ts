@@ -4,6 +4,7 @@ import { map, Observable } from 'rxjs';
 import { IFuelOrderResponse } from '@shared/models/fuel-order-response.model';
 import { IHttpResponseModel } from '@shared/models/http-response.model';
 import { environment } from '@environments/environment';
+import { ITotalFuelOrderedResponse } from '@shared/models/total-fuel-ordered-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -42,6 +43,21 @@ export class FuelOrderService {
     if (arrPort) {
       params = params.set('arrPort', arrPort);
     }
+
+    return this.http
+      .get<IHttpResponseModel>(apiUrl, { params })
+      .pipe(map((response) => response.data));
+  }
+
+  getDailySum(
+    startDate: string,
+    endDate: string,
+  ): Observable<ITotalFuelOrderedResponse[]> {
+    const apiUrl = `${this.baseUrl}/api/v1/admin/fuel-orders/daily-sum`;
+
+    const params = new HttpParams()
+      .set('startDate', startDate)
+      .set('endDate', endDate);
 
     return this.http
       .get<IHttpResponseModel>(apiUrl, { params })

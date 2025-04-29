@@ -18,22 +18,28 @@
     <ng-template #item let-item let-root="root" class="flex">
       <a
         pRipple
-        routerLink="/{{ item.path }}"
+        [routerLink]="item.path"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
         class="flex align-items-center p-menubar-item-link"
+        [ngClass]="{
+          'submenu-item': root === false,
+          'mainmenu-item': root === true,
+        }"
       >
         <img
-          src="/icon/{{ item.icon }}"
-          alt="{{ item.label }}"
+          *ngIf="item.icon"
+          [src]="'/icon/' + item.icon"
+          [alt]="item.label"
           class="menu-item-icon"
         />
+
         <span class="menu-item-label">{{ item.label }}</span>
         <i
           *ngIf="item.items"
           [ngClass]="[
             'pi',
-            root ? 'pi-angle-down ml-2' : 'pi-angle-right ml-auto',
+            root ? 'pi-angle-up ml-2' : 'pi-angle-right ml-auto',
           ]"
         ></i>
       </a>

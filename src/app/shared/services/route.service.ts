@@ -52,12 +52,15 @@ export class RouteService {
   getTopAlternates(
     startDate: string,
     endDate: string,
-    count: number,
   ): Observable<ITopAlternatesResponse[]> {
-    const apiUrl = `${this.baseUrl}/api/v1/admin/routes/top-alternates?startDate=${startDate}&endDate=${endDate}&count=${count}`;
+    const apiUrl = `${this.baseUrl}/api/v1/admin/routes/top-alternates`;
+
+    const params = new HttpParams()
+      .set('startDate', startDate)
+      .set('endDate', endDate);
 
     return this.http
-      .get<IHttpResponseModel>(apiUrl)
+      .get<IHttpResponseModel>(apiUrl, { params })
       .pipe(map((response) => response.data));
   }
 }

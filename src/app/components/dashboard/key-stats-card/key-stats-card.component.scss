@@ -1,0 +1,33 @@
+#key-stats-card-component {
+  .card-placeholder {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 4px;
+    height: 262px;
+    border: 1px solid #dfe3e9;
+
+    .title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #0d0f11;
+    }
+
+    .stats-box {
+      display: flex;
+      flex-direction: column;
+      .stat {
+        .value {
+          font-size: 24px;
+          font-weight: 400;
+          color: #0d0f11;
+        }
+
+        .label {
+          font-size: 12px;
+          color: #0d0f11;
+        }
+      }
+    }
+  }
+}

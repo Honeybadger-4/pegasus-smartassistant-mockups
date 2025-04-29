@@ -1,0 +1,46 @@
+#top-alternate-routes-card-component {
+  .card-placeholder {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 4px;
+    height: 262px;
+    border: 1px solid #dfe3e9;
+
+    .title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #0d0f11;
+    }
+
+    .table-box {
+      height: 190px;
+    }
+  }
+}
+
+::ng-deep {
+  #top-alternate-routes-card-component {
+    table {
+      border-collapse: collapse;
+      width: 100%;
+
+      th {
+        text-align: left;
+        font-weight: 600;
+        font-size: 12px;
+        color: #0d0f11;
+        padding: 6px 30px;
+        border-bottom: none;
+      }
+
+      td {
+        font-size: 14px;
+        font-weight: 400;
+        color: #0d0f11;
+        padding: 6px 30px;
+        border-bottom: none;
+      }
+    }
+  }
+}
