@@ -1,9 +1,8 @@
 import {
   Component,
-  Input,
-  OnChanges,
-  SimpleChanges,
+  effect,
   inject,
+  input,
   signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -19,23 +18,23 @@ import { getDateRange, getTitleSuffix } from '@shared/utils/date-range.util';
   templateUrl: './key-stats-card.component.html',
   styleUrl: './key-stats-card.component.scss',
 })
-export class KeyStatsCardComponent implements OnChanges {
-  @Input() selectedRange: DateRangeType = '6months';
-
+export class KeyStatsCardComponent {
   flightService = inject(FlightInformationService);
 
-  titleSuffix = '';
+  selectedRange = input<DateRangeType>('6months');
+
+  titleSuffix = signal<string>('');
   rawStats = signal<IKeyStatsResponse | null>(null);
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['selectedRange']) {
-      this.titleSuffix = getTitleSuffix(this.selectedRange);
+  constructor() {
+    effect(() => {
+      this.titleSuffix.set(getTitleSuffix(this.selectedRange()));
       this.getStats();
-    }
+    })
   }
 
   getStats(): void {
-    const { startDate, endDate } = getDateRange(this.selectedRange);
+    const { startDate, endDate } = getDateRange(this.selectedRange());
 
     this.flightService
       .getFlightInfoStats(startDate, endDate)

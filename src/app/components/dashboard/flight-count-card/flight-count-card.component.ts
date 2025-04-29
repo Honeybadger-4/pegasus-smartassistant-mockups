@@ -3,7 +3,9 @@ import {
   Input,
   OnChanges,
   SimpleChanges,
+  effect,
   inject,
+  input,
   signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -20,24 +22,24 @@ import moment from 'moment';
   templateUrl: './flight-count-card.component.html',
   styleUrl: './flight-count-card.component.scss',
 })
-export class FlightCountCardComponent implements OnChanges {
-  @Input() selectedRange: DateRangeType = '6months';
-
+export class FlightCountCardComponent {
   flightService = inject(FlightInformationService);
 
-  titleSuffix = '';
+  selectedRange = input<DateRangeType>('6months');
+
+  titleSuffix = signal<string>('');
   chartData = signal<any>(null);
   chartOptions = signal<any>(null);
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['selectedRange']) {
-      this.titleSuffix = getTitleSuffix(this.selectedRange);
+  constructor() {
+    effect(() => {
+      this.titleSuffix.set(getTitleSuffix(this.selectedRange()));
       this.loadFlightData();
-    }
+    })
   }
 
   loadFlightData(): void {
-    const { startDate, endDate } = getDateRange(this.selectedRange);
+    const { startDate, endDate } = getDateRange(this.selectedRange());
 
     this.flightService
       .getDailyCount(startDate, endDate)
@@ -55,58 +57,62 @@ export class FlightCountCardComponent implements OnChanges {
         const labels = Array.from(groupedFlights.keys());
         const values = Array.from(groupedFlights.values());
 
-        this.chartData.set({
-          labels,
-          datasets: [
-            {
-              label: 'Flight Count',
-              data: values,
-              fill: false,
-              borderColor: '#FEB914',
-              backgroundColor: '#FEB914',
-              tension: 0.4,
-              pointRadius: 2,
-              borderWidth: 2,
-            },
-          ],
-        });
-
-        this.chartOptions.set({
-          responsive: true,
-          maintainAspectRatio: false,
-          layout: {
-            padding: { bottom: 15 },
-          },
-          plugins: {
-            legend: {
-              display: true,
-              position: 'bottom',
-              align: 'start',
-              labels: {
-                usePointStyle: true,
-                pointStyle: 'rect',
-                boxWidth: 10,
-                boxHeight: 10,
-                color: '#515B66',
-              },
-            },
-          },
-          scales: {
-            x: {
-              ticks: { color: '#515B66' },
-              grid: { display: false },
-            },
-            y: {
-              beginAtZero: true,
-              ticks: {
-                color: '#515B66',
-                callback: (val: number) =>
-                  val === 0 ? '00' : val / 1000 + 'k',
-              },
-              grid: { color: '#e0e0e0' },
-            },
-          },
-        });
+        this.setChart(labels, values);
       });
+  }
+
+  setChart(labels: string[], values: number[]): void {
+    this.chartData.set({
+      labels,
+      datasets: [
+        {
+          label: 'Flight Count',
+          data: values,
+          fill: false,
+          borderColor: '#FEB914',
+          backgroundColor: '#FEB914',
+          tension: 0.4,
+          pointRadius: 2,
+          borderWidth: 2,
+        },
+      ],
+    });
+
+    this.chartOptions.set({
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: {
+        padding: { bottom: 15 },
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: 'bottom',
+          align: 'start',
+          labels: {
+            usePointStyle: true,
+            pointStyle: 'rect',
+            boxWidth: 10,
+            boxHeight: 10,
+            color: '#515B66',
+          },
+        },
+      },
+      scales: {
+        x: {
+          ticks: { color: '#515B66' },
+          grid: { display: false },
+        },
+        y: {
+          beginAtZero: true,
+          ticks: {
+            color: '#515B66',
+            callback: (val: number) =>
+              val === 0 ? '00' : val / 1000 + 'k',
+          },
+          grid: { color: '#e0e0e0' },
+        },
+      },
+    });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomDonutChartComponent } from '@shared/components/custom-donut-chart/custom-donut-chart.component';
 import { DateRangeType } from 'src/app/pages/dashboard/dashboard.component';
@@ -11,7 +11,7 @@ import { DateRangeType } from 'src/app/pages/dashboard/dashboard.component';
   styleUrl: './gps-signal-loss-card.component.scss',
 })
 export class GpsSignalLossCardComponent {
-  @Input() selectedRange: DateRangeType = '6months';
+  selectedRange = input<DateRangeType>('6months');
 
   chartData = signal<any>({
     datasets: [
