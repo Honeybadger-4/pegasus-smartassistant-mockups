@@ -1,10 +1,4 @@
-import {
-  Component,
-  effect,
-  inject,
-  input,
-  signal,
-} from '@angular/core';
+import { Component, effect, inject, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { getDateRange, getTitleSuffix } from '@shared/utils/date-range.util';
@@ -33,7 +27,7 @@ export class TotalFuelOrderedCardComponent {
     effect(() => {
       this.titleSuffix.set(getTitleSuffix(this.selectedRange()));
       this.loadFuelData();
-    })
+    });
   }
 
   loadFuelData(): void {
@@ -56,7 +50,7 @@ export class TotalFuelOrderedCardComponent {
       });
   }
 
-  setChart(labels: string[], values:number[]): void {
+  setChart(labels: string[], values: number[]): void {
     this.chartData.set({
       labels: labels,
       datasets: [
@@ -102,8 +96,7 @@ export class TotalFuelOrderedCardComponent {
           beginAtZero: true,
           ticks: {
             color: '#515B66',
-            callback: (val: number) =>
-              val === 0 ? '00' : `${val / 1000}k`,
+            callback: (val: number) => (val === 0 ? '00' : `${val / 1000}k`),
           },
           grid: { color: '#e0e0e0' },
         },

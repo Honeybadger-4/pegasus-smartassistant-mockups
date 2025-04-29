@@ -78,12 +78,13 @@ export class PersonalChecklistsComponent implements OnInit {
   getPersonalChecklists() {
     this.tableLoading.set(true);
     this.flightInformationService
-        .getPersonalCheckList(
-          this.currentPage(), 
-          this.currentRows(), 
-          this.currentSortBy(),
-          this.currentSortDir(),
-          this.tableFilters())
+      .getPersonalCheckList(
+        this.currentPage(),
+        this.currentRows(),
+        this.currentSortBy(),
+        this.currentSortDir(),
+        this.tableFilters(),
+      )
       .subscribe({
         next: (response: IPersonalChecklistsResponse) => {
           this.personalChecklistsData.set(response);
@@ -107,10 +108,13 @@ export class PersonalChecklistsComponent implements OnInit {
     this.currentSortDir.set(event.sortOrder === 1 ? 'asc' : 'desc');
 
     this.tableFilters.set({
-      aircraftReg: event.filters?.aircraftReg && event.filters?.aircraftReg[0].value,
+      aircraftReg:
+        event.filters?.aircraftReg && event.filters?.aircraftReg[0].value,
       status: event.filters?.status && event.filters?.status[0].value,
       flightNo: event.filters?.flightNo && event.filters?.flightNo[0].value,
-      checklistConfirmedBy: event.filters?.checklistConfirmedBy && event.filters?.checklistConfirmedBy[0].value,
+      checklistConfirmedBy:
+        event.filters?.checklistConfirmedBy &&
+        event.filters?.checklistConfirmedBy[0].value,
     });
 
     this.getPersonalChecklists();

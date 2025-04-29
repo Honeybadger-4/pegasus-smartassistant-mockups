@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  signal,
-  viewChild,
-} from '@angular/core';
+import { Component, OnInit, signal, viewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -209,12 +204,17 @@ export class FlightPlansComponent implements OnInit {
     this.columns.set([
       { field: 'acReg', header: 'Ac Reg', isFilter: true },
       { field: 'flightNo', header: 'Flight No', isFilter: true },
-      { field: 'depDateTime', header: 'Dep Date - Time', isFilter: true, filterType: 'datepicker' },
+      {
+        field: 'depDateTime',
+        header: 'Dep Date - Time',
+        isFilter: true,
+        filterType: 'datepicker',
+      },
       {
         field: 'receivedDateTime',
         header: 'Received Date - Time',
         isFilter: true,
-        filterType: 'datepicker'
+        filterType: 'datepicker',
       },
       {
         field: 'version',

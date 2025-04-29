@@ -15,7 +15,8 @@
       <p-button
         label="1 Month"
         [styleClass]="
-          'custom-range-button' + (selectedRange() === '1month' ? ' active' : '')
+          'custom-range-button' +
+          (selectedRange() === '1month' ? ' active' : '')
         "
         (onClick)="selectRange('1month')"
         text
@@ -24,7 +25,8 @@
       <p-button
         label="6 Months"
         [styleClass]="
-          'custom-range-button' + (selectedRange() === '6months' ? ' active' : '')
+          'custom-range-button' +
+          (selectedRange() === '6months' ? ' active' : '')
         "
         (onClick)="selectRange('6months')"
         text

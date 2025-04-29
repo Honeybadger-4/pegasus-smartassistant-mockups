@@ -1,10 +1,4 @@
-import {
-  Component,
-  effect,
-  inject,
-  input,
-  signal,
-} from '@angular/core';
+import { Component, effect, inject, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlightInformationService } from '@shared/services/flight-information.service';
 import { DateRangeType } from 'src/app/pages/dashboard/dashboard.component';
@@ -30,7 +24,7 @@ export class KeyStatsCardComponent {
     effect(() => {
       this.titleSuffix.set(getTitleSuffix(this.selectedRange()));
       this.getStats();
-    })
+    });
   }
 
   getStats(): void {

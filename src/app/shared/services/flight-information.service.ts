@@ -97,7 +97,7 @@ export class FlightInformationService {
     } | null,
   ): Observable<IPersonalChecklistsResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/flights/personal-checkList`;
-    
+
     let params = new HttpParams().set('page', page).set('size', size);
 
     const optionalParams: { key: string; value: any }[] = [

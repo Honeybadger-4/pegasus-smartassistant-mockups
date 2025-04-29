@@ -1,10 +1,4 @@
-import {
-  Component,
-  effect,
-  inject,
-  input,
-  signal,
-} from '@angular/core';
+import { Component, effect, inject, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { RouteService } from '@shared/services/route.service';
@@ -33,7 +27,7 @@ export class TopAlternateRoutesCardComponent {
     effect(() => {
       this.titleSuffix.set(getTitleSuffix(this.selectedRange()));
       this.loadAlternateRoutes();
-    })
+    });
   }
 
   loadAlternateRoutes(): void {

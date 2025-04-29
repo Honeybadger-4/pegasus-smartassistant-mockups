@@ -1,10 +1,4 @@
-import {
-  Component,
-  effect,
-  inject,
-  input,
-  signal,
-} from '@angular/core';
+import { Component, effect, inject, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomLineChartComponent } from '@shared/components/custom-line-chart/custom-line-chart.component';
 import { FlightInformationService } from '@shared/services/flight-information.service';
@@ -32,7 +26,7 @@ export class FlightCountCardComponent {
     effect(() => {
       this.titleSuffix.set(getTitleSuffix(this.selectedRange()));
       this.loadFlightData();
-    })
+    });
   }
 
   loadFlightData(): void {
@@ -104,8 +98,7 @@ export class FlightCountCardComponent {
           beginAtZero: true,
           ticks: {
             color: '#515B66',
-            callback: (val: number) =>
-              val === 0 ? '00' : val / 1000 + 'k',
+            callback: (val: number) => (val === 0 ? '00' : val / 1000 + 'k'),
           },
           grid: { color: '#e0e0e0' },
         },
