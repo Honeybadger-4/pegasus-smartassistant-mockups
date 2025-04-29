@@ -59,7 +59,7 @@ export class MenubarComponent implements OnInit {
       {
         label: 'Dashboard',
         icon: 'dashboard-icon.svg',
-        path: '',
+        path: '/',
       },
       {
         label: 'Flights',
