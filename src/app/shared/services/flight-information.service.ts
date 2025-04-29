@@ -87,24 +87,22 @@ export class FlightInformationService {
   getPersonalCheckList(
     page: number,
     size: number,
+    sortBy: string,
+    sortDir: string,
     tableFilters?: {
-      sortBy: string;
-      sortDir: string;
       aircraftReg: string;
       status: string;
       flightNo: string;
       checklistConfirmedBy: string;
-      depDateTime: string;
-      arrDateTime: string;
     } | null,
   ): Observable<IPersonalChecklistsResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/flights/personal-checkList`;
-
+    
     let params = new HttpParams().set('page', page).set('size', size);
 
     const optionalParams: { key: string; value: any }[] = [
-      { key: 'sortBy', value: tableFilters?.sortBy },
-      { key: 'sortDir', value: tableFilters?.sortDir },
+      { key: 'sortBy', value: sortBy },
+      { key: 'sortDir', value: sortDir },
       { key: 'aircraftReg', value: tableFilters?.aircraftReg },
       { key: 'status', value: tableFilters?.status },
       { key: 'flightNo', value: tableFilters?.flightNo },
@@ -112,8 +110,6 @@ export class FlightInformationService {
         key: 'checklistConfirmedBy',
         value: tableFilters?.checklistConfirmedBy,
       },
-      { key: 'depDateTime', value: tableFilters?.depDateTime },
-      { key: 'arrDateTime', value: tableFilters?.arrDateTime },
     ];
 
     this.requestParamsControlService

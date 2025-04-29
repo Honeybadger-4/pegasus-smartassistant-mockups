@@ -57,15 +57,14 @@ export class PersonalChecklistsComponent implements OnInit {
 
   ngOnInit() {
     this.defineColumns();
-    this.getPersonalChecklists();
   }
 
   defineColumns() {
     this.columns.set([
       { field: 'aircraftReg', header: 'Aircraft', isFilter: true },
       { field: 'flightNo', header: 'Flight No', isFilter: true },
-      { field: 'depDateTime', header: 'Dep Date - Time', isFilter: true },
-      { field: 'arrDateTime', header: 'Approve Date - Time', isFilter: true },
+      { field: 'depDateTime', header: 'Dep Date - Time' },
+      { field: 'arrDateTime', header: 'Approve Date - Time' },
       { field: 'checklistConfirmed', header: 'Approved By', isFilter: true },
       {
         field: 'status',
@@ -79,11 +78,12 @@ export class PersonalChecklistsComponent implements OnInit {
   getPersonalChecklists() {
     this.tableLoading.set(true);
     this.flightInformationService
-      .getPersonalCheckList(this.currentPage(), this.currentRows(), {
-        sortBy: this.currentSortBy(),
-        sortDir: this.currentSortDir(),
-        ...this.tableFilters(),
-      })
+        .getPersonalCheckList(
+          this.currentPage(), 
+          this.currentRows(), 
+          this.currentSortBy(),
+          this.currentSortDir(),
+          this.tableFilters())
       .subscribe({
         next: (response: IPersonalChecklistsResponse) => {
           this.personalChecklistsData.set(response);
@@ -107,12 +107,10 @@ export class PersonalChecklistsComponent implements OnInit {
     this.currentSortDir.set(event.sortOrder === 1 ? 'asc' : 'desc');
 
     this.tableFilters.set({
-      aircraftReg: event.filters?.aircraftReg?.value,
-      status: event.filters?.status?.value,
-      flightNo: event.filters?.flightNo?.value,
-      checklistConfirmedBy: event.filters?.checklistConfirmedBy?.value,
-      depDateTime: event.filters?.depDateTime?.value,
-      arrDateTime: event.filters?.arrDateTime?.value,
+      aircraftReg: event.filters?.aircraftReg && event.filters?.aircraftReg[0].value,
+      status: event.filters?.status && event.filters?.status[0].value,
+      flightNo: event.filters?.flightNo && event.filters?.flightNo[0].value,
+      checklistConfirmedBy: event.filters?.checklistConfirmedBy && event.filters?.checklistConfirmedBy[0].value,
     });
 
     this.getPersonalChecklists();
