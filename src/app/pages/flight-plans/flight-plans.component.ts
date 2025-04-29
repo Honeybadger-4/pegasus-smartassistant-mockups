@@ -2,19 +2,18 @@ import {
   Component,
   OnInit,
   signal,
-  TemplateRef,
-  ViewChild,
   viewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
+import { Column } from '@shared/models/columns';
+import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
+
+import { Chip } from 'primeng/chip';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
-import { Column } from '@shared/models/columns';
-import { Chip } from 'primeng/chip';
 
 @Component({
   selector: 'app-flight-plans',
@@ -30,7 +29,7 @@ import { Chip } from 'primeng/chip';
   templateUrl: './flight-plans.component.html',
   styleUrl: './flight-plans.component.scss',
 })
-export class FlightPlansComponent {
+export class FlightPlansComponent implements OnInit {
   customTableComponent = viewChild.required(CustomTableComponent);
   flightPlansColumnTemplate = viewChild.required('flightPlansColumnTemplate');
   statusColumnTemplate = viewChild.required('statusColumnTemplate');
@@ -210,11 +209,12 @@ export class FlightPlansComponent {
     this.columns.set([
       { field: 'acReg', header: 'Ac Reg', isFilter: true },
       { field: 'flightNo', header: 'Flight No', isFilter: true },
-      { field: 'depDateTime', header: 'Dep Date - Time', isFilter: true },
+      { field: 'depDateTime', header: 'Dep Date - Time', isFilter: true, filterType: 'datepicker' },
       {
         field: 'receivedDateTime',
         header: 'Received Date - Time',
         isFilter: true,
+        filterType: 'datepicker'
       },
       {
         field: 'version',

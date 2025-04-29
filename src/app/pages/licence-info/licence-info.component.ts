@@ -2,19 +2,18 @@ import {
   Component,
   OnInit,
   signal,
-  TemplateRef,
-  ViewChild,
   viewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+import { Column } from '@shared/models/columns';
+import { LicenceModalComponent } from '../../components/licence-modal/licence-modal.component';
 import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
+
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
-import { LicenceModalComponent } from '../../components/licence-modal/licence-modal.component';
-import { Column } from '@shared/models/columns';
 
 @Component({
   selector: 'app-licence-info',
@@ -75,11 +74,12 @@ export class LicenceInfoComponent implements OnInit {
     this.columns.set([
       { field: 'acReg', header: 'Ac Reg', isFilter: true },
       { field: 'flightNo', header: 'Flight No', isFilter: true },
-      { field: 'depDateTime', header: 'Dep Date - Time', isFilter: true },
+      { field: 'depDateTime', header: 'Dep Date - Time', isFilter: true, filterType: 'datepicker' },
       {
         field: 'checkedDateTime',
         header: 'Checked Date - Time',
         isFilter: true,
+        filterType: 'datepicker'
       },
       { field: 'checkedBy', header: 'Checked By', isFilter: true },
       {
