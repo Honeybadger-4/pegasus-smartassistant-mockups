@@ -28,20 +28,9 @@ export interface ITripInfoResponse {
 }
 
 export interface ITripInfoTableData {
-  username: string;
-  legIsn: number;
-  depDateTime: string;
-  depPort: string;
-  arrPort: string;
-  flightNo: string;
   aircraftReg: string;
-  arrDateTime: string;
-  pantryCode: string;
-  crewVersion: string;
-  tripFuel: number;
-  taxiFuel: number;
-  eet: string;
-  pax: string;
-  takeOffTime: string;
-  status: string;
+  flightNo: string;
+  depDateTime: string;
+  
 }
+

@@ -17,6 +17,7 @@ import { Column } from '@shared/models/columns';
 import { IPersonalChecklistsResponse } from '@shared/models/personal-checklists-response.model';
 import { FlightInformationService } from '@shared/services/flight-information.service';
 import { Chip } from 'primeng/chip';
+import moment from 'moment';
 
 @Component({
   selector: 'app-personal-checklists',
@@ -87,8 +88,15 @@ export class PersonalChecklistsComponent implements OnInit {
       )
       .subscribe({
         next: (response: IPersonalChecklistsResponse) => {
+          const formattedData = response.content.map((item) => ({
+            ...item,
+            depDateTime: moment(item.depDateTime).format('DD/MM/YYYY - HH:mm'),
+            arrDateTime: moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm'),
+          }));
+
           this.personalChecklistsData.set(response);
-          this.personalChecklistsContentData.set(response.content);
+          this.personalChecklistsContentData.set(formattedData);
+
           this.tableLoading.set(false);
         },
         error: () => {

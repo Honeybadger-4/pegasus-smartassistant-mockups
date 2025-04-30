@@ -1,21 +1,10 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  inject,
-  OnInit,
-  signal,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { Column } from '@shared/models/columns';
+import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
+
 import { TripInfoService } from '@shared/services/trip-info.service';
 import {
   ITripInfoResponse,
@@ -26,8 +15,6 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { DatePickerModule } from 'primeng/datepicker';
-import { ButtonModule } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
 import moment from 'moment';
 
 @Component({
@@ -36,28 +23,22 @@ import moment from 'moment';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    DropdownModule,
     CustomTableComponent,
     DatePickerModule,
     IconFieldModule,
     InputIconModule,
     InputTextModule,
-    ButtonModule,
   ],
   templateUrl: './trip-info.component.html',
   styleUrl: './trip-info.component.scss',
 })
 export class TripInfoComponent implements OnInit {
   @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
-  @ViewChild('previewCellBodyTemplate', { static: true })
-  previewCellBodyTemplate!: TemplateRef<any>;
 
-  formBuilder = inject(FormBuilder);
   tripInfoService = inject(TripInfoService);
 
-  filterFormGroup!: FormGroup;
+  searchInputValue = '';
   columns: Column[] = [];
-  dateRange: Date[] = [];
   currentPage = 0;
   currentRows = 20;
   tableLoading = false;
@@ -66,80 +47,47 @@ export class TripInfoComponent implements OnInit {
   tripInfoTableData = signal<ITripInfoTableData[]>([]);
 
   ngOnInit() {
-    this.builder();
     this.defineColumn();
     this.getTripInfo();
-  }
-  builder() {
-    this.filterFormGroup = this.formBuilder.group({
-      acReg: [''],
-      flightNo: [''],
-      depPort: [''],
-      arrPort: [''],
-      dateRange: [this.dateRangeDefaultValue()],
-    });
   }
 
   defineColumn() {
     this.columns = [
-      { field: 'aircraftReg', header: 'Aircraft' },
-      { field: 'flightNo', header: 'Flight No' },
-      { field: 'depPort', header: 'Departure' },
-      { field: 'arrPort', header: 'Arrival' },
-      { field: 'depDateTime', header: 'Dep Date/Time' },
-      { field: 'arrDateTime', header: 'Arr Date/Time' },
-      { field: 'username', header: 'Send By' },
-      { field: 'pantryCode', header: 'Pantry Code' },
-      { field: 'crewVersion', header: 'Crew Version' },
-      { field: 'pax', header: 'Pax' },
-      { field: 'tripFuel', header: 'Trip Fuel' },
-      { field: 'taxiFuel', header: 'Taxi Fuel' },
-      { field: 'eet', header: 'EET' },
-      { field: 'takeOffTime', header: 'Take Off Time' },
-      { field: 'status', header: 'Status' },
-      { field: '', header: '', template: this.previewCellBodyTemplate },
+      { field: 'acReg', header: 'Ac Reg', isFilter: true },
+      { field: 'flightNo', header: 'Flight No', isFilter: true },
+      {
+        field: 'depDateTime',
+        header: 'Dep. Date-time',
+        isFilter: true,
+        filterType: 'datepicker',
+      },
+      {
+        field: 'receivedDateTime',
+        header: 'Received Date - Time',
+        isFilter: true,
+        filterType: 'datepicker',
+      },
+      { field: 'sentBy', header: 'Sent By', isFilter: true },
+      {
+        field: 'sentDateTime',
+        header: 'Sent Date - Time',
+        isFilter: true,
+        filterType: 'datepicker',
+      },
+      { field: 'details', header: 'Details' },
     ];
   }
 
   getTripInfo() {
     this.tableLoading = true;
 
-    const formValues = this.filterFormGroup.value;
-    const acReg = formValues.acReg?.trim() || null;
-    const flightNo = formValues.flightNo?.trim() || null;
-    const depPort = formValues.depPort?.trim() || null;
-    const arrPort = formValues.arrPort?.trim() || null;
-
-    let startDate = '';
-    let endDate = '';
-
-    // Tarih aralığı kontrolü ve formatlama
-    if (formValues.dateRange && formValues.dateRange.length === 2) {
-      const [start, end] = formValues.dateRange;
-
-      if (start && end) {
-        startDate = moment(start).format('YYYY-MM-DD');
-        endDate = moment(end).format('YYYY-MM-DD');
-      }
-    }
-
     this.tripInfoService
-      .getTripInfo(
-        this.currentPage,
-        this.currentRows,
-        startDate,
-        endDate,
-        acReg,
-        flightNo,
-        depPort,
-        arrPort,
-      )
+      .getTripInfo(this.currentPage, this.currentRows)
       .subscribe({
         next: (response) => {
           const formattedData = response.content.map((item) => ({
             ...item,
             depDateTime: moment(item.depDateTime).format('DD/MM/YYYY - HH:mm'),
-            arrDateTime: moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm'),
           }));
 
           this.tripInfoData.set(response);
@@ -152,16 +100,7 @@ export class TripInfoComponent implements OnInit {
       });
   }
 
-  onFilterSubmit() {
-    this.getTripInfo();
-  }
-
-  dateRangeDefaultValue() {
-    const endDate = moment();
-    const startDate = moment().subtract(3, 'days');
-
-    return [startDate.toDate(), endDate.toDate()];
-  }
+  onChangeSearch(value: string) {}
 
   lazyLoadEvent(event: any) {
     const page = event.first / event.rows;
