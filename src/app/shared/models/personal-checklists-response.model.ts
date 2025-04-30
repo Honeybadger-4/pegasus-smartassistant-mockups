@@ -1,5 +1,5 @@
 export interface IPersonalChecklistsResponse {
-  content: IPersonalChecklistsContentData[]; // ← BURASI DEĞİŞTİ
+  content: IPersonalChecklistsContentData[]; 
   pageable: {
     pageNumber: number;
     pageSize: number;
