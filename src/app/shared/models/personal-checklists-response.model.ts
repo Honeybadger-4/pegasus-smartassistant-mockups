@@ -33,5 +33,6 @@ export interface IPersonalChecklistsContentData {
   depDateTime: string;
   arrDateTime: string;
   checklistConfirmed: null;
-  status: string;
+
 }
+
