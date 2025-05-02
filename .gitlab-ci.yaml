@@ -23,8 +23,8 @@ sonarqube-check:
   script:
     - sonar-scanner
   only:
-    - main  # veya istediğiniz branch
+    - develop  # veya istediğiniz branch
   variables:
     SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
     SONAR_TOKEN: "${SONAR_TOKEN}"
-    SONAR_SCANNER_OPTS: "-Dsonar.projectKey=angular-app"
+    SONAR_SCANNER_OPTS: "-Dsonar.projectKey=efb-admin"
