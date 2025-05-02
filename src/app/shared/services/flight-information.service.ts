@@ -21,28 +21,20 @@ export class FlightInformationService {
     size: number,
     startDate: string,
     endDate: string,
-    flightNo?: string | null,
-    depPort?: string | null,
-    arrPort?: string | null,
-    username?: string | null,
   ): Observable<IFlightInformationResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/flights`;
-
+  
     let params = new HttpParams()
       .set('page', page)
       .set('size', size)
       .set('startDate', startDate)
       .set('endDate', endDate);
-
-    if (flightNo) params = params.set('flightNo', flightNo);
-    if (depPort) params = params.set('depPort', depPort);
-    if (arrPort) params = params.set('arrPort', arrPort);
-    if (username) params = params.set('username', username);
-
+  
     return this.http
       .get<IHttpResponseModel>(apiUrl, { params })
       .pipe(map((response) => response.data));
   }
+  
 
   getFlightInformationTripInfo(
     flightISN: number,

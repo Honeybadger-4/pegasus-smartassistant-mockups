@@ -5,12 +5,12 @@ import {
   OnInit,
   signal,
   TemplateRef,
+  viewChild,
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  FormBuilder,
-  FormGroup,
+
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
@@ -36,6 +36,7 @@ import { TabsModule } from 'primeng/tabs';
 import { DatePickerModule } from 'primeng/datepicker';
 import moment from 'moment';
 import { IFlightInformationTripInfoResponse } from '@shared/models/flight-info-trip-info-response.model';
+import { Chip } from 'primeng/chip';
 
 @Component({
   selector: 'app-flight-info',
@@ -51,8 +52,9 @@ import { IFlightInformationTripInfoResponse } from '@shared/models/flight-info-t
     FormsModule,
     ReactiveFormsModule,
     DatePickerModule,
-    FormsModule,
+    Chip,
   ],
+
   templateUrl: './flight-info.component.html',
   styleUrl: './flight-info.component.scss',
 })
@@ -68,7 +70,8 @@ export class FlightInfoComponent implements OnInit {
   @ViewChild('routeTableDocumentsCellTemplate', { static: true })
   routeTableDocumentsCellTemplate!: TemplateRef<any>;
 
-  filterFormGroup!: FormGroup;
+  statusColumnTemplate = viewChild.required('statusColumnTemplate');
+
   mainCols!: Column[];
   crewCols!: Column[];
   flightPlanCols!: Column[];
@@ -89,8 +92,8 @@ export class FlightInfoComponent implements OnInit {
   flightInformatioHistoryTableData = signal<IFlightInformationTableData[]>([]);
   tripInfoData = signal<IFlightInformationTripInfoResponse[]>([]);
   tripInfoDataLoading = signal<boolean>(false);
+  searchInputValue = signal<string>('');
 
-  formBuilder = inject(FormBuilder);
   flightInformationService = inject(FlightInformationService);
 
   crewData = [
@@ -442,7 +445,6 @@ export class FlightInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.builder();
     this.defineMainColumns();
     this.defineCrewColumns();
     this.defineFlightPlanColums();
@@ -453,31 +455,27 @@ export class FlightInfoComponent implements OnInit {
     this.getFlightInfo();
   }
 
-  builder() {
-    this.filterFormGroup = this.formBuilder.group({
-      flightNo: [''],
-      depPort: [''],
-      arrPort: [''],
-      username: [''],
-      dateRange: [this.dateRangeDefaultValue()],
-    });
-  }
-
   // Define Columns Operation
   defineMainColumns() {
     this.mainCols = [
-      { field: 'aircraftReg', header: 'Aircraft' },
-      { field: 'flightNo', header: 'Flight No' },
-      { field: 'depPort', header: 'Dep Port' },
-      { field: 'arrPort', header: 'Arr Port' },
+      { field: 'aircraftReg', header: 'Aircraft', isFilter: true },
+      { field: 'flightNo', header: 'Flight No', isFilter: true },
+      { field: 'depPort', header: 'Dep Port', isFilter: true },
+      { field: 'arrPort', header: 'Arr Port', isFilter: true },
       { field: 'depDateTime', header: 'Dep Date/Time' },
       { field: 'arrDateTime', header: 'Arr Date/Time' },
-      { field: 'user', header: 'User' },
-      { field: 'flightPlanStatus', header: 'Flight Plan' },
-      { field: 'altRoute', header: 'Alt Route' },
-      { field: 'fuelOrder', header: 'Fuel Order' },
-      { field: 'loadSheetStatus', header: 'Load Sheet' },
-      { field: 'isTripInfoSent', header: 'Trip Info' },
+
+      { field: 'user', header: 'Responsible User', isFilter: true },
+
+      {
+        field: 'status',
+        header: 'Status',
+        isFilter: true,
+        template: this.statusColumnTemplate(), 
+      },
+      
+
+      { field: 'requiredActions', header: 'Required Actions' },
     ];
   }
 
@@ -618,37 +616,10 @@ export class FlightInfoComponent implements OnInit {
   // API Calls Operations
   getFlightInfo() {
     this.tableLoading = true;
-
-    const formValues = this.filterFormGroup.value;
-    const flightNo = formValues.flightNo?.trim() || null;
-    const depPort = formValues.depPort?.trim() || null;
-    const arrPort = formValues.arrPort?.trim() || null;
-    const username = formValues.username?.trim() || null;
-
-    let startDate = '';
-    let endDate = '';
-
-    // Tarih aralığı kontrolü ve formatlama
-    if (formValues.dateRange && formValues.dateRange.length === 2) {
-      const [start, end] = formValues.dateRange;
-
-      if (start && end) {
-        startDate = moment(start).format('YYYY-MM-DD');
-        endDate = moment(end).format('YYYY-MM-DD');
-      }
-    }
-
+    const startDate = moment().subtract(7, 'days').format('YYYY-MM-DD');
+    const endDate = moment().format('YYYY-MM-DD');
     this.flightInformationService
-      .getFlightInfo(
-        this.currentPage,
-        this.currentRows,
-        startDate,
-        endDate,
-        flightNo,
-        depPort,
-        arrPort,
-        username,
-      )
+      .getFlightInfo(this.currentPage, this.currentRows, startDate, endDate)
       .subscribe({
         next: (response) => {
           const formattedData = response.content.map((item) => ({
@@ -683,18 +654,6 @@ export class FlightInfoComponent implements OnInit {
       });
   }
 
-  // Filter Operations
-  dateRangeDefaultValue() {
-    const endDate = moment();
-    const startDate = moment().subtract(3, 'days');
-
-    return [startDate.toDate(), endDate.toDate()];
-  }
-
-  onFilterSubmit() {
-    this.getFlightInfo();
-  }
-
   onRowExpand(event: TableRowExpandEvent) {
     this.expandedRows = {};
     this.expandedRows[event.data.legIsn] = true;
@@ -711,4 +670,6 @@ export class FlightInfoComponent implements OnInit {
     this.currentRows = event.rows;
     this.getFlightInfo();
   }
+
+  onChangeSearch(value: string) {}
 }
