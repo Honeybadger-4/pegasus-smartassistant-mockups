@@ -1,5 +1,5 @@
 export interface IPersonalChecklistsResponse {
-  content: IPersonalChecklistsContentData[]; 
+  content: IPersonalChecklistsContentData[];
   pageable: {
     pageNumber: number;
     pageSize: number;
@@ -35,4 +35,3 @@ export interface IPersonalChecklistsContentData {
   checklistConfirmed: null;
   status: string;
 }
-

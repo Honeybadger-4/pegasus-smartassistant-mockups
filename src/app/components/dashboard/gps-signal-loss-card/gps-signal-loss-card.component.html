@@ -1,6 +1,8 @@
 <div id="gps-signal-loss-card-component">
   <div class="card-placeholder">
-    <p class="title">GPS Signal Loss Breakdown by Type ({{ selectedRange() }})</p>
+    <p class="title">
+      GPS Signal Loss Breakdown by Type ({{ selectedRange() }})
+    </p>
 
     <div class="chart-box">
       <div class="chart-area">
@@ -11,10 +13,7 @@
       </div>
 
       <div class="legend-area">
-        <div
-          class="legend-item"
-          *ngFor="let item of types(); let i = index"
-        >
+        <div class="legend-item" *ngFor="let item of types(); let i = index">
           <span
             class="dot"
             [ngStyle]="{ 'background-color': item.color }"

@@ -25,11 +25,11 @@ sonar_scan:
   stage: sonar
   script:
     - sonar-scanner \
-        -Dsonar.projectKey=angular_project_key \
-        -Dsonar.sources=src \
-        -Dsonar.exclusions=**/*.spec.ts \
-        -Dsonar.host.url=$SONAR_HOST_URL \
-        -Dsonar.login=$SONAR_TOKEN
+      -Dsonar.projectKey=angular_project_key \
+      -Dsonar.sources=src \
+      -Dsonar.exclusions=**/*.spec.ts \
+      -Dsonar.host.url=$SONAR_HOST_URL \
+      -Dsonar.login=$SONAR_TOKEN
   only:
     - develop
   dependencies:

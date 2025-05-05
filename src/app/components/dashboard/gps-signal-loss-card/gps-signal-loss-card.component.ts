@@ -4,7 +4,6 @@ import { CustomDonutChartComponent } from '@shared/components/custom-donut-chart
 import { DateRangeType } from 'src/app/pages/dashboard/dashboard.component';
 import { DashboardDateRangeService } from '@shared/services/helpers-services/dashboard-date-range.service';
 
-
 import { GpsSignalLossService } from '@shared/services/gps-signal-loss.service';
 @Component({
   selector: 'app-gps-signal-loss-card',
@@ -31,33 +30,37 @@ export class GpsSignalLossCardComponent {
   }
 
   loadGpsData() {
-    const { startDate, endDate } = this.dashboardDateRangeService.getDateRange(this.selectedRange());
+    const { startDate, endDate } = this.dashboardDateRangeService.getDateRange(
+      this.selectedRange(),
+    );
 
-    this.gpsLossService.getImpactStats(startDate, endDate).subscribe((response) => {
-      const typesList = response.map((item, index) => ({
-        label: this.formatType(item.type),
-        value: item.count,
-        color: this.colorPalette[index % this.colorPalette.length],
-      }));
+    this.gpsLossService
+      .getImpactStats(startDate, endDate)
+      .subscribe((response) => {
+        const typesList = response.map((item, index) => ({
+          label: this.formatType(item.type),
+          value: item.count,
+          color: this.colorPalette[index % this.colorPalette.length],
+        }));
 
-      this.types.set(typesList);
+        this.types.set(typesList);
 
-      this.chartData.set({
-        datasets: [
-          {
-            data: typesList.map((t) => t.value),
-            backgroundColor: typesList.map((t) => t.color),
-            hoverBackgroundColor: typesList.map((t) => t.color),
-            borderWidth: 0,
-          },
-        ],
+        this.chartData.set({
+          datasets: [
+            {
+              data: typesList.map((t) => t.value),
+              backgroundColor: typesList.map((t) => t.color),
+              hoverBackgroundColor: typesList.map((t) => t.color),
+              borderWidth: 0,
+            },
+          ],
+        });
+
+        this.chartOptions.set({
+          cutout: '70%',
+          plugins: { legend: { display: false } },
+        });
       });
-
-      this.chartOptions.set({
-        cutout: '70%',
-        plugins: { legend: { display: false } },
-      });
-    });
   }
 
   formatType(type: string): string {

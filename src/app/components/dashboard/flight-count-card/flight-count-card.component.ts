@@ -25,13 +25,17 @@ export class FlightCountCardComponent {
 
   constructor() {
     effect(() => {
-      this.titleSuffix.set(this.dashboardDateRangeService.getTitleSuffix(this.selectedRange()));
+      this.titleSuffix.set(
+        this.dashboardDateRangeService.getTitleSuffix(this.selectedRange()),
+      );
       this.loadFlightData();
     });
   }
 
   loadFlightData(): void {
-    const { startDate, endDate } = this.dashboardDateRangeService.getDateRange(this.selectedRange());
+    const { startDate, endDate } = this.dashboardDateRangeService.getDateRange(
+      this.selectedRange(),
+    );
 
     this.flightService
       .getDailyCount(startDate, endDate)

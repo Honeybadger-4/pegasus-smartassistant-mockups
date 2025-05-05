@@ -12,7 +12,10 @@ export class GpsSignalLossService {
   private http = inject(HttpClient);
   private baseUrl = environment.baseApi;
 
-  getImpactStats(start: string, end: string): Observable<IGpsSignalLossResponse[]> {
+  getImpactStats(
+    start: string,
+    end: string,
+  ): Observable<IGpsSignalLossResponse[]> {
     const params = new HttpParams().set('start', start).set('end', end);
     const apiUrl = `${this.baseUrl}/api/v1/admin/gps-losses/impact-stats`;
 

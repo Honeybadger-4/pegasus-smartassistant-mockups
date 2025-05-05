@@ -5,7 +5,6 @@ import { DateRangeType } from 'src/app/pages/dashboard/dashboard.component';
 import { IKeyStatsResponse } from '@shared/models/key-stats-response.model';
 import { DashboardDateRangeService } from '@shared/services/helpers-services/dashboard-date-range.service';
 
-
 @Component({
   selector: 'app-key-stats-card',
   standalone: true,
@@ -24,13 +23,17 @@ export class KeyStatsCardComponent {
 
   constructor() {
     effect(() => {
-      this.titleSuffix.set(this.dashboardDateRangeService.getTitleSuffix(this.selectedRange()));
+      this.titleSuffix.set(
+        this.dashboardDateRangeService.getTitleSuffix(this.selectedRange()),
+      );
       this.getStats();
     });
   }
 
   getStats(): void {
-    const { startDate, endDate } = this.dashboardDateRangeService.getDateRange(this.selectedRange());
+    const { startDate, endDate } = this.dashboardDateRangeService.getDateRange(
+      this.selectedRange(),
+    );
 
     this.flightService
       .getFlightInfoStats(startDate, endDate)

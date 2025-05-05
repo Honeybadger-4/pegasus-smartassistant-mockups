@@ -26,13 +26,17 @@ export class TotalFuelOrderedCardComponent {
 
   constructor() {
     effect(() => {
-      this.titleSuffix.set(this.dashboardDateRangeService.getTitleSuffix(this.selectedRange()));
+      this.titleSuffix.set(
+        this.dashboardDateRangeService.getTitleSuffix(this.selectedRange()),
+      );
       this.loadFuelData();
     });
   }
 
   loadFuelData(): void {
-    const { startDate, endDate } = this.dashboardDateRangeService.getDateRange(this.selectedRange());
+    const { startDate, endDate } = this.dashboardDateRangeService.getDateRange(
+      this.selectedRange(),
+    );
 
     this.fuelOrderService
       .getDailySum(startDate, endDate)

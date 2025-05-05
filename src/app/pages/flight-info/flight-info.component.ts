@@ -9,11 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { FlightInformationService } from '@shared/services/flight-information.service';
@@ -54,7 +50,7 @@ import { SelectModule } from 'primeng/select';
     ReactiveFormsModule,
     DatePickerModule,
     Chip,
-    SelectModule
+    SelectModule,
   ],
 
   templateUrl: './flight-info.component.html',
@@ -479,9 +475,8 @@ export class FlightInfoComponent implements OnInit {
           { label: 'In Progress', value: 'IN_PROGRESS' },
         ],
         filterType: 'selectbox',
-        template: this.statusColumnTemplate(), 
+        template: this.statusColumnTemplate(),
       },
-      
 
       { field: 'requiredActions', header: 'Required Actions' },
     ];

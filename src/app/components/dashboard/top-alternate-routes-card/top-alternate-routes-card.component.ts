@@ -26,13 +26,17 @@ export class TopAlternateRoutesCardComponent {
 
   constructor() {
     effect(() => {
-      this.titleSuffix.set(this.dashboardDateRangeService.getTitleSuffix(this.selectedRange()));
+      this.titleSuffix.set(
+        this.dashboardDateRangeService.getTitleSuffix(this.selectedRange()),
+      );
       this.loadAlternateRoutes();
     });
   }
 
   loadAlternateRoutes(): void {
-    const { startDate, endDate } = this.dashboardDateRangeService.getDateRange(this.selectedRange());
+    const { startDate, endDate } = this.dashboardDateRangeService.getDateRange(
+      this.selectedRange(),
+    );
 
     this.routeService
       .getTopAlternates(startDate, endDate)
