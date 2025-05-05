@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CustomLineChartComponent } from '@shared/components/custom-line-chart/custom-line-chart.component';
 import { FlightInformationService } from '@shared/services/flight-information.service';
 import { DateRangeType } from 'src/app/pages/dashboard/dashboard.component';
-import { getDateRange, getTitleSuffix } from '@shared/utils/date-range.util';
+import { DashboardDateRangeService } from '@shared/services/helpers-services/dashboard-date-range.service';
 import moment from 'moment';
 
 @Component({
@@ -15,6 +15,7 @@ import moment from 'moment';
 })
 export class FlightCountCardComponent {
   flightService = inject(FlightInformationService);
+  dashboardDateRangeService = inject(DashboardDateRangeService);
 
   selectedRange = input<DateRangeType>('6months');
 
@@ -24,13 +25,13 @@ export class FlightCountCardComponent {
 
   constructor() {
     effect(() => {
-      this.titleSuffix.set(getTitleSuffix(this.selectedRange()));
+      this.titleSuffix.set(this.dashboardDateRangeService.getTitleSuffix(this.selectedRange()));
       this.loadFlightData();
     });
   }
 
   loadFlightData(): void {
-    const { startDate, endDate } = getDateRange(this.selectedRange());
+    const { startDate, endDate } = this.dashboardDateRangeService.getDateRange(this.selectedRange());
 
     this.flightService
       .getDailyCount(startDate, endDate)

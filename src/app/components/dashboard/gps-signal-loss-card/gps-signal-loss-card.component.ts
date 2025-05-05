@@ -2,7 +2,7 @@ import { Component, effect, inject, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomDonutChartComponent } from '@shared/components/custom-donut-chart/custom-donut-chart.component';
 import { DateRangeType } from 'src/app/pages/dashboard/dashboard.component';
-import { getDateRange } from '@shared/utils/date-range.util';
+import { DashboardDateRangeService } from '@shared/services/helpers-services/dashboard-date-range.service';
 
 
 import { GpsSignalLossService } from '@shared/services/gps-signal-loss.service';
@@ -16,6 +16,7 @@ import { GpsSignalLossService } from '@shared/services/gps-signal-loss.service';
 export class GpsSignalLossCardComponent {
   selectedRange = input<DateRangeType>('6months');
   gpsLossService = inject(GpsSignalLossService);
+  dashboardDateRangeService = inject(DashboardDateRangeService);
 
   chartData = signal<any>(null);
   chartOptions = signal<any>(null);
@@ -30,7 +31,7 @@ export class GpsSignalLossCardComponent {
   }
 
   loadGpsData() {
-    const { startDate, endDate } = getDateRange(this.selectedRange());
+    const { startDate, endDate } = this.dashboardDateRangeService.getDateRange(this.selectedRange());
 
     this.gpsLossService.getImpactStats(startDate, endDate).subscribe((response) => {
       const typesList = response.map((item, index) => ({
