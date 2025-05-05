@@ -1,8 +1,11 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, effect, inject, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomDonutChartComponent } from '@shared/components/custom-donut-chart/custom-donut-chart.component';
 import { DateRangeType } from 'src/app/pages/dashboard/dashboard.component';
+import { getDateRange } from '@shared/utils/date-range.util';
 
+
+import { GpsSignalLossService } from '@shared/services/gps-signal-loss.service';
 @Component({
   selector: 'app-gps-signal-loss-card',
   standalone: true,
@@ -12,44 +15,54 @@ import { DateRangeType } from 'src/app/pages/dashboard/dashboard.component';
 })
 export class GpsSignalLossCardComponent {
   selectedRange = input<DateRangeType>('6months');
+  gpsLossService = inject(GpsSignalLossService);
 
-  chartData = signal<any>({
-    datasets: [
-      {
-        data: [500, 400, 300, 200, 100],
-        backgroundColor: [
-          '#FEB914',
-          '#E142BC',
-          '#068BEE',
-          '#01B8CA',
-          '#96DB33',
+  chartData = signal<any>(null);
+  chartOptions = signal<any>(null);
+  types = signal<{ label: string; value: number; color: string }[]>([]);
+
+  colorPalette = ['#FEB914', '#E142BC', '#068BEE', '#01B8CA', '#96DB33'];
+
+  constructor() {
+    effect(() => {
+      this.loadGpsData();
+    });
+  }
+
+  loadGpsData() {
+    const { startDate, endDate } = getDateRange(this.selectedRange());
+
+    this.gpsLossService.getImpactStats(startDate, endDate).subscribe((response) => {
+      const typesList = response.map((item, index) => ({
+        label: this.formatType(item.type),
+        value: item.count,
+        color: this.colorPalette[index % this.colorPalette.length],
+      }));
+
+      this.types.set(typesList);
+
+      this.chartData.set({
+        datasets: [
+          {
+            data: typesList.map((t) => t.value),
+            backgroundColor: typesList.map((t) => t.color),
+            hoverBackgroundColor: typesList.map((t) => t.color),
+            borderWidth: 0,
+          },
         ],
-        hoverBackgroundColor: [
-          '#FEB914',
-          '#E142BC',
-          '#068BEE',
-          '#01B8CA',
-          '#96DB33',
-        ],
-        borderWidth: 0,
-      },
-    ],
-  });
+      });
 
-  chartOptions = signal<any>({
-    cutout: '70%',
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-  });
+      this.chartOptions.set({
+        cutout: '70%',
+        plugins: { legend: { display: false } },
+      });
+    });
+  }
 
-  types = signal([
-    { label: 'Type 1', value: 500, color: '#FEB914' },
-    { label: 'Type 2', value: 400, color: '#E142BC' },
-    { label: 'Type 3', value: 300, color: '#068BEE' },
-    { label: 'Type 4', value: 200, color: '#01B8CA' },
-    { label: 'Type 5', value: 100, color: '#96DB33' },
-  ]);
+  formatType(type: string): string {
+    return type
+      .replace(/_/g, ' ')
+      .toLowerCase()
+      .replace(/(^\w|\s\w)/g, (m) => m.toUpperCase());
+  }
 }
