@@ -20,11 +20,15 @@ export class GpsSignalLossCardComponent {
   chartData = signal<any>(null);
   chartOptions = signal<any>(null);
   types = signal<{ label: string; value: number; color: string }[]>([]);
+  titleSuffix = signal<string>('');
 
   colorPalette = ['#FEB914', '#E142BC', '#068BEE', '#01B8CA', '#96DB33'];
 
   constructor() {
     effect(() => {
+      this.titleSuffix.set(
+        this.dashboardDateRangeService.getTitleSuffix(this.selectedRange()),
+      );
       this.loadGpsData();
     });
   }
