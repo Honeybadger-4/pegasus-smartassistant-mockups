@@ -37,6 +37,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import moment from 'moment';
 import { IFlightInformationTripInfoResponse } from '@shared/models/flight-info-trip-info-response.model';
 import { Chip } from 'primeng/chip';
+import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'app-flight-info',
@@ -53,6 +54,7 @@ import { Chip } from 'primeng/chip';
     ReactiveFormsModule,
     DatePickerModule,
     Chip,
+    SelectModule
   ],
 
   templateUrl: './flight-info.component.html',
@@ -471,6 +473,12 @@ export class FlightInfoComponent implements OnInit {
         field: 'status',
         header: 'Status',
         isFilter: true,
+        filterOptions: [
+          { label: 'Waiting', value: 'WAITING' },
+          { label: 'Completed', value: 'COMPLETED' },
+          { label: 'In Progress', value: 'IN_PROGRESS' },
+        ],
+        filterType: 'selectbox',
         template: this.statusColumnTemplate(), 
       },
       
@@ -672,4 +680,8 @@ export class FlightInfoComponent implements OnInit {
   }
 
   onChangeSearch(value: string) {}
+
+  filterDateControl(selectedDate: any) {
+    return moment(selectedDate).format('YYYY-MM-DD');
+  }
 }
