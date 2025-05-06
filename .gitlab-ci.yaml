@@ -1,0 +1,30 @@
+stages:
+  - install
+  - sonar
+
+default:
+  image: node:18
+
+cache:
+  paths:
+    - node_modules/
+
+before_script:
+  - npm ci
+
+install-dependencies:
+  stage: install
+  script:
+    - echo "Dependencies installed."
+
+sonarqube-check:
+  stage: sonar
+  image: sonarsource/sonar-scanner-cli:latest
+  script:
+    - sonar-scanner
+  only:
+    - develop  # veya istediğiniz branch
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+    SONAR_TOKEN: "${SONAR_TOKEN}"
+    SONAR_SCANNER_OPTS: "-Dsonar.projectKey=efb-admin"
