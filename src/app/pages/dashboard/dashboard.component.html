@@ -3,30 +3,60 @@
     <p class="dashboard-title">Dashboard</p>
 
     <div class="date-range-tabs flex gap-2">
-      <p-button label="Today" [styleClass]="
+      <p-button
+        label="Today"
+        [styleClass]="
           'custom-range-button' + (selectedRange() === 'today' ? ' active' : '')
-        " (onClick)="selectRange('today')" text></p-button>
+        "
+        (onClick)="selectRange('today')"
+        text
+      ></p-button>
 
-      <p-button label="1 Month" [styleClass]="
+      <p-button
+        label="1 Month"
+        [styleClass]="
           'custom-range-button' +
           (selectedRange() === '1month' ? ' active' : '')
-        " (onClick)="selectRange('1month')" text></p-button>
+        "
+        (onClick)="selectRange('1month')"
+        text
+      ></p-button>
 
-      <p-button label="6 Months" [styleClass]="
+      <p-button
+        label="6 Months"
+        [styleClass]="
           'custom-range-button' +
           (selectedRange() === '6months' ? ' active' : '')
-        " (onClick)="selectRange('6months')" text></p-button>
+        "
+        (onClick)="selectRange('6months')"
+        text
+      ></p-button>
     </div>
   </div>
 
   <div class="grid grid-cols-12 gap-4">
-    <app-flight-count-card [selectedRange]="selectedRange()" class="col-span-12 md:col-span-4" />
-    <app-total-fuel-ordered-card [selectedRange]="selectedRange()" class="col-span-12 md:col-span-4" />
-    <app-gps-signal-loss-card [selectedRange]="selectedRange()" class="col-span-12 md:col-span-4" />
+    <app-flight-count-card
+      [selectedRange]="selectedRange()"
+      class="col-span-12 md:col-span-4"
+    />
+    <app-total-fuel-ordered-card
+      [selectedRange]="selectedRange()"
+      class="col-span-12 md:col-span-4"
+    />
+    <app-gps-signal-loss-card
+      [selectedRange]="selectedRange()"
+      class="col-span-12 md:col-span-4"
+    />
   </div>
 
   <div class="grid grid-cols-12 gap-4 mt-4">
-    <app-top-alternate-routes-card [selectedRange]="selectedRange()" class="col-span-12 md:col-span-6" />
-    <app-key-stats-card [selectedRange]="selectedRange()" class="col-span-12 md:col-span-6" />
+    <app-top-alternate-routes-card
+      [selectedRange]="selectedRange()"
+      class="col-span-12 md:col-span-6"
+    />
+    <app-key-stats-card
+      [selectedRange]="selectedRange()"
+      class="col-span-12 md:col-span-6"
+    />
   </div>
 </div>
