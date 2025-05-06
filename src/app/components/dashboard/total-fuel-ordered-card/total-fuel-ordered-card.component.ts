@@ -1,11 +1,11 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { getDateRange, getTitleSuffix } from '@shared/utils/date-range.util';
 import { DateRangeType } from 'src/app/pages/dashboard/dashboard.component';
 import { FuelOrderService } from '@shared/services/fuel-order.service';
 import { CustomLineChartComponent } from '@shared/components/custom-line-chart/custom-line-chart.component';
 import moment from 'moment';
+import { DashboardDateRangeService } from '@shared/services/helpers-services/dashboard-date-range.service';
 
 @Component({
   selector: 'app-total-fuel-ordered-card',
@@ -16,6 +16,7 @@ import moment from 'moment';
 })
 export class TotalFuelOrderedCardComponent {
   fuelOrderService = inject(FuelOrderService);
+  dashboardDateRangeService = inject(DashboardDateRangeService);
 
   selectedRange = input<DateRangeType>('6months');
 
@@ -25,13 +26,17 @@ export class TotalFuelOrderedCardComponent {
 
   constructor() {
     effect(() => {
-      this.titleSuffix.set(getTitleSuffix(this.selectedRange()));
+      this.titleSuffix.set(
+        this.dashboardDateRangeService.getTitleSuffix(this.selectedRange()),
+      );
       this.loadFuelData();
     });
   }
 
   loadFuelData(): void {
-    const { startDate, endDate } = getDateRange(this.selectedRange());
+    const { startDate, endDate } = this.dashboardDateRangeService.getDateRange(
+      this.selectedRange(),
+    );
 
     this.fuelOrderService
       .getDailySum(startDate, endDate)

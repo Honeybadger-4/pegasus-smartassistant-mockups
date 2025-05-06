@@ -31,6 +31,4 @@ export interface ITripInfoTableData {
   aircraftReg: string;
   flightNo: string;
   depDateTime: string;
-  
 }
-

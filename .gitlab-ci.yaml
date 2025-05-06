@@ -23,7 +23,7 @@ sonarqube-check:
   script:
     - sonar-scanner
   only:
-    - develop  # veya istediğiniz branch
+    - develop # veya istediğiniz branch
   variables:
     SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
     SONAR_TOKEN: "${SONAR_TOKEN}"

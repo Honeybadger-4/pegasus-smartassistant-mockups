@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FlightInformationService } from '@shared/services/flight-information.service';
 import { DateRangeType } from 'src/app/pages/dashboard/dashboard.component';
 import { IKeyStatsResponse } from '@shared/models/key-stats-response.model';
-import { getDateRange, getTitleSuffix } from '@shared/utils/date-range.util';
+import { DashboardDateRangeService } from '@shared/services/helpers-services/dashboard-date-range.service';
 
 @Component({
   selector: 'app-key-stats-card',
@@ -14,6 +14,7 @@ import { getDateRange, getTitleSuffix } from '@shared/utils/date-range.util';
 })
 export class KeyStatsCardComponent {
   flightService = inject(FlightInformationService);
+  dashboardDateRangeService = inject(DashboardDateRangeService);
 
   selectedRange = input<DateRangeType>('6months');
 
@@ -22,13 +23,17 @@ export class KeyStatsCardComponent {
 
   constructor() {
     effect(() => {
-      this.titleSuffix.set(getTitleSuffix(this.selectedRange()));
+      this.titleSuffix.set(
+        this.dashboardDateRangeService.getTitleSuffix(this.selectedRange()),
+      );
       this.getStats();
     });
   }
 
   getStats(): void {
-    const { startDate, endDate } = getDateRange(this.selectedRange());
+    const { startDate, endDate } = this.dashboardDateRangeService.getDateRange(
+      this.selectedRange(),
+    );
 
     this.flightService
       .getFlightInfoStats(startDate, endDate)
