@@ -3,4 +3,16 @@
     color: #0d0f11;
     font-size: 18px;
   }
+
+  .bar-in-progress {
+    background-color: #feb914;
+  }
+
+  .bar-approved {
+    background-color: #0e8345;
+  }
+
+  .bar-waiting {
+    background-color: #dfe3e9;
+  }
 }

@@ -250,16 +250,30 @@
 <ng-template #statusColumnTemplate let-rowData="rowData">
   @switch (rowData.status) {
     @case ("WAITING") {
-      <p-chip label="Waiting" class="green-chip" />
+      <p-chip label="Waiting" class="gray-chip" />
     }
-    @case ("IN_PROGRESS") {
+    @case ("IN PROGRESS") {
       <p-chip label="In Progress" class="yellow-chip" />
     }
-    @case ("COMPLETED") {
-      <p-chip label="Completed" class="yellow-chip" />
+    @case ("APPROVED") {
+      <p-chip label="Approve" class="green-chip" />
     }
     @default {
       <p-chip label="{{ rowData.status || '-' }}" class="gray-chip" />
     }
   }
+</ng-template>
+
+<ng-template #requiredActionsTemplate let-rowData="rowData">
+  <div class="h-1 bg-gray-200">
+    <div
+      class="h-full"
+      [style.width.%]="(rowData.requiredActions ?? 0) * 100"
+      [ngClass]="{
+        'bar-in-progress': rowData.status === 'IN PROGRESS',
+        'bar-approved': rowData.status === 'APPROVED',
+        'bar-waiting': rowData.status === 'WAITING',
+      }"
+    ></div>
+  </div>
 </ng-template>
