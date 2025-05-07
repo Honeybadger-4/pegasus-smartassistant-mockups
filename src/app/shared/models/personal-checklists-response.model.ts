@@ -32,6 +32,6 @@ export interface IPersonalChecklistsContentData {
   flightNo: string;
   depDateTime: string;
   arrDateTime: string;
-  checklistConfirmed: null;
+  checklistConfirmed: string;
   status: string;
 }

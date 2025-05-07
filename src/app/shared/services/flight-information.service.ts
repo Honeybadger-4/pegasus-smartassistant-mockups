@@ -80,6 +80,7 @@ export class FlightInformationService {
     size: number,
     sortBy: string,
     sortDir: string,
+    search?: string | null,
     tableFilters?: {
       aircraftReg: string;
       status: string;
@@ -92,6 +93,7 @@ export class FlightInformationService {
     let params = new HttpParams().set('page', page).set('size', size);
 
     const optionalParams: { key: string; value: any }[] = [
+      { key: 'search', value: search },
       { key: 'sortBy', value: sortBy },
       { key: 'sortDir', value: sortDir },
       { key: 'aircraftReg', value: tableFilters?.aircraftReg },
