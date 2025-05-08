@@ -1,4 +1,11 @@
-import { Component, inject, OnInit, signal, viewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  OnInit,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -11,6 +18,7 @@ import { IPersonalChecklistsResponse } from '@shared/models/personal-checklists-
 import { FlightInformationService } from '@shared/services/flight-information.service';
 import { Chip } from 'primeng/chip';
 import moment from 'moment';
+import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 
 @Component({
   selector: 'app-personal-checklists',
@@ -33,7 +41,7 @@ export class PersonalChecklistsComponent implements OnInit {
   customTableComponent = viewChild.required(CustomTableComponent);
 
   flightInformationService = inject(FlightInformationService);
-  searchInputValue = signal<string>('');
+  searchInput = viewChild.required<ElementRef>('searchInput');
 
   personalChecklistsData = signal<IPersonalChecklistsResponse | null>(null);
   personalChecklistsContentData = signal<
@@ -48,9 +56,11 @@ export class PersonalChecklistsComponent implements OnInit {
 
   currentSortBy = signal<string>('depDateTime');
   currentSortDir = signal<string>('desc');
+  searchInputValue = signal<string>('');
 
   ngOnInit() {
     this.defineColumns();
+    this.setupSearchListener();
   }
 
   defineColumns() {
@@ -77,6 +87,7 @@ export class PersonalChecklistsComponent implements OnInit {
         this.currentRows(),
         this.currentSortBy(),
         this.currentSortDir(),
+        this.searchInputValue(),
         this.tableFilters(),
       )
       .subscribe({
@@ -98,8 +109,25 @@ export class PersonalChecklistsComponent implements OnInit {
       });
   }
 
-  onChangeSearch(value: string) {}
+  setupSearchListener() {
+    fromEvent<Event>(this.searchInput().nativeElement, 'input')
+      .pipe(
+        map((event: Event) => (event.target as HTMLInputElement).value),
+        debounceTime(300),
+        distinctUntilChanged(),
+      )
+      .subscribe((searchText) => {
+        if (searchText.trim() || searchText === '') {
+          this.currentPage.set(0);
+          this.customTableComponent().resetTableFirstValue();
 
+          this.getPersonalChecklists();
+        }
+      });
+  }
+  onChangeSearch(value: string) {
+    this.searchInputValue.set(value.toUpperCase());
+  }
   lazyLoadEvent(event: any) {
     const page = event.first / event.rows;
     this.currentPage.set(page);

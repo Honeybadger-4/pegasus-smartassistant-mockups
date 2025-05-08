@@ -67,6 +67,8 @@ export class FlightInfoComponent implements OnInit {
   tripInfoTableTripInfoCellTemplate!: TemplateRef<any>;
   @ViewChild('routeTableDocumentsCellTemplate', { static: true })
   routeTableDocumentsCellTemplate!: TemplateRef<any>;
+  @ViewChild('requiredActionsTemplate', { static: true })
+  requiredActionsTemplate!: TemplateRef<any>;
 
   statusColumnTemplate = viewChild.required('statusColumnTemplate');
 
@@ -478,7 +480,11 @@ export class FlightInfoComponent implements OnInit {
         template: this.statusColumnTemplate(),
       },
 
-      { field: 'requiredActions', header: 'Required Actions' },
+      {
+        field: 'requiredActions',
+        header: 'Required Actions',
+        template: this.requiredActionsTemplate,
+      },
     ];
   }
 
