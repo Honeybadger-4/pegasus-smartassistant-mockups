@@ -61,12 +61,6 @@ export class TripInfoComponent implements OnInit {
         isFilter: true,
         filterType: 'datepicker',
       },
-      {
-        field: 'receivedDateTime',
-        header: 'Received Date - Time',
-        isFilter: true,
-        filterType: 'datepicker',
-      },
       { field: 'sentBy', header: 'Sent By', isFilter: true },
       {
         field: 'sentDateTime',
