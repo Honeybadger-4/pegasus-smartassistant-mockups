@@ -59,7 +59,6 @@ export class LicenceInfoComponent implements OnInit {
   currentSortDir = signal<string>('DESC');
   tableFilters = signal<any>({});
 
-
   ngOnInit() {
     this.defineColumn();
     this.setupSearchListener();

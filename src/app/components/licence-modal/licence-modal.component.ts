@@ -25,7 +25,7 @@ export class LicenceModalComponent {
 
   get licenceModalData() {
     if (!this.rowData) return [];
-  
+
     return this.rowData.licenceListResponse.licenseList.map((item) => ({
       licenceName: item.licenceName,
       issueDate: item.issueDate
@@ -36,8 +36,6 @@ export class LicenceModalComponent {
         : undefined,
     }));
   }
-  
-  
 
   closeModal() {
     this.visibleChange.emit(false);

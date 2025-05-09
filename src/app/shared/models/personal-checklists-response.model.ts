@@ -35,34 +35,3 @@ export interface IPersonalChecklistsContentData {
   checklistConfirmed: string;
   status: string;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

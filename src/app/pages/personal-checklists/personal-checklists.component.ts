@@ -42,25 +42,11 @@ export class PersonalChecklistsComponent implements OnInit {
 
   flightInformationService = inject(FlightInformationService);
 
-
-
-
-
-
-
-
-
-
-
-
   personalChecklistsData = signal<IPersonalChecklistsResponse | null>(null);
 
-  personalChecklistsContentData = signal<IPersonalChecklistsResponse['content'] | null>(null);
-
-
-
-
-
+  personalChecklistsContentData = signal<
+    IPersonalChecklistsResponse['content'] | null
+  >(null);
 
   columns = signal<Column[]>([]);
   currentPage = signal<number>(0);

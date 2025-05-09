@@ -24,7 +24,7 @@ export class LicenceInfoService {
       checkedBy?: string;
       depDate?: string;
       checkedDate?: string;
-    }
+    },
   ): Observable<ILicenceInfoResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/licence-infos`;
     let params = new HttpParams().set('page', page).set('size', size);
@@ -40,14 +40,14 @@ export class LicenceInfoService {
       { key: 'checkedDate', value: tableFilters?.checkedDate },
     ];
 
-    this.requestParamsControlService.paramsControl(optionalParams).map(({ key, value }) => {
-      params = params.set(key, value);
-      
-    });
+    this.requestParamsControlService
+      .paramsControl(optionalParams)
+      .map(({ key, value }) => {
+        params = params.set(key, value);
+      });
 
-     return this.http
-         .get<IHttpResponseModel>(apiUrl, { params })
-         .pipe(map((response) => response.data));
-     }
-   }
-   
+    return this.http
+      .get<IHttpResponseModel>(apiUrl, { params })
+      .pipe(map((response) => response.data));
+  }
+}
