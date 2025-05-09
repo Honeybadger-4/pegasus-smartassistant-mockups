@@ -2,6 +2,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
+import { ILicenceInfoContentData } from '@shared/models/licence-info-response.model';
+import moment from 'moment';
 
 @Component({
   selector: 'app-licence-modal',
@@ -13,23 +15,27 @@ import { CustomTableComponent } from '@shared/components/custom-table/custom-tab
 export class LicenceModalComponent {
   @Input() visible: boolean = false;
   @Output() visibleChange = new EventEmitter<boolean>();
+  @Input() rowData: ILicenceInfoContentData | null = null;
 
   licenceModalColumns = [
-    { field: 'licenceName', header: 'Licence Name', isFilter: true },
-    { field: 'issueDate', header: 'Issue Date', isFilter: true },
-    { field: 'expireDate', header: 'Expire Date', isFilter: true },
+    { field: 'licenceName', header: 'Licence Name' },
+    { field: 'issueDate', header: 'Issue Date' },
+    { field: 'expDate', header: 'Expire Date' },
   ];
 
-  licenceModalData = [
-    { licenceName: 'OPC', issueDate: '01/01/2020', expireDate: '01/01/2020' },
-    { licenceName: 'CGO', issueDate: '01/01/2020', expireDate: '01/01/2020' },
-    {
-      licenceName: 'Line Check',
-      issueDate: '01/01/2020',
-      expireDate: '01/01/2020',
-    },
-    { licenceName: 'LPC', issueDate: '01/01/2020', expireDate: '01/01/2020' },
-  ];
+  get licenceModalData() {
+    if (!this.rowData) return [];
+
+    return this.rowData.licenceListResponse.licenseList.map((item) => ({
+      licenceName: item.licenceName,
+      issueDate: item.issueDate
+        ? moment(item.issueDate).format('DD/MM/YYYY - HH:mm')
+        : undefined,
+      expireDate: item.expDate
+        ? moment(item.expDate).format('DD/MM/YYYY - HH:mm')
+        : undefined,
+    }));
+  }
 
   closeModal() {
     this.visibleChange.emit(false);

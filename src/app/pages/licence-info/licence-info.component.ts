@@ -1,14 +1,26 @@
-import { Component, OnInit, signal, viewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { Column } from '@shared/models/columns';
 import { LicenceModalComponent } from '../../components/licence-modal/licence-modal.component';
 import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
-
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
+import { LicenceInfoService } from '@shared/services/licence-info.service';
+import {
+  ILicenceInfoContentData,
+  ILicenceInfoResponse,
+} from '@shared/models/licence-info-response.model';
+import moment from 'moment';
+import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 
 @Component({
   selector: 'app-licence-info',
@@ -26,43 +38,30 @@ import { InputTextModule } from 'primeng/inputtext';
   styleUrl: './licence-info.component.scss',
 })
 export class LicenceInfoComponent implements OnInit {
-  customTableComponent = viewChild.required(CustomTableComponent);
   licenceColumnTemplate = viewChild.required('licenceColumnTemplate');
+  customTableComponent = viewChild.required(CustomTableComponent);
+  searchInput = viewChild.required<ElementRef>('searchInput');
 
-  searchInputValue = '';
+  licenceInfoService = inject(LicenceInfoService);
+
+  searchInputValue = signal<string>('');
   columns = signal<Column[]>([]);
-  showLicenceModal = signal(false);
-  selectedRowData: any = null;
+  showLicenceModal = signal<boolean>(false);
+  selectedRowData = signal<ILicenceInfoContentData | null>(null);
 
-  licenceInfoData = [
-    {
-      acReg: 'lorem',
-      flightNo: 'lorem',
-      depDateTime: '01/01/2020 - 10:29',
-      checkedDateTime: '01/01/2020 - 10:29',
-      checkedBy: 'Name Surname',
-      licences: '',
-    },
-    {
-      acReg: 'ipsum',
-      flightNo: 'ipsum',
-      depDateTime: '02/01/2020 - 11:00',
-      checkedDateTime: '02/01/2020 - 11:30',
-      checkedBy: 'Another Name',
-      licences: '',
-    },
-    {
-      acReg: 'dolor',
-      flightNo: 'dolor',
-      depDateTime: '03/01/2020 - 12:15',
-      checkedDateTime: '03/01/2020 - 12:45',
-      checkedBy: 'Some Name',
-      licences: '',
-    },
-  ];
+  licenceInfoData = signal<ILicenceInfoResponse | null>(null);
+  licenceInfoContentData = signal<ILicenceInfoResponse['content'] | null>(null);
+
+  currentPage = signal<number>(0);
+  currentRows = signal<number>(10);
+  tableLoading = signal<boolean>(false);
+  currentSort = signal<string>('id');
+  currentSortDir = signal<string>('DESC');
+  tableFilters = signal<any>({});
 
   ngOnInit() {
     this.defineColumn();
+    this.setupSearchListener();
   }
 
   defineColumn() {
@@ -70,13 +69,13 @@ export class LicenceInfoComponent implements OnInit {
       { field: 'acReg', header: 'Ac Reg', isFilter: true },
       { field: 'flightNo', header: 'Flight No', isFilter: true },
       {
-        field: 'depDateTime',
+        field: 'depTime',
         header: 'Dep Date - Time',
         isFilter: true,
         filterType: 'datepicker',
       },
       {
-        field: 'checkedDateTime',
+        field: 'checkedDate',
         header: 'Checked Date - Time',
         isFilter: true,
         filterType: 'datepicker',
@@ -91,10 +90,73 @@ export class LicenceInfoComponent implements OnInit {
     ]);
   }
 
-  onChangeSearch(value: string) {}
+  getLicenceInfo() {
+    this.tableLoading.set(true);
+    this.licenceInfoService
+      .getLicenceInfo(
+        this.currentPage(),
+        this.currentRows(),
+        this.currentSortDir(),
+        this.currentSort(),
+        this.searchInputValue(),
+        this.tableFilters(),
+      )
+      .subscribe({
+        next: (response: ILicenceInfoResponse) => {
+          const formattedData = response.content.map((item) => ({
+            ...item,
+            depTime: moment(item.depTime).format('DD/MM/YYYY - HH:mm'),
+            checkedDate: moment(item.checkedDate).format('DD/MM/YYYY - HH:mm'),
+          }));
 
-  onLicenceShow(rowData: any) {
-    this.selectedRowData = rowData;
+          this.licenceInfoContentData.set(formattedData);
+          this.licenceInfoData.set(response);
+
+          this.tableLoading.set(false);
+        },
+        error: () => this.tableLoading.set(false),
+      });
+  }
+
+  setupSearchListener() {
+    fromEvent<Event>(this.searchInput().nativeElement, 'input')
+      .pipe(
+        map((event: Event) => (event.target as HTMLInputElement).value),
+        debounceTime(300),
+        distinctUntilChanged(),
+      )
+      .subscribe((searchText) => {
+        if (searchText.trim() || searchText === '') {
+          this.currentPage.set(0);
+          this.customTableComponent().resetTableFirstValue();
+
+          this.getLicenceInfo();
+        }
+      });
+  }
+
+  onChangeSearch(value: string) {
+    this.searchInputValue.set(value.toUpperCase());
+  }
+
+  lazyLoadEvent(event: any) {
+    const page = event.first / event.rows;
+    this.currentPage.set(page);
+    this.currentRows.set(event.rows);
+    this.currentSort.set(event.sortField || 'id');
+    this.currentSortDir.set(event.sortOrder === 1 ? 'ASC' : 'DESC');
+    this.tableFilters.set({
+      acReg: event.filters?.acReg?.[0]?.value,
+      flightNo: event.filters?.flightNo?.[0]?.value,
+      checkedBy: event.filters?.checkedBy?.[0]?.value,
+      depDate: event.filters?.depTime?.[0]?.value,
+      checkedDate: event.filters?.checkedDate?.[0]?.value,
+    });
+    this.getLicenceInfo();
+  }
+
+  onLicenceShow(rowData: ILicenceInfoContentData) {
+    this.selectedRowData.set(rowData);
     this.showLicenceModal.set(true);
   }
 
