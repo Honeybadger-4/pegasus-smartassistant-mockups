@@ -1,5 +1,5 @@
-export interface IPersonalChecklistsResponse {
-  content: IPersonalChecklistsContentData[];
+export interface ILicenceInfoResponse {
+  content: ILicenceInfoContentData[];
   pageable: {
     pageNumber: number;
     pageSize: number;
@@ -27,42 +27,17 @@ export interface IPersonalChecklistsResponse {
   empty: boolean;
 }
 
-export interface IPersonalChecklistsContentData {
-  aircraftReg: string;
+export interface ILicenceInfoContentData {
+  acReg: string;
   flightNo: string;
-  depDateTime: string;
-  arrDateTime: string;
-  checklistConfirmed: string;
-  status: string;
+  depTime: string;
+  checkedDate: string;
+  checkedBy: string;
+  licenceListResponse: {
+    licenseList: {
+      licenceName: string;
+      issueDate: string | null;
+      expDate: string | null;
+    }[];
+  };
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

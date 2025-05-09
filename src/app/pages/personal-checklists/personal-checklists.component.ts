@@ -37,16 +37,30 @@ import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 })
 export class PersonalChecklistsComponent implements OnInit {
   statusColumnTemplate = viewChild.required('statusColumnTemplate');
-
   customTableComponent = viewChild.required(CustomTableComponent);
-
-  flightInformationService = inject(FlightInformationService);
   searchInput = viewChild.required<ElementRef>('searchInput');
 
+  flightInformationService = inject(FlightInformationService);
+
+
+
+
+
+
+
+
+
+
+
+
   personalChecklistsData = signal<IPersonalChecklistsResponse | null>(null);
-  personalChecklistsContentData = signal<
-    IPersonalChecklistsResponse['content'] | null
-  >(null);
+
+  personalChecklistsContentData = signal<IPersonalChecklistsResponse['content'] | null>(null);
+
+
+
+
+
 
   columns = signal<Column[]>([]);
   currentPage = signal<number>(0);
