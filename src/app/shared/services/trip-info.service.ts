@@ -17,26 +17,23 @@ export class TripInfoService {
   getTripInfo(
     page: number,
     size: number,
-    searchValue?: string | null,
-
+    searchValue?: string,
     tableFilters?: {
-      acReg: string;
-      flightNo: string;
-      depDateTime: string;
-      sentBy: string;
-
-      sentDateTime: string;
-    } | null,
+      acReg?: string;
+      flightNo?: string;
+      depDateTime?: string;
+      sentBy?: string;
+      sentDateTime?: string;
+    },
   ): Observable<ITripInfoResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/trip-info`;
-
     let params = new HttpParams().set('page', page).set('size', size);
 
     const optionalParams: { key: string; value: any }[] = [
       { key: 'searchValue', value: searchValue },
       { key: 'acReg', value: tableFilters?.acReg },
-      { key: 'depDateTime', value: tableFilters?.depDateTime },
       { key: 'flightNo', value: tableFilters?.flightNo },
+      { key: 'depDateTime', value: tableFilters?.depDateTime },
       {
         key: 'sentBy',
         value: tableFilters?.sentBy,

@@ -143,8 +143,14 @@ export class LicenceInfoComponent implements OnInit {
     const page = event.first / event.rows;
     this.currentPage.set(page);
     this.currentRows.set(event.rows);
+
+
+
     this.currentSort.set(event.sortField || 'id');
     this.currentSortDir.set(event.sortOrder === 1 ? 'ASC' : 'DESC');
+
+
+    
     this.tableFilters.set({
       acReg: event.filters?.acReg?.[0]?.value,
       flightNo: event.filters?.flightNo?.[0]?.value,
