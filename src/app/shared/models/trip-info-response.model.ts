@@ -1,5 +1,5 @@
 export interface ITripInfoResponse {
-  content: [ITripInfoTableData];
+  content: ITripInfoTableData[];
   pageable: {
     pageNumber: number;
     pageSize: number;
@@ -28,7 +28,10 @@ export interface ITripInfoResponse {
 }
 
 export interface ITripInfoTableData {
-  aircraftReg: string;
+  id: number;
+  acReg: string;
   flightNo: string;
   depDateTime: string;
+  sentBy: string;
+  sentDateTime: string;
 }

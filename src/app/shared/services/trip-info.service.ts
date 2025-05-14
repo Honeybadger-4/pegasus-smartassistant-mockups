@@ -4,6 +4,7 @@ import { environment } from '@environments/environment';
 import { IHttpResponseModel } from '@shared/models/http-response.model';
 import { ITripInfoResponse } from '@shared/models/trip-info-response.model';
 import { map, Observable } from 'rxjs';
+import { RequestParamsControlService } from './helpers-services/request-params-control.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,11 +12,42 @@ import { map, Observable } from 'rxjs';
 export class TripInfoService {
   http = inject(HttpClient);
   baseUrl = environment.baseApi;
+  requestParamsControlService = inject(RequestParamsControlService);
 
-  getTripInfo(page: number, size: number): Observable<ITripInfoResponse> {
+  getTripInfo(
+    page: number,
+    size: number,
+    sort: string,
+    searchValue?: string,
+    tableFilters?: {
+      acReg?: string;
+      flightNo?: string;
+      depDate?: string;
+      sentBy?: string;
+      sentDate?: string;
+    },
+  ): Observable<ITripInfoResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/trip-info`;
-
     let params = new HttpParams().set('page', page).set('size', size);
+
+    const optionalParams: { key: string; value: any }[] = [
+      { key: 'sort', value: sort },
+      { key: 'searchValue', value: searchValue },
+      { key: 'acReg', value: tableFilters?.acReg },
+      { key: 'flightNo', value: tableFilters?.flightNo },
+      { key: 'depDate', value: tableFilters?.depDate },
+      {
+        key: 'sentBy',
+        value: tableFilters?.sentBy,
+      },
+      { key: 'sentDate', value: tableFilters?.sentDate },
+    ];
+
+    this.requestParamsControlService
+      .paramsControl(optionalParams)
+      .map(({ key, value }) => {
+        params = params.set(key, value);
+      });
 
     return this.http
       .get<IHttpResponseModel>(apiUrl, { params })
