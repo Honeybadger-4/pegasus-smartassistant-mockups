@@ -50,6 +50,8 @@ export class TripInfoComponent implements OnInit {
 
   currentPage = signal<number>(0);
   currentRows = signal<number>(10);
+  currentSort = signal<string>('DESC');
+
   tableLoading = signal<boolean>(false);
 
   tableFilters = signal<any>({});
@@ -85,6 +87,8 @@ export class TripInfoComponent implements OnInit {
       .getTripInfo(
         this.currentPage(),
         this.currentRows(),
+        this.currentSort(),
+
         this.searchInputValue(),
         this.tableFilters(),
       )
@@ -131,19 +135,20 @@ export class TripInfoComponent implements OnInit {
     const page = event.first / event.rows;
     this.currentPage.set(page);
     this.currentRows.set(event.rows);
-  
-    const rawDepDate = event.filters?.depDateTime?.[0]?.value;
-    const rawSentDate = event.filters?.sentDateTime?.[0]?.value;
-  
+
+    this.currentSort.set(event.sortField || 'DESC');
+
     this.tableFilters.set({
-      acReg: event.filters?.acReg?.[0]?.value,
-      flightNo: event.filters?.flightNo?.[0]?.value,
-      depDateTime: event.filters?.depDateTime?.[0]?.value,
-      sentBy: event.filters?.sentBy?.[0]?.value,
-      sentDateTime: event.filters?.sentDateTime?.[0]?.value,
+      acReg: event.filters?.acReg && event.filters?.acReg[0].value,
+      flightNo: event.filters?.flightNo && event.filters?.flightNo[0].value,
+      depDate:
+        event.filters?.depDateTime && event.filters?.depDateTime[0].value,
+      sentBy: event.filters?.sentBy && event.filters?.sentBy[0].value,
+      sentDate:
+        event.filters?.sentDateTime && event.filters?.sentDateTime[0].value,
     });
-  
+    console.log(this.tableFilters());
+
     this.getTripInfo();
   }
-  
-}  
+}

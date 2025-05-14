@@ -17,28 +17,30 @@ export class TripInfoService {
   getTripInfo(
     page: number,
     size: number,
+    sort: string,
     searchValue?: string,
     tableFilters?: {
       acReg?: string;
       flightNo?: string;
-      depDateTime?: string;
+      depDate?: string;
       sentBy?: string;
-      sentDateTime?: string;
+      sentDate?: string;
     },
   ): Observable<ITripInfoResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/trip-info`;
     let params = new HttpParams().set('page', page).set('size', size);
 
     const optionalParams: { key: string; value: any }[] = [
+      { key: 'sort', value: sort },
       { key: 'searchValue', value: searchValue },
       { key: 'acReg', value: tableFilters?.acReg },
       { key: 'flightNo', value: tableFilters?.flightNo },
-      { key: 'depDateTime', value: tableFilters?.depDateTime },
+      { key: 'depDate', value: tableFilters?.depDate },
       {
         key: 'sentBy',
         value: tableFilters?.sentBy,
       },
-      { key: 'sentDateTime', value: tableFilters?.sentDateTime },
+      { key: 'sentDate', value: tableFilters?.sentDate },
     ];
 
     this.requestParamsControlService
