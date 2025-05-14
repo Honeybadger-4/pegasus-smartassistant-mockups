@@ -1,5 +1,5 @@
 export interface ITripInfoResponse {
-  content: ITripInfoTableData[]; 
+  content: ITripInfoTableData[];
   pageable: {
     pageNumber: number;
     pageSize: number;
