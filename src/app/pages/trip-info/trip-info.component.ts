@@ -132,6 +132,9 @@ export class TripInfoComponent implements OnInit {
     this.currentPage.set(page);
     this.currentRows.set(event.rows);
   
+    const rawDepDate = event.filters?.depDateTime?.[0]?.value;
+    const rawSentDate = event.filters?.sentDateTime?.[0]?.value;
+  
     this.tableFilters.set({
       acReg: event.filters?.acReg?.[0]?.value,
       flightNo: event.filters?.flightNo?.[0]?.value,
@@ -142,4 +145,5 @@ export class TripInfoComponent implements OnInit {
   
     this.getTripInfo();
   }
+  
 }  

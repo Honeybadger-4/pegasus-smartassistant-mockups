@@ -54,7 +54,7 @@ export class PersonalChecklistsComponent implements OnInit {
   tableLoading = signal<boolean>(false);
   tableFilters = signal<any>({});
 
-  currentSortBy = signal<string>('depDateTime');
+  currentSort = signal<string>('depDateTime');
   currentSortDir = signal<string>('desc');
   searchInputValue = signal<string>('');
 
@@ -67,8 +67,18 @@ export class PersonalChecklistsComponent implements OnInit {
     this.columns.set([
       { field: 'aircraftReg', header: 'Aircraft', isFilter: true },
       { field: 'flightNo', header: 'Flight No', isFilter: true },
-      { field: 'depDateTime', header: 'Dep Date - Time' },
-      { field: 'arrDateTime', header: 'Approve Date - Time' },
+      {
+        field: 'depDateTime',
+        header: 'Dep Date - Time',
+        isFilter: true,
+        filterType: 'datepicker',
+      },
+      {
+        field: 'approvedDateTime',
+        header: 'Approve Date - Time',
+        isFilter: true,
+        filterType: 'datepicker',
+      },
       { field: 'checklistConfirmed', header: 'Approved By', isFilter: true },
       {
         field: 'status',
@@ -85,7 +95,7 @@ export class PersonalChecklistsComponent implements OnInit {
       .getPersonalCheckList(
         this.currentPage(),
         this.currentRows(),
-        this.currentSortBy(),
+        this.currentSort(),
         this.currentSortDir(),
         this.searchInputValue(),
         this.tableFilters(),
@@ -95,7 +105,9 @@ export class PersonalChecklistsComponent implements OnInit {
           const formattedData = response.content.map((item) => ({
             ...item,
             depDateTime: moment(item.depDateTime).format('DD/MM/YYYY - HH:mm'),
-            arrDateTime: moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm'),
+            approvedDateTime: moment(item.approvedDateTime).format(
+              'DD/MM/YYYY - HH:mm',
+            ),
           }));
 
           this.personalChecklistsData.set(response);
@@ -133,18 +145,28 @@ export class PersonalChecklistsComponent implements OnInit {
     this.currentPage.set(page);
     this.currentRows.set(event.rows);
 
-    this.currentSortBy.set(event.sortField || 'depDateTime');
+    this.currentSort.set(event.sortField || 'depDateTime');
     this.currentSortDir.set(event.sortOrder === 1 ? 'asc' : 'desc');
 
     this.tableFilters.set({
       aircraftReg:
         event.filters?.aircraftReg && event.filters?.aircraftReg[0].value,
+
       status: event.filters?.status && event.filters?.status[0].value,
+
       flightNo: event.filters?.flightNo && event.filters?.flightNo[0].value,
+
       checklistConfirmedBy:
-        event.filters?.checklistConfirmedBy &&
-        event.filters?.checklistConfirmedBy[0].value,
+        event.filters?.checklistConfirmed &&
+        event.filters?.checklistConfirmed[0].value,
+
+      depDateTime:
+        event.filters?.depDateTime && event.filters?.depDateTime[0].value,
+      approvedDateTime:
+        event.filters?.approvedDateTime &&
+        event.filters?.approvedDateTime[0].value,
     });
+    console.log(this.tableFilters());
 
     this.getPersonalChecklists();
   }
