@@ -55,8 +55,7 @@ export class LicenceInfoComponent implements OnInit {
   currentPage = signal<number>(0);
   currentRows = signal<number>(10);
   tableLoading = signal<boolean>(false);
-  currentSort = signal<string>('id');
-  currentSortDir = signal<string>('DESC');
+
   tableFilters = signal<any>({});
 
   ngOnInit() {
@@ -96,8 +95,7 @@ export class LicenceInfoComponent implements OnInit {
       .getLicenceInfo(
         this.currentPage(),
         this.currentRows(),
-        this.currentSortDir(),
-        this.currentSort(),
+      
         this.searchInputValue(),
         this.tableFilters(),
       )
@@ -144,9 +142,7 @@ export class LicenceInfoComponent implements OnInit {
     this.currentPage.set(page);
     this.currentRows.set(event.rows);
 
-    this.currentSort.set(event.sortField || 'id');
-    this.currentSortDir.set(event.sortOrder === 1 ? 'ASC' : 'DESC');
-
+ 
     this.tableFilters.set({
       acReg: event.filters?.acReg?.[0]?.value,
       flightNo: event.filters?.flightNo?.[0]?.value,

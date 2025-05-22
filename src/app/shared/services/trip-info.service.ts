@@ -17,7 +17,6 @@ export class TripInfoService {
   getTripInfo(
     page: number,
     size: number,
-    sort: string,
     searchValue?: string,
     tableFilters?: {
       acReg?: string;
@@ -31,7 +30,6 @@ export class TripInfoService {
     let params = new HttpParams().set('page', page).set('size', size);
 
     const optionalParams: { key: string; value: any }[] = [
-      { key: 'sort', value: sort },
       { key: 'searchValue', value: searchValue },
       { key: 'acReg', value: tableFilters?.acReg },
       { key: 'flightNo', value: tableFilters?.flightNo },

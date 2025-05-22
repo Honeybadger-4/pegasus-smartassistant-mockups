@@ -54,8 +54,7 @@ export class PersonalChecklistsComponent implements OnInit {
   tableLoading = signal<boolean>(false);
   tableFilters = signal<any>({});
 
-  currentSort = signal<string>('depDateTime');
-  currentSortDir = signal<string>('desc');
+
   searchInputValue = signal<string>('');
 
   ngOnInit() {
@@ -95,8 +94,7 @@ export class PersonalChecklistsComponent implements OnInit {
       .getPersonalCheckList(
         this.currentPage(),
         this.currentRows(),
-        this.currentSort(),
-        this.currentSortDir(),
+     
         this.searchInputValue(),
         this.tableFilters(),
       )
@@ -145,8 +143,7 @@ export class PersonalChecklistsComponent implements OnInit {
     this.currentPage.set(page);
     this.currentRows.set(event.rows);
 
-    this.currentSort.set(event.sortField || 'depDateTime');
-    this.currentSortDir.set(event.sortOrder === 1 ? 'asc' : 'desc');
+
 
     this.tableFilters.set({
       aircraftReg:

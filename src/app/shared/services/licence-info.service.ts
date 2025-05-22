@@ -15,8 +15,7 @@ export class LicenceInfoService {
   getLicenceInfo(
     page: number,
     size: number,
-    sortDir: string,
-    sort: string,
+   
     search?: string,
     tableFilters?: {
       acReg?: string;
@@ -31,8 +30,7 @@ export class LicenceInfoService {
 
     const optionalParams: { key: string; value: any }[] = [
       { key: 'search', value: search },
-      { key: 'sortDir', value: sortDir },
-      { key: 'sort', value: sort },
+
       { key: 'acReg', value: tableFilters?.acReg },
       { key: 'flightNo', value: tableFilters?.flightNo },
       { key: 'checkedBy', value: tableFilters?.checkedBy },
@@ -51,3 +49,11 @@ export class LicenceInfoService {
       .pipe(map((response) => response.data));
   }
 }
+
+
+
+
+
+
+
+

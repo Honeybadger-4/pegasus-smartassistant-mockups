@@ -78,8 +78,6 @@ export class FlightInformationService {
   getPersonalCheckList(
     page: number,
     size: number,
-    sort: string,
-    sortDir: string,
     search?: string | null,
     tableFilters?: {
       aircraftReg?: string;
@@ -96,8 +94,6 @@ export class FlightInformationService {
 
     const optionalParams: { key: string; value: any }[] = [
       { key: 'search', value: search },
-      { key: 'sort', value: sort },
-      { key: 'sortDir', value: sortDir },
       { key: 'aircraftReg', value: tableFilters?.aircraftReg },
       { key: 'status', value: tableFilters?.status },
       { key: 'flightNo', value: tableFilters?.flightNo },
