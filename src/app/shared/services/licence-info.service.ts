@@ -51,3 +51,11 @@ export class LicenceInfoService {
       .pipe(map((response) => response.data));
   }
 }
+
+
+
+
+
+
+
+
