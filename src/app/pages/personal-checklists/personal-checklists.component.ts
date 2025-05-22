@@ -54,7 +54,6 @@ export class PersonalChecklistsComponent implements OnInit {
   tableLoading = signal<boolean>(false);
   tableFilters = signal<any>({});
 
-
   searchInputValue = signal<string>('');
 
   ngOnInit() {
@@ -94,7 +93,7 @@ export class PersonalChecklistsComponent implements OnInit {
       .getPersonalCheckList(
         this.currentPage(),
         this.currentRows(),
-     
+
         this.searchInputValue(),
         this.tableFilters(),
       )
@@ -142,8 +141,6 @@ export class PersonalChecklistsComponent implements OnInit {
     const page = event.first / event.rows;
     this.currentPage.set(page);
     this.currentRows.set(event.rows);
-
-
 
     this.tableFilters.set({
       aircraftReg:

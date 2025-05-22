@@ -95,7 +95,7 @@ export class LicenceInfoComponent implements OnInit {
       .getLicenceInfo(
         this.currentPage(),
         this.currentRows(),
-      
+
         this.searchInputValue(),
         this.tableFilters(),
       )
@@ -142,7 +142,6 @@ export class LicenceInfoComponent implements OnInit {
     this.currentPage.set(page);
     this.currentRows.set(event.rows);
 
- 
     this.tableFilters.set({
       acReg: event.filters?.acReg?.[0]?.value,
       flightNo: event.filters?.flightNo?.[0]?.value,
