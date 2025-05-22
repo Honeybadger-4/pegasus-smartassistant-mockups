@@ -50,7 +50,6 @@ export class TripInfoComponent implements OnInit {
 
   currentPage = signal<number>(0);
   currentRows = signal<number>(10);
-  currentSort = signal<string>('DESC');
 
   tableLoading = signal<boolean>(false);
 
@@ -87,8 +86,6 @@ export class TripInfoComponent implements OnInit {
       .getTripInfo(
         this.currentPage(),
         this.currentRows(),
-        this.currentSort(),
-
         this.searchInputValue(),
         this.tableFilters(),
       )
@@ -135,8 +132,6 @@ export class TripInfoComponent implements OnInit {
     const page = event.first / event.rows;
     this.currentPage.set(page);
     this.currentRows.set(event.rows);
-
-    this.currentSort.set(event.sortField || 'DESC');
 
     this.tableFilters.set({
       acReg: event.filters?.acReg && event.filters?.acReg[0].value,
