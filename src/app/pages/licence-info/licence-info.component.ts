@@ -69,13 +69,13 @@ export class LicenceInfoComponent implements OnInit {
       { field: 'flightNo', header: 'Flight No', isFilter: true },
       {
         field: 'depTime',
-        header: 'Dep Date - Time',
+        header: 'Departure Date',
         isFilter: true,
         filterType: 'datepicker',
       },
       {
         field: 'checkedDate',
-        header: 'Checked Date - Time',
+        header: 'Checked Date',
         isFilter: true,
         filterType: 'datepicker',
       },
@@ -103,8 +103,12 @@ export class LicenceInfoComponent implements OnInit {
         next: (response: ILicenceInfoResponse) => {
           const formattedData = response.content.map((item) => ({
             ...item,
-            depTime: moment(item.depTime).format('DD/MM/YYYY - HH:mm'),
-            checkedDate: moment(item.checkedDate).format('DD/MM/YYYY - HH:mm'),
+            depTime: item.depTime
+              ? moment(item.depTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+            checkedDate: item.checkedDate
+              ? moment(item.checkedDate).format('DD/MM/YYYY - HH:mm')
+              : null,
           }));
 
           this.licenceInfoContentData.set(formattedData);

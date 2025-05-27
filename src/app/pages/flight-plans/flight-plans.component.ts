@@ -1,17 +1,27 @@
-import { Component, OnInit, signal, viewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  signal,
+  viewChild,
+  inject,
+  ElementRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { Column } from '@shared/models/columns';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
-
-import { Chip } from 'primeng/chip';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
+import { Chip } from 'primeng/chip';
+import { FlightPlansService } from '@shared/services/flight-plans.service';
+import { IFlightPlan } from '@shared/models/flight-plans-response.model';
+import moment from 'moment';
+import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 
 @Component({
   selector: 'app-flight-plans',
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
@@ -28,176 +38,23 @@ export class FlightPlansComponent implements OnInit {
   customTableComponent = viewChild.required(CustomTableComponent);
   flightPlansColumnTemplate = viewChild.required('flightPlansColumnTemplate');
   statusColumnTemplate = viewChild.required('statusColumnTemplate');
+  searchInput = viewChild.required<ElementRef>('searchInput');
 
-  searchInputValue = '';
+  flightPlansService = inject(FlightPlansService);
+
   columns = signal<Column[]>([]);
-  selectedRowData: any = null;
+  flightPlansData = signal<IFlightPlan[] | null>(null);
+  flightPlansTotal = signal<number>(0);
 
-  flightPlansData = [
-    {
-      acReg: 'lorem',
-      flightNo: 'lorem',
-      depDateTime: '01/01/2020 - 10:29',
-      receivedDateTime: '01/01/2020 - 10:29',
-      version: 'V1',
-
-      responsibleUser: 'Name Surname',
-      status: 'SUBMITTED',
-      approvedDateTime: '01/01/2020 - 10:29',
-      replacedDateTime: '01/01/2020 - 10:29',
-      declinedDateTime: '01/01/2020 - 10:29',
-
-      submittedDateTime: '01/01/2020 - 10:29',
-      flightPlan: '',
-    },
-    {
-      acReg: 'lorem',
-      flightNo: 'lorem',
-      depDateTime: '01/01/2020 - 10:29',
-      receivedDateTime: '01/01/2020 - 10:29',
-      version: 'V1',
-
-      responsibleUser: 'Name Surname',
-      status: 'APPROVED',
-      approvedDateTime: '01/01/2020 - 10:29',
-      replacedDateTime: '01/01/2020 - 10:29',
-      declinedDateTime: '01/01/2020 - 10:29',
-
-      submittedDateTime: '01/01/2020 - 10:29',
-      flightPlan: '',
-    },
-    {
-      acReg: 'lorem',
-      flightNo: 'lorem',
-      depDateTime: '01/01/2020 - 10:29',
-      receivedDateTime: '01/01/2020 - 10:29',
-      version: 'V1',
-
-      responsibleUser: 'Name Surname',
-      status: 'DECLINED',
-      approvedDateTime: '01/01/2020 - 10:29',
-      replacedDateTime: '01/01/2020 - 10:29',
-      declinedDateTime: '01/01/2020 - 10:29',
-
-      submittedDateTime: '01/01/2020 - 10:29',
-      flightPlan: '',
-    },
-    {
-      acReg: 'lorem',
-      flightNo: 'lorem',
-      depDateTime: '01/01/2020 - 10:29',
-      receivedDateTime: '01/01/2020 - 10:29',
-      version: 'V1',
-
-      responsibleUser: 'Name Surname',
-      status: 'SUBMITTED',
-      approvedDateTime: '01/01/2020 - 10:29',
-      replacedDateTime: '01/01/2020 - 10:29',
-      declinedDateTime: '01/01/2020 - 10:29',
-
-      submittedDateTime: '01/01/2020 - 10:29',
-      flightPlan: '',
-    },
-    {
-      acReg: 'lorem',
-      flightNo: 'lorem',
-      depDateTime: '01/01/2020 - 10:29',
-      receivedDateTime: '01/01/2020 - 10:29',
-      version: 'V1',
-
-      responsibleUser: 'Name Surname',
-      status: 'APPROVED',
-      approvedDateTime: '01/01/2020 - 10:29',
-      replacedDateTime: '01/01/2020 - 10:29',
-      declinedDateTime: '01/01/2020 - 10:29',
-
-      submittedDateTime: '01/01/2020 - 10:29',
-      flightPlan: '',
-    },
-    {
-      acReg: 'lorem',
-      flightNo: 'lorem',
-      depDateTime: '01/01/2020 - 10:29',
-      receivedDateTime: '01/01/2020 - 10:29',
-      version: 'V1',
-
-      responsibleUser: 'Name Surname',
-      status: 'DECLINED',
-      approvedDateTime: '01/01/2020 - 10:29',
-      replacedDateTime: '01/01/2020 - 10:29',
-      declinedDateTime: '01/01/2020 - 10:29',
-
-      submittedDateTime: '01/01/2020 - 10:29',
-      flightPlan: '',
-    },
-    {
-      acReg: 'lorem',
-      flightNo: 'lorem',
-      depDateTime: '01/01/2020 - 10:29',
-      receivedDateTime: '01/01/2020 - 10:29',
-      version: 'V1',
-
-      responsibleUser: 'Name Surname',
-      status: 'WAITING_APPROVE',
-      approvedDateTime: '01/01/2020 - 10:29',
-      replacedDateTime: '01/01/2020 - 10:29',
-      declinedDateTime: '01/01/2020 - 10:29',
-
-      submittedDateTime: '01/01/2020 - 10:29',
-      flightPlan: '',
-    },
-    {
-      acReg: 'lorem',
-      flightNo: 'lorem',
-      depDateTime: '01/01/2020 - 10:29',
-      receivedDateTime: '01/01/2020 - 10:29',
-      version: 'V1',
-
-      responsibleUser: 'Name Surname',
-      status: 'REPLACED',
-      approvedDateTime: '01/01/2020 - 10:29',
-      replacedDateTime: '01/01/2020 - 10:29',
-      declinedDateTime: '01/01/2020 - 10:29',
-
-      submittedDateTime: '01/01/2020 - 10:29',
-      flightPlan: '',
-    },
-    {
-      acReg: 'lorem',
-      flightNo: 'lorem',
-      depDateTime: '01/01/2020 - 10:29',
-      receivedDateTime: '01/01/2020 - 10:29',
-      version: 'V1',
-
-      responsibleUser: 'Name Surname',
-      status: 'WAITING_APPROVE',
-      approvedDateTime: '01/01/2020 - 10:29',
-      replacedDateTime: '01/01/2020 - 10:29',
-      declinedDateTime: '01/01/2020 - 10:29',
-
-      submittedDateTime: '01/01/2020 - 10:29',
-      flightPlan: '',
-    },
-    {
-      acReg: 'lorem',
-      flightNo: 'lorem',
-      depDateTime: '01/01/2020 - 10:29',
-      receivedDateTime: '01/01/2020 - 10:29',
-      version: 'V1',
-
-      responsibleUser: 'Name Surname',
-      status: 'REPLACED',
-      approvedDateTime: '01/01/2020 - 10:29',
-      replacedDateTime: '01/01/2020 - 10:29',
-      declinedDateTime: '01/01/2020 - 10:29',
-
-      submittedDateTime: '01/01/2020 - 10:29',
-      flightPlan: '',
-    },
-  ];
+  searchInputValue = signal<string>('');
+  currentPage = signal<number>(0);
+  currentRows = signal<number>(10);
+  tableFilters = signal<any>({});
+  tableLoading = signal<boolean>(false);
 
   ngOnInit() {
     this.defineColumn();
+    this.setupSearchListener();
   }
 
   defineColumn() {
@@ -206,60 +63,174 @@ export class FlightPlansComponent implements OnInit {
       { field: 'flightNo', header: 'Flight No', isFilter: true },
       {
         field: 'depDateTime',
-        header: 'Dep Date - Time',
+        header: 'Departure Date',
         isFilter: true,
         filterType: 'datepicker',
       },
       {
         field: 'receivedDateTime',
-        header: 'Received Date - Time',
+        header: 'Received Date',
         isFilter: true,
         filterType: 'datepicker',
       },
-      {
-        field: 'version',
-        header: 'Version',
-        isFilter: true,
-      },
-
+      { field: 'version', header: 'Version', isFilter: true },
       { field: 'responsibleUser', header: 'Responsible User', isFilter: true },
       {
         field: 'status',
         header: 'Status',
-        isFilter: false,
+        isFilter: true,
         template: this.statusColumnTemplate(),
+        filterType: 'selectbox',
+        filterOptions: [
+          { label: 'Waiting for Approve', value: 'NEW' },
+          { label: 'Approved', value: 'APPROVED' },
+          { label: 'Submitted', value: 'SUBMITTED' },
+          { label: 'Declined', value: 'DECLINED' },
+          { label: 'Replaced', value: 'REPLACED' },
+        ],
       },
-
       {
         field: 'approvedDateTime',
-        header: 'Approved Date - Time',
+        header: 'Approved Date',
         isFilter: true,
+        filterType: 'datepicker',
       },
       {
         field: 'replacedDateTime',
-        header: 'Replaced Date - Time',
+        header: 'Replaced Date',
         isFilter: true,
+        filterType: 'datepicker',
       },
       {
         field: 'declinedDateTime',
-        header: 'Declined Date - Time',
+        header: 'Declined Date',
         isFilter: true,
+        filterType: 'datepicker',
       },
       {
         field: 'submittedDateTime',
-        header: 'Submitted Date - Time',
+        header: 'Submitted Date',
         isFilter: true,
+        filterType: 'datepicker',
       },
       {
         field: 'flightPlan',
         header: 'Flight Plan',
-        isFilter: true,
+        isFilter: false,
         template: this.flightPlansColumnTemplate(),
       },
     ]);
   }
 
-  onChangeSearch(value: string) {}
+  getFlightPlans() {
+    this.tableLoading.set(true);
 
-  onFlightPlansShow(rowData: any) {}
+    this.flightPlansService
+      .getFlightPlans(
+        this.currentPage(),
+        this.currentRows(),
+        this.searchInputValue(),
+        this.tableFilters(),
+      )
+      .subscribe({
+        next: (response) => {
+          const formattedData = response.content.map((item) => ({
+            ...item,
+            depDateTime: item.depDateTime
+              ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+
+            receivedDateTime: item.receivedDateTime
+              ? moment(item.receivedDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+
+            approvedDateTime: item.approvedDateTime
+              ? moment(item.approvedDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+
+            replacedDateTime: item.replacedDateTime
+              ? moment(item.replacedDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+            declinedDateTime: item.declinedDateTime
+              ? moment(item.declinedDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+            submittedDateTime: item.submittedDateTime
+              ? moment(item.submittedDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+          }));
+
+          this.flightPlansData.set(formattedData);
+          this.flightPlansTotal.set(response.totalElements);
+          this.tableLoading.set(false);
+        },
+        error: () => {
+          this.tableLoading.set(false);
+        },
+      });
+  }
+
+  setupSearchListener() {
+    fromEvent<Event>(this.searchInput().nativeElement, 'input')
+      .pipe(
+        map((event: Event) => (event.target as HTMLInputElement).value),
+        debounceTime(300),
+        distinctUntilChanged(),
+      )
+      .subscribe((searchText) => {
+        if (searchText.trim() || searchText === '') {
+          this.currentPage.set(0);
+          this.customTableComponent().resetTableFirstValue();
+
+          this.getFlightPlans();
+        }
+      });
+  }
+
+  onChangeSearch(value: string) {
+    this.searchInputValue.set(value.toUpperCase());
+    this.currentPage.set(0);
+    this.customTableComponent().resetTableFirstValue();
+    this.getFlightPlans();
+  }
+
+  lazyLoadEvent(event: any) {
+    const page = event.first / event.rows;
+    this.currentPage.set(page);
+    this.currentRows.set(event.rows);
+
+    this.tableFilters.set({
+      acReg: event.filters?.acReg && event.filters?.acReg[0].value,
+      flightNo: event.filters?.flightNo && event.filters?.flightNo[0].value,
+      depDate:
+        event.filters?.depDateTime && event.filters?.depDateTime[0].value,
+      receivedDate:
+        event.filters?.receivedDateTime &&
+        event.filters?.receivedDateTime[0].value,
+      version: event.filters?.version && event.filters?.version[0].value,
+      responsibleUser:
+        event.filters?.responsibleUser &&
+        event.filters?.responsibleUser[0].value,
+
+      status: event.filters?.status && event.filters?.status[0].value,
+      approvedDate:
+        event.filters?.approvedDateTime &&
+        event.filters?.approvedDateTime[0].value,
+      replacedDate:
+        event.filters?.replacedDateTime &&
+        event.filters?.replacedDateTime[0].value,
+      declinedDate:
+        event.filters?.declinedDateTime &&
+        event.filters?.declinedDateTime[0].value,
+      submittedDate:
+        event.filters?.submittedDateTime &&
+        event.filters?.submittedDateTime[0].value,
+    });
+    console.log(this.tableFilters());
+
+    this.getFlightPlans();
+  }
+
+  onFlightPlansShow(rowData: IFlightPlan) {
+    console.log('Selected row:', rowData);
+  }
 }

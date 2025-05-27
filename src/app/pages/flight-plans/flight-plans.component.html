@@ -20,13 +20,16 @@
   <!-- Table -->
   <section class="table-section custom-card mt-5">
     <app-custom-table
-      [tableData]="flightPlansData"
+      [tableData]="flightPlansData()"
       [tableColumns]="columns()"
+      [totalRecords]="flightPlansTotal()"
+      (lazyLoadEvent)="lazyLoadEvent($event)"
+      [tableLoading]="tableLoading()"
     ></app-custom-table>
   </section>
 </div>
 
-<!-- Licence Column Template -->
+<!-- Flight Plan Column Template -->
 <ng-template #flightPlansColumnTemplate let-rowData="rowData">
   <button
     class="border border-gray-300 rounded-md px-3 py-1 bg-white"
@@ -36,6 +39,7 @@
   </button>
 </ng-template>
 
+<!-- Status Chip Template -->
 <ng-template #statusColumnTemplate let-rowData="rowData">
   @switch (rowData.status) {
     @case ("SUBMITTED") {
@@ -47,7 +51,7 @@
     @case ("DECLINED") {
       <p-chip label="Declined" class="red-chip" />
     }
-    @case ("WAITING_APPROVE") {
+    @case ("NEW") {
       <p-chip label="Waiting for approve" class="orange-chip" />
     }
     @case ("REPLACED") {

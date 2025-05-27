@@ -30,8 +30,8 @@ export interface IPersonalChecklistsResponse {
 export interface IPersonalChecklistsContentData {
   aircraftReg: string;
   flightNo: string;
-  depDateTime: string;
-  approvedDateTime: string;
+  depDateTime: string | null;
+  approvedDateTime: string | null;
   checklistConfirmed: string;
   status: string;
 }

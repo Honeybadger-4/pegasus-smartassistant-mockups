@@ -66,14 +66,14 @@ export class TripInfoComponent implements OnInit {
       { field: 'flightNo', header: 'Flight No', isFilter: true },
       {
         field: 'depDateTime',
-        header: 'Dep Date - Time',
+        header: 'Departure Date',
         isFilter: true,
         filterType: 'datepicker',
       },
       { field: 'sentBy', header: 'Sent By', isFilter: true },
       {
         field: 'sentDateTime',
-        header: 'Sent Date - Time',
+        header: 'Sent Date',
         isFilter: true,
         filterType: 'datepicker',
       },
@@ -93,10 +93,12 @@ export class TripInfoComponent implements OnInit {
         next: (response: ITripInfoResponse) => {
           const formattedData = response.content.map((item) => ({
             ...item,
-            depDateTime: moment(item.depDateTime).format('DD/MM/YYYY - HH:mm'),
-            sentDateTime: moment(item.sentDateTime).format(
-              'DD/MM/YYYY - HH:mm',
-            ),
+            depDateTime: item.depDateTime
+              ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+            sentDateTime: item.sentDateTime
+              ? moment(item.sentDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
           }));
 
           this.tripInfoTableData.set(formattedData);

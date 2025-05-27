@@ -67,13 +67,13 @@ export class PersonalChecklistsComponent implements OnInit {
       { field: 'flightNo', header: 'Flight No', isFilter: true },
       {
         field: 'depDateTime',
-        header: 'Dep Date - Time',
+        header: 'Departure Date',
         isFilter: true,
         filterType: 'datepicker',
       },
       {
         field: 'approvedDateTime',
-        header: 'Approve Date - Time',
+        header: 'Approve Date',
         isFilter: true,
         filterType: 'datepicker',
       },
@@ -83,6 +83,11 @@ export class PersonalChecklistsComponent implements OnInit {
         header: 'Status',
         isFilter: true,
         template: this.statusColumnTemplate(),
+        filterType: 'selectbox',
+        filterOptions: [
+          { label: 'Waiting for Approve', value: 'WAITING FOR APPROVE' },
+          { label: 'Approved', value: 'APPROVED' },
+        ],
       },
     ]);
   }
@@ -101,10 +106,12 @@ export class PersonalChecklistsComponent implements OnInit {
         next: (response: IPersonalChecklistsResponse) => {
           const formattedData = response.content.map((item) => ({
             ...item,
-            depDateTime: moment(item.depDateTime).format('DD/MM/YYYY - HH:mm'),
-            approvedDateTime: moment(item.approvedDateTime).format(
-              'DD/MM/YYYY - HH:mm',
-            ),
+            depDateTime: item.depDateTime
+              ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+            approvedDateTime: item.approvedDateTime
+              ? moment(item.approvedDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
           }));
 
           this.personalChecklistsData.set(response);
