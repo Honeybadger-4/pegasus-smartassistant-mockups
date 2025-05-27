@@ -66,14 +66,14 @@ export class TripInfoComponent implements OnInit {
       { field: 'flightNo', header: 'Flight No', isFilter: true },
       {
         field: 'depDateTime',
-        header: 'Dep Date - Time',
+        header: 'Departure Date',
         isFilter: true,
         filterType: 'datepicker',
       },
       { field: 'sentBy', header: 'Sent By', isFilter: true },
       {
         field: 'sentDateTime',
-        header: 'Sent Date - Time',
+        header: 'Sent Date',
         isFilter: true,
         filterType: 'datepicker',
       },

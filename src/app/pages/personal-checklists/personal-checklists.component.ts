@@ -67,13 +67,13 @@ export class PersonalChecklistsComponent implements OnInit {
       { field: 'flightNo', header: 'Flight No', isFilter: true },
       {
         field: 'depDateTime',
-        header: 'Dep Date - Time',
+        header: 'Departure Date',
         isFilter: true,
         filterType: 'datepicker',
       },
       {
         field: 'approvedDateTime',
-        header: 'Approve Date - Time',
+        header: 'Approve Date',
         isFilter: true,
         filterType: 'datepicker',
       },

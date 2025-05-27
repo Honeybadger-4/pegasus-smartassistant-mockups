@@ -460,10 +460,10 @@ export class FlightInfoComponent implements OnInit {
     this.mainCols = [
       { field: 'aircraftReg', header: 'Aircraft', isFilter: true },
       { field: 'flightNo', header: 'Flight No', isFilter: true },
-      { field: 'depPort', header: 'Dep Port', isFilter: true },
-      { field: 'arrPort', header: 'Arr Port', isFilter: true },
-      { field: 'depDateTime', header: 'Dep Date/Time' },
-      { field: 'arrDateTime', header: 'Arr Date/Time' },
+      { field: 'depPort', header: 'Departure Port', isFilter: true },
+      { field: 'arrPort', header: 'Arrival Port', isFilter: true },
+      { field: 'depDateTime', header: 'Departure Date' , isFilter: true },
+      { field: 'arrDateTime', header: 'Arrival Date' , isFilter: true },
 
       { field: 'user', header: 'Responsible User', isFilter: true },
 

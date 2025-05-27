@@ -69,13 +69,13 @@ export class LicenceInfoComponent implements OnInit {
       { field: 'flightNo', header: 'Flight No', isFilter: true },
       {
         field: 'depTime',
-        header: 'Dep Date - Time',
+        header: 'Departure Date',
         isFilter: true,
         filterType: 'datepicker',
       },
       {
         field: 'checkedDate',
-        header: 'Checked Date - Time',
+        header: 'Checked Date',
         isFilter: true,
         filterType: 'datepicker',
       },
