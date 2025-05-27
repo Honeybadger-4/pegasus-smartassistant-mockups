@@ -462,8 +462,8 @@ export class FlightInfoComponent implements OnInit {
       { field: 'flightNo', header: 'Flight No', isFilter: true },
       { field: 'depPort', header: 'Departure Port', isFilter: true },
       { field: 'arrPort', header: 'Arrival Port', isFilter: true },
-      { field: 'depDateTime', header: 'Departure Date' , isFilter: true },
-      { field: 'arrDateTime', header: 'Arrival Date' , isFilter: true },
+      { field: 'depDateTime', header: 'Departure Date', isFilter: true },
+      { field: 'arrDateTime', header: 'Arrival Date', isFilter: true },
 
       { field: 'user', header: 'Responsible User', isFilter: true },
 
@@ -635,10 +635,10 @@ export class FlightInfoComponent implements OnInit {
             ...item,
             depDateTime: item.depDateTime
               ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
-               : null,
+              : null,
             arrDateTime: item.arrDateTime
               ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
-               : null,
+              : null,
           }));
 
           this.flightInformationHistoryData.set(response);
