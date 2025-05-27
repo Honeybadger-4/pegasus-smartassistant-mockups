@@ -18,6 +18,7 @@ import { LogbookComponent } from './pages/logbook/logbook.component';
 import { PersonalChecklistsComponent } from './pages/personal-checklists/personal-checklists.component';
 import { LicenceInfoComponent } from './pages/licence-info/licence-info.component';
 import { FlightPlansComponent } from './pages/flight-plans/flight-plans.component';
+import { GpsLossFormsComponent } from './pages/gps-loss-forms/gps-loss-forms.component';
 
 export const routes: Routes = [
   {
@@ -54,6 +55,8 @@ export const routes: Routes = [
           { path: 'trip-information', component: TripInfoComponent },
           { path: 'load-sheet', component: LoadSheetComponent },
           { path: 'report', component: ReportComponent },
+                    { path: 'gps-loss-form', component: GpsLossFormsComponent },
+
         ],
       },
 
