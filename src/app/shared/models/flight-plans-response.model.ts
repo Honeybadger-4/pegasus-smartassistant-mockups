@@ -26,13 +26,13 @@ export interface IFlightPlan {
   id: number;
   acReg: string;
   flightNo: string;
-  depDateTime: string;
-  receivedDateTime: string;
+  depDateTime: string | null;
+  receivedDateTime: string | null;
   version: string;
   responsibleUser: string;
   status: string;
-  approvedDateTime: string;
-  replacedDateTime: string;
-  declinedDateTime: string;
-  submittedDateTime: string;
+  approvedDateTime: string | null;
+  replacedDateTime: string | null;
+  declinedDateTime: string | null;
+  submittedDateTime: string | null;
 }

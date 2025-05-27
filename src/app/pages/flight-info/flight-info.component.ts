@@ -635,10 +635,10 @@ export class FlightInfoComponent implements OnInit {
             ...item,
             depDateTime: item.depDateTime
               ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
-              : '-',
+               : null,
             arrDateTime: item.arrDateTime
               ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
-              : '-',
+               : null,
           }));
 
           this.flightInformationHistoryData.set(response);

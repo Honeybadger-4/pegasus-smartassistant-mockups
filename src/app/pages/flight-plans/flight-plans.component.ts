@@ -138,25 +138,25 @@ export class FlightPlansComponent implements OnInit {
             ...item,
             depDateTime: item.depDateTime
               ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
-              : '-',
+              : null,
 
             receivedDateTime: item.receivedDateTime
               ? moment(item.receivedDateTime).format('DD/MM/YYYY - HH:mm')
-              : '-',
+              : null,
 
             approvedDateTime: item.approvedDateTime
               ? moment(item.approvedDateTime).format('DD/MM/YYYY - HH:mm')
-              : '-',
+              : null,
 
             replacedDateTime: item.replacedDateTime
               ? moment(item.replacedDateTime).format('DD/MM/YYYY - HH:mm')
-              : '-',
+              : null,
             declinedDateTime: item.declinedDateTime
               ? moment(item.declinedDateTime).format('DD/MM/YYYY - HH:mm')
-              : '-',
+              : null,
             submittedDateTime: item.submittedDateTime
               ? moment(item.submittedDateTime).format('DD/MM/YYYY - HH:mm')
-              : '-',
+              : null,
           }));
 
           this.flightPlansData.set(formattedData);

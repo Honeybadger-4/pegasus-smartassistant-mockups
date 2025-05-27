@@ -108,10 +108,10 @@ export class PersonalChecklistsComponent implements OnInit {
             ...item,
             depDateTime: item.depDateTime
               ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
-              : '-',
+              : null,
             approvedDateTime: item.approvedDateTime
               ? moment(item.approvedDateTime).format('DD/MM/YYYY - HH:mm')
-              : '-',
+              : null,
           }));
 
           this.personalChecklistsData.set(response);

@@ -31,7 +31,7 @@ export interface ITripInfoTableData {
   id: number;
   acReg: string;
   flightNo: string;
-  depDateTime: string;
+  depDateTime: string | null;
   sentBy: string;
-  sentDateTime: string;
+  sentDateTime: string | null;
 }

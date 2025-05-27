@@ -95,10 +95,10 @@ export class TripInfoComponent implements OnInit {
             ...item,
             depDateTime: item.depDateTime
               ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
-              : '-',
+              : null,
             sentDateTime: item.sentDateTime
               ? moment(item.sentDateTime).format('DD/MM/YYYY - HH:mm')
-              : '-',
+              : null,
           }));
 
           this.tripInfoTableData.set(formattedData);

@@ -30,8 +30,8 @@ export interface ILicenceInfoResponse {
 export interface ILicenceInfoContentData {
   acReg: string;
   flightNo: string;
-  depTime: string;
-  checkedDate: string;
+  depTime: string | null;
+  checkedDate: string | null;
   checkedBy: string;
   licenceListResponse: {
     licenseList: {

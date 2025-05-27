@@ -105,10 +105,10 @@ export class LicenceInfoComponent implements OnInit {
             ...item,
             depTime: item.depTime
               ? moment(item.depTime).format('DD/MM/YYYY - HH:mm')
-              : '-',
+              : null,
             checkedDate: item.checkedDate
               ? moment(item.checkedDate).format('DD/MM/YYYY - HH:mm')
-              : '-',
+              : null,
           }));
 
           this.licenceInfoContentData.set(formattedData);
