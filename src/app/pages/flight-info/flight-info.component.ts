@@ -633,8 +633,12 @@ export class FlightInfoComponent implements OnInit {
         next: (response) => {
           const formattedData = response.content.map((item) => ({
             ...item,
-            depDateTime: item.depDateTime?moment(item.depDateTime).format('DD/MM/YYYY - HH:mm'):'-',
-            arrDateTime: item.arrDateTime?moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm'):'-',
+            depDateTime: item.depDateTime
+              ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
+              : '-',
+            arrDateTime: item.arrDateTime
+              ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
+              : '-',
           }));
 
           this.flightInformationHistoryData.set(response);

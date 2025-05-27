@@ -103,8 +103,12 @@ export class LicenceInfoComponent implements OnInit {
         next: (response: ILicenceInfoResponse) => {
           const formattedData = response.content.map((item) => ({
             ...item,
-            depTime: item.depTime?moment(item.depTime).format('DD/MM/YYYY - HH:mm'):'-',
-            checkedDate: item.checkedDate?moment(item.checkedDate).format('DD/MM/YYYY - HH:mm'):'-',
+            depTime: item.depTime
+              ? moment(item.depTime).format('DD/MM/YYYY - HH:mm')
+              : '-',
+            checkedDate: item.checkedDate
+              ? moment(item.checkedDate).format('DD/MM/YYYY - HH:mm')
+              : '-',
           }));
 
           this.licenceInfoContentData.set(formattedData);

@@ -33,6 +33,6 @@ export interface IFlightPlan {
   status: string;
   approvedDateTime: string;
   replacedDateTime: string;
-  declinedDateTime:string;
+  declinedDateTime: string;
   submittedDateTime: string;
 }

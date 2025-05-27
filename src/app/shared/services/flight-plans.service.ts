@@ -50,11 +50,11 @@ export class FlightPlansService {
       submittedDate: tableFilters?.submittedDate,
     };
 
-    const cleanedBody = this.requestParamsControlService.requestBodyControl(requestBody);
+    const cleanedBody =
+      this.requestParamsControlService.requestBodyControl(requestBody);
 
-
-   return this.http
-    .post<IHttpResponseModel>(apiUrl, cleanedBody, { params })
-    .pipe(map((response) => response.data));
-}
+    return this.http
+      .post<IHttpResponseModel>(apiUrl, cleanedBody, { params })
+      .pipe(map((response) => response.data));
+  }
 }

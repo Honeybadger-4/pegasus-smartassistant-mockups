@@ -93,10 +93,12 @@ export class TripInfoComponent implements OnInit {
         next: (response: ITripInfoResponse) => {
           const formattedData = response.content.map((item) => ({
             ...item,
-            depDateTime: item.depDateTime?moment(item.depDateTime).format('DD/MM/YYYY - HH:mm'):'-',
-            sentDateTime: item.sentDateTime?moment(item.sentDateTime).format(
-              'DD/MM/YYYY - HH:mm',
-            ):'-',
+            depDateTime: item.depDateTime
+              ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
+              : '-',
+            sentDateTime: item.sentDateTime
+              ? moment(item.sentDateTime).format('DD/MM/YYYY - HH:mm')
+              : '-',
           }));
 
           this.tripInfoTableData.set(formattedData);

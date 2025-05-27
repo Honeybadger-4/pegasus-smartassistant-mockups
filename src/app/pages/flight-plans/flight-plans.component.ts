@@ -136,28 +136,27 @@ export class FlightPlansComponent implements OnInit {
         next: (response) => {
           const formattedData = response.content.map((item) => ({
             ...item,
-            depDateTime: item.depDateTime?moment(item.depDateTime).format('DD/MM/YYYY - HH:mm'):'-',
+            depDateTime: item.depDateTime
+              ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
+              : '-',
 
-            receivedDateTime: item.receivedDateTime?moment(item.receivedDateTime).format(
-              'DD/MM/YYYY - HH:mm',
-            ):'-',
+            receivedDateTime: item.receivedDateTime
+              ? moment(item.receivedDateTime).format('DD/MM/YYYY - HH:mm')
+              : '-',
 
             approvedDateTime: item.approvedDateTime
               ? moment(item.approvedDateTime).format('DD/MM/YYYY - HH:mm')
               : '-',
 
-
-
-
-            replacedDateTime: item.replacedDateTime?moment(item.replacedDateTime).format(
-              'DD/MM/YYYY - HH:mm',
-            ):'-',
-            declinedDateTime: item.declinedDateTime?moment(item.declinedDateTime).format(
-              'DD/MM/YYYY - HH:mm',
-            ):'-',
-            submittedDateTime: item.submittedDateTime?moment(item.submittedDateTime).format(
-              'DD/MM/YYYY - HH:mm',
-            ):'-',
+            replacedDateTime: item.replacedDateTime
+              ? moment(item.replacedDateTime).format('DD/MM/YYYY - HH:mm')
+              : '-',
+            declinedDateTime: item.declinedDateTime
+              ? moment(item.declinedDateTime).format('DD/MM/YYYY - HH:mm')
+              : '-',
+            submittedDateTime: item.submittedDateTime
+              ? moment(item.submittedDateTime).format('DD/MM/YYYY - HH:mm')
+              : '-',
           }));
 
           this.flightPlansData.set(formattedData);
