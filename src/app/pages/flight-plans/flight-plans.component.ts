@@ -80,6 +80,14 @@ export class FlightPlansComponent implements OnInit {
         header: 'Status',
         isFilter: true,
         template: this.statusColumnTemplate(),
+        filterType: 'selectbox',
+        filterOptions: [
+          { label: 'Waiting for Approve', value: 'NEW' },
+          { label: 'Approved', value: 'APPROVED' },
+          { label: 'Submitted', value: 'SUBMITTED' },
+          { label: 'Declined', value: 'DECLINED' },
+          { label: 'Replaced', value: 'REPLACED' },
+        ],
       },
       {
         field: 'approvedDateTime',
@@ -128,24 +136,28 @@ export class FlightPlansComponent implements OnInit {
         next: (response) => {
           const formattedData = response.content.map((item) => ({
             ...item,
-            depDateTime: moment(item.depDateTime).format('DD/MM/YYYY - HH:mm'),
+            depDateTime: item.depDateTime?moment(item.depDateTime).format('DD/MM/YYYY - HH:mm'):'-',
 
-            receivedDateTime: moment(item.receivedDateTime).format(
+            receivedDateTime: item.receivedDateTime?moment(item.receivedDateTime).format(
               'DD/MM/YYYY - HH:mm',
-            ),
+            ):'-',
 
-            approvedDateTime: moment(item.approvedDateTime).format(
+            approvedDateTime: item.approvedDateTime
+              ? moment(item.approvedDateTime).format('DD/MM/YYYY - HH:mm')
+              : '-',
+
+
+
+
+            replacedDateTime: item.replacedDateTime?moment(item.replacedDateTime).format(
               'DD/MM/YYYY - HH:mm',
-            ),
-            replacedDateTime: moment(item.replacedDateTime).format(
+            ):'-',
+            declinedDateTime: item.declinedDateTime?moment(item.declinedDateTime).format(
               'DD/MM/YYYY - HH:mm',
-            ),
-            declinedDateTime: moment(item.declinedDateTime).format(
+            ):'-',
+            submittedDateTime: item.submittedDateTime?moment(item.submittedDateTime).format(
               'DD/MM/YYYY - HH:mm',
-            ),
-            submittedDateTime: moment(item.submittedDateTime).format(
-              'DD/MM/YYYY - HH:mm',
-            ),
+            ):'-',
           }));
 
           this.flightPlansData.set(formattedData);

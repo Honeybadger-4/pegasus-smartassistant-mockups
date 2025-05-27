@@ -101,10 +101,10 @@ export class PersonalChecklistsComponent implements OnInit {
         next: (response: IPersonalChecklistsResponse) => {
           const formattedData = response.content.map((item) => ({
             ...item,
-            depDateTime: moment(item.depDateTime).format('DD/MM/YYYY - HH:mm'),
-            approvedDateTime: moment(item.approvedDateTime).format(
+            depDateTime: item.depDateTime?moment(item.depDateTime).format('DD/MM/YYYY - HH:mm'):'-',
+            approvedDateTime: item.approvedDateTime?moment(item.approvedDateTime).format(
               'DD/MM/YYYY - HH:mm',
-            ),
+            ):'-',
           }));
 
           this.personalChecklistsData.set(response);

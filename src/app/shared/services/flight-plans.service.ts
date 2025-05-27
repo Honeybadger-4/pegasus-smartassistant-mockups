@@ -49,14 +49,12 @@ export class FlightPlansService {
       declinedDate: tableFilters?.declinedDate,
       submittedDate: tableFilters?.submittedDate,
     };
-    Object.keys(requestBody).forEach((key) => {
-      if (requestBody[key] == null) {
-        delete requestBody[key];
-      }
-    });
 
-    return this.http
-      .post<IHttpResponseModel>(apiUrl, requestBody, { params })
-      .pipe(map((response) => response.data));
-  }
+    const cleanedBody = this.requestParamsControlService.requestBodyControl(requestBody);
+
+
+   return this.http
+    .post<IHttpResponseModel>(apiUrl, cleanedBody, { params })
+    .pipe(map((response) => response.data));
+}
 }

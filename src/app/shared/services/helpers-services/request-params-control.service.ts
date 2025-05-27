@@ -19,4 +19,12 @@ export class RequestParamsControlService {
 
     return params;
   }
+  requestBodyControl(raw: any): any {
+    Object.keys(raw).forEach((key) => {
+      if (raw[key] == null) {
+        delete raw[key];
+      }
+    });
+    return raw;
+  }
 }
