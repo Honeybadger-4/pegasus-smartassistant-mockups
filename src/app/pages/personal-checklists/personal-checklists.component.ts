@@ -83,6 +83,11 @@ export class PersonalChecklistsComponent implements OnInit {
         header: 'Status',
         isFilter: true,
         template: this.statusColumnTemplate(),
+        filterType: 'selectbox',
+        filterOptions: [
+          { label: 'Waiting for Approve', value: 'WAITING FOR APPROVE' },
+          { label: 'Approved', value: 'APPROVED' },
+        ],
       },
     ]);
   }
