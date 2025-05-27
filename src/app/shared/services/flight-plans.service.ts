@@ -20,50 +20,43 @@ export class FlightPlansService {
     tableFilters?: {
       acReg?: string;
       flightNo?: string;
-      depDateTime?: string;
-      receivedDateTime?: string;
+      depDate?: string;
+      receivedDate?: string;
       version?: string;
       responsibleUser?: string;
       status?: string;
-      approvedDateTime?: string;
-      replacedDateTime?: string;
-      declinedDateTime?: string;
-      submittedDateTime?: string;
+      approvedDate?: string;
+      replacedDate?: string;
+      declinedDate?: string;
+      submittedDate?: string;
     },
   ): Observable<IFlightPlansResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/flight-plans/search`;
 
     let params = new HttpParams().set('page', page).set('size', size);
 
-      const optionalParams: { key: string; value: any }[] = [
-      { key: 'searchValue', value: searchValue },
-      { key: 'sort', value:'desc' },
-      { key: 'acReg', value: tableFilters?.acReg },
-      { key: 'flightNo', value: tableFilters?.flightNo },
-      { key: 'depDateTime', value: tableFilters?.depDateTime },
-      { key: 'receivedDateTime', value: tableFilters?.receivedDateTime },
-      { key: 'version', value: tableFilters?.version },
-
-
-        { key: 'responsibleUser', value: tableFilters?.responsibleUser },
-      { key: 'status', value: tableFilters?.status },
-      { key: 'approvedDateTime', value: tableFilters?.approvedDateTime },
-      { key: 'replacedDateTime', value: tableFilters?.replacedDateTime },
-         { key: 'declinedDateTime', value: tableFilters?.declinedDateTime },
-      { key: 'submittedDateTime', value: tableFilters?.submittedDateTime },
-
-    ];
-
-    // sadece dolu filtreleri body'ye aktar
-    const body: Record<string, any> = {};
-    this.requestParamsControlService
-      .paramsControl(optionalParams)
-      .forEach(({ key, value }) => {
-        body[key] = value;
-      });
+    const requestBody: any = {
+      searchValue: searchValue,
+      acReg: tableFilters?.acReg,
+      flightNo: tableFilters?.flightNo,
+      depDate: tableFilters?.depDate,
+      receivedDate: tableFilters?.receivedDate,
+      version: tableFilters?.version,
+      responsibleUser: tableFilters?.responsibleUser,
+      status: tableFilters?.status,
+      approvedDate: tableFilters?.approvedDate,
+      replacedDate: tableFilters?.replacedDate,
+      declinedDate: tableFilters?.declinedDate,
+      submittedDate: tableFilters?.submittedDate,
+    };
+    Object.keys(requestBody).forEach((key) => {
+      if (requestBody[key] == null) {
+        delete requestBody[key];
+      }
+    });
 
     return this.http
-      .post<IHttpResponseModel>(apiUrl, body, { params }) // 👈 doğru kullanım
+      .post<IHttpResponseModel>(apiUrl, requestBody, { params })
       .pipe(map((response) => response.data));
   }
 }

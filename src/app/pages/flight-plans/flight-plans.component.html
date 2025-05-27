@@ -24,6 +24,7 @@
       [tableColumns]="columns()"
       [totalRecords]="flightPlansTotal()"
       (lazyLoadEvent)="lazyLoadEvent($event)"
+      [tableLoading]="tableLoading()"
     ></app-custom-table>
   </section>
 </div>

@@ -23,8 +23,8 @@
           <p-tableHeaderCheckbox />
         </th>
         <th *ngFor="let col of columns">
-          <div class="flex items-center">
-            {{ col.header }}
+          <div class="flex items-center" style="white-space: nowrap;">
+            {{ col.header }} 
             <ng-container [ngSwitch]="col.filterType">
               <!-- Selectbox Filter -->
               <ng-container *ngSwitchCase="'selectbox'">

@@ -29,10 +29,10 @@ export interface IFlightPlan {
   depDateTime: string;
   receivedDateTime: string;
   version: string;
-  responsibleUser: string | null;
+  responsibleUser: string;
   status: string;
-  approvedDateTime: string | null;
-  replacedDateTime: string | null;
-  declinedDateTime: string | null;
-  submittedDateTime: string | null;
+  approvedDateTime: string;
+  replacedDateTime: string;
+  declinedDateTime:string;
+  submittedDateTime: string;
 }
