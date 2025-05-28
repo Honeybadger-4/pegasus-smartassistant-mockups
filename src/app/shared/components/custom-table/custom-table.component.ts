@@ -74,7 +74,6 @@ export class CustomTableComponent {
   }
 
   filterTimeControl(selectedTime: any) {
-    return moment(selectedTime).format('HH:mm'); 
-  };
-
+    return moment(selectedTime).format('HH:mm');
+  }
 }

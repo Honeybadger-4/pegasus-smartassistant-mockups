@@ -37,7 +37,5 @@ export interface IGpsLossFormContentData {
   flightLevel: number;
   duration: string;
   flightPhase: string;
-  impacts: string[]   
+  impacts: string[];
 }
-
-
