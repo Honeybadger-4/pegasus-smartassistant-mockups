@@ -27,7 +27,7 @@ export class GpsSignalLossService {
       .pipe(map((response) => response.data));
   }
 
-  getAll(
+  getAllGpsLossForms(
     page: number,
     size: number,
     searchValue?: string,

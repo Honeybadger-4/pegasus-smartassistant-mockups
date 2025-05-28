@@ -20,9 +20,9 @@
   <!-- Table -->
   <section class="table-section custom-card mt-5">
     <app-custom-table
-      [tableData]="gpsLossFormsData()"
+      [tableData]="gpsLossFormsContentData()"
       [tableColumns]="columns()"
-      [totalRecords]="gpsLossFormsTotal()"
+      [totalRecords]="gpsLossFormsData()?.totalElements || 0"
       (lazyLoadEvent)="lazyLoadEvent($event)"
       [tableLoading]="tableLoading()"
     ></app-custom-table>
@@ -39,4 +39,8 @@
   </button>
 </ng-template>
 
-
+<!-- GPS Loss Types Modal -->
+<app-gps-loss-forms-modal
+  [(visible)]="modalVisible"
+  [rowData]="selectedRow()"
+/>

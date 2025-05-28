@@ -10,14 +10,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
+import { GpsLossFormsModalComponent } from 'src/app/components/gps-loss-forms-modal/gps-loss-forms-modal.component';
+
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { GpsSignalLossService } from '@shared/services/gps-signal-loss.service';
-import {
-  IGpsLossForm,
-  IGpsLossFormsResponse,
-} from '@shared/models/gps-loss-forms-response.model';
+
+import { IGpsLossFormContentData, IGpsLossFormsResponse } from '@shared/models/gps-loss-forms-response.model';
 import moment from 'moment';
 import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 @Component({
@@ -29,27 +29,49 @@ import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
     IconFieldModule,
     InputIconModule,
     InputTextModule,
+    GpsLossFormsModalComponent,
   ],
   templateUrl: './gps-loss-forms.component.html',
   styleUrl: './gps-loss-forms.component.scss',
 })
 export class GpsLossFormsComponent implements OnInit {
-  customTableComponent = viewChild.required(CustomTableComponent);
   gpsLossFormsColumnTemplate = viewChild.required('gpsLossFormsColumnTemplate');
-  statusColumnTemplate = viewChild.required('statusColumnTemplate');
+  customTableComponent = viewChild.required(CustomTableComponent);
   searchInput = viewChild.required<ElementRef>('searchInput');
+
+
+
 
   gpsLossFormsService = inject(GpsSignalLossService);
 
-  columns = signal<Column[]>([]);
-  gpsLossFormsData = signal<IGpsLossForm[] | null>(null);
-  gpsLossFormsTotal = signal<number>(0);
+
+
 
   searchInputValue = signal<string>('');
+
+
+
+  columns = signal<Column[]>([]);
+
+  showModal = signal<boolean>(false);
+
+  selectedRow = signal<IGpsLossFormContentData | null>(null);
+
+
+
+  // gpsLossFormsData = signal<IGpsLossFormContentData[] | null>(null);
+  // gpsLossFormsTotal = signal<number>(0);
+
+
+gpsLossFormsData = signal<IGpsLossFormsResponse | null>(null);
+  gpsLossFormsContentData = signal<IGpsLossFormsResponse['content'] | null>(null);
+
+
   currentPage = signal<number>(0);
   currentRows = signal<number>(10);
   tableFilters = signal<any>({});
   tableLoading = signal<boolean>(false);
+
 
   ngOnInit() {
     this.defineColumn();
@@ -61,34 +83,51 @@ export class GpsLossFormsComponent implements OnInit {
       { field: 'acReg', header: 'Ac Reg', isFilter: true },
       { field: 'flightNo', header: 'Flight No', isFilter: true },
       { field: 'depPort', header: 'Departure Port', isFilter: true },
-      { field: 'depDateTime', header: 'Departure Date', isFilter: true, filterType: 'datepicker', },
+      {
+        field: 'depDateTime',
+        header: 'Departure Date',
+        isFilter: true,
+        filterType: 'datepicker',
+      },
       { field: 'arrPort', header: 'Arrival Port', isFilter: true },
-      { field: 'arrDateTime', header: 'Arrival Date', isFilter: true , filterType: 'datepicker',},
+      {
+        field: 'arrDateTime',
+        header: 'Arrival Date',
+        isFilter: true,
+        filterType: 'datepicker',
+      },
       { field: 'firstPointName', header: 'First Point', isFilter: true },
       { field: 'lastPointName', header: 'Last Point', isFilter: true },
       { field: 'time', header: 'Time', isFilter: true },
+      { field: 'flightPhase', header: 'Phase of Flight', isFilter: true },
+      {
+        field: 'flightLevel',
+        header: 'Flight Level or Attitude',
+        isFilter: true,
+      },
+      { field: 'duration', header: 'Duration', isFilter: true },
 
       {
         field: 'gpsLossForms',
-        header: 'GPS Loss Information',
+        header: 'GPS Loss Types',
         isFilter: false,
         template: this.gpsLossFormsColumnTemplate(),
       },
     ]);
   }
 
-  getAll() {
+  getAllGpsLossForms() {
     this.tableLoading.set(true);
 
     this.gpsLossFormsService
-      .getAll(
+      .getAllGpsLossForms(
         this.currentPage(),
         this.currentRows(),
         this.searchInputValue(),
         this.tableFilters(),
       )
       .subscribe({
-        next: (response) => {
+        next: (response: IGpsLossFormsResponse) => {
           const formattedData = response.content.map((item) => ({
             ...item,
             depDateTime: item.depDateTime
@@ -100,8 +139,10 @@ export class GpsLossFormsComponent implements OnInit {
               : null,
           }));
 
-          this.gpsLossFormsData.set(formattedData);
-          this.gpsLossFormsTotal.set(response.totalElements);
+          this.gpsLossFormsContentData.set(formattedData);
+          this.gpsLossFormsData.set(response);
+
+
           this.tableLoading.set(false);
         },
         error: () => {
@@ -122,7 +163,7 @@ export class GpsLossFormsComponent implements OnInit {
           this.currentPage.set(0);
           this.customTableComponent().resetTableFirstValue();
 
-          this.getAll();
+          this.getAllGpsLossForms();
         }
       });
   }
@@ -131,7 +172,7 @@ export class GpsLossFormsComponent implements OnInit {
     this.searchInputValue.set(value.toUpperCase());
     this.currentPage.set(0);
     this.customTableComponent().resetTableFirstValue();
-    this.getAll();
+    this.getAllGpsLossForms();
   }
 
   lazyLoadEvent(event: any) {
@@ -158,13 +199,27 @@ export class GpsLossFormsComponent implements OnInit {
         event.filters?.lastPointName && event.filters?.lastPointName[0].value,
 
       time: event.filters?.time && event.filters?.time[0].value,
+
+      flightPhase:
+        event.filters?.flightPhase && event.filters?.flightPhase[0].value,
+      flightLevel:
+        event.filters?.flightLevel && event.filters?.flightLevel[0].value,
+      duration: event.filters?.duration && event.filters?.duration[0].value,
     });
     console.log(this.tableFilters());
 
-    this.getAll();
+    this.getAllGpsLossForms();
   }
 
-  onGpsLossFormsShow(rowData: IGpsLossForm) {
-    console.log('Selected row:', rowData);
+  onGpsLossFormsShow(row: IGpsLossFormContentData) {
+    this.selectedRow.set(row);
+    this.showModal.set(true);
+  }
+
+  get modalVisible() {
+    return this.showModal();
+  }
+  set modalVisible(value: boolean) {
+    this.showModal.set(value);
   }
 }

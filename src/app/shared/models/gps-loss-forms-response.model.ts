@@ -1,5 +1,5 @@
 export interface IGpsLossFormsResponse {
-  content: IGpsLossForm[];
+  content: IGpsLossFormContentData[];
   pageable: {
     pageNumber: number;
     pageSize: number;
@@ -22,7 +22,7 @@ export interface IGpsLossFormsResponse {
   empty: boolean;
 }
 
-export interface IGpsLossForm {
+export interface IGpsLossFormContentData {
   id: number;
   legIsn: number;
   acReg: string;
@@ -39,3 +39,5 @@ export interface IGpsLossForm {
   flightPhase: string;
   impacts: string[]   
 }
+
+
