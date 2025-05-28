@@ -46,6 +46,15 @@
                 />
               </ng-container>
 
+              <ng-container *ngSwitchCase="'timeonly'">
+                <ng-container
+                  *ngTemplateOutlet="
+                    timeFilterTemplate;
+                    context: { $implicit: col }
+                  "
+                />
+              </ng-container>
+
               <!-- Default Text Filter -->
               <ng-container *ngSwitchDefault>
                 <ng-container
@@ -156,6 +165,29 @@
             class="custom-calendar"
             (onSelect)="filter(filterDateControl($event))"
           />
+        </ng-template>
+      </p-columnFilter>
+    </ng-template>
+
+    <ng-template #timeFilterTemplate let-col>
+      <p-columnFilter
+        [field]="col.field"
+        matchMode="equals"
+        display="menu"
+        [showMatchModes]="false"
+        [showOperator]="false"
+        [showAddButton]="false"
+        [showApplyButton]="false"
+      >
+        <ng-template #filter let-value let-filter="filterCallback">
+          <p-datepicker
+            [readonlyInput]="true"
+            [timeOnly]="true"
+            [showSeconds]="false"
+            placeholder="Select a Time"
+            class="custom-calendar"
+            (onSelect)="filter(filterTimeControl($event))"
+          ></p-datepicker>
         </ng-template>
       </p-columnFilter>
     </ng-template>

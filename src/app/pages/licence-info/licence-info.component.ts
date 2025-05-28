@@ -46,6 +46,7 @@ export class LicenceInfoComponent implements OnInit {
 
   searchInputValue = signal<string>('');
   columns = signal<Column[]>([]);
+
   showLicenceModal = signal<boolean>(false);
   selectedRowData = signal<ILicenceInfoContentData | null>(null);
 

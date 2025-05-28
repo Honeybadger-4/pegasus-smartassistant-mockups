@@ -1,0 +1,19 @@
+<div id="gps-loss-forms-modal">
+  <p-dialog
+    [(visible)]="visible"
+    [modal]="true"
+    [closable]="true"
+    [dismissableMask]="true"
+    header="GPS Loss Types"
+    (onHide)="closeModal()"
+    [style]="{ width: '750px' }"
+  >
+    <section class="table-section custom-card">
+      <app-custom-table
+        [tableData]="tableData"
+        [tableColumns]="gpsLossTypesModalColumns"
+        [isPaginator]="false"
+      ></app-custom-table>
+    </section>
+  </p-dialog>
+</div>
