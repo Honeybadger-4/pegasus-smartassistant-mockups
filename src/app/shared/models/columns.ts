@@ -3,7 +3,7 @@ export interface Column {
   header: string;
   template?: any;
   isFilter?: boolean;
-  filterType?: 'selectbox' | 'datepicker';
+  filterType?: 'selectbox' | 'datepicker' | 'timeonly';
   filterOptions?: any[];
   sortable?: boolean;
 }

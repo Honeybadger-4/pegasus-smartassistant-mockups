@@ -59,8 +59,7 @@ export class GpsLossFormsComponent implements OnInit {
 
 
 
-  // gpsLossFormsData = signal<IGpsLossFormContentData[] | null>(null);
-  // gpsLossFormsTotal = signal<number>(0);
+
 
 
 gpsLossFormsData = signal<IGpsLossFormsResponse | null>(null);
@@ -98,14 +97,14 @@ gpsLossFormsData = signal<IGpsLossFormsResponse | null>(null);
       },
       { field: 'firstPointName', header: 'First Point', isFilter: true },
       { field: 'lastPointName', header: 'Last Point', isFilter: true },
-      { field: 'time', header: 'Time', isFilter: true },
+      { field: 'time', header: 'Time', isFilter: true, filterType: 'timeonly' },
       { field: 'flightPhase', header: 'Phase of Flight', isFilter: true },
       {
         field: 'flightLevel',
         header: 'Flight Level or Attitude',
         isFilter: true,
       },
-      { field: 'duration', header: 'Duration', isFilter: true },
+      { field: 'duration', header: 'Duration', isFilter: true, filterType: 'timeonly' },
 
       {
         field: 'gpsLossForms',
