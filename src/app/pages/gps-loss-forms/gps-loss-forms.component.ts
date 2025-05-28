@@ -17,7 +17,10 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { GpsSignalLossService } from '@shared/services/gps-signal-loss.service';
 
-import { IGpsLossFormContentData, IGpsLossFormsResponse } from '@shared/models/gps-loss-forms-response.model';
+import {
+  IGpsLossFormContentData,
+  IGpsLossFormsResponse,
+} from '@shared/models/gps-loss-forms-response.model';
 import moment from 'moment';
 import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 @Component({
@@ -39,17 +42,9 @@ export class GpsLossFormsComponent implements OnInit {
   customTableComponent = viewChild.required(CustomTableComponent);
   searchInput = viewChild.required<ElementRef>('searchInput');
 
-
-
-
   gpsLossFormsService = inject(GpsSignalLossService);
 
-
-
-
   searchInputValue = signal<string>('');
-
-
 
   columns = signal<Column[]>([]);
 
@@ -57,20 +52,15 @@ export class GpsLossFormsComponent implements OnInit {
 
   selectedRow = signal<IGpsLossFormContentData | null>(null);
 
-
-
-
-
-
-gpsLossFormsData = signal<IGpsLossFormsResponse | null>(null);
-  gpsLossFormsContentData = signal<IGpsLossFormsResponse['content'] | null>(null);
-
+  gpsLossFormsData = signal<IGpsLossFormsResponse | null>(null);
+  gpsLossFormsContentData = signal<IGpsLossFormsResponse['content'] | null>(
+    null,
+  );
 
   currentPage = signal<number>(0);
   currentRows = signal<number>(10);
   tableFilters = signal<any>({});
   tableLoading = signal<boolean>(false);
-
 
   ngOnInit() {
     this.defineColumn();
@@ -104,7 +94,12 @@ gpsLossFormsData = signal<IGpsLossFormsResponse | null>(null);
         header: 'Flight Level or Attitude',
         isFilter: true,
       },
-      { field: 'duration', header: 'Duration', isFilter: true, filterType: 'timeonly' },
+      {
+        field: 'duration',
+        header: 'Duration',
+        isFilter: true,
+        filterType: 'timeonly',
+      },
 
       {
         field: 'gpsLossForms',
@@ -140,7 +135,6 @@ gpsLossFormsData = signal<IGpsLossFormsResponse | null>(null);
 
           this.gpsLossFormsContentData.set(formattedData);
           this.gpsLossFormsData.set(response);
-
 
           this.tableLoading.set(false);
         },

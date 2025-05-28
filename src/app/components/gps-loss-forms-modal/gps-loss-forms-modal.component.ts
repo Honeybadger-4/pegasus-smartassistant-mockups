@@ -7,9 +7,9 @@ import { IGpsLossFormContentData } from '@shared/models/gps-loss-forms-response.
 @Component({
   selector: 'app-gps-loss-forms-modal',
   standalone: true,
-  imports: [ CommonModule, DialogModule, CustomTableComponent ],
+  imports: [CommonModule, DialogModule, CustomTableComponent],
   templateUrl: './gps-loss-forms-modal.component.html',
-  styleUrls: ['./gps-loss-forms-modal.component.scss']
+  styleUrls: ['./gps-loss-forms-modal.component.scss'],
 })
 export class GpsLossFormsModalComponent {
   @Input() visible = false;
@@ -17,13 +17,11 @@ export class GpsLossFormsModalComponent {
 
   @Input() rowData: IGpsLossFormContentData | null = null;
 
-  gpsLossTypesModalColumns = [
-    { field: 'impact', header: 'GPS Loss Type' }
-  ];
+  gpsLossTypesModalColumns = [{ field: 'impact', header: 'GPS Loss Type' }];
 
   get tableData() {
     if (!this.rowData) return [];
-    return this.rowData.impacts.map(impactValue => ({ impact: impactValue }));
+    return this.rowData.impacts.map((impactValue) => ({ impact: impactValue }));
   }
 
   closeModal() {
