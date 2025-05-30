@@ -20,6 +20,7 @@ import { LicenceInfoComponent } from './pages/licence-info/licence-info.componen
 import { FlightPlansComponent } from './pages/flight-plans/flight-plans.component';
 import { GpsLossFormsComponent } from './pages/gps-loss-forms/gps-loss-forms.component';
 import { CrewInformationComponent } from './pages/crew-information/crew-information.component';
+import { AircraftChecklistComponent } from './pages/aircraft-checklist/aircraft-checklist.component';
 
 export const routes: Routes = [
   {
@@ -49,6 +50,10 @@ export const routes: Routes = [
             component: PersonalChecklistsComponent,
           },
           { path: 'licence-info', component: LicenceInfoComponent },
+          {
+            path: 'aircraft-checklists',
+            component: AircraftChecklistComponent,
+          },
           { path: 'flight-plans', component: FlightPlansComponent },
 
           { path: 'fuel', component: FuelOrderComponent },
