@@ -55,7 +55,7 @@ export const routes: Routes = [
           { path: 'route', component: RouteComponent },
           { path: 'trip-information', component: TripInfoComponent },
           { path: 'load-sheet', component: LoadSheetComponent },
-                    { path: 'crew-information', component: CrewInformationComponent },
+          { path: 'crew-information', component: CrewInformationComponent },
 
           { path: 'report', component: ReportComponent },
           { path: 'gps-loss-form', component: GpsLossFormsComponent },
