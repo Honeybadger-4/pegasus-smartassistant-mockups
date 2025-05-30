@@ -1,0 +1,29 @@
+<div id="crew-info-page">
+  <!-- Page Header -->
+  <section class="flex items-center justify-between">
+    <p class="header-title">Crew Information</p>
+
+    <div class="w-[210px]">
+      <p-iconField iconPosition="right" class="custom-icon-field">
+        <input
+          type="text"
+          pInputText
+          [(ngModel)]="searchInputValue"
+          placeholder="Find Aircraft or Flight No"
+        />
+        <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+      </p-iconField>
+    </div>
+  </section>
+
+  <!-- Table -->
+  <section class="table-section custom-card mt-5">
+    <app-custom-table
+      [tableData]="crewInfoTableData"
+      [tableColumns]="columns()"
+      [totalRecords]="crewInfoData"
+      [tableLoading]="tableLoading()"
+      (lazyLoadEvent)="lazyLoadEvent($event)"
+    ></app-custom-table>
+  </section>
+</div>

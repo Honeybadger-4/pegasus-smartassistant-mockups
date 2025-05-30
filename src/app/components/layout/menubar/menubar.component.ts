@@ -112,7 +112,7 @@ export class MenubarComponent implements OnInit {
           {
             label: 'Crews',
             icon: '',
-            path: 'operational-reports/crews',
+            path: 'operational-reports/crew-information',
           },
           {
             label: 'Reports',
