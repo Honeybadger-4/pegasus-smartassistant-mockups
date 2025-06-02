@@ -31,18 +31,20 @@ export interface ILoadSheetResponse {
 }
 
 export interface ILoadSheetTableData {
-  username: string;
-  legIsn: number;
-  depPort: string;
-  arrPort: string;
+  id: number;
+  acReg: string;
   flightNo: string;
-  aircraftReg: string;
-  status: string;
+  depPort: string;
+  depDateTime: string | null;
+  arrDateTime: string | null;
+
+  version: number;
   preparedBy: string;
   checkedBy: string;
-  lmc: string;
-  crew: string;
-  version: string;
-  depDateTime: string;
-  arrDateTime: string;
+  responsibleUser: string;
+  status: string;
+  approved: string | null;
+  replaced: string | null;
+  declined: string | null;
+  hasLmc: boolean;
 }

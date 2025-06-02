@@ -1,137 +1,64 @@
-<div id="LoadSheetPage">
-  <section class="table-header-section lg:flex block">
-    <!-- Header Title -->
+<div id="load-sheet-page">
+  <!-- Page Header -->
+  <section class="flex items-center justify-between">
     <p class="header-title">Load Sheet</p>
-    <!-- Filter Inputs  -->
-    <form [formGroup]="filterFormGroup" (ngSubmit)="onFilterSubmit()">
-      <div class="flex justify-between items-center gap-4">
-        <div class="grid grid-cols-10 gap-4 items-center">
-          <!-- Aircraft  Input -->
-          <div class="lg:col-span-2 md:col-span-6 col-span-12">
-            <p-iconField iconPosition="right" class="custom-icon-field">
-              <input
-                type="text"
-                pInputText
-                placeholder="Aircraft"
-                formControlName="acReg"
-              />
-            </p-iconField>
-          </div>
 
-          <!-- Flight No Input -->
-          <div class="lg:col-span-2 md:col-span-6 col-span-12">
-            <p-iconField iconPosition="right" class="custom-icon-field">
-              <input
-                type="text"
-                pInputText
-                placeholder="Flight No"
-                formControlName="flightNo"
-              />
-            </p-iconField>
-          </div>
-
-          <!-- Dep Port Input -->
-          <div class="lg:col-span-2 md:col-span-6 col-span-12">
-            <p-iconField iconPosition="right" class="custom-icon-field">
-              <input
-                type="text"
-                pInputText
-                placeholder="Dep Port"
-                formControlName="depPort"
-              />
-            </p-iconField>
-          </div>
-
-          <!-- Arr Port Input -->
-          <div class="lg:col-span-2 md:col-span-6 col-span-12">
-            <p-iconField iconPosition="right" class="custom-icon-field">
-              <input
-                type="text"
-                pInputText
-                placeholder="Arr Port"
-                formControlName="arrPort"
-              />
-            </p-iconField>
-          </div>
-
-          <!-- Date Picker -->
-          <div class="lg:col-span-2 md:col-span-6 col-span-12">
-            <p-datepicker
-              selectionMode="range"
-              [readonlyInput]="true"
-              dateFormat="dd/mm/yy"
-              placeholder="Start Date - End Date"
-              class="custom-calendar"
-              formControlName="dateRange"
-            />
-          </div>
-        </div>
-        <div>
-          <p-button
-            type="submit"
-            icon="pi pi-search"
-            [rounded]="true"
-            class="filter-submit-btn"
-          />
-        </div>
-      </div>
-    </form>
-  </section>
-
-  <section class="slider-section custom-card">
-    <div class="slider-container">
-      <p class="slider-title">Approved</p>
-      <p-slider
-        [(ngModel)]="approvedValue"
-        disabled
-        class="approved-slider"
-        [ngStyle]="{ width: '100%' }"
-      ></p-slider>
-      <p class="percentage">{{ approvedValue() }}%</p>
-    </div>
-
-    <div class="slider-container">
-      <p class="slider-title">Declined</p>
-      <p-slider
-        [(ngModel)]="declinedValue"
-        disabled
-        class="declined-slider"
-        [ngStyle]="{ width: '100%' }"
-      ></p-slider>
-      <p class="percentage">{{ declinedValue() }}%</p>
+    <div class="w-[210px]">
+      <p-iconField iconPosition="right" class="custom-icon-field">
+        <input
+          type="text"
+          pInputText
+          [(ngModel)]="searchInputValue"
+          (ngModelChange)="onChangeSearch($event)"
+          placeholder="Find Aircraft or Flight No"
+        />
+        <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+      </p-iconField>
     </div>
   </section>
 
-  <section class="table-section custom-card">
+  <!-- Table -->
+  <section class="table-section custom-card mt-5">
     <app-custom-table
-      [tableData]="loadSheetTableData()"
-      [tableColumns]="columns"
-      [totalRecords]="loadSheetData()?.loadSheets?.totalElements || 0"
+      [tableData]="loadSheetData()"
+      [tableColumns]="columns()"
+      [totalRecords]="loadSheetTotal()"
       (lazyLoadEvent)="lazyLoadEvent($event)"
+      [tableLoading]="tableLoading()"
     ></app-custom-table>
   </section>
-
-  <app-load-and-trim-sheet
-    [visible]="isDialogVisible"
-    [loadSheetRowData]="loadAndTrimSheetData()"
-    (closeModal)="toggleLoadAndTrimSheetDialogVisible()"
-  >
-  </app-load-and-trim-sheet>
 </div>
 
-<!-- Table Cell Templates -->
-<ng-template #statusCellBodyTemplate let-rowData="rowData">
-  @if (rowData.status === "LOADSHEET_APPROVED") {
-    <span class="font-bold">APPROVED</span>
-  } @else if (rowData.status === "LOADSHEET_DECLINED") {
-    <span class="font-bold">DECLINED</span>
-  }
+<!-- Flight Plan Column Template -->
+<ng-template #flightPlansColumnTemplate let-rowData="rowData">
+  <button
+    class="border border-gray-300 rounded-md px-3 py-1 bg-white"
+    (click)="onFlightPlansShow(rowData)"
+  >
+    Show
+  </button>
 </ng-template>
 
-<ng-template #previewCellBodyTemplate let-rowData="rowData">
-  <i
-    class="pi pi-eye cursor-pointer"
-    (click)="toggleLoadAndTrimSheetDialogVisible(rowData)"
-  >
-  </i
-></ng-template>
+<!-- Status Chip Template -->
+<ng-template #statusColumnTemplate let-rowData="rowData">
+  @switch (rowData.status) {
+    @case ("SUBMITTED") {
+      <p-chip label="Submitted" class="light-green-chip" />
+    }
+    @case ("APPROVED") {
+      <p-chip label="Approved" class="green-chip" />
+    }
+    @case ("DECLINED") {
+      <p-chip label="Declined" class="red-chip" />
+    }
+    @case ("NEW") {
+      <p-chip label="Waiting for approve" class="orange-chip" />
+    }
+    @case ("REPLACED") {
+      <p-chip label="Replaced" class="black-chip" />
+    }
+    @default {
+      <p-chip label="{{ rowData.status || '-' }}" class="gray-chip" />
+    }
+  }
+</ng-template>

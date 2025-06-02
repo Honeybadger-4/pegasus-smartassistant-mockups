@@ -1,9 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from '@environments/environment';
-import { IHttpResponseModel } from '@shared/models/http-response.model';
-import { ILoadSheetResponse } from '@shared/models/load-sheet-response.model';
 import { map, Observable } from 'rxjs';
+import { environment } from '@environments/environment';
+import { RequestParamsControlService } from './helpers-services/request-params-control.service';
+import { ILoadSheetResponse } from '@shared/models/load-sheet-response.model';
+import { IHttpResponseModel } from '@shared/models/http-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,40 +12,57 @@ import { map, Observable } from 'rxjs';
 export class LoadSheetService {
   http = inject(HttpClient);
   baseUrl = environment.baseApi;
+  requestParamsControlService = inject(RequestParamsControlService);
 
-  getLoadSheet(
+  getAllLoadSheet(
     page: number,
     size: number,
-    startDate: string,
-    endDate: string,
-    acReg?: string | null,
-    flightNo?: string | null,
-    depPort?: string | null,
-    arrPort?: string | null,
+    searchValue?: string,
+
+    tableFilters?: {
+      acReg?: string;
+      flightNo?: string;
+      depPort?: string;
+      depDate?: string;
+      version?: number;
+      preparedBy?: string;
+      checkedBy?: string;
+      responsibleUser?: string;
+      status?: string;
+      approved?: string;
+      replaced?: string;
+      declined?: string;
+
+
+    },
   ): Observable<ILoadSheetResponse> {
-    const apiUrl = `${this.baseUrl}/api/v1/admin/load-sheets`;
+    const apiUrl = `${this.baseUrl}/api/v1/admin/load-sheets/search`;
 
-    let params = new HttpParams()
-      .set('page', page)
-      .set('size', size)
-      .set('startDate', startDate)
-      .set('endDate', endDate);
+    let params = new HttpParams().set('page', page).set('size', size);
 
-    if (acReg) {
-      params = params.set('acReg', acReg);
-    }
-    if (flightNo) {
-      params = params.set('flightNo', flightNo);
-    }
-    if (depPort) {
-      params = params.set('depPort', depPort);
-    }
-    if (arrPort) {
-      params = params.set('arrPort', arrPort);
-    }
+    const requestBody: any = {
+      searchValue: searchValue,
+      acReg: tableFilters?.acReg,
+      flightNo: tableFilters?.flightNo,
+      depPort: tableFilters?.depPort,
+      depDate: tableFilters?.depDate,
+      version: tableFilters?.version,
+      preparedBy: tableFilters?.preparedBy,
+      checkedBy: tableFilters?.checkedBy,
+      responsibleUser: tableFilters?.responsibleUser,
+      status: tableFilters?.status,
+      approved: tableFilters?.approved,
+      replaced: tableFilters?.replaced,
+      declined: tableFilters?.declined,
+      
+
+    };
+
+    const cleanedBody =
+      this.requestParamsControlService.requestBodyControl(requestBody);
 
     return this.http
-      .get<IHttpResponseModel>(apiUrl, { params })
+      .post<IHttpResponseModel>(apiUrl, cleanedBody, { params })
       .pipe(map((response) => response.data));
   }
 }
