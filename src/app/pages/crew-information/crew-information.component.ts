@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  inject,
   OnInit,
   signal,
   viewChild,
@@ -15,6 +16,11 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
+import { CrewInformationService } from '@shared/services/crew-information.service';
+import { ICrewInformationContentData, ICrewInformationResponse } from '@shared/models/crew-information-response.model';
+import moment from 'moment';
+
+
 
 @Component({
   selector: 'app-crew-information',
@@ -33,15 +39,28 @@ export class CrewInformationComponent implements OnInit {
   customTableComponent = viewChild.required(CustomTableComponent);
   searchInput = viewChild.required<ElementRef>('searchInput');
 
+    crewInformationService = inject(CrewInformationService);
+  
+
   searchInputValue = signal<string>('');
 
-  columns = signal<Column[]>([]);
 
-  crewInfoData = 0;
-  crewInfoTableData: any[] = [];
+
+
+
+  columns = signal<Column[]>([]);
+    selectedRow = signal<ICrewInformationContentData | null>(null);
+
+  
+
+  crewInformationData = signal<ICrewInformationResponse | null>(null);
+  crewInformationContentData = signal<ICrewInformationResponse['content'] | null>(
+    null,
+  );
 
   currentPage = signal<number>(0);
   currentRows = signal<number>(10);
+  tableFilters = signal<any>({});
 
   tableLoading = signal<boolean>(false);
 
@@ -110,7 +129,38 @@ export class CrewInformationComponent implements OnInit {
     ]);
   }
 
-  getCrewInfo() {}
+  getAllCrewInformation() { this.tableLoading.set(true);
+  
+      this.crewInformationService
+        .getAllCrewInformation(
+          this.currentPage(),
+          this.currentRows(),
+          this.searchInputValue(),
+          this.tableFilters(),
+        )
+        .subscribe({
+          next: (response: ICrewInformationResponse) => {
+            const formattedData = response.content.map((item) => ({
+              ...item,
+              depDateTime: item.depDateTime
+                ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
+                : null,
+  
+              arrDateTime: item.arrDateTime
+                ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
+                : null,
+            }));
+  
+            this.crewInformationContentData.set(formattedData);
+            this.crewInformationData.set(response);
+  
+            this.tableLoading.set(false);
+          },
+          error: () => {
+            this.tableLoading.set(false);
+          },
+        });
+    }
 
   setupSearchListener() {
     fromEvent<Event>(this.searchInput().nativeElement, 'input')
@@ -124,12 +174,49 @@ export class CrewInformationComponent implements OnInit {
           this.currentPage.set(0);
           this.customTableComponent().resetTableFirstValue();
 
-          this.getCrewInfo();
+          this.getAllCrewInformation();
         }
       });
   }
+ 
   onChangeSearch(value: string) {
     this.searchInputValue.set(value.toUpperCase());
+    this.currentPage.set(0);
+    this.customTableComponent().resetTableFirstValue();
+    this.getAllCrewInformation();
   }
-  lazyLoadEvent(event: any) {}
-}
+lazyLoadEvent(event: any) {
+    const page = event.first / event.rows;
+    this.currentPage.set(page);
+    this.currentRows.set(event.rows);
+
+    this.tableFilters.set({
+      acReg: event.filters?.acReg && event.filters?.acReg[0].value,
+      flightNo: event.filters?.flightNo && event.filters?.flightNo[0].value,
+      depPort: event.filters?.depPort && event.filters?.depPort[0].value,
+      depDate:
+        event.filters?.depDateTime && event.filters?.depDateTime[0].value,
+
+      arrPort: event.filters?.arrPort && event.filters?.arrPort[0].value,
+
+      arrDate:
+        event.filters?.arrDateTime && event.filters?.arrDateTime[0].value,
+
+      firstPointName:
+        event.filters?.firstPointName && event.filters?.firstPointName[0].value,
+
+      lastPointName:
+        event.filters?.lastPointName && event.filters?.lastPointName[0].value,
+
+      time: event.filters?.time && event.filters?.time[0].value,
+
+      flightPhase:
+        event.filters?.flightPhase && event.filters?.flightPhase[0].value,
+      flightLevel:
+        event.filters?.flightLevel && event.filters?.flightLevel[0].value,
+      duration: event.filters?.duration && event.filters?.duration[0].value,
+    });
+    console.log(this.tableFilters());
+
+    this.getAllCrewInformation();
+  }}

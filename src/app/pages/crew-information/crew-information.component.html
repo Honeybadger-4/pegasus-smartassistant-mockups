@@ -20,9 +20,9 @@
   <!-- Table -->
   <section class="table-section custom-card mt-5">
     <app-custom-table
-      [tableData]="crewInfoTableData"
+      [tableData]="crewInformationContentData()"
       [tableColumns]="columns()"
-      [totalRecords]="crewInfoData"
+      [totalRecords]="crewInformationData()?.totalElements || 0"
       [tableLoading]="tableLoading()"
       (lazyLoadEvent)="lazyLoadEvent($event)"
     ></app-custom-table>
