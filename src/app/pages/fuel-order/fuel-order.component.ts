@@ -1,161 +1,179 @@
-import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+  Component,
+  ElementRef,
+  inject,
+  OnInit,
+  signal,
+  viewChild,
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 
-import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
-import { FuelOrderService } from '@shared/services/fuel-order.service';
 import { Column } from '@shared/models/columns';
+import { FormsModule } from '@angular/forms';
+
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
+import { FuelOrderService } from '@shared/services/fuel-order.service';
 import {
   IFuelOrderResponse,
-  IFuelOrderTableData,
+  IFuelOrderContentData,
 } from '@shared/models/fuel-order-response.model';
-
-import { InputIconModule } from 'primeng/inputicon';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputTextModule } from 'primeng/inputtext';
-import { DatePicker } from 'primeng/datepicker';
-import { ButtonModule } from 'primeng/button';
 import moment from 'moment';
-
 @Component({
-  selector: 'app-fuel',
+  selector: 'app-fuel-order',
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule,
     CustomTableComponent,
     IconFieldModule,
     InputIconModule,
     InputTextModule,
-    DatePicker,
-    ButtonModule,
   ],
   templateUrl: './fuel-order.component.html',
   styleUrl: './fuel-order.component.scss',
 })
 export class FuelOrderComponent implements OnInit {
-  @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
+  customTableComponent = viewChild.required(CustomTableComponent);
+  searchInput = viewChild.required<ElementRef>('searchInput');
 
-  filterFormGroup!: FormGroup;
-  columns!: Column[];
-  tableLoading = false;
-  dateRange: Date[] = [];
-  currentPage = 0;
-  currentRows = 20;
-
-  fuelOrderHistoryData = signal<IFuelOrderResponse | null>(null);
-  fuelOrderHistoryTableData = signal<IFuelOrderTableData[]>([]);
-
-  formBuilder = inject(FormBuilder);
   fuelOrderService = inject(FuelOrderService);
 
-  ngOnInit() {
-    this.builder();
-    this.defineColumns();
-    this.getFuelOrder();
-  }
+  searchInputValue = signal<string>('');
 
-  builder() {
-    this.filterFormGroup = this.formBuilder.group({
-      acReg: [''],
-      flightNo: [''],
-      depPort: [''],
-      arrPort: [''],
-      dateRange: [this.dateRangeDefaultValue()],
-    });
+  columns = signal<Column[]>([]);
+  selectedRow = signal<IFuelOrderContentData | null>(null);
+
+  fuelOrderData = signal<IFuelOrderResponse | null>(null);
+  fuelOrderContentData = signal<IFuelOrderResponse['content'] | null>(
+    null,
+  );
+
+  currentPage = signal<number>(0);
+  currentRows = signal<number>(10);
+  tableFilters = signal<any>({});
+
+  tableLoading = signal<boolean>(false);
+
+  ngOnInit(): void {
+    this.defineColumns();
+    this.setupSearchListener();
   }
 
   defineColumns() {
-    this.columns = [
-      { field: 'aircraftReg', header: 'Aircraft' },
-      { field: 'flightNo', header: 'Flight No' },
-      { field: 'depPort', header: 'Departure' },
-      { field: 'arrPort', header: 'Arrival' },
-      { field: 'depDateTime', header: 'Dep Date/Time' },
-      { field: 'arrDateTime', header: 'Arr Date/Time' },
-      { field: 'amount', header: 'Amount' },
-      { field: 'userName', header: 'User' },
-      { field: 'orderDateTime', header: 'Order Date / Time' },
-    ];
+    this.columns.set([
+      { field: 'acReg', header: 'Ac Reg', isFilter: true },
+      { field: 'flightNo', header: 'Flight No', isFilter: true },
+      { field: 'depPort', header: 'Departure Port', isFilter: true },
+      {
+        field: 'depDateTime',
+        header: 'Departure Date',
+        isFilter: true,
+        filterType: 'datepicker',
+      },
+      { field: 'arrPort', header: 'Arrival Port', isFilter: true },
+      {
+        field: 'arrDateTime',
+        header: 'Arrival Date',
+        isFilter: true,
+        filterType: 'datepicker',
+      },
+      { field: 'amount', header: 'Amount', isFilter: true },
+      { field: 'user', header: 'User', isFilter: true },
+      {
+        field: 'orderDateTime',
+        header: 'Order Date',
+        isFilter: true,
+        filterType: 'datepicker',
+      },
+    ]);
   }
 
-  // API Calls Operations
-  getFuelOrder() {
-    this.tableLoading = true;
-
-    const formValues = this.filterFormGroup.value;
-    const acReg = formValues.acReg?.trim() || null;
-    const flightNo = formValues.flightNo?.trim() || null;
-    const depPort = formValues.depPort?.trim() || null;
-    const arrPort = formValues.arrPort?.trim() || null;
-
-    let startDate = '';
-    let endDate = '';
-
-    // Tarih aralığı kontrolü ve formatlama
-    if (formValues.dateRange && formValues.dateRange.length === 2) {
-      const [start, end] = formValues.dateRange;
-
-      if (start && end) {
-        startDate = moment(start).format('YYYY-MM-DD');
-        endDate = moment(end).format('YYYY-MM-DD');
-      }
-    }
+  getAllFuelOrder() {
+    this.tableLoading.set(true);
 
     this.fuelOrderService
-      .getFuelOrder(
-        this.currentPage,
-        this.currentRows,
-        startDate,
-        endDate,
-        acReg,
-        flightNo,
-        depPort,
-        arrPort,
+      .getAllFuelOrder(
+        this.currentPage(),
+        this.currentRows(),
+        this.searchInputValue(),
+        this.tableFilters(),
       )
       .subscribe({
-        next: (response) => {
+        next: (response: IFuelOrderResponse) => {
           const formattedData = response.content.map((item) => ({
             ...item,
-            depDateTime: moment(item.depDateTime).format('DD/MM/YYYY - HH:mm'),
-            arrDateTime: moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm'),
-            orderDateTime: moment(item.orderDateTime).format(
-              'DD/MM/YYYY - HH:mm',
-            ),
+            depDateTime: item.depDateTime
+              ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+
+            arrDateTime: item.arrDateTime
+              ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+            orderDateTime: item.orderDateTime
+              ? moment(item.orderDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
           }));
 
-          this.fuelOrderHistoryData.set(response);
-          this.fuelOrderHistoryTableData.set(formattedData);
-          this.tableLoading = false;
+          this.fuelOrderContentData.set(formattedData);
+          this.fuelOrderData.set(response);
+
+          this.tableLoading.set(false);
         },
         error: () => {
-          this.tableLoading = false;
+          this.tableLoading.set(false);
         },
       });
   }
 
-  // Filter Operations
-  dateRangeDefaultValue() {
-    const endDate = moment();
-    const startDate = moment().subtract(3, 'days');
+  setupSearchListener() {
+    fromEvent<Event>(this.searchInput().nativeElement, 'input')
+      .pipe(
+        map((event: Event) => (event.target as HTMLInputElement).value),
+        debounceTime(300),
+        distinctUntilChanged(),
+      )
+      .subscribe((searchText) => {
+        if (searchText.trim() || searchText === '') {
+          this.currentPage.set(0);
+          this.customTableComponent().resetTableFirstValue();
 
-    return [startDate.toDate(), endDate.toDate()];
+          this.getAllFuelOrder();
+        }
+      });
   }
 
-  onFilterSubmit() {
-    this.getFuelOrder();
+  onChangeSearch(value: string) {
+    this.searchInputValue.set(value.toUpperCase());
+    this.currentPage.set(0);
+    this.customTableComponent().resetTableFirstValue();
+    this.getAllFuelOrder();
   }
-
-  // Other Operations
   lazyLoadEvent(event: any) {
     const page = event.first / event.rows;
-    this.currentPage = page;
-    this.currentRows = event.rows;
-    this.getFuelOrder();
+    this.currentPage.set(page);
+    this.currentRows.set(event.rows);
+
+    this.tableFilters.set({
+      acReg: event.filters?.acReg && event.filters?.acReg[0].value,
+      flightNo: event.filters?.flightNo && event.filters?.flightNo[0].value,
+      depPort: event.filters?.depPort && event.filters?.depPort[0].value,
+      depDate:
+        event.filters?.depDateTime && event.filters?.depDateTime[0].value,
+
+      arrPort: event.filters?.arrPort && event.filters?.arrPort[0].value,
+
+      arrDate:
+        event.filters?.arrDateTime && event.filters?.arrDateTime[0].value,
+
+      amount: event.filters?.amount && event.filters?.amount[0].value,
+      user: event.filters?.user && event.filters?.user[0].value,
+      orderDate:
+        event.filters?.orderDateTime && event.filters?.orderDateTime[0].value,
+    });
+
+    this.getAllFuelOrder();
   }
 }
