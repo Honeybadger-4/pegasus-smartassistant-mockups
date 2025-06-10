@@ -47,9 +47,7 @@ export class FuelOrderComponent implements OnInit {
   selectedRow = signal<IFuelOrderContentData | null>(null);
 
   fuelOrderData = signal<IFuelOrderResponse | null>(null);
-  fuelOrderContentData = signal<IFuelOrderResponse['content'] | null>(
-    null,
-  );
+  fuelOrderContentData = signal<IFuelOrderResponse['content'] | null>(null);
 
   currentPage = signal<number>(0);
   currentRows = signal<number>(10);
