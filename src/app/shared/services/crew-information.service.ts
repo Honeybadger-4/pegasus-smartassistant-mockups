@@ -27,7 +27,7 @@ export class CrewInformationService {
       arrPort?: string;
       arrDate?: string;
 
-      crewName?: string;
+      crewFullName?: string;
       companyId?: number;
       leg?: string;
       dutyType?: string;
@@ -50,7 +50,7 @@ export class CrewInformationService {
       depDate: tableFilters?.depDate,
       arrPort: tableFilters?.arrPort,
       arrDate: tableFilters?.arrDate,
-      crewName: tableFilters?.crewName,
+      crewFullName: tableFilters?.crewFullName,
       companyId: tableFilters?.companyId,
       leg: tableFilters?.leg,
       dutyType: tableFilters?.dutyType,

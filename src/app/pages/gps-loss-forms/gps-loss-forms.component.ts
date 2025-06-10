@@ -46,11 +46,6 @@ export class GpsLossFormsComponent implements OnInit {
 
   searchInputValue = signal<string>('');
 
-
-
-
-
-  
   columns = signal<Column[]>([]);
 
   showModal = signal<boolean>(false);

@@ -38,4 +38,8 @@ export interface ICrewInformationContentData {
   pass: boolean;
   pf: string;
   pm: string;
+  decisionOfPilot: string;
 }
+
+
+
