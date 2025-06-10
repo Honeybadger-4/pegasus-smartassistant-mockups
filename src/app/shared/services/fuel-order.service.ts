@@ -1,10 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { IFuelOrderResponse } from '@shared/models/fuel-order-response.model';
-import { IHttpResponseModel } from '@shared/models/http-response.model';
 import { environment } from '@environments/environment';
+import { RequestParamsControlService } from './helpers-services/request-params-control.service';
+import { IFuelOrderResponse } from '@shared/models/fuel-order-response.model';
 import { ITotalFuelOrderedResponse } from '@shared/models/total-fuel-ordered-response.model';
+import { IHttpResponseModel } from '@shared/models/http-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,40 +13,46 @@ import { ITotalFuelOrderedResponse } from '@shared/models/total-fuel-ordered-res
 export class FuelOrderService {
   http = inject(HttpClient);
   baseUrl = environment.baseApi;
+  requestParamsControlService = inject(RequestParamsControlService);
 
-  getFuelOrder(
+  getAllFuelOrder(
     page: number,
     size: number,
-    startDate: string,
-    endDate: string,
-    acReg?: string | null,
-    flightNo?: string | null,
-    depPort?: string | null,
-    arrPort?: string | null,
+    searchValue?: string,
+    tableFilters?: {
+      acReg?: string;
+      flightNo?: string;
+      depPort?: string;
+      depDate?: string;
+      arrPort?: string;
+      arrDate?: string;
+      amount?: number;
+      user?: string;
+      orderDate?: string;
+    },
   ): Observable<IFuelOrderResponse> {
-    const apiUrl = `${this.baseUrl}/api/v1/admin/fuel-orders`;
+    const apiUrl = `${this.baseUrl}/api/v1/admin/fuel-orders/search`;
 
-    let params = new HttpParams()
-      .set('page', page)
-      .set('size', size)
-      .set('startDate', startDate)
-      .set('endDate', endDate);
+    let params = new HttpParams().set('page', page).set('size', size);
 
-    if (acReg) {
-      params = params.set('acReg', acReg);
-    }
-    if (flightNo) {
-      params = params.set('flightNo', flightNo);
-    }
-    if (depPort) {
-      params = params.set('depPort', depPort);
-    }
-    if (arrPort) {
-      params = params.set('arrPort', arrPort);
-    }
+    const requestBody: any = {
+      searchValue: searchValue,
+      acReg: tableFilters?.acReg,
+      flightNo: tableFilters?.flightNo,
+      depPort: tableFilters?.depPort,
+      depDate: tableFilters?.depDate,
+      arrPort: tableFilters?.arrPort,
+      arrDate: tableFilters?.arrDate,
+      amount: tableFilters?.amount,
+      user: tableFilters?.user,
+      orderDate: tableFilters?.orderDate,
+    };
+
+    const cleanedBody =
+      this.requestParamsControlService.requestBodyControl(requestBody);
 
     return this.http
-      .get<IHttpResponseModel>(apiUrl, { params })
+      .post<IHttpResponseModel>(apiUrl, cleanedBody, { params })
       .pipe(map((response) => response.data));
   }
 

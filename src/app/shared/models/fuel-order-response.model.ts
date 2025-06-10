@@ -1,41 +1,35 @@
 export interface IFuelOrderResponse {
-  content: [IFuelOrderTableData];
+  content: IFuelOrderContentData[];
   pageable: {
     pageNumber: number;
     pageSize: number;
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
     sort: {
       empty: boolean;
       sorted: boolean;
       unsorted: boolean;
     };
-    offset: number;
-    paged: boolean;
-    unpaged: boolean;
   };
   totalElements: number;
   totalPages: number;
   last: boolean;
   size: number;
   number: number;
-  sort: {
-    empty: boolean;
-    sorted: boolean;
-    unsorted: boolean;
-  };
   numberOfElements: number;
   first: boolean;
   empty: boolean;
 }
 
-export interface IFuelOrderTableData {
-  legIsn: number;
-  depDateTime: string;
-  depPort: string;
-  arrPort: string;
+export interface IFuelOrderContentData {
+  acReg: string;
   flightNo: string;
-  aircraftReg: string;
-  arrDateTime: string;
+  depPort: string;
+  depDateTime: string | null;
+  arrPort: string;
+  arrDateTime: string | null;
   amount: number;
-  userName: string;
-  orderDateTime: string;
+  user: string;
+  orderDateTime: string | null;
 }
