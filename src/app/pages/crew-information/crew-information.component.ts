@@ -223,7 +223,6 @@ export class CrewInformationComponent implements OnInit {
       pf: event.filters?.pf && event.filters?.pf[0].value,
       pm: event.filters?.pm && event.filters?.pm[0].value,
     });
-    console.log(this.tableFilters());
 
     this.getAllCrewInformation();
   }
