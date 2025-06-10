@@ -29,13 +29,12 @@
   </section>
 </div>
 
-
 <ng-template #passStatusTemplate let-rowData="rowData">
   <i
     class="pi"
     [ngClass]="{
       'pi-check-circle text-green-500': rowData.pass === true,
-      'pi-times-circle text-red-500': rowData.pass === false
+      'pi-times-circle text-red-500': rowData.pass === false,
     }"
   ></i>
 </ng-template>

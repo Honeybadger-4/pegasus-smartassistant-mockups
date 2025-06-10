@@ -30,7 +30,7 @@ export interface ICrewInformationContentData {
   arrPort: string;
   arrDateTime: string | null;
   crewFullName: string;
-  companyId: number
+  companyId: number;
   leg: string;
   dutyType: string;
   dutyStart: string;
@@ -40,6 +40,3 @@ export interface ICrewInformationContentData {
   pm: string;
   decisionOfPilot: string;
 }
-
-
-
