@@ -8,6 +8,7 @@ import { IFlightInformationTripInfoResponse } from '@shared/models/flight-info-t
 import { IDailyCountResponse } from '@shared/models/daily-count-response.model';
 import { IKeyStatsResponse } from '@shared/models/key-stats-response.model';
 import { IPersonalChecklistsResponse } from '@shared/models/personal-checklists-response.model';
+import { IAircraftChecklistResponse } from '@shared/models/aircraft-checklist-response.model';
 import { RequestParamsControlService } from './helpers-services/request-params-control.service';
 
 @Injectable({ providedIn: 'root' })
@@ -103,6 +104,48 @@ export class FlightInformationService {
       },
       { key: 'depDateTime', value: tableFilters?.depDateTime },
       { key: 'approvedDateTime', value: tableFilters?.approvedDateTime },
+    ];
+
+    this.requestParamsControlService
+      .paramsControl(optionalParams)
+      .map(({ key, value }) => {
+        params = params.set(key, value);
+      });
+
+    return this.http
+      .get<IHttpResponseModel>(apiUrl, { params })
+      .pipe(map((response) => response.data));
+  }
+
+  getAircraftCheckList(
+    page: number,
+    size: number,
+    search?: string | null,
+    tableFilters?: {
+      aircraftReg?: string;
+      flightNo?: string;
+      depPort?: string;
+      depDate?: string;
+      arrPort?: string;
+      arrDate?: string;
+      confirmedBy?: string;
+      confirmedDate?: string;
+    } | null,
+  ): Observable<IAircraftChecklistResponse> {
+    const apiUrl = `${this.baseUrl}/api/v1/admin/flights/ac-checkList`;
+
+    let params = new HttpParams().set('page', page).set('size', size);
+
+    const optionalParams: { key: string; value: any }[] = [
+      { key: 'search', value: search },
+      { key: 'aircraftReg', value: tableFilters?.aircraftReg },
+      { key: 'flightNo', value: tableFilters?.flightNo },
+      { key: 'depPort', value: tableFilters?.depPort },
+      { key: 'depDate', value: tableFilters?.depDate },
+      { key: 'arrPort', value: tableFilters?.arrPort },
+      { key: 'arrDate', value: tableFilters?.arrDate },
+      { key: 'confirmedBy', value: tableFilters?.confirmedBy },
+      { key: 'confirmedDate', value: tableFilters?.confirmedDate },
     ];
 
     this.requestParamsControlService

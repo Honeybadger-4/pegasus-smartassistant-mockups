@@ -20,11 +20,21 @@
   <!-- Table -->
   <section class="table-section custom-card mt-5">
     <app-custom-table
-      [tableData]="aircraftChecklisTableData"
+      [tableData]="aircraftChecklistContentData()"
       [tableColumns]="columns()"
-      [totalRecords]="aircraftChecklistData"
+      [totalRecords]="aircraftChecklistData()?.totalElements || 0"
       [tableLoading]="tableLoading()"
       (lazyLoadEvent)="lazyLoadEvent($event)"
     ></app-custom-table>
   </section>
 </div>
+
+<ng-template #statusTemplate let-rowData="rowData" let-col="col">
+  <i
+    class="pi"
+    [ngClass]="{
+      'pi-check-circle text-green-500': rowData[col.field] === true,
+      'pi-times-circle text-red-500': rowData[col.field] === false,
+    }"
+  ></i>
+</ng-template>
