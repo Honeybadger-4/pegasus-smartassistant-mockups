@@ -86,7 +86,11 @@ export class FlightInformationService {
       flightNo?: string;
       checklistConfirmedBy?: string;
       depDateTime?: string;
+      arrDateTime?: string;
       approvedDateTime?: string;
+      depPort?: string;
+      arrPort?: string;
+
     } | null,
   ): Observable<IPersonalChecklistsResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/flights/personal-checkList`;
@@ -104,6 +108,9 @@ export class FlightInformationService {
       },
       { key: 'depDateTime', value: tableFilters?.depDateTime },
       { key: 'approvedDateTime', value: tableFilters?.approvedDateTime },
+      { key: 'arrDateTime', value: tableFilters?.arrDateTime },
+      { key: 'depPort', value: tableFilters?.depPort },
+      { key: 'arrPort', value: tableFilters?.arrPort },
     ];
 
     this.requestParamsControlService

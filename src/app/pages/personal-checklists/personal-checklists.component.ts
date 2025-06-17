@@ -65,9 +65,18 @@ export class PersonalChecklistsComponent implements OnInit {
     this.columns.set([
       { field: 'aircraftReg', header: 'Aircraft', isFilter: true },
       { field: 'flightNo', header: 'Flight No', isFilter: true },
+      { field: 'depPort', header: 'Departure Port', isFilter: true },
+
       {
         field: 'depDateTime',
         header: 'Departure Date',
+        isFilter: true,
+        filterType: 'datepicker',
+      },
+      { field: 'arrPort', header: 'Arrival Port', isFilter: true },
+ {
+        field: 'arrDateTime',
+        header: 'Arrival Date',
         isFilter: true,
         filterType: 'datepicker',
       },
@@ -166,6 +175,10 @@ export class PersonalChecklistsComponent implements OnInit {
       approvedDateTime:
         event.filters?.approvedDateTime &&
         event.filters?.approvedDateTime[0].value,
+      arrPort: event.filters?.arrPort && event.filters?.arrPort[0].value,
+      depPort: event.filters?.depPort && event.filters?.depPort[0].value,
+       arrDate:
+        event.filters?.arrDateTime && event.filters?.arrDateTime[0].value,
     });
     console.log(this.tableFilters());
 
