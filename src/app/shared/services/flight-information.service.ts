@@ -9,6 +9,7 @@ import { IDailyCountResponse } from '@shared/models/daily-count-response.model';
 import { IKeyStatsResponse } from '@shared/models/key-stats-response.model';
 import { IPersonalChecklistsResponse } from '@shared/models/personal-checklists-response.model';
 import { IAircraftChecklistResponse } from '@shared/models/aircraft-checklist-response.model';
+import { IAircraftChecklistSignatureResponse } from '@shared/models/aircraft-checklist-signature-response.model';
 import { RequestParamsControlService } from './helpers-services/request-params-control.service';
 
 @Injectable({ providedIn: 'root' })
@@ -90,7 +91,6 @@ export class FlightInformationService {
       approvedDateTime?: string;
       depPort?: string;
       arrPort?: string;
-
     } | null,
   ): Observable<IPersonalChecklistsResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/flights/personal-checkList`;
@@ -165,4 +165,15 @@ export class FlightInformationService {
       .get<IHttpResponseModel>(apiUrl, { params })
       .pipe(map((response) => response.data));
   }
+
+getAircraftChecklistSignature(
+  flightIsn: number
+): Observable<IAircraftChecklistSignatureResponse> {
+  const apiUrl = `${this.baseUrl}/api/v1/flights/${flightIsn}/ac-checklist`;
+
+  return this.http
+    .get<IHttpResponseModel>(apiUrl)
+    .pipe(map((response) => response.data));
+}
+
 }

@@ -19,8 +19,10 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 import { FlightInformationService } from '@shared/services/flight-information.service';
-import { IAircraftChecklistResponse } from '@shared/models/aircraft-checklist-response.model';
+import { IAircraftChecklistResponse,IAircraftChecklistContentData } from '@shared/models/aircraft-checklist-response.model';
 import moment from 'moment';
+import { IAircraftChecklistSignatureResponse } from '@shared/models/aircraft-checklist-signature-response.model';
+import { AircraftChecklistModalComponent } from '../../components/aircraft-checklist-modal/aircraft-checklist-modal.component';
 
 @Component({
   selector: 'app-aircraft-checklist',
@@ -31,6 +33,7 @@ import moment from 'moment';
     IconFieldModule,
     InputIconModule,
     InputTextModule,
+    AircraftChecklistModalComponent,
   ],
   templateUrl: './aircraft-checklist.component.html',
   styleUrl: './aircraft-checklist.component.scss',
@@ -39,6 +42,8 @@ export class AircraftChecklistComponent implements OnInit {
   @ViewChild('statusTemplate', { static: true })
   statusTemplate!: TemplateRef<any>;
   customTableComponent = viewChild.required(CustomTableComponent);
+  signatureColumnTemplate = viewChild.required('signatureColumnTemplate');
+
   searchInput = viewChild.required<ElementRef>('searchInput');
   flightInformationService = inject(FlightInformationService);
 
@@ -51,6 +56,9 @@ export class AircraftChecklistComponent implements OnInit {
   searchInputValue = signal<string>('');
 
   columns = signal<Column[]>([]);
+
+  showSignatureModal = signal<boolean>(false);
+  selectedRowData = signal<IAircraftChecklistSignatureResponse | null>(null);
 
   currentPage = signal<number>(0);
   currentRows = signal<number>(10);
@@ -120,7 +128,12 @@ export class AircraftChecklistComponent implements OnInit {
         isFilter: false,
         template: this.statusTemplate,
       },
-      { field: 'signature', header: 'Signature', isFilter: false },
+      {
+        field: 'signature',
+        header: 'Signature',
+        isFilter: false,
+        template: this.signatureColumnTemplate(),
+      },
       { field: 'confirmedBy', header: 'Confirmed by', isFilter: true },
       {
         field: 'confirmedDateTime',
@@ -210,5 +223,23 @@ export class AircraftChecklistComponent implements OnInit {
     console.log(this.tableFilters());
 
     this.getAircraftCheckList();
+  }
+ onSignatureShow(row: IAircraftChecklistContentData) {
+  this.flightInformationService
+    .getAircraftChecklistSignature(row.legIsn)
+    .subscribe((response) => {
+      this.selectedRowData.set({ signature: response.signature }); 
+      this.showSignatureModal.set(true);
+    });
+
+
+  }
+
+  get signatureModalVisible() {
+    return this.showSignatureModal();
+  }
+
+  set signatureModalVisible(value: boolean) {
+    this.showSignatureModal.set(value);
   }
 }
