@@ -20,7 +20,6 @@ export class FlightPlansService {
     tableFilters?: {
       acReg?: string;
       flightNo?: string;
-      depDate?: string;
       receivedDate?: string;
       version?: string;
       responsibleUser?: string;
@@ -29,6 +28,11 @@ export class FlightPlansService {
       replacedDate?: string;
       declinedDate?: string;
       submittedDate?: string;
+
+      arrPort?: string;
+      depPort?: string;
+      arrDate?: string;
+      depDate?: string;
     },
   ): Observable<IFlightPlansResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/flight-plans/search`;
@@ -39,7 +43,6 @@ export class FlightPlansService {
       searchValue: searchValue,
       acReg: tableFilters?.acReg,
       flightNo: tableFilters?.flightNo,
-      depDate: tableFilters?.depDate,
       receivedDate: tableFilters?.receivedDate,
       version: tableFilters?.version,
       responsibleUser: tableFilters?.responsibleUser,
@@ -48,6 +51,11 @@ export class FlightPlansService {
       replacedDate: tableFilters?.replacedDate,
       declinedDate: tableFilters?.declinedDate,
       submittedDate: tableFilters?.submittedDate,
+
+      depDate: tableFilters?.depDate,
+      arrDate: tableFilters?.arrDate,
+      arrPort: tableFilters?.arrPort,
+      depPort: tableFilters?.depPort,
     };
 
     const cleanedBody =
