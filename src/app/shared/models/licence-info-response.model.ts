@@ -30,6 +30,10 @@ export interface ILicenceInfoResponse {
 export interface ILicenceInfoContentData {
   acReg: string;
   flightNo: string;
+  arrPort: string;
+  arrTime: string | null;
+  depPort: string;
+
   depTime: string | null;
   checkedDate: string | null;
   checkedBy: string;
@@ -41,3 +45,4 @@ export interface ILicenceInfoContentData {
     }[];
   };
 }
+

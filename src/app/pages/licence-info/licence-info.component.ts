@@ -118,6 +118,9 @@ export class LicenceInfoComponent implements OnInit {
             checkedDate: item.checkedDate
               ? moment(item.checkedDate).format('DD/MM/YYYY - HH:mm')
               : null,
+              arrTime: item.arrTime
+              ? moment(item.arrTime).format('DD/MM/YYYY - HH:mm')
+              : null,
           }));
 
           this.licenceInfoContentData.set(formattedData);
@@ -158,10 +161,12 @@ export class LicenceInfoComponent implements OnInit {
     this.tableFilters.set({
       acReg: event.filters?.acReg?.[0]?.value,
       flightNo: event.filters?.flightNo?.[0]?.value,
-      checkedBy: event.filters?.checkedBy?.[0]?.value,
+
+            depPort: event.filters?.depPort?.[0]?.value,
       depDate: event.filters?.depTime?.[0]?.value,
+
+      checkedBy: event.filters?.checkedBy?.[0]?.value,
       checkedDate: event.filters?.checkedDate?.[0]?.value,
-      depPort: event.filters?.depPort?.[0]?.value,
       arrPort: event.filters?.arrPort?.[0]?.value,
       arrDate: event.filters?.arrTime?.[0]?.value,
     });
