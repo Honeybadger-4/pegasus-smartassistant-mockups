@@ -34,4 +34,6 @@ export interface ITripInfoTableData {
   depDateTime: string | null;
   sentBy: string;
   sentDateTime: string | null;
+  arrPort: string;
+  depPort: string;
 }
