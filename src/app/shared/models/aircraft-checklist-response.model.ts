@@ -1,5 +1,5 @@
-export interface ITripInfoResponse {
-  content: ITripInfoTableData[];
+export interface IAircraftChecklistResponse {
+  content: IAircraftChecklistContentData[];
   pageable: {
     pageNumber: number;
     pageSize: number;
@@ -27,13 +27,22 @@ export interface ITripInfoResponse {
   empty: boolean;
 }
 
-export interface ITripInfoTableData {
-  id: number;
-  acReg: string;
+export interface IAircraftChecklistContentData {
+  melItems: boolean;
+  legIsn: number;
+  aircraftReg: string;
   flightNo: string;
-  depDateTime: string | null;
-  sentBy: string;
-  sentDateTime: string | null;
-  arrPort: string;
   depPort: string;
+  arrPort: string;
+  depDateTime: string | null;
+  arrDateTime: string | null;
+  dailyCheck: boolean;
+  preflightCheck: boolean;
+  defferedItems: boolean;
+  fluidUplift: boolean;
+  securitySearch: boolean;
+  confirmedBy: string;
+  confirmedDateTime:string | null;
 }
+
+

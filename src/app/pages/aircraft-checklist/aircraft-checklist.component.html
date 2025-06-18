@@ -20,11 +20,37 @@
   <!-- Table -->
   <section class="table-section custom-card mt-5">
     <app-custom-table
-      [tableData]="aircraftChecklisTableData"
+      [tableData]="aircraftChecklistContentData()"
       [tableColumns]="columns()"
-      [totalRecords]="aircraftChecklistData"
+      [totalRecords]="aircraftChecklistData()?.totalElements || 0"
       [tableLoading]="tableLoading()"
       (lazyLoadEvent)="lazyLoadEvent($event)"
     ></app-custom-table>
   </section>
 </div>
+
+<ng-template #statusTemplate let-rowData="rowData" let-col="col">
+  <i
+    class="pi"
+    [ngClass]="{
+      'pi-check-circle text-green-500': rowData[col.field] === true,
+      'pi-times-circle text-red-500': rowData[col.field] === false,
+    }"
+  ></i>
+</ng-template>
+
+<!-- Signature Column Template -->
+<ng-template #signatureColumnTemplate let-rowData="rowData">
+  <button
+    class="border border-gray-300 rounded-md px-3 py-1 bg-white"
+    (click)="onSignatureShow(rowData)"
+  >
+    Show
+  </button>
+</ng-template>
+
+<!-- Signature Modal -->
+<app-aircraft-checklist-modal
+  [(visible)]="signatureModalVisible"
+  [rowData]="selectedRowData()"
+/>

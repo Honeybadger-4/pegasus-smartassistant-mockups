@@ -1,0 +1,22 @@
+<div id="signature-modal">
+  <p-dialog
+    [(visible)]="visible"
+    header="Signature"
+    [modal]="true"
+    [closable]="true"
+    [dismissableMask]="true"
+    [style]="{ width: '600px' }"
+    (onHide)="closeModal()"
+  >
+<ng-container *ngIf="getSignatureImage(); else empty">
+      <img
+        *ngIf="getSignatureImage()"
+        class="max-w-full max-h-[500px] object-contain"
+        [src]="getSignatureImage()"
+        alt="signature"
+      />
+    </ng-container>
+
+    <ng-template #empty> <p>No signature found.</p> </ng-template>
+  </p-dialog>
+</div>

@@ -80,7 +80,10 @@
         <td *ngFor="let column of tableColumns()">
           <ng-container *ngIf="column.template; else defaultCell">
             <ng-container
-              *ngTemplateOutlet="column.template; context: { rowData: rowData }"
+              *ngTemplateOutlet="
+                column.template;
+                context: { rowData: rowData, col: column }
+              "
             ></ng-container>
           </ng-container>
 

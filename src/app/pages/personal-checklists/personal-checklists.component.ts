@@ -65,9 +65,18 @@ export class PersonalChecklistsComponent implements OnInit {
     this.columns.set([
       { field: 'aircraftReg', header: 'Aircraft', isFilter: true },
       { field: 'flightNo', header: 'Flight No', isFilter: true },
+      { field: 'depPort', header: 'Departure Port', isFilter: true },
+
       {
         field: 'depDateTime',
         header: 'Departure Date',
+        isFilter: true,
+        filterType: 'datepicker',
+      },
+      { field: 'arrPort', header: 'Arrival Port', isFilter: true },
+      {
+        field: 'arrDateTime',
+        header: 'Arrival Date',
         isFilter: true,
         filterType: 'datepicker',
       },
@@ -111,6 +120,9 @@ export class PersonalChecklistsComponent implements OnInit {
               : null,
             approvedDateTime: item.approvedDateTime
               ? moment(item.approvedDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+              arrDateTime: item.arrDateTime
+              ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
               : null,
           }));
 
@@ -161,11 +173,15 @@ export class PersonalChecklistsComponent implements OnInit {
         event.filters?.checklistConfirmed &&
         event.filters?.checklistConfirmed[0].value,
 
-      depDateTime:
+      depDate:
         event.filters?.depDateTime && event.filters?.depDateTime[0].value,
       approvedDateTime:
         event.filters?.approvedDateTime &&
         event.filters?.approvedDateTime[0].value,
+      arrPort: event.filters?.arrPort && event.filters?.arrPort[0].value,
+      depPort: event.filters?.depPort && event.filters?.depPort[0].value,
+      arrDate:
+        event.filters?.arrDateTime && event.filters?.arrDateTime[0].value,
     });
     console.log(this.tableFilters());
 
