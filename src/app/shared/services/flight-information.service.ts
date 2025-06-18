@@ -86,8 +86,8 @@ export class FlightInformationService {
       status?: string;
       flightNo?: string;
       checklistConfirmedBy?: string;
-      depDateTime?: string;
-      arrDateTime?: string;
+      depDate?: string;
+      arrDate?: string;
       approvedDateTime?: string;
       depPort?: string;
       arrPort?: string;
@@ -106,9 +106,10 @@ export class FlightInformationService {
         key: 'checklistConfirmedBy',
         value: tableFilters?.checklistConfirmedBy,
       },
-      { key: 'depDateTime', value: tableFilters?.depDateTime },
+      { key: 'depDate', value: tableFilters?.depDate },
       { key: 'approvedDateTime', value: tableFilters?.approvedDateTime },
-      { key: 'arrDateTime', value: tableFilters?.arrDateTime },
+      { key: 'arrDate', value: tableFilters?.arrDate
+       },
       { key: 'depPort', value: tableFilters?.depPort },
       { key: 'arrPort', value: tableFilters?.arrPort },
     ];
