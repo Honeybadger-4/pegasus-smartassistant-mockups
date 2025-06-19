@@ -20,8 +20,10 @@ import {
 import { Column } from '@shared/models/columns';
 import { PdfExportService } from '@shared/services/pdf-export.service';
 import { AdminLogbookService } from '@shared/services/admin-logbook.service';
+import { LogbookMailService } from '@shared/services/logbook-mail.service';
 import { FileSaverService } from '@shared/services/helpers-services/file-saver.service';
 import { ILogbookCrewListResponse } from '@shared/models/logbook-crew-list-response.model';
+import { ILogbookMailResponse } from '@shared/models/logbook-mail-response.model';
 import { StateManagement } from '@shared/services/helpers-services/state-management.service';
 import { CustomTableComponent } from '../../shared/components/custom-table/custom-table.component';
 import { CustomBreadcrumbComponent } from '@shared/components/custom-breadcrumb/custom-breadcrumb.component';
@@ -60,6 +62,7 @@ export class CrewListComponent implements OnInit {
   searchInput = viewChild.required<ElementRef>('searchInput');
   linkedNextPageTemplate = viewChild.required('linkedNextPageTemplate');
   exportDataIconTemplate = viewChild.required('exportDataIconTemplate');
+  sendMailIconTemplate = viewChild.required('sendMailIconTemplate');
   approvedStatusTemplate = viewChild.required('approvedStatusTemplate');
   totalHoursOfLogColumnTemplate = viewChild.required(
     'totalHoursOfLogColumnTemplate',
@@ -69,6 +72,7 @@ export class CrewListComponent implements OnInit {
   stateManagement = inject(StateManagement);
   pdfExportService = inject(PdfExportService);
   adminLogbookService = inject(AdminLogbookService);
+  logbookMailService = inject(LogbookMailService);
 
   columns = signal<Column[]>([]);
   currentPage = signal<number>(0);
@@ -145,6 +149,7 @@ export class CrewListComponent implements OnInit {
         },
         { field: '', header: '', template: this.linkedNextPageTemplate() },
         { field: '', header: '', template: this.exportDataIconTemplate() },
+        { field: '', header: '', template: this.sendMailIconTemplate() },
       ]);
     }
   }
@@ -185,6 +190,19 @@ export class CrewListComponent implements OnInit {
       );
     } catch (error) {
       console.error('PDF Download Error:', error);
+    }
+  }
+
+  async sendEmail(rowData: any) {
+    const companyId = rowData.companyId;
+    const yearMonth = this.logbookDashboardData?.yearMonth;
+
+    try {
+      await firstValueFrom(
+        this.logbookMailService.sendMail(companyId, yearMonth),
+      );
+    } catch (error) {
+      console.error('Email sending error:', error);
     }
   }
 
