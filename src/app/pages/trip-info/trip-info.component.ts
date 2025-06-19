@@ -38,6 +38,8 @@ import moment from 'moment';
 export class TripInfoComponent implements OnInit {
   customTableComponent = viewChild.required(CustomTableComponent);
   searchInput = viewChild.required<ElementRef>('searchInput');
+  detailsColumnTemplate = viewChild.required('detailsColumnTemplate');
+
 
   tripInfoService = inject(TripInfoService);
 
@@ -54,6 +56,9 @@ export class TripInfoComponent implements OnInit {
   tableLoading = signal<boolean>(false);
 
   tableFilters = signal<any>({});
+
+    showTripInfoDetailsModal = signal<boolean>(false);
+  selectedRowData = signal<ITripInfoTableData | null>(null);
 
   ngOnInit() {
     this.defineColumns();
@@ -79,6 +84,12 @@ export class TripInfoComponent implements OnInit {
         header: 'Sent Date',
         isFilter: true,
         filterType: 'datepicker',
+      },
+      {
+        field: 'details',
+        header: 'Details',
+        isFilter: false,
+        template: this.detailsColumnTemplate(),
       },
     ]);
   }
@@ -153,4 +164,17 @@ export class TripInfoComponent implements OnInit {
 
     this.getTripInfo();
   }
+
+   onTripInfoDetailsShow(rowData: ITripInfoTableData) {
+      this.selectedRowData.set(rowData);
+      this.showTripInfoDetailsModal.set(true);
+    }
+  
+    get licenceModalVisible() {
+      return this.showTripInfoDetailsModal();
+    }
+  
+    set licenceModalVisible(value: boolean) {
+      this.showTripInfoDetailsModal.set(value);
+    }
 }
