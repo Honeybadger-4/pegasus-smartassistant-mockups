@@ -1,3 +1,3 @@
 export interface ILogbookMailResponse {
-  result: boolean
+  result: boolean;
 }

@@ -12,7 +12,10 @@ export class LogbookMailService {
   http = inject(HttpClient);
   baseUrl = environment.baseApi;
 
-  sendMail(companyId: number, yearMonth: string): Observable<ILogbookMailResponse> {
+  sendMail(
+    companyId: number,
+    yearMonth: string,
+  ): Observable<ILogbookMailResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/monthlyLogbook/send-pdf-mail`;
 
     let params = new HttpParams()
