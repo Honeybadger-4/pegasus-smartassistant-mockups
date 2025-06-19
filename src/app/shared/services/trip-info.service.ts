@@ -5,6 +5,7 @@ import { IHttpResponseModel } from '@shared/models/http-response.model';
 import { ITripInfoResponse } from '@shared/models/trip-info-response.model';
 import { map, Observable } from 'rxjs';
 import { RequestParamsControlService } from './helpers-services/request-params-control.service';
+import { ITripInfoDetailsResponse } from '@shared/models/trip-info-details-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -23,8 +24,6 @@ export class TripInfoService {
       flightNo?: string;
       sentBy?: string;
       sentDate?: string;
-
-
       arrPort?: string;
       depPort?: string;
       depDate?: string;
@@ -58,4 +57,16 @@ export class TripInfoService {
       .get<IHttpResponseModel>(apiUrl, { params })
       .pipe(map((response) => response.data));
   }
+
+
+
+
+
+getTripInfoDetails(id: number): Observable<ITripInfoDetailsResponse> {
+  const apiUrl = `${this.baseUrl}/api/v1/admin/trip-info/${id}`;
+  return this.http
+    .get<IHttpResponseModel>(apiUrl)
+    .pipe(map((response) => response.data));
+}
+
 }

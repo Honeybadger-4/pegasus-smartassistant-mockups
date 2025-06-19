@@ -1,4 +1,4 @@
-export interface ITripInfoDetailsdResponse {
+export interface ITripInfoDetailsResponse {
   legIsn: number;
   originId: number;
   aircraftRegistration: string;
@@ -17,7 +17,7 @@ export interface ITripInfoDetailsdResponse {
   tripFuel: number;
   takeOffTime: string;
   eet: string;
-  submittedByTxt: 'ESRA YAVAS';
-  submitted: '2024-03-14T02:36:49';
+  submittedByTxt: string;
+  submitted: string;
   version: number;
 }

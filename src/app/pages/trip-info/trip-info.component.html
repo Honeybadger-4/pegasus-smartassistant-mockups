@@ -39,3 +39,9 @@
   </button>
 </ng-template>
 
+
+<app-trip-info-details-modal
+  [visible]="tripInfoDetailsModalVisible"
+  (visibleChange)="tripInfoDetailsModalVisible = $event"
+  [details]="tripInfoDetails()"
+></app-trip-info-details-modal>

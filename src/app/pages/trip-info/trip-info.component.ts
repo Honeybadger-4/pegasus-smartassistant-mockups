@@ -15,11 +15,15 @@ import {
   ITripInfoResponse,
   ITripInfoTableData,
 } from '@shared/models/trip-info-response.model';
+import { ITripInfoDetailsResponse } from '@shared/models/trip-info-details-response.model';
+import { TripInfoDetailsModalComponent } from '../../components/trip-info-details-modal/trip-info-details-modal.component';
+
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 import moment from 'moment';
+
 
 @Component({
   selector: 'app-trip-info',
@@ -31,6 +35,7 @@ import moment from 'moment';
     IconFieldModule,
     InputIconModule,
     InputTextModule,
+    TripInfoDetailsModalComponent,
   ],
   templateUrl: './trip-info.component.html',
   styleUrl: './trip-info.component.scss',
@@ -49,6 +54,10 @@ export class TripInfoComponent implements OnInit {
 
   tripInfoData = signal<ITripInfoResponse | null>(null);
   tripInfoTableData = signal<ITripInfoResponse['content'] | null>(null);
+
+  tripInfoDetailsLoading = signal<boolean>(false);
+tripInfoDetails = signal<ITripInfoDetailsResponse | null>(null);
+
 
   currentPage = signal<number>(0);
   currentRows = signal<number>(10);
@@ -165,16 +174,22 @@ export class TripInfoComponent implements OnInit {
     this.getTripInfo();
   }
 
-   onTripInfoDetailsShow(rowData: ITripInfoTableData) {
-      this.selectedRowData.set(rowData);
+onTripInfoDetailsShow(rowData: ITripInfoTableData) {
+  this.tripInfoService.getTripInfoDetails(rowData.id).subscribe({
+    next: (data) => {
+      this.tripInfoDetails.set(data);
       this.showTripInfoDetailsModal.set(true);
-    }
-  
-    get licenceModalVisible() {
-      return this.showTripInfoDetailsModal();
-    }
-  
-    set licenceModalVisible(value: boolean) {
-      this.showTripInfoDetailsModal.set(value);
-    }
+    },
+    error: (err) => {
+      console.error('Trip Info Details fetch failed:', err);
+    },
+  });
 }
+
+
+get tripInfoDetailsModalVisible() {
+  return this.showTripInfoDetailsModal();
+}
+set tripInfoDetailsModalVisible(val: boolean) {
+  this.showTripInfoDetailsModal.set(val);
+}}

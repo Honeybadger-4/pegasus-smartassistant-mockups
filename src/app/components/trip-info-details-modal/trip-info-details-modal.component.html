@@ -1,1 +1,18 @@
-<p>trip-info-details-modal works!</p>
+<div id="trip-info-details-modal">
+  <p-dialog
+    [(visible)]="visible"
+    [modal]="true"
+    [closable]="true"
+    [dismissableMask]="true"
+    header="Trip Info Details"
+    [style]="{ width: '900px' }"
+    (onHide)="closeModal()"
+  >
+    <section class="table-section custom-card mt-5">
+      <app-custom-table
+        [tableData]="tripInfoDetailsModalData"
+        [tableColumns]="tripInfoDetailsModalColumns"
+      ></app-custom-table>
+    </section>
+  </p-dialog>
+</div>
