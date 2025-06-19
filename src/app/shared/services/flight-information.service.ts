@@ -108,8 +108,7 @@ export class FlightInformationService {
       },
       { key: 'depDate', value: tableFilters?.depDate },
       { key: 'approvedDateTime', value: tableFilters?.approvedDateTime },
-      { key: 'arrDate', value: tableFilters?.arrDate
-       },
+      { key: 'arrDate', value: tableFilters?.arrDate },
       { key: 'depPort', value: tableFilters?.depPort },
       { key: 'arrPort', value: tableFilters?.arrPort },
     ];
@@ -167,14 +166,13 @@ export class FlightInformationService {
       .pipe(map((response) => response.data));
   }
 
-getAircraftChecklistSignature(
-  flightIsn: number
-): Observable<IAircraftChecklistSignatureResponse> {
-  const apiUrl = `${this.baseUrl}/api/v1/flights/${flightIsn}/ac-checklist`;
+  getAircraftChecklistSignature(
+    flightIsn: number,
+  ): Observable<IAircraftChecklistSignatureResponse> {
+    const apiUrl = `${this.baseUrl}/api/v1/flights/${flightIsn}/ac-checklist`;
 
-  return this.http
-    .get<IHttpResponseModel>(apiUrl)
-    .pipe(map((response) => response.data));
-}
-
+    return this.http
+      .get<IHttpResponseModel>(apiUrl)
+      .pipe(map((response) => response.data));
+  }
 }

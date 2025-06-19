@@ -19,7 +19,10 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 import { FlightInformationService } from '@shared/services/flight-information.service';
-import { IAircraftChecklistResponse,IAircraftChecklistContentData } from '@shared/models/aircraft-checklist-response.model';
+import {
+  IAircraftChecklistResponse,
+  IAircraftChecklistContentData,
+} from '@shared/models/aircraft-checklist-response.model';
 import moment from 'moment';
 import { IAircraftChecklistSignatureResponse } from '@shared/models/aircraft-checklist-signature-response.model';
 import { AircraftChecklistModalComponent } from '../../components/aircraft-checklist-modal/aircraft-checklist-modal.component';
@@ -224,15 +227,13 @@ export class AircraftChecklistComponent implements OnInit {
 
     this.getAircraftCheckList();
   }
- onSignatureShow(row: IAircraftChecklistContentData) {
-  this.flightInformationService
-    .getAircraftChecklistSignature(row.legIsn)
-    .subscribe((response) => {
-      this.selectedRowData.set({ signature: response.signature }); 
-      this.showSignatureModal.set(true);
-    });
-
-
+  onSignatureShow(row: IAircraftChecklistContentData) {
+    this.flightInformationService
+      .getAircraftChecklistSignature(row.legIsn)
+      .subscribe((response) => {
+        this.selectedRowData.set({ signature: response.signature });
+        this.showSignatureModal.set(true);
+      });
   }
 
   get signatureModalVisible() {

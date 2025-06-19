@@ -26,7 +26,6 @@ export class LicenceInfoService {
       arrPort?: string;
       depPort?: string;
       arrDate?: string;
-
     },
   ): Observable<ILicenceInfoResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/licence-infos`;
@@ -40,12 +39,10 @@ export class LicenceInfoService {
       { key: 'checkedBy', value: tableFilters?.checkedBy },
       { key: 'depDate', value: tableFilters?.depDate },
       { key: 'checkedDate', value: tableFilters?.checkedDate },
-            { key: 'arrPort', value: tableFilters?.arrPort },
-                        { key: 'depPort', value: tableFilters?.depPort },
+      { key: 'arrPort', value: tableFilters?.arrPort },
+      { key: 'depPort', value: tableFilters?.depPort },
 
-                                                { key: 'arrDate', value: tableFilters?.arrDate },
-
-
+      { key: 'arrDate', value: tableFilters?.arrDate },
     ];
 
     this.requestParamsControlService
