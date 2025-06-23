@@ -468,7 +468,7 @@
             <p>{{ editDefaultData()?.remarksAndEndorsement }}</p>
             <p>{{ editDefaultData()?.syntheticTrainingDescription }}</p>
             <img
-              *ngIf="editDefaultData()?.isSigned"
+              *ngIf="editDefaultData()?.dutyType=== 'SIM'? editDefaultData()?.isSigned : editDefaultData()?.isSignedFlight"
               class="h-[85px] w-[450px] object-cover"
               [src]="convertBase64ToImage()"
               alt="signature"

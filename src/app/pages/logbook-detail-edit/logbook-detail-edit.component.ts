@@ -338,7 +338,10 @@ export class LogbookDetailEditComponent implements OnInit {
   }
 
   convertBase64ToImage(): string {
-    const signatureBase64 = this.editDefaultData()?.signature;
+    const signatureBase64 =
+      this.editDefaultData()?.dutyType === 'SIM'
+        ? this.editDefaultData()?.signature
+        : this.editDefaultData()?.flightSignature;
 
     if (signatureBase64) {
       return `data:image/jpeg;base64,${signatureBase64}`;
