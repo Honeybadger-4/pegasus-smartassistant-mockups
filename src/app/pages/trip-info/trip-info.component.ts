@@ -173,6 +173,8 @@ tripInfoDetails = signal<ITripInfoDetailsResponse | null>(null);
         event.filters?.sentDateTime && event.filters?.sentDateTime[0].value,
       arrPort: event.filters?.arrPort && event.filters?.arrPort[0].value,
       depPort: event.filters?.depPort && event.filters?.depPort[0].value,
+      arrDate:
+        event.filters?.arrDateTime && event.filters?.arrDateTime[0].value,
     });
     console.log(this.tableFilters());
 

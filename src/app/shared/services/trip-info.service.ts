@@ -27,6 +27,7 @@ export class TripInfoService {
       arrPort?: string;
       depPort?: string;
       depDate?: string;
+      arrDate?: string;
     },
   ): Observable<ITripInfoResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/trip-info`;
@@ -44,6 +45,7 @@ export class TripInfoService {
         value: tableFilters?.sentBy,
       },
       { key: 'sentDate', value: tableFilters?.sentDate },
+      { key: 'arrDate', value: tableFilters?.arrDate },
     ];
 
     this.requestParamsControlService
@@ -57,15 +59,10 @@ export class TripInfoService {
       .pipe(map((response) => response.data));
   }
 
-
-
-
-
-getTripInfoDetails(id: number): Observable<ITripInfoDetailsResponse> {
-  const apiUrl = `${this.baseUrl}/api/v1/admin/trip-info/${id}`;
-  return this.http
-    .get<IHttpResponseModel>(apiUrl)
-    .pipe(map((response) => response.data));
-}
-
+  getTripInfoDetails(id: number): Observable<ITripInfoDetailsResponse> {
+    const apiUrl = `${this.baseUrl}/api/v1/admin/trip-info/${id}`;
+    return this.http
+      .get<IHttpResponseModel>(apiUrl)
+      .pipe(map((response) => response.data));
+  }
 }
