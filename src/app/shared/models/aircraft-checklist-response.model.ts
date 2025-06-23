@@ -1,5 +1,5 @@
-export interface ILicenceInfoResponse {
-  content: ILicenceInfoContentData[];
+export interface IAircraftChecklistResponse {
+  content: IAircraftChecklistContentData[];
   pageable: {
     pageNumber: number;
     pageSize: number;
@@ -27,21 +27,20 @@ export interface ILicenceInfoResponse {
   empty: boolean;
 }
 
-export interface ILicenceInfoContentData {
-  acReg: string;
+export interface IAircraftChecklistContentData {
+  melItems: boolean;
+  legIsn: number;
+  aircraftReg: string;
   flightNo: string;
-  arrPort: string;
-  arrTime: string | null;
   depPort: string;
-
-  depTime: string | null;
-  checkedDate: string | null;
-  checkedBy: string;
-  licenceListResponse: {
-    licenseList: {
-      licenceName: string;
-      issueDate: string | null;
-      expDate: string | null;
-    }[];
-  };
+  arrPort: string;
+  depDateTime: string | null;
+  arrDateTime: string | null;
+  dailyCheck: boolean;
+  preflightCheck: boolean;
+  defferedItems: boolean;
+  fluidUplift: boolean;
+  securitySearch: boolean;
+  confirmedBy: string;
+  confirmedDateTime: string | null;
 }

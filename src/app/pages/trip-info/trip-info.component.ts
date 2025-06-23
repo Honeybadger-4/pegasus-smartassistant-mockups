@@ -64,9 +64,17 @@ export class TripInfoComponent implements OnInit {
     this.columns.set([
       { field: 'acReg', header: 'Ac Reg', isFilter: true },
       { field: 'flightNo', header: 'Flight No', isFilter: true },
+      { field: 'depPort', header: 'Departure Port', isFilter: true },
       {
         field: 'depDateTime',
         header: 'Departure Date',
+        isFilter: true,
+        filterType: 'datepicker',
+      },
+      { field: 'arrPort', header: 'Arrival Port', isFilter: true },
+      {
+        field: 'arrDateTime',
+        header: 'Arrival Date',
         isFilter: true,
         filterType: 'datepicker',
       },
@@ -143,6 +151,8 @@ export class TripInfoComponent implements OnInit {
       sentBy: event.filters?.sentBy && event.filters?.sentBy[0].value,
       sentDate:
         event.filters?.sentDateTime && event.filters?.sentDateTime[0].value,
+      arrPort: event.filters?.arrPort && event.filters?.arrPort[0].value,
+      depPort: event.filters?.depPort && event.filters?.depPort[0].value,
     });
     console.log(this.tableFilters());
 

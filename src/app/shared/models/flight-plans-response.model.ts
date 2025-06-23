@@ -27,6 +27,9 @@ export interface IFlightPlan {
   acReg: string;
   flightNo: string;
   depDateTime: string | null;
+  arrDateTime: string | null;
+  arrPort: string;
+  depPort: string;
   receivedDateTime: string | null;
   version: string;
   responsibleUser: string;

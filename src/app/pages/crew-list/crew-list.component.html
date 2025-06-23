@@ -93,6 +93,20 @@
   />
 </ng-template>
 
+<ng-template #sendMailIconTemplate let-rowData="rowData">
+  <p-button
+    type="button"
+    [text]="true"
+    [rounded]="true"
+    icon="pi pi-envelope"
+    [pTooltip]="'Send via Email'"
+    tooltipPosition="bottom"
+    tooltipStyleClass="custom-tooltip"
+    [style]="{ color: 'black' }"
+    (click)="sendEmail(rowData)"
+  ></p-button>
+</ng-template>
+
 <ng-template #linkedNextPageTemplate let-rowData="rowData">
   <i
     class="pi pi-angle-right !flex justify-end cursor-pointer w-full"

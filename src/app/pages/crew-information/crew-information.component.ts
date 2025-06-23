@@ -153,6 +153,9 @@ export class CrewInformationComponent implements OnInit {
             arrDateTime: item.arrDateTime
               ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
               : null,
+            dutyStart: item.dutyStart
+              ? moment(item.dutyStart).format('DD/MM/YYYY - HH:mm')
+              : null,
           }));
 
           this.crewInformationContentData.set(formattedData);

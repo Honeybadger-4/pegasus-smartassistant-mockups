@@ -33,7 +33,7 @@ export interface ICrewInformationContentData {
   companyId: number;
   leg: string;
   dutyType: string;
-  dutyStart: string;
+  dutyStart: string | null;
   addDutyTime: string;
   pass: boolean;
   pf: string;

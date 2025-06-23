@@ -461,8 +461,8 @@ export class FlightInfoComponent implements OnInit {
       { field: 'aircraftReg', header: 'Aircraft', isFilter: true },
       { field: 'flightNo', header: 'Flight No', isFilter: true },
       { field: 'depPort', header: 'Departure Port', isFilter: true },
-      { field: 'arrPort', header: 'Arrival Port', isFilter: true },
       { field: 'depDateTime', header: 'Departure Date', isFilter: true },
+      { field: 'arrPort', header: 'Arrival Port', isFilter: true },
       { field: 'arrDateTime', header: 'Arrival Date', isFilter: true },
 
       { field: 'user', header: 'Responsible User', isFilter: true },

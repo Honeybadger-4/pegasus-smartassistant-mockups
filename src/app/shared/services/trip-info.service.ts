@@ -21,9 +21,12 @@ export class TripInfoService {
     tableFilters?: {
       acReg?: string;
       flightNo?: string;
-      depDate?: string;
       sentBy?: string;
       sentDate?: string;
+
+      arrPort?: string;
+      depPort?: string;
+      depDate?: string;
     },
   ): Observable<ITripInfoResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/trip-info`;
@@ -34,6 +37,8 @@ export class TripInfoService {
       { key: 'acReg', value: tableFilters?.acReg },
       { key: 'flightNo', value: tableFilters?.flightNo },
       { key: 'depDate', value: tableFilters?.depDate },
+      { key: 'arrPort', value: tableFilters?.arrPort },
+      { key: 'depPort', value: tableFilters?.depPort },
       {
         key: 'sentBy',
         value: tableFilters?.sentBy,

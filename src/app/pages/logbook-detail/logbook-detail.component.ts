@@ -169,9 +169,7 @@ export class LogbookDetailComponent implements OnInit {
       ...(!this.isLogbookCurrentMonth()
         ? [{ field: '', header: '', template: this.previewCellBodyTemplate() }]
         : []),
-      ...(!this.isLogbookCurrentMonth()
-        ? [{ field: '', header: '', template: this.editableCellBodyTemplate() }]
-        : []),
+      { field: '', header: '', template: this.editableCellBodyTemplate() },
     ]);
   }
 
