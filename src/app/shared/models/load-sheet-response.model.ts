@@ -1,6 +1,6 @@
 export interface ILoadSheetResponse {
   loadSheets: {
-    content: [ILoadSheetTableData];
+    content: ILoadSheetTableData[];
     pageable: {
       pageNumber: number;
       pageSize: number;

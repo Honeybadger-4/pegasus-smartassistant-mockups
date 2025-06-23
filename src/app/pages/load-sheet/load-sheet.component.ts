@@ -16,7 +16,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { Chip } from 'primeng/chip';
 import moment from 'moment';
 import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
-import { ILoadSheetResponse } from '@shared/models/load-sheet-response.model';
+import { ILoadSheetResponse,ILoadSheetTableData } from '@shared/models/load-sheet-response.model';
 import { LoadSheetService } from '@shared/services/load-sheet.service';
 
 @Component({
@@ -42,7 +42,7 @@ export class LoadSheetComponent implements OnInit {
   loadSheetService = inject(LoadSheetService);
 
   columns = signal<Column[]>([]);
-  loadSheetData = signal<ILoadSheetResponse[] | null>(null);
+loadSheetData = signal<ILoadSheetTableData[] | null>(null);
   loadSheetTotal = signal<number>(0);
 
   searchInputValue = signal<string>('');
@@ -145,7 +145,9 @@ export class LoadSheetComponent implements OnInit {
       )
       .subscribe({
         next: (response) => {
-          const formattedData = response.content.map((item) => ({
+                  const items = response.loadSheets.content;
+
+        const formattedData = items.map((item: ILoadSheetTableData) => ({
             ...item,
             depDateTime: item.depDateTime
               ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
@@ -165,8 +167,8 @@ export class LoadSheetComponent implements OnInit {
           }));
 
           this.loadSheetData.set(formattedData);
-          this.loadSheetTotal.set(response.totalElements);
-          this.tableLoading.set(false);
+        this.loadSheetTotal.set(response.loadSheets.totalElements);
+        this.tableLoading.set(false);
         },
         error: () => {
           this.tableLoading.set(false);
@@ -226,7 +228,7 @@ export class LoadSheetComponent implements OnInit {
     this.getAllLoadSheet();
   }
 
-  onFlightPlansShow(rowData: ILoadSheetResponse) {
+  onFlightPlansShow(rowData: ILoadSheetTableData) {
     console.log('Selected row:', rowData);
   }
 }
