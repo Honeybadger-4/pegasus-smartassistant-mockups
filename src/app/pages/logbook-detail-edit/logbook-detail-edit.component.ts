@@ -79,10 +79,14 @@ export class LogbookDetailEditComponent implements OnInit {
   formDataLoading = signal<boolean>(false);
   isEditMode = signal<boolean>(false);
   updateableFields = signal<string[]>([]);
+  isLogbookCurrentMonth = signal<boolean>(false);
 
   ngOnInit() {
     this.logId = this.stateManagement.getState('logbookDetailPage')?.logId;
 
+    this.isLogbookCurrentMonth.set(
+      this.stateManagement.getState('isLogbookCurrentMonth'),
+    );
     this.getLogByLogId();
 
     this.builder();
