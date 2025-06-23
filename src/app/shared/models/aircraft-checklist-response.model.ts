@@ -42,7 +42,5 @@ export interface IAircraftChecklistContentData {
   fluidUplift: boolean;
   securitySearch: boolean;
   confirmedBy: string;
-  confirmedDateTime:string | null;
+  confirmedDateTime: string | null;
 }
-
-

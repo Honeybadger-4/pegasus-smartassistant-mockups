@@ -8,7 +8,7 @@
     [style]="{ width: '600px' }"
     (onHide)="closeModal()"
   >
-<ng-container *ngIf="getSignatureImage(); else empty">
+    <ng-container *ngIf="getSignatureImage(); else empty">
       <img
         *ngIf="getSignatureImage()"
         class="max-w-full max-h-[500px] object-contain"

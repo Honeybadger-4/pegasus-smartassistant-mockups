@@ -121,7 +121,7 @@ export class PersonalChecklistsComponent implements OnInit {
             approvedDateTime: item.approvedDateTime
               ? moment(item.approvedDateTime).format('DD/MM/YYYY - HH:mm')
               : null,
-              arrDateTime: item.arrDateTime
+            arrDateTime: item.arrDateTime
               ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
               : null,
           }));

@@ -27,7 +27,6 @@ export class TripInfoService {
       arrPort?: string;
       depPort?: string;
       depDate?: string;
-
     },
   ): Observable<ITripInfoResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/trip-info`;

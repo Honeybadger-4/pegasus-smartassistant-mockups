@@ -86,7 +86,12 @@ tripInfoDetails = signal<ITripInfoDetailsResponse | null>(null);
         filterType: 'datepicker',
       },
       { field: 'arrPort', header: 'Arrival Port', isFilter: true },
-      {field:'arrDateTime', header: 'Arrival Date', isFilter: true, filterType: 'datepicker'},
+      {
+        field: 'arrDateTime',
+        header: 'Arrival Date',
+        isFilter: true,
+        filterType: 'datepicker',
+      },
       { field: 'sentBy', header: 'Sent By', isFilter: true },
       {
         field: 'sentDateTime',
@@ -167,7 +172,7 @@ tripInfoDetails = signal<ITripInfoDetailsResponse | null>(null);
       sentDate:
         event.filters?.sentDateTime && event.filters?.sentDateTime[0].value,
       arrPort: event.filters?.arrPort && event.filters?.arrPort[0].value,
-      depPort: event.filters?.depPort && event.filters?.depPort[0].value
+      depPort: event.filters?.depPort && event.filters?.depPort[0].value,
     });
     console.log(this.tableFilters());
 

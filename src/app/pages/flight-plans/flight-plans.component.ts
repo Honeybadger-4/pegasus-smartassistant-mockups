@@ -61,14 +61,14 @@ export class FlightPlansComponent implements OnInit {
     this.columns.set([
       { field: 'acReg', header: 'Ac Reg', isFilter: true },
       { field: 'flightNo', header: 'Flight No', isFilter: true },
-      {field: 'depPort', header: 'Departure Port', isFilter: true},
+      { field: 'depPort', header: 'Departure Port', isFilter: true },
       {
         field: 'depDateTime',
         header: 'Departure Date',
         isFilter: true,
         filterType: 'datepicker',
       },
-       {field: 'arrPort', header: 'Arrival Port', isFilter: true},
+      { field: 'arrPort', header: 'Arrival Port', isFilter: true },
       {
         field: 'arrDateTime',
         header: 'Arrival Date',
@@ -213,8 +213,6 @@ export class FlightPlansComponent implements OnInit {
       acReg: event.filters?.acReg && event.filters?.acReg[0].value,
       flightNo: event.filters?.flightNo && event.filters?.flightNo[0].value,
 
-
-
       depDate:
         event.filters?.depDateTime && event.filters?.depDateTime[0].value,
 
@@ -240,12 +238,10 @@ export class FlightPlansComponent implements OnInit {
         event.filters?.submittedDateTime &&
         event.filters?.submittedDateTime[0].value,
 
-
       depPort: event.filters?.depPort && event.filters?.depPort[0].value,
       arrPort: event.filters?.arrPort && event.filters?.arrPort[0].value,
       arrDate:
         event.filters?.arrDateTime && event.filters?.arrDateTime[0].value,
-      
     });
     console.log(this.tableFilters());
 

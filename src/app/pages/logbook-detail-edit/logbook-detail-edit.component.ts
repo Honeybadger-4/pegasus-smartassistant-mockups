@@ -79,10 +79,14 @@ export class LogbookDetailEditComponent implements OnInit {
   formDataLoading = signal<boolean>(false);
   isEditMode = signal<boolean>(false);
   updateableFields = signal<string[]>([]);
+  isLogbookCurrentMonth = signal<boolean>(false);
 
   ngOnInit() {
     this.logId = this.stateManagement.getState('logbookDetailPage')?.logId;
 
+    this.isLogbookCurrentMonth.set(
+      this.stateManagement.getState('isLogbookCurrentMonth'),
+    );
     this.getLogByLogId();
 
     this.builder();
@@ -338,7 +342,10 @@ export class LogbookDetailEditComponent implements OnInit {
   }
 
   convertBase64ToImage(): string {
-    const signatureBase64 = this.editDefaultData()?.signature;
+    const signatureBase64 =
+      this.editDefaultData()?.dutyType === 'SIM'
+        ? this.editDefaultData()?.signature
+        : this.editDefaultData()?.flightSignature;
 
     if (signatureBase64) {
       return `data:image/jpeg;base64,${signatureBase64}`;
