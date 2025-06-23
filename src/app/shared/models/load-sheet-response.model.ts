@@ -1,6 +1,6 @@
 export interface ILoadSheetResponse {
   loadSheets: {
-    content: ILoadSheetTableData[];
+    content: ILoadSheetContentData[];
     pageable: {
       pageNumber: number;
       pageSize: number;
@@ -30,7 +30,7 @@ export interface ILoadSheetResponse {
   approvedPercentage: number;
 }
 
-export interface ILoadSheetTableData {
+export interface ILoadSheetContentData {
   id: number;
   acReg: string;
   flightNo: string;
