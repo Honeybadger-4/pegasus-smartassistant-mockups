@@ -46,8 +46,8 @@ export class LoadSheetComponent implements OnInit {
 
   columns = signal<Column[]>([]);
 
-  loadSheetData = signal<ILoadSheetResponse | null>(null);
-  LoadSheetContentData = signal<ILoadSheetResponse['content'] | null>(null);
+   loadSheetData = signal<ILoadSheetResponse | null>(null);
+  loadSheetContentData = signal<ILoadSheetContentData[] | null>(null);
 
   searchInputValue = signal<string>('');
   currentPage = signal<number>(0);
@@ -58,11 +58,13 @@ export class LoadSheetComponent implements OnInit {
   ngOnInit() {
     this.defineColumn();
     this.setupSearchListener();
+
+
   }
 
   defineColumn() {
     this.columns.set([
-      { field: 'acReg', header: 'Ac Reg', isFilter: true },
+      { field: 'acReg', header: 'Aircraft', isFilter: true },
       { field: 'flightNo', header: 'Flight No', isFilter: true },
       { field: 'depPort', header: 'Departure Port', isFilter: true },
       {
@@ -71,6 +73,14 @@ export class LoadSheetComponent implements OnInit {
         isFilter: true,
         filterType: 'datepicker',
       },
+       { field: 'arrPort', header: 'Arrival Port', isFilter: true },
+      {
+        field: 'arrDateTime',
+        header: 'Arrival Date',
+        isFilter: true,
+        filterType: 'datepicker',
+      },
+      
       { field: 'version', header: 'Version', isFilter: true },
       {
         field: 'preparedBy',
@@ -86,11 +96,11 @@ export class LoadSheetComponent implements OnInit {
         template: this.statusColumnTemplate(),
         filterType: 'selectbox',
         filterOptions: [
-          { label: 'Waiting for Approve', value: 'NEW' },
-          { label: 'Approved', value: 'APPROVED' },
-          { label: 'Submitted', value: 'SUBMITTED' },
-          { label: 'Declined', value: 'DECLINED' },
-          { label: 'Replaced', value: 'REPLACED' },
+          { label: 'Created', value: 'LOADSHEET_CREATED' },
+          { label: 'Delivered', value: 'LOADSHEET_DELIVERED' },
+          { label: 'Declined', value: 'LOADSHEET_DECLINED' },
+          { label: 'Replaced', value: 'LOADSHEET_REPLACED' },
+          { label: 'Approved', value: 'LOADSHEET_APPROVED' },
         ],
       },
 
@@ -119,65 +129,62 @@ export class LoadSheetComponent implements OnInit {
         field: 'loadSheet',
         header: 'Load Sheet',
         isFilter: false,
-        template: this.loadSheetColumnTemplate(),
       },
       {
         field: 'lmc',
         header: 'LMC',
         isFilter: false,
-        template: this.loadSheetColumnTemplate(),
       },
 
       {
         field: 'cgLimits',
         header: 'CG Limits',
         isFilter: false,
-        template: this.loadSheetColumnTemplate(),
       },
     ]);
   }
 
-  getAllLoadSheet() {
-    this.tableLoading.set(true);
+ getAllLoadSheet() {
+  this.tableLoading.set(true);
 
-    this.loadSheetService
-      .getAllLoadSheet(
-        this.currentPage(),
-        this.currentRows(),
-        this.searchInputValue(),
-        this.tableFilters(),
-      )
-      .subscribe({
-        next: (response: ILoadSheetResponse) => {
-          const formattedData = response.content.map((item) => ({
-            ...item,
-            depDateTime: item.depDateTime
-              ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
-              : null,
-            arrDateTime: item.arrDateTime
-              ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
-              : null,
-            approved: item.approved
-              ? moment(item.approved).format('DD/MM/YYYY - HH:mm')
-              : null,
-            replaced: item.replaced
-              ? moment(item.replaced).format('DD/MM/YYYY - HH:mm')
-              : null,
-            declined: item.declined
-              ? moment(item.declined).format('DD/MM/YYYY - HH:mm')
-              : null,
-          }));
+  this.loadSheetService
+    .getAllLoadSheet(
+      this.currentPage(),
+      this.currentRows(),
+      this.searchInputValue(),
+      this.tableFilters(),
+    )
+    .subscribe({
+      next: (response: ILoadSheetResponse) => {
+        const formattedData = response.content.map((item: ILoadSheetContentData) => ({
+          ...item,
+          depDateTime: item.depDateTime
+            ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
+            : null,
+          arrDateTime: item.arrDateTime
+            ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
+            : null,
+          approved: item.approved
+            ? moment(item.approved).format('DD/MM/YYYY - HH:mm')
+            : null,
+          replaced: item.replaced
+            ? moment(item.replaced).format('DD/MM/YYYY - HH:mm')
+            : null,
+          declined: item.declined
+            ? moment(item.declined).format('DD/MM/YYYY - HH:mm')
+            : null,
+        }));
 
-          this.LoadSheetContentData.set(formattedData);
-          this.loadSheetData.set(response);
+        this.loadSheetContentData.set(formattedData);
+        this.loadSheetData.set(response);
+        this.tableLoading.set(false);
+      },
+      error: () => {
+        this.tableLoading.set(false);
+      },
+    });
+}
 
-          this.tableLoading.set(false);
-        },
-        error: () => {
-          this.tableLoading.set(false);
-        },
-      });
-  }
 
   setupSearchListener() {
     fromEvent<Event>(this.searchInput().nativeElement, 'input')
@@ -225,6 +232,9 @@ export class LoadSheetComponent implements OnInit {
       approved: event.filters?.approved && event.filters?.approved[0].value,
       replaced: event.filters?.replaced && event.filters?.replaced[0].value,
       declined: event.filters?.declined && event.filters?.declined[0].value,
+      arrPort: event.filters?.arrPort && event.filters?.arrPort[0].value,
+      arrDateTime:
+        event.filters?.arrDateTime && event.filters?.arrDateTime[0].value,
     });
     console.log(this.tableFilters());
 

@@ -8,6 +8,8 @@
         <input
           type="text"
           pInputText
+                    #searchInput
+
           [(ngModel)]="searchInputValue"
           (ngModelChange)="onChangeSearch($event)"
           placeholder="Find Aircraft or Flight No"
@@ -19,33 +21,34 @@
 
   <!-- Table -->
   <section class="table-section custom-card mt-5">
-    <app-custom-table
-      [tableData]="ILoadSheetContentData()"
-      [tableColumns]="columns()"
-      [totalRecords]="loadSheetData()?.totalElements || 0"
-      (lazyLoadEvent)="lazyLoadEvent($event)"
-      [tableLoading]="tableLoading()"
-    ></app-custom-table>
-  </section>
+  <app-custom-table
+    [tableData]="loadSheetContentData()"
+    [tableColumns]="columns()"
+    [totalRecords]="loadSheetData()?.totalElements || 0"
+    (lazyLoadEvent)="lazyLoadEvent($event)"
+    [tableLoading]="tableLoading()"
+  ></app-custom-table>
+</section>
+
 </div>
 
 
 <!-- Status Chip Template -->
 <ng-template #statusColumnTemplate let-rowData="rowData">
   @switch (rowData.status) {
-    @case ("SUBMITTED") {
-      <p-chip label="Submitted" class="light-green-chip" />
+    @case ("LOADSHEET_CREATED") {
+      <p-chip label="Created" class="orange-chip" />
     }
-    @case ("APPROVED") {
-      <p-chip label="Approved" class="green-chip" />
+    @case ("LOADSHEET_DELIVERED") {
+      <p-chip label="Delivered" class="green-chip" />
     }
-    @case ("DECLINED") {
+    @case ("LOADSHEET_APPROVED") {
+      <p-chip label="Approved" class="light-green-chip" />
+    }
+    @case ("LOADSHEET_DECLINED") {
       <p-chip label="Declined" class="red-chip" />
     }
-    @case ("NEW") {
-      <p-chip label="Waiting for approve" class="orange-chip" />
-    }
-    @case ("REPLACED") {
+    @case ("LOADSHEET_REPLACED") {
       <p-chip label="Replaced" class="black-chip" />
     }
     @default {
@@ -53,3 +56,5 @@
     }
   }
 </ng-template>
+
+

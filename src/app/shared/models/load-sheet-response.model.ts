@@ -1,35 +1,24 @@
 export interface ILoadSheetResponse {
-  loadSheets: {
-    content: ILoadSheetContentData[];
-    pageable: {
-      pageNumber: number;
-      pageSize: number;
-      sort: {
-        empty: boolean;
-        sorted: boolean;
-        unsorted: boolean;
-      };
-      offset: number;
-      paged: boolean;
-      unpaged: boolean;
-    };
-    last: boolean;
-    totalElements: number;
-    totalPages: number;
-    size: number;
-    number: number;
-    sort: {
-      empty: boolean;
-      sorted: boolean;
-      unsorted: boolean;
-    };
-    first: boolean;
-    numberOfElements: number;
-    empty: boolean;
+  content: ILoadSheetContentData[];
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort: { empty: boolean; sorted: boolean; unsorted: boolean };
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
   };
+  last: boolean;
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  number: number;
+  sort: { empty: boolean; sorted: boolean; unsorted: boolean };
+  first: boolean;
+  numberOfElements: number;
+  empty: boolean;
   approvedPercentage: number;
 }
-
 export interface ILoadSheetContentData {
   id: number;
   acReg: string;
@@ -47,4 +36,5 @@ export interface ILoadSheetContentData {
   replaced: string | null;
   declined: string | null;
   hasLmc: boolean;
+  arrPort: string;
 }

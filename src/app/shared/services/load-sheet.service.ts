@@ -32,8 +32,8 @@ export class LoadSheetService {
       approved?: string;
       replaced?: string;
       declined?: string;
-
-
+      arrPort?: string;
+      arrDateTime?: string;
     },
   ): Observable<ILoadSheetResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/load-sheets/search`;
@@ -54,8 +54,8 @@ export class LoadSheetService {
       approved: tableFilters?.approved,
       replaced: tableFilters?.replaced,
       declined: tableFilters?.declined,
-      
-
+      arrPort: tableFilters?.arrPort,
+      arrDateTime:tableFilters?.arrDateTime,
     };
 
     const cleanedBody =
