@@ -15,6 +15,9 @@ import {
   ITripInfoResponse,
   ITripInfoTableData,
 } from '@shared/models/trip-info-response.model';
+import { ITripInfoDetailsResponse } from '@shared/models/trip-info-details-response.model';
+import { TripInfoDetailsModalComponent } from '../../components/trip-info-details-modal/trip-info-details-modal.component';
+
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
@@ -31,6 +34,7 @@ import moment from 'moment';
     IconFieldModule,
     InputIconModule,
     InputTextModule,
+    TripInfoDetailsModalComponent,
   ],
   templateUrl: './trip-info.component.html',
   styleUrl: './trip-info.component.scss',
@@ -38,6 +42,7 @@ import moment from 'moment';
 export class TripInfoComponent implements OnInit {
   customTableComponent = viewChild.required(CustomTableComponent);
   searchInput = viewChild.required<ElementRef>('searchInput');
+  detailsColumnTemplate = viewChild.required('detailsColumnTemplate');
 
   tripInfoService = inject(TripInfoService);
 
@@ -48,12 +53,18 @@ export class TripInfoComponent implements OnInit {
   tripInfoData = signal<ITripInfoResponse | null>(null);
   tripInfoTableData = signal<ITripInfoResponse['content'] | null>(null);
 
+  tripInfoDetailsLoading = signal<boolean>(false);
+  tripInfoDetails = signal<ITripInfoDetailsResponse | null>(null);
+
   currentPage = signal<number>(0);
   currentRows = signal<number>(10);
 
   tableLoading = signal<boolean>(false);
 
   tableFilters = signal<any>({});
+
+  showTripInfoDetailsModal = signal<boolean>(false);
+  selectedRowData = signal<ITripInfoTableData | null>(null);
 
   ngOnInit() {
     this.defineColumns();
@@ -85,6 +96,12 @@ export class TripInfoComponent implements OnInit {
         isFilter: true,
         filterType: 'datepicker',
       },
+      {
+        field: 'details',
+        header: 'Details',
+        isFilter: false,
+        template: this.detailsColumnTemplate(),
+      },
     ]);
   }
 
@@ -106,6 +123,9 @@ export class TripInfoComponent implements OnInit {
               : null,
             sentDateTime: item.sentDateTime
               ? moment(item.sentDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+              arrDateTime: item.arrDateTime
+              ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
               : null,
           }));
 
@@ -153,9 +173,30 @@ export class TripInfoComponent implements OnInit {
         event.filters?.sentDateTime && event.filters?.sentDateTime[0].value,
       arrPort: event.filters?.arrPort && event.filters?.arrPort[0].value,
       depPort: event.filters?.depPort && event.filters?.depPort[0].value,
+      arrDate:
+        event.filters?.arrDateTime && event.filters?.arrDateTime[0].value,
     });
     console.log(this.tableFilters());
 
     this.getTripInfo();
+  }
+
+  onTripInfoDetailsShow(rowData: ITripInfoTableData) {
+    this.tripInfoService.getTripInfoDetails(rowData.id).subscribe({
+      next: (data) => {
+        this.tripInfoDetails.set(data);
+        this.showTripInfoDetailsModal.set(true);
+      },
+      error: (err) => {
+        console.error('Trip Info Details fetch failed:', err);
+      },
+    });
+  }
+
+  get tripInfoDetailsModalVisible() {
+    return this.showTripInfoDetailsModal();
+  }
+  set tripInfoDetailsModalVisible(val: boolean) {
+    this.showTripInfoDetailsModal.set(val);
   }
 }

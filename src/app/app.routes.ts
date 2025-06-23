@@ -32,40 +32,40 @@ export const routes: Routes = [
     component: LayoutComponent,
     canActivate: [authGuard],
     children: [
-      // {
-      //   path: '',
-      //   component: DashboardComponent,
-      // },
+      {
+        path: '',
+        component: DashboardComponent,
+      },
 
-      // {
-      //   path: 'flight-information',
-      //   component: FlightInfoComponent,
-      // },
+      {
+        path: 'flight-information',
+        component: FlightInfoComponent,
+      },
 
-      // {
-      //   path: 'operational-reports',
-      //   children: [
-      //     {
-      //       path: 'personal-checklists',
-      //       component: PersonalChecklistsComponent,
-      //     },
-      //     { path: 'licence-info', component: LicenceInfoComponent },
-      //     {
-      //       path: 'aircraft-checklists',
-      //       component: AircraftChecklistComponent,
-      //     },
-      //     { path: 'flight-plans', component: FlightPlansComponent },
+      {
+        path: 'operational-reports',
+        children: [
+          {
+            path: 'personal-checklists',
+            component: PersonalChecklistsComponent,
+          },
+          { path: 'licence-info', component: LicenceInfoComponent },
+          {
+            path: 'aircraft-checklists',
+            component: AircraftChecklistComponent,
+          },
+          { path: 'flight-plans', component: FlightPlansComponent },
 
-      //     { path: 'fuel', component: FuelOrderComponent },
-      //     { path: 'route', component: RouteComponent },
-      //     { path: 'trip-information', component: TripInfoComponent },
-      //     { path: 'load-sheet', component: LoadSheetComponent },
-      //     { path: 'crew-information', component: CrewInformationComponent },
+          { path: 'fuel', component: FuelOrderComponent },
+          { path: 'route', component: RouteComponent },
+          { path: 'trip-information', component: TripInfoComponent },
+          { path: 'load-sheet', component: LoadSheetComponent },
+          { path: 'crew-information', component: CrewInformationComponent },
 
-      //     { path: 'report', component: ReportComponent },
-      //     { path: 'gps-loss-form', component: GpsLossFormsComponent },
-      //   ],
-      // },
+          { path: 'report', component: ReportComponent },
+          { path: 'gps-loss-form', component: GpsLossFormsComponent },
+        ],
+      },
 
       {
         path: 'logbook',
@@ -88,14 +88,14 @@ export const routes: Routes = [
           },
         ],
       },
-      // {
-      //   path: 'airport-information',
-      //   component: AirportInfoComponent,
-      // },
-      // {
-      //   path: 'user-login-history',
-      //   component: UserLoginHistoryComponent,
-      // },
+      {
+        path: 'airport-information',
+        component: AirportInfoComponent,
+      },
+      {
+        path: 'user-login-history',
+        component: UserLoginHistoryComponent,
+      },
     ],
   },
 ];
