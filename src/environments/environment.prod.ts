@@ -1,3 +1,3 @@
 export const environment = {
-  baseApi: 'https://smartcockpit.pegasusum.com/dpa',
+  baseApi: 'http://172.27.40.49:8080/dpa',
 };
