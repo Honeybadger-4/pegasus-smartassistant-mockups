@@ -32,7 +32,7 @@ export const routes: Routes = [
     component: LayoutComponent,
     canActivate: [authGuard],
     children: [
-     {
+      {
         path: '',
         component: DashboardComponent,
       },
@@ -88,7 +88,7 @@ export const routes: Routes = [
           },
         ],
       },
-       {
+      {
         path: 'airport-information',
         component: AirportInfoComponent,
       },

@@ -8,7 +8,7 @@ export interface ITripInfoDetailsResponse {
   doi: number;
   eicAdj: null;
   indEffect: null;
-  mzfw:number;
+  mzfw: number;
   mtow: number;
   mlw: number;
   maltow: number;
@@ -20,7 +20,7 @@ export interface ITripInfoDetailsResponse {
   submittedByTxt: string;
   submitted: string;
   version: number;
-  eic:boolean | null;
+  eic: boolean | null;
   dowAdj: number | string | null;
   doiAdj: number | string | null;
 }

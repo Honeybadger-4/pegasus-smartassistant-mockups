@@ -24,7 +24,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 import moment from 'moment';
 
-
 @Component({
   selector: 'app-trip-info',
   standalone: true,
@@ -45,7 +44,6 @@ export class TripInfoComponent implements OnInit {
   searchInput = viewChild.required<ElementRef>('searchInput');
   detailsColumnTemplate = viewChild.required('detailsColumnTemplate');
 
-
   tripInfoService = inject(TripInfoService);
 
   searchInputValue = signal<string>('');
@@ -56,8 +54,7 @@ export class TripInfoComponent implements OnInit {
   tripInfoTableData = signal<ITripInfoResponse['content'] | null>(null);
 
   tripInfoDetailsLoading = signal<boolean>(false);
-tripInfoDetails = signal<ITripInfoDetailsResponse | null>(null);
-
+  tripInfoDetails = signal<ITripInfoDetailsResponse | null>(null);
 
   currentPage = signal<number>(0);
   currentRows = signal<number>(10);
@@ -66,7 +63,7 @@ tripInfoDetails = signal<ITripInfoDetailsResponse | null>(null);
 
   tableFilters = signal<any>({});
 
-    showTripInfoDetailsModal = signal<boolean>(false);
+  showTripInfoDetailsModal = signal<boolean>(false);
   selectedRowData = signal<ITripInfoTableData | null>(null);
 
   ngOnInit() {
@@ -181,22 +178,22 @@ tripInfoDetails = signal<ITripInfoDetailsResponse | null>(null);
     this.getTripInfo();
   }
 
-onTripInfoDetailsShow(rowData: ITripInfoTableData) {
-  this.tripInfoService.getTripInfoDetails(rowData.id).subscribe({
-    next: (data) => {
-      this.tripInfoDetails.set(data);
-      this.showTripInfoDetailsModal.set(true);
-    },
-    error: (err) => {
-      console.error('Trip Info Details fetch failed:', err);
-    },
-  });
-}
+  onTripInfoDetailsShow(rowData: ITripInfoTableData) {
+    this.tripInfoService.getTripInfoDetails(rowData.id).subscribe({
+      next: (data) => {
+        this.tripInfoDetails.set(data);
+        this.showTripInfoDetailsModal.set(true);
+      },
+      error: (err) => {
+        console.error('Trip Info Details fetch failed:', err);
+      },
+    });
+  }
 
-
-get tripInfoDetailsModalVisible() {
-  return this.showTripInfoDetailsModal();
+  get tripInfoDetailsModalVisible() {
+    return this.showTripInfoDetailsModal();
+  }
+  set tripInfoDetailsModalVisible(val: boolean) {
+    this.showTripInfoDetailsModal.set(val);
+  }
 }
-set tripInfoDetailsModalVisible(val: boolean) {
-  this.showTripInfoDetailsModal.set(val);
-}}
