@@ -1,4 +1,4 @@
-export interface ILoadandTrimSheetResponse {
+export interface ILoadSheetModalsResponse {
   loadAndTrimSheet: [
     {
       id?: number;

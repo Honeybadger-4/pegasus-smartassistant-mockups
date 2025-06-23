@@ -21,6 +21,7 @@ import {
   ILoadSheetContentData,
 } from '@shared/models/load-sheet-response.model';
 import { LoadSheetService } from '@shared/services/load-sheet.service';
+import { LoadAndTrimSheetComponent } from 'src/app/components/load-and-trim-sheet/load-and-trim-sheet.component';
 
 @Component({
   selector: 'app-load-sheet',
@@ -32,15 +33,17 @@ import { LoadSheetService } from '@shared/services/load-sheet.service';
     InputIconModule,
     InputTextModule,
     Chip,
+    LoadAndTrimSheetComponent,
   ],
   templateUrl: './load-sheet.component.html',
   styleUrl: './load-sheet.component.scss',
 })
 export class LoadSheetComponent implements OnInit {
   customTableComponent = viewChild.required(CustomTableComponent);
-  loadSheetColumnTemplate = viewChild.required('loadSheetColumnTemplate');
   statusColumnTemplate = viewChild.required('statusColumnTemplate');
   searchInput = viewChild.required<ElementRef>('searchInput');
+
+  loadSheetColumnTemplate = viewChild.required('loadSheetColumnTemplate');
 
   loadSheetService = inject(LoadSheetService);
 
@@ -54,6 +57,10 @@ export class LoadSheetComponent implements OnInit {
   currentRows = signal<number>(10);
   tableFilters = signal<any>({});
   tableLoading = signal<boolean>(false);
+
+
+  loadSheetModal = signal<boolean>(false);
+  selectedRowData = signal<ILoadSheetContentData | null>(null);
 
   ngOnInit() {
     this.defineColumn();
@@ -129,6 +136,7 @@ export class LoadSheetComponent implements OnInit {
         field: 'loadSheet',
         header: 'Load Sheet',
         isFilter: false,
+        template: this.loadSheetColumnTemplate(),
       },
       {
         field: 'lmc',
@@ -240,5 +248,16 @@ export class LoadSheetComponent implements OnInit {
 
     this.getAllLoadSheet();
   }
+ onLoadSheetShow(rowData: ILoadSheetContentData) {
+    this.selectedRowData.set(rowData);
+    this.loadSheetModal.set(true);
+  }
 
+  get loadSheetModalVisible() {
+    return this.loadSheetModal();
+  }
+
+  set loadSheetModalVisible(value: boolean) {
+    this.loadSheetModal.set(value);
+  }
 }

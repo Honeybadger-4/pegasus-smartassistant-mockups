@@ -58,3 +58,21 @@
 </ng-template>
 
 
+
+
+
+
+
+<ng-template #loadSheetColumnTemplate let-rowData="rowData">
+  <button
+    class="border border-gray-300 rounded-md px-3 py-1 bg-white"
+    (click)="onLoadSheetShow(rowData)"
+  >
+    Show
+  </button>
+</ng-template>
+
+<app-load-and-trim-sheet
+  [(visible)]="loadSheetModalVisible"
+  [rowData]="selectedRowData()"
+/>

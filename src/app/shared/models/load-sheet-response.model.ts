@@ -26,7 +26,6 @@ export interface ILoadSheetContentData {
   depPort: string;
   depDateTime: string | null;
   arrDateTime: string | null;
-
   version: number;
   preparedBy: string;
   checkedBy: string;

@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 
 import { LoadAndTrimSheetService } from '@shared/services/load-and-trim-sheet.service';
 import { ILoadSheetTableData } from '@shared/models/load-sheet-response.model';
-import { ILoadandTrimSheetResponse } from '@shared/models/load-and-trim-sheet-response.model';
+import { ILoadSheetModalsResponse } from '@shared/models/load-and-trim-sheet-response.model';
 
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
@@ -27,7 +27,7 @@ export class LoadAndTrimSheetComponent {
   @Output() closeModal = new EventEmitter<void>();
 
   loadAndTrimSheetService = inject(LoadAndTrimSheetService);
-  loadAndTrimSheetData = signal<ILoadandTrimSheetResponse | null>(null);
+  loadAndTrimSheetData = signal<ILoadSheetModalsResponse | null>(null);
 
   dialogOpened() {
     if (this.loadSheetRowData) {
@@ -37,7 +37,7 @@ export class LoadAndTrimSheetComponent {
 
   getLoadAndTrimSheet(legIsn: number) {
     this.loadAndTrimSheetService.getLoadAndTrimSheet(legIsn).subscribe({
-      next: (response: ILoadandTrimSheetResponse) => {
+      next: (response: ILoadSheetModalsResponse) => {
         this.loadAndTrimSheetData.set(response);
         console.log(this.loadAndTrimSheetData);
       },
