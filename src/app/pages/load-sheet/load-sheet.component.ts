@@ -31,6 +31,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SliderModule } from 'primeng/slider';
 import { DialogModule } from 'primeng/dialog';
 import moment from 'moment';
+import { CgLimitsChartComponent } from "../../components/cg-limits-chart/cg-limits-chart.component";
 
 @Component({
   selector: 'app-load-sheet',
@@ -47,7 +48,8 @@ import moment from 'moment';
     DatePickerModule,
     DialogModule,
     ButtonModule,
-  ],
+    CgLimitsChartComponent
+],
   templateUrl: './load-sheet.component.html',
   styleUrl: './load-sheet.component.scss',
 })
