@@ -124,7 +124,7 @@ export class TripInfoComponent implements OnInit {
             sentDateTime: item.sentDateTime
               ? moment(item.sentDateTime).format('DD/MM/YYYY - HH:mm')
               : null,
-              arrDateTime: item.arrDateTime
+            arrDateTime: item.arrDateTime
               ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
               : null,
           }));

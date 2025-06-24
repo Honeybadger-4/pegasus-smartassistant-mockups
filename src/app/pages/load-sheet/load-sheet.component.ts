@@ -49,7 +49,7 @@ export class LoadSheetComponent implements OnInit {
 
   columns = signal<Column[]>([]);
 
-   loadSheetData = signal<ILoadSheetResponse | null>(null);
+  loadSheetData = signal<ILoadSheetResponse | null>(null);
   loadSheetContentData = signal<ILoadSheetContentData[] | null>(null);
 
   searchInputValue = signal<string>('');
@@ -58,15 +58,12 @@ export class LoadSheetComponent implements OnInit {
   tableFilters = signal<any>({});
   tableLoading = signal<boolean>(false);
 
-
   loadSheetModal = signal<boolean>(false);
   selectedRowData = signal<ILoadSheetContentData | null>(null);
 
   ngOnInit() {
     this.defineColumn();
     this.setupSearchListener();
-
-
   }
 
   defineColumn() {
@@ -80,24 +77,24 @@ export class LoadSheetComponent implements OnInit {
         isFilter: true,
         filterType: 'datepicker',
       },
-       { field: 'arrPort', header: 'Arrival Port', isFilter: true },
+      { field: 'arrPort', header: 'Arrival Port', isFilter: true },
       {
         field: 'arrDateTime',
         header: 'Arrival Date',
         isFilter: true,
         filterType: 'datepicker',
       },
-      
+
       { field: 'version', header: 'Version', isFilter: true },
       {
         field: 'preparedBy',
         header: 'Prepared By (load sheet)',
         isFilter: true,
       },
-      
+
       { field: 'checkedBy', header: 'Checked By (load sheet)', isFilter: true },
       { field: 'responsibleUser', header: 'Responsible User', isFilter: true },
-      
+
       {
         field: 'status',
         header: 'Status',
@@ -133,13 +130,13 @@ export class LoadSheetComponent implements OnInit {
         isFilter: true,
         filterType: 'datepicker',
       },
- {
+      {
         field: 'loadSheet',
         header: 'Load Sheet',
         isFilter: false,
         template: this.loadSheetColumnTemplate(),
       },
-     
+
       {
         field: 'lmc',
         header: 'LMC',
@@ -154,47 +151,48 @@ export class LoadSheetComponent implements OnInit {
     ]);
   }
 
- getAllLoadSheet() {
-  this.tableLoading.set(true);
+  getAllLoadSheet() {
+    this.tableLoading.set(true);
 
-  this.loadSheetService
-    .getAllLoadSheet(
-      this.currentPage(),
-      this.currentRows(),
-      this.searchInputValue(),
-      this.tableFilters(),
-    )
-    .subscribe({
-      next: (response: ILoadSheetResponse) => {
-        const formattedData = response.content.map((item: ILoadSheetContentData) => ({
-          ...item,
-          depDateTime: item.depDateTime
-            ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
-            : null,
-          arrDateTime: item.arrDateTime
-            ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
-            : null,
-          approved: item.approved
-            ? moment(item.approved).format('DD/MM/YYYY - HH:mm')
-            : null,
-          replaced: item.replaced
-            ? moment(item.replaced).format('DD/MM/YYYY - HH:mm')
-            : null,
-          declined: item.declined
-            ? moment(item.declined).format('DD/MM/YYYY - HH:mm')
-            : null,
-        }));
+    this.loadSheetService
+      .getAllLoadSheet(
+        this.currentPage(),
+        this.currentRows(),
+        this.searchInputValue(),
+        this.tableFilters(),
+      )
+      .subscribe({
+        next: (response: ILoadSheetResponse) => {
+          const formattedData = response.content.map(
+            (item: ILoadSheetContentData) => ({
+              ...item,
+              depDateTime: item.depDateTime
+                ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
+                : null,
+              arrDateTime: item.arrDateTime
+                ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
+                : null,
+              approved: item.approved
+                ? moment(item.approved).format('DD/MM/YYYY - HH:mm')
+                : null,
+              replaced: item.replaced
+                ? moment(item.replaced).format('DD/MM/YYYY - HH:mm')
+                : null,
+              declined: item.declined
+                ? moment(item.declined).format('DD/MM/YYYY - HH:mm')
+                : null,
+            }),
+          );
 
-        this.loadSheetContentData.set(formattedData);
-        this.loadSheetData.set(response);
-        this.tableLoading.set(false);
-      },
-      error: () => {
-        this.tableLoading.set(false);
-      },
-    });
-}
-
+          this.loadSheetContentData.set(formattedData);
+          this.loadSheetData.set(response);
+          this.tableLoading.set(false);
+        },
+        error: () => {
+          this.tableLoading.set(false);
+        },
+      });
+  }
 
   setupSearchListener() {
     fromEvent<Event>(this.searchInput().nativeElement, 'input')
@@ -212,9 +210,6 @@ export class LoadSheetComponent implements OnInit {
         }
       });
   }
-
-
-  
 
   onChangeSearch(value: string) {
     this.searchInputValue.set(value.toUpperCase());
@@ -252,14 +247,11 @@ export class LoadSheetComponent implements OnInit {
 
     this.getAllLoadSheet();
   }
-  
+
   onLoadSheetShow(row: ILoadSheetContentData) {
     this.selectedRowData.set(row);
     this.loadSheetModal.set(true);
   }
-
-  
-
 
   get loadSheetModalVisible() {
     return this.loadSheetModal();

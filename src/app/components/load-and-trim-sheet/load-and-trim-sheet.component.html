@@ -273,55 +273,64 @@
           <p class="mb-4 ml-28">LAST MINUTE CHANGES</p>
           <div class="flex items-center gap-5 ml-28">
             <p>DEST</p>
-            <p>{{ loadAndTrimSheetData.lmc.lmcJson?.[0]?.Destination || '-' }}</p>
+            <p>
+              {{ loadAndTrimSheetData.lmc.lmcJson?.[0]?.Destination || "-" }}
+            </p>
             <p>SPEC</p>
-            <p>{{ loadAndTrimSheetData.lmc.lmcJson?.[0]?.SpcAmount || '-' }} {{ loadAndTrimSheetData.lmc.lmcJson?.[0]?.SpcType || '' }} {{ loadAndTrimSheetData.lmc.lmcJson?.[0]?.SpcSubtype || '' }}</p>
+            <p>
+              {{ loadAndTrimSheetData.lmc.lmcJson?.[0]?.SpcAmount || "-" }}
+              {{ loadAndTrimSheetData.lmc.lmcJson?.[0]?.SpcType || "" }}
+              {{ loadAndTrimSheetData.lmc.lmcJson?.[0]?.SpcSubtype || "" }}
+            </p>
             <p>CL/CPT</p>
-            <p>{{ loadAndTrimSheetData.lmc.lmcJson?.[0]?.ClCpt || '-' }}</p>
+            <p>{{ loadAndTrimSheetData.lmc.lmcJson?.[0]?.ClCpt || "-" }}</p>
             <p>+ WEIGHT</p>
-            <p>{{ loadAndTrimSheetData.lmc.lmcJson?.[0]?.Weight || '-' }}</p>
+            <p>{{ loadAndTrimSheetData.lmc.lmcJson?.[0]?.Weight || "-" }}</p>
           </div>
         </div>
 
         <!-- FLAP INFO -->
         <div class="flex gap-4">
-          <p>{{ loadAndTrimSheetData.initialContent.flapInfo?.stapTo || '-' }}</p>
-          <p>{{ loadAndTrimSheetData.initialContent.flapInfo?.flapValue || '-' }}</p>
+          <p>
+            {{ loadAndTrimSheetData.initialContent.flapInfo?.stapTo || "-" }}
+          </p>
+          <p>
+            {{ loadAndTrimSheetData.initialContent.flapInfo?.flapValue || "-" }}
+          </p>
         </div>
 
         <!-- SEATING -->
         <div>
           <p>SEATING</p>
-          <p>{{ loadAndTrimSheetData.initialContent.cabinDistribution || '-' }}</p>
+          <p>
+            {{ loadAndTrimSheetData.initialContent.cabinDistribution || "-" }}
+          </p>
         </div>
 
         <!-- UNDERLOAD -->
         <div class="flex gap-4">
           <p>UNDERLOAD</p>
-          <p>{{ loadAndTrimSheetData.initialContent.underloadBeforeLMC || '-' }}</p>
+          <p>
+            {{ loadAndTrimSheetData.initialContent.underloadBeforeLMC || "-" }}
+          </p>
         </div>
 
         <p>*</p>
-
-
-
 
         <!-- LOAD MESSAGE AND CAPTAIN'S INFORMATION -->
         <section class="mt-10">
           <p class="mb-4">LOAD MESSAGE AND CAPTAIN'S INFORMATION</p>
           <div class="flex items-center justify-between w-[250px]">
             <p>TAXI FUEL</p>
-            <p>{{ loadAndTrimSheetData.initialContent.taxiFuel || '-' }}</p>
+            <p>{{ loadAndTrimSheetData.initialContent.taxiFuel || "-" }}</p>
           </div>
           <div class="flex items-center justify-between w-[250px]">
             <p>PAX WEIGHT USED</p>
-            <p>{{ loadAndTrimSheetData.lmc.lmcJson?.[0]?.PaxWeightUsed || '-' }}</p>
+            <p>
+              {{ loadAndTrimSheetData.lmc.lmcJson?.[0]?.PaxWeightUsed || "-" }}
+            </p>
           </div>
         </section>
-
-    
-
-      
       </section>
     </div>
   </p-dialog>

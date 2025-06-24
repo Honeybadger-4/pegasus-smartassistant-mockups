@@ -51,7 +51,11 @@ export interface ILoadSheetModalsResponse {
         lastUpdater?: string;
         count?: number;
         crewInfo?: { data?: number; label?: string; enabled?: boolean };
-        crewConfiguration?: { data?: number; label?: string; enabled?: boolean };
+        crewConfiguration?: {
+          data?: number;
+          label?: string;
+          enabled?: boolean;
+        };
       }>;
     };
 

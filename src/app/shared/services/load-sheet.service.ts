@@ -69,14 +69,10 @@ export class LoadSheetService {
       .pipe(map((response) => response.data));
   }
 
- getLoadSheetModalInfo(id: number): Observable<ILoadSheetModalsResponse> {
+  getLoadSheetModalInfo(id: number): Observable<ILoadSheetModalsResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/load-sheets/${id}`;
     return this.http
       .get<IHttpResponseModel>(apiUrl)
       .pipe(map((response) => response.data));
   }
 }
-
-
-
-
