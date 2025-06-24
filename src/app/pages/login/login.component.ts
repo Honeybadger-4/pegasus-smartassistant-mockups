@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
 
       this.loginService.login(username, password).subscribe({
         next: () => {
-          this.router.navigate(['/logbook']);
+          this.router.navigate(['/']);
           this.btnLoading.set(false);
         },
         error: () => {
