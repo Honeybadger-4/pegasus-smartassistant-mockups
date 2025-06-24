@@ -65,29 +65,29 @@ export class CgLimitsChartComponent {
     };
 
     this.options = {
-        responsive: true,
-        scales: {
-          x: {
-            min: 20,
-            max: 55,
-            grid: {
-              color: '#fff',
-            },
-            ticks: {
-              color: 'white',
-            },
+      responsive: true,
+      scales: {
+        x: {
+          min: 20,
+          max: 55,
+          grid: {
+            color: '#fff',
           },
-          y: {
-            min: 35000,
-            max: 90000,
-            grid: {
-              color: 'gray'
-            },
-            ticks: {
-              color: 'white',
-            },
+          ticks: {
+            color: 'white',
           },
         },
+        y: {
+          min: 35000,
+          max: 90000,
+          grid: {
+            color: 'gray',
+          },
+          ticks: {
+            color: 'white',
+          },
+        },
+      },
     };
   }
 }
