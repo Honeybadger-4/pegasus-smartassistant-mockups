@@ -1,0 +1,41 @@
+<div id="routes-page">
+  <!-- Page Header -->
+  <section class="flex items-center justify-between">
+    <p class="header-title">Routes</p>
+
+    <div class="w-[210px]">
+      <p-iconField iconPosition="right" class="custom-icon-field">
+        <input
+          type="text"
+          pInputText
+          [(ngModel)]="searchInputValue"
+          (ngModelChange)="onChangeSearch($event)"
+          placeholder="Find Aircraft or Flight No"
+        />
+        <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+      </p-iconField>
+    </div>
+  </section>
+
+  <!-- Table -->
+  <section class="table-section custom-card mt-5">
+    <app-custom-table
+      [tableData]="flightPlansData()"
+      [tableColumns]="columns()"
+      [totalRecords]="flightPlansTotal()"
+      (lazyLoadEvent)="lazyLoadEvent($event)"
+      [tableLoading]="tableLoading()"
+    ></app-custom-table>
+  </section>
+</div>
+
+<!-- Flight Plan Column Template -->
+<ng-template #routeDetailsColumnTemplate let-rowData="rowData">
+  <button
+    class="border border-gray-300 rounded-md px-3 py-1 bg-white"
+    (click)="onFlightPlansShow(rowData)"
+  >
+    Show
+  </button>
+</ng-template>
+

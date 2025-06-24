@@ -127,7 +127,7 @@ export class MenubarComponent implements OnInit {
           },
 
           {
-            label: 'Alternate Routes',
+            label: 'Routes',
             icon: '',
             path: 'operational-reports/route',
           },
