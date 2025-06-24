@@ -8,8 +8,7 @@
         <input
           type="text"
           pInputText
-                    #searchInput
-
+          #searchInput
           [(ngModel)]="searchInputValue"
           (ngModelChange)="onChangeSearch($event)"
           placeholder="Find Aircraft or Flight No"
@@ -21,17 +20,15 @@
 
   <!-- Table -->
   <section class="table-section custom-card mt-5">
-  <app-custom-table
-    [tableData]="loadSheetContentData()"
-    [tableColumns]="columns()"
-    [totalRecords]="loadSheetData()?.totalElements || 0"
-    (lazyLoadEvent)="lazyLoadEvent($event)"
-    [tableLoading]="tableLoading()"
-  ></app-custom-table>
-</section>
-
+    <app-custom-table
+      [tableData]="loadSheetContentData()"
+      [tableColumns]="columns()"
+      [totalRecords]="loadSheetData()?.totalElements || 0"
+      (lazyLoadEvent)="lazyLoadEvent($event)"
+      [tableLoading]="tableLoading()"
+    ></app-custom-table>
+  </section>
 </div>
-
 
 <!-- Status Chip Template -->
 <ng-template #statusColumnTemplate let-rowData="rowData">
@@ -57,12 +54,6 @@
   }
 </ng-template>
 
-
-
-
-
-
-
 <ng-template #loadSheetColumnTemplate let-rowData="rowData">
   <button
     class="border border-gray-300 rounded-md px-3 py-1 bg-white"
@@ -73,6 +64,7 @@
 </ng-template>
 
 <app-load-and-trim-sheet
+  *ngIf="selectedRowData()"
+  [loadSheetRowData]="selectedRowData()"
   [(visible)]="loadSheetModalVisible"
-  [rowData]="selectedRowData()"
-/>
+></app-load-and-trim-sheet>

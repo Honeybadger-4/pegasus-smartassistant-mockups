@@ -3,8 +3,11 @@ import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { RequestParamsControlService } from './helpers-services/request-params-control.service';
-import { ILoadSheetResponse } from '@shared/models/load-sheet-response.model';
 import { IHttpResponseModel } from '@shared/models/http-response.model';
+
+import { ILoadSheetResponse } from '@shared/models/load-sheet-response.model';
+import { ILoadSheetModalsResponse } from '@shared/models/load-sheet-modals-response';
+import { response } from 'express';
 
 @Injectable({
   providedIn: 'root',
@@ -55,7 +58,7 @@ export class LoadSheetService {
       replaced: tableFilters?.replaced,
       declined: tableFilters?.declined,
       arrPort: tableFilters?.arrPort,
-      arrDateTime:tableFilters?.arrDateTime,
+      arrDateTime: tableFilters?.arrDateTime,
     };
 
     const cleanedBody =
@@ -66,6 +69,14 @@ export class LoadSheetService {
       .pipe(map((response) => response.data));
   }
 
-
-   
+ getLoadSheetModalInfo(id: number): Observable<ILoadSheetModalsResponse> {
+    const apiUrl = `${this.baseUrl}/api/v1/admin/load-sheets/${id}`;
+    return this.http
+      .get<IHttpResponseModel>(apiUrl)
+      .pipe(map((response) => response.data));
+  }
 }
+
+
+
+

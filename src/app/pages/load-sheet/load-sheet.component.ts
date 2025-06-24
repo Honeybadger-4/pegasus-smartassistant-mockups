@@ -94,8 +94,10 @@ export class LoadSheetComponent implements OnInit {
         header: 'Prepared By (load sheet)',
         isFilter: true,
       },
+      
       { field: 'checkedBy', header: 'Checked By (load sheet)', isFilter: true },
       { field: 'responsibleUser', header: 'Responsible User', isFilter: true },
+      
       {
         field: 'status',
         header: 'Status',
@@ -131,13 +133,13 @@ export class LoadSheetComponent implements OnInit {
         isFilter: true,
         filterType: 'datepicker',
       },
-
-      {
+ {
         field: 'loadSheet',
         header: 'Load Sheet',
         isFilter: false,
         template: this.loadSheetColumnTemplate(),
       },
+     
       {
         field: 'lmc',
         header: 'LMC',
@@ -211,6 +213,9 @@ export class LoadSheetComponent implements OnInit {
       });
   }
 
+
+  
+
   onChangeSearch(value: string) {
     this.searchInputValue.set(value.toUpperCase());
     this.currentPage.set(0);
@@ -244,14 +249,17 @@ export class LoadSheetComponent implements OnInit {
       arrDateTime:
         event.filters?.arrDateTime && event.filters?.arrDateTime[0].value,
     });
-    console.log(this.tableFilters());
 
     this.getAllLoadSheet();
   }
- onLoadSheetShow(rowData: ILoadSheetContentData) {
-    this.selectedRowData.set(rowData);
+  
+  onLoadSheetShow(row: ILoadSheetContentData) {
+    this.selectedRowData.set(row);
     this.loadSheetModal.set(true);
   }
+
+  
+
 
   get loadSheetModalVisible() {
     return this.loadSheetModal();
