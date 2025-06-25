@@ -1,48 +1,39 @@
 export interface ILoadSheetResponse {
-  loadSheets: {
-    content: [ILoadSheetTableData];
-    pageable: {
-      pageNumber: number;
-      pageSize: number;
-      sort: {
-        empty: boolean;
-        sorted: boolean;
-        unsorted: boolean;
-      };
-      offset: number;
-      paged: boolean;
-      unpaged: boolean;
-    };
-    last: boolean;
-    totalElements: number;
-    totalPages: number;
-    size: number;
-    number: number;
-    sort: {
-      empty: boolean;
-      sorted: boolean;
-      unsorted: boolean;
-    };
-    first: boolean;
-    numberOfElements: number;
-    empty: boolean;
+  content: ILoadSheetContentData[];
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort: { empty: boolean; sorted: boolean; unsorted: boolean };
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
   };
+  last: boolean;
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  number: number;
+  sort: { empty: boolean; sorted: boolean; unsorted: boolean };
+  first: boolean;
+  numberOfElements: number;
+  empty: boolean;
   approvedPercentage: number;
 }
-
-export interface ILoadSheetTableData {
-  username: string;
-  legIsn: number;
-  depPort: string;
-  arrPort: string;
+export interface ILoadSheetContentData {
+  id: number;
+  acReg: string;
   flightNo: string;
-  aircraftReg: string;
-  status: string;
+  depPort: string;
+  depDateTime: string | null;
+  arrDateTime: string | null;
+  version: number;
   preparedBy: string;
   checkedBy: string;
-  lmc: string;
-  crew: string;
-  version: string;
-  depDateTime: string;
-  arrDateTime: string;
+  responsibleUser: string;
+  status: string;
+  approved: string | null;
+  replaced: string | null;
+  declined: string | null;
+  hasLmc: boolean;
+  arrPort: string;
 }

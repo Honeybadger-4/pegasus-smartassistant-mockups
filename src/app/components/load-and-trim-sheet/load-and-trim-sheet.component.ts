@@ -1,53 +1,46 @@
 import {
   Component,
   EventEmitter,
-  inject,
   Input,
   Output,
+  inject,
   signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { LoadAndTrimSheetService } from '@shared/services/load-and-trim-sheet.service';
-import { ILoadSheetTableData } from '@shared/models/load-sheet-response.model';
-import { ILoadandTrimSheetResponse } from '@shared/models/load-and-trim-sheet-response.model';
-
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
+import { LoadSheetService } from '@shared/services/load-sheet.service';
+import { ILoadSheetContentData } from '@shared/models/load-sheet-response.model';
 
 @Component({
   selector: 'app-load-and-trim-sheet',
   imports: [CommonModule, DialogModule, ButtonModule],
   templateUrl: './load-and-trim-sheet.component.html',
-  styleUrl: './load-and-trim-sheet.component.scss',
+  styleUrls: ['./load-and-trim-sheet.component.scss'],
 })
 export class LoadAndTrimSheetComponent {
-  @Input() visible = true;
-  @Input() loadSheetRowData: ILoadSheetTableData | null = null;
-  @Output() closeModal = new EventEmitter<void>();
+  @Input() visible = false;
+  @Output() visibleChange = new EventEmitter<boolean>();
 
-  loadAndTrimSheetService = inject(LoadAndTrimSheetService);
-  loadAndTrimSheetData = signal<ILoadandTrimSheetResponse | null>(null);
+  @Input() loadSheetRowData: ILoadSheetContentData | null = null;
+
+  raw = signal<any | null>(null);
+
+  loadAndTrimSheet = inject(LoadSheetService);
 
   dialogOpened() {
-    if (this.loadSheetRowData) {
-      this.getLoadAndTrimSheet(this.loadSheetRowData.legIsn);
+    const id = this.loadSheetRowData?.id;
+    if (!id) {
+      this.raw.set(null);
+      return;
     }
-  }
-
-  getLoadAndTrimSheet(legIsn: number) {
-    this.loadAndTrimSheetService.getLoadAndTrimSheet(legIsn).subscribe({
-      next: (response: ILoadandTrimSheetResponse) => {
-        this.loadAndTrimSheetData.set(response);
-        console.log(this.loadAndTrimSheetData);
-      },
-      error: (error: any) => {
-        console.log(error);
-      },
+    this.loadAndTrimSheet.getLoadSheetModalInfo(id).subscribe({
+      next: (data) => this.raw.set(data),
+      error: () => this.raw.set(null),
     });
   }
 
   close() {
-    this.closeModal.emit();
+    this.visibleChange.emit(false);
   }
 }

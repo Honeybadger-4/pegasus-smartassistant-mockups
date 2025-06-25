@@ -236,12 +236,12 @@ body {
     font-weight: 500;
     color: #8d8d8d;
     font-size: 14px;
-    padding: 7px 15px;
+    padding: 7px 2px;
   }
 
   .p-datatable-tbody > tr > td {
-    padding: 7px 15px;
-    font-size: 14px;
+    padding: 7px 2px;
+    font-size: 12px;
   }
 }
 
@@ -378,7 +378,12 @@ p-columnfilterformelement {
 }
 
 .yellow-chip {
-  background-color: #feb914 !important;
+  background-color: #feb814dc !important;
+  color: #515b66 !important;
+}
+
+.logbook-yellow-chip {
+  background-color: #ffc562b4 !important;
   color: #515b66 !important;
 }
 
