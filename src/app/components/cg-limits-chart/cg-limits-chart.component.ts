@@ -1,93 +1,187 @@
-import { Component, signal } from '@angular/core';
-import { ChartData, ChartOptions, ChartType, Point } from 'chart.js';
+import { Component, inject, signal } from '@angular/core';
+import {
+  CgLimitsEnvelopes,
+  GetCgLimitsResponseModel,
+} from '@shared/models/cg-limits-response.model';
+import { CgLimitsService } from '@shared/services/bff/cg-limits.service';
 import { ChartModule } from 'primeng/chart';
 
 @Component({
   selector: 'app-cg-limits-chart',
+  standalone: true,
   imports: [ChartModule],
   templateUrl: './cg-limits-chart.component.html',
   styleUrl: './cg-limits-chart.component.scss',
 })
 export class CgLimitsChartComponent {
-  data: any;
-  options: any;
+  private cgLimitsService = inject(CgLimitsService);
+
+  cgLimitsData = signal<GetCgLimitsResponseModel | null>(null);
+  chartData = signal<any>(null);
+  chartOptions: any;
 
   ngOnInit(): void {
-    this.data = {
-      datasets: [
-        {
-          label: 'LW Envelope',
-          data: [
-            { x: 30, y: 45000 },
-            { x: 20, y: 72000 },
-            { x: 28, y: 80000 },
-            { x: 50, y: 80000 },
-            { x: 55, y: 75000 },
-            { x: 45, y: 60000 },
-            { x: 40, y: 45000 },
-            { x: 30, y: 45000 }, // Closing the envelope
-          ],
-          borderColor: 'rgba(0, 128, 255, 1)',
-          backgroundColor: 'rgba(0, 128, 255, 0.2)',
-          fill: true,
-          tension: 0,
-          pointRadius: 0,
-          borderWidth: 2,
-          showLine: true,
-        },
+    this.fetchCgLimits();
+    this.initializeChart();
+  }
 
-        {
-          label: 'ZFW',
-          type: 'scatter',
-          data: [{ x: 38, y: 68000 }],
-          backgroundColor: 'green',
-          pointRadius: 6,
-        },
-
-        {
-          label: 'TOW',
-          type: 'scatter',
-          data: [{ x: 39, y: 70000 }],
-          backgroundColor: 'white',
-          borderColor: 'gray',
-          borderWidth: 1,
-          pointRadius: 6,
-        },
-
-        {
-          label: 'LW',
-          type: 'scatter',
-          data: [{ x: 40, y: 72000 }],
-          backgroundColor: 'blue',
-          pointRadius: 6,
-        },
-      ],
-    };
-
-    this.options = {
+  initializeChart(): void {
+    this.chartOptions = {
       responsive: true,
       scales: {
         x: {
-          min: 20,
-          max: 55,
-          grid: {
-            color: '#fff',
-          },
-          ticks: {
-            color: 'white',
-          },
+          min: 0,
+          max: 130,
+          grid: { color: '#fff' },
+          ticks: { color: 'white' },
         },
         y: {
-          min: 35000,
-          max: 90000,
-          grid: {
-            color: 'gray',
-          },
-          ticks: {
-            color: 'white',
-          },
+          min: 25000,
+          max: 100000,
+          grid: { color: 'gray' },
+          ticks: { color: 'white' },
         },
       },
+    };
+  }
+
+  fetchCgLimits(): void {
+    this.cgLimitsService.getCgLimits('14503268').subscribe({
+      next: (response) => {
+        this.cgLimitsData.set(response);
+        this.chartData.set(
+          this.transformToChartData(response),
+        );
+      },
+      error: (error) => {
+        console.error('Error fetching CG limits:', error);
+      },
+    });
+  }
+
+  transformToChartData(data: GetCgLimitsResponseModel) {
+    const datasets = [];
+
+    const envelopes = [
+      { type: 'ZFW', label: 'ZFW Envelope', color: 'rgba(255, 0, 0, 1)' },
+      {
+        type: 'TAKE_OFF',
+        label: 'Takeoff Envelope',
+        color: 'rgba(0, 255, 0, 1)',
+      },
+      {
+        type: 'LANDING',
+        label: 'Landing Envelope',
+        color: 'rgba(0, 0, 255, 1)',
+      },
+    ];
+
+    for (const env of envelopes) {
+      const found = data.envelopes?.find(
+        (e: any) => e.envelopeIndexType === env.type,
+      );
+      
+      if (found) {
+        datasets.push(
+          ...this.buildEnvelopeDataset(
+            env.label,
+            found.envelopeUnits,
+            env.color,
+          ),
+        );
+      }
+    }
+
+    // CG dots and lines
+    datasets.push(
+      this.buildPoint(
+        'ZFW',
+        data.zfw.weightIndex,
+        data.zfw.weight,
+        'rgba(255, 0, 0, 1)',
+      ),
+    );
+    datasets.push(
+      this.buildPoint(
+        'TOW',
+        data.tow.weightIndex,
+        data.tow.weight,
+        'rgba(0, 255, 0, 1)',
+      ),
+    );
+    datasets.push(
+      this.buildPoint(
+        'LW',
+        data.lw.weightIndex,
+        data.lw.weight,
+        'rgba(0, 0, 255, 1)',
+      ),
+    );
+    datasets.push(this.buildCGLine('CG1', data.cg1));
+    datasets.push(this.buildCGLine('CG2', data.cg2));
+
+    return { datasets };
+  }
+
+  buildEnvelopeDataset(
+    label: string,
+    units: CgLimitsEnvelopes['envelopeUnits'],
+    color: string,
+  ): any[] {
+    const aftPoints = units
+      .filter((u) => u.envelopeType === 'AFT')
+      .map((u) => ({ x: u.weightIndex, y: u.weight }));
+
+    const forwardPoints = units
+      .filter((u) => u.envelopeType === 'FORWARD')
+      .map((u) => ({ x: u.weightIndex, y: u.weight }));
+
+    return [
+      {
+        label: `${label} - AFT`,
+        data: aftPoints,
+        borderColor: color,
+        backgroundColor: color,
+        fill: false,
+        tension: 0,
+        pointRadius: 6,
+        borderWidth: 2,
+        showLine: true,
+      },
+      {
+        label: `${label} - FORWARD`,
+        data: forwardPoints,
+        borderColor: color,
+        backgroundColor: color,
+        fill: false,
+        tension: 0,
+        pointRadius: 6,
+        borderWidth: 2,
+        showLine: true,
+      },
+    ];
+  }
+
+  buildPoint(label: string, x: number, y: number, color: string): any {
+    return {
+      label,
+      data: [{ x, y }],
+      backgroundColor: color,
+      pointRadius: 6,
+      borderWidth: 1,
+    };
+  }
+
+  buildCGLine(label: string, points: any[]): any {
+    return {
+      label,
+      data: points.map((cg) => ({ x: cg.weightIndex, y: cg.weight })),
+      fill: false,
+      borderWidth: 2,
+      borderColor: 'white',
+      backgroundColor: 'white',
+      pointRadius: 6,
+      showLine: true,
     };
   }
 }
