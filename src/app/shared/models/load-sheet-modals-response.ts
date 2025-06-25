@@ -255,9 +255,9 @@ export interface ILoadSheetModalsResponse {
     lmcJson?: {
       spcType: string;
       spcSubType: string | null;
-      spcAmount: number
+      spcAmount: number;
       clCpt: string;
-      weight: number
+      weight: number;
       destination: string;
     };
   };
