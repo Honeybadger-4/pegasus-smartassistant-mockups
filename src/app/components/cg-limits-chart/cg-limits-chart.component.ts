@@ -46,12 +46,11 @@ export class CgLimitsChartComponent {
   }
 
   fetchCgLimits(): void {
+    // TODO: Loadsheet'in legIsn bilgisi alınıp istek o şekilde atılmalı.
     this.cgLimitsService.getCgLimits('14503268').subscribe({
       next: (response) => {
         this.cgLimitsData.set(response);
-        this.chartData.set(
-          this.transformToChartData(response),
-        );
+        this.chartData.set(this.transformToChartData(response));
       },
       error: (error) => {
         console.error('Error fetching CG limits:', error);
@@ -80,7 +79,7 @@ export class CgLimitsChartComponent {
       const found = data.envelopes?.find(
         (e: any) => e.envelopeIndexType === env.type,
       );
-      
+
       if (found) {
         datasets.push(
           ...this.buildEnvelopeDataset(

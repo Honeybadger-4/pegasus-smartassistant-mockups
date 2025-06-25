@@ -6,16 +6,17 @@ import { IHttpResponseModel } from '@shared/models/http-response.model';
 import { map, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CgLimitsService {
-    http = inject(HttpClient);
-    baseUrl = environment.baseApi;
+  http = inject(HttpClient);
+  baseUrl = environment.baseApi;
 
-    getCgLimits(legIsn: string): Observable<GetCgLimitsResponseModel> {
-      const apiUrl = `${this.baseUrl}/api/v1/bff/cgLimits?legIsn=${legIsn}`;
+  getCgLimits(legIsn: string): Observable<GetCgLimitsResponseModel> {
+    const apiUrl = `${this.baseUrl}/api/v1/bff/cgLimits?legIsn=${legIsn}`;
 
-      return this.http.get<IHttpResponseModel>(apiUrl)
+    return this.http
+      .get<IHttpResponseModel>(apiUrl)
       .pipe(map((response) => response.data));
-    }
+  }
 }
