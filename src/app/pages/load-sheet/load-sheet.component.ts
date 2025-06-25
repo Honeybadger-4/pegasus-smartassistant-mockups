@@ -1,200 +1,263 @@
 import {
   Component,
-  inject,
   OnInit,
   signal,
-  TemplateRef,
-  ViewChild,
+  viewChild,
+  inject,
+  ElementRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
-
-import { LoadAndTrimSheetComponent } from '../../components/load-and-trim-sheet/load-and-trim-sheet.component';
-import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
-import { LoadSheetService } from '@shared/services/load-sheet.service';
+import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
-import {
-  ILoadSheetResponse,
-  ILoadSheetTableData,
-} from '@shared/models/load-sheet-response.model';
-
-import { ButtonModule } from 'primeng/button';
-import { DatePickerModule } from 'primeng/datepicker';
+import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
-import { SliderModule } from 'primeng/slider';
-import { DialogModule } from 'primeng/dialog';
+import { Chip } from 'primeng/chip';
 import moment from 'moment';
+import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
+import {
+  ILoadSheetResponse,
+  ILoadSheetContentData,
+} from '@shared/models/load-sheet-response.model';
+import { LoadSheetService } from '@shared/services/load-sheet.service';
+import { LoadAndTrimSheetComponent } from 'src/app/components/load-and-trim-sheet/load-and-trim-sheet.component';
 
 @Component({
   selector: 'app-load-sheet',
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule,
-    LoadAndTrimSheetComponent,
     CustomTableComponent,
-    SliderModule,
     IconFieldModule,
     InputIconModule,
     InputTextModule,
-    DatePickerModule,
-    DialogModule,
-    ButtonModule,
+    Chip,
+    LoadAndTrimSheetComponent,
   ],
   templateUrl: './load-sheet.component.html',
   styleUrl: './load-sheet.component.scss',
 })
 export class LoadSheetComponent implements OnInit {
-  @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
-  @ViewChild('statusCellBodyTemplate', { static: true })
-  statusCellBodyTemplate!: TemplateRef<any>;
-  @ViewChild('previewCellBodyTemplate', { static: true })
-  previewCellBodyTemplate!: TemplateRef<any>;
+  customTableComponent = viewChild.required(CustomTableComponent);
+  statusColumnTemplate = viewChild.required('statusColumnTemplate');
+  searchInput = viewChild.required<ElementRef>('searchInput');
 
-  filterFormGroup!: FormGroup;
-  columns: Column[] = [];
-  dateRange: Date[] = [];
-  currentPage = 0;
-  currentRows = 20;
-  isDialogVisible = false;
-  tableLoading = false;
+  loadSheetColumnTemplate = viewChild.required('loadSheetColumnTemplate');
 
-  loadSheetData = signal<ILoadSheetResponse | null>(null);
-  loadSheetTableData = signal<ILoadSheetTableData[]>([]);
-  loadAndTrimSheetData = signal<ILoadSheetTableData | null>(null);
-  approvedValue = signal<number>(0);
-  declinedValue = signal<number>(0);
-
-  formBuilder = inject(FormBuilder);
   loadSheetService = inject(LoadSheetService);
 
-  ngOnInit() {
-    this.builder();
-    this.defineColumn();
-    this.getLoadSheet();
-  }
+  columns = signal<Column[]>([]);
 
-  builder() {
-    this.filterFormGroup = this.formBuilder.group({
-      acReg: [''],
-      flightNo: [''],
-      depPort: [''],
-      arrPort: [''],
-      dateRange: [this.dateRangeDefaultValue()],
-    });
+  loadSheetData = signal<ILoadSheetResponse | null>(null);
+  loadSheetContentData = signal<ILoadSheetContentData[] | null>(null);
+
+  searchInputValue = signal<string>('');
+  currentPage = signal<number>(0);
+  currentRows = signal<number>(10);
+  tableFilters = signal<any>({});
+  tableLoading = signal<boolean>(false);
+
+  loadSheetModal = signal<boolean>(false);
+  selectedRowData = signal<ILoadSheetContentData | null>(null);
+
+  ngOnInit() {
+    this.defineColumn();
+    this.setupSearchListener();
   }
 
   defineColumn() {
-    this.columns = [
-      { field: 'aircraftReg', header: 'Aircraft' },
-      { field: 'flightNo', header: 'Flight No' },
-      { field: 'depPort', header: 'Departure' },
-      { field: 'arrPort', header: 'Arrival' },
-      { field: 'depDateTime', header: 'Dep Date/Time' },
-      { field: 'arrDateTime', header: 'Arr Date/Time' },
-      { field: 'preparedBy', header: 'Prepared By' },
-      { field: 'checkedBy', header: 'Checked By' },
-      { field: 'username', header: 'Approved By' },
-      { field: 'lmc', header: 'LMC' },
-      { field: 'crew', header: 'Crew' },
-      { field: 'version', header: 'Version' },
+    this.columns.set([
+      { field: 'acReg', header: 'Aircraft', isFilter: true },
+      { field: 'flightNo', header: 'Flight No', isFilter: true },
+      { field: 'depPort', header: 'Departure Port', isFilter: true },
+      {
+        field: 'depDateTime',
+        header: 'Departure Date',
+        isFilter: true,
+        filterType: 'datepicker',
+      },
+      { field: 'arrPort', header: 'Arrival Port', isFilter: true },
+      {
+        field: 'arrDateTime',
+        header: 'Arrival Date',
+        isFilter: true,
+        filterType: 'datepicker',
+      },
+
+      { field: 'version', header: 'Version', isFilter: true },
+      {
+        field: 'preparedBy',
+        header: 'Prepared By (load sheet)',
+        isFilter: true,
+      },
+
+      { field: 'checkedBy', header: 'Checked By (load sheet)', isFilter: true },
+      { field: 'responsibleUser', header: 'Responsible User', isFilter: true },
+
       {
         field: 'status',
         header: 'Status',
-        template: this.statusCellBodyTemplate,
+        isFilter: true,
+        template: this.statusColumnTemplate(),
+        filterType: 'selectbox',
+        filterOptions: [
+          { label: 'Created', value: 'LOADSHEET_CREATED' },
+          { label: 'Delivered', value: 'LOADSHEET_DELIVERED' },
+          { label: 'Declined', value: 'LOADSHEET_DECLINED' },
+          { label: 'Replaced', value: 'LOADSHEET_REPLACED' },
+          { label: 'Approved', value: 'LOADSHEET_APPROVED' },
+        ],
       },
-      { field: '', header: '', template: this.previewCellBodyTemplate },
-    ];
+
+      {
+        field: 'approved',
+        header: 'Approved Date',
+        isFilter: true,
+        filterType: 'datepicker',
+      },
+
+      {
+        field: 'replaced',
+        header: 'Replaced Date',
+        isFilter: true,
+        filterType: 'datepicker',
+      },
+
+      {
+        field: 'declined',
+        header: 'Declined Date',
+        isFilter: true,
+        filterType: 'datepicker',
+      },
+      {
+        field: 'loadSheet',
+        header: 'Load Sheet',
+        isFilter: false,
+        template: this.loadSheetColumnTemplate(),
+      },
+
+      {
+        field: 'lmc',
+        header: 'LMC',
+        isFilter: false,
+      },
+
+      {
+        field: 'cgLimits',
+        header: 'CG Limits',
+        isFilter: false,
+      },
+    ]);
   }
 
-  // API Calls Operations
-  getLoadSheet() {
-    this.tableLoading = true;
+  getAllLoadSheet() {
+    this.tableLoading.set(true);
 
-    const formValues = this.filterFormGroup.value;
-    const acReg = formValues.acReg?.trim() || null;
-    const flightNo = formValues.flightNo?.trim() || null;
-    const depPort = formValues.depPort?.trim() || null;
-    const arrPort = formValues.arrPort?.trim() || null;
-    let startDate = '';
-    let endDate = '';
-
-    // Tarih aralığı kontrolü ve formatlama
-    if (formValues.dateRange && formValues.dateRange.length === 2) {
-      const [start, end] = formValues.dateRange;
-
-      if (start && end) {
-        startDate = moment(start).format('YYYY-MM-DD');
-        endDate = moment(end).format('YYYY-MM-DD');
-      }
-    }
     this.loadSheetService
-      .getLoadSheet(
-        this.currentPage,
-        this.currentRows,
-        startDate,
-        endDate,
-        acReg,
-        flightNo,
-        depPort,
-        arrPort,
+      .getAllLoadSheet(
+        this.currentPage(),
+        this.currentRows(),
+        this.searchInputValue(),
+        this.tableFilters(),
       )
       .subscribe({
-        next: (response) => {
-          const formattedData = response.loadSheets.content.map((item) => ({
-            ...item,
-            depDateTime: moment(item.depDateTime).format('DD/MM/YYYY - HH:mm'),
-            arrDateTime: moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm'),
-          }));
+        next: (response: ILoadSheetResponse) => {
+          const formattedData = response.content.map(
+            (item: ILoadSheetContentData) => ({
+              ...item,
+              depDateTime: item.depDateTime
+                ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
+                : null,
+              arrDateTime: item.arrDateTime
+                ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
+                : null,
+              approved: item.approved
+                ? moment(item.approved).format('DD/MM/YYYY - HH:mm')
+                : null,
+              replaced: item.replaced
+                ? moment(item.replaced).format('DD/MM/YYYY - HH:mm')
+                : null,
+              declined: item.declined
+                ? moment(item.declined).format('DD/MM/YYYY - HH:mm')
+                : null,
+            }),
+          );
 
+          this.loadSheetContentData.set(formattedData);
           this.loadSheetData.set(response);
-          this.loadSheetTableData.set(formattedData);
-          this.approvedValue.set(response.approvedPercentage);
-          this.tableLoading = false;
-
-          if (response.approvedPercentage === 0) {
-            this.declinedValue.set(0);
-          } else {
-            this.declinedValue.set(100 - response.approvedPercentage);
-          }
+          this.tableLoading.set(false);
         },
         error: () => {
-          this.tableLoading = false;
+          this.tableLoading.set(false);
         },
       });
   }
 
-  // Filter Operations
-  dateRangeDefaultValue() {
-    const endDate = moment();
-    const startDate = moment().subtract(3, 'days');
+  setupSearchListener() {
+    fromEvent<Event>(this.searchInput().nativeElement, 'input')
+      .pipe(
+        map((event: Event) => (event.target as HTMLInputElement).value),
+        debounceTime(300),
+        distinctUntilChanged(),
+      )
+      .subscribe((searchText) => {
+        if (searchText.trim() || searchText === '') {
+          this.currentPage.set(0);
+          this.customTableComponent().resetTableFirstValue();
 
-    return [startDate.toDate(), endDate.toDate()];
+          this.getAllLoadSheet();
+        }
+      });
   }
 
-  onFilterSubmit() {
-    this.getLoadSheet();
-  }
-
-  // Other Operations
-  toggleLoadAndTrimSheetDialogVisible(
-    rowData: ILoadSheetTableData | null = null,
-  ) {
-    this.isDialogVisible = !this.isDialogVisible;
-    this.loadAndTrimSheetData.set(rowData);
+  onChangeSearch(value: string) {
+    this.searchInputValue.set(value.toUpperCase());
+    this.currentPage.set(0);
+    this.customTableComponent().resetTableFirstValue();
+    this.getAllLoadSheet();
   }
 
   lazyLoadEvent(event: any) {
     const page = event.first / event.rows;
-    this.currentPage = page;
-    this.currentRows = event.rows;
-    this.getLoadSheet();
+    this.currentPage.set(page);
+    this.currentRows.set(event.rows);
+
+    this.tableFilters.set({
+      acReg: event.filters?.acReg && event.filters?.acReg[0].value,
+      flightNo: event.filters?.flightNo && event.filters?.flightNo[0].value,
+      depPort: event.filters?.depPort && event.filters?.depPort[0].value,
+      depDate:
+        event.filters?.depDateTime && event.filters?.depDateTime[0].value,
+      version: event.filters?.version && event.filters?.version[0].value,
+      preparedBy:
+        event.filters?.preparedBy && event.filters?.preparedBy[0].value,
+      checkedBy: event.filters?.checkedBy && event.filters?.checkedBy[0].value,
+      responsibleUser:
+        event.filters?.responsibleUser &&
+        event.filters?.responsibleUser[0].value,
+      status: event.filters?.status && event.filters?.status[0].value,
+      approved: event.filters?.approved && event.filters?.approved[0].value,
+      replaced: event.filters?.replaced && event.filters?.replaced[0].value,
+      declined: event.filters?.declined && event.filters?.declined[0].value,
+      arrPort: event.filters?.arrPort && event.filters?.arrPort[0].value,
+      arrDateTime:
+        event.filters?.arrDateTime && event.filters?.arrDateTime[0].value,
+    });
+
+    this.getAllLoadSheet();
+  }
+
+  onLoadSheetShow(row: ILoadSheetContentData) {
+    this.selectedRowData.set(row);
+    this.loadSheetModal.set(true);
+  }
+
+  get loadSheetModalVisible() {
+    return this.loadSheetModal();
+  }
+
+  set loadSheetModalVisible(value: boolean) {
+    this.loadSheetModal.set(value);
   }
 }
