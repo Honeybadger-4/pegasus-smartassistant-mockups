@@ -35,7 +35,7 @@ import { CgLimitsChartComponent } from '../../components/cg-limits-chart/cg-limi
     InputTextModule,
     Chip,
     LoadAndTrimSheetComponent,
-    CgLimitsChartComponent
+    CgLimitsChartComponent,
   ],
   templateUrl: './load-sheet.component.html',
   styleUrl: './load-sheet.component.scss',
