@@ -1,0 +1,18 @@
+<div id="lmc-details-modal">
+  <p-dialog
+    [(visible)]="visible"
+    [modal]="true"
+    [closable]="true"
+    [dismissableMask]="true"
+    header="LMC Details"
+    [style]="{ width: '1200px' }"
+    (onHide)="closeModal()"
+  >
+    <section class="table-section custom-card mt-5">
+      <app-custom-table
+        [tableData]="lmcModalData"
+        [tableColumns]="lmcModalColumns"
+      ></app-custom-table>
+    </section>
+  </p-dialog>
+</div>
