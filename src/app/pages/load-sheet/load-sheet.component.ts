@@ -22,7 +22,7 @@ import {
 } from '@shared/models/load-sheet-response.model';
 import { LoadSheetService } from '@shared/services/load-sheet.service';
 import { LoadAndTrimSheetComponent } from 'src/app/components/load-and-trim-sheet/load-and-trim-sheet.component';
-import { CgLimitsDialogComponent } from "../../components/cg-limits-dialog/cg-limits-dialog.component";
+import { CgLimitsDialogComponent } from '../../components/cg-limits-dialog/cg-limits-dialog.component';
 
 @Component({
   selector: 'app-load-sheet',
@@ -35,8 +35,8 @@ import { CgLimitsDialogComponent } from "../../components/cg-limits-dialog/cg-li
     InputTextModule,
     Chip,
     LoadAndTrimSheetComponent,
-    CgLimitsDialogComponent
-],
+    CgLimitsDialogComponent,
+  ],
   templateUrl: './load-sheet.component.html',
   styleUrl: './load-sheet.component.scss',
 })
