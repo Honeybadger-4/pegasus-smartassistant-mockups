@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject, input, signal } from '@angular/core';
 
 import {
@@ -7,11 +8,12 @@ import {
 import { CgLimitsService } from '@shared/services/bff/cg-limits.service';
 
 import { ChartModule } from 'primeng/chart';
+import { ProgressSpinner } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-cg-limits-chart',
   standalone: true,
-  imports: [ChartModule],
+  imports: [CommonModule, ChartModule, ProgressSpinner],
   templateUrl: './cg-limits-chart.component.html',
   styleUrl: './cg-limits-chart.component.scss',
 })
@@ -20,6 +22,7 @@ export class CgLimitsChartComponent {
   legIsn = input('');
   cgLimitsData = signal<GetCgLimitsResponseModel | null>(null);
   chartData = signal<any>(null);
+  chartLoading = signal<boolean>(true);
   chartOptions: any;
 
   ngOnInit(): void {
@@ -52,9 +55,11 @@ export class CgLimitsChartComponent {
       next: (response) => {
         this.cgLimitsData.set(response);
         this.chartData.set(this.transformToChartData(response));
+        this.chartLoading.set(false);
       },
       error: (error) => {
         console.error('Error fetching CG limits:', error);
+        this.chartLoading.set(false);
       },
     });
   }

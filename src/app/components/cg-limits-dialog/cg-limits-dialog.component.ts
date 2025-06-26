@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, input, output } from '@angular/core';
+import {
+  Component,
+  Input,
+  input,
+  output,
+  signal,
+  viewChild,
+} from '@angular/core';
 
 import { CgLimitsChartComponent } from '../cg-limits-chart/cg-limits-chart.component';
 
@@ -9,7 +16,6 @@ import { DialogModule } from 'primeng/dialog';
   selector: 'app-cg-limits-dialog',
   imports: [CommonModule, DialogModule, CgLimitsChartComponent],
   templateUrl: './cg-limits-dialog.component.html',
-  styleUrl: './cg-limits-dialog.component.scss',
 })
 export class CgLimitsDialogComponent {
   @Input() visible = false;
