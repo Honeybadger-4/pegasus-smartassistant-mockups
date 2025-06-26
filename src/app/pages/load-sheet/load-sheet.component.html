@@ -28,9 +28,6 @@
       [tableLoading]="tableLoading()"
     ></app-custom-table>
   </section>
-
-  <!-- TODO: Kaldırılacak -->
-  <app-cg-limits-chart></app-cg-limits-chart>
 </div>
 
 <!-- Status Chip Template -->
@@ -59,8 +56,17 @@
 
 <ng-template #loadSheetColumnTemplate let-rowData="rowData">
   <button
-    class="border border-gray-300 rounded-md px-3 py-1 bg-white"
+    class="table-show-btn"
     (click)="onLoadSheetShow(rowData)"
+  >
+    Show
+  </button>
+</ng-template>
+
+<ng-template #cgLimitsColumnTemplate let-rowData="rowData">
+  <button
+    class="table-show-btn"
+    (click)="onShowCGLimitsDialog(rowData)"
   >
     Show
   </button>
@@ -71,3 +77,5 @@
   [loadSheetRowData]="selectedRowData()"
   [(visible)]="loadSheetModalVisible"
 ></app-load-and-trim-sheet>
+
+<app-cg-limits-dialog *ngIf="cgLimitsDialogVisible()" [(visible)]="cgLimitsDialogVisible" [selectedRowData]="selectedRowData()"  />

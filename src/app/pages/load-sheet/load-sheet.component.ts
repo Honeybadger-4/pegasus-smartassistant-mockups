@@ -22,7 +22,7 @@ import {
 } from '@shared/models/load-sheet-response.model';
 import { LoadSheetService } from '@shared/services/load-sheet.service';
 import { LoadAndTrimSheetComponent } from 'src/app/components/load-and-trim-sheet/load-and-trim-sheet.component';
-import { CgLimitsChartComponent } from '../../components/cg-limits-chart/cg-limits-chart.component';
+import { CgLimitsDialogComponent } from "../../components/cg-limits-dialog/cg-limits-dialog.component";
 
 @Component({
   selector: 'app-load-sheet',
@@ -35,17 +35,17 @@ import { CgLimitsChartComponent } from '../../components/cg-limits-chart/cg-limi
     InputTextModule,
     Chip,
     LoadAndTrimSheetComponent,
-    CgLimitsChartComponent,
-  ],
+    CgLimitsDialogComponent
+],
   templateUrl: './load-sheet.component.html',
   styleUrl: './load-sheet.component.scss',
 })
 export class LoadSheetComponent implements OnInit {
   customTableComponent = viewChild.required(CustomTableComponent);
-  statusColumnTemplate = viewChild.required('statusColumnTemplate');
   searchInput = viewChild.required<ElementRef>('searchInput');
-
+  statusColumnTemplate = viewChild.required('statusColumnTemplate');
   loadSheetColumnTemplate = viewChild.required('loadSheetColumnTemplate');
+  cgLimitsColumnTemplate = viewChild.required('cgLimitsColumnTemplate');
 
   loadSheetService = inject(LoadSheetService);
 
@@ -61,6 +61,7 @@ export class LoadSheetComponent implements OnInit {
   tableLoading = signal<boolean>(false);
 
   loadSheetModal = signal<boolean>(false);
+  cgLimitsDialogVisible = signal<boolean>(false);
   selectedRowData = signal<ILoadSheetContentData | null>(null);
 
   ngOnInit() {
@@ -149,6 +150,7 @@ export class LoadSheetComponent implements OnInit {
         field: 'cgLimits',
         header: 'CG Limits',
         isFilter: false,
+        template: this.cgLimitsColumnTemplate(),
       },
     ]);
   }
@@ -253,6 +255,11 @@ export class LoadSheetComponent implements OnInit {
   onLoadSheetShow(row: ILoadSheetContentData) {
     this.selectedRowData.set(row);
     this.loadSheetModal.set(true);
+  }
+
+  onShowCGLimitsDialog(rowData: ILoadSheetContentData) {
+    this.selectedRowData.set(rowData);
+    this.cgLimitsDialogVisible.set(true);
   }
 
   get loadSheetModalVisible() {

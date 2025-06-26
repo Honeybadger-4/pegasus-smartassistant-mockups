@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
 import {
   CgLimitsEnvelopes,
   GetCgLimitsResponseModel,
@@ -15,7 +15,7 @@ import { ChartModule } from 'primeng/chart';
 })
 export class CgLimitsChartComponent {
   private cgLimitsService = inject(CgLimitsService);
-
+  legIsn = input('');
   cgLimitsData = signal<GetCgLimitsResponseModel | null>(null);
   chartData = signal<any>(null);
   chartOptions: any;
@@ -46,8 +46,7 @@ export class CgLimitsChartComponent {
   }
 
   fetchCgLimits(): void {
-    // TODO: Loadsheet'in legIsn bilgisi alınıp istek o şekilde atılmalı.
-    this.cgLimitsService.getCgLimits('14503268').subscribe({
+    this.cgLimitsService.getCgLimits(this.legIsn()).subscribe({
       next: (response) => {
         this.cgLimitsData.set(response);
         this.chartData.set(this.transformToChartData(response));
