@@ -19,9 +19,11 @@
   #flight-count-card-component {
     .chart-box {
       height: 182px !important;
+      position: relative;
     }
 
     canvas {
+      max-height: 220px !important;
       height: 100% !important;
       width: 100% !important;
     }
