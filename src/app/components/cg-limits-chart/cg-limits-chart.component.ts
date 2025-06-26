@@ -1,9 +1,11 @@
 import { Component, inject, input, signal } from '@angular/core';
+
 import {
   CgLimitsEnvelopes,
   GetCgLimitsResponseModel,
 } from '@shared/models/cg-limits-response.model';
 import { CgLimitsService } from '@shared/services/bff/cg-limits.service';
+
 import { ChartModule } from 'primeng/chart';
 
 @Component({

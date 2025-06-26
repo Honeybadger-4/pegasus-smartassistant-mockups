@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, input, output } from '@angular/core';
-import { DialogModule } from 'primeng/dialog';
+
 import { CgLimitsChartComponent } from '../cg-limits-chart/cg-limits-chart.component';
+
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-cg-limits-dialog',
