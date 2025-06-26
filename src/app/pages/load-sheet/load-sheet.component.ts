@@ -14,7 +14,10 @@ import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { LoadSheetService } from '@shared/services/load-sheet.service';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
-import { ILoadSheetResponse, ILoadSheetContentData } from '@shared/models/load-sheet-response.model';
+import {
+  ILoadSheetResponse,
+  ILoadSheetContentData,
+} from '@shared/models/load-sheet-response.model';
 import { CgLimitsDialogComponent } from '../../components/cg-limits-dialog/cg-limits-dialog.component';
 import { LoadAndTrimSheetComponent } from 'src/app/components/load-and-trim-sheet/load-and-trim-sheet.component';
 
