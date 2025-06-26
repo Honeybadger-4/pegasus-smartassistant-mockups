@@ -8,7 +8,6 @@ import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { ILoadSheetModalsResponse } from '@shared/models/load-sheet-modals-response';
-import moment from 'moment';
 
 @Component({
   selector: 'app-lmc-details-modal',
@@ -27,26 +26,13 @@ export class LmcDetailsModalComponent {
     { field: 'spcAmount',   header: 'Spec. Amount' },
     { field: 'clCpt',       header: 'CL/CPT' },
     { field: 'weight',      header: 'Weight' },
-    { field: 'enteredDate', header: 'Entered Date/Time' },
+    { field: 'enteredDate', header: 'Entered Date/Time'},
     { field: 'enteredBy',   header: 'Entered By' },
   ];
 
+ 
   get lmcModalData(): any[] {
-    const list = this.rowData?.lmc?.lmcJson;
-    if (!Array.isArray(list) || list.length === 0) {
-      return [];
-    }
-    return list.map(j => ({
-      destination:  j.destination,
-      spcType:      j.spcType,
-      spcAmount:    j.spcAmount,
-      clCpt:        j.clCpt,
-      weight:       j.weight,
-      enteredDate:  j.enteredDate
-        ? moment(j.enteredDate).format('DD/MM/YYYY - HH:mm')
-        : '-',
-      enteredBy:    j.enteredBy ?? '-',
-    }));
+    return this.rowData?.lmc?.lmcJson ?? [];
   }
 
   closeModal() {
