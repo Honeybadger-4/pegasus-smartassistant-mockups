@@ -1,0 +1,22 @@
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { environment } from '@environments/environment';
+import { GetCgLimitsResponseModel } from '@shared/models/cg-limits-response.model';
+import { IHttpResponseModel } from '@shared/models/http-response.model';
+import { map, Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CgLimitsService {
+  http = inject(HttpClient);
+  baseUrl = environment.baseApi;
+
+  getCgLimits(legIsn: string): Observable<GetCgLimitsResponseModel> {
+    const apiUrl = `${this.baseUrl}/api/v1/bff/cgLimits?legIsn=${legIsn}`;
+
+    return this.http
+      .get<IHttpResponseModel>(apiUrl)
+      .pipe(map((response) => response.data));
+  }
+}

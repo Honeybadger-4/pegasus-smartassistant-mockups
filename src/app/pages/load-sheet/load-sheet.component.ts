@@ -6,22 +6,25 @@ import {
   inject,
   ElementRef,
 } from '@angular/core';
+import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
+import moment from 'moment';
+
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
+import { LoadSheetService } from '@shared/services/load-sheet.service';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
-import { Chip } from 'primeng/chip';
-import moment from 'moment';
-import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 import {
   ILoadSheetResponse,
   ILoadSheetContentData,
 } from '@shared/models/load-sheet-response.model';
-import { LoadSheetService } from '@shared/services/load-sheet.service';
+import { CgLimitsDialogComponent } from '../../components/cg-limits-dialog/cg-limits-dialog.component';
 import { LoadAndTrimSheetComponent } from 'src/app/components/load-and-trim-sheet/load-and-trim-sheet.component';
+
+import { Chip } from 'primeng/chip';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-load-sheet',
@@ -34,16 +37,17 @@ import { LoadAndTrimSheetComponent } from 'src/app/components/load-and-trim-shee
     InputTextModule,
     Chip,
     LoadAndTrimSheetComponent,
+    CgLimitsDialogComponent,
   ],
   templateUrl: './load-sheet.component.html',
   styleUrl: './load-sheet.component.scss',
 })
 export class LoadSheetComponent implements OnInit {
   customTableComponent = viewChild.required(CustomTableComponent);
-  statusColumnTemplate = viewChild.required('statusColumnTemplate');
   searchInput = viewChild.required<ElementRef>('searchInput');
-
+  statusColumnTemplate = viewChild.required('statusColumnTemplate');
   loadSheetColumnTemplate = viewChild.required('loadSheetColumnTemplate');
+  cgLimitsColumnTemplate = viewChild.required('cgLimitsColumnTemplate');
 
   loadSheetService = inject(LoadSheetService);
 
@@ -59,6 +63,7 @@ export class LoadSheetComponent implements OnInit {
   tableLoading = signal<boolean>(false);
 
   loadSheetModal = signal<boolean>(false);
+  cgLimitsDialogVisible = signal<boolean>(false);
   selectedRowData = signal<ILoadSheetContentData | null>(null);
 
   ngOnInit() {
@@ -147,6 +152,7 @@ export class LoadSheetComponent implements OnInit {
         field: 'cgLimits',
         header: 'CG Limits',
         isFilter: false,
+        template: this.cgLimitsColumnTemplate(),
       },
     ]);
   }
@@ -251,6 +257,11 @@ export class LoadSheetComponent implements OnInit {
   onLoadSheetShow(row: ILoadSheetContentData) {
     this.selectedRowData.set(row);
     this.loadSheetModal.set(true);
+  }
+
+  onShowCGLimitsDialog(rowData: ILoadSheetContentData) {
+    this.selectedRowData.set(rowData);
+    this.cgLimitsDialogVisible.set(true);
   }
 
   get loadSheetModalVisible() {

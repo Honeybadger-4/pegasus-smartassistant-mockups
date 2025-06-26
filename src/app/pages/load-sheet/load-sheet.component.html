@@ -55,10 +55,13 @@
 </ng-template>
 
 <ng-template #loadSheetColumnTemplate let-rowData="rowData">
-  <button
-    class="border border-gray-300 rounded-md px-3 py-1 bg-white"
-    (click)="onLoadSheetShow(rowData)"
-  >
+  <button class="table-show-btn" (click)="onLoadSheetShow(rowData)">
+    Show
+  </button>
+</ng-template>
+
+<ng-template #cgLimitsColumnTemplate let-rowData="rowData">
+  <button class="table-show-btn" (click)="onShowCGLimitsDialog(rowData)">
     Show
   </button>
 </ng-template>
@@ -68,3 +71,9 @@
   [loadSheetRowData]="selectedRowData()"
   [(visible)]="loadSheetModalVisible"
 ></app-load-and-trim-sheet>
+
+<app-cg-limits-dialog
+  *ngIf="cgLimitsDialogVisible()"
+  [(visible)]="cgLimitsDialogVisible"
+  [selectedRowData]="selectedRowData()"
+/>
