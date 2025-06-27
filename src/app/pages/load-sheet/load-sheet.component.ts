@@ -159,7 +159,7 @@ export class LoadSheetComponent implements OnInit {
       { field: 'declined',  header: 'Declined Date', filterType: 'datepicker', isFilter: true },
       { field: 'loadSheet', header: 'Load Sheet', isFilter: false, template: this.loadSheetColumnTemplate() },
       { field: 'lmc',       header: 'LMC',        isFilter: false, template: this.lmcColumnTemplate() },
-      { field: 'cgLimits',  header: 'CG Limits',  isFilter: false },
+      { field: 'cgLimits',  header: 'CG Limits',  isFilter: false,template: this.cgLimitsColumnTemplate() },
     ]);
   }
 
