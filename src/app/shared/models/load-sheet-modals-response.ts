@@ -260,7 +260,7 @@ export interface ILoadSheetModalsResponse {
      weight: number;
      destination: string;
      enteredBy: string | null;
-     enteredDate: string; // API string tarih dönüyor
+     enteredDate: string; 
    }>;
   };
 }

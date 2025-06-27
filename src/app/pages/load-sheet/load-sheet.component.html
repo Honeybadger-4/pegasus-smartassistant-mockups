@@ -72,10 +72,12 @@
 <!-- LMC Button Column -->
 <ng-template #lmcColumnTemplate let-rowData="rowData">
   <button
-    class="border border-gray-300 rounded-md px-3 py-1 bg-white"
-    (click)="onLmcShow(rowData)"
+    class="border border-gray-300 rounded-md px-3 py-1 bg-white whitespace-nowrap"
+    [disabled]="!rowData.hasLmc"
+    [ngStyle]="{ 'color': rowData.hasLmc ? 'inherit' : '#24242480', 'cursor': rowData.hasLmc ? 'pointer' : 'not-allowed' }"
+    (click)="rowData.hasLmc && onLmcShow(rowData)"
   >
-    Show
+    {{ rowData.hasLmc ? 'Show' : 'Not Entered' }}
   </button>
 </ng-template>
 
