@@ -52,31 +52,29 @@ export class LoadSheetComponent implements OnInit {
   statusColumnTemplate = viewChild.required('statusColumnTemplate');
   loadSheetColumnTemplate = viewChild.required('loadSheetColumnTemplate');
   cgLimitsColumnTemplate = viewChild.required('cgLimitsColumnTemplate');
-  lmcColumnTemplate      = viewChild.required('lmcColumnTemplate');
+  lmcColumnTemplate = viewChild.required('lmcColumnTemplate');
 
   // signals
-  columns               = signal<Column[]>([]);
-  loadSheetData         = signal<ILoadSheetResponse | null>(null);
-  loadSheetContentData  = signal<ILoadSheetContentData[] | null>(null);
+  columns = signal<Column[]>([]);
+  loadSheetData = signal<ILoadSheetResponse | null>(null);
+  loadSheetContentData = signal<ILoadSheetContentData[] | null>(null);
 
-  searchInputValue      = signal<string>('');
-  currentPage           = signal<number>(0);
-  currentRows           = signal<number>(10);
-  tableFilters          = signal<any>({});
-  tableLoading          = signal<boolean>(false);
+  searchInputValue = signal<string>('');
+  currentPage = signal<number>(0);
+  currentRows = signal<number>(10);
+  tableFilters = signal<any>({});
+  tableLoading = signal<boolean>(false);
 
   // Load & Trim Sheet modal
   selectedLoadSheetRowData = signal<ILoadSheetContentData | null>(null);
-  showLoadSheetModal       = signal<boolean>(false);
+  showLoadSheetModal = signal<boolean>(false);
 
   // LMC modal
   selectedLmcRowData = signal<ILoadSheetModalsResponse | null>(null);
-  showLmcModal       = signal<boolean>(false);
+  showLmcModal = signal<boolean>(false);
 
   // service
   loadSheetService = inject(LoadSheetService);
-
-
 
   loadSheetModal = signal<boolean>(false);
   cgLimitsDialogVisible = signal<boolean>(false);
@@ -90,27 +88,42 @@ export class LoadSheetComponent implements OnInit {
 
   defineColumn() {
     this.columns.set([
-      { field: 'acReg',        header: 'Aircraft',                isFilter: true },
-      { field: 'flightNo',     header: 'Flight No',               isFilter: true },
-      { field: 'depPort',      header: 'Departure Port',          isFilter: true },
-      { field: 'depDateTime',  header: 'Departure Date', filterType: 'datepicker', isFilter: true },
-      { field: 'arrPort',      header: 'Arrival Port',            isFilter: true },
-      { field: 'arrDateTime',  header: 'Arrival Date',   filterType: 'datepicker', isFilter: true },
-      { field: 'version',      header: 'Version',                  isFilter: true },
-      { field: 'preparedBy',   header: 'Prepared By (load sheet)',isFilter: true },
-      { field: 'checkedBy',    header: 'Checked By (load sheet)', isFilter: true },
-      { field: 'responsibleUser', header: 'Responsible User',     isFilter: true },
+      { field: 'acReg', header: 'Aircraft', isFilter: true },
+      { field: 'flightNo', header: 'Flight No', isFilter: true },
+      { field: 'depPort', header: 'Departure Port', isFilter: true },
+      {
+        field: 'depDateTime',
+        header: 'Departure Date',
+        filterType: 'datepicker',
+        isFilter: true,
+      },
+      { field: 'arrPort', header: 'Arrival Port', isFilter: true },
+      {
+        field: 'arrDateTime',
+        header: 'Arrival Date',
+        filterType: 'datepicker',
+        isFilter: true,
+      },
+      { field: 'version', header: 'Version', isFilter: true },
+
+      {
+        field: 'preparedBy',
+        header: 'Prepared By (load sheet)',
+        isFilter: true,
+      },
+      { field: 'checkedBy', header: 'Checked By (load sheet)', isFilter: true },
+      { field: 'responsibleUser', header: 'Responsible User', isFilter: true },
       {
         field: 'status',
         header: 'Status',
         isFilter: true,
         filterType: 'selectbox',
         filterOptions: [
-          { label: 'Created',   value: 'LOADSHEET_CREATED' },
+          { label: 'Created', value: 'LOADSHEET_CREATED' },
           { label: 'Delivered', value: 'LOADSHEET_DELIVERED' },
-          { label: 'Declined',  value: 'LOADSHEET_DECLINED' },
-          { label: 'Replaced',  value: 'LOADSHEET_REPLACED' },
-          { label: 'Approved',  value: 'LOADSHEET_APPROVED' },
+          { label: 'Declined', value: 'LOADSHEET_DECLINED' },
+          { label: 'Replaced', value: 'LOADSHEET_REPLACED' },
+          { label: 'Approved', value: 'LOADSHEET_APPROVED' },
         ],
         template: this.statusColumnTemplate(),
       },
@@ -135,31 +148,25 @@ export class LoadSheetComponent implements OnInit {
         isFilter: true,
         filterType: 'datepicker',
       },
+
       {
         field: 'loadSheet',
         header: 'Load Sheet',
         isFilter: false,
         template: this.loadSheetColumnTemplate(),
       },
-
       {
         field: 'lmc',
         header: 'LMC',
         isFilter: false,
+        template: this.lmcColumnTemplate(),
       },
-
       {
         field: 'cgLimits',
         header: 'CG Limits',
         isFilter: false,
         template: this.cgLimitsColumnTemplate(),
       },
-      { field: 'approved',  header: 'Approved Date', filterType: 'datepicker', isFilter: true },
-      { field: 'replaced',  header: 'Replaced Date', filterType: 'datepicker', isFilter: true },
-      { field: 'declined',  header: 'Declined Date', filterType: 'datepicker', isFilter: true },
-      { field: 'loadSheet', header: 'Load Sheet', isFilter: false, template: this.loadSheetColumnTemplate() },
-      { field: 'lmc',       header: 'LMC',        isFilter: false, template: this.lmcColumnTemplate() },
-      { field: 'cgLimits',  header: 'CG Limits',  isFilter: false,template: this.cgLimitsColumnTemplate() },
     ]);
   }
 
@@ -174,13 +181,23 @@ export class LoadSheetComponent implements OnInit {
       )
       .subscribe({
         next: (response) => {
-          const formatted = response.content.map(item => ({
+          const formatted = response.content.map((item) => ({
             ...item,
-            depDateTime: item.depDateTime  ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm') : null,
-            arrDateTime: item.arrDateTime  ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm') : null,
-            approved:    item.approved     ? moment(item.approved).format('DD/MM/YYYY - HH:mm')     : null,
-            replaced:    item.replaced     ? moment(item.replaced).format('DD/MM/YYYY - HH:mm')     : null,
-            declined:    item.declined     ? moment(item.declined).format('DD/MM/YYYY - HH:mm')     : null,
+            depDateTime: item.depDateTime
+              ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+            arrDateTime: item.arrDateTime
+              ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+            approved: item.approved
+              ? moment(item.approved).format('DD/MM/YYYY - HH:mm')
+              : null,
+            replaced: item.replaced
+              ? moment(item.replaced).format('DD/MM/YYYY - HH:mm')
+              : null,
+            declined: item.declined
+              ? moment(item.declined).format('DD/MM/YYYY - HH:mm')
+              : null,
           })) as ILoadSheetContentData[];
 
           this.loadSheetContentData.set(formatted);
@@ -191,7 +208,7 @@ export class LoadSheetComponent implements OnInit {
       });
   }
 
- setupSearchListener() {
+  setupSearchListener() {
     fromEvent<Event>(this.searchInput().nativeElement, 'input')
       .pipe(
         map((event: Event) => (event.target as HTMLInputElement).value),
@@ -219,20 +236,20 @@ export class LoadSheetComponent implements OnInit {
     this.currentPage.set(event.first / event.rows);
     this.currentRows.set(event.rows);
     this.tableFilters.set({
-      acReg:      event.filters?.acReg?.[0]?.value,
-      flightNo:   event.filters?.flightNo?.[0]?.value,
-      depPort:    event.filters?.depPort?.[0]?.value,
-      depDate:    event.filters?.depDateTime?.[0]?.value,
-      version:    event.filters?.version?.[0]?.value,
+      acReg: event.filters?.acReg?.[0]?.value,
+      flightNo: event.filters?.flightNo?.[0]?.value,
+      depPort: event.filters?.depPort?.[0]?.value,
+      depDate: event.filters?.depDateTime?.[0]?.value,
+      version: event.filters?.version?.[0]?.value,
       preparedBy: event.filters?.preparedBy?.[0]?.value,
-      checkedBy:  event.filters?.checkedBy?.[0]?.value,
+      checkedBy: event.filters?.checkedBy?.[0]?.value,
       responsibleUser: event.filters?.responsibleUser?.[0]?.value,
-      status:     event.filters?.status?.[0]?.value,
-      approved:   event.filters?.approved?.[0]?.value,
-      replaced:   event.filters?.replaced?.[0]?.value,
-      declined:   event.filters?.declined?.[0]?.value,
-      arrPort:    event.filters?.arrPort?.[0]?.value,
-      arrDateTime:event.filters?.arrDateTime?.[0]?.value,
+      status: event.filters?.status?.[0]?.value,
+      approved: event.filters?.approved?.[0]?.value,
+      replaced: event.filters?.replaced?.[0]?.value,
+      declined: event.filters?.declined?.[0]?.value,
+      arrPort: event.filters?.arrPort?.[0]?.value,
+      arrDateTime: event.filters?.arrDateTime?.[0]?.value,
     });
     this.getAllLoadSheet();
   }
@@ -256,19 +273,15 @@ export class LoadSheetComponent implements OnInit {
   }
 
   // --- LMC Modal ---
-onLmcShow(row: ILoadSheetContentData) {
-  this.loadSheetService
-    .getLoadSheetModalInfo(row.id!)    
-    .subscribe({
+  onLmcShow(row: ILoadSheetContentData) {
+    this.loadSheetService.getLoadSheetModalInfo(row.id!).subscribe({
       next: (detail: ILoadSheetModalsResponse) => {
         this.selectedLmcRowData.set(detail);
         this.showLmcModal.set(true);
       },
-      error: () => {
-      }
+      error: () => {},
     });
-}
-
+  }
 
   get lmcModalVisible() {
     return this.showLmcModal();
