@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
 import { ILoadSheetModalsResponse } from '@shared/models/load-sheet-modals-response';
+import moment from 'moment';
 
 @Component({
   selector: 'app-lmc-details-modal',
@@ -32,12 +33,25 @@ export class LmcDetailsModalComponent {
   ];
 
   get lmcModalData(): any[] {
-    return this.rowData?.lmc?.lmcJson ?? [];
+    if (!this.rowData?.lmc?.lmcJson) {
+      return [];
+    }
+    return this.rowData.lmc.lmcJson.map(item => ({
+      destination:  item.destination,
+      spcType:      item.spcType,
+      spcAmount:    item.spcAmount,
+      clCpt:        item.clCpt,
+      weight:       item.weight,
+      enteredDate:  item.enteredDate
+        ? moment(item.enteredDate).format('DD/MM/YYYY - HH:mm')
+        : undefined,
+      enteredBy:    item.enteredBy,
+    }));
   }
 
   get totalWeight(): number {
     return this.lmcModalData
-      .map(r => r.weight ?? 0)
+      .map(item => item.weight ?? 0)
       .reduce((sum, w) => sum + w, 0);
   }
 
