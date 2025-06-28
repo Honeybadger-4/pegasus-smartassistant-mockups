@@ -11,6 +11,7 @@ import { ILoadSheetModalsResponse } from '@shared/models/load-sheet-modals-respo
 
 @Component({
   selector: 'app-lmc-details-modal',
+  standalone: true,
   imports: [CommonModule, DialogModule, CustomTableComponent],
   templateUrl: './lmc-details-modal.component.html',
   styleUrls: ['./lmc-details-modal.component.scss']
@@ -26,13 +27,18 @@ export class LmcDetailsModalComponent {
     { field: 'spcAmount',   header: 'Spec. Amount' },
     { field: 'clCpt',       header: 'CL/CPT' },
     { field: 'weight',      header: 'Weight' },
-    { field: 'enteredDate', header: 'Entered Date/Time'},
+    { field: 'enteredDate', header: 'Entered Date/Time' },
     { field: 'enteredBy',   header: 'Entered By' },
   ];
 
- 
   get lmcModalData(): any[] {
     return this.rowData?.lmc?.lmcJson ?? [];
+  }
+
+  get totalWeight(): number {
+    return this.lmcModalData
+      .map(r => r.weight ?? 0)
+      .reduce((sum, w) => sum + w, 0);
   }
 
   closeModal() {

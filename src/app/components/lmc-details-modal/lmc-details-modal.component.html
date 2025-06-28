@@ -12,7 +12,22 @@
       <app-custom-table
         [tableData]="lmcModalData"
         [tableColumns]="lmcModalColumns"
-      ></app-custom-table>
+        [isPaginator]="false"
+        [footerTemplate]="lmcFooterTemplate"
+      >
+      </app-custom-table>
+
+      <ng-template #lmcFooterTemplate>
+        <tr>
+          <td colspan="4" class="!text-right font-bold p-3 pb-0">
+            Total
+          </td>
+          <td class="font-bold p-3 pb-0">
+            {{ totalWeight | number }}
+          </td>
+          <td colspan="2"></td>
+        </tr>
+      </ng-template>
     </section>
   </p-dialog>
 </div>
