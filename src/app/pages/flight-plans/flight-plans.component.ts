@@ -1,10 +1,10 @@
 import {
   Component,
   OnInit,
-  signal,
-  viewChild,
   inject,
+  viewChild,
   ElementRef,
+  signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -15,9 +15,17 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { Chip } from 'primeng/chip';
 import { FlightPlansService } from '@shared/services/flight-plans.service';
+import { FlightPlanPdfService } from '@shared/services/flightPlan/flight-plan-pdf.service';
 import { IFlightPlan } from '@shared/models/flight-plans-response.model';
+import { IFlightPlanModalPdfResponse } from '@shared/models/flight-plan-modal-pdf-response.model';
 import moment from 'moment';
-import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
+import { fromEvent } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+
+
+import { FlightPlanModalComponent } from '../../components/flight-plan-modal/flight-plan-modal.component';
+
+
 
 @Component({
   selector: 'app-flight-plans',
@@ -30,6 +38,7 @@ import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
     InputIconModule,
     InputTextModule,
     Chip,
+    FlightPlanModalComponent
   ],
   templateUrl: './flight-plans.component.html',
   styleUrl: './flight-plans.component.scss',
@@ -41,6 +50,7 @@ export class FlightPlansComponent implements OnInit {
   searchInput = viewChild.required<ElementRef>('searchInput');
 
   flightPlansService = inject(FlightPlansService);
+  flightPlanPdfService = inject(FlightPlanPdfService);
 
   columns = signal<Column[]>([]);
   flightPlansData = signal<IFlightPlan[] | null>(null);
@@ -51,6 +61,10 @@ export class FlightPlansComponent implements OnInit {
   currentRows = signal<number>(10);
   tableFilters = signal<any>({});
   tableLoading = signal<boolean>(false);
+
+
+  displayModal = signal<boolean>(false);
+  pdfData = signal<IFlightPlanModalPdfResponse | null>(null);
 
   ngOnInit() {
     this.defineColumn();
@@ -248,7 +262,19 @@ export class FlightPlansComponent implements OnInit {
     this.getFlightPlans();
   }
 
-  onFlightPlansShow(rowData: IFlightPlan) {
-    console.log('Selected row:', rowData);
+  onFlightPlansShow(row: IFlightPlan) {
+    this.flightPlanPdfService.getPaperFPlan(row.id.toString()).subscribe({
+      next: (pdf) => {
+        this.pdfData.set(pdf);
+        this.displayModal.set(true);
+      },
+      error: () => {
+        // hata yönetimi
+      },
+    });
+  }
+
+  onModalHide() {
+    this.displayModal.set(false);
   }
 }
