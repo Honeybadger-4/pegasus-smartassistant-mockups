@@ -12,8 +12,8 @@ export class CgLimitsService {
   http = inject(HttpClient);
   baseUrl = environment.baseApi;
 
-  getCgLimits(legIsn: string): Observable<GetCgLimitsResponseModel> {
-    const apiUrl = `${this.baseUrl}/api/v1/bff/cgLimits?legIsn=${legIsn}`;
+  getCgLimits(loadSheetId: string): Observable<GetCgLimitsResponseModel> {
+    const apiUrl = `${this.baseUrl}/api/v1/bff/cgLimits?loadSheetId=${loadSheetId}`;
 
     return this.http
       .get<IHttpResponseModel>(apiUrl)
