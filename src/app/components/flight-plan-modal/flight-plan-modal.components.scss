@@ -1,0 +1,14 @@
+::ng-deep {
+  #flight-plan-modal {
+    .p-dialog-content {
+      background: #fff !important;
+      padding: 0 !important;
+    }
+    .pdf-iframe {
+      width: 100% !important;
+      height: 100% !important;
+      border: none !important;
+      background: #fff !important;
+    }
+  }
+}

@@ -17,6 +17,8 @@ import { IFlightPlanModalPdfResponse } from '@shared/models/flight-plan-modal-pd
   standalone: true,
   imports: [CommonModule, DialogModule],
   templateUrl: './flight-plan-modal.component.html',
+  styleUrl: './flight-plan-modal.components.scss',
+
 })
 export class FlightPlanModalComponent implements OnChanges {
   @Input() visible = false;
