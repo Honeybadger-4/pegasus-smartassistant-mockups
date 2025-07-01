@@ -27,7 +27,6 @@ export class RouteModalComponent {
 
   routeDetailsModalData: IRouteDetailsResponse[] = [];
 
-
   routeDetailsModalColumns = [
     { field: 'airway', header: 'Airway' },
     { field: 'wpt', header: 'WPT' },
@@ -37,35 +36,25 @@ export class RouteModalComponent {
     { field: 'avtt', header: 'AVTT' },
     { field: 'wv', header: 'W/V' },
     { field: 'dist', header: 'DIST' },
-
     { field: 'rd', header: 'RD' },
     { field: 'pf', header: 'PF' },
-
     { field: 'fu', header: 'FU' },
     { field: 'rf', header: 'RF' },
-
     { field: 'af', header: 'AF' },
     { field: 'df', header: 'DF' },
-
     { field: 'min', header: 'MIN' },
     { field: 'tW', header: 'T/W' },
-
     { field: 'at', header: 'AT' },
     { field: 'dt', header: 'DT' },
-
     { field: 'acc', header: 'ACC' },
-
     { field: 'sentBy', header: 'Sent By' },
-
     { field: 'sentDate', header: 'Sent Date-Time' },
-
     { field: 'note', header: 'Notes' },
   ];
 
   flightInfoRoutesService = inject(FlightInfoRoutesService);
 
   ngOnChanges(changes: SimpleChanges) {
-    // visible veya rowData değiştiğinde, yeni bir istek yap
     if (changes['rowData'] && this.rowData) {
       this.loadRouteDetails(this.rowData.id);
     }
