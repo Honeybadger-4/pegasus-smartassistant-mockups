@@ -17,6 +17,7 @@ import { FlightPlansService } from '@shared/services/flight-plans.service';
 import { IFlightPlan } from '@shared/models/flight-plans-response.model';
 import moment from 'moment';
 import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
+import {RouteModalComponent}  from '../../components/route-modal/route-modal.component';
 
 @Component({
   selector: 'app-routes',
@@ -27,6 +28,7 @@ import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
     IconFieldModule,
     InputIconModule,
     InputTextModule,
+    RouteModalComponent
   ],  templateUrl: './routes.component.html',
   styleUrl: './routes.component.scss'
 })
@@ -46,6 +48,11 @@ customTableComponent = viewChild.required(CustomTableComponent);
   currentRows = signal<number>(10);
   tableFilters = signal<any>({});
   tableLoading = signal<boolean>(false);
+
+
+   showRouteDetailsModal = signal<boolean>(false);
+    selectedRowData = signal<IFlightPlan | null>(null);
+  
 
   ngOnInit() {
     this.defineColumn();
@@ -206,8 +213,18 @@ customTableComponent = viewChild.required(CustomTableComponent);
     this.getFlightPlans();
   }
 
-  onFlightPlansShow(rowData: IFlightPlan) {
-    console.log('Selected row:', rowData);
+  onRouteDetailsShow(rowData: IFlightPlan) {
+    this.selectedRowData.set(rowData);
+    this.showRouteDetailsModal.set(true);
+  }
+
+  get routeDetailsModalVisible() {
+    return this.showRouteDetailsModal();
+  }
+
+  set routeDetailsModalVisible(value: boolean) {
+    this.showRouteDetailsModal.set(value);
   }
 }
+
 
