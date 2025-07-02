@@ -78,7 +78,12 @@
         </td>
 
         <td *ngFor="let column of tableColumns()">
-          <ng-container *ngTemplateOutlet="column.template || defaultCell; context: { rowData: rowData, col: column }"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="
+              column.template || defaultCell;
+              context: { rowData: rowData, col: column }
+            "
+          ></ng-container>
           <ng-template #defaultCell>
             {{ rowData[column.field] || "-" }}
           </ng-template>
@@ -178,7 +183,13 @@
         [showApplyButton]="false"
       >
         <ng-template #filter let-filter="filterCallback">
-          <p-inputmask #timeInput mask="99:99" [(ngModel)]="filterValues[col.field]" placeholder="Select a Time" (onComplete)="onTimeFilterComplete(timeInput.value, filter)" />
+          <p-inputmask
+            #timeInput
+            mask="99:99"
+            [(ngModel)]="filterValues[col.field]"
+            placeholder="Select a Time"
+            (onComplete)="onTimeFilterComplete(timeInput.value, filter)"
+          />
         </ng-template>
       </p-columnFilter>
     </ng-template>
