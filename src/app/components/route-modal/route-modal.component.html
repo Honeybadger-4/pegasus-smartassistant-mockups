@@ -8,14 +8,27 @@
     [style]="{ width: '1200px' }"
     (onHide)="closeModal()"
   >
+    <ng-template #noteStatusTemplate let-rowData="rowData" let-col="col">
+      <i
+        class="pi"
+        [ngClass]="
+          rowData.note
+            ? 'pi-check-circle text-green-500'
+            : 'pi-circle text-gray-300'
+        "
+      ></i>
+      <span *ngIf="rowData.note" class="ml-2">
+        {{ rowData.note }}
+      </span>
+    </ng-template>
+
     <section class="table-section custom-card mt-5">
       <app-custom-table
-        [tableData]="routeDetailsModalData"
+        [tableData]="routeDetailsContentData()"
         [tableColumns]="routeDetailsModalColumns"
-                [isPaginator]="false"
-
+        [tableLoading]="tableLoading()"
+        [isPaginator]="false"
       ></app-custom-table>
     </section>
   </p-dialog>
 </div>
-
