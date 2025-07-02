@@ -22,13 +22,32 @@
       </span>
     </ng-template>
 
+    <!-- Route Details Table -->
     <section class="table-section custom-card mt-5">
       <app-custom-table
-        [tableData]="routeDetailsContentData()"
+        [tableData]="routeData()"
         [tableColumns]="routeDetailsModalColumns"
         [tableLoading]="tableLoading()"
         [isPaginator]="false"
       ></app-custom-table>
+    </section>
+
+    <!-- Alternate Route Details Title -->
+    <h4 class="mt-6 mb-2">Alternate Route Details</h4>
+
+    <!-- Alternate Route Details Table -->
+    <section class="table-section custom-card">
+      <ng-container *ngIf="alternateRouteData() && alternateRouteData().length > 0; else noAlternate">
+        <app-custom-table
+          [tableData]="alternateRouteData()"
+          [tableColumns]="routeDetailsModalColumns"
+          [tableLoading]="tableLoading()"
+          [isPaginator]="false"
+        ></app-custom-table>
+      </ng-container>
+      <ng-template #noAlternate>
+        <p class="text-gray-500 text-sm">No alternate route(s) available !</p>
+      </ng-template>
     </section>
   </p-dialog>
 </div>

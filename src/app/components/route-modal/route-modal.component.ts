@@ -1,9 +1,9 @@
 import {
   Component,
-  OnInit,
   Input,
   Output,
   EventEmitter,
+  OnInit,
   inject,
   signal,
   viewChild,
@@ -14,6 +14,7 @@ import { CustomTableComponent } from '@shared/components/custom-table/custom-tab
 import { IRouteDetailsResponse } from '@shared/models/route-details-modal-response.model';
 import { FlightInfoRoutesService } from '@shared/services/bff/route-details.service';
 import { IFlightPlan } from '@shared/models/flight-plans-response.model';
+import moment from 'moment';
 
 @Component({
   selector: 'app-route-modal',
@@ -28,7 +29,8 @@ export class RouteModalComponent implements OnInit {
 
   noteStatusTemplate = viewChild.required('noteStatusTemplate');
 
-  routeDetailsContentData = signal<IRouteDetailsResponse[]>([]);
+  routeData = signal<IRouteDetailsResponse[]>([]);
+  alternateRouteData = signal<IRouteDetailsResponse[]>([]);
   tableLoading = signal<boolean>(false);
 
   flightInfoRoutesService = inject(FlightInfoRoutesService);
@@ -83,20 +85,36 @@ export class RouteModalComponent implements OnInit {
   }
 
   getFlightInfoRoutes(flightPlanId: number): void {
-    this.tableLoading.set(true);
-    this.flightInfoRoutesService
-      .getFlightInfoRoutes(flightPlanId.toString())
-      .subscribe({
-        next: (response) => {
-          this.routeDetailsContentData.set(response);
-          this.tableLoading.set(false);
-        },
-        error: () => {
-          this.routeDetailsContentData.set([]);
-          this.tableLoading.set(false);
-        },
-      });
-  }
+  this.tableLoading.set(true);
+  this.flightInfoRoutesService
+    .getFlightInfoRoutes(flightPlanId.toString())
+    .subscribe({
+      next: (response) => {
+        const formattedResponse = response.map((routeItem) => ({
+          ...routeItem,
+          sentDate: routeItem.sentDate
+            ? moment(routeItem.sentDate).format('DD/MM/YYYY - HH:mm')
+            : null,
+        }));
+
+        const routeList = formattedResponse.filter(
+          (routeItem) => routeItem.routeType === 'route'
+        );
+        const alternateList = formattedResponse.filter(
+          (routeItem) => routeItem.routeType === 'alternate'
+        );
+
+        this.routeData.set(routeList);
+        this.alternateRouteData.set(alternateList);
+        this.tableLoading.set(false);
+      },
+      error: () => {
+        this.routeData.set([]);
+        this.alternateRouteData.set([]);
+        this.tableLoading.set(false);
+      },
+    });
+}
 
   closeModal(): void {
     this.visibleChange.emit(false);

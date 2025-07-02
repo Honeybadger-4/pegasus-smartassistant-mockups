@@ -23,5 +23,5 @@ export interface IRouteDetailsResponse {
   note:string;
   routeType: string;
   sentBy: string;
-  sentDate: string;
+  sentDate: string | null;
 }
