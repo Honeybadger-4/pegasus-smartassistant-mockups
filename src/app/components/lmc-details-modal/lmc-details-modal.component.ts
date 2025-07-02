@@ -50,10 +50,11 @@ export class LmcDetailsModalComponent {
   }
 
   get totalWeight(): number {
-    return this.lmcModalData
-      .map(item => item.weight ?? 0)
-      .reduce((sum, w) => sum + w, 0);
-  }
+  return this.lmcModalData
+    .map(item => Math.abs(item.weight ?? 0))
+    .reduce((sum, w) => sum + w, 0);
+}
+
 
   closeModal() {
     this.visibleChange.emit(false);
