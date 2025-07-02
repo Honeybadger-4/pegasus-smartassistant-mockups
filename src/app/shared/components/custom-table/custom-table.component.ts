@@ -31,7 +31,7 @@ import { DatePickerModule } from 'primeng/datepicker';
     SelectModule,
     DatePickerModule,
     InputTextModule,
-    InputMaskModule
+    InputMaskModule,
   ],
   templateUrl: './custom-table.component.html',
   styleUrl: './custom-table.component.scss',
@@ -80,18 +80,22 @@ export class CustomTableComponent {
   }
 
   // Time filter operations
-  onTimeFilterComplete(value: string | null | undefined, filterCallback: Function) {
+  onTimeFilterComplete(
+    value: string | null | undefined,
+    filterCallback: Function,
+  ) {
     if (this.isValidTime24Format(value)) {
       filterCallback(value); // filtre uygula
     } else {
       console.warn('Invalid time format:', value);
-      this.showToastService.showErrorToast('Invalid time format. Please use HH:mm (24-hour) format.');
+      this.showToastService.showErrorToast(
+        'Invalid time format. Please use HH:mm (24-hour) format.',
+      );
     }
   }
 
   isValidTime24Format(value: string | null | undefined): boolean {
-      const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
-      return timeRegex.test(value || '');
+    const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+    return timeRegex.test(value || '');
   }
-
 }
