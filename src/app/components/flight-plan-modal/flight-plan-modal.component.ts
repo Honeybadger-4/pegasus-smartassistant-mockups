@@ -3,8 +3,6 @@ import {
   Input,
   Output,
   EventEmitter,
-  OnChanges,
-  SimpleChanges,
   inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -17,21 +15,22 @@ import { IFlightPlanModalPdfResponse } from '@shared/models/flight-plan-modal-pd
   standalone: true,
   imports: [CommonModule, DialogModule],
   templateUrl: './flight-plan-modal.component.html',
-  styleUrl: './flight-plan-modal.components.scss',
-
+   styleUrl: './flight-plan-modal.components.scss',
 })
-export class FlightPlanModalComponent implements OnChanges {
+export class FlightPlanModalComponent {
   @Input() visible = false;
   @Output() visibleChange = new EventEmitter<boolean>();
-  @Input() pdfData: IFlightPlanModalPdfResponse | null = null;
 
   pdfSrc: SafeResourceUrl | null = null;
-  private sanitizer = inject(DomSanitizer);
+  sanitizer = inject(DomSanitizer);
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['pdfData'] && this.pdfData?.CONTENT) {
-      const base64 = `data:${this.pdfData.TYPE};base64,${this.pdfData.CONTENT}`;
+  // pdfData her değiştiğinde burası tetiklenir
+  @Input() set pdfData(data: IFlightPlanModalPdfResponse | null) {
+    if (data?.CONTENT) {
+      const base64 = `data:${data.TYPE};base64,${data.CONTENT}`;
       this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(base64);
+    } else {
+      this.pdfSrc = null;
     }
   }
 

@@ -8,11 +8,8 @@
     header="{{ pdfData?.FILE_NAME || 'Flight Plan' }}"
   >
     <ng-container *ngIf="pdfSrc">
-<iframe
-  [src]="pdfSrc"
-  class="pdf-iframe"
-  type="application/pdf">
-</iframe>
+      <iframe [src]="pdfSrc" class="pdf-iframe" type="application/pdf">
+      </iframe>
     </ng-container>
   </p-dialog>
 </div>
