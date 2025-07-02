@@ -137,9 +137,9 @@ export class LogbookDetailComponent implements OnInit {
       { field: 'aircraftType', header: 'A/C Type', isFilter: true },
       { field: 'aircraftReg', header: 'A/C Reg', isFilter: true },
       { field: 'departure', header: 'Departure', isFilter: true },
-      { field: 'departureTime', header: 'Departure Time', isFilter: true },
+      { field: 'departureTime', header: 'Departure Time', isFilter: true, filterType: 'timeonly' },
       { field: 'arrival', header: 'Arrival', isFilter: true },
-      { field: 'arrivalTime', header: 'Arrival Time', isFilter: true },
+      { field: 'arrivalTime', header: 'Arrival Time', isFilter: true, filterType: 'timeonly' },
       { field: 'totalTime', header: 'Total Time' },
       { field: 'multiPilotTime', header: 'Multi Pilot Time' },
       {
