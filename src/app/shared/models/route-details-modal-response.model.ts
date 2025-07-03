@@ -3,7 +3,7 @@ export interface IRouteDetailsResponse {
   airway: string;
   wpt: string;
   tooltip: string;
-  mora:string;
+  mora: string;
   fl: string;
   shr: string;
   avtt: string;
@@ -20,7 +20,7 @@ export interface IRouteDetailsResponse {
   at: string;
   dt: string;
   acc: string;
-  note:string;
+  note: string;
   routeType: string;
   sentBy: string;
   sentDate: string | null;

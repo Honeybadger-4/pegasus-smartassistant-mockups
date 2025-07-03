@@ -43,12 +43,24 @@
 <!-- Status Chip Template -->
 <ng-template #statusColumnTemplate let-rowData="rowData">
   <ng-container [ngSwitch]="rowData.status">
-    <p-chip *ngSwitchCase="'SUBMITTED'" label="Submitted" class="light-green-chip" />
-    <p-chip *ngSwitchCase="'APPROVED'"  label="Approved"  class="green-chip" />
-    <p-chip *ngSwitchCase="'DECLINED'"  label="Declined"  class="red-chip" />
-    <p-chip *ngSwitchCase="'NEW'"       label="Waiting for approve" class="orange-chip" />
-    <p-chip *ngSwitchCase="'REPLACED'"  label="Replaced"  class="black-chip" />
-    <p-chip *ngSwitchDefault               label="{{ rowData.status || '-' }}" class="gray-chip" />
+    <p-chip
+      *ngSwitchCase="'SUBMITTED'"
+      label="Submitted"
+      class="light-green-chip"
+    />
+    <p-chip *ngSwitchCase="'APPROVED'" label="Approved" class="green-chip" />
+    <p-chip *ngSwitchCase="'DECLINED'" label="Declined" class="red-chip" />
+    <p-chip
+      *ngSwitchCase="'NEW'"
+      label="Waiting for approve"
+      class="orange-chip"
+    />
+    <p-chip *ngSwitchCase="'REPLACED'" label="Replaced" class="black-chip" />
+    <p-chip
+      *ngSwitchDefault
+      label="{{ rowData.status || '-' }}"
+      class="gray-chip"
+    />
   </ng-container>
 </ng-template>
 

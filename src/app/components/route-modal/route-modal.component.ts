@@ -48,7 +48,6 @@ export class RouteModalComponent implements OnInit {
   expandedRowsRoute: { [key: string]: boolean } = {};
   expandedRowsAlternate: { [key: string]: boolean } = {};
 
- 
   ngOnInit(): void {}
 
   getFlightInfoRoutes(flightPlanId: number): void {

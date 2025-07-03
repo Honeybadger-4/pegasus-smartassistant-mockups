@@ -12,8 +12,6 @@ export class RouteService {
   http = inject(HttpClient);
   baseUrl = environment.baseApi;
 
- 
-
   getTopAlternates(
     startDate: string,
     endDate: string,

@@ -252,15 +252,15 @@ export interface ILoadSheetModalsResponse {
   lmc?: {
     totalPaxWeight?: number;
     totalPaxPassenger?: number;
-   lmcJson?: Array<{
-     spcType: string;
-     spcSubType: string | null;
-     spcAmount: number;
-     clCpt: string;
-     weight: number;
-     destination: string;
-     enteredBy: string | null;
-     enteredDate: string; 
-   }>;
+    lmcJson?: Array<{
+      spcType: string;
+      spcSubType: string | null;
+      spcAmount: number;
+      clCpt: string;
+      weight: number;
+      destination: string;
+      enteredBy: string | null;
+      enteredDate: string;
+    }>;
   };
 }

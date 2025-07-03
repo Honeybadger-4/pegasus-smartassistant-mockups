@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  inject,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -15,7 +9,7 @@ import { IFlightPlanModalPdfResponse } from '@shared/models/flight-plan-modal-pd
   standalone: true,
   imports: [CommonModule, DialogModule],
   templateUrl: './flight-plan-modal.component.html',
-   styleUrl: './flight-plan-modal.components.scss',
+  styleUrl: './flight-plan-modal.components.scss',
 })
 export class FlightPlanModalComponent {
   @Input() visible = false;

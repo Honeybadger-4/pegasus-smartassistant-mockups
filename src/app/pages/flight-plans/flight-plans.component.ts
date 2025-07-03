@@ -22,10 +22,7 @@ import moment from 'moment';
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
-
 import { FlightPlanModalComponent } from '../../components/flight-plan-modal/flight-plan-modal.component';
-
-
 
 @Component({
   selector: 'app-flight-plans',
@@ -38,7 +35,7 @@ import { FlightPlanModalComponent } from '../../components/flight-plan-modal/fli
     InputIconModule,
     InputTextModule,
     Chip,
-    FlightPlanModalComponent
+    FlightPlanModalComponent,
   ],
   templateUrl: './flight-plans.component.html',
   styleUrl: './flight-plans.component.scss',
@@ -61,7 +58,6 @@ export class FlightPlansComponent implements OnInit {
   currentRows = signal<number>(10);
   tableFilters = signal<any>({});
   tableLoading = signal<boolean>(false);
-
 
   displayModal = signal<boolean>(false);
   pdfData = signal<IFlightPlanModalPdfResponse | null>(null);

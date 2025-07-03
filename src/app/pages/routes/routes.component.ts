@@ -17,7 +17,7 @@ import { FlightPlansService } from '@shared/services/flight-plans.service';
 import { IFlightPlan } from '@shared/models/flight-plans-response.model';
 import moment from 'moment';
 import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
-import {RouteModalComponent}  from '../../components/route-modal/route-modal.component';
+import { RouteModalComponent } from '../../components/route-modal/route-modal.component';
 
 @Component({
   selector: 'app-routes',
@@ -28,12 +28,13 @@ import {RouteModalComponent}  from '../../components/route-modal/route-modal.com
     IconFieldModule,
     InputIconModule,
     InputTextModule,
-    RouteModalComponent
-  ],  templateUrl: './routes.component.html',
-  styleUrl: './routes.component.scss'
+    RouteModalComponent,
+  ],
+  templateUrl: './routes.component.html',
+  styleUrl: './routes.component.scss',
 })
 export class RoutesComponent implements OnInit {
-customTableComponent = viewChild.required(CustomTableComponent);
+  customTableComponent = viewChild.required(CustomTableComponent);
   routeDetailsColumnTemplate = viewChild.required('routeDetailsColumnTemplate');
   searchInput = viewChild.required<ElementRef>('searchInput');
 
@@ -49,10 +50,8 @@ customTableComponent = viewChild.required(CustomTableComponent);
   tableFilters = signal<any>({});
   tableLoading = signal<boolean>(false);
 
-
-   showRouteDetailsModal = signal<boolean>(false);
-    selectedRowData = signal<IFlightPlan | null>(null);
-  
+  showRouteDetailsModal = signal<boolean>(false);
+  selectedRowData = signal<IFlightPlan | null>(null);
 
   ngOnInit() {
     this.defineColumn();
@@ -78,14 +77,6 @@ customTableComponent = viewChild.required(CustomTableComponent);
         filterType: 'datepicker',
       },
 
-
-
-
-
-
-
-      
-      
       {
         field: 'flightPlan',
         header: 'Route Details',
@@ -226,5 +217,3 @@ customTableComponent = viewChild.required(CustomTableComponent);
     this.showRouteDetailsModal.set(value);
   }
 }
-
-

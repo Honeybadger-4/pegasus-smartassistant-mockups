@@ -33,12 +33,24 @@
 <!-- Status Chip Template -->
 <ng-template #statusColumnTemplate let-rowData="rowData">
   @switch (rowData.status) {
-    @case("LOADSHEET_CREATED")    { <p-chip label="Created"   class="orange-chip"     /> }
-    @case("LOADSHEET_DELIVERED")  { <p-chip label="Delivered" class="green-chip"      /> }
-    @case("LOADSHEET_APPROVED")   { <p-chip label="Approved"  class="light-green-chip"/> }
-    @case("LOADSHEET_DECLINED")   { <p-chip label="Declined"  class="red-chip"        /> }
-    @case("LOADSHEET_REPLACED")   { <p-chip label="Replaced"  class="black-chip"      /> }
-    @default                      { <p-chip label="{{ rowData.status || '-' }}" class="gray-chip" /> }
+    @case ("LOADSHEET_CREATED") {
+      <p-chip label="Created" class="orange-chip" />
+    }
+    @case ("LOADSHEET_DELIVERED") {
+      <p-chip label="Delivered" class="green-chip" />
+    }
+    @case ("LOADSHEET_APPROVED") {
+      <p-chip label="Approved" class="light-green-chip" />
+    }
+    @case ("LOADSHEET_DECLINED") {
+      <p-chip label="Declined" class="red-chip" />
+    }
+    @case ("LOADSHEET_REPLACED") {
+      <p-chip label="Replaced" class="black-chip" />
+    }
+    @default {
+      <p-chip label="{{ rowData.status || '-' }}" class="gray-chip" />
+    }
   }
 </ng-template>
 
@@ -68,16 +80,18 @@
   [selectedRowData]="selectedRowData()"
 />
 
-
 <!-- LMC Button Column -->
 <ng-template #lmcColumnTemplate let-rowData="rowData">
   <button
     class="border border-gray-300 rounded-md px-3 py-1 bg-white whitespace-nowrap"
     [disabled]="!rowData.hasLmc"
-    [ngStyle]="{ 'color': rowData.hasLmc ? 'inherit' : '#24242480', 'cursor': rowData.hasLmc ? 'pointer' : 'not-allowed' }"
+    [ngStyle]="{
+      color: rowData.hasLmc ? 'inherit' : '#24242480',
+      cursor: rowData.hasLmc ? 'pointer' : 'not-allowed',
+    }"
     (click)="rowData.hasLmc && onLmcShow(rowData)"
   >
-    {{ rowData.hasLmc ? 'Show' : 'Not Entered' }}
+    {{ rowData.hasLmc ? "Show" : "Not Entered" }}
   </button>
 </ng-template>
 
