@@ -1,4 +1,3 @@
-// src/app/shared/services/bff/route-details.service.ts
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from '@environments/environment';

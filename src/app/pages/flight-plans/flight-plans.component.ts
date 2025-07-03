@@ -253,22 +253,19 @@ export class FlightPlansComponent implements OnInit {
       arrDate:
         event.filters?.arrDateTime && event.filters?.arrDateTime[0].value,
     });
-    console.log(this.tableFilters());
 
     this.getFlightPlans();
   }
 
-  onFlightPlansShow(row: IFlightPlan) {
-    this.flightPlanPdfService.getPaperFPlan(row.id.toString()).subscribe({
-      next: (pdf) => {
-        this.pdfData.set(pdf);
-        this.displayModal.set(true);
-      },
-      error: () => {
-        // hata yönetimi
-      },
-    });
-  }
+ onFlightPlansShow(row: IFlightPlan) {
+  this.flightPlanPdfService.getPaperFPlan(row.id.toString()).subscribe({
+    next: (pdf) => {
+      this.pdfData.set(pdf);
+      this.displayModal.set(true);
+    }
+  });
+}
+
 
   onModalHide() {
     this.displayModal.set(false);

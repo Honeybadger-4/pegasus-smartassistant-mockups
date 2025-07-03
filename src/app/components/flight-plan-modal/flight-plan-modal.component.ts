@@ -18,7 +18,6 @@ export class FlightPlanModalComponent {
   pdfSrc: SafeResourceUrl | null = null;
   sanitizer = inject(DomSanitizer);
 
-  // pdfData her değiştiğinde burası tetiklenir
   @Input() set pdfData(data: IFlightPlanModalPdfResponse | null) {
     if (data?.CONTENT) {
       const base64 = `data:${data.TYPE};base64,${data.CONTENT}`;

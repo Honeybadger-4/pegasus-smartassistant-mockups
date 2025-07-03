@@ -199,7 +199,6 @@ export class GpsLossFormsComponent implements OnInit {
         event.filters?.flightLevel && event.filters?.flightLevel[0].value,
       duration: event.filters?.duration && event.filters?.duration[0].value,
     });
-    console.log(this.tableFilters());
 
     this.getAllGpsLossForms();
   }

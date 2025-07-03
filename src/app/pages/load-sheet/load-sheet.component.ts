@@ -46,7 +46,6 @@ import { InputTextModule } from 'primeng/inputtext';
   styleUrls: ['./load-sheet.component.scss'],
 })
 export class LoadSheetComponent implements OnInit {
-  // table & filter
   customTableComponent = viewChild.required(CustomTableComponent);
   searchInput = viewChild.required<ElementRef>('searchInput');
   statusColumnTemplate = viewChild.required('statusColumnTemplate');
@@ -54,7 +53,6 @@ export class LoadSheetComponent implements OnInit {
   cgLimitsColumnTemplate = viewChild.required('cgLimitsColumnTemplate');
   lmcColumnTemplate = viewChild.required('lmcColumnTemplate');
 
-  // signals
   columns = signal<Column[]>([]);
   loadSheetData = signal<ILoadSheetResponse | null>(null);
   loadSheetContentData = signal<ILoadSheetContentData[] | null>(null);
@@ -65,15 +63,12 @@ export class LoadSheetComponent implements OnInit {
   tableFilters = signal<any>({});
   tableLoading = signal<boolean>(false);
 
-  // Load & Trim Sheet modal
   selectedLoadSheetRowData = signal<ILoadSheetContentData | null>(null);
   showLoadSheetModal = signal<boolean>(false);
 
-  // LMC modal
   selectedLmcRowData = signal<ILoadSheetModalsResponse | null>(null);
   showLmcModal = signal<boolean>(false);
 
-  // service
   loadSheetService = inject(LoadSheetService);
 
   loadSheetModal = signal<boolean>(false);
@@ -279,7 +274,6 @@ export class LoadSheetComponent implements OnInit {
         this.selectedLmcRowData.set(detail);
         this.showLmcModal.set(true);
       },
-      error: () => {},
     });
   }
 

@@ -199,7 +199,6 @@ export class RoutesComponent implements OnInit {
       arrDate:
         event.filters?.arrDateTime && event.filters?.arrDateTime[0].value,
     });
-    console.log(this.tableFilters());
 
     this.getFlightPlans();
   }
