@@ -78,15 +78,12 @@
         </td>
 
         <td *ngFor="let column of tableColumns()">
-          <ng-container *ngIf="column.template; else defaultCell">
-            <ng-container
-              *ngTemplateOutlet="
-                column.template;
-                context: { rowData: rowData, col: column }
-              "
-            ></ng-container>
-          </ng-container>
-
+          <ng-container
+            *ngTemplateOutlet="
+              column.template || defaultCell;
+              context: { rowData: rowData, col: column }
+            "
+          ></ng-container>
           <ng-template #defaultCell>
             {{ rowData[column.field] || "-" }}
           </ng-template>
@@ -133,10 +130,10 @@
         [showAddButton]="false"
         [showApplyButton]="false"
       >
-        <ng-template #filter let-value let-filter="filterCallback">
+        <ng-template #filter let-filter="filterCallback">
           <p-select
-            (ngModel)="(value)"
             [options]="col.filterOptions"
+            [(ngModel)]="filterValues[col.field]"
             styleClass="w-full"
             placeholder="Select One"
             (onChange)="filter($event.value)"
@@ -160,9 +157,10 @@
         [showAddButton]="false"
         [showApplyButton]="false"
       >
-        <ng-template #filter let-value let-filter="filterCallback">
+        <ng-template #filter let-filter="filterCallback">
           <p-datepicker
             [readonlyInput]="true"
+            [(ngModel)]="filterValues[col.field]"
             dateFormat="dd/mm/yy"
             placeholder="Select a Date"
             class="custom-calendar"
@@ -172,9 +170,11 @@
       </p-columnFilter>
     </ng-template>
 
+    <!-- Time Input Template -->
     <ng-template #timeFilterTemplate let-col>
       <p-columnFilter
         [field]="col.field"
+        type="time"
         matchMode="equals"
         display="menu"
         [showMatchModes]="false"
@@ -182,15 +182,14 @@
         [showAddButton]="false"
         [showApplyButton]="false"
       >
-        <ng-template #filter let-value let-filter="filterCallback">
-          <p-datepicker
-            [readonlyInput]="true"
-            [timeOnly]="true"
-            [showSeconds]="false"
+        <ng-template #filter let-filter="filterCallback">
+          <p-inputmask
+            #timeInput
+            mask="99:99"
+            [(ngModel)]="filterValues[col.field]"
             placeholder="Select a Time"
-            class="custom-calendar"
-            (onSelect)="filter(filterTimeControl($event))"
-          ></p-datepicker>
+            (onComplete)="onTimeFilterComplete(timeInput.value, filter)"
+          />
         </ng-template>
       </p-columnFilter>
     </ng-template>
