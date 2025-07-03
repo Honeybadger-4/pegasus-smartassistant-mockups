@@ -1,69 +1,17 @@
-<div id="UserLoginHistoryPage">
-  <section class="table-header-section lg:flex block">
-    <!-- Header Title -->
+<div id="user-login-history-page">
+  <!-- Page Header -->
+  <section class="flex items-center justify-between">
     <p class="header-title">User Login History</p>
-    <form [formGroup]="filterFormGroup" (ngSubmit)="onFilterSubmit()">
-      <div class="flex justify-between items-center gap-4">
-        <!-- Filter Inputs -->
-        <div class="grid grid-cols-12 gap-4 items-center">
-          <!-- Username  Input -->
-          <div class="lg:col-span-4 md:col-span-6 col-span-12">
-            <p-iconField iconPosition="right" class="custom-icon-field">
-              <input
-                type="text"
-                pInputText
-                placeholder="Username"
-                formControlName="username"
-              />
-            </p-iconField>
-          </div>
-
-          <!-- Company Id Input -->
-          <div class="lg:col-span-4 md:col-span-6 col-span-12">
-            <p-iconField iconPosition="right" class="custom-icon-field">
-              <input
-                type="text"
-                pInputText
-                placeholder="Company ID"
-                formControlName="companyId"
-              />
-            </p-iconField>
-          </div>
-
-          <!-- Date Picker -->
-          <div class="lg:col-span-4 md:col-span-6 col-span-12">
-            <p-datepicker
-              formControlName="dateRange"
-              selectionMode="range"
-              [readonlyInput]="true"
-              dateFormat="dd/mm/yy"
-              placeholder="Start Date - End Date"
-              class="custom-calendar"
-            />
-          </div>
-        </div>
-        <div>
-          <p-button
-            type="submit"
-            icon="pi pi-search"
-            [rounded]="true"
-            class="filter-submit-btn"
-          />
-        </div>
-      </div>
-    </form>
   </section>
 
-  <section class="table-section custom-card">
+  <!-- Table -->
+  <section class="table-section custom-card mt-5">
     <app-custom-table
-      [tableData]="userLoginHistoryTableData()"
-      [tableColumns]="columns"
+      [tableData]="userLoginHistoryContentData()"
+      [tableColumns]="columns()"
       [totalRecords]="userLoginHistoryData()?.totalElements || 0"
+      [tableLoading]="tableLoading()"
       (lazyLoadEvent)="lazyLoadEvent($event)"
     ></app-custom-table>
   </section>
 </div>
-
-<ng-template #loggedInDateTemplate let-rowData="rowData">
-  <span>{{ rowData.loggedInDate | date: "dd/MM/YYYY - HH:mm" }}</span>
-</ng-template>
