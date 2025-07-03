@@ -45,7 +45,7 @@ export class RouteModalComponent implements OnInit {
     return this.rowDataValue;
   }
 
-expandedRows: { [key: string]: boolean } = {};
+  expandedRows: { [key: string]: boolean } = {};
 
   ngOnInit(): void {}
 
@@ -73,8 +73,7 @@ expandedRows: { [key: string]: boolean } = {};
           this.alternateRouteData.set(alternateList);
           this.tableLoading.set(false);
 
-          // Opsiyonel: başlangıçta tüm satırları kapalı yap
-          this.expandedRows = {};
+          this.expandedRows = {}; 
         },
         error: () => {
           this.routeData.set([]);
@@ -87,5 +86,4 @@ expandedRows: { [key: string]: boolean } = {};
   closeModal(): void {
     this.visibleChange.emit(false);
   }
-  
 }

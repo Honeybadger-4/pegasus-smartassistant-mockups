@@ -16,7 +16,7 @@
         [expandedRowKeys]="expandedRows"
         [loading]="tableLoading()"
       >
-        <ng-template pTemplate="header">
+        <ng-template #header>
           <tr>
             <th>Airway</th>
             <th>WPT</th>
@@ -55,11 +55,11 @@
             <th>Sent By</th>
             <th>Sent Date-Time</th>
             <th>Notes</th>
-            <th style="width: 5rem"></th> <!-- Toggle button -->
+            <th style="width: 5rem"></th> <!-- Toggle button en sağda -->
           </tr>
         </ng-template>
 
-        <ng-template pTemplate="body" let-rowData let-expanded="expanded">
+        <ng-template #body let-rowData let-expanded="expanded">
           <tr>
             <td>{{ rowData.airway }}</td>
             <td>{{ rowData.wpt }}</td>
@@ -117,7 +117,7 @@
           </tr>
         </ng-template>
 
-        <ng-template pTemplate="rowexpansion" let-rowData>
+        <ng-template #expandedrow let-rowData>
           <tr>
             <td colspan="19">
               <div class="p-4 bg-gray-50 text-sm text-gray-700">
@@ -132,7 +132,6 @@
     <!-- Alternate Route Details Title -->
     <h4 class="mt-6 mb-2">Alternate Route Details</h4>
 
-    <!-- Alternate Route Details Table -->
     <section class="table-section custom-card">
       <ng-container *ngIf="alternateRouteData() && alternateRouteData().length > 0; else noAlternate">
         <p-table
@@ -178,7 +177,7 @@
               <th>ACC</th>
               <th>Sent By</th>
               <th>Sent Date-Time</th>
-              <th>Description</th>
+              <th>Notes</th>
             </tr>
           </ng-template>
 
@@ -220,7 +219,7 @@
               <td>{{ rowData.acc }}</td>
               <td>{{ rowData.sentBy }}</td>
               <td>{{ rowData.sentDate }}</td>
-              <td>{{ rowData.description }}</td>
+              <td>{{ rowData.note }}</td>
             </tr>
           </ng-template>
         </p-table>
