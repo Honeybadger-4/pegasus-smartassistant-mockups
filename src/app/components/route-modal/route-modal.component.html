@@ -13,7 +13,7 @@
       <p-table
         [value]="routeData()"
         dataKey="wpId"
-        [expandedRowKeys]="expandedRows"
+        [expandedRowKeys]="expandedRowsRoute"
         [loading]="tableLoading()"
       >
         <ng-template #header>
@@ -28,25 +28,49 @@
             <th>DIST</th>
             <th>RD</th>
             <th>
-              <div style="display: flex; flex-direction: column; align-items: center;">
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                "
+              >
                 <span>FU</span>
                 <span>RF</span>
               </div>
             </th>
             <th>
-              <div style="display: flex; flex-direction: column; align-items: center;">
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                "
+              >
                 <span>AF</span>
                 <span>DF</span>
               </div>
             </th>
             <th>
-              <div style="display: flex; flex-direction: column; align-items: center;">
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                "
+              >
                 <span>MIN</span>
                 <span>T/W</span>
               </div>
             </th>
             <th>
-              <div style="display: flex; flex-direction: column; align-items: center;">
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                "
+              >
                 <span>AT</span>
                 <span>DT</span>
               </div>
@@ -55,7 +79,8 @@
             <th>Sent By</th>
             <th>Sent Date-Time</th>
             <th>Notes</th>
-            <th style="width: 5rem"></th> <!-- Toggle button en sağda -->
+            <th style="width: 5rem"></th>
+            <!-- Toggle button en sağda -->
           </tr>
         </ng-template>
 
@@ -71,25 +96,49 @@
             <td>{{ rowData.dist }}</td>
             <td>{{ rowData.rd }}</td>
             <td>
-              <div style="display: flex; flex-direction: column; align-items: center;">
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                "
+              >
                 <span>{{ rowData.fu }}</span>
                 <span>{{ rowData.rf }}</span>
               </div>
             </td>
             <td>
-              <div style="display: flex; flex-direction: column; align-items: center;">
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                "
+              >
                 <span>{{ rowData.af }}</span>
                 <span>{{ rowData.df }}</span>
               </div>
             </td>
             <td>
-              <div style="display: flex; flex-direction: column; align-items: center;">
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                "
+              >
                 <span>{{ rowData.min }}</span>
                 <span>{{ rowData.tW }}</span>
               </div>
             </td>
             <td>
-              <div style="display: flex; flex-direction: column; align-items: center;">
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                "
+              >
                 <span>{{ rowData.at }}</span>
                 <span>{{ rowData.dt }}</span>
               </div>
@@ -100,7 +149,11 @@
             <td>
               <i
                 class="pi"
-                [ngClass]="rowData.note ? 'pi pi-check-circle text-green-500' : 'pi pi-circle text-gray-300'"
+                [ngClass]="
+                  rowData.note
+                    ? 'pi pi-check-circle text-green-500'
+                    : 'pi pi-circle text-gray-300'
+                "
               ></i>
             </td>
             <td>
@@ -121,7 +174,7 @@
           <tr>
             <td colspan="19">
               <div class="p-4 bg-gray-50 text-sm text-gray-700">
-                <strong>Note:</strong> {{ rowData.note || 'No note available' }}
+                <strong>Note:</strong> {{ rowData.note || "No note available" }}
               </div>
             </td>
           </tr>
@@ -133,13 +186,21 @@
     <h4 class="mt-6 mb-2">Alternate Route Details</h4>
 
     <section class="table-section custom-card">
-      <ng-container *ngIf="alternateRouteData() && alternateRouteData().length > 0; else noAlternate">
+      <ng-container
+        *ngIf="
+          alternateRouteData() && alternateRouteData().length > 0;
+          else noAlternate
+        "
+      >
         <p-table
           [value]="alternateRouteData()"
-          dataKey="wv"
+          dataKey="wpId"
+          [expandedRowKeys]="expandedRowsAlternate"
           [loading]="tableLoading()"
+        
         >
-          <ng-template pTemplate="header">
+          >
+          <ng-template  #header>
             <tr>
               <th>Airway</th>
               <th>WPT</th>
@@ -151,25 +212,49 @@
               <th>DIST</th>
               <th>RD</th>
               <th>
-                <div style="display: flex; flex-direction: column; align-items: center;">
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                  "
+                >
                   <span>FU</span>
                   <span>RF</span>
                 </div>
               </th>
               <th>
-                <div style="display: flex; flex-direction: column; align-items: center;">
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                  "
+                >
                   <span>AF</span>
                   <span>DF</span>
                 </div>
               </th>
               <th>
-                <div style="display: flex; flex-direction: column; align-items: center;">
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                  "
+                >
                   <span>MIN</span>
                   <span>T/W</span>
                 </div>
               </th>
               <th>
-                <div style="display: flex; flex-direction: column; align-items: center;">
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                  "
+                >
                   <span>AT</span>
                   <span>DT</span>
                 </div>
@@ -178,10 +263,11 @@
               <th>Sent By</th>
               <th>Sent Date-Time</th>
               <th>Notes</th>
+              <th style="width: 5rem"></th>
             </tr>
           </ng-template>
 
-          <ng-template pTemplate="body" let-rowData>
+          <ng-template #body let-rowData let-expanded="expanded">
             <tr>
               <td>{{ rowData.airway }}</td>
               <td>{{ rowData.wpt }}</td>
@@ -193,25 +279,49 @@
               <td>{{ rowData.dist }}</td>
               <td>{{ rowData.rd }}</td>
               <td>
-                <div style="display: flex; flex-direction: column; align-items: center;">
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                  "
+                >
                   <span>{{ rowData.fu }}</span>
                   <span>{{ rowData.rf }}</span>
                 </div>
               </td>
               <td>
-                <div style="display: flex; flex-direction: column; align-items: center;">
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                  "
+                >
                   <span>{{ rowData.af }}</span>
                   <span>{{ rowData.df }}</span>
                 </div>
               </td>
               <td>
-                <div style="display: flex; flex-direction: column; align-items: center;">
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                  "
+                >
                   <span>{{ rowData.min }}</span>
                   <span>{{ rowData.tW }}</span>
                 </div>
               </td>
               <td>
-                <div style="display: flex; flex-direction: column; align-items: center;">
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                  "
+                >
                   <span>{{ rowData.at }}</span>
                   <span>{{ rowData.dt }}</span>
                 </div>
@@ -219,7 +329,40 @@
               <td>{{ rowData.acc }}</td>
               <td>{{ rowData.sentBy }}</td>
               <td>{{ rowData.sentDate }}</td>
-              <td>{{ rowData.note }}</td>
+              <td>
+                <i
+                  class="pi"
+                  [ngClass]="
+                    rowData.note
+                      ? 'pi pi-check-circle text-green-500'
+                      : 'pi pi-circle text-gray-300'
+                  "
+                ></i>
+              </td>
+              <td>
+                <p-button
+                  type="button"
+                  pRipple
+                  [pRowToggler]="rowData"
+                  [text]="true"
+                  [rounded]="true"
+                  [plain]="true"
+                  [icon]="
+                    expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'
+                  "
+                />
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template #expandedrow let-rowData>
+            <tr>
+              <td colspan="19">
+                <div class="p-4 bg-gray-50 text-sm text-gray-700">
+                  <strong>Note:</strong>
+                  {{ rowData.note || "No note available" }}
+                </div>
+              </td>
             </tr>
           </ng-template>
         </p-table>

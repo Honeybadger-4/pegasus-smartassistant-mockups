@@ -45,8 +45,10 @@ export class RouteModalComponent implements OnInit {
     return this.rowDataValue;
   }
 
-  expandedRows: { [key: string]: boolean } = {};
+  expandedRowsRoute: { [key: string]: boolean } = {};
+  expandedRowsAlternate: { [key: string]: boolean } = {};
 
+ 
   ngOnInit(): void {}
 
   getFlightInfoRoutes(flightPlanId: number): void {
@@ -63,17 +65,18 @@ export class RouteModalComponent implements OnInit {
           }));
 
           const routeList = formattedResponse.filter(
-            (routeItem) => routeItem.routeType === 'route'
+            (routeItem) => routeItem.routeType === 'route',
           );
           const alternateList = formattedResponse.filter(
-            (routeItem) => routeItem.routeType === 'alternate'
+            (routeItem) => routeItem.routeType === 'alternate',
           );
 
           this.routeData.set(routeList);
           this.alternateRouteData.set(alternateList);
           this.tableLoading.set(false);
 
-          this.expandedRows = {}; 
+          this.expandedRowsRoute = {};
+          this.expandedRowsAlternate = {};
         },
         error: () => {
           this.routeData.set([]);
