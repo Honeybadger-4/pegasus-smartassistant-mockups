@@ -12,7 +12,7 @@ import { AirportInfoComponent } from './pages/airport-info/airport-info.componen
 import { CrewListComponent } from './pages/crew-list/crew-list.component';
 import { LogbookDetailComponent } from './pages/logbook-detail/logbook-detail.component';
 import { LogbookDetailEditComponent } from './pages/logbook-detail-edit/logbook-detail-edit.component';
-import { RouteComponent } from './pages/route/route.component';
+import { RoutesComponent } from './pages/routes/routes.component';
 import { authGuard } from '@shared/guards/auth.guard';
 import { LogbookComponent } from './pages/logbook/logbook.component';
 import { PersonalChecklistsComponent } from './pages/personal-checklists/personal-checklists.component';
@@ -57,7 +57,7 @@ export const routes: Routes = [
           { path: 'flight-plans', component: FlightPlansComponent },
 
           { path: 'fuel', component: FuelOrderComponent },
-          { path: 'route', component: RouteComponent },
+          { path: 'route', component: RoutesComponent },
           { path: 'trip-information', component: TripInfoComponent },
           { path: 'load-sheet', component: LoadSheetComponent },
           { path: 'crew-information', component: CrewInformationComponent },

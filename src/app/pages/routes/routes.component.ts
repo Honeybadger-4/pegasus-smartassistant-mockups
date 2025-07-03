@@ -10,21 +10,17 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Column } from '@shared/models/columns';
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
-import { GpsLossFormsModalComponent } from 'src/app/components/gps-loss-forms-modal/gps-loss-forms-modal.component';
-
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
-import { GpsSignalLossService } from '@shared/services/gps-signal-loss.service';
-
-import {
-  IGpsLossFormContentData,
-  IGpsLossFormsResponse,
-} from '@shared/models/gps-loss-forms-response.model';
+import { FlightPlansService } from '@shared/services/flight-plans.service';
+import { IFlightPlan } from '@shared/models/flight-plans-response.model';
 import moment from 'moment';
 import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
+import { RouteModalComponent } from '../../components/route-modal/route-modal.component';
+
 @Component({
-  selector: 'app-gps-loss-forms',
+  selector: 'app-routes',
   imports: [
     CommonModule,
     FormsModule,
@@ -32,35 +28,30 @@ import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
     IconFieldModule,
     InputIconModule,
     InputTextModule,
-    GpsLossFormsModalComponent,
+    RouteModalComponent,
   ],
-  templateUrl: './gps-loss-forms.component.html',
-  styleUrl: './gps-loss-forms.component.scss',
+  templateUrl: './routes.component.html',
+  styleUrl: './routes.component.scss',
 })
-export class GpsLossFormsComponent implements OnInit {
-  gpsLossFormsColumnTemplate = viewChild.required('gpsLossFormsColumnTemplate');
+export class RoutesComponent implements OnInit {
   customTableComponent = viewChild.required(CustomTableComponent);
+  routeDetailsColumnTemplate = viewChild.required('routeDetailsColumnTemplate');
   searchInput = viewChild.required<ElementRef>('searchInput');
 
-  gpsLossFormsService = inject(GpsSignalLossService);
-
-  searchInputValue = signal<string>('');
+  flightPlansService = inject(FlightPlansService);
 
   columns = signal<Column[]>([]);
+  flightPlansData = signal<IFlightPlan[] | null>(null);
+  flightPlansTotal = signal<number>(0);
 
-  showModal = signal<boolean>(false);
-
-  selectedRow = signal<IGpsLossFormContentData | null>(null);
-
-  gpsLossFormsData = signal<IGpsLossFormsResponse | null>(null);
-  gpsLossFormsContentData = signal<IGpsLossFormsResponse['content'] | null>(
-    null,
-  );
-
+  searchInputValue = signal<string>('');
   currentPage = signal<number>(0);
   currentRows = signal<number>(10);
   tableFilters = signal<any>({});
   tableLoading = signal<boolean>(false);
+
+  showRouteDetailsModal = signal<boolean>(false);
+  selectedRowData = signal<IFlightPlan | null>(null);
 
   ngOnInit() {
     this.defineColumn();
@@ -85,57 +76,58 @@ export class GpsLossFormsComponent implements OnInit {
         isFilter: true,
         filterType: 'datepicker',
       },
-      { field: 'firstPointName', header: 'First Point', isFilter: true },
-      { field: 'lastPointName', header: 'Last Point', isFilter: true },
-      { field: 'time', header: 'Time', isFilter: true, filterType: 'timeonly' },
-      { field: 'flightPhase', header: 'Phase of Flight', isFilter: true },
-      {
-        field: 'flightLevel',
-        header: 'Flight Level or Attitude',
-        isFilter: true,
-      },
-      {
-        field: 'duration',
-        header: 'Duration',
-        isFilter: true,
-        filterType: 'timeonly',
-      },
 
       {
-        field: 'gpsLossForms',
-        header: 'GPS Loss Types',
+        field: 'flightPlan',
+        header: 'Route Details',
         isFilter: false,
-        template: this.gpsLossFormsColumnTemplate(),
+        template: this.routeDetailsColumnTemplate(),
       },
     ]);
   }
 
-  getAllGpsLossForms() {
+  getFlightPlans() {
     this.tableLoading.set(true);
 
-    this.gpsLossFormsService
-      .getAllGpsLossForms(
+    this.flightPlansService
+      .getFlightPlans(
         this.currentPage(),
         this.currentRows(),
         this.searchInputValue(),
         this.tableFilters(),
       )
       .subscribe({
-        next: (response: IGpsLossFormsResponse) => {
+        next: (response) => {
           const formattedData = response.content.map((item) => ({
             ...item,
             depDateTime: item.depDateTime
               ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
               : null,
-
             arrDateTime: item.arrDateTime
               ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
               : null,
+
+            receivedDateTime: item.receivedDateTime
+              ? moment(item.receivedDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+
+            approvedDateTime: item.approvedDateTime
+              ? moment(item.approvedDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+
+            replacedDateTime: item.replacedDateTime
+              ? moment(item.replacedDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+            declinedDateTime: item.declinedDateTime
+              ? moment(item.declinedDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+            submittedDateTime: item.submittedDateTime
+              ? moment(item.submittedDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
           }));
 
-          this.gpsLossFormsContentData.set(formattedData);
-          this.gpsLossFormsData.set(response);
-
+          this.flightPlansData.set(formattedData);
+          this.flightPlansTotal.set(response.totalElements);
           this.tableLoading.set(false);
         },
         error: () => {
@@ -156,7 +148,7 @@ export class GpsLossFormsComponent implements OnInit {
           this.currentPage.set(0);
           this.customTableComponent().resetTableFirstValue();
 
-          this.getAllGpsLossForms();
+          this.getFlightPlans();
         }
       });
   }
@@ -165,7 +157,7 @@ export class GpsLossFormsComponent implements OnInit {
     this.searchInputValue.set(value.toUpperCase());
     this.currentPage.set(0);
     this.customTableComponent().resetTableFirstValue();
-    this.getAllGpsLossForms();
+    this.getFlightPlans();
   }
 
   lazyLoadEvent(event: any) {
@@ -176,42 +168,51 @@ export class GpsLossFormsComponent implements OnInit {
     this.tableFilters.set({
       acReg: event.filters?.acReg && event.filters?.acReg[0].value,
       flightNo: event.filters?.flightNo && event.filters?.flightNo[0].value,
-      depPort: event.filters?.depPort && event.filters?.depPort[0].value,
+
       depDate:
         event.filters?.depDateTime && event.filters?.depDateTime[0].value,
 
-      arrPort: event.filters?.arrPort && event.filters?.arrPort[0].value,
+      receivedDate:
+        event.filters?.receivedDateTime &&
+        event.filters?.receivedDateTime[0].value,
+      version: event.filters?.version && event.filters?.version[0].value,
+      responsibleUser:
+        event.filters?.responsibleUser &&
+        event.filters?.responsibleUser[0].value,
 
+      status: event.filters?.status && event.filters?.status[0].value,
+      approvedDate:
+        event.filters?.approvedDateTime &&
+        event.filters?.approvedDateTime[0].value,
+      replacedDate:
+        event.filters?.replacedDateTime &&
+        event.filters?.replacedDateTime[0].value,
+      declinedDate:
+        event.filters?.declinedDateTime &&
+        event.filters?.declinedDateTime[0].value,
+      submittedDate:
+        event.filters?.submittedDateTime &&
+        event.filters?.submittedDateTime[0].value,
+
+      depPort: event.filters?.depPort && event.filters?.depPort[0].value,
+      arrPort: event.filters?.arrPort && event.filters?.arrPort[0].value,
       arrDate:
         event.filters?.arrDateTime && event.filters?.arrDateTime[0].value,
-
-      firstPointName:
-        event.filters?.firstPointName && event.filters?.firstPointName[0].value,
-
-      lastPointName:
-        event.filters?.lastPointName && event.filters?.lastPointName[0].value,
-
-      time: event.filters?.time && event.filters?.time[0].value,
-
-      flightPhase:
-        event.filters?.flightPhase && event.filters?.flightPhase[0].value,
-      flightLevel:
-        event.filters?.flightLevel && event.filters?.flightLevel[0].value,
-      duration: event.filters?.duration && event.filters?.duration[0].value,
     });
 
-    this.getAllGpsLossForms();
+    this.getFlightPlans();
   }
 
-  onGpsLossFormsShow(row: IGpsLossFormContentData) {
-    this.selectedRow.set(row);
-    this.showModal.set(true);
+  onRouteDetailsShow(rowData: IFlightPlan) {
+    this.selectedRowData.set(rowData);
+    this.showRouteDetailsModal.set(true);
   }
 
-  get modalVisible() {
-    return this.showModal();
+  get routeDetailsModalVisible() {
+    return this.showRouteDetailsModal();
   }
-  set modalVisible(value: boolean) {
-    this.showModal.set(value);
+
+  set routeDetailsModalVisible(value: boolean) {
+    this.showRouteDetailsModal.set(value);
   }
 }

@@ -1,0 +1,373 @@
+<div id="route-details-modal">
+  <p-dialog
+    [(visible)]="visible"
+    [modal]="true"
+    [closable]="true"
+    [dismissableMask]="true"
+    header="Route Details"
+    [style]="{ width: '1200px' }"
+    (onHide)="closeModal()"
+  >
+    <!-- Route Details Table -->
+    <section class="table-section custom-card mt-5">
+      <p-table
+        [value]="routeData()"
+        dataKey="wpId"
+        [expandedRowKeys]="expandedRowsRoute"
+        [loading]="tableLoading()"
+      >
+        <ng-template #header>
+          <tr>
+            <th>Airway</th>
+            <th>WPT</th>
+            <th>MORA</th>
+            <th>FL</th>
+            <th>SHR</th>
+            <th>AVTT</th>
+            <th>W/V</th>
+            <th>DIST</th>
+            <th>RD</th>
+            <th>
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                "
+              >
+                <span>FU</span>
+                <span>RF</span>
+              </div>
+            </th>
+            <th>
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                "
+              >
+                <span>AF</span>
+                <span>DF</span>
+              </div>
+            </th>
+            <th>
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                "
+              >
+                <span>MIN</span>
+                <span>T/W</span>
+              </div>
+            </th>
+            <th>
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                "
+              >
+                <span>AT</span>
+                <span>DT</span>
+              </div>
+            </th>
+            <th>ACC</th>
+            <th>Sent By</th>
+            <th>Sent Date-Time</th>
+            <th>Notes</th>
+            <th style="width: 5rem"></th>
+          </tr>
+        </ng-template>
+
+        <ng-template #body let-rowData let-expanded="expanded">
+          <tr>
+            <td>{{ rowData.airway }}</td>
+            <td>{{ rowData.wpt }}</td>
+            <td>{{ rowData.mora }}</td>
+            <td>{{ rowData.fl }}</td>
+            <td>{{ rowData.shr }}</td>
+            <td>{{ rowData.avtt }}</td>
+            <td>{{ rowData.wv }}</td>
+            <td>{{ rowData.dist }}</td>
+            <td>{{ rowData.rd }}</td>
+            <td>
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                "
+              >
+                <span>{{ rowData.fu }}</span>
+                <span>{{ rowData.rf }}</span>
+              </div>
+            </td>
+            <td>
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                "
+              >
+                <span>{{ rowData.af }}</span>
+                <span>{{ rowData.df }}</span>
+              </div>
+            </td>
+            <td>
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                "
+              >
+                <span>{{ rowData.min }}</span>
+                <span>{{ rowData.tW }}</span>
+              </div>
+            </td>
+            <td>
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                "
+              >
+                <span>{{ rowData.at }}</span>
+                <span>{{ rowData.dt }}</span>
+              </div>
+            </td>
+            <td>{{ rowData.acc }}</td>
+            <td>{{ rowData.sentBy }}</td>
+            <td>{{ rowData.sentDate }}</td>
+            <td>
+              <i
+                class="pi"
+                [ngClass]="
+                  rowData.note
+                    ? 'pi pi-check-circle text-green-500'
+                    : 'pi pi-circle text-gray-300'
+                "
+              ></i>
+            </td>
+            <td>
+              <p-button
+                type="button"
+                pRipple
+                [pRowToggler]="rowData"
+                [text]="true"
+                [rounded]="true"
+                [plain]="true"
+                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+              />
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template #expandedrow let-rowData>
+          <tr>
+            <td colspan="19">
+              <div class="p-4 bg-gray-50 text-sm text-gray-700">
+                <strong>Note:</strong> {{ rowData.note || "No note available" }}
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </section>
+
+    <!-- Alternate Route Details Title -->
+    <h4 class="mt-6 mb-2">Alternate Route Details</h4>
+
+    <section class="table-section custom-card">
+      <ng-container
+        *ngIf="
+          alternateRouteData() && alternateRouteData().length > 0;
+          else noAlternate
+        "
+      >
+        <p-table
+          [value]="alternateRouteData()"
+          dataKey="wpId"
+          [expandedRowKeys]="expandedRowsAlternate"
+          [loading]="tableLoading()"
+        >
+          >
+          <ng-template #header>
+            <tr>
+              <th>Airway</th>
+              <th>WPT</th>
+              <th>MORA</th>
+              <th>FL</th>
+              <th>SHR</th>
+              <th>AVTT</th>
+              <th>W/V</th>
+              <th>DIST</th>
+              <th>RD</th>
+              <th>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                  "
+                >
+                  <span>FU</span>
+                  <span>RF</span>
+                </div>
+              </th>
+              <th>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                  "
+                >
+                  <span>AF</span>
+                  <span>DF</span>
+                </div>
+              </th>
+              <th>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                  "
+                >
+                  <span>MIN</span>
+                  <span>T/W</span>
+                </div>
+              </th>
+              <th>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                  "
+                >
+                  <span>AT</span>
+                  <span>DT</span>
+                </div>
+              </th>
+              <th>ACC</th>
+              <th>Sent By</th>
+              <th>Sent Date-Time</th>
+              <th>Notes</th>
+              <th style="width: 5rem"></th>
+            </tr>
+          </ng-template>
+
+          <ng-template #body let-rowData let-expanded="expanded">
+            <tr>
+              <td>{{ rowData.airway }}</td>
+              <td>{{ rowData.wpt }}</td>
+              <td>{{ rowData.mora }}</td>
+              <td>{{ rowData.fl }}</td>
+              <td>{{ rowData.shr }}</td>
+              <td>{{ rowData.avtt }}</td>
+              <td>{{ rowData.wv }}</td>
+              <td>{{ rowData.dist }}</td>
+              <td>{{ rowData.rd }}</td>
+              <td>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                  "
+                >
+                  <span>{{ rowData.fu }}</span>
+                  <span>{{ rowData.rf }}</span>
+                </div>
+              </td>
+              <td>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                  "
+                >
+                  <span>{{ rowData.af }}</span>
+                  <span>{{ rowData.df }}</span>
+                </div>
+              </td>
+              <td>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                  "
+                >
+                  <span>{{ rowData.min }}</span>
+                  <span>{{ rowData.tW }}</span>
+                </div>
+              </td>
+              <td>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                  "
+                >
+                  <span>{{ rowData.at }}</span>
+                  <span>{{ rowData.dt }}</span>
+                </div>
+              </td>
+              <td>{{ rowData.acc }}</td>
+              <td>{{ rowData.sentBy }}</td>
+              <td>{{ rowData.sentDate }}</td>
+              <td>
+                <i
+                  class="pi"
+                  [ngClass]="
+                    rowData.note
+                      ? 'pi pi-check-circle text-green-500'
+                      : 'pi pi-circle text-gray-300'
+                  "
+                ></i>
+              </td>
+              <td>
+                <p-button
+                  type="button"
+                  pRipple
+                  [pRowToggler]="rowData"
+                  [text]="true"
+                  [rounded]="true"
+                  [plain]="true"
+                  [icon]="
+                    expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'
+                  "
+                />
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template #expandedrow let-rowData>
+            <tr>
+              <td colspan="19">
+                <div class="p-4 bg-gray-50 text-sm text-gray-700">
+                  <strong>Note:</strong>
+                  {{ rowData.note || "No note available" }}
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </ng-container>
+      <ng-template #noAlternate>
+        <p class="text-gray-500 text-sm">No alternate route(s) available!</p>
+      </ng-template>
+    </section>
+  </p-dialog>
+</div>

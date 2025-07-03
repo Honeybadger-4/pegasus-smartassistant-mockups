@@ -6,6 +6,7 @@
     <div class="w-[210px]">
       <p-iconField iconPosition="right" class="custom-icon-field">
         <input
+          #searchInput
           type="text"
           pInputText
           [(ngModel)]="searchInputValue"
@@ -41,24 +42,31 @@
 
 <!-- Status Chip Template -->
 <ng-template #statusColumnTemplate let-rowData="rowData">
-  @switch (rowData.status) {
-    @case ("SUBMITTED") {
-      <p-chip label="Submitted" class="light-green-chip" />
-    }
-    @case ("APPROVED") {
-      <p-chip label="Approved" class="green-chip" />
-    }
-    @case ("DECLINED") {
-      <p-chip label="Declined" class="red-chip" />
-    }
-    @case ("NEW") {
-      <p-chip label="Waiting for approve" class="orange-chip" />
-    }
-    @case ("REPLACED") {
-      <p-chip label="Replaced" class="black-chip" />
-    }
-    @default {
-      <p-chip label="{{ rowData.status || '-' }}" class="gray-chip" />
-    }
-  }
+  <ng-container [ngSwitch]="rowData.status">
+    <p-chip
+      *ngSwitchCase="'SUBMITTED'"
+      label="Submitted"
+      class="light-green-chip"
+    />
+    <p-chip *ngSwitchCase="'APPROVED'" label="Approved" class="green-chip" />
+    <p-chip *ngSwitchCase="'DECLINED'" label="Declined" class="red-chip" />
+    <p-chip
+      *ngSwitchCase="'NEW'"
+      label="Waiting for approve"
+      class="orange-chip"
+    />
+    <p-chip *ngSwitchCase="'REPLACED'" label="Replaced" class="black-chip" />
+    <p-chip
+      *ngSwitchDefault
+      label="{{ rowData.status || '-' }}"
+      class="gray-chip"
+    />
+  </ng-container>
 </ng-template>
+
+<!-- PDF Modal Component -->
+<app-flight-plan-modal
+  [visible]="displayModal()"
+  [pdfData]="pdfData()"
+  (visibleChange)="onModalHide()"
+></app-flight-plan-modal>

@@ -54,6 +54,7 @@
   }
 </ng-template>
 
+<!-- Load & Trim Sheet Button Column -->
 <ng-template #loadSheetColumnTemplate let-rowData="rowData">
   <button class="table-show-btn" (click)="onLoadSheetShow(rowData)">
     Show
@@ -66,9 +67,10 @@
   </button>
 </ng-template>
 
+<!-- Load & Trim Sheet Modal -->
 <app-load-and-trim-sheet
-  *ngIf="selectedRowData()"
-  [loadSheetRowData]="selectedRowData()"
+  *ngIf="selectedLoadSheetRowData()"
+  [loadSheetRowData]="selectedLoadSheetRowData()"
   [(visible)]="loadSheetModalVisible"
 ></app-load-and-trim-sheet>
 
@@ -77,3 +79,25 @@
   [(visible)]="cgLimitsDialogVisible"
   [selectedRowData]="selectedRowData()"
 />
+
+<!-- LMC Button Column -->
+<ng-template #lmcColumnTemplate let-rowData="rowData">
+  <button
+    class="border border-gray-300 rounded-md px-3 py-1 bg-white whitespace-nowrap"
+    [disabled]="!rowData.hasLmc"
+    [ngStyle]="{
+      color: rowData.hasLmc ? 'inherit' : '#24242480',
+      cursor: rowData.hasLmc ? 'pointer' : 'not-allowed',
+    }"
+    (click)="rowData.hasLmc && onLmcShow(rowData)"
+  >
+    {{ rowData.hasLmc ? "Show" : "Not Entered" }}
+  </button>
+</ng-template>
+
+<!-- LMC Details Modal -->
+<app-lmc-details-modal
+  *ngIf="selectedLmcRowData()"
+  [rowData]="selectedLmcRowData()"
+  [(visible)]="lmcModalVisible"
+></app-lmc-details-modal>

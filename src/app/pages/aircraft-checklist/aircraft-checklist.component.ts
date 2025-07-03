@@ -223,7 +223,6 @@ export class AircraftChecklistComponent implements OnInit {
         event.filters?.confirmedDateTime &&
         event.filters?.confirmedDateTime[0].value,
     });
-    console.log(this.tableFilters());
 
     this.getAircraftCheckList();
   }
