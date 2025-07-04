@@ -42,9 +42,22 @@ export class UserLoginHistoryComponent implements OnInit {
 
   defineColumns() {
     this.columns.set([
+            { field: 'username', header: 'Username', isFilter: true },
+                  { field: 'companyId', header: 'Company ID', isFilter: true },
+
+
+         {
+        field: 'loggedInDate',
+        header: 'Logged In Date',
+        isFilter: true,
+        filterType: 'datepicker',
+      },
+
       { field: 'appVersion', header: 'App Version', isFilter: true },
       { field: 'channel', header: 'Channel', isFilter: true },
       { field: 'deviceBrand', header: 'Device Brand', isFilter: true },
+            { field: 'deviceModel', header: 'Device Model', isFilter: true },
+
 
       {
         field: 'deviceId',
@@ -52,7 +65,6 @@ export class UserLoginHistoryComponent implements OnInit {
         isFilter: true,
       },
 
-      { field: 'deviceModel', header: 'Device Model', isFilter: true },
 
       {
         field: 'ipAddress',
@@ -64,15 +76,7 @@ export class UserLoginHistoryComponent implements OnInit {
 
       { field: 'osVersion', header: 'OS Version', isFilter: true },
 
-      {
-        field: 'loggedInDate',
-        header: 'Logged In Date',
-        isFilter: true,
-        filterType: 'datepicker',
-      },
-      { field: 'companyId', header: 'Company ID', isFilter: true },
-
-      { field: 'username', header: 'Username', isFilter: true },
+   
     ]);
   }
 
