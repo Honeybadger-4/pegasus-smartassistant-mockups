@@ -11,3 +11,12 @@
     background-color: white;
   }
 }
+
+ ::ng-deep #load-sheet-page .custom-card table {
+  thead tr th:nth-child(16),
+  thead tr th:nth-child(17),
+  tbody tr td:nth-child(16),
+  tbody tr td:nth-child(17) {
+    padding-left: 1rem !important;
+  }
+}
