@@ -41,8 +41,8 @@
 </ng-template>
 
 <!-- Status Chip Template -->
-<ng-template #statusColumnTemplate let-rowData="rowData" >
-  <ng-container [ngSwitch]="rowData.status" >
+<ng-template #statusColumnTemplate let-rowData="rowData">
+  <ng-container [ngSwitch]="rowData.status">
     <p-chip
       *ngSwitchCase="'SUBMITTED'"
       label="Submitted"

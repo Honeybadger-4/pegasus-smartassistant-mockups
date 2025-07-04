@@ -12,16 +12,16 @@
       justify-content: center;
       height: 100%;
       padding: 2rem;
-      background-color: #f7f8fa; 
-      border: 1px dashed #d1d5db; 
-      border-radius: 0.5rem; 
-      color: #6b7280; 
+      background-color: #f7f8fa;
+      border: 1px dashed #d1d5db;
+      border-radius: 0.5rem;
+      color: #6b7280;
       font-weight: 500;
       font-size: 0.95rem;
       text-align: center;
 
       &::before {
-        content: "ℹ️"; 
+        content: "ℹ️";
         display: block;
         font-size: 2rem;
         margin-bottom: 0.5rem;
