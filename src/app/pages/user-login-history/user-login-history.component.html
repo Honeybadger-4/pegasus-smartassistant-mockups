@@ -2,6 +2,12 @@
   <!-- Page Header -->
   <section class="flex items-center justify-between">
     <p class="header-title">User Login History</p>
+    <p-button
+      icon="pi pi-file-excel"
+      label="Download Excel"
+      styleClass="p-button-sm p-button-text"
+      (onClick)="exportExcel()"
+    ></p-button>
   </section>
 
   <!-- Table -->

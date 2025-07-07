@@ -10,10 +10,13 @@ import {
 } from '@shared/models/user-login-history-response.model';
 import { UserLoginHistoryService } from '@shared/services/user-login-history.service';
 import moment from 'moment';
+import * as XLSX from 'xlsx-js-style';
+import * as FileSaver from 'file-saver';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-user-login-history',
-  imports: [CommonModule, CustomTableComponent],
+  imports: [CommonModule, CustomTableComponent, ButtonModule],
   templateUrl: './user-login-history.component.html',
   styleUrl: './user-login-history.component.scss',
 })
@@ -128,5 +131,50 @@ export class UserLoginHistoryComponent implements OnInit {
     });
 
     this.getAllUserLoginHistory();
+  }
+
+  exportExcel() {
+    const data = this.userLoginHistoryContentData() || [];
+    if (!data.length) {
+      return;
+    }
+
+    const cols = this.columns();
+    const fields = cols.map((c) => c.field);
+    const headers = cols.map((c) => c.header);
+
+    const aoa = [
+      headers,
+      ...data.map((item) =>
+        fields.map((f) => {
+          const v = (item as any)[f];
+          return v != null ? v : '';
+        }),
+      ),
+    ];
+
+    const worksheet: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(aoa);
+
+    const range = XLSX.utils.decode_range(worksheet['!ref']!);
+    for (let C = range.s.c; C <= range.e.c; ++C) {
+      const cellRef = XLSX.utils.encode_cell({ r: range.s.r, c: C });
+      const cell = worksheet[cellRef];
+      if (cell) {
+        cell.s = {
+          fill: { fgColor: { rgb: 'DDEBF7' } },
+          font: { bold: true, color: { rgb: '000000' } },
+          alignment: { horizontal: 'center', vertical: 'center' },
+        };
+      }
+    }
+
+    const workbook: XLSX.WorkBook = {
+      Sheets: { UserLoginHistory: worksheet },
+      SheetNames: ['UserLoginHistory'],
+    };
+    const wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const blob = new Blob([wbout], { type: 'application/octet-stream' });
+    const fileName = `UserLoginHistory_${moment().format('YYYYMMDD_HHmm')}.xlsx`;
+    FileSaver.saveAs(blob, fileName);
   }
 }
