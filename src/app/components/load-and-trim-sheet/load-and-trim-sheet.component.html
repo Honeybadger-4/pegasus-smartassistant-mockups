@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <section id="LoadAndTrimSheet">
   <p-dialog
     [(visible)]="visible"
@@ -12,7 +13,12 @@
     <ng-template pTemplate="header">
       <div class="flex items-center justify-between w-full">
         <h2 class="text-lg font-semibold">Load Sheet</h2>
-        <p-button icon="pi pi-download" [text]="true" class="download-button" />
+        <p-button
+          icon="pi pi-download"
+          [text]="true"
+          class="download-button"
+          (onClick)="downloadAsPDF()"
+        ></p-button>
       </div>
     </ng-template>
 
@@ -263,7 +269,7 @@
         </div>
       </section>
 
-      <section class="mt-10 flex flex-col space-y-2">
+      <section class="mt-8 flex flex-col space-y-2">
         <!-- STABTO and Flap Values -->
         <!-- <div class="flex items-center gap-2">
           <p>
