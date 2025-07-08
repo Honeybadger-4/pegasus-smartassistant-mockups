@@ -21,7 +21,9 @@ export class GpsLossFormsModalComponent {
 
   get tableData() {
     if (!this.rowData) return [];
-    return this.rowData.impacts.map((impactValue) => ({ impact: impactValue }));
+    return this.rowData.impactLabels.map((impactValue) => ({
+      impact: impactValue,
+    }));
   }
 
   closeModal() {

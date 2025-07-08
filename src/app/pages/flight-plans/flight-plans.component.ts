@@ -257,15 +257,14 @@ export class FlightPlansComponent implements OnInit {
     this.getFlightPlans();
   }
 
- onFlightPlansShow(row: IFlightPlan) {
-  this.flightPlanPdfService.getPaperFPlan(row.id.toString()).subscribe({
-    next: (pdf) => {
-      this.pdfData.set(pdf);
-      this.displayModal.set(true);
-    }
-  });
-}
-
+  onFlightPlansShow(row: IFlightPlan) {
+    this.flightPlanPdfService.getPaperFPlan(row.id.toString()).subscribe({
+      next: (pdf) => {
+        this.pdfData.set(pdf);
+        this.displayModal.set(true);
+      },
+    });
+  }
 
   onModalHide() {
     this.displayModal.set(false);

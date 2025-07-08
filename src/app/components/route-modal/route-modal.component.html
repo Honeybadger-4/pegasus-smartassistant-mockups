@@ -35,8 +35,7 @@
                   align-items: center;
                 "
               >
-                <span>FU</span>
-                <span>RF</span>
+                <span>FU</span><span>RF</span>
               </div>
             </th>
             <th>
@@ -47,8 +46,7 @@
                   align-items: center;
                 "
               >
-                <span>AF</span>
-                <span>DF</span>
+                <span>AF</span><span>DF</span>
               </div>
             </th>
             <th>
@@ -59,8 +57,7 @@
                   align-items: center;
                 "
               >
-                <span>MIN</span>
-                <span>T/W</span>
+                <span>MIN</span><span>T/W</span>
               </div>
             </th>
             <th>
@@ -71,8 +68,7 @@
                   align-items: center;
                 "
               >
-                <span>AT</span>
-                <span>DT</span>
+                <span>AT</span><span>DT</span>
               </div>
             </th>
             <th>ACC</th>
@@ -85,15 +81,15 @@
 
         <ng-template #body let-rowData let-expanded="expanded">
           <tr>
-            <td>{{ rowData.airway }}</td>
-            <td>{{ rowData.wpt }}</td>
-            <td>{{ rowData.mora }}</td>
-            <td>{{ rowData.fl }}</td>
-            <td>{{ rowData.shr }}</td>
-            <td>{{ rowData.avtt }}</td>
-            <td>{{ rowData.wv }}</td>
-            <td>{{ rowData.dist }}</td>
-            <td>{{ rowData.rd }}</td>
+            <td>{{ rowData.airway || "-" }}</td>
+            <td>{{ rowData.wpt || "-" }}</td>
+            <td>{{ rowData.mora || "-" }}</td>
+            <td>{{ rowData.fl || "-" }}</td>
+            <td>{{ rowData.shr || "-" }}</td>
+            <td>{{ rowData.avtt || "-" }}</td>
+            <td>{{ rowData.wv || "-" }}</td>
+            <td>{{ rowData.dist || "-" }}</td>
+            <td>{{ rowData.rd || "-" }}</td>
             <td>
               <div
                 style="
@@ -102,8 +98,8 @@
                   align-items: center;
                 "
               >
-                <span>{{ rowData.fu }}</span>
-                <span>{{ rowData.rf }}</span>
+                <span>{{ rowData.fu || "-" }}</span>
+                <span>{{ rowData.rf || "-" }}</span>
               </div>
             </td>
             <td>
@@ -114,8 +110,8 @@
                   align-items: center;
                 "
               >
-                <span>{{ rowData.af }}</span>
-                <span>{{ rowData.df }}</span>
+                <span>{{ rowData.af || "-" }}</span>
+                <span>{{ rowData.df || "-" }}</span>
               </div>
             </td>
             <td>
@@ -126,8 +122,8 @@
                   align-items: center;
                 "
               >
-                <span>{{ rowData.min }}</span>
-                <span>{{ rowData.tW }}</span>
+                <span>{{ rowData.min || "-" }}</span>
+                <span>{{ rowData.tW || "-" }}</span>
               </div>
             </td>
             <td>
@@ -138,13 +134,13 @@
                   align-items: center;
                 "
               >
-                <span>{{ rowData.at }}</span>
-                <span>{{ rowData.dt }}</span>
+                <span>{{ rowData.at || "-" }}</span>
+                <span>{{ rowData.dt || "-" }}</span>
               </div>
             </td>
-            <td>{{ rowData.acc }}</td>
-            <td>{{ rowData.sentBy }}</td>
-            <td>{{ rowData.sentDate }}</td>
+            <td>{{ rowData.acc || "-" }}</td>
+            <td>{{ rowData.sentBy || "-" }}</td>
+            <td>{{ rowData.sentDate || "-" }}</td>
             <td>
               <i
                 class="pi"
@@ -197,7 +193,6 @@
           [expandedRowKeys]="expandedRowsAlternate"
           [loading]="tableLoading()"
         >
-          >
           <ng-template #header>
             <tr>
               <th>Airway</th>
@@ -217,8 +212,7 @@
                     align-items: center;
                   "
                 >
-                  <span>FU</span>
-                  <span>RF</span>
+                  <span>FU</span><span>RF</span>
                 </div>
               </th>
               <th>
@@ -229,8 +223,7 @@
                     align-items: center;
                   "
                 >
-                  <span>AF</span>
-                  <span>DF</span>
+                  <span>AF</span><span>DF</span>
                 </div>
               </th>
               <th>
@@ -241,8 +234,7 @@
                     align-items: center;
                   "
                 >
-                  <span>MIN</span>
-                  <span>T/W</span>
+                  <span>MIN</span><span>T/W</span>
                 </div>
               </th>
               <th>
@@ -253,8 +245,7 @@
                     align-items: center;
                   "
                 >
-                  <span>AT</span>
-                  <span>DT</span>
+                  <span>AT</span><span>DT</span>
                 </div>
               </th>
               <th>ACC</th>
@@ -267,15 +258,15 @@
 
           <ng-template #body let-rowData let-expanded="expanded">
             <tr>
-              <td>{{ rowData.airway }}</td>
-              <td>{{ rowData.wpt }}</td>
-              <td>{{ rowData.mora }}</td>
-              <td>{{ rowData.fl }}</td>
-              <td>{{ rowData.shr }}</td>
-              <td>{{ rowData.avtt }}</td>
-              <td>{{ rowData.wv }}</td>
-              <td>{{ rowData.dist }}</td>
-              <td>{{ rowData.rd }}</td>
+              <td>{{ rowData.airway || "-" }}</td>
+              <td>{{ rowData.wpt || "-" }}</td>
+              <td>{{ rowData.mora || "-" }}</td>
+              <td>{{ rowData.fl || "-" }}</td>
+              <td>{{ rowData.shr || "-" }}</td>
+              <td>{{ rowData.avtt || "-" }}</td>
+              <td>{{ rowData.wv || "-" }}</td>
+              <td>{{ rowData.dist || "-" }}</td>
+              <td>{{ rowData.rd || "-" }}</td>
               <td>
                 <div
                   style="
@@ -284,8 +275,8 @@
                     align-items: center;
                   "
                 >
-                  <span>{{ rowData.fu }}</span>
-                  <span>{{ rowData.rf }}</span>
+                  <span>{{ rowData.fu || "-" }}</span>
+                  <span>{{ rowData.rf || "-" }}</span>
                 </div>
               </td>
               <td>
@@ -296,8 +287,8 @@
                     align-items: center;
                   "
                 >
-                  <span>{{ rowData.af }}</span>
-                  <span>{{ rowData.df }}</span>
+                  <span>{{ rowData.af || "-" }}</span>
+                  <span>{{ rowData.df || "-" }}</span>
                 </div>
               </td>
               <td>
@@ -308,8 +299,8 @@
                     align-items: center;
                   "
                 >
-                  <span>{{ rowData.min }}</span>
-                  <span>{{ rowData.tW }}</span>
+                  <span>{{ rowData.min || "-" }}</span>
+                  <span>{{ rowData.tW || "-" }}</span>
                 </div>
               </td>
               <td>
@@ -320,13 +311,13 @@
                     align-items: center;
                   "
                 >
-                  <span>{{ rowData.at }}</span>
-                  <span>{{ rowData.dt }}</span>
+                  <span>{{ rowData.at || "-" }}</span>
+                  <span>{{ rowData.dt || "-" }}</span>
                 </div>
               </td>
-              <td>{{ rowData.acc }}</td>
-              <td>{{ rowData.sentBy }}</td>
-              <td>{{ rowData.sentDate }}</td>
+              <td>{{ rowData.acc || "-" }}</td>
+              <td>{{ rowData.sentBy || "-" }}</td>
+              <td>{{ rowData.sentDate || "-" }}</td>
               <td>
                 <i
                   class="pi"

@@ -85,17 +85,28 @@
         font-size: 8px;
       }
     }
-  }
+    // Table padding override
+    .custom-card table {
+      thead tr th:nth-child(n + 9):nth-child(-n + 14),
+      tbody tr td:nth-child(n + 9):nth-child(-n + 14) {
+        padding-left: 1rem !important;
+      }
 
-  .comment-context-tooltip {
-    .p-tooltip-text {
-      background-color: #fff !important;
-      color: #444444;
+      thead tr th:nth-child(3),
+      tbody tr td:nth-child(3) {
+        padding-right: 1rem !important;
+      }
     }
+    .comment-context-tooltip {
+      .p-tooltip-text {
+        background-color: #fff !important;
+        color: #444444;
+      }
 
-    .p-tooltip-arrow {
-      border-top-color: #fff;
-      border-bottom-color: #fff;
+      .p-tooltip-arrow {
+        border-top-color: #fff;
+        border-bottom-color: #fff;
+      }
     }
   }
 }
