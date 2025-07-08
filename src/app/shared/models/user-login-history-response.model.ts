@@ -1,33 +1,28 @@
-export interface ILoginInfoResponse {
-  content: [ILoginInfoTableData];
+export interface IUserLoginHistoryResponse {
+  content: IUserLoginHistoryContentData[];
   pageable: {
     pageNumber: number;
     pageSize: number;
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
     sort: {
       empty: boolean;
       sorted: boolean;
       unsorted: boolean;
     };
-    offset: number;
-    paged: boolean;
-    unpaged: boolean;
   };
-  totalPages: number;
   totalElements: number;
+  totalPages: number;
   last: boolean;
   size: number;
   number: number;
-  sort: {
-    empty: boolean;
-    sorted: boolean;
-    unsorted: boolean;
-  };
   numberOfElements: number;
   first: boolean;
   empty: boolean;
 }
 
-export interface ILoginInfoTableData {
+export interface IUserLoginHistoryContentData {
   appVersion: string;
   channel: string;
   companyId: number;
@@ -35,7 +30,7 @@ export interface ILoginInfoTableData {
   deviceId: string;
   deviceModel: string;
   ipAddress: string;
-  loggedInDate: string;
+  loggedInDate: string | null;
   os: string;
   osVersion: string;
   userId: number;

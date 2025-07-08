@@ -1,157 +1,180 @@
-import {
-  Component,
-  inject,
-  OnInit,
-  signal,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
+import { Component, inject, OnInit, signal, viewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
-
 import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
-import { Column } from '@shared/models/columns';
-import { LoginInfoService } from '@shared/services/login-info.service';
-import {
-  ILoginInfoResponse,
-  ILoginInfoTableData,
-} from '@shared/models/login-info-response.model';
 
-import { ButtonModule } from 'primeng/button';
-import { DatePickerModule } from 'primeng/datepicker';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
+import { Column } from '@shared/models/columns';
+
+import {
+  IUserLoginHistoryResponse,
+  IUserLoginHistoryContentData,
+} from '@shared/models/user-login-history-response.model';
+import { UserLoginHistoryService } from '@shared/services/user-login-history.service';
 import moment from 'moment';
+import * as XLSX from 'xlsx-js-style';
+import * as FileSaver from 'file-saver';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-user-login-history',
-  imports: [
-    CommonModule,
-    FormsModule,
-    CustomTableComponent,
-    DatePickerModule,
-    IconFieldModule,
-    InputIconModule,
-    InputTextModule,
-    ReactiveFormsModule,
-    ButtonModule,
-  ],
+  imports: [CommonModule, CustomTableComponent, ButtonModule],
   templateUrl: './user-login-history.component.html',
   styleUrl: './user-login-history.component.scss',
 })
 export class UserLoginHistoryComponent implements OnInit {
-  @ViewChild(CustomTableComponent) customTableComponent!: CustomTableComponent;
-  @ViewChild('loggedInDateTemplate', { static: true })
-  loggedInDateTemplate!: TemplateRef<any>;
-  loginInfoService = inject(LoginInfoService);
-  formBuilder = inject(FormBuilder);
+  customTableComponent = viewChild.required(CustomTableComponent);
 
-  filterFormGroup!: FormGroup;
-  columns: Column[] = [];
-  currentPage = 0;
-  currentRows = 20;
-  dateRange: Date[] = [];
-  tableLoading = false;
+  userLoginHistoryService = inject(UserLoginHistoryService);
 
-  userLoginHistoryData = signal<ILoginInfoResponse | null>(null);
-  userLoginHistoryTableData = signal<ILoginInfoTableData[]>([]);
+  columns = signal<Column[]>([]);
+  selectedRow = signal<IUserLoginHistoryContentData | null>(null);
 
-  ngOnInit() {
-    this.builder();
-    this.defineColumn();
-    this.getAllLoginInfo();
+  userLoginHistoryData = signal<IUserLoginHistoryResponse | null>(null);
+  userLoginHistoryContentData = signal<
+    IUserLoginHistoryResponse['content'] | null
+  >(null);
+
+  currentPage = signal<number>(0);
+  currentRows = signal<number>(10);
+  tableFilters = signal<any>({});
+
+  tableLoading = signal<boolean>(false);
+
+  ngOnInit(): void {
+    this.defineColumns();
   }
 
-  builder() {
-    this.filterFormGroup = this.formBuilder.group({
-      username: [''],
-      companyId: [''],
-      dateRange: [this.dateRangeDefaultValue()],
-    });
-  }
+  defineColumns() {
+    this.columns.set([
+      { field: 'username', header: 'Username', isFilter: true },
+      { field: 'companyId', header: 'Company ID', isFilter: true },
 
-  defineColumn() {
-    this.columns = [
-      { field: 'appVersion', header: 'App Version' },
-      { field: 'channel', header: 'Channel' },
-      { field: 'companyId', header: 'Company ID' },
-      { field: 'deviceBrand', header: 'Device Brand' },
-      { field: 'deviceId', header: 'Device ID' },
-      { field: 'deviceModel', header: 'Device Model' },
-      { field: 'ipAddress', header: 'IP Address' },
       {
         field: 'loggedInDate',
         header: 'Logged In Date',
-        template: this.loggedInDateTemplate,
+        isFilter: true,
+        filterType: 'datepicker',
       },
-      { field: 'os', header: 'OS' },
-      { field: 'osVersion', header: 'OS Version' },
-      { field: 'userId', header: 'User ID' },
-      { field: 'username', header: 'Username' },
-    ];
+
+      { field: 'appVersion', header: 'App Version', isFilter: true },
+      { field: 'channel', header: 'Channel', isFilter: true },
+      { field: 'deviceBrand', header: 'Device Brand', isFilter: true },
+      { field: 'deviceModel', header: 'Device Model', isFilter: true },
+
+      {
+        field: 'deviceId',
+        header: 'Device ID',
+        isFilter: true,
+      },
+
+      {
+        field: 'ipAddress',
+        header: 'IP Address',
+        isFilter: true,
+      },
+
+      { field: 'os', header: 'OS', isFilter: true },
+
+      { field: 'osVersion', header: 'OS Version', isFilter: true },
+    ]);
   }
 
-  getAllLoginInfo() {
-    this.tableLoading = true;
+  getAllUserLoginHistory() {
+    this.tableLoading.set(true);
 
-    const formValues = this.filterFormGroup.value;
-    const username = formValues.username?.trim() || null;
-    const companyId = formValues.companyId?.trim() || null;
-
-    let startDate = '';
-    let endDate = '';
-
-    // Tarih aralığı kontrolü ve formatlama
-    if (formValues.dateRange && formValues.dateRange.length === 2) {
-      const [start, end] = formValues.dateRange;
-
-      if (start && end) {
-        startDate = moment(start).format('YYYY-MM-DD');
-        endDate = moment(end).format('YYYY-MM-DD');
-      }
-    }
-    this.loginInfoService
-      .getAllLoginInfo(
-        this.currentPage,
-        this.currentRows,
-        startDate,
-        endDate,
-        username,
-        companyId,
+    this.userLoginHistoryService
+      .getAllUserLoginHistory(
+        this.currentPage(),
+        this.currentRows(),
+        this.tableFilters(),
       )
       .subscribe({
-        next: (response) => {
+        next: (response: IUserLoginHistoryResponse) => {
+          const formattedData = response.content.map((item) => ({
+            ...item,
+            loggedInDate: item.loggedInDate
+              ? moment(item.loggedInDate).format('DD/MM/YYYY - HH:mm')
+              : null,
+          }));
+
+          this.userLoginHistoryContentData.set(formattedData);
           this.userLoginHistoryData.set(response);
-          this.userLoginHistoryTableData.set(response.content);
-          this.tableLoading = false;
+
+          this.tableLoading.set(false);
         },
         error: () => {
-          this.tableLoading = false;
+          this.tableLoading.set(false);
         },
       });
   }
 
-  onFilterSubmit() {
-    this.getAllLoginInfo();
-  }
-
-  dateRangeDefaultValue() {
-    const endDate = moment();
-    const startDate = moment().subtract(3, 'days');
-
-    return [startDate.toDate(), endDate.toDate()];
-  }
-
   lazyLoadEvent(event: any) {
     const page = event.first / event.rows;
-    this.currentPage = page;
-    this.currentRows = event.rows;
-    this.getAllLoginInfo();
+    this.currentPage.set(page);
+    this.currentRows.set(event.rows);
+
+    this.tableFilters.set({
+      appVersion:
+        event.filters?.appVersion && event.filters?.appVersion[0].value,
+      channel: event.filters?.channel && event.filters?.channel[0].value,
+      companyId: event.filters?.companyId && event.filters?.companyId[0].value,
+      deviceBrand:
+        event.filters?.deviceBrand && event.filters?.deviceBrand[0].value,
+      deviceId: event.filters?.deviceId && event.filters?.deviceId[0].value,
+      deviceModel:
+        event.filters?.deviceModel && event.filters?.deviceModel[0].value,
+      ipAddress: event.filters?.ipAddress && event.filters?.ipAddress[0].value,
+      loggedInDate:
+        event.filters?.loggedInDate && event.filters?.loggedInDate[0].value,
+      os: event.filters?.os && event.filters?.os[0].value,
+      osVersion: event.filters?.osVersion && event.filters?.osVersion[0].value,
+      username: event.filters?.username && event.filters?.username[0].value,
+    });
+
+    this.getAllUserLoginHistory();
+  }
+
+  exportExcel() {
+    const data = this.userLoginHistoryContentData() || [];
+    if (!data.length) {
+      return;
+    }
+
+    const cols = this.columns();
+    const fields = cols.map((c) => c.field);
+    const headers = cols.map((c) => c.header);
+
+    const aoa = [
+      headers,
+      ...data.map((item) =>
+        fields.map((f) => {
+          const v = (item as any)[f];
+          return v != null ? v : '';
+        }),
+      ),
+    ];
+
+    const worksheet: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(aoa);
+
+    const range = XLSX.utils.decode_range(worksheet['!ref']!);
+    for (let C = range.s.c; C <= range.e.c; ++C) {
+      const cellRef = XLSX.utils.encode_cell({ r: range.s.r, c: C });
+      const cell = worksheet[cellRef];
+      if (cell) {
+        cell.s = {
+          fill: { fgColor: { rgb: 'DDEBF7' } },
+          font: { bold: true, color: { rgb: '000000' } },
+          alignment: { horizontal: 'center', vertical: 'center' },
+        };
+      }
+    }
+
+    const workbook: XLSX.WorkBook = {
+      Sheets: { UserLoginHistory: worksheet },
+      SheetNames: ['UserLoginHistory'],
+    };
+    const wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const blob = new Blob([wbout], { type: 'application/octet-stream' });
+    const fileName = `UserLoginHistory_${moment().format('YYYYMMDD_HHmm')}.xlsx`;
+    FileSaver.saveAs(blob, fileName);
   }
 }

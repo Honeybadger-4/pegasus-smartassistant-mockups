@@ -22,8 +22,17 @@ export class GpsSignalLossCardComponent {
   types = signal<{ label: string; value: number; color: string }[]>([]);
   titleSuffix = signal<string>('');
 
-  colorPalette = ['#FEB914', '#E142BC', '#068BEE', '#01B8CA', '#96DB33'];
-
+  colorPalette = [
+    '#392B7B', // Gece Menekşe
+    '#E83E8C', // Yoğun Pembe
+    '#FD7E14', // Enerjik Turuncu
+    '#28A745', // Başarı Yeşili
+    '#FFC107', // Parlayan Amber
+    '#007BFF', // Canlı Mavi
+    '#DC3545', // Vurgu Kırmızısı
+    '#20C997', // Sakin Turkuaz
+    '#BB33FF', // Parlak Lavanta
+  ];
   constructor() {
     effect(() => {
       this.titleSuffix.set(
