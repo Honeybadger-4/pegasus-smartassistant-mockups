@@ -60,8 +60,25 @@ export class CustomTableComponent {
   }
 
   onLazyLoad(event: any) {
-    console.log(event);
+    this.updateFilters(event);
     this.lazyLoadEvent.emit(event);
+  }
+
+  // Lazy Load tetiklendiğinde even.filters içerisinde boş olan filtreleri filterValues içinde resetler.
+  updateFilters(event: any) {
+    const filters = event.filters as { [key: string]: { value: any }[] };
+    Object.entries(filters).forEach(([key, filterArray]) => {
+      // PrimeNG filter yapısı: filterArray = [{ value, matchMode, operator }]
+      const filterObj = filterArray[0];
+
+      if (
+        filterObj?.value == null ||
+        filterObj?.value == undefined ||
+        filterObj?.value == ''
+      ) {
+        this.filterValues[key] = filterObj.value;
+      }
+    });
   }
 
   // It resets the table's first value to 0 when needed, triggered from the parent component.
