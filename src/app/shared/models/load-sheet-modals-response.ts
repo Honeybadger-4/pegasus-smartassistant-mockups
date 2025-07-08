@@ -67,10 +67,17 @@ export interface ILoadSheetModalsResponse {
   crewConfigurationName?: string;
   ldmMessage?: string;
   weightUnitType?: string;
+  tripFuel: number;
+
   paxWeightUsed?: string;
   passengerDistribution?: string;
   totalPassenger?: string;
   holdDistribution?: string;
   totalHoldWeight?: number;
   cabinDistribution?: string;
+  flapInfo?: {
+    stapTo?: string;
+    flapText?: string;
+    flapValue?: string;
+  };
 }
