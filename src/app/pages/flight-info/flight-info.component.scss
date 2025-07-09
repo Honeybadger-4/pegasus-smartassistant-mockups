@@ -16,3 +16,9 @@
     background-color: #dfe3e9;
   }
 }
+
+::ng-deep .p-column-filter-active {
+  .p-iconwrapper {
+    color: #feb914;
+  }
+}
