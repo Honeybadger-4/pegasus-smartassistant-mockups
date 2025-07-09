@@ -137,32 +137,42 @@ export class FlightInformationService {
       arrDate?: string;
       confirmedBy?: string;
       confirmedDate?: string;
+
+      melItems: boolean;
+      dailyCheck: boolean;
+      preflightCheck: boolean;
+      securitySearch: boolean;
+      fluidUplift: boolean;
+      defferedItems: boolean;
     } | null,
   ): Observable<IAircraftChecklistResponse> {
-    const apiUrl = `${this.baseUrl}/api/v1/admin/flights/ac-checkList`;
+    const apiUrl = `${this.baseUrl}/api/v1/admin/flights/ac-checkList/search`;
 
     let params = new HttpParams().set('page', page).set('size', size);
 
-    const optionalParams: { key: string; value: any }[] = [
-      { key: 'search', value: search },
-      { key: 'aircraftReg', value: tableFilters?.aircraftReg },
-      { key: 'flightNo', value: tableFilters?.flightNo },
-      { key: 'depPort', value: tableFilters?.depPort },
-      { key: 'depDate', value: tableFilters?.depDate },
-      { key: 'arrPort', value: tableFilters?.arrPort },
-      { key: 'arrDate', value: tableFilters?.arrDate },
-      { key: 'confirmedBy', value: tableFilters?.confirmedBy },
-      { key: 'confirmedDate', value: tableFilters?.confirmedDate },
-    ];
+    const requestBody: any = {
+      search: search,
+      aircraftReg: tableFilters?.aircraftReg,
+      flightNo: tableFilters?.flightNo,
+      depPort: tableFilters?.depPort,
+      depDate: tableFilters?.depDate,
+      arrPort: tableFilters?.arrPort,
+      arrDate: tableFilters?.arrDate,
+      confirmedBy: tableFilters?.confirmedBy,
+      confirmedDate: tableFilters?.confirmedDate,
+      melItems: tableFilters?.melItems,
+      dailyCheck: tableFilters?.dailyCheck,
+      preflightCheck: tableFilters?.preflightCheck,
+      securitySearch: tableFilters?.securitySearch,
+      fluidUplift: tableFilters?.fluidUplift,
+      defferedItems: tableFilters?.defferedItems,
+    };
 
-    this.requestParamsControlService
-      .paramsControl(optionalParams)
-      .map(({ key, value }) => {
-        params = params.set(key, value);
-      });
+    const cleanedBody =
+      this.requestParamsControlService.requestBodyControl(requestBody);
 
     return this.http
-      .get<IHttpResponseModel>(apiUrl, { params })
+      .post<IHttpResponseModel>(apiUrl, cleanedBody, { params })
       .pipe(map((response) => response.data));
   }
 

@@ -29,16 +29,6 @@
   </section>
 </div>
 
-<ng-template #statusTemplate let-rowData="rowData" let-col="col">
-  <i
-    class="pi"
-    [ngClass]="{
-      'pi-check-circle text-green-500': rowData[col.field] === true,
-      'pi-times-circle text-red-500': rowData[col.field] === false,
-    }"
-  ></i>
-</ng-template>
-
 <!-- Signature Column Template -->
 <ng-template #signatureColumnTemplate let-rowData="rowData">
   <button
@@ -54,3 +44,53 @@
   [(visible)]="signatureModalVisible"
   [rowData]="selectedRowData()"
 />
+
+<ng-template #melItemsStatusTemplate let-rowData="rowData">
+  <i
+    class="pi"
+    [ngClass]="{
+      'pi-check-circle text-green-500': rowData.melItems === true,
+      'pi-times-circle text-red-500': rowData.melItems === false,
+    }"
+  ></i> </ng-template
+><ng-template #dailyCheckStatusTemplate let-rowData="rowData">
+  <i
+    class="pi"
+    [ngClass]="{
+      'pi-check-circle text-green-500': rowData.dailyCheck === true,
+      'pi-times-circle text-red-500': rowData.dailyCheck === false,
+    }"
+  ></i> </ng-template
+><ng-template #defferedItemsStatusTemplate let-rowData="rowData">
+  <i
+    class="pi"
+    [ngClass]="{
+      'pi-check-circle text-green-500': rowData.defferedItems === true,
+      'pi-times-circle text-red-500': rowData.defferedItems === false,
+    }"
+  ></i> </ng-template
+><ng-template #preflightCheckStatusTemplate let-rowData="rowData">
+  <i
+    class="pi"
+    [ngClass]="{
+      'pi-check-circle text-green-500': rowData.preflightCheck === true,
+      'pi-times-circle text-red-500': rowData.preflightCheck === false,
+    }"
+  ></i> </ng-template
+><ng-template #fluidUpliftStatusTemplate let-rowData="rowData">
+  <i
+    class="pi"
+    [ngClass]="{
+      'pi-check-circle text-green-500': rowData.fluidUplift === true,
+      'pi-times-circle text-red-500': rowData.fluidUplift === false,
+    }"
+  ></i> </ng-template
+><ng-template #securitySearchStatusTemplate let-rowData="rowData">
+  <i
+    class="pi"
+    [ngClass]="{
+      'pi-check-circle text-green-500': rowData.securitySearch === true,
+      'pi-times-circle text-red-500': rowData.securitySearch === false,
+    }"
+  ></i>
+</ng-template>
