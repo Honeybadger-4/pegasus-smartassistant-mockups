@@ -44,7 +44,10 @@
         <tr>
           <th></th>
           <th *ngFor="let col of columns">
-            <div class="flex items-center" [ngClass]="{ 'p-column-filter-active': filterValues[col.field] }">
+            <div
+              class="flex items-center"
+              [ngClass]="{ 'p-column-filter-active': filterValues[col.field] }"
+            >
               {{ col.header }}
               <ng-container [ngSwitch]="col.filterType">
                 <!-- Selectbox Filter -->
