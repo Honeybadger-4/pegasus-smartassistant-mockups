@@ -1,0 +1,65 @@
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [style]="{ width: '600px' }"
+  (onHide)="closeModal()"
+>
+  <ng-template pTemplate="header">
+    <p>Report Details</p>
+  </ng-template>
+
+  <p-tabs>
+    <p-tablist>
+      <p-tab value="0">Flight</p-tab>
+      <p-tab value="1">Passenger</p-tab>
+      <p-tab value="2">Fuel</p-tab>
+      <p-tab value="3">Oil</p-tab>
+      <p-tab value="4">Divert</p-tab>
+    </p-tablist>
+
+    <p-tabpanels>
+      <p-tabpanel value="0">
+        <ul>
+          <li *ngFor="let item of flightFields">
+            {{ item.label }}: {{ item.value || '-' }}
+          </li>
+        </ul>
+      </p-tabpanel>
+
+      <p-tabpanel value="1">
+        <ul>
+          <li *ngFor="let item of passengerFields">
+            {{ item.label }}: {{ item.value || '-' }}
+          </li>
+        </ul>
+      </p-tabpanel>
+
+      <p-tabpanel value="2">
+        <ul>
+          <li *ngFor="let item of fuelFields">
+            {{ item.label }}: {{ item.value || '-' }}
+          </li>
+        </ul>
+      </p-tabpanel>
+
+      <p-tabpanel value="3">
+        <ul>
+          <li *ngFor="let item of oilFields">
+            {{ item.label }}: {{ item.value || '-' }}
+          </li>
+        </ul>
+      </p-tabpanel>
+
+      <p-tabpanel value="4">
+        <ul>
+          <li *ngFor="let item of divertFields">
+            {{ item.label }}: {{ item.value || '-' }}
+          </li>
+        </ul>
+      </p-tabpanel>
+    </p-tabpanels>
+  </p-tabs>
+</p-dialog>
