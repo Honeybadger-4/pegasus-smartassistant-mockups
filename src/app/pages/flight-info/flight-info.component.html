@@ -37,13 +37,14 @@
       (onPage)="pageEvent($event)"
       (onRowExpand)="onRowExpand($event)"
       (onRowCollapse)="onRowCollapse($event)"
+      (onLazyLoad)="onLazyLoad($event)"
     >
       <!-- Table Header -->
       <ng-template #header let-columns>
         <tr>
           <th></th>
           <th *ngFor="let col of columns">
-            <div class="flex items-center">
+            <div class="flex items-center" [ngClass]="{ 'p-column-filter-active': filterValues[col.field] }">
               {{ col.header }}
               <ng-container [ngSwitch]="col.filterType">
                 <!-- Selectbox Filter -->
@@ -163,9 +164,18 @@
             [showMatchModes]="false"
             [showOperator]="false"
             [showAddButton]="false"
-            [placeholder]="'Search by ' + col.header"
+            [showApplyButton]="false"
             ariaLabel="Filter"
-          />
+          >
+            <ng-template #filter let-filter="filterCallback">
+              <input
+                pInputText
+                [(ngModel)]="filterValues[col.field]"
+                [placeholder]="'Search by ' + col.header"
+                (ngModelChange)="filter($event)"
+              />
+            </ng-template>
+          </p-columnFilter>
         </ng-container>
       </ng-template>
 
@@ -180,10 +190,10 @@
           [showAddButton]="false"
           [showApplyButton]="false"
         >
-          <ng-template #filter let-value let-filter="filterCallback">
+          <ng-template #filter let-filter="filterCallback">
             <p-select
-              (ngModel)="(value)"
               [options]="col.filterOptions"
+              [(ngModel)]="filterValues[col.field]"
               styleClass="w-full"
               placeholder="Select One"
               (onChange)="filter($event.value)"
@@ -207,9 +217,10 @@
           [showAddButton]="false"
           [showApplyButton]="false"
         >
-          <ng-template #filter let-value let-filter="filterCallback">
+          <ng-template #filter let-filter="filterCallback">
             <p-datepicker
               [readonlyInput]="true"
+              [(ngModel)]="filterValues[col.field]"
               dateFormat="dd/mm/yy"
               placeholder="Select a Date"
               class="custom-calendar"

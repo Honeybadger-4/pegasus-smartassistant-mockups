@@ -85,6 +85,7 @@ export class FlightInfoComponent implements OnInit {
   tableLoading = false;
 
   tableSubPanels!: any[];
+  filterValues: { [key: string]: any } = {};
 
   flightInformationHistoryData = signal<IFlightInformationResponse | null>(
     null,
@@ -461,9 +462,9 @@ export class FlightInfoComponent implements OnInit {
       { field: 'aircraftReg', header: 'Aircraft', isFilter: true },
       { field: 'flightNo', header: 'Flight No', isFilter: true },
       { field: 'depPort', header: 'Departure Port', isFilter: true },
-      { field: 'depDateTime', header: 'Departure Date', isFilter: true },
+      { field: 'depDateTime', header: 'Departure Date', isFilter: true, filterType: 'datepicker' },
       { field: 'arrPort', header: 'Arrival Port', isFilter: true },
-      { field: 'arrDateTime', header: 'Arrival Date', isFilter: true },
+      { field: 'arrDateTime', header: 'Arrival Date', isFilter: true, filterType: 'datepicker' },
 
       { field: 'user', header: 'Responsible User', isFilter: true },
 
@@ -665,6 +666,27 @@ export class FlightInfoComponent implements OnInit {
           this.tripInfoDataLoading.set(false);
         },
       });
+  }
+
+  onLazyLoad(event: any) {
+    this.updateFilters(event);
+  }
+
+  // Lazy Load tetiklendiğinde even.filters içerisinde boş olan filtreleri filterValues içinde resetler.
+  updateFilters(event: any) {
+    const filters = event.filters as { [key: string]: { value: any }[] };
+    Object.entries(filters).forEach(([key, filterArray]) => {
+      // PrimeNG filter yapısı: filterArray = [{ value, matchMode, operator }]
+      const filterObj = filterArray[0];
+
+      if (
+        filterObj?.value == null ||
+        filterObj?.value == undefined ||
+        filterObj?.value == ''
+      ) {
+        this.filterValues[key] = filterObj.value;
+      }
+    });
   }
 
   onRowExpand(event: TableRowExpandEvent) {
