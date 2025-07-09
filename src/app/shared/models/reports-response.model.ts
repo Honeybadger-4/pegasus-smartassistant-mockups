@@ -37,7 +37,7 @@ export interface IReportsContentData {
   arrDateTime: string | null;
   createdBy: string
   enteredDate:  string | null;
-  doorClosed:  string;
+  doorClosed:  string | null;
   offBlock:  string;
   takeOff:  string;
   landing:  string;

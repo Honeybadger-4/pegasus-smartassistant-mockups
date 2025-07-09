@@ -127,6 +127,9 @@ export class ReportComponent implements OnInit {
             enteredDate: item.enteredDate
               ? moment(item.enteredDate).format('DD/MM/YYYY - HH:mm')
               : null,
+              doorClosed: item.doorClosed
+              ? moment(item.doorClosed).format('DD/MM/YYYY - HH:mm')
+              : null,
           }));
 
           this.reportsContentData.set(formattedData);
