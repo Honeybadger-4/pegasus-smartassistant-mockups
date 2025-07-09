@@ -70,12 +70,11 @@ export class LoadSheetService {
   }
 
   getLoadSheetModalInfo(id: number): Observable<ILoadSheetModalsResponse> {
-  const apiUrl = `${this.baseUrl}/api/v1/admin/bff/load-sheets`;
-  const params = new HttpParams().set('loadSheetId', id);
+    const apiUrl = `${this.baseUrl}/api/v1/admin/bff/load-sheets`;
+    const params = new HttpParams().set('loadSheetId', id);
 
-  return this.http
-    .get<IHttpResponseModel>(apiUrl, { params })
-    .pipe(map((response) => response.data));
-}
-
+    return this.http
+      .get<IHttpResponseModel>(apiUrl, { params })
+      .pipe(map((response) => response.data));
+  }
 }
