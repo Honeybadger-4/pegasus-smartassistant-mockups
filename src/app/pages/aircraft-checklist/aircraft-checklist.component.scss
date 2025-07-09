@@ -4,3 +4,10 @@
     font-size: 18px;
   }
 }
+
+::ng-deep #aircraft-checklist-page .custom-card table {
+  thead tr th:nth-child(14),
+  tbody tr td:nth-child(14) {
+    padding-left: 1rem !important;
+  }
+}

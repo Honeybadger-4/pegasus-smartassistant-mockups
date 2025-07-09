@@ -42,10 +42,21 @@ import { AircraftChecklistModalComponent } from '../../components/aircraft-check
   styleUrl: './aircraft-checklist.component.scss',
 })
 export class AircraftChecklistComponent implements OnInit {
-  @ViewChild('statusTemplate', { static: true })
-  statusTemplate!: TemplateRef<any>;
   customTableComponent = viewChild.required(CustomTableComponent);
   signatureColumnTemplate = viewChild.required('signatureColumnTemplate');
+
+  melItemsStatusTemplate = viewChild.required('melItemsStatusTemplate');
+  dailyCheckStatusTemplate = viewChild.required('dailyCheckStatusTemplate');
+  defferedItemsStatusTemplate = viewChild.required(
+    'defferedItemsStatusTemplate',
+  );
+  preflightCheckStatusTemplate = viewChild.required(
+    'preflightCheckStatusTemplate',
+  );
+  fluidUpliftStatusTemplate = viewChild.required('fluidUpliftStatusTemplate');
+  securitySearchStatusTemplate = viewChild.required(
+    'securitySearchStatusTemplate',
+  );
 
   searchInput = viewChild.required<ElementRef>('searchInput');
   flightInformationService = inject(FlightInformationService);
@@ -96,41 +107,72 @@ export class AircraftChecklistComponent implements OnInit {
       {
         field: 'melItems',
         header: 'MEL Items',
-        isFilter: false,
-        template: this.statusTemplate,
+        isFilter: true,
+        template: this.melItemsStatusTemplate(),
+        filterType: 'selectbox',
+        filterOptions: [
+          { label: 'Check', value: 'true' },
+          { label: 'Uncheck', value: 'false' },
+        ],
       },
       {
         field: 'dailyCheck',
         header: 'Daily Check',
-        isFilter: false,
-        template: this.statusTemplate,
+        isFilter: true,
+        template: this.dailyCheckStatusTemplate(),
+        filterType: 'selectbox',
+        filterOptions: [
+          { label: 'Check', value: 'true' },
+          { label: 'Uncheck', value: 'false' },
+        ],
       },
 
       {
         field: 'defferedItems',
         header: 'Deffered Items',
-        isFilter: false,
-        template: this.statusTemplate,
+        isFilter: true,
+        template: this.defferedItemsStatusTemplate(),
+        filterType: 'selectbox',
+        filterOptions: [
+          { label: 'Check', value: 'true' },
+          { label: 'Uncheck', value: 'false' },
+        ],
       },
       {
         field: 'preflightCheck',
         header: 'Preflight Check',
-        isFilter: false,
-        template: this.statusTemplate,
+        isFilter: true,
+        template: this.preflightCheckStatusTemplate(),
+        filterType: 'selectbox',
+        filterOptions: [
+          { label: 'Check', value: 'true' },
+          { label: 'Uncheck', value: 'false' },
+        ],
       },
       {
         field: 'fluidUplift',
         header: 'Fluid Uplift',
-        isFilter: false,
-        template: this.statusTemplate,
+        isFilter: true,
+        template: this.fluidUpliftStatusTemplate(),
+        filterType: 'selectbox',
+        filterOptions: [
+          { label: 'Check', value: 'true' },
+          { label: 'Uncheck', value: 'false' },
+        ],
       },
 
       {
         field: 'securitySearch',
         header: 'Security Search',
-        isFilter: false,
-        template: this.statusTemplate,
+        isFilter: true,
+        template: this.securitySearchStatusTemplate(),
+        filterType: 'selectbox',
+        filterOptions: [
+          { label: 'Check', value: 'true' },
+          { label: 'Uncheck', value: 'false' },
+        ],
       },
+
       {
         field: 'signature',
         header: 'Signature',
@@ -222,6 +264,18 @@ export class AircraftChecklistComponent implements OnInit {
       confirmedDate:
         event.filters?.confirmedDateTime &&
         event.filters?.confirmedDateTime[0].value,
+
+      melItems: event.filters?.melItems && event.filters?.melItems[0].value,
+      dailyCheck:
+        event.filters?.dailyCheck && event.filters?.dailyCheck[0].value,
+      preflightCheck:
+        event.filters?.preflightCheck && event.filters?.preflightCheck[0].value,
+      securitySearch:
+        event.filters?.securitySearch && event.filters?.securitySearch[0].value,
+      fluidUplift:
+        event.filters?.fluidUplift && event.filters?.fluidUplift[0].value,
+      defferedItems:
+        event.filters?.defferedItems && event.filters?.defferedItems[0].value,
     });
 
     this.getAircraftCheckList();
