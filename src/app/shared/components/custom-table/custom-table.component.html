@@ -23,8 +23,13 @@
           <p-tableHeaderCheckbox />
         </th>
         <th *ngFor="let col of columns">
-          <div class="flex items-center" style="white-space: nowrap">
+          <div
+            class="flex items-center"
+            style="white-space: nowrap"
+            [ngClass]="{ 'p-column-filter-active': filterValues[col.field] }"
+          >
             {{ col.header }}
+
             <ng-container [ngSwitch]="col.filterType">
               <!-- Selectbox Filter -->
               <ng-container *ngSwitchCase="'selectbox'">
@@ -46,6 +51,7 @@
                 />
               </ng-container>
 
+              <!-- Time Only Filter -->
               <ng-container *ngSwitchCase="'timeonly'">
                 <ng-container
                   *ngTemplateOutlet="
@@ -113,9 +119,18 @@
           [showMatchModes]="false"
           [showOperator]="false"
           [showAddButton]="false"
-          [placeholder]="'Search by ' + col.header"
+          [showApplyButton]="false"
           ariaLabel="Filter"
-        />
+        >
+          <ng-template #filter let-filter="filterCallback">
+            <input
+              pInputText
+              [(ngModel)]="filterValues[col.field]"
+              [placeholder]="'Search by ' + col.header"
+              (ngModelChange)="filter($event)"
+            />
+          </ng-template>
+        </p-columnFilter>
       </ng-container>
     </ng-template>
 
