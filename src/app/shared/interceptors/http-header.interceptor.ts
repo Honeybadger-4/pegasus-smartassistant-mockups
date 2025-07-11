@@ -20,15 +20,16 @@ export const httpHeadersInterceptor: HttpInterceptorFn = (req, next) => {
     Accept: '*/*',
     os,
     osVersion,
-    appVersion: '1',
+    appVersion: '-',
     deviceBrand,
     deviceModel,
-    deviceId: '1',
-    ipAddress: '1',
+    deviceId: '-',
+    ipAddress: '-',
   };
 
   if (!req.url.includes('/login') || req.url.includes('/login-info')) {
     headers['authorization'] = `Bearer ${token}`;
+    console.log(result);
   }
 
   const updatedRequest = req.clone({
