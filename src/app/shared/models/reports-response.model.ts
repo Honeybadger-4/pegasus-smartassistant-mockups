@@ -29,22 +29,22 @@ export interface IReportsResponse {
 
 export interface IReportsContentData {
   id: number;
-  aircraftReg: string
+  aircraftReg: string;
   flightNo: string;
   depPort: string;
   arrPort: string;
   depDateTime: string | null;
   arrDateTime: string | null;
-  createdBy: string
-  enteredDate:  string | null;
-  doorClosed:  string | null;
-  offBlock:  string;
-  takeOff:  string;
-  landing:  string;
-  onBlock:  string;
-  doorOpen:  string;
-  flightHours:  string;
-  blockHours:  string;
+  createdBy: string;
+  enteredDate: string | null;
+  doorClosed: string | null;
+  offBlock: string | null;
+  takeOff: string | null;
+  landing: string | null;
+  onBlock: string | null;
+  doorOpen: string | null;
+  flightHours: string;
+  blockHours: string;
   adult: number;
   child: number;
   infant: number;
@@ -54,12 +54,12 @@ export interface IReportsContentData {
   remainingFuel: number;
   ofpFuel: number;
   upliftFuel: number;
-  upliftTime:  string;
+  upliftTime: string;
   density: number;
   totalFuel: number;
   gaugesSumAfter: number;
   landingFuel: number;
-  excessFuelReasons:  string;
+  excessFuelReasons: string;
   oilBeforeEngOne: number;
   oilBeforeEngTwo: number;
   oilAfterEngOne: number;
@@ -77,6 +77,5 @@ export interface IReportsContentData {
       delayedTime: string;
       comment: string;
     },
-   
   ];
 }

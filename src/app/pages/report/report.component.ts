@@ -118,8 +118,11 @@ export class ReportComponent implements OnInit {
         next: (response: IReportsResponse) => {
           const formattedData = response.content.map((item) => ({
             ...item,
-            depTime: item.depDateTime
+            depDateTime: item.depDateTime
               ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+              arrDateTime: item.arrDateTime
+              ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
               : null,
             checkedDate: item.arrDateTime
               ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
@@ -129,6 +132,21 @@ export class ReportComponent implements OnInit {
               : null,
               doorClosed: item.doorClosed
               ? moment(item.doorClosed).format('DD/MM/YYYY - HH:mm')
+              : null,
+              offBlock: item.offBlock
+              ? moment(item.offBlock).format('DD/MM/YYYY - HH:mm')
+              : null,
+              takeOff: item.takeOff
+              ? moment(item.takeOff).format('DD/MM/YYYY - HH:mm')
+              : null,
+              landing: item.landing
+              ? moment(item.landing).format('DD/MM/YYYY - HH:mm')
+              : null,
+              onBlock: item.onBlock
+              ? moment(item.onBlock).format('DD/MM/YYYY - HH:mm')
+              : null,
+              doorOpen: item.doorOpen
+              ? moment(item.doorOpen).format('DD/MM/YYYY - HH:mm')
               : null,
           }));
 
@@ -170,7 +188,6 @@ export class ReportComponent implements OnInit {
     this.tableFilters.set({
       acReg: event.filters?.aircraftReg?.[0]?.value,
       flightNo: event.filters?.flightNo?.[0]?.value,
-
       depPort: event.filters?.depPort?.[0]?.value,
       depDate: event.filters?.depDateTime?.[0]?.value,
       arrPort: event.filters?.arrPort?.[0]?.value,

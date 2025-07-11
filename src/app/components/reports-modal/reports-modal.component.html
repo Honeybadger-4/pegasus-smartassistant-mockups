@@ -1,65 +1,263 @@
-<p-dialog
-  [(visible)]="visible"
-  [modal]="true"
-  [draggable]="false"
-  [resizable]="false"
-  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
-  [style]="{ width: '600px' }"
-  (onHide)="closeModal()"
->
-  <ng-template pTemplate="header">
-    <p>Report Details</p>
-  </ng-template>
+<div id="reports-modal">
+  <p-dialog
+    [(visible)]="visible"
+    [modal]="true"
+    [draggable]="false"
+    [resizable]="false"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+    [style]="{ width: '508px', height: '500px' }"
+    (onHide)="closeModal()"
+    (onShow)="resetTabIndex()"
+  >
+    <ng-template pTemplate="header">
+      <p>Report Details</p>
+    </ng-template>
 
-  <p-tabs>
-    <p-tablist>
-      <p-tab value="0">Flight</p-tab>
-      <p-tab value="1">Passenger</p-tab>
-      <p-tab value="2">Fuel</p-tab>
-      <p-tab value="3">Oil</p-tab>
-      <p-tab value="4">Divert</p-tab>
-    </p-tablist>
+    <p-tabs [value]="activeTabIndex()" class="custom-tabs">
+      <p-tablist>
+        <p-tab [value]="0">Flight</p-tab>
+        <p-tab [value]="1">Passenger</p-tab>
+        <p-tab [value]="2">Fuel</p-tab>
+        <p-tab [value]="3">Oil</p-tab>
+        <p-tab [value]="4">Divert</p-tab>
+      </p-tablist>
 
-    <p-tabpanels>
-      <p-tabpanel value="0">
-        <ul>
-          <li *ngFor="let item of flightFields">
-            {{ item.label }}: {{ item.value || '-' }}
-          </li>
-        </ul>
-      </p-tabpanel>
+      <p-tabpanels>
+        <!-- Flight -->
+        <p-tabpanel [value]="0">
+          <ul>
+            <li>
+              <span class="label">Door Closed:</span
+              ><span class="value">{{ rowData?.doorClosed || "-" }}</span>
+            </li>
+            <li>
+              <span class="label">Off Block:</span
+              ><span class="value">{{ rowData?.offBlock || "-" }}</span>
+            </li>
+            <li>
+              <span class="label">Take Off:</span
+              ><span class="value">{{ rowData?.takeOff || "-" }}</span>
+            </li>
+            <li>
+              <span class="label">Landing:</span
+              ><span class="value">{{ rowData?.landing || "-" }}</span>
+            </li>
+            <li>
+              <span class="label">On Block:</span
+              ><span class="value">{{ rowData?.onBlock || "-" }}</span>
+            </li>
+            <li>
+              <span class="label">Door Open:</span
+              ><span class="value">{{ rowData?.doorOpen || "-" }}</span>
+            </li>
+            <li>
+              <span class="label">Flight Hours:</span
+              ><span class="value">{{ rowData?.flightHours || "-" }}</span>
+            </li>
+            <li>
+              <span class="label">Block Hours:</span
+              ><span class="value">{{ rowData?.blockHours || "-" }}</span>
+            </li>
+          </ul>
+        </p-tabpanel>
 
-      <p-tabpanel value="1">
-        <ul>
-          <li *ngFor="let item of passengerFields">
-            {{ item.label }}: {{ item.value || '-' }}
-          </li>
-        </ul>
-      </p-tabpanel>
+        <!-- Passenger -->
+        <p-tabpanel [value]="1">
+          <ul>
+            <li>
+              <span class="label">Adult:</span
+              ><span class="value">{{ rowData?.adult ?? "-" }}</span>
+            </li>
+            <li>
+              <span class="label">Child:</span
+              ><span class="value">{{ rowData?.child ?? "-" }}</span>
+            </li>
+            <li>
+              <span class="label">Infant:</span
+              ><span class="value">{{ rowData?.infant ?? "-" }}</span>
+            </li>
+            <li>
+              <span class="label">Pick Up Pax:</span
+              ><span class="value">{{ rowData?.pickUpPax ?? "-" }}</span>
+            </li>
+            <li>
+              <span class="label">Non Revenue:</span
+              ><span class="value">{{ rowData?.nonRevenue ?? "-" }}</span>
+            </li>
+            <li>
+              <span class="label">Door Open:</span
+              ><span class="value">{{ rowData?.doorOpen || "-" }}</span>
+            </li>
+            <li>
+              <span class="label">De-icing:</span
+              ><span class="value">{{ rowData?.deIcing ? "Yes" : "No" }}</span>
+            </li>
+          </ul>
+        </p-tabpanel>
 
-      <p-tabpanel value="2">
-        <ul>
-          <li *ngFor="let item of fuelFields">
-            {{ item.label }}: {{ item.value || '-' }}
-          </li>
-        </ul>
-      </p-tabpanel>
+        <!-- Fuel -->
+        <p-tabpanel [value]="2">
+          <ul>
+            <li>
+              <span class="label">Remaining Fuel:</span
+              ><span class="value">{{ rowData?.remainingFuel ?? "-" }}</span>
+            </li>
+            <li>
+              <span class="label">OFP Plan Fuel:</span
+              ><span class="value">{{ rowData?.ofpFuel ?? "-" }}</span>
+            </li>
+            <li>
+              <span class="label">Uplift Fuel (lt):</span
+              ><span class="value">{{ rowData?.upliftFuel ?? "-" }}</span>
+            </li>
+            <li>
+              <span class="label">Uplift Time:</span
+              ><span class="value">{{ rowData?.upliftTime || "-" }}</span>
+            </li>
+            <li>
+              <span class="label">Density (kg/lt):</span
+              ><span class="value">{{ rowData?.density ?? "-" }}</span>
+            </li>
+            <li>
+              <span class="label">Total Fuel:</span
+              ><span class="value">{{ rowData?.totalFuel ?? "-" }}</span>
+            </li>
+            <li>
+              <span class="label">Gauges Sum After:</span
+              ><span class="value">{{ rowData?.gaugesSumAfter ?? "-" }}</span>
+            </li>
+            <li>
+              <span class="label">Landing Fuel:</span
+              ><span class="value">{{ rowData?.landingFuel ?? "-" }}</span>
+            </li>
+            <li>
+              <span class="label">Reason of Excess Fuel:</span
+              ><span class="value">{{
+                rowData?.excessFuelReasons || "-"
+              }}</span>
+            </li>
+          </ul>
+        </p-tabpanel>
 
-      <p-tabpanel value="3">
-        <ul>
-          <li *ngFor="let item of oilFields">
-            {{ item.label }}: {{ item.value || '-' }}
-          </li>
-        </ul>
-      </p-tabpanel>
+        <!-- Oil -->
+        <p-tabpanel [value]="3">
+          <ul>
+            <li>
+              <span class="label">Oil Before Eng 1:</span
+              ><span class="value">{{ rowData?.oilBeforeEngOne ?? "-" }}</span>
+            </li>
+            <li>
+              <span class="label">Oil Before Eng 2:</span
+              ><span class="value">{{ rowData?.oilBeforeEngTwo ?? "-" }}</span>
+            </li>
+            <li>
+              <span class="label">Oil After Eng 1:</span
+              ><span class="value">{{ rowData?.oilAfterEngOne ?? "-" }}</span>
+            </li>
+            <li>
+              <span class="label">Oil After Eng 2:</span
+              ><span class="value">{{ rowData?.oilAfterEngTwo ?? "-" }}</span>
+            </li>
+            <li>
+              <span class="label">Landing Wind Report:</span
+              ><span class="value">{{
+                rowData?.landingWindReport || "-"
+              }}</span>
+            </li>
+            <li>
+              <span class="label">Hyd Green Checked:</span>
+              <span class="value">
+                <i
+                  *ngIf="rowData?.isHydGreenChecked"
+                  class="pi pi-check-circle text-green-500"
+                  aria-hidden="true"
+                ></i>
+                <i
+                  *ngIf="!rowData?.isHydGreenChecked"
+                  class="pi pi-circle text-gray-400"
+                  aria-hidden="true"
+                ></i>
+              </span>
+            </li>
+            <li>
+              <span class="label">Hyd Blue Checked:</span>
+              <span class="value">
+                <i
+                  *ngIf="rowData?.isHydBlueChecked"
+                  class="pi pi-check-circle text-green-500"
+                  aria-hidden="true"
+                ></i>
+                <i
+                  *ngIf="!rowData?.isHydBlueChecked"
+                  class="pi pi-circle text-gray-400"
+                  aria-hidden="true"
+                ></i>
+              </span>
+            </li>
+            <li>
+              <span class="label">Hyd Yellow Checked:</span>
+              <span class="value">
+                <i
+                  *ngIf="rowData?.isHydYellowChecked"
+                  class="pi pi-check-circle text-green-500"
+                  aria-hidden="true"
+                ></i>
+                <i
+                  *ngIf="!rowData?.isHydYellowChecked"
+                  class="pi pi-circle text-gray-400"
+                  aria-hidden="true"
+                ></i>
+              </span>
+            </li>
+          </ul>
+        </p-tabpanel>
 
-      <p-tabpanel value="4">
-        <ul>
-          <li *ngFor="let item of divertFields">
-            {{ item.label }}: {{ item.value || '-' }}
-          </li>
-        </ul>
-      </p-tabpanel>
-    </p-tabpanels>
-  </p-tabs>
-</p-dialog>
+        <!-- Divert -->
+        <p-tabpanel [value]="4">
+          <div class="divert-section">
+            <div class="divert-info">
+              <ul>
+                <li>
+                  <span class="label">Divert:</span>
+                  <span class="value">{{
+                    rowData?.divertAirportIcao || "-"
+                  }}</span>
+                </li>
+                <li>
+                  <span class="label">Autoland:</span>
+                  <span class="value">{{
+                    rowData?.autolandInfoMessage || "-"
+                  }}</span>
+                </li>
+              </ul>
+            </div>
+
+            <span>Delay Codes:</span>
+
+            <div
+              class="delay-card"
+              *ngFor="let delayReason of rowData?.delayReasons"
+            >
+              <ul>
+                <li>
+                  <span class="label">ID:</span>
+                  <span class="value">{{ delayReason.code || "-" }}</span>
+                </li>
+                <li>
+                  <span class="label">Delayed Time:</span>
+                  <span class="value">{{
+                    delayReason.delayedTime || "-"
+                  }}</span>
+                </li>
+                <li>
+                  <span class="label">Comment:</span>
+                  <span class="value">{{ delayReason.comment || "-" }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </p-tabpanel>
+      </p-tabpanels>
+    </p-tabs>
+  </p-dialog>
+</div>
