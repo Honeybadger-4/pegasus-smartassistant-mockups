@@ -1,98 +1,45 @@
-<div id="ReportPage">
-  <section class="table-header-section">
-    <!-- Header Title -->
-    <p class="header-title">Report</p>
+<div id="reports-page">
+  <!-- Page Header -->
+  <section class="flex items-center justify-between">
+    <p class="header-title">Reports</p>
 
-    <form [formGroup]="filterFormGroup" (ngSubmit)="onFilterSubmit()">
-      <div class="flex justify-between items-center gap-4">
-        <!-- Filter Inputs -->
-
-        <div class="grid grid-cols-10 gap-4 items-center">
-          <!-- Aircraft  Input -->
-          <div class="lg:col-span-2 md:col-span-6 col-span-12">
-            <p-iconField iconPosition="right" class="custom-icon-field">
-              <input
-                type="text"
-                pInputText
-                placeholder="Aircraft"
-                formControlName="aircraft"
-              />
-            </p-iconField>
-          </div>
-
-          <!-- Flight No Input -->
-          <div class="lg:col-span-2 md:col-span-6 col-span-12">
-            <p-iconField iconPosition="right" class="custom-icon-field">
-              <input
-                type="text"
-                pInputText
-                placeholder="Flight No"
-                formControlName="flightNo"
-              />
-            </p-iconField>
-          </div>
-
-          <!-- Dep Port Input -->
-          <div class="lg:col-span-2 md:col-span-6 col-span-12">
-            <p-iconField iconPosition="right" class="custom-icon-field">
-              <input
-                type="text"
-                pInputText
-                placeholder="Dep Port"
-                formControlName="depPort"
-              />
-            </p-iconField>
-          </div>
-
-          <!-- Arr Port Input -->
-          <div class="lg:col-span-2 md:col-span-6 col-span-12">
-            <p-iconField iconPosition="right" class="custom-icon-field">
-              <input
-                type="text"
-                pInputText
-                placeholder="Arr Port"
-                formControlName="arrPort"
-              />
-            </p-iconField>
-          </div>
-
-          <!-- Date Picker -->
-          <div class="lg:col-span-2 md:col-span-6 col-span-12">
-            <p-datepicker
-              formControlName="dateRange"
-              selectionMode="range"
-              [readonlyInput]="true"
-              dateFormat="dd/mm/yy"
-              placeholder="Start Date - End Date"
-              class="custom-calendar"
-            />
-          </div>
-        </div>
-        <div>
-          <p-button
-            type="submit"
-            icon="pi pi-search"
-            [rounded]="true"
-            class="filter-submit-btn"
-          />
-        </div>
-      </div>
-    </form>
+    <div class="w-[210px]">
+      <p-iconField iconPosition="right" class="custom-icon-field">
+        <input
+          type="text"
+          pInputText
+          #searchInput
+          [(ngModel)]="searchInputValue"
+          (ngModelChange)="onChangeSearch($event)"
+          placeholder="Find Aircraft or Flight No"
+        />
+        <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
+      </p-iconField>
+    </div>
   </section>
 
-  <section class="table-section custom-card">
+  <!-- Table -->
+  <section class="table-section custom-card mt-5">
     <app-custom-table
-      [tableData]="reportData"
-      [tableColumns]="columns"
+      [tableData]="reportsContentData()"
+      [tableColumns]="columns()"
+      [totalRecords]="reportsData()?.totalElements || 0"
+      [tableLoading]="tableLoading()"
+      (lazyLoadEvent)="lazyLoadEvent($event)"
     ></app-custom-table>
   </section>
 </div>
 
-<!-- Table Cell Templates -->
-<ng-template #checkListCellBodyTemplate let-rowData="rowData">
-  <span class="font-bold">{{ rowData.checkList }}</span>
+<ng-template #reportsColumnTemplate let-rowData="rowData">
+  <button
+    class="border border-gray-300 rounded-md px-3 py-1 bg-white"
+    (click)="onReportsShow(rowData)"
+  >
+    Show
+  </button>
 </ng-template>
 
-<ng-template #previewCellBodyTemplate>
-  <i class="pi pi-eye"></i>
-</ng-template>
+<app-reports-modal
+  [(visible)]="reportsModalVisible"
+  [rowData]="selectedRowData()"
+/>
