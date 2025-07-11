@@ -32,13 +32,13 @@ import { ReportsModalComponent } from 'src/app/components/reports-modal/reports-
     IconFieldModule,
     InputIconModule,
     InputTextModule,
-    ReportsModalComponent
+    ReportsModalComponent,
   ],
   templateUrl: './report.component.html',
   styleUrl: './report.component.scss',
 })
 export class ReportComponent implements OnInit {
-   reportsColumnTemplate = viewChild.required('reportsColumnTemplate');
+  reportsColumnTemplate = viewChild.required('reportsColumnTemplate');
   customTableComponent = viewChild.required(CustomTableComponent);
   searchInput = viewChild.required<ElementRef>('searchInput');
 
@@ -97,11 +97,11 @@ export class ReportComponent implements OnInit {
       },
 
       {
-         field: 'show',
-         header: 'Report Details',
-         isFilter: false,
-         template: this.reportsColumnTemplate(),
-       },
+        field: 'show',
+        header: 'Report Details',
+        isFilter: false,
+        template: this.reportsColumnTemplate(),
+      },
     ]);
   }
 
@@ -121,7 +121,7 @@ export class ReportComponent implements OnInit {
             depDateTime: item.depDateTime
               ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
               : null,
-              arrDateTime: item.arrDateTime
+            arrDateTime: item.arrDateTime
               ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
               : null,
             checkedDate: item.arrDateTime
@@ -130,22 +130,22 @@ export class ReportComponent implements OnInit {
             enteredDate: item.enteredDate
               ? moment(item.enteredDate).format('DD/MM/YYYY - HH:mm')
               : null,
-              doorClosed: item.doorClosed
+            doorClosed: item.doorClosed
               ? moment(item.doorClosed).format('DD/MM/YYYY - HH:mm')
               : null,
-              offBlock: item.offBlock
+            offBlock: item.offBlock
               ? moment(item.offBlock).format('DD/MM/YYYY - HH:mm')
               : null,
-              takeOff: item.takeOff
+            takeOff: item.takeOff
               ? moment(item.takeOff).format('DD/MM/YYYY - HH:mm')
               : null,
-              landing: item.landing
+            landing: item.landing
               ? moment(item.landing).format('DD/MM/YYYY - HH:mm')
               : null,
-              onBlock: item.onBlock
+            onBlock: item.onBlock
               ? moment(item.onBlock).format('DD/MM/YYYY - HH:mm')
               : null,
-              doorOpen: item.doorOpen
+            doorOpen: item.doorOpen
               ? moment(item.doorOpen).format('DD/MM/YYYY - HH:mm')
               : null,
           }));
@@ -198,16 +198,16 @@ export class ReportComponent implements OnInit {
     this.getAllReports();
   }
 
-   onReportsShow(rowData: IReportsContentData) {
-     this.selectedRowData.set(rowData);
-     this.showReportsModal.set(true);
-   }
+  onReportsShow(rowData: IReportsContentData) {
+    this.selectedRowData.set(rowData);
+    this.showReportsModal.set(true);
+  }
 
-   get reportsModalVisible() {
-     return this.showReportsModal();
-   }
+  get reportsModalVisible() {
+    return this.showReportsModal();
+  }
 
-   set reportsModalVisible(value: boolean) {
-     this.showReportsModal.set(value);
-   }
+  set reportsModalVisible(value: boolean) {
+    this.showReportsModal.set(value);
+  }
 }
