@@ -70,7 +70,8 @@ export class FlightInfoComponent implements OnInit {
   routeTableDocumentsCellTemplate!: TemplateRef<any>;
   @ViewChild('requiredActionsTemplate', { static: true })
   requiredActionsTemplate!: TemplateRef<any>;
-  customTableComponent = viewChild.required(CustomTableComponent);
+  
+customTableComponent = viewChild(CustomTableComponent);
 
   statusColumnTemplate = viewChild.required('statusColumnTemplate');
 
@@ -677,7 +678,7 @@ export class FlightInfoComponent implements OnInit {
       .subscribe((searchText) => {
         if (searchText.trim() || searchText === '') {
           this.currentPage.set(0);
-          this.customTableComponent().resetTableFirstValue();
+      this.customTableComponent()?.resetTableFirstValue();
 
           this.getFlightInfo();
         }
