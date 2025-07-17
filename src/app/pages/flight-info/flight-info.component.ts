@@ -86,7 +86,7 @@ customTableComponent = viewChild(CustomTableComponent);
   dateRange: Date[] = [];
   expandedRows: { [key: string]: boolean } = {};
   currentPage = signal<number>(0);
-  currentRows = signal<number>(10);
+  currentRows = signal<number>(20);
   tableLoading = signal<boolean>(false);
   filterValues: { [key: string]: any } = {};
   tableSubPanels!: any[];
