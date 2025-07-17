@@ -70,8 +70,8 @@ export class FlightInfoComponent implements OnInit {
   routeTableDocumentsCellTemplate!: TemplateRef<any>;
   @ViewChild('requiredActionsTemplate', { static: true })
   requiredActionsTemplate!: TemplateRef<any>;
-  
-customTableComponent = viewChild(CustomTableComponent);
+
+  customTableComponent = viewChild(CustomTableComponent);
 
   statusColumnTemplate = viewChild.required('statusColumnTemplate');
 
@@ -487,13 +487,13 @@ customTableComponent = viewChild(CustomTableComponent);
         field: 'status',
         header: 'Status',
         isFilter: true,
-        filterOptions: [
-          { label: 'Waiting', value: 'WAITING' },
-          { label: 'Completed', value: 'COMPLETED' },
-          { label: 'In Progress', value: 'IN_PROGRESS' },
-        ],
         filterType: 'selectbox',
         template: this.statusColumnTemplate(),
+        filterOptions: [
+          { label: 'Waiting', value: 'WAITING' },
+          { label: 'Approved', value: 'APPROVED' },
+          { label: 'In Progress', value: 'IN PROGRESS' },
+        ],
       },
 
       {
@@ -678,7 +678,7 @@ customTableComponent = viewChild(CustomTableComponent);
       .subscribe((searchText) => {
         if (searchText.trim() || searchText === '') {
           this.currentPage.set(0);
-      this.customTableComponent()?.resetTableFirstValue();
+          this.customTableComponent()?.resetTableFirstValue();
 
           this.getFlightInfo();
         }

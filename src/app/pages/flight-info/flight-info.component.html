@@ -8,7 +8,7 @@
         <input
           type="text"
           pInputText
-         #searchInput
+          #searchInput
           [(ngModel)]="searchInputValue"
           (ngModelChange)="onChangeSearch($event)"
           placeholder="Find Aircraft or Flight No"
@@ -20,7 +20,7 @@
   </section>
 
   <section class="table-section custom-card">
-    <p-table 
+    <p-table
       dataKey="legIsn"
       [value]="flightInformatioHistoryTableData()"
       [columns]="mainCols"
@@ -262,20 +262,20 @@
 </ng-template>
 
 <ng-template #statusColumnTemplate let-rowData="rowData">
-  @switch (rowData.status) {
-    @case ("WAITING") {
-      <p-chip label="Waiting" class="gray-chip" />
-    }
-    @case ("IN PROGRESS") {
-      <p-chip label="In Progress" class="yellow-chip" />
-    }
-    @case ("APPROVED") {
-      <p-chip label="Approve" class="green-chip" />
-    }
-    @default {
-      <p-chip label="{{ rowData.status || '-' }}" class="gray-chip" />
-    }
-  }
+  <ng-container [ngSwitch]="rowData.status">
+    <p-chip *ngSwitchCase="'WAITING'" label="Waiting" class="gray-chip" />
+    <p-chip
+      *ngSwitchCase="'IN PROGRESS'"
+      label="In Progress"
+      class="yellow-chip"
+    />
+    <p-chip *ngSwitchCase="'APPROVED'" label="Approved" class="green-chip" />
+    <p-chip
+      *ngSwitchDefault
+      label="{{ rowData.status || '-' }}"
+      class="gray-chip"
+    />
+  </ng-container>
 </ng-template>
 
 <ng-template #requiredActionsTemplate let-rowData="rowData">
