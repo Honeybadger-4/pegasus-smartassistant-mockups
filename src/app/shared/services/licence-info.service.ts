@@ -15,7 +15,6 @@ export class LicenceInfoService {
   getLicenceInfo(
     page: number,
     size: number,
-
     search?: string,
     tableFilters?: {
       acReg?: string;

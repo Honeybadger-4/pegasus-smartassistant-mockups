@@ -1,6 +1,7 @@
 import {
   Component,
   effect,
+  ElementRef,
   inject,
   OnInit,
   signal,
@@ -31,9 +32,9 @@ import { ButtonModule } from 'primeng/button';
 import { TabsModule } from 'primeng/tabs';
 import { DatePickerModule } from 'primeng/datepicker';
 import moment from 'moment';
-import { IFlightInformationTripInfoResponse } from '@shared/models/flight-info-trip-info-response.model';
 import { Chip } from 'primeng/chip';
 import { SelectModule } from 'primeng/select';
+import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 
 @Component({
   selector: 'app-flight-info',
@@ -69,8 +70,11 @@ export class FlightInfoComponent implements OnInit {
   routeTableDocumentsCellTemplate!: TemplateRef<any>;
   @ViewChild('requiredActionsTemplate', { static: true })
   requiredActionsTemplate!: TemplateRef<any>;
+  customTableComponent = viewChild.required(CustomTableComponent);
 
   statusColumnTemplate = viewChild.required('statusColumnTemplate');
+
+  searchInput = viewChild.required<ElementRef>('searchInput');
 
   mainCols!: Column[];
   crewCols!: Column[];
@@ -80,18 +84,16 @@ export class FlightInfoComponent implements OnInit {
   routeCols!: Column[];
   dateRange: Date[] = [];
   expandedRows: { [key: string]: boolean } = {};
-  currentPage = 0;
-  currentRows = 20;
-  tableLoading = false;
-
-  tableSubPanels!: any[];
+  currentPage = signal<number>(0);
+  currentRows = signal<number>(10);
+  tableLoading = signal<boolean>(false);
   filterValues: { [key: string]: any } = {};
+  tableSubPanels!: any[];
 
   flightInformationHistoryData = signal<IFlightInformationResponse | null>(
     null,
   );
   flightInformatioHistoryTableData = signal<IFlightInformationTableData[]>([]);
-  tripInfoData = signal<IFlightInformationTripInfoResponse[]>([]);
   tripInfoDataLoading = signal<boolean>(false);
   searchInputValue = signal<string>('');
 
@@ -439,6 +441,8 @@ export class FlightInfoComponent implements OnInit {
     },
   ];
 
+  tripInfoData = [{}];
+
   constructor() {
     effect(() => {
       this.defineTableSubPanels();
@@ -453,7 +457,7 @@ export class FlightInfoComponent implements OnInit {
     this.defineLoadSheetColums();
     this.defineRouteColums();
     this.defineTableSubPanels();
-    this.getFlightInfo();
+    this.setupSearchListener();
   }
 
   // Define Columns Operation
@@ -476,7 +480,7 @@ export class FlightInfoComponent implements OnInit {
         filterType: 'datepicker',
       },
 
-      { field: 'user', header: 'Responsible User', isFilter: true },
+      { field: 'responsibleUser', header: 'Responsible User', isFilter: true },
 
       {
         field: 'status',
@@ -613,7 +617,7 @@ export class FlightInfoComponent implements OnInit {
       },
       {
         panelHeader: 'Trip Info',
-        tableData: this.tripInfoData(),
+        tableData: this.tripInfoData,
         tableColumns: this.tripInfoCols,
         tableLoading: this.tripInfoDataLoading(),
         value: 2,
@@ -635,11 +639,14 @@ export class FlightInfoComponent implements OnInit {
 
   // API Calls Operations
   getFlightInfo() {
-    this.tableLoading = true;
-    const startDate = moment().subtract(7, 'days').format('YYYY-MM-DD');
-    const endDate = moment().format('YYYY-MM-DD');
+    this.tableLoading.set(true);
     this.flightInformationService
-      .getFlightInfo(this.currentPage, this.currentRows, startDate, endDate)
+      .getFlightInfo(
+        this.currentPage(),
+        this.currentRows(),
+        this.searchInputValue(),
+        this.filterValues,
+      )
       .subscribe({
         next: (response) => {
           const formattedData = response.content.map((item) => ({
@@ -654,27 +661,26 @@ export class FlightInfoComponent implements OnInit {
 
           this.flightInformationHistoryData.set(response);
           this.flightInformatioHistoryTableData.set(formattedData);
-          this.tableLoading = false;
+          this.tableLoading.set(false);
         },
-        error: () => {
-          this.tableLoading = false;
-        },
+        error: () => this.tableLoading.set(false),
       });
   }
 
-  getFlightInformationTripInfo(legIsn: number) {
-    this.tripInfoDataLoading.set(true);
-    this.flightInformationService
-      .getFlightInformationTripInfo(legIsn)
-      .subscribe({
-        next: (response) => {
-          this.tripInfoData.set(response);
-          this.tripInfoDataLoading.set(false);
-        },
-        error: (error) => {
-          console.log(error);
-          this.tripInfoDataLoading.set(false);
-        },
+  setupSearchListener() {
+    fromEvent<Event>(this.searchInput().nativeElement, 'input')
+      .pipe(
+        map((event: Event) => (event.target as HTMLInputElement).value),
+        debounceTime(300),
+        distinctUntilChanged(),
+      )
+      .subscribe((searchText) => {
+        if (searchText.trim() || searchText === '') {
+          this.currentPage.set(0);
+          this.customTableComponent().resetTableFirstValue();
+
+          this.getFlightInfo();
+        }
       });
   }
 
@@ -699,10 +705,31 @@ export class FlightInfoComponent implements OnInit {
     });
   }
 
+  lazyLoadEvent(event: any) {
+    const page = event.first / event.rows;
+    this.currentPage.set(page);
+    this.currentRows.set(event.rows);
+
+    this.filterValues = {
+      aircraftReg:
+        event.filters?.aircraftReg && event.filters?.aircraftReg[0].value,
+      flightNo: event.filters?.flightNo && event.filters?.flightNo[0].value,
+      depPort: event.filters?.depPort && event.filters?.depPort[0].value,
+      depDate:
+        event.filters?.depDateTime && event.filters?.depDateTime[0].value,
+      arrPort: event.filters?.arrPort && event.filters?.arrPort[0].value,
+      arrDate:
+        event.filters?.arrDateTime && event.filters?.arrDateTime[0].value,
+      responsibleUser: event.filters?.user && event.filters?.user[0].value,
+      status: event.filters?.status && event.filters?.status[0].value,
+    };
+
+    this.getFlightInfo();
+  }
+
   onRowExpand(event: TableRowExpandEvent) {
     this.expandedRows = {};
     this.expandedRows[event.data.legIsn] = true;
-    this.getFlightInformationTripInfo(event.data.legIsn);
   }
 
   onRowCollapse(event: TableRowCollapseEvent) {
@@ -711,13 +738,14 @@ export class FlightInfoComponent implements OnInit {
 
   pageEvent(event: { first: number; rows: number }) {
     const page = event.first / event.rows;
-    this.currentPage = page;
-    this.currentRows = event.rows;
+    this.currentPage.set(page);
+    this.currentRows.set(event.rows);
     this.getFlightInfo();
   }
 
-  onChangeSearch(value: string) {}
-
+  onChangeSearch(value: string) {
+    this.searchInputValue.set(value.toUpperCase());
+  }
   filterDateControl(selectedDate: any) {
     return moment(selectedDate).format('YYYY-MM-DD');
   }

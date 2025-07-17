@@ -8,7 +8,7 @@
         <input
           type="text"
           pInputText
-          #searchInput
+         #searchInput
           [(ngModel)]="searchInputValue"
           (ngModelChange)="onChangeSearch($event)"
           placeholder="Find Aircraft or Flight No"
@@ -20,24 +20,24 @@
   </section>
 
   <section class="table-section custom-card">
-    <p-table
+    <p-table 
       dataKey="legIsn"
       [value]="flightInformatioHistoryTableData()"
       [columns]="mainCols"
-      [loading]="tableLoading"
+      [loading]="tableLoading()"
       [expandedRowKeys]="expandedRows"
       [paginator]="true"
-      [rows]="currentRows"
+      [rows]="currentRows()"
       [rowsPerPageOptions]="[20, 40, 80]"
       [totalRecords]="flightInformationHistoryData()?.totalElements || 0"
-      [first]="currentPage * currentRows"
+      [first]="currentPage() * currentRows()"
       [lazy]="true"
       [tableStyle]="{ 'min-width': '50rem' }"
       stripedRows
       (onPage)="pageEvent($event)"
       (onRowExpand)="onRowExpand($event)"
       (onRowCollapse)="onRowCollapse($event)"
-      (onLazyLoad)="onLazyLoad($event)"
+      (onLazyLoad)="lazyLoadEvent($event)"
     >
       <!-- Table Header -->
       <ng-template #header let-columns>
