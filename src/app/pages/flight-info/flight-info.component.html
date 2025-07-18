@@ -265,11 +265,11 @@
   <ng-container [ngSwitch]="rowData.status">
     <p-chip *ngSwitchCase="'WAITING'" label="Waiting" class="gray-chip" />
     <p-chip
-      *ngSwitchCase="'IN PROGRESS'"
+      *ngSwitchCase="'IN_PROGRESS'"
       label="In Progress"
       class="yellow-chip"
     />
-    <p-chip *ngSwitchCase="'APPROVED'" label="Approved" class="green-chip" />
+    <p-chip *ngSwitchCase="'COMPLETED'" label="Completed" class="green-chip" />
     <p-chip
       *ngSwitchDefault
       label="{{ rowData.status || '-' }}"
@@ -284,8 +284,8 @@
       class="h-full"
       [style.width.%]="(rowData.requiredActions ?? 0) * 100"
       [ngClass]="{
-        'bar-in-progress': rowData.status === 'IN PROGRESS',
-        'bar-approved': rowData.status === 'APPROVED',
+        'bar-in-progress': rowData.status === 'IN_PROGRESS',
+        'bar-approved': rowData.status === 'COMPLETED',
         'bar-waiting': rowData.status === 'WAITING',
       }"
     ></div>

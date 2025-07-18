@@ -32,7 +32,7 @@ import { ButtonModule } from 'primeng/button';
 import { TabsModule } from 'primeng/tabs';
 import { DatePickerModule } from 'primeng/datepicker';
 import moment from 'moment';
-import { Chip } from 'primeng/chip';
+import { ChipModule } from 'primeng/chip';
 import { SelectModule } from 'primeng/select';
 import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 
@@ -50,7 +50,7 @@ import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
     FormsModule,
     ReactiveFormsModule,
     DatePickerModule,
-    Chip,
+    ChipModule,
     SelectModule,
   ],
 
@@ -491,8 +491,8 @@ export class FlightInfoComponent implements OnInit {
         template: this.statusColumnTemplate(),
         filterOptions: [
           { label: 'Waiting', value: 'WAITING' },
-          { label: 'Approved', value: 'APPROVED' },
-          { label: 'In Progress', value: 'IN PROGRESS' },
+          { label: 'Completed', value: 'COMPLETED' },
+          { label: 'In Progress', value: 'IN_PROGRESS' },
         ],
       },
 
@@ -721,7 +721,7 @@ export class FlightInfoComponent implements OnInit {
       arrPort: event.filters?.arrPort && event.filters?.arrPort[0].value,
       arrDate:
         event.filters?.arrDateTime && event.filters?.arrDateTime[0].value,
-      responsibleUser: event.filters?.user && event.filters?.user[0].value,
+      responsibleUser: event.filters?.responsibleUser && event.filters?.responsibleUser[0].value,
       status: event.filters?.status && event.filters?.status[0].value,
     };
 

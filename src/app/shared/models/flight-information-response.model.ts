@@ -34,7 +34,7 @@ export interface IFlightInformationTableData {
   arrPort: string;
   depDateTime: string | null;
   arrDateTime: string | null;
-  user: string;
+  responsibleUser: string;
   status: string;
   requiredActions: number;
 }
