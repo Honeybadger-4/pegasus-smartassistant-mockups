@@ -721,7 +721,9 @@ export class FlightInfoComponent implements OnInit {
       arrPort: event.filters?.arrPort && event.filters?.arrPort[0].value,
       arrDate:
         event.filters?.arrDateTime && event.filters?.arrDateTime[0].value,
-      responsibleUser: event.filters?.responsibleUser && event.filters?.responsibleUser[0].value,
+      responsibleUser:
+        event.filters?.responsibleUser &&
+        event.filters?.responsibleUser[0].value,
       status: event.filters?.status && event.filters?.status[0].value,
     };
 
