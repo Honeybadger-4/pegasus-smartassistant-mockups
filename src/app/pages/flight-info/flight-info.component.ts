@@ -709,10 +709,10 @@ export class FlightInfoComponent implements OnInit {
         event.filters?.aircraftReg && event.filters?.aircraftReg[0].value,
       flightNo: event.filters?.flightNo && event.filters?.flightNo[0].value,
       depPort: event.filters?.depPort && event.filters?.depPort[0].value,
-      depDate:
+      depDateTime:
         event.filters?.depDateTime && event.filters?.depDateTime[0].value,
       arrPort: event.filters?.arrPort && event.filters?.arrPort[0].value,
-      arrDate:
+      arrDateTime:
         event.filters?.arrDateTime && event.filters?.arrDateTime[0].value,
       responsibleUser:
         event.filters?.responsibleUser &&

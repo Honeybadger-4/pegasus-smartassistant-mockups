@@ -28,8 +28,8 @@ export class FlightInformationService {
       arrPort?: string;
       responsibleUser?: string;
       status?: string;
-      depDate?: string;
-      arrDate?: string;
+      depDateTime?: string;
+      arrDateTime?: string;
     },
   ): Observable<IFlightInformationResponse> {
     const apiUrl = `${this.baseUrl}/api/v1/admin/flights`;
@@ -44,8 +44,8 @@ export class FlightInformationService {
       { key: 'arrPort', value: filterParams?.arrPort },
       { key: 'responsibleUser', value: filterParams?.responsibleUser },
       { key: 'status', value: filterParams?.status },
-      { key: 'depDate', value: filterParams?.depDate },
-      { key: 'arrDate', value: filterParams?.arrDate },
+      { key: 'depDateTime', value: filterParams?.depDateTime },
+      { key: 'arrDateTime', value: filterParams?.arrDateTime },
     ];
 
     this.requestParamsControlService
