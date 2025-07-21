@@ -49,6 +49,20 @@ import {
 } from '@shared/models/trip-info-response.model';
 import { ITripInfoDetailsResponse } from '@shared/models/trip-info-details-response.model';
 import { TripInfoDetailsModalComponent } from '../../components/trip-info-details-modal/trip-info-details-modal.component';
+import { ILoadSheetResponse } from '@shared/models/load-sheet-response.model';
+
+import { LoadSheetService } from '@shared/services/load-sheet.service';
+
+import { ILoadSheetContentData } from '@shared/models/load-sheet-response.model';
+import { CgLimitsService } from '@shared/services/bff/cg-limits.service';
+import { GetCgLimitsResponseModel } from '@shared/models/cg-limits-response.model';
+import { CgLimitsDialogComponent } from '../../components/cg-limits-dialog/cg-limits-dialog.component';
+import { LoadAndTrimSheetComponent } from 'src/app/components/load-and-trim-sheet/load-and-trim-sheet.component';
+import { LmcDetailsModalComponent } from 'src/app/components/lmc-details-modal/lmc-details-modal.component';
+import { ILoadSheetModalsResponse } from '@shared/models/load-sheet-modals-response';
+import { table } from 'console';
+import { CrewInformationService } from '@shared/services/crew-information.service';
+import { ICrewInformationContentData } from '@shared/models/crew-information-response.model';
 
 @Component({
   selector: 'app-flight-info',
@@ -68,16 +82,24 @@ import { TripInfoDetailsModalComponent } from '../../components/trip-info-detail
     SelectModule,
     FlightPlanModalComponent,
     TripInfoDetailsModalComponent,
+    LoadAndTrimSheetComponent,
+    CgLimitsDialogComponent,
+    LmcDetailsModalComponent,
   ],
 
   templateUrl: './flight-info.component.html',
   styleUrl: './flight-info.component.scss',
 })
 export class FlightInfoComponent implements OnInit {
-  @ViewChild('loadSheetTableLoadSheetCellTemplate', { static: true })
-  loadSheetTableLoadSheetCellTemplate!: TemplateRef<any>;
-  @ViewChild('loadSheetTableCGLimitsCellTemplate', { static: true })
-  loadSheetTableCGLimitsCellTemplate!: TemplateRef<any>;
+  // FlightInfoComponent içinde
+  @ViewChild('loadSheetColumnTemplate', { static: true })
+  loadSheetColumnTemplate!: TemplateRef<any>;
+
+  @ViewChild('cgLimitsColumnTemplate', { static: true })
+  cgLimitsColumnTemplate!: TemplateRef<any>;
+
+  @ViewChild('lmcColumnTemplate', { static: true })
+  lmcColumnTemplate!: TemplateRef<any>;
 
   @ViewChild('routeTableDocumentsCellTemplate', { static: true })
   routeTableDocumentsCellTemplate!: TemplateRef<any>;
@@ -90,9 +112,19 @@ export class FlightInfoComponent implements OnInit {
 
   mainStatusColumnTemplate = viewChild.required('mainStatusColumnTemplate');
 
+  loadSheetStatusTemplate = viewChild.required('loadSheetStatusTemplate');
+
   flightPlanStatusColumnTemplate = viewChild.required(
     'flightPlanStatusColumnTemplate',
   );
+
+  @ViewChild('loadSheetLmcTemplate', { static: true })
+  loadSheetLmcTemplate!: TemplateRef<any>;
+
+  selectedLmcDetail = signal<ILoadSheetModalsResponse | null>(null);
+  showLmcModal = signal<boolean>(false);
+
+  loadSheetService = inject(LoadSheetService);
 
   tripInfodetailsColumnTemplate = viewChild.required(
     'tripInfodetailsColumnTemplate',
@@ -134,169 +166,27 @@ export class FlightInfoComponent implements OnInit {
   flightInformationService = inject(FlightInformationService);
   tripInfoService = inject(TripInfoService);
   tripInfoDetails = signal<ITripInfoDetailsResponse | null>(null);
+  crewInformationService = inject(CrewInformationService);
 
   tripInfoData = signal<ITripInfoTableData[]>([]);
   tripInfoDataLoading = signal<boolean>(false);
 
-  crewData = [
-    {
-      name: 'Mert Inan',
-      id: '123123123',
-      leg: '-',
-      duty: 'CAP',
-      dustyStart: '00:10',
-      additionalDutyTime: '00:20',
-      pass: 'OK',
-      pfPm: 'OK',
-      pilotComment: 'Test 1',
-    },
-    {
-      name: 'Mert Inan 2',
-      id: '456456456456',
-      leg: '-',
-      duty: 'CAP',
-      dustyStart: '00:10',
-      additionalDutyTime: '00:20',
-      pass: 'OK',
-      pfPm: 'OK',
-      pilotComment: 'Test 2',
-    },
-    {
-      name: 'Mert Inan 2',
-      id: '456456456456',
-      leg: '-',
-      duty: 'CAP',
-      dustyStart: '00:10',
-      additionalDutyTime: '00:20',
-      pass: 'OK',
-      pfPm: 'OK',
-      pilotComment: 'Test 2',
-    },
-    {
-      name: 'Mert Inan 2',
-      id: '456456456456',
-      leg: '-',
-      duty: 'CAP',
-      dustyStart: '00:10',
-      additionalDutyTime: '00:20',
-      pass: 'OK',
-      pfPm: 'OK',
-      pilotComment: 'Test 2',
-    },
-    {
-      name: 'Mert Inan 2',
-      id: '456456456456',
-      leg: '-',
-      duty: 'CAP',
-      dustyStart: '00:10',
-      additionalDutyTime: '00:20',
-      pass: 'OK',
-      pfPm: 'OK',
-      pilotComment: 'Test 2',
-    },
-    {
-      name: 'Mert Inan 2',
-      id: '456456456456',
-      leg: '-',
-      duty: 'CAP',
-      dustyStart: '00:10',
-      additionalDutyTime: '00:20',
-      pass: 'OK',
-      pfPm: 'OK',
-      pilotComment: 'Test 2',
-    },
-    {
-      name: 'Mert Inan 2',
-      id: '456456456456',
-      leg: '-',
-      duty: 'CAP',
-      dustyStart: '00:10',
-      additionalDutyTime: '00:20',
-      pass: 'OK',
-      pfPm: 'OK',
-      pilotComment: 'Test 2',
-    },
-  ];
+  crewData = signal<ICrewInformationContentData[]>([]);
+  crewDataLoading = signal<boolean>(false);
 
-  loadSheetData = [
-    {
-      preparedBy: 'Lorem ipsum',
-      checkedBy: 'Lorem ipsum',
-      approvedBy: 'Lorem ipsum',
-      lmc: 'X',
-      acType: 'A320-251',
-      version: '186Y',
-      crewConfiguration: '2/4',
-      loadSheet: '-',
-      cgLimits: '-',
-    },
-    {
-      preparedBy: 'Lorem ipsum 2',
-      checkedBy: 'Lorem ipsum',
-      approvedBy: 'Lorem ipsum',
-      lmc: 'X',
-      acType: 'A320-251',
-      version: '186Y',
-      crewConfiguration: '2/4',
-      loadSheet: '-',
-      cgLimits: '-',
-    },
-    {
-      preparedBy: 'Lorem ipsum 2',
-      checkedBy: 'Lorem ipsum',
-      approvedBy: 'Lorem ipsum',
-      lmc: 'X',
-      acType: 'A320-251',
-      version: '186Y',
-      crewConfiguration: '2/4',
-      loadSheet: '-',
-      cgLimits: '-',
-    },
-    {
-      preparedBy: 'Lorem ipsum 2',
-      checkedBy: 'Lorem ipsum',
-      approvedBy: 'Lorem ipsum',
-      lmc: 'X',
-      acType: 'A320-251',
-      version: '186Y',
-      crewConfiguration: '2/4',
-      loadSheet: '-',
-      cgLimits: '-',
-    },
-    {
-      preparedBy: 'Lorem ipsum 2',
-      checkedBy: 'Lorem ipsum',
-      approvedBy: 'Lorem ipsum',
-      lmc: 'X',
-      acType: 'A320-251',
-      version: '186Y',
-      crewConfiguration: '2/4',
-      loadSheet: '-',
-      cgLimits: '-',
-    },
-    {
-      preparedBy: 'Lorem ipsum 2',
-      checkedBy: 'Lorem ipsum',
-      approvedBy: 'Lorem ipsum',
-      lmc: 'X',
-      acType: 'A320-251',
-      version: '186Y',
-      crewConfiguration: '2/4',
-      loadSheet: '-',
-      cgLimits: '-',
-    },
-    {
-      preparedBy: 'Lorem ipsum 2',
-      checkedBy: 'Lorem ipsum',
-      approvedBy: 'Lorem ipsum',
-      lmc: 'X',
-      acType: 'A320-251',
-      version: '186Y',
-      crewConfiguration: '2/4',
-      loadSheet: '-',
-      cgLimits: '-',
-    },
-  ];
+  loadSheetDataLoading = signal<boolean>(false);
+  selectedLmcRowData = signal<ILoadSheetModalsResponse | null>(null);
+
+  cgLimitsService = inject(CgLimitsService);
+
+  loadSheetData = signal<ILoadSheetContentData[]>([]);
+  loadSheetLoading = signal<boolean>(false);
+
+  selectedLoadSheet = signal<ILoadSheetContentData | null>(null);
+  showLoadSheetModal = signal<boolean>(false);
+
+  selectedCgLimits = signal<GetCgLimitsResponseModel | null>(null);
+  showCgLimitsDialog = signal<boolean>(false);
 
   routeData = [
     {
@@ -529,39 +419,72 @@ export class FlightInfoComponent implements OnInit {
       },
     ];
   }
+  passStatusTemplate = viewChild.required('passStatusTemplate');
 
   defineCrewColumns() {
     this.crewCols = [
-      { field: 'name', header: 'Name' },
-      { field: 'id', header: 'Id' },
+      { field: 'crewFullName', header: 'Name Surname' },
+      { field: 'companyId', header: 'Company ID' },
       { field: 'leg', header: 'Leg' },
-      { field: 'duty', header: 'Duty' },
-      { field: 'dustyStart', header: 'Duty Start' },
-      { field: 'additionalDutyTime', header: 'Additional Duty Time' },
-      { field: 'pass', header: 'Pass' },
-      { field: 'pfPm', header: 'PF/PM' },
-      { field: 'pilotComment', header: 'Pilot Comment' },
+      { field: 'dutyType', header: 'Duty' },
+      {
+        field: 'dutyStart',
+        header: 'Duty Start (GMT)',
+      },
+
+      {
+        field: 'addDutyTime',
+        header: 'Additional Duty Time',
+      },
+      {
+        field: 'pass',
+        header: ' Pass',
+        template: this.passStatusTemplate(),
+      },
+
+      {
+        field: 'pf',
+        header: 'PF',
+      },
+      {
+        field: 'pm',
+        header: 'PM',
+      },
+      {
+        field: 'decisionOfPilot',
+        header: 'Decision of Pilot in Command',
+      },
     ];
   }
 
   defineLoadSheetColums() {
     this.loadSheetCols = [
+      { field: 'version', header: 'Version' },
       { field: 'preparedBy', header: 'Prepared By' },
       { field: 'checkedBy', header: 'Checked By' },
-      { field: 'approvedBy', header: 'Approved By' },
-      { field: 'lmc', header: 'LMC' },
-      { field: 'acType', header: 'A/C Type' },
-      { field: 'version', header: 'Version' },
-      { field: 'crewConfiguration', header: 'Crew' },
+      { field: 'responsibleUser', header: 'Responsible User' },
+      {
+        field: 'status',
+        header: 'Status',
+        template: this.loadSheetStatusTemplate(),
+      },
+      { field: 'approved', header: 'Approved Date' },
+      { field: 'replaced', header: 'Replaced Date' },
+      { field: 'declined', header: 'Declined Date' },
       {
         field: 'loadSheet',
         header: 'Load Sheet',
-        template: this.loadSheetTableLoadSheetCellTemplate,
+        template: this.loadSheetColumnTemplate,
+      },
+      {
+        field: 'hasLmc',
+        header: 'LMC',
+        template: this.lmcColumnTemplate,
       },
       {
         field: 'cgLimits',
         header: 'CG Limits',
-        template: this.loadSheetTableCGLimitsCellTemplate,
+        template: this.cgLimitsColumnTemplate,
       },
     ];
   }
@@ -610,18 +533,20 @@ export class FlightInfoComponent implements OnInit {
         value: 1,
       },
       {
-        panelHeader: 'Crew',
-        tableData: this.crewData,
-        tableColumns: this.crewCols,
+        panelHeader: 'Load Sheets',
+        tableData: this.loadSheetData(),
+        tableColumns: this.loadSheetCols,
+        tableLoading: this.loadSheetLoading(),
         value: 2,
       },
-
       {
-        panelHeader: 'Load Sheet',
-        tableData: this.loadSheetData,
-        tableColumns: this.loadSheetCols,
+        panelHeader: 'Crew',
+        tableData: this.crewData(),
+        tableColumns: this.crewCols,
+        tableLoading: this.crewDataLoading(),
         value: 3,
       },
+
       {
         panelHeader: 'Route',
         tableData: this.routeData,
@@ -735,6 +660,8 @@ export class FlightInfoComponent implements OnInit {
 
     this.loadFlightPlans(acReg, flightNo);
     this.loadTripInfo(acReg, flightNo);
+    this.loadLoadSheets(acReg, flightNo); // ← yenisi
+    this.loadCrew(acReg, flightNo); // ← buraya ekledik
   }
 
   loadFlightPlans(acReg: string, flightNo: string) {
@@ -777,33 +704,98 @@ export class FlightInfoComponent implements OnInit {
       });
   }
 
- loadTripInfo(acReg: string, flightNo: string) {
-  this.tripInfoDataLoading.set(true);
+  loadTripInfo(acReg: string, flightNo: string) {
+    this.tripInfoDataLoading.set(true);
 
-  this.tripInfoService
-    .getTripInfo(this.currentPage(), this.currentRows(), undefined, {
-      acReg,
-      flightNo,
-    })
-    .subscribe({
-      next: (response) => {
-        const formatted = response.content.map((item) => ({
-          ...item,
-          sentDateTime: item.sentDateTime
-            ? moment(item.sentDateTime).format('DD/MM/YYYY - HH:mm')
-            : '-',
-        }));
+    this.tripInfoService
+      .getTripInfo(this.currentPage(), this.currentRows(), undefined, {
+        acReg,
+        flightNo,
+      })
+      .subscribe({
+        next: (response) => {
+          const formatted = response.content.map((item) => ({
+            ...item,
+            sentDateTime: item.sentDateTime
+              ? moment(item.sentDateTime).format('DD/MM/YYYY - HH:mm')
+              : '-',
+          }));
 
-        // <-- use the formatted array, not the raw response
-        this.tripInfoData.set(formatted);
-        this.tripInfoDataLoading.set(false);
-      },
-      error: () => {
-        this.tripInfoDataLoading.set(false);
-      },
-    });
-}
+          // <-- use the formatted array, not the raw response
+          this.tripInfoData.set(formatted);
+          this.tripInfoDataLoading.set(false);
+        },
+        error: () => {
+          this.tripInfoDataLoading.set(false);
+        },
+      });
+  }
 
+  loadLoadSheets(acReg: string, flightNo: string) {
+    this.loadSheetLoading.set(true);
+
+    this.loadSheetService
+      .getAllLoadSheet(
+        this.currentPage(),
+        this.currentRows(),
+        this.searchInputValue(),
+        { acReg, flightNo },
+      )
+      .subscribe({
+        next: (response) => {
+          // tarihleri formatla
+          const formatted = response.content.map((item) => ({
+            ...item,
+            depDateTime: item.depDateTime
+              ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+            arrDateTime: item.arrDateTime
+              ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+            approved: item.approved
+              ? moment(item.approved).format('DD/MM/YYYY - HH:mm')
+              : null,
+            replaced: item.replaced
+              ? moment(item.replaced).format('DD/MM/YYYY - HH:mm')
+              : null,
+            declined: item.declined
+              ? moment(item.declined).format('DD/MM/YYYY - HH:mm')
+              : null,
+          })) as ILoadSheetContentData[];
+
+          this.loadSheetData.set(formatted);
+          this.loadSheetLoading.set(false);
+        },
+        error: () => this.loadSheetLoading.set(false),
+      });
+  }
+  loadCrew(acReg: string, flightNo: string) {
+    this.crewDataLoading.set(true);
+
+    this.crewInformationService
+      .getAllCrewInformation(
+        this.currentPage(),
+        this.currentRows(),
+        this.searchInputValue(),
+        { acReg, flightNo },
+      )
+      .subscribe({
+        next: (resp) => {
+          const formatted = resp.content.map((item) => ({
+            ...item,
+            // dutyStart tarihini "DD/MM/YYYY - HH:mm" formatına çeviriyoruz
+            dutyStart: item.dutyStart
+              ? moment(item.dutyStart).format('DD/MM/YYYY - HH:mm')
+              : null,
+          }));
+          this.crewData.set(formatted);
+          this.crewDataLoading.set(false);
+        },
+        error: () => {
+          this.crewDataLoading.set(false);
+        },
+      });
+  }
 
   onRowCollapse(event: TableRowCollapseEvent) {
     delete this.expandedRows[event.data.legIsn];
@@ -853,5 +845,39 @@ export class FlightInfoComponent implements OnInit {
   }
   set tripInfoDetailsModalVisible(val: boolean) {
     this.showTripInfoDetailsModal.set(val);
+  }
+
+  cgLimitsDialogVisible = signal<boolean>(false);
+
+  onLoadSheetShow(row: ILoadSheetContentData) {
+    this.selectedLoadSheet.set(row);
+    this.showLoadSheetModal.set(true);
+  }
+  onShowCGLimitsDialog(row: ILoadSheetContentData) {
+    this.selectedLoadSheet.set(row);
+    this.showCgLimitsDialog.set(true);
+  }
+
+  get loadSheetModalVisible() {
+    return this.showLoadSheetModal();
+  }
+  set loadSheetModalVisible(v: boolean) {
+    this.showLoadSheetModal.set(v);
+  }
+
+  onLmcShow(row: ILoadSheetContentData) {
+    this.loadSheetService.getLoadSheetModalInfo(row.id!).subscribe({
+      next: (detail: ILoadSheetModalsResponse) => {
+        this.selectedLmcRowData.set(detail);
+        this.showLmcModal.set(true);
+      },
+    });
+  }
+
+  get lmcModalVisible() {
+    return this.showLmcModal();
+  }
+  set lmcModalVisible(v: boolean) {
+    this.showLmcModal.set(v);
   }
 }
