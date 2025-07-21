@@ -1,5 +1,3 @@
-
-
 import {
   Component,
   effect,
@@ -44,6 +42,14 @@ import { FlightPlanPdfService } from '@shared/services/flightPlan/flight-plan-pd
 import { IFlightPlanModalPdfResponse } from '@shared/models/flight-plan-modal-pdf-response.model';
 import { FlightPlanModalComponent } from '../../components/flight-plan-modal/flight-plan-modal.component';
 
+import { TripInfoService } from '@shared/services/trip-info.service';
+import {
+  ITripInfoResponse,
+  ITripInfoTableData,
+} from '@shared/models/trip-info-response.model';
+import { ITripInfoDetailsResponse } from '@shared/models/trip-info-details-response.model';
+import { TripInfoDetailsModalComponent } from '../../components/trip-info-details-modal/trip-info-details-modal.component';
+
 @Component({
   selector: 'app-flight-info',
   imports: [
@@ -60,8 +66,8 @@ import { FlightPlanModalComponent } from '../../components/flight-plan-modal/fli
     DatePickerModule,
     ChipModule,
     SelectModule,
-        FlightPlanModalComponent,
-
+    FlightPlanModalComponent,
+    TripInfoDetailsModalComponent,
   ],
 
   templateUrl: './flight-info.component.html',
@@ -72,8 +78,7 @@ export class FlightInfoComponent implements OnInit {
   loadSheetTableLoadSheetCellTemplate!: TemplateRef<any>;
   @ViewChild('loadSheetTableCGLimitsCellTemplate', { static: true })
   loadSheetTableCGLimitsCellTemplate!: TemplateRef<any>;
-  @ViewChild('tripInfoTableTripInfoCellTemplate', { static: true })
-  tripInfoTableTripInfoCellTemplate!: TemplateRef<any>;
+
   @ViewChild('routeTableDocumentsCellTemplate', { static: true })
   routeTableDocumentsCellTemplate!: TemplateRef<any>;
   @ViewChild('requiredActionsTemplate', { static: true })
@@ -85,11 +90,17 @@ export class FlightInfoComponent implements OnInit {
 
   mainStatusColumnTemplate = viewChild.required('mainStatusColumnTemplate');
 
-  flightPlanStatusColumnTemplate = viewChild.required('flightPlanStatusColumnTemplate');
+  flightPlanStatusColumnTemplate = viewChild.required(
+    'flightPlanStatusColumnTemplate',
+  );
 
+  tripInfodetailsColumnTemplate = viewChild.required(
+    'tripInfodetailsColumnTemplate',
+  );
+  showTripInfoDetailsModal = signal<boolean>(false);
 
-  
   searchInput = viewChild.required<ElementRef>('searchInput');
+  tableFilters = signal<any>({});
 
   mainCols!: Column[];
   crewCols!: Column[];
@@ -108,7 +119,7 @@ export class FlightInfoComponent implements OnInit {
 
   flightPlanData = signal<IFlightPlan[]>([]);
   flightPlanLoading = signal<boolean>(false);
- displayModal = signal<boolean>(false);
+  displayModal = signal<boolean>(false);
   pdfData = signal<IFlightPlanModalPdfResponse | null>(null);
 
   // Mevcut servis inject’lerine ek olarak…
@@ -118,10 +129,14 @@ export class FlightInfoComponent implements OnInit {
     null,
   );
   flightInformatioHistoryTableData = signal<IFlightInformationTableData[]>([]);
-  tripInfoDataLoading = signal<boolean>(false);
   searchInputValue = signal<string>('');
 
   flightInformationService = inject(FlightInformationService);
+  tripInfoService = inject(TripInfoService);
+  tripInfoDetails = signal<ITripInfoDetailsResponse | null>(null);
+
+  tripInfoData = signal<ITripInfoTableData[]>([]);
+  tripInfoDataLoading = signal<boolean>(false);
 
   crewData = [
     {
@@ -400,8 +415,6 @@ export class FlightInfoComponent implements OnInit {
     },
   ];
 
-  tripInfoData = [{}];
-
   constructor() {
     effect(() => {
       this.defineTableSubPanels();
@@ -411,11 +424,9 @@ export class FlightInfoComponent implements OnInit {
   ngOnInit() {
     this.defineMainColumns();
     this.defineFlightPlanColums();
-
-
+    this.defineTripInfoColums();
 
     this.defineCrewColumns();
-    this.defineTripInfoColums();
     this.defineLoadSheetColums();
     this.defineRouteColums();
     this.defineTableSubPanels();
@@ -465,46 +476,56 @@ export class FlightInfoComponent implements OnInit {
     ];
   }
 
-   defineFlightPlanColums() {
+  defineFlightPlanColums() {
     this.flightPlanCols = [
       {
         field: 'receivedDateTime',
         header: 'Received Date',
-      
       },
-      { field: 'version', header: 'Version',  },
-      { field: 'responsibleUser', header: 'Responsible User',},
+      { field: 'version', header: 'Version' },
+      { field: 'responsibleUser', header: 'Responsible User' },
       {
         field: 'status',
         header: 'Status',
         template: this.flightPlanStatusColumnTemplate(),
-        
       },
       {
         field: 'approvedDateTime',
         header: 'Approved Date',
-        
       },
       {
         field: 'replacedDateTime',
         header: 'Replaced Date',
-        
       },
       {
         field: 'declinedDateTime',
         header: 'Declined Date',
-       
       },
       {
         field: 'submittedDateTime',
         header: 'Submitted Date',
-       
       },
       {
         field: 'flightPlan',
         header: 'Flight Plan',
         isFilter: false,
         template: this.flightPlansColumnTemplate(),
+      },
+    ];
+  }
+
+  defineTripInfoColums() {
+    this.tripInfoCols = [
+      { field: 'sentBy', header: 'Sent By' },
+      {
+        field: 'sentDateTime',
+        header: 'Sent Date',
+      },
+      {
+        field: 'details',
+        header: 'Details',
+        isFilter: false,
+        template: this.tripInfodetailsColumnTemplate(),
       },
     ];
   }
@@ -520,27 +541,6 @@ export class FlightInfoComponent implements OnInit {
       { field: 'pass', header: 'Pass' },
       { field: 'pfPm', header: 'PF/PM' },
       { field: 'pilotComment', header: 'Pilot Comment' },
-    ];
-  }
-
- 
-
-  defineTripInfoColums() {
-    this.tripInfoCols = [
-      { field: 'username', header: 'Send By' },
-      { field: 'crewVersion', header: 'Crew Version' },
-      { field: 'pantryCode', header: 'Pantry Code' },
-      { field: 'taxiFuel', header: 'Taxi Fuel' },
-      { field: 'tripFuel', header: 'Trip Fuel' },
-      { field: 'takeOffTime', header: 'Take Off Time' },
-      { field: 'eet', header: 'EET' },
-      { field: 'eic_adj', header: 'EIC Adj' },
-      { field: 'pax', header: 'Pax' },
-      {
-        field: 'tripInfo',
-        header: 'Trip Info',
-        template: this.tripInfoTableTripInfoCellTemplate,
-      },
     ];
   }
 
@@ -595,27 +595,27 @@ export class FlightInfoComponent implements OnInit {
 
   defineTableSubPanels() {
     this.tableSubPanels = [
-    
       {
-        panelHeader: 'Flight Plan',
-        tableData: this.flightPlanData(), // ← dynamic
+        panelHeader: 'Flight Plans',
+        tableData: this.flightPlanData(),
         tableColumns: this.flightPlanCols,
-        tableLoading: this.flightPlanLoading(), // ← dynamic
+        tableLoading: this.flightPlanLoading(),
         value: 0,
       },
-        {
-        panelHeader: 'Crew',
-        tableData: this.crewData,
-        tableColumns: this.crewCols,
+      {
+        panelHeader: 'Trip Infos',
+        tableData: this.tripInfoData(), // artık dizi
+        tableColumns: this.tripInfoCols,
+        tableLoading: this.tripInfoDataLoading(), // loading sinyali
         value: 1,
       },
       {
-        panelHeader: 'Trip Info',
-        tableData: this.tripInfoData,
-        tableColumns: this.tripInfoCols,
-        tableLoading: this.tripInfoDataLoading(),
+        panelHeader: 'Crew',
+        tableData: this.crewData,
+        tableColumns: this.crewCols,
         value: 2,
       },
+
       {
         panelHeader: 'Load Sheet',
         tableData: this.loadSheetData,
@@ -723,13 +723,18 @@ export class FlightInfoComponent implements OnInit {
     this.getFlightInfo();
   }
 
-  tableFilters = signal<any>({});
+  // Mevcut onRowExpand’i şöyle güncelle:
 
   onRowExpand(event: TableRowExpandEvent) {
     this.expandedRows = {};
     this.expandedRows[event.data.legIsn] = true;
 
-    this.loadFlightPlans(event.data.acReg, event.data.flightNo);
+    // ← doğru isimler:
+    const acReg = event.data.aircraftReg;
+    const flightNo = event.data.flightNo;
+
+    this.loadFlightPlans(acReg, flightNo);
+    this.loadTripInfo(acReg, flightNo);
   }
 
   loadFlightPlans(acReg: string, flightNo: string) {
@@ -743,10 +748,9 @@ export class FlightInfoComponent implements OnInit {
         this.tableFilters(),
       )
       .subscribe({
-        next: (resp) => {
-          const formatted = resp.content.map((item) => ({
+        next: (response) => {
+          const formatted = response.content.map((item) => ({
             ...item,
-            // tarihleri DD/MM/YYYY - HH:mm formatına çeviriyoruz
             receivedDateTime: item.receivedDateTime
               ? moment(item.receivedDateTime).format('DD/MM/YYYY - HH:mm')
               : '-',
@@ -773,10 +777,34 @@ export class FlightInfoComponent implements OnInit {
       });
   }
 
+ loadTripInfo(acReg: string, flightNo: string) {
+  this.tripInfoDataLoading.set(true);
+
+  this.tripInfoService
+    .getTripInfo(this.currentPage(), this.currentRows(), undefined, {
+      acReg,
+      flightNo,
+    })
+    .subscribe({
+      next: (response) => {
+        const formatted = response.content.map((item) => ({
+          ...item,
+          sentDateTime: item.sentDateTime
+            ? moment(item.sentDateTime).format('DD/MM/YYYY - HH:mm')
+            : '-',
+        }));
+
+        // <-- use the formatted array, not the raw response
+        this.tripInfoData.set(formatted);
+        this.tripInfoDataLoading.set(false);
+      },
+      error: () => {
+        this.tripInfoDataLoading.set(false);
+      },
+    });
+}
 
 
-
-  
   onRowCollapse(event: TableRowCollapseEvent) {
     delete this.expandedRows[event.data.legIsn];
   }
@@ -806,5 +834,24 @@ export class FlightInfoComponent implements OnInit {
 
   onModalHide() {
     this.displayModal.set(false);
+  }
+
+  onTripInfoDetailsShow(rowData: ITripInfoTableData) {
+    this.tripInfoService.getTripInfoDetails(rowData.id).subscribe({
+      next: (data) => {
+        this.tripInfoDetails.set(data);
+        this.showTripInfoDetailsModal.set(true);
+      },
+      error: (err) => {
+        console.error('Trip Info Details fetch failed:', err);
+      },
+    });
+  }
+
+  get tripInfoDetailsModalVisible() {
+    return this.showTripInfoDetailsModal();
+  }
+  set tripInfoDetailsModalVisible(val: boolean) {
+    this.showTripInfoDetailsModal.set(val);
   }
 }
