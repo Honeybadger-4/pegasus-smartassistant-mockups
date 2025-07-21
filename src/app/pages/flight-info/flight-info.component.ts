@@ -63,6 +63,8 @@ import { ILoadSheetModalsResponse } from '@shared/models/load-sheet-modals-respo
 import { table } from 'console';
 import { CrewInformationService } from '@shared/services/crew-information.service';
 import { ICrewInformationContentData } from '@shared/models/crew-information-response.model';
+import { FuelOrderService } from '@shared/services/fuel-order.service';
+import { IFuelOrderContentData } from '@shared/models/fuel-order-response.model';
 
 @Component({
   selector: 'app-flight-info',
@@ -136,6 +138,7 @@ export class FlightInfoComponent implements OnInit {
 
   mainCols!: Column[];
   crewCols!: Column[];
+  fuelOrderCols!: Column[];
   flightPlanCols!: Column[];
   tripInfoCols!: Column[];
   loadSheetCols!: Column[];
@@ -173,6 +176,14 @@ export class FlightInfoComponent implements OnInit {
 
   crewData = signal<ICrewInformationContentData[]>([]);
   crewDataLoading = signal<boolean>(false);
+  fuelOrderService = inject(FuelOrderService);
+
+  // sayfanın başına, crewData signal’lerinin yanına
+  fuelOrderData = signal<IFuelOrderContentData[]>([]);
+  fuelOrderLoading = signal<boolean>(false);
+
+  routeData = signal<ICrewInformationContentData[]>([]);
+  routeDataLoading = signal<boolean>(false);
 
   loadSheetDataLoading = signal<boolean>(false);
   selectedLmcRowData = signal<ILoadSheetModalsResponse | null>(null);
@@ -188,123 +199,6 @@ export class FlightInfoComponent implements OnInit {
   selectedCgLimits = signal<GetCgLimitsResponseModel | null>(null);
   showCgLimitsDialog = signal<boolean>(false);
 
-  routeData = [
-    {
-      airway: 'UGB',
-      wpt: 'GOBIT',
-      mora: '86',
-      fl: 'CLB',
-      shr: '-',
-      avtt: '110',
-      wV: '269/02',
-      dist: '54',
-      rd: '152',
-      pf: '152',
-      fu: '-1042',
-      rf: '-823',
-      afDf: '00:00',
-      min: '00:00',
-      tW: '05:10',
-      atDt: '00:00',
-      acc: '05:10',
-    },
-    {
-      airway: 'UGB',
-      wpt: 'GOBIT',
-      mora: '86',
-      fl: 'CLB',
-      shr: '-',
-      avtt: '110',
-      wV: '269/02',
-      dist: '54',
-      rd: '152',
-      pf: '152',
-      fu: '-1042',
-      rf: '-823',
-      afDf: '00:00',
-      min: '00:00',
-      tW: '05:10',
-      atDt: '00:00',
-      acc: '05:10',
-    },
-    {
-      airway: 'UGB',
-      wpt: 'GOBIT',
-      mora: '86',
-      fl: 'CLB',
-      shr: '-',
-      avtt: '110',
-      wV: '269/02',
-      dist: '54',
-      rd: '152',
-      pf: '152',
-      fu: '-1042',
-      rf: '-823',
-      afDf: '00:00',
-      min: '00:00',
-      tW: '05:10',
-      atDt: '00:00',
-      acc: '05:10',
-    },
-    {
-      airway: 'UGB',
-      wpt: 'GOBIT',
-      mora: '86',
-      fl: 'CLB',
-      shr: '-',
-      avtt: '110',
-      wV: '269/02',
-      dist: '54',
-      rd: '152',
-      pf: '152',
-      fu: '-1042',
-      rf: '-823',
-      afDf: '00:00',
-      min: '00:00',
-      tW: '05:10',
-      atDt: '00:00',
-      acc: '05:10',
-    },
-    {
-      airway: 'UGB',
-      wpt: 'GOBIT',
-      mora: '86',
-      fl: 'CLB',
-      shr: '-',
-      avtt: '110',
-      wV: '269/02',
-      dist: '54',
-      rd: '152',
-      pf: '152',
-      fu: '-1042',
-      rf: '-823',
-      afDf: '00:00',
-      min: '00:00',
-      tW: '05:10',
-      atDt: '00:00',
-      acc: '05:10',
-    },
-    {
-      airway: 'UGB',
-      wpt: 'GOBIT',
-      mora: '86',
-      fl: 'CLB',
-      shr: '-',
-      avtt: '110',
-      wV: '269/02',
-      dist: '54',
-      rd: '152',
-      pf: '152',
-      fu: '-1042',
-      rf: '-823',
-      afDf: '00:00',
-      min: '00:00',
-      tW: '05:10',
-      atDt: '00:00',
-      acc: '05:10',
-    },
-  ];
-
   constructor() {
     effect(() => {
       this.defineTableSubPanels();
@@ -318,6 +212,7 @@ export class FlightInfoComponent implements OnInit {
 
     this.defineCrewColumns();
     this.defineLoadSheetColums();
+    this.defineFuelOrderColums();
     this.defineRouteColums();
     this.defineTableSubPanels();
     this.setupSearchListener();
@@ -421,6 +316,37 @@ export class FlightInfoComponent implements OnInit {
   }
   passStatusTemplate = viewChild.required('passStatusTemplate');
 
+  defineLoadSheetColums() {
+    this.loadSheetCols = [
+      { field: 'version', header: 'Version' },
+      { field: 'preparedBy', header: 'Prepared By' },
+      { field: 'checkedBy', header: 'Checked By' },
+      { field: 'responsibleUser', header: 'Responsible User' },
+      {
+        field: 'status',
+        header: 'Status',
+        template: this.loadSheetStatusTemplate(),
+      },
+      { field: 'approved', header: 'Approved Date' },
+      { field: 'replaced', header: 'Replaced Date' },
+      { field: 'declined', header: 'Declined Date' },
+      {
+        field: 'loadSheet',
+        header: 'Load Sheet',
+        template: this.loadSheetColumnTemplate,
+      },
+      {
+        field: 'hasLmc',
+        header: 'LMC',
+        template: this.lmcColumnTemplate,
+      },
+      {
+        field: 'cgLimits',
+        header: 'CG Limits',
+        template: this.cgLimitsColumnTemplate,
+      },
+    ];
+  }
   defineCrewColumns() {
     this.crewCols = [
       { field: 'crewFullName', header: 'Name Surname' },
@@ -457,34 +383,13 @@ export class FlightInfoComponent implements OnInit {
     ];
   }
 
-  defineLoadSheetColums() {
-    this.loadSheetCols = [
-      { field: 'version', header: 'Version' },
-      { field: 'preparedBy', header: 'Prepared By' },
-      { field: 'checkedBy', header: 'Checked By' },
-      { field: 'responsibleUser', header: 'Responsible User' },
+  defineFuelOrderColums() {
+    this.fuelOrderCols = [
+      { field: 'amount', header: 'Amount' },
+      { field: 'user', header: 'User' },
       {
-        field: 'status',
-        header: 'Status',
-        template: this.loadSheetStatusTemplate(),
-      },
-      { field: 'approved', header: 'Approved Date' },
-      { field: 'replaced', header: 'Replaced Date' },
-      { field: 'declined', header: 'Declined Date' },
-      {
-        field: 'loadSheet',
-        header: 'Load Sheet',
-        template: this.loadSheetColumnTemplate,
-      },
-      {
-        field: 'hasLmc',
-        header: 'LMC',
-        template: this.lmcColumnTemplate,
-      },
-      {
-        field: 'cgLimits',
-        header: 'CG Limits',
-        template: this.cgLimitsColumnTemplate,
+        field: 'orderDateTime',
+        header: 'Order Date',
       },
     ];
   }
@@ -540,18 +445,26 @@ export class FlightInfoComponent implements OnInit {
         value: 2,
       },
       {
-        panelHeader: 'Crew',
+        panelHeader: 'Crews',
         tableData: this.crewData(),
         tableColumns: this.crewCols,
         tableLoading: this.crewDataLoading(),
         value: 3,
       },
 
+    {
+  panelHeader: 'Fuel Order',
+  tableData: this.fuelOrderData(),
+  tableColumns: this.fuelOrderCols,
+  tableLoading: this.fuelOrderLoading(),
+  value: 4,
+},
+
       {
         panelHeader: 'Route',
         tableData: this.routeData,
         tableColumns: this.routeCols,
-        value: 4,
+        value: 5,
       },
     ];
   }
@@ -662,6 +575,7 @@ export class FlightInfoComponent implements OnInit {
     this.loadTripInfo(acReg, flightNo);
     this.loadLoadSheets(acReg, flightNo); // ← yenisi
     this.loadCrew(acReg, flightNo); // ← buraya ekledik
+this.loadFuelOrder(acReg, flightNo);
   }
 
   loadFlightPlans(acReg: string, flightNo: string) {
@@ -796,6 +710,37 @@ export class FlightInfoComponent implements OnInit {
         },
       });
   }
+  loadFuelOrder(acReg: string, flightNo: string) {
+  this.fuelOrderLoading.set(true);
+
+  this.fuelOrderService
+    .getAllFuelOrder(
+      this.currentPage(),
+      this.currentRows(),
+      this.searchInputValue(),
+      { acReg, flightNo }
+    )
+    .subscribe({
+      next: resp => {
+        const formatted = resp.content.map(item => ({
+          ...item,
+          depDateTime: item.depDateTime
+            ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
+            : null,
+          arrDateTime: item.arrDateTime
+            ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
+            : null,
+          orderDateTime: item.orderDateTime
+            ? moment(item.orderDateTime).format('DD/MM/YYYY - HH:mm')
+            : null
+        }));
+        this.fuelOrderData.set(formatted);
+        this.fuelOrderLoading.set(false);
+      },
+      error: () => this.fuelOrderLoading.set(false)
+    });
+}
+
 
   onRowCollapse(event: TableRowCollapseEvent) {
     delete this.expandedRows[event.data.legIsn];
