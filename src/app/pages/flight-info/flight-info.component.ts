@@ -1,3 +1,5 @@
+
+
 import {
   Component,
   effect,
@@ -36,6 +38,12 @@ import { ChipModule } from 'primeng/chip';
 import { SelectModule } from 'primeng/select';
 import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 
+import { FlightPlansService } from '@shared/services/flight-plans.service';
+import { IFlightPlan } from '@shared/models/flight-plans-response.model';
+import { FlightPlanPdfService } from '@shared/services/flightPlan/flight-plan-pdf.service';
+import { IFlightPlanModalPdfResponse } from '@shared/models/flight-plan-modal-pdf-response.model';
+import { FlightPlanModalComponent } from '../../components/flight-plan-modal/flight-plan-modal.component';
+
 @Component({
   selector: 'app-flight-info',
   imports: [
@@ -52,14 +60,14 @@ import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
     DatePickerModule,
     ChipModule,
     SelectModule,
+        FlightPlanModalComponent,
+
   ],
 
   templateUrl: './flight-info.component.html',
   styleUrl: './flight-info.component.scss',
 })
 export class FlightInfoComponent implements OnInit {
-  @ViewChild('flightPlanTableFlightPlanCellTemplate', { static: true })
-  flightPlanTableFlightPlanCellTemplate!: TemplateRef<any>;
   @ViewChild('loadSheetTableLoadSheetCellTemplate', { static: true })
   loadSheetTableLoadSheetCellTemplate!: TemplateRef<any>;
   @ViewChild('loadSheetTableCGLimitsCellTemplate', { static: true })
@@ -71,10 +79,16 @@ export class FlightInfoComponent implements OnInit {
   @ViewChild('requiredActionsTemplate', { static: true })
   requiredActionsTemplate!: TemplateRef<any>;
 
+  flightPlansColumnTemplate = viewChild.required('flightPlansColumnTemplate');
+
   customTableComponent = viewChild(CustomTableComponent);
 
-  statusColumnTemplate = viewChild.required('statusColumnTemplate');
+  mainStatusColumnTemplate = viewChild.required('mainStatusColumnTemplate');
 
+  flightPlanStatusColumnTemplate = viewChild.required('flightPlanStatusColumnTemplate');
+
+
+  
   searchInput = viewChild.required<ElementRef>('searchInput');
 
   mainCols!: Column[];
@@ -90,6 +104,15 @@ export class FlightInfoComponent implements OnInit {
   tableLoading = signal<boolean>(false);
   filterValues: { [key: string]: any } = {};
   tableSubPanels!: any[];
+  flightPlanPdfService = inject(FlightPlanPdfService);
+
+  flightPlanData = signal<IFlightPlan[]>([]);
+  flightPlanLoading = signal<boolean>(false);
+ displayModal = signal<boolean>(false);
+  pdfData = signal<IFlightPlanModalPdfResponse | null>(null);
+
+  // Mevcut servis inject’lerine ek olarak…
+  flightPlansService = inject(FlightPlansService);
 
   flightInformationHistoryData = signal<IFlightInformationResponse | null>(
     null,
@@ -177,71 +200,6 @@ export class FlightInfoComponent implements OnInit {
       pass: 'OK',
       pfPm: 'OK',
       pilotComment: 'Test 2',
-    },
-  ];
-  flightPlanData = [
-    {
-      approvedBy: 'SAWBNCS1',
-      msr: 'at LTAC',
-      ver: 'OFP3',
-      fuelOrder: '9999 Kg',
-      altRoute: 'LTGH',
-      gpsLossForm: 'Not Sent',
-      flightPlan: '-',
-    },
-    {
-      approvedBy: 'SAWBNCS2',
-      msr: 'at LTAC',
-      ver: 'OFP3',
-      fuelOrder: '9999 Kg',
-      altRoute: 'LTGH',
-      gpsLossForm: 'Not Sent',
-      flightPlan: '-',
-    },
-    {
-      approvedBy: 'SAWBNCS3',
-      msr: 'at LTAC',
-      ver: 'OFP3',
-      fuelOrder: '9999 Kg',
-      altRoute: 'LTGH',
-      gpsLossForm: 'Not Sent',
-      flightPlan: '-',
-    },
-    {
-      approvedBy: 'SAWBNCS3',
-      msr: 'at LTAC',
-      ver: 'OFP3',
-      fuelOrder: '9999 Kg',
-      altRoute: 'LTGH',
-      gpsLossForm: 'Not Sent',
-      flightPlan: '-',
-    },
-    {
-      approvedBy: 'SAWBNCS3',
-      msr: 'at LTAC',
-      ver: 'OFP3',
-      fuelOrder: '9999 Kg',
-      altRoute: 'LTGH',
-      gpsLossForm: 'Not Sent',
-      flightPlan: '-',
-    },
-    {
-      approvedBy: 'SAWBNCS3',
-      msr: 'at LTAC',
-      ver: 'OFP3',
-      fuelOrder: '9999 Kg',
-      altRoute: 'LTGH',
-      gpsLossForm: 'Not Sent',
-      flightPlan: '-',
-    },
-    {
-      approvedBy: 'SAWBNCS3',
-      msr: 'at LTAC',
-      ver: 'OFP3',
-      fuelOrder: '9999 Kg',
-      altRoute: 'LTGH',
-      gpsLossForm: 'Not Sent',
-      flightPlan: '-',
     },
   ];
 
@@ -452,8 +410,11 @@ export class FlightInfoComponent implements OnInit {
 
   ngOnInit() {
     this.defineMainColumns();
-    this.defineCrewColumns();
     this.defineFlightPlanColums();
+
+
+
+    this.defineCrewColumns();
     this.defineTripInfoColums();
     this.defineLoadSheetColums();
     this.defineRouteColums();
@@ -488,7 +449,7 @@ export class FlightInfoComponent implements OnInit {
         header: 'Status',
         isFilter: true,
         filterType: 'selectbox',
-        template: this.statusColumnTemplate(),
+        template: this.mainStatusColumnTemplate(),
         filterOptions: [
           { label: 'Waiting', value: 'WAITING' },
           { label: 'Completed', value: 'COMPLETED' },
@@ -500,6 +461,50 @@ export class FlightInfoComponent implements OnInit {
         field: 'requiredActions',
         header: 'Required Actions',
         template: this.requiredActionsTemplate,
+      },
+    ];
+  }
+
+   defineFlightPlanColums() {
+    this.flightPlanCols = [
+      {
+        field: 'receivedDateTime',
+        header: 'Received Date',
+      
+      },
+      { field: 'version', header: 'Version',  },
+      { field: 'responsibleUser', header: 'Responsible User',},
+      {
+        field: 'status',
+        header: 'Status',
+        template: this.flightPlanStatusColumnTemplate(),
+        
+      },
+      {
+        field: 'approvedDateTime',
+        header: 'Approved Date',
+        
+      },
+      {
+        field: 'replacedDateTime',
+        header: 'Replaced Date',
+        
+      },
+      {
+        field: 'declinedDateTime',
+        header: 'Declined Date',
+       
+      },
+      {
+        field: 'submittedDateTime',
+        header: 'Submitted Date',
+       
+      },
+      {
+        field: 'flightPlan',
+        header: 'Flight Plan',
+        isFilter: false,
+        template: this.flightPlansColumnTemplate(),
       },
     ];
   }
@@ -518,21 +523,7 @@ export class FlightInfoComponent implements OnInit {
     ];
   }
 
-  defineFlightPlanColums() {
-    this.flightPlanCols = [
-      { field: 'approvedBy', header: 'Approved By' },
-      { field: 'msr', header: 'MSR' },
-      { field: 'ver', header: 'VER' },
-      { field: 'fuelOrder', header: 'Fuel Order' },
-      { field: 'altRoute', header: 'Alt. Route' },
-      { field: 'gpsLossForm', header: 'GPS Loss Form' },
-      {
-        field: 'flightPlan',
-        header: 'Flight Plan',
-        template: this.flightPlanTableFlightPlanCellTemplate,
-      },
-    ];
-  }
+ 
 
   defineTripInfoColums() {
     this.tripInfoCols = [
@@ -604,16 +595,18 @@ export class FlightInfoComponent implements OnInit {
 
   defineTableSubPanels() {
     this.tableSubPanels = [
+    
       {
+        panelHeader: 'Flight Plan',
+        tableData: this.flightPlanData(), // ← dynamic
+        tableColumns: this.flightPlanCols,
+        tableLoading: this.flightPlanLoading(), // ← dynamic
+        value: 0,
+      },
+        {
         panelHeader: 'Crew',
         tableData: this.crewData,
         tableColumns: this.crewCols,
-        value: 0,
-      },
-      {
-        panelHeader: 'Flight Plan',
-        tableData: this.flightPlanData,
-        tableColumns: this.flightPlanCols,
         value: 1,
       },
       {
@@ -730,11 +723,60 @@ export class FlightInfoComponent implements OnInit {
     this.getFlightInfo();
   }
 
+  tableFilters = signal<any>({});
+
   onRowExpand(event: TableRowExpandEvent) {
     this.expandedRows = {};
     this.expandedRows[event.data.legIsn] = true;
+
+    this.loadFlightPlans(event.data.acReg, event.data.flightNo);
   }
 
+  loadFlightPlans(acReg: string, flightNo: string) {
+    this.flightPlanLoading.set(true);
+
+    this.flightPlansService
+      .getFlightPlans(
+        this.currentPage(), // pagination
+        this.currentRows(), // kaç satır gösterilecek
+        this.searchInputValue(),
+        this.tableFilters(),
+      )
+      .subscribe({
+        next: (resp) => {
+          const formatted = resp.content.map((item) => ({
+            ...item,
+            // tarihleri DD/MM/YYYY - HH:mm formatına çeviriyoruz
+            receivedDateTime: item.receivedDateTime
+              ? moment(item.receivedDateTime).format('DD/MM/YYYY - HH:mm')
+              : '-',
+            approvedDateTime: item.approvedDateTime
+              ? moment(item.approvedDateTime).format('DD/MM/YYYY - HH:mm')
+              : '-',
+            replacedDateTime: item.replacedDateTime
+              ? moment(item.replacedDateTime).format('DD/MM/YYYY - HH:mm')
+              : '-',
+            declinedDateTime: item.declinedDateTime
+              ? moment(item.declinedDateTime).format('DD/MM/YYYY - HH:mm')
+              : '-',
+            submittedDateTime: item.submittedDateTime
+              ? moment(item.submittedDateTime).format('DD/MM/YYYY - HH:mm')
+              : '-',
+          }));
+
+          this.flightPlanData.set(formatted);
+          this.flightPlanLoading.set(false);
+        },
+        error: () => {
+          this.flightPlanLoading.set(false);
+        },
+      });
+  }
+
+
+
+
+  
   onRowCollapse(event: TableRowCollapseEvent) {
     delete this.expandedRows[event.data.legIsn];
   }
@@ -751,5 +793,18 @@ export class FlightInfoComponent implements OnInit {
   }
   filterDateControl(selectedDate: any) {
     return moment(selectedDate).format('YYYY-MM-DD');
+  }
+
+  onFlightPlansShow(row: IFlightPlan) {
+    this.flightPlanPdfService.getPaperFPlan(row.id.toString()).subscribe({
+      next: (pdf) => {
+        this.pdfData.set(pdf);
+        this.displayModal.set(true);
+      },
+    });
+  }
+
+  onModalHide() {
+    this.displayModal.set(false);
   }
 }
