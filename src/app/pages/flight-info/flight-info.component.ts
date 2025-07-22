@@ -1,119 +1,111 @@
 import {
   Component,
-  effect,
   ElementRef,
-  inject,
   OnInit,
-  signal,
   TemplateRef,
-  viewChild,
   ViewChild,
+  inject,
+  effect,
+  signal,
+  viewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
-import { FlightInformationService } from '@shared/services/flight-information.service';
-import { Column } from '@shared/models/columns';
-import {
-  IFlightInformationResponse,
-  IFlightInformationTableData,
-} from '@shared/models/flight-information-response.model';
+import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
 
-import { InputTextModule } from 'primeng/inputtext';
+import moment from 'moment';
+
+// PrimeNG
+import { ButtonModule } from 'primeng/button';
+import { ChipModule } from 'primeng/chip';
+import { DatePickerModule } from 'primeng/datepicker';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { SelectModule } from 'primeng/select';
 import {
   TableModule,
   TableRowCollapseEvent,
   TableRowExpandEvent,
 } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
 import { TabsModule } from 'primeng/tabs';
-import { DatePickerModule } from 'primeng/datepicker';
-import moment from 'moment';
-import { ChipModule } from 'primeng/chip';
-import { SelectModule } from 'primeng/select';
-import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
-
-import { FlightPlansService } from '@shared/services/flight-plans.service';
-import { IFlightPlan } from '@shared/models/flight-plans-response.model';
-import { FlightPlanPdfService } from '@shared/services/flightPlan/flight-plan-pdf.service';
-import { IFlightPlanModalPdfResponse } from '@shared/models/flight-plan-modal-pdf-response.model';
-import { FlightPlanModalComponent } from '../../components/flight-plan-modal/flight-plan-modal.component';
-
-import { TripInfoService } from '@shared/services/trip-info.service';
+// Shared models
+import { Column } from '@shared/models/columns';
 import {
-  ITripInfoResponse,
-  ITripInfoTableData,
-} from '@shared/models/trip-info-response.model';
+  IFlightInformationResponse,
+  IFlightInformationTableData,
+} from '@shared/models/flight-information-response.model';
+import { IFlightPlan } from '@shared/models/flight-plans-response.model';
+import { IFlightPlanModalPdfResponse } from '@shared/models/flight-plan-modal-pdf-response.model';
+import { ITripInfoTableData } from '@shared/models/trip-info-response.model';
 import { ITripInfoDetailsResponse } from '@shared/models/trip-info-details-response.model';
-import { TripInfoDetailsModalComponent } from '../../components/trip-info-details-modal/trip-info-details-modal.component';
-import { ILoadSheetResponse } from '@shared/models/load-sheet-response.model';
-
-import { LoadSheetService } from '@shared/services/load-sheet.service';
-
 import { ILoadSheetContentData } from '@shared/models/load-sheet-response.model';
-import { CgLimitsService } from '@shared/services/bff/cg-limits.service';
-import { GetCgLimitsResponseModel } from '@shared/models/cg-limits-response.model';
-import { CgLimitsDialogComponent } from '../../components/cg-limits-dialog/cg-limits-dialog.component';
-import { LoadAndTrimSheetComponent } from 'src/app/components/load-and-trim-sheet/load-and-trim-sheet.component';
-import { LmcDetailsModalComponent } from 'src/app/components/lmc-details-modal/lmc-details-modal.component';
 import { ILoadSheetModalsResponse } from '@shared/models/load-sheet-modals-response';
-import { table } from 'console';
-import { CrewInformationService } from '@shared/services/crew-information.service';
+import { GetCgLimitsResponseModel } from '@shared/models/cg-limits-response.model';
 import { ICrewInformationContentData } from '@shared/models/crew-information-response.model';
-import { FuelOrderService } from '@shared/services/fuel-order.service';
 import { IFuelOrderContentData } from '@shared/models/fuel-order-response.model';
 import { IReportsContentData } from '@shared/models/reports-response.model';
-
-// imports üstüne ekle
-import { ReportsService } from '@shared/services/reports.service';
-import { ReportsModalComponent } from 'src/app/components/reports-modal/reports-modal.component';
-// en üst importlara ekle
-import { GpsSignalLossService } from '@shared/services/gps-signal-loss.service';
 import { IGpsLossFormContentData } from '@shared/models/gps-loss-forms-response.model';
-import { GpsLossFormsModalComponent } from 'src/app/components/gps-loss-forms-modal/gps-loss-forms-modal.component';
-// mevcut importların yanına ekle
-import { RouteModalComponent } from 'src/app/components/route-modal/route-modal.component';
-import { IRouteDetailsResponse } from '@shared/models/route-details-modal-response.model';
-import { FlightInfoRoutesService } from '@shared/services/bff/route-details.service';
 import { IAircraftChecklistContentData } from '@shared/models/aircraft-checklist-response.model';
 import { IAircraftChecklistSignatureResponse } from '@shared/models/aircraft-checklist-signature-response.model';
+
+// Shared services
+import { FlightInformationService } from '@shared/services/flight-information.service';
+import { FlightPlansService } from '@shared/services/flight-plans.service';
+import { FlightPlanPdfService } from '@shared/services/flightPlan/flight-plan-pdf.service';
+import { TripInfoService } from '@shared/services/trip-info.service';
+import { LoadSheetService } from '@shared/services/load-sheet.service';
+import { CgLimitsService } from '@shared/services/bff/cg-limits.service';
+import { CrewInformationService } from '@shared/services/crew-information.service';
+import { FuelOrderService } from '@shared/services/fuel-order.service';
+import { ReportsService } from '@shared/services/reports.service';
+import { GpsSignalLossService } from '@shared/services/gps-signal-loss.service';
+
+// Components
+import { CustomTableComponent } from '@shared/components/custom-table/custom-table.component';
+import { FlightPlanModalComponent } from '../../components/flight-plan-modal/flight-plan-modal.component';
+import { TripInfoDetailsModalComponent } from '../../components/trip-info-details-modal/trip-info-details-modal.component';
+import { LoadAndTrimSheetComponent } from 'src/app/components/load-and-trim-sheet/load-and-trim-sheet.component';
+import { CgLimitsDialogComponent } from '../../components/cg-limits-dialog/cg-limits-dialog.component';
+import { LmcDetailsModalComponent } from 'src/app/components/lmc-details-modal/lmc-details-modal.component';
+import { ReportsModalComponent } from 'src/app/components/reports-modal/reports-modal.component';
+import { GpsLossFormsModalComponent } from 'src/app/components/gps-loss-forms-modal/gps-loss-forms-modal.component';
+import { RouteModalComponent } from 'src/app/components/route-modal/route-modal.component';
 import { AircraftChecklistModalComponent } from 'src/app/components/aircraft-checklist-modal/aircraft-checklist-modal.component';
 
 @Component({
   selector: 'app-flight-info',
-  imports: [
-    CommonModule,
-    TableModule,
-    ButtonModule,
-    TabsModule,
-    CustomTableComponent,
-    IconFieldModule,
-    InputIconModule,
-    InputTextModule,
-    FormsModule,
-    ReactiveFormsModule,
-    DatePickerModule,
-    ChipModule,
-    SelectModule,
-    FlightPlanModalComponent,
-    TripInfoDetailsModalComponent,
-    LoadAndTrimSheetComponent,
-    CgLimitsDialogComponent,
-    LmcDetailsModalComponent,
-    ReportsModalComponent,
-    GpsLossFormsModalComponent,
-    RouteModalComponent,
-    AircraftChecklistModalComponent,
-  ],
+ imports: [
+  CommonModule,
+  FormsModule,
+  ReactiveFormsModule,
+  TableModule,
+  ButtonModule,
+  TabsModule,
+  IconFieldModule,
+  InputIconModule,
+  InputTextModule,
+  DatePickerModule,
+  ChipModule,
+  SelectModule,
+  CustomTableComponent,
+  FlightPlanModalComponent,
+  TripInfoDetailsModalComponent,
+  LoadAndTrimSheetComponent,
+  CgLimitsDialogComponent,
+  LmcDetailsModalComponent,
+  ReportsModalComponent,
+  GpsLossFormsModalComponent,
+  RouteModalComponent,
+  AircraftChecklistModalComponent,
+],
+
 
   templateUrl: './flight-info.component.html',
   styleUrl: './flight-info.component.scss',
 })
 export class FlightInfoComponent implements OnInit {
-  // FlightInfoComponent içinde
   @ViewChild('loadSheetColumnTemplate', { static: true })
   loadSheetColumnTemplate!: TemplateRef<any>;
 
@@ -129,14 +121,11 @@ export class FlightInfoComponent implements OnInit {
   requiredActionsTemplate!: TemplateRef<any>;
 
   flightPlansColumnTemplate = viewChild.required('flightPlansColumnTemplate');
-  // class içinde, diğer viewChild'ların yanına
   routeDetailsColumnTemplate = viewChild.required('routeDetailsColumnTemplate');
 
-  // Data & loading
   routesTableData = signal<IFlightPlan[]>([]);
   routesTableLoading = signal<boolean>(false);
 
-  // Modal kontrol
   showRouteDetailsModal = signal<boolean>(false);
   selectedRouteRow = signal<IFlightPlan | null>(null);
 
@@ -150,21 +139,20 @@ export class FlightInfoComponent implements OnInit {
     'flightPlanStatusColumnTemplate',
   );
 
-
-
-@ViewChild('signatureColumnTemplate',     { static: true }) signatureColumnTemplate!: TemplateRef<any>;
-@ViewChild('melItemsStatusTemplate',      { static: true }) melItemsStatusTemplate!: TemplateRef<any>;
-@ViewChild('dailyCheckStatusTemplate',    { static: true }) dailyCheckStatusTemplate!: TemplateRef<any>;
-@ViewChild('defferedItemsStatusTemplate', { static: true }) defferedItemsStatusTemplate!: TemplateRef<any>;
-@ViewChild('preflightCheckStatusTemplate',{ static: true }) preflightCheckStatusTemplate!: TemplateRef<any>;
-@ViewChild('fluidUpliftStatusTemplate',   { static: true }) fluidUpliftStatusTemplate!: TemplateRef<any>;
-@ViewChild('securitySearchStatusTemplate',{ static: true }) securitySearchStatusTemplate!: TemplateRef<any>;
-
-
-
- 
- 
-
+  @ViewChild('signatureColumnTemplate', { static: true })
+  signatureColumnTemplate!: TemplateRef<any>;
+  @ViewChild('melItemsStatusTemplate', { static: true })
+  melItemsStatusTemplate!: TemplateRef<any>;
+  @ViewChild('dailyCheckStatusTemplate', { static: true })
+  dailyCheckStatusTemplate!: TemplateRef<any>;
+  @ViewChild('defferedItemsStatusTemplate', { static: true })
+  defferedItemsStatusTemplate!: TemplateRef<any>;
+  @ViewChild('preflightCheckStatusTemplate', { static: true })
+  preflightCheckStatusTemplate!: TemplateRef<any>;
+  @ViewChild('fluidUpliftStatusTemplate', { static: true })
+  fluidUpliftStatusTemplate!: TemplateRef<any>;
+  @ViewChild('securitySearchStatusTemplate', { static: true })
+  securitySearchStatusTemplate!: TemplateRef<any>;
 
   @ViewChild('loadSheetLmcTemplate', { static: true })
   loadSheetLmcTemplate!: TemplateRef<any>;
@@ -203,7 +191,6 @@ export class FlightInfoComponent implements OnInit {
   tableSubPanels!: any[];
   flightPlanPdfService = inject(FlightPlanPdfService);
 
-  // class içinde sinyaller
   reportsService = inject(ReportsService);
 
   reportData = signal<IReportsContentData[]>([]);
@@ -218,7 +205,6 @@ export class FlightInfoComponent implements OnInit {
   pdfData = signal<IFlightPlanModalPdfResponse | null>(null);
   gpsLossFormsColumnTemplate = viewChild.required('gpsLossFormsColumnTemplate');
 
-  // Mevcut servis inject’lerine ek olarak…
   flightPlansService = inject(FlightPlansService);
 
   flightInformationHistoryData = signal<IFlightInformationResponse | null>(
@@ -279,6 +265,37 @@ export class FlightInfoComponent implements OnInit {
   selectedChecklistSignature =
     signal<IAircraftChecklistSignatureResponse | null>(null);
 
+
+
+
+
+  passStatusTemplate = viewChild.required('passStatusTemplate');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   constructor() {
     effect(() => {
       this.defineTableSubPanels();
@@ -296,7 +313,7 @@ export class FlightInfoComponent implements OnInit {
     this.defineReportsColums();
     this.defineGpsLossFormsColums();
     this.defineRoutesColumns();
-      this.defineAircraftChecklistColumns(); // ← BUNU EKLE
+    this.defineAircraftChecklistColumns(); // ← BUNU EKLE
 
     this.defineTableSubPanels();
     this.setupSearchListener();
@@ -398,7 +415,6 @@ export class FlightInfoComponent implements OnInit {
       },
     ];
   }
-  passStatusTemplate = viewChild.required('passStatusTemplate');
 
   defineLoadSheetColums() {
     this.loadSheetCols = [
@@ -535,8 +551,6 @@ export class FlightInfoComponent implements OnInit {
 
   defineAircraftChecklistColumns() {
     this.aircraftChecklistCols = [
-    
-
       {
         field: 'melItems',
         header: 'MEL Items',
@@ -568,13 +582,11 @@ export class FlightInfoComponent implements OnInit {
         template: this.securitySearchStatusTemplate,
       },
 
-     {
-  field: 'signature',
-  header: 'Signature',
-  template: this.signatureColumnTemplate
-}
-
-     
+      {
+        field: 'signature',
+        header: 'Signature',
+        template: this.signatureColumnTemplate,
+      },
     ];
   }
 
