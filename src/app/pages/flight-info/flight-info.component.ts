@@ -70,6 +70,10 @@ import { IReportsContentData } from '@shared/models/reports-response.model';
 // imports üstüne ekle
 import { ReportsService } from '@shared/services/reports.service';
 import { ReportsModalComponent } from 'src/app/components/reports-modal/reports-modal.component';
+// en üst importlara ekle
+import { GpsSignalLossService } from '@shared/services/gps-signal-loss.service';
+import { IGpsLossFormContentData } from '@shared/models/gps-loss-forms-response.model';
+import { GpsLossFormsModalComponent } from 'src/app/components/gps-loss-forms-modal/gps-loss-forms-modal.component';
 
 @Component({
   selector: 'app-flight-info',
@@ -93,6 +97,7 @@ import { ReportsModalComponent } from 'src/app/components/reports-modal/reports-
     CgLimitsDialogComponent,
     LmcDetailsModalComponent,
     ReportsModalComponent,
+    GpsLossFormsModalComponent,
   ],
 
   templateUrl: './flight-info.component.html',
@@ -147,6 +152,7 @@ export class FlightInfoComponent implements OnInit {
   crewCols!: Column[];
   fuelOrderCols!: Column[];
   reportsCols!: Column[];
+  gpsLossFormsCols!: Column[];
   flightPlanCols!: Column[];
   tripInfoCols!: Column[];
   loadSheetCols!: Column[];
@@ -173,6 +179,7 @@ export class FlightInfoComponent implements OnInit {
   flightPlanLoading = signal<boolean>(false);
   displayModal = signal<boolean>(false);
   pdfData = signal<IFlightPlanModalPdfResponse | null>(null);
+  gpsLossFormsColumnTemplate = viewChild.required('gpsLossFormsColumnTemplate');
 
   // Mevcut servis inject’lerine ek olarak…
   flightPlansService = inject(FlightPlansService);
@@ -216,6 +223,15 @@ export class FlightInfoComponent implements OnInit {
   selectedCgLimits = signal<GetCgLimitsResponseModel | null>(null);
   showCgLimitsDialog = signal<boolean>(false);
 
+  // class içi
+  gpsLossFormsService = inject(GpsSignalLossService);
+
+  gpsLossFormsData = signal<IGpsLossFormContentData[]>([]);
+  gpsLossFormsLoading = signal<boolean>(false);
+
+  showGpsLossModal = signal<boolean>(false);
+  selectedGpsLossRow = signal<IGpsLossFormContentData | null>(null);
+
   constructor() {
     effect(() => {
       this.defineTableSubPanels();
@@ -231,6 +247,7 @@ export class FlightInfoComponent implements OnInit {
     this.defineLoadSheetColums();
     this.defineFuelOrderColums();
     this.defineReportsColums();
+    this.defineGpsLossFormsColums();
     this.defineRouteColums();
     this.defineTableSubPanels();
     this.setupSearchListener();
@@ -421,12 +438,33 @@ export class FlightInfoComponent implements OnInit {
       {
         field: 'enteredDate',
         header: 'Sent Date - Time',
-       
       },
       {
         field: 'show',
         header: 'Report Details',
         template: this.reportsColumnTemplate(), // ↓ bu template’i html’de ekleyeceğiz
+      },
+    ];
+  }
+
+  defineGpsLossFormsColums() {
+    this.gpsLossFormsCols = [
+      { field: 'acReg', header: 'Ac Reg' },
+      { field: 'flightNo', header: 'Flight No' },
+      { field: 'depPort', header: 'Departure Port' },
+      { field: 'depDateTime', header: 'Departure Date' },
+      { field: 'arrPort', header: 'Arrival Port' },
+      { field: 'arrDateTime', header: 'Arrival Date' },
+      { field: 'firstPointName', header: 'First Point' },
+      { field: 'lastPointName', header: 'Last Point' },
+      { field: 'time', header: 'Time' },
+      { field: 'flightPhase', header: 'Phase of Flight' },
+      { field: 'flightLevel', header: 'Flight Level / Altitude' },
+      { field: 'duration', header: 'Duration' },
+      {
+        field: 'gpsLossTypes',
+        header: 'GPS Loss Types',
+        template: this.gpsLossFormsColumnTemplate(),
       },
     ];
   }
@@ -503,7 +541,13 @@ export class FlightInfoComponent implements OnInit {
         tableLoading: this.reportsLoading(),
         value: 5,
       },
-      // Route tabı 6’ya kayar (varsa)
+      {
+        panelHeader: 'GPS Loss Forms',
+        tableData: this.gpsLossFormsData(),
+        tableColumns: this.gpsLossFormsCols,
+        tableLoading: this.gpsLossFormsLoading(),
+        value: 6,
+      },
     ];
   }
 
@@ -610,6 +654,7 @@ export class FlightInfoComponent implements OnInit {
     this.loadCrew(acReg, flightNo);
     this.loadFuelOrder(acReg, flightNo);
     this.loadReports(acReg, flightNo);
+    this.loadGpsLossForms(acReg, flightNo);
   }
 
   loadFlightPlans(acReg: string, flightNo: string) {
@@ -822,6 +867,34 @@ export class FlightInfoComponent implements OnInit {
       });
   }
 
+  loadGpsLossForms(acReg: string, flightNo: string) {
+    this.gpsLossFormsLoading.set(true);
+
+    this.gpsLossFormsService
+      .getAllGpsLossForms(
+        this.currentPage(),
+        this.currentRows(),
+        this.searchInputValue(),
+        { acReg, flightNo } as any, // servis aynı patterni kullanıyorsa
+      )
+      .subscribe({
+        next: (resp) => {
+          const formatted = resp.content.map((item) => ({
+            ...item,
+            depDateTime: item.depDateTime
+              ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+            arrDateTime: item.arrDateTime
+              ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+          }));
+          this.gpsLossFormsData.set(formatted);
+          this.gpsLossFormsLoading.set(false);
+        },
+        error: () => this.gpsLossFormsLoading.set(false),
+      });
+  }
+
   onRowCollapse(event: TableRowCollapseEvent) {
     delete this.expandedRows[event.data.legIsn];
   }
@@ -916,5 +989,17 @@ export class FlightInfoComponent implements OnInit {
   }
   set reportsModalVisible(v: boolean) {
     this.showReportsModal.set(v);
+  }
+
+  onGpsLossShow(row: IGpsLossFormContentData) {
+    this.selectedGpsLossRow.set(row);
+    this.showGpsLossModal.set(true);
+  }
+
+  get gpsLossModalVisible() {
+    return this.showGpsLossModal();
+  }
+  set gpsLossModalVisible(v: boolean) {
+    this.showGpsLossModal.set(v);
   }
 }

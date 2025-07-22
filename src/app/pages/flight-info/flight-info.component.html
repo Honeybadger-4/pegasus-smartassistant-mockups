@@ -366,6 +366,16 @@
     }
   }
 </ng-template>
+
+<ng-template #gpsLossFormsColumnTemplate let-rowData="rowData">
+  <button
+    class="border border-gray-300 rounded-md px-3 py-1 bg-white"
+    (click)="onGpsLossShow(rowData)"
+  >
+    Show
+  </button>
+</ng-template>
+
 <ng-template #passStatusTemplate let-rowData="rowData">
   <i
     class="pi"
@@ -384,7 +394,6 @@
     Show
   </button>
 </ng-template>
-
 
 <app-flight-plan-modal
   [visible]="displayModal()"
@@ -405,11 +414,12 @@
 >
 </app-load-and-trim-sheet>
 
- <app-cg-limits-dialog
-   *ngIf="showCgLimitsDialog()"
-   [(visible)]="showCgLimitsDialog"
-   [selectedRowData]="selectedLoadSheet()">
- </app-cg-limits-dialog>
+<app-cg-limits-dialog
+  *ngIf="showCgLimitsDialog()"
+  [(visible)]="showCgLimitsDialog"
+  [selectedRowData]="selectedLoadSheet()"
+>
+</app-cg-limits-dialog>
 
 <app-lmc-details-modal
   *ngIf="selectedLmcRowData()"
@@ -417,9 +427,14 @@
   [(visible)]="lmcModalVisible"
 ></app-lmc-details-modal>
 
-
 <app-reports-modal
   *ngIf="selectedReportRow()"
   [(visible)]="reportsModalVisible"
   [rowData]="selectedReportRow()"
 ></app-reports-modal>
+
+<app-gps-loss-forms-modal
+  *ngIf="selectedGpsLossRow()"
+  [(visible)]="gpsLossModalVisible"
+  [rowData]="selectedGpsLossRow()"
+></app-gps-loss-forms-modal>
