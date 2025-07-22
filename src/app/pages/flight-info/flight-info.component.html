@@ -424,6 +424,64 @@
 >
 </app-load-and-trim-sheet>
 
+<ng-template #melItemsStatusTemplate let-rowData="rowData">
+  <i
+    class="pi"
+    [ngClass]="{
+      'pi-check-circle text-green-500': rowData.melItems === true,
+      'pi-times-circle text-red-500': rowData.melItems === false,
+    }"
+  ></i> </ng-template
+><ng-template #dailyCheckStatusTemplate let-rowData="rowData">
+  <i
+    class="pi"
+    [ngClass]="{
+      'pi-check-circle text-green-500': rowData.dailyCheck === true,
+      'pi-times-circle text-red-500': rowData.dailyCheck === false,
+    }"
+  ></i> </ng-template
+><ng-template #defferedItemsStatusTemplate let-rowData="rowData">
+  <i
+    class="pi"
+    [ngClass]="{
+      'pi-check-circle text-green-500': rowData.defferedItems === true,
+      'pi-times-circle text-red-500': rowData.defferedItems === false,
+    }"
+  ></i> </ng-template
+><ng-template #preflightCheckStatusTemplate let-rowData="rowData">
+  <i
+    class="pi"
+    [ngClass]="{
+      'pi-check-circle text-green-500': rowData.preflightCheck === true,
+      'pi-times-circle text-red-500': rowData.preflightCheck === false,
+    }"
+  ></i> </ng-template
+><ng-template #fluidUpliftStatusTemplate let-rowData="rowData">
+  <i
+    class="pi"
+    [ngClass]="{
+      'pi-check-circle text-green-500': rowData.fluidUplift === true,
+      'pi-times-circle text-red-500': rowData.fluidUplift === false,
+    }"
+  ></i> </ng-template
+><ng-template #securitySearchStatusTemplate let-rowData="rowData">
+  <i
+    class="pi"
+    [ngClass]="{
+      'pi-check-circle text-green-500': rowData.securitySearch === true,
+      'pi-times-circle text-red-500': rowData.securitySearch === false,
+    }"
+  ></i>
+</ng-template>
+<ng-template #signatureColumnTemplate let-rowData="rowData">
+  <button
+    class="border border-gray-300 rounded-md px-3 py-1 bg-white"
+    (click)="onChecklistSignatureShow(rowData)"
+  >
+    Show
+  </button>
+</ng-template>
+
 <app-cg-limits-dialog
   *ngIf="showCgLimitsDialog()"
   [(visible)]="showCgLimitsDialog"
@@ -454,3 +512,10 @@
   [(visible)]="routeDetailsModalVisible"
   [rowData]="selectedRouteRow()"
 ></app-route-modal>
+
+
+<app-aircraft-checklist-modal
+  *ngIf="selectedChecklistSignature()"
+  [(visible)]="checklistSignatureModalVisible"
+  [rowData]="selectedChecklistSignature()"
+></app-aircraft-checklist-modal>

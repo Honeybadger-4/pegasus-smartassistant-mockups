@@ -78,6 +78,9 @@ import { GpsLossFormsModalComponent } from 'src/app/components/gps-loss-forms-mo
 import { RouteModalComponent } from 'src/app/components/route-modal/route-modal.component';
 import { IRouteDetailsResponse } from '@shared/models/route-details-modal-response.model';
 import { FlightInfoRoutesService } from '@shared/services/bff/route-details.service';
+import { IAircraftChecklistContentData } from '@shared/models/aircraft-checklist-response.model';
+import { IAircraftChecklistSignatureResponse } from '@shared/models/aircraft-checklist-signature-response.model';
+import { AircraftChecklistModalComponent } from 'src/app/components/aircraft-checklist-modal/aircraft-checklist-modal.component';
 
 @Component({
   selector: 'app-flight-info',
@@ -103,6 +106,7 @@ import { FlightInfoRoutesService } from '@shared/services/bff/route-details.serv
     ReportsModalComponent,
     GpsLossFormsModalComponent,
     RouteModalComponent,
+    AircraftChecklistModalComponent,
   ],
 
   templateUrl: './flight-info.component.html',
@@ -146,6 +150,22 @@ export class FlightInfoComponent implements OnInit {
     'flightPlanStatusColumnTemplate',
   );
 
+
+
+@ViewChild('signatureColumnTemplate',     { static: true }) signatureColumnTemplate!: TemplateRef<any>;
+@ViewChild('melItemsStatusTemplate',      { static: true }) melItemsStatusTemplate!: TemplateRef<any>;
+@ViewChild('dailyCheckStatusTemplate',    { static: true }) dailyCheckStatusTemplate!: TemplateRef<any>;
+@ViewChild('defferedItemsStatusTemplate', { static: true }) defferedItemsStatusTemplate!: TemplateRef<any>;
+@ViewChild('preflightCheckStatusTemplate',{ static: true }) preflightCheckStatusTemplate!: TemplateRef<any>;
+@ViewChild('fluidUpliftStatusTemplate',   { static: true }) fluidUpliftStatusTemplate!: TemplateRef<any>;
+@ViewChild('securitySearchStatusTemplate',{ static: true }) securitySearchStatusTemplate!: TemplateRef<any>;
+
+
+
+ 
+ 
+
+
   @ViewChild('loadSheetLmcTemplate', { static: true })
   loadSheetLmcTemplate!: TemplateRef<any>;
 
@@ -172,6 +192,8 @@ export class FlightInfoComponent implements OnInit {
   tripInfoCols!: Column[];
   loadSheetCols!: Column[];
   routeCols!: Column[];
+  aircraftChecklistCols!: Column[];
+
   dateRange: Date[] = [];
   expandedRows: { [key: string]: boolean } = {};
   currentPage = signal<number>(0);
@@ -247,6 +269,16 @@ export class FlightInfoComponent implements OnInit {
   showGpsLossModal = signal<boolean>(false);
   selectedGpsLossRow = signal<IGpsLossFormContentData | null>(null);
 
+  // --- signals (diğerlerinin yanına)
+  aircraftChecklistData = signal<IAircraftChecklistContentData[]>([]);
+  aircraftChecklistLoading = signal<boolean>(false);
+  selectedChecklistRow = signal<IAircraftChecklistContentData | null>(null);
+  showChecklistSignature = signal<boolean>(false);
+
+  // signature data
+  selectedChecklistSignature =
+    signal<IAircraftChecklistSignatureResponse | null>(null);
+
   constructor() {
     effect(() => {
       this.defineTableSubPanels();
@@ -264,6 +296,8 @@ export class FlightInfoComponent implements OnInit {
     this.defineReportsColums();
     this.defineGpsLossFormsColums();
     this.defineRoutesColumns();
+      this.defineAircraftChecklistColumns(); // ← BUNU EKLE
+
     this.defineTableSubPanels();
     this.setupSearchListener();
   }
@@ -499,6 +533,51 @@ export class FlightInfoComponent implements OnInit {
     ];
   }
 
+  defineAircraftChecklistColumns() {
+    this.aircraftChecklistCols = [
+    
+
+      {
+        field: 'melItems',
+        header: 'MEL Items',
+        template: this.melItemsStatusTemplate,
+      },
+      {
+        field: 'dailyCheck',
+        header: 'Daily Check',
+        template: this.dailyCheckStatusTemplate,
+      },
+      {
+        field: 'defferedItems',
+        header: 'Deferred Items',
+        template: this.defferedItemsStatusTemplate,
+      },
+      {
+        field: 'preflightCheck',
+        header: 'Preflight Check',
+        template: this.preflightCheckStatusTemplate,
+      },
+      {
+        field: 'fluidUplift',
+        header: 'Fluid Uplift',
+        template: this.fluidUpliftStatusTemplate,
+      },
+      {
+        field: 'securitySearch',
+        header: 'Security Search',
+        template: this.securitySearchStatusTemplate,
+      },
+
+     {
+  field: 'signature',
+  header: 'Signature',
+  template: this.signatureColumnTemplate
+}
+
+     
+    ];
+  }
+
   defineTableSubPanels() {
     this.tableSubPanels = [
       {
@@ -557,6 +636,13 @@ export class FlightInfoComponent implements OnInit {
         tableColumns: this.routeCols,
         tableLoading: this.routesTableLoading(),
         value: 7,
+      },
+      {
+        panelHeader: 'Aircraft Checklist',
+        tableData: this.aircraftChecklistData(),
+        tableColumns: this.aircraftChecklistCols, // ayrı kolon seti
+        tableLoading: this.aircraftChecklistLoading(),
+        value: 8,
       },
     ];
   }
@@ -666,6 +752,7 @@ export class FlightInfoComponent implements OnInit {
     this.loadReports(acReg, flightNo);
     this.loadGpsLossForms(acReg, flightNo);
     this.loadRoutes(acReg, flightNo);
+    this.loadAircraftChecklist(acReg, flightNo);
   }
 
   loadRoutes(acReg: string, flightNo: string) {
@@ -902,6 +989,57 @@ export class FlightInfoComponent implements OnInit {
         },
         error: () => this.reportsLoading.set(false),
       });
+  }
+
+  loadAircraftChecklist(acReg: string, flightNo: string) {
+    this.aircraftChecklistLoading.set(true);
+
+    const page = this.currentPage();
+    const size = this.currentRows();
+    const search = this.searchInputValue();
+
+    const filters = {
+      ...this.tableFilters(),
+      aircraftReg: acReg,
+      flightNo,
+    } as any;
+
+    this.flightInformationService
+      .getAircraftCheckList(page, size, search, filters)
+      .subscribe({
+        next: (resp) => {
+          const formatted = resp.content.map((item) => ({
+            ...item,
+            depDateTime: item.depDateTime
+              ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+            arrDateTime: item.arrDateTime
+              ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+            confirmedDateTime: item.confirmedDateTime
+              ? moment(item.confirmedDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+          }));
+          this.aircraftChecklistData.set(formatted);
+          this.aircraftChecklistLoading.set(false);
+        },
+        error: () => this.aircraftChecklistLoading.set(false),
+      });
+  }
+  onChecklistSignatureShow(row: IAircraftChecklistContentData) {
+    this.flightInformationService
+      .getAircraftChecklistSignature(row.legIsn)
+      .subscribe((res) => {
+        this.selectedChecklistSignature.set(res);
+        this.showChecklistSignature.set(true);
+      });
+  }
+
+  get checklistSignatureModalVisible() {
+    return this.showChecklistSignature();
+  }
+  set checklistSignatureModalVisible(v: boolean) {
+    this.showChecklistSignature.set(v);
   }
 
   loadGpsLossForms(acReg: string, flightNo: string) {
