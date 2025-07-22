@@ -11,9 +11,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { debounceTime, distinctUntilChanged, fromEvent, map } from 'rxjs';
-
 import moment from 'moment';
 
 // PrimeNG
@@ -76,31 +74,30 @@ import { AircraftChecklistModalComponent } from 'src/app/components/aircraft-che
 
 @Component({
   selector: 'app-flight-info',
- imports: [
-  CommonModule,
-  FormsModule,
-  ReactiveFormsModule,
-  TableModule,
-  ButtonModule,
-  TabsModule,
-  IconFieldModule,
-  InputIconModule,
-  InputTextModule,
-  DatePickerModule,
-  ChipModule,
-  SelectModule,
-  CustomTableComponent,
-  FlightPlanModalComponent,
-  TripInfoDetailsModalComponent,
-  LoadAndTrimSheetComponent,
-  CgLimitsDialogComponent,
-  LmcDetailsModalComponent,
-  ReportsModalComponent,
-  GpsLossFormsModalComponent,
-  RouteModalComponent,
-  AircraftChecklistModalComponent,
-],
-
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TableModule,
+    ButtonModule,
+    TabsModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+    DatePickerModule,
+    ChipModule,
+    SelectModule,
+    CustomTableComponent,
+    FlightPlanModalComponent,
+    TripInfoDetailsModalComponent,
+    LoadAndTrimSheetComponent,
+    CgLimitsDialogComponent,
+    LmcDetailsModalComponent,
+    ReportsModalComponent,
+    GpsLossFormsModalComponent,
+    RouteModalComponent,
+    AircraftChecklistModalComponent,
+  ],
 
   templateUrl: './flight-info.component.html',
   styleUrl: './flight-info.component.scss',
@@ -108,36 +105,14 @@ import { AircraftChecklistModalComponent } from 'src/app/components/aircraft-che
 export class FlightInfoComponent implements OnInit {
   @ViewChild('loadSheetColumnTemplate', { static: true })
   loadSheetColumnTemplate!: TemplateRef<any>;
-
   @ViewChild('cgLimitsColumnTemplate', { static: true })
   cgLimitsColumnTemplate!: TemplateRef<any>;
-
   @ViewChild('lmcColumnTemplate', { static: true })
   lmcColumnTemplate!: TemplateRef<any>;
-
   @ViewChild('routeTableDocumentsCellTemplate', { static: true })
   routeTableDocumentsCellTemplate!: TemplateRef<any>;
   @ViewChild('requiredActionsTemplate', { static: true })
   requiredActionsTemplate!: TemplateRef<any>;
-
-  flightPlansColumnTemplate = viewChild.required('flightPlansColumnTemplate');
-  routeDetailsColumnTemplate = viewChild.required('routeDetailsColumnTemplate');
-
-  routesTableData = signal<IFlightPlan[]>([]);
-  routesTableLoading = signal<boolean>(false);
-
-  showRouteDetailsModal = signal<boolean>(false);
-  selectedRouteRow = signal<IFlightPlan | null>(null);
-
-  customTableComponent = viewChild(CustomTableComponent);
-
-  mainStatusColumnTemplate = viewChild.required('mainStatusColumnTemplate');
-
-  loadSheetStatusTemplate = viewChild.required('loadSheetStatusTemplate');
-
-  flightPlanStatusColumnTemplate = viewChild.required(
-    'flightPlanStatusColumnTemplate',
-  );
 
   @ViewChild('signatureColumnTemplate', { static: true })
   signatureColumnTemplate!: TemplateRef<any>;
@@ -157,144 +132,110 @@ export class FlightInfoComponent implements OnInit {
   @ViewChild('loadSheetLmcTemplate', { static: true })
   loadSheetLmcTemplate!: TemplateRef<any>;
 
-  selectedLmcDetail = signal<ILoadSheetModalsResponse | null>(null);
-  showLmcModal = signal<boolean>(false);
+  customTableComponent = viewChild(CustomTableComponent);
+  searchInput = viewChild.required<ElementRef>('searchInput');
 
-  loadSheetService = inject(LoadSheetService);
+  flightPlansColumnTemplate = viewChild.required('flightPlansColumnTemplate');
+  routeDetailsColumnTemplate = viewChild.required('routeDetailsColumnTemplate');
 
+  mainStatusColumnTemplate = viewChild.required('mainStatusColumnTemplate');
+  loadSheetStatusTemplate = viewChild.required('loadSheetStatusTemplate');
+  flightPlanStatusColumnTemplate = viewChild.required(
+    'flightPlanStatusColumnTemplate',
+  );
+  gpsLossFormsColumnTemplate = viewChild.required('gpsLossFormsColumnTemplate');
   tripInfodetailsColumnTemplate = viewChild.required(
     'tripInfodetailsColumnTemplate',
   );
-  showTripInfoDetailsModal = signal<boolean>(false);
   reportsColumnTemplate = viewChild.required('reportsColumnTemplate');
-
-  searchInput = viewChild.required<ElementRef>('searchInput');
-  tableFilters = signal<any>({});
-
-  mainCols!: Column[];
-  crewCols!: Column[];
-  fuelOrderCols!: Column[];
-  reportsCols!: Column[];
-  gpsLossFormsCols!: Column[];
-  flightPlanCols!: Column[];
-  tripInfoCols!: Column[];
-  loadSheetCols!: Column[];
-  routeCols!: Column[];
-  aircraftChecklistCols!: Column[];
-
-  dateRange: Date[] = [];
-  expandedRows: { [key: string]: boolean } = {};
-  currentPage = signal<number>(0);
-  currentRows = signal<number>(20);
-  tableLoading = signal<boolean>(false);
-  filterValues: { [key: string]: any } = {};
-  tableSubPanels!: any[];
-  flightPlanPdfService = inject(FlightPlanPdfService);
-
-  reportsService = inject(ReportsService);
-
-  reportData = signal<IReportsContentData[]>([]);
-  reportsLoading = signal<boolean>(false);
-
-  showReportsModal = signal<boolean>(false);
-  selectedReportRow = signal<IReportsContentData | null>(null);
-
-  flightPlanData = signal<IFlightPlan[]>([]);
-  flightPlanLoading = signal<boolean>(false);
-  displayModal = signal<boolean>(false);
-  pdfData = signal<IFlightPlanModalPdfResponse | null>(null);
-  gpsLossFormsColumnTemplate = viewChild.required('gpsLossFormsColumnTemplate');
-
-  flightPlansService = inject(FlightPlansService);
+  passStatusTemplate = viewChild.required('passStatusTemplate');
 
   flightInformationHistoryData = signal<IFlightInformationResponse | null>(
     null,
   );
   flightInformatioHistoryTableData = signal<IFlightInformationTableData[]>([]);
-  searchInputValue = signal<string>('');
 
-  flightInformationService = inject(FlightInformationService);
-  tripInfoService = inject(TripInfoService);
-  tripInfoDetails = signal<ITripInfoDetailsResponse | null>(null);
-  crewInformationService = inject(CrewInformationService);
-
+  flightPlanData = signal<IFlightPlan[]>([]);
   tripInfoData = signal<ITripInfoTableData[]>([]);
-  tripInfoDataLoading = signal<boolean>(false);
-
-  crewData = signal<ICrewInformationContentData[]>([]);
-  crewDataLoading = signal<boolean>(false);
-  fuelOrderService = inject(FuelOrderService);
-
-  // sayfanın başına, crewData signal’lerinin yanına
-  fuelOrderData = signal<IFuelOrderContentData[]>([]);
-  fuelOrderLoading = signal<boolean>(false);
-
-  routeData = signal<ICrewInformationContentData[]>([]);
-  routeDataLoading = signal<boolean>(false);
-
-  loadSheetDataLoading = signal<boolean>(false);
-  selectedLmcRowData = signal<ILoadSheetModalsResponse | null>(null);
-
-  cgLimitsService = inject(CgLimitsService);
-
   loadSheetData = signal<ILoadSheetContentData[]>([]);
-  loadSheetLoading = signal<boolean>(false);
+  crewData = signal<ICrewInformationContentData[]>([]);
+  fuelOrderData = signal<IFuelOrderContentData[]>([]);
+  reportData = signal<IReportsContentData[]>([]);
+  gpsLossFormsData = signal<IGpsLossFormContentData[]>([]);
+  routesTableData = signal<IFlightPlan[]>([]);
+  aircraftChecklistData = signal<IAircraftChecklistContentData[]>([]);
 
-  selectedLoadSheet = signal<ILoadSheetContentData | null>(null);
+  tableLoading = signal<boolean>(false);
+  flightPlanLoading = signal<boolean>(false);
+  tripInfoDataLoading = signal<boolean>(false);
+  loadSheetLoading = signal<boolean>(false);
+  crewDataLoading = signal<boolean>(false);
+  fuelOrderLoading = signal<boolean>(false);
+  reportsLoading = signal<boolean>(false);
+  gpsLossFormsLoading = signal<boolean>(false);
+  routesTableLoading = signal<boolean>(false);
+  aircraftChecklistLoading = signal<boolean>(false);
+
+  displayModal = signal<boolean>(false);
+  pdfData = signal<IFlightPlanModalPdfResponse | null>(null);
+
+  showTripInfoDetailsModal = signal<boolean>(false);
+  tripInfoDetails = signal<ITripInfoDetailsResponse | null>(null);
+
   showLoadSheetModal = signal<boolean>(false);
+  selectedLoadSheet = signal<ILoadSheetContentData | null>(null);
+
+  showCgLimitsDialog = signal<boolean>(false);
+  cgLimitsDialogVisible = signal<boolean>(false);
 
   selectedCgLimits = signal<GetCgLimitsResponseModel | null>(null);
-  showCgLimitsDialog = signal<boolean>(false);
 
-  // class içi
-  gpsLossFormsService = inject(GpsSignalLossService);
+  showLmcModal = signal<boolean>(false);
+  selectedLmcRowData = signal<ILoadSheetModalsResponse | null>(null);
 
-  gpsLossFormsData = signal<IGpsLossFormContentData[]>([]);
-  gpsLossFormsLoading = signal<boolean>(false);
+  showReportsModal = signal<boolean>(false);
+  selectedReportRow = signal<IReportsContentData | null>(null);
 
   showGpsLossModal = signal<boolean>(false);
   selectedGpsLossRow = signal<IGpsLossFormContentData | null>(null);
 
-  // --- signals (diğerlerinin yanına)
-  aircraftChecklistData = signal<IAircraftChecklistContentData[]>([]);
-  aircraftChecklistLoading = signal<boolean>(false);
-  selectedChecklistRow = signal<IAircraftChecklistContentData | null>(null);
-  showChecklistSignature = signal<boolean>(false);
+  showRouteDetailsModal = signal<boolean>(false);
+  selectedRouteRow = signal<IFlightPlan | null>(null);
 
-  // signature data
+  showChecklistSignature = signal<boolean>(false);
   selectedChecklistSignature =
     signal<IAircraftChecklistSignatureResponse | null>(null);
 
+  currentPage = signal<number>(0);
+  currentRows = signal<number>(20);
+  filterValues: { [key: string]: any } = {};
+  tableFilters = signal<any>({});
+  expandedRows: { [key: string]: boolean } = {};
+  dateRange: Date[] = [];
+  searchInputValue = signal<string>('');
+  tableSubPanels!: any[];
 
+  flightInformationService = inject(FlightInformationService);
+  flightPlansService = inject(FlightPlansService);
+  flightPlanPdfService = inject(FlightPlanPdfService);
+  tripInfoService = inject(TripInfoService);
+  loadSheetService = inject(LoadSheetService);
+  cgLimitsService = inject(CgLimitsService);
+  crewInformationService = inject(CrewInformationService);
+  fuelOrderService = inject(FuelOrderService);
+  reportsService = inject(ReportsService);
+  gpsLossFormsService = inject(GpsSignalLossService);
 
-
-
-  passStatusTemplate = viewChild.required('passStatusTemplate');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  mainCols!: Column[];
+  flightPlanCols!: Column[];
+  tripInfoCols!: Column[];
+  loadSheetCols!: Column[];
+  crewCols!: Column[];
+  fuelOrderCols!: Column[];
+  reportsCols!: Column[];
+  gpsLossFormsCols!: Column[];
+  routeCols!: Column[];
+  aircraftChecklistCols!: Column[];
 
   constructor() {
     effect(() => {
@@ -306,20 +247,17 @@ export class FlightInfoComponent implements OnInit {
     this.defineMainColumns();
     this.defineFlightPlanColums();
     this.defineTripInfoColums();
-
     this.defineCrewColumns();
     this.defineLoadSheetColums();
     this.defineFuelOrderColums();
     this.defineReportsColums();
     this.defineGpsLossFormsColums();
     this.defineRoutesColumns();
-    this.defineAircraftChecklistColumns(); // ← BUNU EKLE
-
+    this.defineAircraftChecklistColumns();
     this.defineTableSubPanels();
     this.setupSearchListener();
   }
 
-  // Define Columns Operation
   defineMainColumns() {
     this.mainCols = [
       { field: 'aircraftReg', header: 'Aircraft', isFilter: true },
@@ -601,9 +539,9 @@ export class FlightInfoComponent implements OnInit {
       },
       {
         panelHeader: 'Trip Infos',
-        tableData: this.tripInfoData(), // artık dizi
+        tableData: this.tripInfoData(),
         tableColumns: this.tripInfoCols,
-        tableLoading: this.tripInfoDataLoading(), // loading sinyali
+        tableLoading: this.tripInfoDataLoading(),
         value: 1,
       },
       {
@@ -652,7 +590,7 @@ export class FlightInfoComponent implements OnInit {
       {
         panelHeader: 'Aircraft Checklist',
         tableData: this.aircraftChecklistData(),
-        tableColumns: this.aircraftChecklistCols, // ayrı kolon seti
+        tableColumns: this.aircraftChecklistCols,
         tableLoading: this.aircraftChecklistLoading(),
         value: 8,
       },
@@ -767,30 +705,22 @@ export class FlightInfoComponent implements OnInit {
     this.loadAircraftChecklist(acReg, flightNo);
   }
 
-  loadRoutes(acReg: string, flightNo: string) {
-    this.routesTableLoading.set(true);
+  onRowCollapse(event: TableRowCollapseEvent) {
+    delete this.expandedRows[event.data.legIsn];
+  }
 
-    this.flightPlansService
-      .getFlightPlans(this.currentPage(), this.currentRows(), undefined, {
-        acReg,
-        flightNo,
-      })
-      .subscribe({
-        next: (resp) => {
-          const formatted = resp.content.map((item) => ({
-            ...item,
-            depDateTime: item.depDateTime
-              ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
-              : null,
-            arrDateTime: item.arrDateTime
-              ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
-              : null,
-          }));
-          this.routesTableData.set(formatted);
-          this.routesTableLoading.set(false);
-        },
-        error: () => this.routesTableLoading.set(false),
-      });
+  pageEvent(event: { first: number; rows: number }) {
+    const page = event.first / event.rows;
+    this.currentPage.set(page);
+    this.currentRows.set(event.rows);
+    this.getFlightInfo();
+  }
+
+  onChangeSearch(value: string) {
+    this.searchInputValue.set(value.toUpperCase());
+  }
+  filterDateControl(selectedDate: any) {
+    return moment(selectedDate).format('YYYY-MM-DD');
   }
 
   loadFlightPlans(acReg: string, flightNo: string) {
@@ -798,8 +728,8 @@ export class FlightInfoComponent implements OnInit {
 
     this.flightPlansService
       .getFlightPlans(
-        this.currentPage(), // pagination
-        this.currentRows(), // kaç satır gösterilecek
+        this.currentPage(),
+        this.currentRows(),
         this.searchInputValue(),
         this.tableFilters(),
       )
@@ -837,10 +767,15 @@ export class FlightInfoComponent implements OnInit {
     this.tripInfoDataLoading.set(true);
 
     this.tripInfoService
-      .getTripInfo(this.currentPage(), this.currentRows(), undefined, {
-        acReg,
-        flightNo,
-      })
+      .getTripInfo(
+        this.currentPage(),
+        this.currentRows(),
+        this.searchInputValue(),
+        {
+          acReg,
+          flightNo,
+        },
+      )
       .subscribe({
         next: (response) => {
           const formatted = response.content.map((item) => ({
@@ -850,7 +785,6 @@ export class FlightInfoComponent implements OnInit {
               : '-',
           }));
 
-          // <-- use the formatted array, not the raw response
           this.tripInfoData.set(formatted);
           this.tripInfoDataLoading.set(false);
         },
@@ -911,7 +845,6 @@ export class FlightInfoComponent implements OnInit {
         next: (resp) => {
           const formatted = resp.content.map((item) => ({
             ...item,
-            // dutyStart tarihini "DD/MM/YYYY - HH:mm" formatına çeviriyoruz
             dutyStart: item.dutyStart
               ? moment(item.dutyStart).format('DD/MM/YYYY - HH:mm')
               : null,
@@ -1002,22 +935,74 @@ export class FlightInfoComponent implements OnInit {
         error: () => this.reportsLoading.set(false),
       });
   }
+  loadGpsLossForms(acReg: string, flightNo: string) {
+    this.gpsLossFormsLoading.set(true);
+
+    this.gpsLossFormsService
+      .getAllGpsLossForms(
+        this.currentPage(),
+        this.currentRows(),
+        this.searchInputValue(),
+        { acReg, flightNo },
+      )
+      .subscribe({
+        next: (resp) => {
+          const formatted = resp.content.map((item) => ({
+            ...item,
+            depDateTime: item.depDateTime
+              ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+            arrDateTime: item.arrDateTime
+              ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+          }));
+          this.gpsLossFormsData.set(formatted);
+          this.gpsLossFormsLoading.set(false);
+        },
+        error: () => this.gpsLossFormsLoading.set(false),
+      });
+  }
+  loadRoutes(acReg: string, flightNo: string) {
+    this.routesTableLoading.set(true);
+
+    this.flightPlansService
+      .getFlightPlans(
+        this.currentPage(),
+        this.currentRows(),
+        this.searchInputValue(),
+        {
+          acReg,
+          flightNo,
+        },
+      )
+      .subscribe({
+        next: (resp) => {
+          const formatted = resp.content.map((item) => ({
+            ...item,
+            depDateTime: item.depDateTime
+              ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+            arrDateTime: item.arrDateTime
+              ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+          }));
+          this.routesTableData.set(formatted);
+          this.routesTableLoading.set(false);
+        },
+        error: () => this.routesTableLoading.set(false),
+      });
+  }
 
   loadAircraftChecklist(acReg: string, flightNo: string) {
     this.aircraftChecklistLoading.set(true);
 
-    const page = this.currentPage();
-    const size = this.currentRows();
-    const search = this.searchInputValue();
-
-    const filters = {
-      ...this.tableFilters(),
-      aircraftReg: acReg,
-      flightNo,
-    } as any;
-
     this.flightInformationService
-      .getAircraftCheckList(page, size, search, filters)
+      .getAircraftCheckList(
+        this.currentPage(),
+        this.currentRows(),
+        this.searchInputValue(),
+        { aircraftReg: acReg, flightNo } as any,
+      )
       .subscribe({
         next: (resp) => {
           const formatted = resp.content.map((item) => ({
@@ -1037,67 +1022,6 @@ export class FlightInfoComponent implements OnInit {
         },
         error: () => this.aircraftChecklistLoading.set(false),
       });
-  }
-  onChecklistSignatureShow(row: IAircraftChecklistContentData) {
-    this.flightInformationService
-      .getAircraftChecklistSignature(row.legIsn)
-      .subscribe((res) => {
-        this.selectedChecklistSignature.set(res);
-        this.showChecklistSignature.set(true);
-      });
-  }
-
-  get checklistSignatureModalVisible() {
-    return this.showChecklistSignature();
-  }
-  set checklistSignatureModalVisible(v: boolean) {
-    this.showChecklistSignature.set(v);
-  }
-
-  loadGpsLossForms(acReg: string, flightNo: string) {
-    this.gpsLossFormsLoading.set(true);
-
-    this.gpsLossFormsService
-      .getAllGpsLossForms(
-        this.currentPage(),
-        this.currentRows(),
-        this.searchInputValue(),
-        { acReg, flightNo } as any, // servis aynı patterni kullanıyorsa
-      )
-      .subscribe({
-        next: (resp) => {
-          const formatted = resp.content.map((item) => ({
-            ...item,
-            depDateTime: item.depDateTime
-              ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
-              : null,
-            arrDateTime: item.arrDateTime
-              ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
-              : null,
-          }));
-          this.gpsLossFormsData.set(formatted);
-          this.gpsLossFormsLoading.set(false);
-        },
-        error: () => this.gpsLossFormsLoading.set(false),
-      });
-  }
-
-  onRowCollapse(event: TableRowCollapseEvent) {
-    delete this.expandedRows[event.data.legIsn];
-  }
-
-  pageEvent(event: { first: number; rows: number }) {
-    const page = event.first / event.rows;
-    this.currentPage.set(page);
-    this.currentRows.set(event.rows);
-    this.getFlightInfo();
-  }
-
-  onChangeSearch(value: string) {
-    this.searchInputValue.set(value.toUpperCase());
-  }
-  filterDateControl(selectedDate: any) {
-    return moment(selectedDate).format('YYYY-MM-DD');
   }
 
   onFlightPlansShow(row: IFlightPlan) {
@@ -1131,8 +1055,6 @@ export class FlightInfoComponent implements OnInit {
   set tripInfoDetailsModalVisible(val: boolean) {
     this.showTripInfoDetailsModal.set(val);
   }
-
-  cgLimitsDialogVisible = signal<boolean>(false);
 
   onLoadSheetShow(row: ILoadSheetContentData) {
     this.selectedLoadSheet.set(row);
@@ -1200,5 +1122,21 @@ export class FlightInfoComponent implements OnInit {
   }
   set routeDetailsModalVisible(v: boolean) {
     this.showRouteDetailsModal.set(v);
+  }
+
+  onChecklistSignatureShow(row: IAircraftChecklistContentData) {
+    this.flightInformationService
+      .getAircraftChecklistSignature(row.legIsn)
+      .subscribe((res) => {
+        this.selectedChecklistSignature.set(res);
+        this.showChecklistSignature.set(true);
+      });
+  }
+
+  get checklistSignatureModalVisible() {
+    return this.showChecklistSignature();
+  }
+  set checklistSignatureModalVisible(v: boolean) {
+    this.showChecklistSignature.set(v);
   }
 }
