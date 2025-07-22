@@ -1,5 +1,5 @@
 <div id="flight-info-page">
-  <!-- Page Header -->
+  <!-- PAGE HEADER -->
   <section class="flex items-center justify-between">
     <p class="header-title">Flights</p>
 
@@ -13,12 +13,12 @@
           (ngModelChange)="onChangeSearch($event)"
           placeholder="Find Aircraft or Flight No"
         />
-
         <p-inputIcon styleClass="pi pi-search"></p-inputIcon>
       </p-iconField>
     </div>
   </section>
 
+  <!-- MAIN TABLE -->
   <section class="table-section custom-card">
     <p-table
       dataKey="legIsn"
@@ -39,7 +39,6 @@
       (onRowCollapse)="onRowCollapse($event)"
       (onLazyLoad)="lazyLoadEvent($event)"
     >
-      <!-- Table Header -->
       <ng-template #header let-columns>
         <tr>
           <th></th>
@@ -85,7 +84,7 @@
         </tr>
       </ng-template>
 
-      <!-- Table Body -->
+      <!-- TABLE BODY TEMPLATE -->
       <ng-template
         #body
         let-rowData
@@ -121,8 +120,7 @@
           </td>
         </tr>
       </ng-template>
-
-      <!-- Row Expansion Content -->
+      <!-- EXPANDED ROW CONTENT -->
       <ng-template #expandedrow>
         <tr>
           <td colspan="13">
@@ -136,6 +134,7 @@
                     {{ tab.panelHeader }}
                   </p-tab>
                 </p-tablist>
+
                 <p-tabpanels>
                   <p-tabpanel
                     *ngFor="let tab of tableSubPanels; index as i"
@@ -154,9 +153,7 @@
           </td>
         </tr>
       </ng-template>
-
-      <!-- Filters Template -->
-      <!-- Default Text Filter -->
+      <!-- FILTER TEMPLATES -->
       <ng-template #defaultFilterTemplate let-col>
         <ng-container *ngIf="col.isFilter">
           <p-columnFilter
@@ -182,7 +179,6 @@
         </ng-container>
       </ng-template>
 
-      <!-- Selectbox Template -->
       <ng-template #selectFilterTemplate let-col>
         <p-columnFilter
           [field]="col.field"
@@ -209,7 +205,6 @@
         </p-columnFilter>
       </ng-template>
 
-      <!-- Datepicker Template -->
       <ng-template #dateFilterTemplate let-col>
         <p-columnFilter
           [field]="col.field"
@@ -236,25 +231,7 @@
   </section>
 </div>
 
-<!-- Table Cell Templates -->
-<!-- Flight Plan Column Template -->
-<ng-template #flightPlansColumnTemplate let-rowData="rowData">
-  <button
-    class="border border-gray-300 rounded-md px-3 py-1 bg-white"
-    (click)="onFlightPlansShow(rowData)"
-  >
-    Show
-  </button>
-</ng-template>
-
-<ng-template #routeTableDocumentsCellTemplate let-rowData="rowData">
-  <img
-    src="/icon/documents-icon.svg"
-    alt="document view icon"
-    class="icon-class"
-  />
-</ng-template>
-
+<!-- Main status chip -->
 <ng-template #mainStatusColumnTemplate let-rowData="rowData">
   <ng-container [ngSwitch]="rowData.status">
     <p-chip *ngSwitchCase="'WAITING'" label="Waiting" class="gray-chip" />
@@ -272,6 +249,7 @@
   </ng-container>
 </ng-template>
 
+<!-- Required actions bar -->
 <ng-template #requiredActionsTemplate let-rowData="rowData">
   <div class="h-1 bg-gray-200">
     <div
@@ -286,41 +264,16 @@
   </div>
 </ng-template>
 
-<ng-template #tripInfodetailsColumnTemplate let-rowData="rowData">
+<!-- Flight Plan -->
+<ng-template #flightPlansColumnTemplate let-rowData="rowData">
   <button
     class="border border-gray-300 rounded-md px-3 py-1 bg-white"
-    (click)="onTripInfoDetailsShow(rowData)"
+    (click)="onFlightPlansShow(rowData)"
   >
     Show
   </button>
 </ng-template>
-
-<ng-template #loadSheetColumnTemplate let-rowData="rowData">
-  <button class="table-show-btn" (click)="onLoadSheetShow(rowData)">
-    Show
-  </button>
-</ng-template>
-
-<ng-template #cgLimitsColumnTemplate let-rowData="rowData">
-  <button class="table-show-btn" (click)="onShowCGLimitsDialog(rowData)">
-    Show
-  </button>
-</ng-template>
-
-<ng-template #lmcColumnTemplate let-rowData="rowData">
-  <button
-    class="border border-gray-300 rounded-md px-3 py-1 bg-white whitespace-nowrap"
-    [disabled]="!rowData.hasLmc"
-    [ngStyle]="{
-      color: rowData.hasLmc ? 'inherit' : '#24242480',
-      cursor: rowData.hasLmc ? 'pointer' : 'not-allowed',
-    }"
-    (click)="rowData.hasLmc && onLmcShow(rowData)"
-  >
-    {{ rowData.hasLmc ? "Show" : "Not Entered" }}
-  </button>
-</ng-template>
-
+<!-- Flight plan status chip -->
 <ng-template #flightPlanStatusColumnTemplate let-rowData="rowData">
   <ng-container [ngSwitch]="rowData.status">
     <p-chip
@@ -344,6 +297,17 @@
   </ng-container>
 </ng-template>
 
+<!-- Trip info details -->
+<ng-template #tripInfodetailsColumnTemplate let-rowData="rowData">
+  <button
+    class="border border-gray-300 rounded-md px-3 py-1 bg-white"
+    (click)="onTripInfoDetailsShow(rowData)"
+  >
+    Show
+  </button>
+</ng-template>
+
+<!-- Loadsheet status chip -->
 <ng-template #loadSheetStatusTemplate let-rowData="rowData">
   @switch (rowData.status) {
     @case ("LOADSHEET_CREATED") {
@@ -367,15 +331,35 @@
   }
 </ng-template>
 
-<ng-template #gpsLossFormsColumnTemplate let-rowData="rowData">
-  <button
-    class="border border-gray-300 rounded-md px-3 py-1 bg-white"
-    (click)="onGpsLossShow(rowData)"
-  >
+<!-- LoadSheet Show -->
+<ng-template #loadSheetColumnTemplate let-rowData="rowData">
+  <button class="table-show-btn" (click)="onLoadSheetShow(rowData)">
+    Show
+  </button>
+</ng-template>
+<!-- CG Limits -->
+<ng-template #cgLimitsColumnTemplate let-rowData="rowData">
+  <button class="table-show-btn" (click)="onShowCGLimitsDialog(rowData)">
     Show
   </button>
 </ng-template>
 
+<!-- LMC -->
+<ng-template #lmcColumnTemplate let-rowData="rowData">
+  <button
+    class="border border-gray-300 rounded-md px-3 py-1 bg-white whitespace-nowrap"
+    [disabled]="!rowData.hasLmc"
+    [ngStyle]="{
+      color: rowData.hasLmc ? 'inherit' : '#24242480',
+      cursor: rowData.hasLmc ? 'pointer' : 'not-allowed',
+    }"
+    (click)="rowData.hasLmc && onLmcShow(rowData)"
+  >
+    {{ rowData.hasLmc ? "Show" : "Not Entered" }}
+  </button>
+</ng-template>
+
+<!-- Crew pass icon -->
 <ng-template #passStatusTemplate let-rowData="rowData">
   <i
     class="pi"
@@ -386,6 +370,7 @@
   ></i>
 </ng-template>
 
+<!-- Report details -->
 <ng-template #reportsColumnTemplate let-rowData="rowData">
   <button
     class="border border-gray-300 rounded-md px-3 py-1 bg-white"
@@ -395,6 +380,17 @@
   </button>
 </ng-template>
 
+<!-- GPS loss forms -->
+<ng-template #gpsLossFormsColumnTemplate let-rowData="rowData">
+  <button
+    class="border border-gray-300 rounded-md px-3 py-1 bg-white"
+    (click)="onGpsLossShow(rowData)"
+  >
+    Show
+  </button>
+</ng-template>
+
+<!-- Route details -->
 <ng-template #routeDetailsColumnTemplate let-rowData="rowData">
   <button
     class="border border-gray-300 rounded-md px-3 py-1 bg-white"
@@ -404,6 +400,87 @@
   </button>
 </ng-template>
 
+<!-- Route documents icon -->
+<ng-template #routeTableDocumentsCellTemplate let-rowData="rowData">
+  <img
+    src="/icon/documents-icon.svg"
+    alt="document view icon"
+    class="icon-class"
+  />
+</ng-template>
+
+<!-- Aircraft checklist boolean columns -->
+<ng-template #melItemsStatusTemplate let-rowData="rowData">
+  <i
+    class="pi"
+    [ngClass]="{
+      'pi-check-circle text-green-500': rowData.melItems === true,
+      'pi-times-circle text-red-500': rowData.melItems === false,
+    }"
+  ></i>
+</ng-template>
+
+<ng-template #dailyCheckStatusTemplate let-rowData="rowData">
+  <i
+    class="pi"
+    [ngClass]="{
+      'pi-check-circle text-green-500': rowData.dailyCheck === true,
+      'pi-times-circle text-red-500': rowData.dailyCheck === false,
+    }"
+  ></i>
+</ng-template>
+
+<ng-template #defferedItemsStatusTemplate let-rowData="rowData">
+  <i
+    class="pi"
+    [ngClass]="{
+      'pi-check-circle text-green-500': rowData.defferedItems === true,
+      'pi-times-circle text-red-500': rowData.defferedItems === false,
+    }"
+  ></i>
+</ng-template>
+
+<ng-template #preflightCheckStatusTemplate let-rowData="rowData">
+  <i
+    class="pi"
+    [ngClass]="{
+      'pi-check-circle text-green-500': rowData.preflightCheck === true,
+      'pi-times-circle text-red-500': rowData.preflightCheck === false,
+    }"
+  ></i>
+</ng-template>
+
+<ng-template #fluidUpliftStatusTemplate let-rowData="rowData">
+  <i
+    class="pi"
+    [ngClass]="{
+      'pi-check-circle text-green-500': rowData.fluidUplift === true,
+      'pi-times-circle text-red-500': rowData.fluidUplift === false,
+    }"
+  ></i>
+</ng-template>
+
+<ng-template #securitySearchStatusTemplate let-rowData="rowData">
+  <i
+    class="pi"
+    [ngClass]="{
+      'pi-check-circle text-green-500': rowData.securitySearch === true,
+      'pi-times-circle text-red-500': rowData.securitySearch === false,
+    }"
+  ></i>
+</ng-template>
+
+<!-- Signature button -->
+<ng-template #signatureColumnTemplate let-rowData="rowData">
+  <button
+    class="border border-gray-300 rounded-md px-3 py-1 bg-white"
+    (click)="onChecklistSignatureShow(rowData)"
+  >
+    Show
+  </button>
+</ng-template>
+
+<!-- MODALS -->
 
 <app-flight-plan-modal
   [visible]="displayModal()"
@@ -421,73 +498,13 @@
   *ngIf="showLoadSheetModal()"
   [loadSheetRowData]="selectedLoadSheet()"
   [(visible)]="showLoadSheetModal"
->
-</app-load-and-trim-sheet>
-
-<ng-template #melItemsStatusTemplate let-rowData="rowData">
-  <i
-    class="pi"
-    [ngClass]="{
-      'pi-check-circle text-green-500': rowData.melItems === true,
-      'pi-times-circle text-red-500': rowData.melItems === false,
-    }"
-  ></i> </ng-template
-><ng-template #dailyCheckStatusTemplate let-rowData="rowData">
-  <i
-    class="pi"
-    [ngClass]="{
-      'pi-check-circle text-green-500': rowData.dailyCheck === true,
-      'pi-times-circle text-red-500': rowData.dailyCheck === false,
-    }"
-  ></i> </ng-template
-><ng-template #defferedItemsStatusTemplate let-rowData="rowData">
-  <i
-    class="pi"
-    [ngClass]="{
-      'pi-check-circle text-green-500': rowData.defferedItems === true,
-      'pi-times-circle text-red-500': rowData.defferedItems === false,
-    }"
-  ></i> </ng-template
-><ng-template #preflightCheckStatusTemplate let-rowData="rowData">
-  <i
-    class="pi"
-    [ngClass]="{
-      'pi-check-circle text-green-500': rowData.preflightCheck === true,
-      'pi-times-circle text-red-500': rowData.preflightCheck === false,
-    }"
-  ></i> </ng-template
-><ng-template #fluidUpliftStatusTemplate let-rowData="rowData">
-  <i
-    class="pi"
-    [ngClass]="{
-      'pi-check-circle text-green-500': rowData.fluidUplift === true,
-      'pi-times-circle text-red-500': rowData.fluidUplift === false,
-    }"
-  ></i> </ng-template
-><ng-template #securitySearchStatusTemplate let-rowData="rowData">
-  <i
-    class="pi"
-    [ngClass]="{
-      'pi-check-circle text-green-500': rowData.securitySearch === true,
-      'pi-times-circle text-red-500': rowData.securitySearch === false,
-    }"
-  ></i>
-</ng-template>
-<ng-template #signatureColumnTemplate let-rowData="rowData">
-  <button
-    class="border border-gray-300 rounded-md px-3 py-1 bg-white"
-    (click)="onChecklistSignatureShow(rowData)"
-  >
-    Show
-  </button>
-</ng-template>
+></app-load-and-trim-sheet>
 
 <app-cg-limits-dialog
   *ngIf="showCgLimitsDialog()"
   [(visible)]="showCgLimitsDialog"
   [selectedRowData]="selectedLoadSheet()"
->
-</app-cg-limits-dialog>
+></app-cg-limits-dialog>
 
 <app-lmc-details-modal
   *ngIf="selectedLmcRowData()"
@@ -512,7 +529,6 @@
   [(visible)]="routeDetailsModalVisible"
   [rowData]="selectedRouteRow()"
 ></app-route-modal>
-
 
 <app-aircraft-checklist-modal
   *ngIf="selectedChecklistSignature()"
