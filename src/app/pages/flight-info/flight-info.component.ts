@@ -74,6 +74,10 @@ import { ReportsModalComponent } from 'src/app/components/reports-modal/reports-
 import { GpsSignalLossService } from '@shared/services/gps-signal-loss.service';
 import { IGpsLossFormContentData } from '@shared/models/gps-loss-forms-response.model';
 import { GpsLossFormsModalComponent } from 'src/app/components/gps-loss-forms-modal/gps-loss-forms-modal.component';
+// mevcut importların yanına ekle
+import { RouteModalComponent } from 'src/app/components/route-modal/route-modal.component';
+import { IRouteDetailsResponse } from '@shared/models/route-details-modal-response.model';
+import { FlightInfoRoutesService } from '@shared/services/bff/route-details.service';
 
 @Component({
   selector: 'app-flight-info',
@@ -98,6 +102,7 @@ import { GpsLossFormsModalComponent } from 'src/app/components/gps-loss-forms-mo
     LmcDetailsModalComponent,
     ReportsModalComponent,
     GpsLossFormsModalComponent,
+    RouteModalComponent,
   ],
 
   templateUrl: './flight-info.component.html',
@@ -120,6 +125,16 @@ export class FlightInfoComponent implements OnInit {
   requiredActionsTemplate!: TemplateRef<any>;
 
   flightPlansColumnTemplate = viewChild.required('flightPlansColumnTemplate');
+  // class içinde, diğer viewChild'ların yanına
+  routeDetailsColumnTemplate = viewChild.required('routeDetailsColumnTemplate');
+
+  // Data & loading
+  routesTableData = signal<IFlightPlan[]>([]);
+  routesTableLoading = signal<boolean>(false);
+
+  // Modal kontrol
+  showRouteDetailsModal = signal<boolean>(false);
+  selectedRouteRow = signal<IFlightPlan | null>(null);
 
   customTableComponent = viewChild(CustomTableComponent);
 
@@ -248,7 +263,7 @@ export class FlightInfoComponent implements OnInit {
     this.defineFuelOrderColums();
     this.defineReportsColums();
     this.defineGpsLossFormsColums();
-    this.defineRouteColums();
+    this.defineRoutesColumns();
     this.defineTableSubPanels();
     this.setupSearchListener();
   }
@@ -468,30 +483,18 @@ export class FlightInfoComponent implements OnInit {
       },
     ];
   }
-
-  defineRouteColums() {
+  defineRoutesColumns() {
     this.routeCols = [
-      { field: 'airway', header: 'Airway' },
-      { field: 'wpt', header: 'WPT' },
-      { field: 'mora', header: 'MORA' },
-      { field: 'fl', header: 'FL' },
-      { field: 'shr', header: 'SHR' },
-      { field: 'avtt', header: 'AVTT' },
-      { field: 'wV', header: 'W/V' },
-      { field: 'dist', header: 'DIST' },
-      { field: 'rd', header: 'RD' },
-      { field: 'pf', header: 'PF' },
-      { field: 'fu', header: 'FU' },
-      { field: 'rf', header: 'RF' },
-      { field: 'afDf', header: 'AF-DF' },
-      { field: 'min', header: 'MIN' },
-      { field: 'tW', header: 'T/W' },
-      { field: 'atDt', header: 'AT-DT' },
-      { field: 'acc', header: 'ACC' },
+      { field: 'acReg', header: 'Ac Reg' },
+      { field: 'flightNo', header: 'Flight No' },
+      { field: 'depPort', header: 'Departure Port' },
+      { field: 'depDateTime', header: 'Departure Date' },
+      { field: 'arrPort', header: 'Arrival Port' },
+      { field: 'arrDateTime', header: 'Arrival Date' },
       {
-        field: '',
-        header: '',
-        template: this.routeTableDocumentsCellTemplate,
+        field: 'routeDetails',
+        header: 'Route Details',
+        template: this.routeDetailsColumnTemplate(),
       },
     ];
   }
@@ -547,6 +550,13 @@ export class FlightInfoComponent implements OnInit {
         tableColumns: this.gpsLossFormsCols,
         tableLoading: this.gpsLossFormsLoading(),
         value: 6,
+      },
+      {
+        panelHeader: 'Routes',
+        tableData: this.routesTableData(),
+        tableColumns: this.routeCols,
+        tableLoading: this.routesTableLoading(),
+        value: 7,
       },
     ];
   }
@@ -655,6 +665,33 @@ export class FlightInfoComponent implements OnInit {
     this.loadFuelOrder(acReg, flightNo);
     this.loadReports(acReg, flightNo);
     this.loadGpsLossForms(acReg, flightNo);
+    this.loadRoutes(acReg, flightNo);
+  }
+
+  loadRoutes(acReg: string, flightNo: string) {
+    this.routesTableLoading.set(true);
+
+    this.flightPlansService
+      .getFlightPlans(this.currentPage(), this.currentRows(), undefined, {
+        acReg,
+        flightNo,
+      })
+      .subscribe({
+        next: (resp) => {
+          const formatted = resp.content.map((item) => ({
+            ...item,
+            depDateTime: item.depDateTime
+              ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+            arrDateTime: item.arrDateTime
+              ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+          }));
+          this.routesTableData.set(formatted);
+          this.routesTableLoading.set(false);
+        },
+        error: () => this.routesTableLoading.set(false),
+      });
   }
 
   loadFlightPlans(acReg: string, flightNo: string) {
@@ -1001,5 +1038,17 @@ export class FlightInfoComponent implements OnInit {
   }
   set gpsLossModalVisible(v: boolean) {
     this.showGpsLossModal.set(v);
+  }
+
+  onRouteDetailsShow(row: IFlightPlan) {
+    this.selectedRouteRow.set(row);
+    this.showRouteDetailsModal.set(true);
+  }
+
+  get routeDetailsModalVisible() {
+    return this.showRouteDetailsModal();
+  }
+  set routeDetailsModalVisible(v: boolean) {
+    this.showRouteDetailsModal.set(v);
   }
 }

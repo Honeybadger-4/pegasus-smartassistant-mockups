@@ -395,6 +395,16 @@
   </button>
 </ng-template>
 
+<ng-template #routeDetailsColumnTemplate let-rowData="rowData">
+  <button
+    class="border border-gray-300 rounded-md px-3 py-1 bg-white"
+    (click)="onRouteDetailsShow(rowData)"
+  >
+    Show
+  </button>
+</ng-template>
+
+
 <app-flight-plan-modal
   [visible]="displayModal()"
   [pdfData]="pdfData()"
@@ -438,3 +448,9 @@
   [(visible)]="gpsLossModalVisible"
   [rowData]="selectedGpsLossRow()"
 ></app-gps-loss-forms-modal>
+
+<app-route-modal
+  *ngIf="selectedRouteRow()"
+  [(visible)]="routeDetailsModalVisible"
+  [rowData]="selectedRouteRow()"
+></app-route-modal>
