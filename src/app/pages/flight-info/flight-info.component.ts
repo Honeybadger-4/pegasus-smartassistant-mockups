@@ -65,6 +65,11 @@ import { CrewInformationService } from '@shared/services/crew-information.servic
 import { ICrewInformationContentData } from '@shared/models/crew-information-response.model';
 import { FuelOrderService } from '@shared/services/fuel-order.service';
 import { IFuelOrderContentData } from '@shared/models/fuel-order-response.model';
+import { IReportsContentData } from '@shared/models/reports-response.model';
+
+// imports üstüne ekle
+import { ReportsService } from '@shared/services/reports.service';
+import { ReportsModalComponent } from 'src/app/components/reports-modal/reports-modal.component';
 
 @Component({
   selector: 'app-flight-info',
@@ -87,6 +92,7 @@ import { IFuelOrderContentData } from '@shared/models/fuel-order-response.model'
     LoadAndTrimSheetComponent,
     CgLimitsDialogComponent,
     LmcDetailsModalComponent,
+    ReportsModalComponent,
   ],
 
   templateUrl: './flight-info.component.html',
@@ -132,6 +138,7 @@ export class FlightInfoComponent implements OnInit {
     'tripInfodetailsColumnTemplate',
   );
   showTripInfoDetailsModal = signal<boolean>(false);
+  reportsColumnTemplate = viewChild.required('reportsColumnTemplate');
 
   searchInput = viewChild.required<ElementRef>('searchInput');
   tableFilters = signal<any>({});
@@ -139,6 +146,7 @@ export class FlightInfoComponent implements OnInit {
   mainCols!: Column[];
   crewCols!: Column[];
   fuelOrderCols!: Column[];
+  reportsCols!: Column[];
   flightPlanCols!: Column[];
   tripInfoCols!: Column[];
   loadSheetCols!: Column[];
@@ -151,6 +159,15 @@ export class FlightInfoComponent implements OnInit {
   filterValues: { [key: string]: any } = {};
   tableSubPanels!: any[];
   flightPlanPdfService = inject(FlightPlanPdfService);
+
+  // class içinde sinyaller
+  reportsService = inject(ReportsService);
+
+  reportData = signal<IReportsContentData[]>([]);
+  reportsLoading = signal<boolean>(false);
+
+  showReportsModal = signal<boolean>(false);
+  selectedReportRow = signal<IReportsContentData | null>(null);
 
   flightPlanData = signal<IFlightPlan[]>([]);
   flightPlanLoading = signal<boolean>(false);
@@ -213,6 +230,7 @@ export class FlightInfoComponent implements OnInit {
     this.defineCrewColumns();
     this.defineLoadSheetColums();
     this.defineFuelOrderColums();
+    this.defineReportsColums();
     this.defineRouteColums();
     this.defineTableSubPanels();
     this.setupSearchListener();
@@ -394,6 +412,25 @@ export class FlightInfoComponent implements OnInit {
     ];
   }
 
+  defineReportsColums() {
+    this.reportsCols = [
+      {
+        field: 'createdBy',
+        header: 'Sent By',
+      },
+      {
+        field: 'enteredDate',
+        header: 'Sent Date - Time',
+       
+      },
+      {
+        field: 'show',
+        header: 'Report Details',
+        template: this.reportsColumnTemplate(), // ↓ bu template’i html’de ekleyeceğiz
+      },
+    ];
+  }
+
   defineRouteColums() {
     this.routeCols = [
       { field: 'airway', header: 'Airway' },
@@ -452,24 +489,24 @@ export class FlightInfoComponent implements OnInit {
         value: 3,
       },
 
-    {
-  panelHeader: 'Fuel Order',
-  tableData: this.fuelOrderData(),
-  tableColumns: this.fuelOrderCols,
-  tableLoading: this.fuelOrderLoading(),
-  value: 4,
-},
-
       {
-        panelHeader: 'Route',
-        tableData: this.routeData,
-        tableColumns: this.routeCols,
+        panelHeader: 'Fuel Order',
+        tableData: this.fuelOrderData(),
+        tableColumns: this.fuelOrderCols,
+        tableLoading: this.fuelOrderLoading(),
+        value: 4,
+      },
+      {
+        panelHeader: 'Reports',
+        tableData: this.reportData(),
+        tableColumns: this.reportsCols,
+        tableLoading: this.reportsLoading(),
         value: 5,
       },
+      // Route tabı 6’ya kayar (varsa)
     ];
   }
 
-  // API Calls Operations
   getFlightInfo() {
     this.tableLoading.set(true);
     this.flightInformationService
@@ -520,7 +557,6 @@ export class FlightInfoComponent implements OnInit {
     this.updateFilters(event);
   }
 
-  // Lazy Load tetiklendiğinde even.filters içerisinde boş olan filtreleri filterValues içinde resetler.
   updateFilters(event: any) {
     const filters = event.filters as { [key: string]: { value: any }[] };
     Object.entries(filters).forEach(([key, filterArray]) => {
@@ -561,21 +597,19 @@ export class FlightInfoComponent implements OnInit {
     this.getFlightInfo();
   }
 
-  // Mevcut onRowExpand’i şöyle güncelle:
-
   onRowExpand(event: TableRowExpandEvent) {
     this.expandedRows = {};
     this.expandedRows[event.data.legIsn] = true;
 
-    // ← doğru isimler:
     const acReg = event.data.aircraftReg;
     const flightNo = event.data.flightNo;
 
     this.loadFlightPlans(acReg, flightNo);
     this.loadTripInfo(acReg, flightNo);
-    this.loadLoadSheets(acReg, flightNo); // ← yenisi
-    this.loadCrew(acReg, flightNo); // ← buraya ekledik
-this.loadFuelOrder(acReg, flightNo);
+    this.loadLoadSheets(acReg, flightNo);
+    this.loadCrew(acReg, flightNo);
+    this.loadFuelOrder(acReg, flightNo);
+    this.loadReports(acReg, flightNo);
   }
 
   loadFlightPlans(acReg: string, flightNo: string) {
@@ -657,7 +691,6 @@ this.loadFuelOrder(acReg, flightNo);
       )
       .subscribe({
         next: (response) => {
-          // tarihleri formatla
           const formatted = response.content.map((item) => ({
             ...item,
             depDateTime: item.depDateTime
@@ -711,36 +744,83 @@ this.loadFuelOrder(acReg, flightNo);
       });
   }
   loadFuelOrder(acReg: string, flightNo: string) {
-  this.fuelOrderLoading.set(true);
+    this.fuelOrderLoading.set(true);
 
-  this.fuelOrderService
-    .getAllFuelOrder(
-      this.currentPage(),
-      this.currentRows(),
-      this.searchInputValue(),
-      { acReg, flightNo }
-    )
-    .subscribe({
-      next: resp => {
-        const formatted = resp.content.map(item => ({
-          ...item,
-          depDateTime: item.depDateTime
-            ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
-            : null,
-          arrDateTime: item.arrDateTime
-            ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
-            : null,
-          orderDateTime: item.orderDateTime
-            ? moment(item.orderDateTime).format('DD/MM/YYYY - HH:mm')
-            : null
-        }));
-        this.fuelOrderData.set(formatted);
-        this.fuelOrderLoading.set(false);
-      },
-      error: () => this.fuelOrderLoading.set(false)
-    });
-}
+    this.fuelOrderService
+      .getAllFuelOrder(
+        this.currentPage(),
+        this.currentRows(),
+        this.searchInputValue(),
+        { acReg, flightNo },
+      )
+      .subscribe({
+        next: (resp) => {
+          const formatted = resp.content.map((item) => ({
+            ...item,
+            depDateTime: item.depDateTime
+              ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+            arrDateTime: item.arrDateTime
+              ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+            orderDateTime: item.orderDateTime
+              ? moment(item.orderDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+          }));
+          this.fuelOrderData.set(formatted);
+          this.fuelOrderLoading.set(false);
+        },
+        error: () => this.fuelOrderLoading.set(false),
+      });
+  }
+  loadReports(acReg: string, flightNo: string) {
+    this.reportsLoading.set(true);
 
+    this.reportsService
+      .getAllReports(
+        this.currentPage(),
+        this.currentRows(),
+        this.searchInputValue(),
+        { acReg, flightNo },
+      )
+      .subscribe({
+        next: (resp) => {
+          const formatted = resp.content.map((item) => ({
+            ...item,
+            depDateTime: item.depDateTime
+              ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+            arrDateTime: item.arrDateTime
+              ? moment(item.arrDateTime).format('DD/MM/YYYY - HH:mm')
+              : null,
+            enteredDate: item.enteredDate
+              ? moment(item.enteredDate).format('DD/MM/YYYY - HH:mm')
+              : null,
+            doorClosed: item.doorClosed
+              ? moment(item.doorClosed).format('DD/MM/YYYY - HH:mm')
+              : null,
+            offBlock: item.offBlock
+              ? moment(item.offBlock).format('DD/MM/YYYY - HH:mm')
+              : null,
+            takeOff: item.takeOff
+              ? moment(item.takeOff).format('DD/MM/YYYY - HH:mm')
+              : null,
+            landing: item.landing
+              ? moment(item.landing).format('DD/MM/YYYY - HH:mm')
+              : null,
+            onBlock: item.onBlock
+              ? moment(item.onBlock).format('DD/MM/YYYY - HH:mm')
+              : null,
+            doorOpen: item.doorOpen
+              ? moment(item.doorOpen).format('DD/MM/YYYY - HH:mm')
+              : null,
+          }));
+          this.reportData.set(formatted);
+          this.reportsLoading.set(false);
+        },
+        error: () => this.reportsLoading.set(false),
+      });
+  }
 
   onRowCollapse(event: TableRowCollapseEvent) {
     delete this.expandedRows[event.data.legIsn];
@@ -824,5 +904,17 @@ this.loadFuelOrder(acReg, flightNo);
   }
   set lmcModalVisible(v: boolean) {
     this.showLmcModal.set(v);
+  }
+
+  onReportShow(row: IReportsContentData) {
+    this.selectedReportRow.set(row);
+    this.showReportsModal.set(true);
+  }
+
+  get reportsModalVisible() {
+    return this.showReportsModal();
+  }
+  set reportsModalVisible(v: boolean) {
+    this.showReportsModal.set(v);
   }
 }
