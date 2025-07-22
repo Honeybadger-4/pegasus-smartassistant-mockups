@@ -842,8 +842,8 @@ export class FlightInfoComponent implements OnInit {
         { acReg, flightNo },
       )
       .subscribe({
-        next: (resp) => {
-          const formatted = resp.content.map((item) => ({
+        next: (response) => {
+          const formatted = response.content.map((item) => ({
             ...item,
             dutyStart: item.dutyStart
               ? moment(item.dutyStart).format('DD/MM/YYYY - HH:mm')
@@ -868,8 +868,8 @@ export class FlightInfoComponent implements OnInit {
         { acReg, flightNo },
       )
       .subscribe({
-        next: (resp) => {
-          const formatted = resp.content.map((item) => ({
+        next: (response) => {
+          const formatted = response.content.map((item) => ({
             ...item,
             depDateTime: item.depDateTime
               ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
@@ -898,8 +898,8 @@ export class FlightInfoComponent implements OnInit {
         { acReg, flightNo },
       )
       .subscribe({
-        next: (resp) => {
-          const formatted = resp.content.map((item) => ({
+        next: (response) => {
+          const formatted = response.content.map((item) => ({
             ...item,
             depDateTime: item.depDateTime
               ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
@@ -946,8 +946,8 @@ export class FlightInfoComponent implements OnInit {
         { acReg, flightNo },
       )
       .subscribe({
-        next: (resp) => {
-          const formatted = resp.content.map((item) => ({
+        next: (response) => {
+          const formatted = response.content.map((item) => ({
             ...item,
             depDateTime: item.depDateTime
               ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
@@ -976,8 +976,8 @@ export class FlightInfoComponent implements OnInit {
         },
       )
       .subscribe({
-        next: (resp) => {
-          const formatted = resp.content.map((item) => ({
+        next: (response) => {
+          const formatted = response.content.map((item) => ({
             ...item,
             depDateTime: item.depDateTime
               ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
@@ -1004,8 +1004,8 @@ export class FlightInfoComponent implements OnInit {
         { aircraftReg: acReg, flightNo } as any,
       )
       .subscribe({
-        next: (resp) => {
-          const formatted = resp.content.map((item) => ({
+        next: (response) => {
+          const formatted = response.content.map((item) => ({
             ...item,
             depDateTime: item.depDateTime
               ? moment(item.depDateTime).format('DD/MM/YYYY - HH:mm')
@@ -1042,9 +1042,6 @@ export class FlightInfoComponent implements OnInit {
       next: (data) => {
         this.tripInfoDetails.set(data);
         this.showTripInfoDetailsModal.set(true);
-      },
-      error: (err) => {
-        console.error('Trip Info Details fetch failed:', err);
       },
     });
   }
