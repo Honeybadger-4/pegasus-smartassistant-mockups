@@ -1,36 +1,47 @@
 <div id="dashboard-page">
-  <div class="dashboard-header flex justify-between items-center mb-6">
+  <div class="dashboard-header flex justify-between items-start mb-6">
     <p class="dashboard-title">Dashboard</p>
 
-    <div class="date-range-tabs flex gap-2">
-      <p-button
-        label="Today"
-        [styleClass]="
-          'custom-range-button' + (selectedRange() === 'today' ? ' active' : '')
-        "
-        (onClick)="selectRange('today')"
-        text
-      ></p-button>
+    <div class="header-right flex flex-col items-end gap-2">
+      <!-- BASIC Toggle -->
+      <div class="fallback-toggle">
+  <span class="label">Fallback</span>
+  <p-toggleswitch [(ngModel)]="fallbackEnabled"></p-toggleswitch>
+</div>
 
-      <p-button
-        label="1 Month"
-        [styleClass]="
-          'custom-range-button' +
-          (selectedRange() === '1month' ? ' active' : '')
-        "
-        (onClick)="selectRange('1month')"
-        text
-      ></p-button>
 
-      <p-button
-        label="6 Months"
-        [styleClass]="
-          'custom-range-button' +
-          (selectedRange() === '6months' ? ' active' : '')
-        "
-        (onClick)="selectRange('6months')"
-        text
-      ></p-button>
+      <!-- Date Range Tabs -->
+      <div class="date-range-tabs flex gap-1">
+        <p-button
+          label="Today"
+          [styleClass]="
+            'custom-range-button' +
+            (selectedRange() === 'today' ? ' active' : '')
+          "
+          (onClick)="selectRange('today')"
+          text
+        ></p-button>
+
+        <p-button
+          label="1 Month"
+          [styleClass]="
+            'custom-range-button' +
+            (selectedRange() === '1month' ? ' active' : '')
+          "
+          (onClick)="selectRange('1month')"
+          text
+        ></p-button>
+
+        <p-button
+          label="6 Months"
+          [styleClass]="
+            'custom-range-button' +
+            (selectedRange() === '6months' ? ' active' : '')
+          "
+          (onClick)="selectRange('6months')"
+          text
+        ></p-button>
+      </div>
     </div>
   </div>
 
