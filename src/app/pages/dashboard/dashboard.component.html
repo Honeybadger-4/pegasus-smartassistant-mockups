@@ -3,12 +3,14 @@
     <p class="dashboard-title">Dashboard</p>
 
     <div class="header-right flex flex-col items-end gap-2">
-      <!-- BASIC Toggle -->
       <div class="fallback-toggle">
-  <span class="label">Fallback</span>
-  <p-toggleswitch [(ngModel)]="fallbackEnabled"></p-toggleswitch>
-</div>
-
+        <span class="label">Fallback</span>
+        <p-toggleswitch
+          [ngModel]="fallbackEnabled()"
+          (ngModelChange)="fallbackEnabled.set($event); onToggleChange($event)"
+          [disabled]="switchLoading()"
+        ></p-toggleswitch>
+      </div>
 
       <!-- Date Range Tabs -->
       <div class="date-range-tabs flex gap-1">
