@@ -86,4 +86,3 @@ export class DashboardComponent implements OnInit {
     this.selectedRange.set(range);
   }
 }
-

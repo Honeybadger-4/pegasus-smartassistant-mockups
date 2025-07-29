@@ -28,12 +28,14 @@ export class LicenceModalComponent {
 
     return this.rowData.licenceListResponse.licenseList.map((item) => ({
       licenceName: item.licenceName,
+
       issueDate: item.issueDate
-        ? moment(item.issueDate).format('DD/MM/YYYY - HH:mm')
-        : undefined,
-      expireDate: item.expDate
-        ? moment(item.expDate).format('DD/MM/YYYY - HH:mm')
-        : undefined,
+        ? moment(item.issueDate, 'DD/MM/YYYY').format('DD/MM/YYYY')
+        : null,
+
+      expDate: item.expDate
+        ? moment(item.expDate, 'DD/MM/YYYY').format('DD/MM/YYYY')
+        : null,
     }));
   }
 
