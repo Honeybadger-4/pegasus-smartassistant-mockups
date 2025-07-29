@@ -8,7 +8,6 @@
         <p-toggleswitch
           [ngModel]="fallbackEnabled()"
           (ngModelChange)="fallbackEnabled.set($event); onToggleChange($event)"
-          [disabled]="switchLoading()"
         ></p-toggleswitch>
       </div>
 
