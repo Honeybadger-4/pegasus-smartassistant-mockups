@@ -42,6 +42,8 @@ export class DashboardComponent implements OnInit {
   systemPropertyService = inject(SystemPropertyService);
   systemPropertyAdminService = inject(SystemPropertyAdminService);
 
+  switchButtonLoading = signal<boolean>(false);
+
   ngOnInit(): void {
     this.loadSwitch();
   }
@@ -64,17 +66,17 @@ export class DashboardComponent implements OnInit {
     const switchKey = 'SYSTEM_LEVEL_SWITCH';
     const switchValue = enabled ? 'ON' : 'OFF';
 
+    this.switchButtonLoading.set(true);
     this.systemPropertyAdminService
       .updateSystemLevelSwitch(switchKey, switchValue)
       .subscribe({
         next: (response: ISystemPropertyAdminResponse) => {
-          const shouldRevert = !response.result;
-          if (shouldRevert) {
-            this.fallbackEnabled.set(!enabled);
-          }
+          this.fallbackEnabled.set(enabled);
+          this.switchButtonLoading.set(false);
         },
         error: () => {
           this.fallbackEnabled.set(!enabled);
+          this.switchButtonLoading.set(false);
           console.error('Failed to update switch');
         },
       });
@@ -84,3 +86,5 @@ export class DashboardComponent implements OnInit {
     this.selectedRange.set(range);
   }
 }
+
+// butona loading apiden istek gelmediyse loading olsun

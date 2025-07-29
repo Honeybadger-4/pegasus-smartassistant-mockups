@@ -6,6 +6,7 @@
       <div class="fallback-toggle">
         <p-toggleswitch
           [ngModel]="fallbackEnabled()"
+          [disabled]="switchButtonLoading()"
           (ngModelChange)="fallbackEnabled.set($event); onToggleChange($event)"
         ></p-toggleswitch>
       </div>
