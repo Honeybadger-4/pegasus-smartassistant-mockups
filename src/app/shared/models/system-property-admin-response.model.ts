@@ -1,3 +1,3 @@
 export interface ISystemPropertyAdminResponse {
-  result: boolean;       
+  result: boolean;
 }

@@ -7,7 +7,7 @@ import { ISystemPropertyAdminResponse } from '@shared/models/system-property-adm
 
 @Injectable({ providedIn: 'root' })
 export class SystemPropertyAdminService {
-http = inject(HttpClient);
+  http = inject(HttpClient);
   baseUrl = environment.baseApi;
 
   updateSystemLevelSwitch(
