@@ -87,4 +87,3 @@ export class DashboardComponent implements OnInit {
   }
 }
 
-// butona loading apiden istek gelmediyse loading olsun
