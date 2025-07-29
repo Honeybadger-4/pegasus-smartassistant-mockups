@@ -8,7 +8,7 @@
   .fallback-toggle {
     display: flex;
     align-items: center;
-    padding: 0px 20px;
+    padding: 0px 15px;
 
     gap: 10px;
     color: #515b66;
@@ -16,13 +16,12 @@
   }
 }
 
-/* ToggleSwitch token’ları için ::ng-deep */
 ::ng-deep {
   #dashboard-page {
     .p-button.custom-range-button {
       background: none !important;
       border: none;
-      padding: 10px 20px;
+      padding-right: 10px;
       font-size: 14px;
       color: #515b66;
 

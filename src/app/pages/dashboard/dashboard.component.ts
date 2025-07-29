@@ -1,19 +1,20 @@
-import { Component, OnInit, signal, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { ButtonModule } from 'primeng/button';
-import { MessageService } from 'primeng/api';
 
 import { SystemPropertyService } from '@shared/services/system-property.service';
 import { SystemPropertyAdminService } from '@shared/services/system-property-admin.service';
 
-import { KeyStatsCardComponent } from 'src/app/components/dashboard/key-stats-card/key-stats-card.component';
 import { FlightCountCardComponent } from 'src/app/components/dashboard/flight-count-card/flight-count-card.component';
-import { GpsSignalLossCardComponent } from 'src/app/components/dashboard/gps-signal-loss-card/gps-signal-loss-card.component';
 import { TotalFuelOrderedCardComponent } from 'src/app/components/dashboard/total-fuel-ordered-card/total-fuel-ordered-card.component';
+import { KeyStatsCardComponent } from 'src/app/components/dashboard/key-stats-card/key-stats-card.component';
 import { TopAlternateRoutesCardComponent } from 'src/app/components/dashboard/top-alternate-routes-card/top-alternate-routes-card.component';
-import { map } from 'rxjs';
+import { GpsSignalLossCardComponent } from 'src/app/components/dashboard/gps-signal-loss-card/gps-signal-loss-card.component';
+
+import { ISystemPropertyResponse } from '@shared/models/system-property-response.model';
+import { ISystemPropertyAdminResponse } from '@shared/models/system-property-admin-response.model';
 
 export type DateRangeType = 'today' | '1month' | '6months';
 
@@ -27,65 +28,59 @@ export type DateRangeType = 'today' | '1month' | '6months';
     ButtonModule,
     FlightCountCardComponent,
     TotalFuelOrderedCardComponent,
-    GpsSignalLossCardComponent,
-    TopAlternateRoutesCardComponent,
     KeyStatsCardComponent,
+    TopAlternateRoutesCardComponent,
+    GpsSignalLossCardComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  providers: [MessageService],
 })
 export class DashboardComponent implements OnInit {
-  // signals
   selectedRange = signal<DateRangeType>('6months');
   fallbackEnabled = signal<boolean>(false);
-  switchLoading = signal<boolean>(false);
 
-  // services
-  private sysPropSrv = inject(SystemPropertyService);
-  private sysPropAdminSrv = inject(SystemPropertyAdminService);
-  private msg = inject(MessageService);
+  systemPropertyService = inject(SystemPropertyService);
+  systemPropertyAdminService = inject(SystemPropertyAdminService);
 
   ngOnInit(): void {
     this.loadSwitch();
   }
 
-  private loadSwitch() {
-    this.switchLoading.set(true);
-    this.sysPropSrv.getSystemLevelSwitch().subscribe({
-      next: (val) => this.fallbackEnabled.set(val),
-      error: () =>
-        this.msg.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Switch value could not be loaded',
-        }),
-      complete: () => this.switchLoading.set(false),
-    });
-  }
+  loadSwitch(): void {
+    const switchKey = 'SYSTEM_LEVEL_SWITCH';
 
-  onToggleChange(val: boolean) {
-    this.switchLoading.set(true);
-    this.sysPropAdminSrv.updateSystemLevelSwitch(val ? 'ON' : 'OFF').subscribe({
-      next: () =>
-        this.msg.add({
-          severity: 'success',
-          summary: 'Saved',
-          detail: `Fallback ${val ? 'ON' : 'OFF'}`,
-        }),
-      error: () => {
-        this.fallbackEnabled.set(!val); // revert
-        this.msg.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Save failed',
-        });
+    this.systemPropertyService.getSystemLevelSwitch(switchKey).subscribe({
+      next: (response: ISystemPropertyResponse) => {
+        const isEnabled = response.value === 'ON';
+        this.fallbackEnabled.set(isEnabled);
       },
-      complete: () => this.switchLoading.set(false),
+      error: () => {
+        console.error('Failed to load switch');
+      },
     });
   }
 
-  selectRange(range: DateRangeType) {
+  onToggleChange(enabled: boolean): void {
+    const switchKey = 'SYSTEM_LEVEL_SWITCH';
+    const switchValue = enabled ? 'ON' : 'OFF';
+
+    this.systemPropertyAdminService
+      .updateSystemLevelSwitch(switchKey, switchValue)
+      .subscribe({
+        next: (response: ISystemPropertyAdminResponse) => {
+          const shouldRevert = !response.result;
+          if (shouldRevert) {
+            this.fallbackEnabled.set(!enabled);
+          }
+        },
+        error: () => {
+          this.fallbackEnabled.set(!enabled);
+          console.error('Failed to update switch');
+        },
+      });
+  }
+
+  selectRange(range: DateRangeType): void {
     this.selectedRange.set(range);
   }
 }

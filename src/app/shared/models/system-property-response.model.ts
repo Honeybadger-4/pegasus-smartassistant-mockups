@@ -1,4 +1,5 @@
-export interface ISetSystemPropertyPayload {
-  key: string;          // "SYSTEM_LEVEL_SWITCH"
-  value: 'ON' | 'OFF';
+export interface ISystemPropertyResponse {
+  key: string;      
+  value: string;   
 }
+     
