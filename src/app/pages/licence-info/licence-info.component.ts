@@ -104,7 +104,6 @@ export class LicenceInfoComponent implements OnInit {
       .getLicenceInfo(
         this.currentPage(),
         this.currentRows(),
-
         this.searchInputValue(),
         this.tableFilters(),
       )
