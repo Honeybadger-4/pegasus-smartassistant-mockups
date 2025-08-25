@@ -37,6 +37,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
+import { TabsModule } from 'primeng/tabs';
 
 @Component({
   selector: 'app-logbook',
@@ -53,6 +54,7 @@ import { InputTextModule } from 'primeng/inputtext';
     TooltipModule,
     ButtonModule,
     Chip,
+    TabsModule, 
   ],
   templateUrl: './crew-list.component.html',
   styleUrl: './crew-list.component.scss',
@@ -87,6 +89,8 @@ export class CrewListComponent implements OnInit {
 
   logbookDashboardData: any = [];
   isLogbookCurrentMonth = false;
+  activeTabIndex = signal<number>(0); 
+
   breadcrumbItems: MenuItem[] = [
     { label: 'Logbook', routerLink: '/logbook' },
     { label: 'Crew List' },
@@ -103,6 +107,15 @@ export class CrewListComponent implements OnInit {
 
     this.defineColumns();
     this.setupSearchListener();
+
+    this.getCrewList();
+  }
+
+  onTabChange(index: number) {
+    this.activeTabIndex.set(index);
+    this.currentPage.set(0);
+    this.customTableComponent().resetTableFirstValue();
+    this.getCrewList();
   }
 
   defineColumns() {
@@ -156,6 +169,9 @@ export class CrewListComponent implements OnInit {
 
   getCrewList() {
     this.tableLoading.set(true);
+
+    const isActive = this.activeTabIndex() === 0;
+
     this.adminLogbookService
       .getCrewList(
         this.logbookDashboardData?.logbookType,
@@ -163,7 +179,10 @@ export class CrewListComponent implements OnInit {
         this.currentPage(),
         this.currentRows(),
         this.searchInputValue(),
-        this.tableFilters(),
+        {
+          ...this.tableFilters(),
+          filterIsActive: isActive, 
+        },
       )
       .subscribe({
         next: (response) => {
@@ -242,6 +261,7 @@ export class CrewListComponent implements OnInit {
       filterApprovalStatus:
         event.filters?.approvedStatus &&
         event.filters?.approvedStatus[0]?.value,
+      filterIsActive: this.activeTabIndex() === 0,
     });
 
     this.getCrewList();

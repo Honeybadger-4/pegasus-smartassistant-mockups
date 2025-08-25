@@ -66,15 +66,39 @@
     }
   </section>
 
-  <!-- Table -->
-  <section class="table-section custom-card mt-5">
-    <app-custom-table
-      [tableData]="crewListContentData()"
-      [tableColumns]="columns()"
-      [totalRecords]="crewListData()?.totalElements || 0"
-      [tableLoading]="tableLoading()"
-      (lazyLoadEvent)="lazyLoadEvent($event)"
-    ></app-custom-table>
+  <section class="mt-5">
+    <p-tabs [(value)]="activeTabIndex" class="crew-tabs">
+      <p-tablist>
+        <p-tab [value]="0" (click)="onTabChange(0)">Active Users</p-tab>
+        <p-tab [value]="1" (click)="onTabChange(1)">Inactive Users</p-tab>
+      </p-tablist>
+
+      <p-tabpanels>
+        <p-tabpanel [value]="0">
+          <section class="table-section custom-card mt-5">
+            <app-custom-table
+              [tableData]="crewListContentData()"
+              [tableColumns]="columns()"
+              [totalRecords]="crewListData()?.totalElements || 0"
+              [tableLoading]="tableLoading()"
+              (lazyLoadEvent)="lazyLoadEvent($event)"
+            ></app-custom-table>
+          </section>
+        </p-tabpanel>
+
+        <p-tabpanel [value]="1">
+          <section class="table-section custom-card mt-5">
+            <app-custom-table
+              [tableData]="crewListContentData()"
+              [tableColumns]="columns()"
+              [totalRecords]="crewListData()?.totalElements || 0"
+              [tableLoading]="tableLoading()"
+              (lazyLoadEvent)="lazyLoadEvent($event)"
+            ></app-custom-table>
+          </section>
+        </p-tabpanel>
+      </p-tabpanels>
+    </p-tabs>
   </section>
 </div>
 
