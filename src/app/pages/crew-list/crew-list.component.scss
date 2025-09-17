@@ -30,5 +30,23 @@
         border-bottom: none;
       }
     }
+
+    .crew-tabs {
+      .p-tablist {
+        .p-tab {
+          color: #666;
+          font-size: 12px;
+
+          &:hover {
+            color: #000;
+          }
+        }
+
+        .p-tablist-active-bar {
+          background: #f4b400 !important;
+          height: 3px;
+        }
+      }
+    }
   }
 }

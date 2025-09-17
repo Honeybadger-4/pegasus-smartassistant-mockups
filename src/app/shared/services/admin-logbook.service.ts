@@ -47,7 +47,9 @@ export class AdminLogbookService {
     yearMonth: number,
     page: number,
     size: number,
+    isActive: boolean,
     searchValue?: string | null,
+
     tableFilters?: {
       filterCompanyId: string;
       filterCrewFullName: string;
@@ -60,7 +62,8 @@ export class AdminLogbookService {
       .set('logbookType', logbookType)
       .set('yearMonth', yearMonth)
       .set('page', page)
-      .set('size', size);
+      .set('size', size)
+      .set('isActive', isActive);
 
     const optionalParams: { key: string; value: any }[] = [
       { key: 'searchValue', value: searchValue },
