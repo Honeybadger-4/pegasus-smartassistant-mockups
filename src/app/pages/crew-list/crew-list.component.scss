@@ -33,26 +33,17 @@
 
     .crew-tabs {
       .p-tablist {
-        border-bottom: 0px solid white;
-
         .p-tab {
           color: #666;
           font-size: 12px;
-          background: transparent;
-          border: none;
 
           &:hover {
-            color: #000;
-          }
-
-          &.p-highlight {
             color: #000;
           }
         }
 
         .p-tablist-active-bar {
-          background-color: #f4b400 !important;
-
+          background: #f4b400 !important;
           height: 3px;
         }
       }
