@@ -180,6 +180,7 @@ export class CrewListComponent implements OnInit {
         this.currentRows(),
         this.activeTabIndex() === 0,
         this.searchInputValue(),
+        this.tableFilters(),
       )
 
       .subscribe({
