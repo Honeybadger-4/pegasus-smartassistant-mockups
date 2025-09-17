@@ -54,7 +54,7 @@ import { TabsModule } from 'primeng/tabs';
     TooltipModule,
     ButtonModule,
     Chip,
-    TabsModule, 
+    TabsModule,
   ],
   templateUrl: './crew-list.component.html',
   styleUrl: './crew-list.component.scss',
@@ -89,7 +89,7 @@ export class CrewListComponent implements OnInit {
 
   logbookDashboardData: any = [];
   isLogbookCurrentMonth = false;
-  activeTabIndex = signal<number>(0); 
+  activeTabIndex = signal<number>(0);
 
   breadcrumbItems: MenuItem[] = [
     { label: 'Logbook', routerLink: '/logbook' },
@@ -178,12 +178,10 @@ export class CrewListComponent implements OnInit {
         this.logbookDashboardData?.yearMonth,
         this.currentPage(),
         this.currentRows(),
+        this.activeTabIndex() === 0,
         this.searchInputValue(),
-        {
-          ...this.tableFilters(),
-          filterIsActive: isActive, 
-        },
       )
+
       .subscribe({
         next: (response) => {
           this.crewListData.set(response);
@@ -261,7 +259,6 @@ export class CrewListComponent implements OnInit {
       filterApprovalStatus:
         event.filters?.approvedStatus &&
         event.filters?.approvedStatus[0]?.value,
-      filterIsActive: this.activeTabIndex() === 0,
     });
 
     this.getCrewList();
