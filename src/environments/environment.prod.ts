@@ -1,3 +1,3 @@
 export const environment = {
-  baseApi: 'https://smartcockpit-test.pegasusum.com/dpa',
+  baseApi: 'https://smartcockpit.pegasusum.com/dpa',
 };
