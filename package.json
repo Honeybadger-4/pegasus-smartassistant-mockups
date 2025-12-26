@@ -9,7 +9,8 @@
     "test": "ng test --watch=false --browsers=ChromeHeadless --code-coverage",
     "format": "prettier .  --write",
     "serve:ssr:efb-admin": "node dist/efb-admin/server/server.mjs",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "build:prod": "ng build --configuration production"
   },
   "private": true,
   "dependencies": {
