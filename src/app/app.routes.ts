@@ -21,6 +21,7 @@ import { FlightPlansComponent } from './pages/flight-plans/flight-plans.componen
 import { GpsLossFormsComponent } from './pages/gps-loss-forms/gps-loss-forms.component';
 import { CrewInformationComponent } from './pages/crew-information/crew-information.component';
 import { AircraftChecklistComponent } from './pages/aircraft-checklist/aircraft-checklist.component';
+import { LogbookUsageHistoryComponent } from './pages/logbook-usage-history/logbook-usage-history.component';
 
 export const routes: Routes = [
   {
@@ -71,7 +72,11 @@ export const routes: Routes = [
         path: 'logbook',
         children: [
           {
-            path: '',
+            path: 'logbook-usage-history',
+            component: LogbookUsageHistoryComponent
+          },
+          {
+            path: 'logbook-main',
             component: LogbookComponent,
           },
           {

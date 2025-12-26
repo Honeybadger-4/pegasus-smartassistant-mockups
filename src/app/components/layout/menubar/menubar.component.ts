@@ -56,103 +56,116 @@ export class MenubarComponent implements OnInit {
 
   definedMenu() {
     this.menuItems = [
-      {
-        label: 'Dashboard',
-        icon: 'dashboard-icon.svg',
-        path: '/',
-      },
-      {
-        label: 'Flights',
-        icon: 'flight-icon.svg',
-        path: 'flight-information',
-      },
-      {
-        label: 'Operational Reports',
-        icon: 'operational-reports-icon.svg',
-        items: [
-          {
-            label: 'Personal Checklists',
-            icon: '',
-            path: 'operational-reports/personal-checklists',
-          },
-          {
-            label: 'Aircraft Checklists',
-            icon: '',
-            path: 'operational-reports/aircraft-checklists',
-          },
-          {
-            label: 'Licence Infos',
-            icon: '',
-            path: 'operational-reports/licence-info',
-          },
-          {
-            label: 'Flight Plans',
-            icon: '',
-            path: 'operational-reports/flight-plans',
-          },
+      // {
+      //   label: 'Dashboard',
+      //   icon: 'dashboard-icon.svg',
+      //   path: '/',
+      // },
+      // {
+      //   label: 'Flights',
+      //   icon: 'flight-icon.svg',
+      //   path: 'flight-information',
+      // },
+      // {
+      //   label: 'Operational Reports',
+      //   icon: 'operational-reports-icon.svg',
+      //   items: [
+      //     {
+      //       label: 'Personal Checklists',
+      //       icon: '',
+      //       path: 'operational-reports/personal-checklists',
+      //     },
+      //     {
+      //       label: 'Aircraft Checklists',
+      //       icon: '',
+      //       path: 'operational-reports/aircraft-checklists',
+      //     },
+      //     {
+      //       label: 'Licence Infos',
+      //       icon: '',
+      //       path: 'operational-reports/licence-info',
+      //     },
+      //     {
+      //       label: 'Flight Plans',
+      //       icon: '',
+      //       path: 'operational-reports/flight-plans',
+      //     },
 
-          {
-            label: 'Trip Infos',
-            icon: '',
-            path: 'operational-reports/trip-information',
-          },
+      //     {
+      //       label: 'Trip Infos',
+      //       icon: '',
+      //       path: 'operational-reports/trip-information',
+      //     },
 
-          {
-            label: 'Load Sheets',
-            icon: '',
-            path: 'operational-reports/load-sheet',
-          },
+      //     {
+      //       label: 'Load Sheets',
+      //       icon: '',
+      //       path: 'operational-reports/load-sheet',
+      //     },
 
-          {
-            label: 'Fuel Orders',
-            icon: '',
-            path: 'operational-reports/fuel',
-          },
+      //     {
+      //       label: 'Fuel Orders',
+      //       icon: '',
+      //       path: 'operational-reports/fuel',
+      //     },
 
-          {
-            label: 'Crews',
-            icon: '',
-            path: 'operational-reports/crew-information',
-          },
-          {
-            label: 'Reports',
-            icon: '',
-            path: 'operational-reports/report',
-          },
+      //     {
+      //       label: 'Crews',
+      //       icon: '',
+      //       path: 'operational-reports/crew-information',
+      //     },
+      //     {
+      //       label: 'Reports',
+      //       icon: '',
+      //       path: 'operational-reports/report',
+      //     },
 
-          {
-            label: 'GPS Loss Forms',
-            icon: '',
-            path: 'operational-reports/gps-loss-form',
-          },
+      //     {
+      //       label: 'GPS Loss Forms',
+      //       icon: '',
+      //       path: 'operational-reports/gps-loss-form',
+      //     },
 
-          {
-            label: 'Routes',
-            icon: '',
-            path: 'operational-reports/route',
-          },
-        ],
-      },
+      //     {
+      //       label: 'Routes',
+      //       icon: '',
+      //       path: 'operational-reports/route',
+      //     },
+      //   ],
+      // },
+
       {
         label: 'Logbook',
         icon: 'open-book.svg',
-        path: 'logbook',
+        items: [
+          {
+            label: 'Logbook',
+            icon: '',
+            path: 'logbook/logbook-main',
+          },
+          {
+            label: 'Logbook Usage History',
+            icon: '',
+            path: 'logbook/logbook-usage-history',
+          },
+        ],
       },
-      {
-        label: 'Airport Information',
-        icon: 'airport-icon.svg',
-        path: 'airport-information',
-      },
-      {
-        label: 'Aircraft Database',
-        icon: 'aircraft-icon.svg',
-        path: 'aircraft-database',
-      },
-      {
-        label: 'User Login History',
-        icon: 'user-icon.svg',
-        path: 'user-login-history',
-      },
+
+      // {
+      //   label: 'Airport Information',
+      //   icon: 'airport-icon.svg',
+      //   path: 'airport-information',
+      // },
+      // {
+      //   label: 'Aircraft Database',
+      //   icon: 'aircraft-icon.svg',
+      //   path: 'aircraft-database',
+      // },
+      // {
+      //   label: 'User Login History',
+      //   icon: 'user-icon.svg',
+      //   path: 'user-login-history',
+      // },
     ];
   }
 
