@@ -14,6 +14,8 @@ import { ILogbookStatusListResponse } from '@shared/models/logbook-status-list-r
 import { IDetailedListResponse } from '@shared/models/detailed-list-response.model';
 import { RequestParamsControlService } from './helpers-services/request-params-control.service';
 import { ILogbookLogID } from '@shared/models/logbooks-logId-respone.interface';
+import { ILogbookUsageReportResponse } from '@shared/models/logbook-usage-report-response.model';
+import { ILogbookUsageResponse } from '@shared/models/logbook-usage-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -155,5 +157,45 @@ export class AdminLogbookService {
     return this.http
       .get<IHttpResponseModel>(apiUrl)
       .pipe(map((response) => response.data));
+  }
+
+getLogbookUsage(
+  page: number,
+  size: number,
+  sort: string,
+  start: string,
+  end: string,
+  filter?: string | null,
+): Observable<ILogbookUsageResponse> {
+  const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/logbook-usage`;
+
+  let params = new HttpParams()
+    .set('page', page)
+    .set('size', size)
+    .set('sort', sort)
+    .set('start', start)
+    .set('end', end);
+
+  if (filter) {
+    params = params.set('filter', filter);
+  }
+
+  return this.http.get<ILogbookUsageResponse>(apiUrl, { params });
+}
+
+
+  getLogbookUsageReport(
+    type: 'DAILY' | 'WEEKLY' | 'MONTHLY',
+    start: string,
+    end: string,
+  ): Observable<ILogbookUsageReportResponse[]> {
+    const apiUrl = `${this.baseUrl}/api/v1/admin/logbook/logbook-usage/report`;
+
+    const params = new HttpParams()
+      .set('type', type)
+      .set('start', start)
+      .set('end', end);
+
+    return this.http.get<ILogbookUsageReportResponse[]>(apiUrl, { params });
   }
 }

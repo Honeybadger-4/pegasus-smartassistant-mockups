@@ -133,11 +133,25 @@ export class MenubarComponent implements OnInit {
           },
         ],
       },
+
       {
         label: 'Logbook',
         icon: 'open-book.svg',
-        path: 'logbook',
+        items: [
+           {
+            label: 'Logbook',
+            icon: '',
+            path: 'logbook/logbook-main',
+          },
+          {
+            label: 'Logbook Usage History',
+            icon: '',
+            path: 'logbook/logbook-usage-history',
+          },
+         
+        ],
       },
+
       {
         label: 'Airport Information',
         icon: 'airport-icon.svg',
