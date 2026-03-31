@@ -11,23 +11,30 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root',
 })
 export class LoginService {
+  private http = inject(HttpClient);
   router = inject(Router);
   platformId = inject(PLATFORM_ID);
   baseUrl = environment.baseApi;
   currentUser = signal<ILoginResponse | null>(null);
   private userDataStorageKey = 'userData';
 
-  constructor(private http: HttpClient) {
+  constructor() {
     if (isPlatformBrowser(this.platformId)) {
       this.loadUserData();
     }
   }
 
-  login(username: string, password: string): Observable<any> {
+  // --- API METHODS ---
+
+  login(username: string, password: string): Observable<void> {
     const apiUrl = `${this.baseUrl}/api/v1/login`;
 
     return this.http
-      .post<IHttpResponseModel>(apiUrl, { username, password }, { headers: { channel: 'WEB' } })
+      .post<IHttpResponseModel>(
+        apiUrl,
+        { username, password },
+        { headers: { channel: 'WEB' } },
+      )
       .pipe(
         map((response) => {
           const data: ILoginResponse = response.data;
@@ -38,13 +45,52 @@ export class LoginService {
       );
   }
 
+  /**
+   * Kullanıcı isteğiyle çıkış: API'ye logout isteği atar (deviceId ile),
+   * ardından yerel oturumu temizler ve login sayfasına yönlendirir.
+   */
   logout(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      localStorage.removeItem(this.userDataStorageKey);
-    }
+    const deviceId = isPlatformBrowser(this.platformId)
+      ? localStorage.getItem('deviceId') || '-'
+      : '-';
 
-    this.currentUser.set(null);
+    // Önce logout isteğini gönder; token hâlâ geçerli olduğundan header interceptor
+    // Authorization başlığını doğru şekilde ekleyebilir.
+    this.http
+      .post(`${this.baseUrl}/api/v1/auth/logout`, { deviceId })
+      .subscribe({ error: () => {} });
+
+    // Ardından yerel oturumu temizle ve login'e yönlendir
+    this.clearLocalSession();
     this.router.navigate(['/login']);
+  }
+
+  refreshToken(token: string): Observable<ILoginResponse> {
+    const apiUrl = `${this.baseUrl}/api/v1/auth/refresh`;
+    return this.http
+      .post<IHttpResponseModel>(apiUrl, { refreshToken: token })
+      .pipe(map((response) => response.data as ILoginResponse));
+  }
+
+  /**
+   * Sunucu tarafından zorla çıkış (token geçersiz, şüpheli işlem vb.):
+   * API çağrısı yapmadan yerel oturumu temizler ve login sayfasına yönlendirir.
+   */
+  forceLogout(): void {
+    this.clearLocalSession();
+    this.router.navigate(['/login']);
+  }
+
+  /**
+   * Token yenileme sonrasında access ve refresh token'ları günceller.
+   */
+  updateTokens(efbToken: string, refreshToken: string): void {
+    const user = this.currentUser();
+    if (user) {
+      const updatedUser: ILoginResponse = { ...user, efbToken, refreshToken };
+      this.setUserData(updatedUser);
+      this.currentUser.set(updatedUser);
+    }
   }
 
   loadUserData(): void {
@@ -62,6 +108,13 @@ export class LoginService {
     }
   }
 
+  private clearLocalSession(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem(this.userDataStorageKey);
+    }
+    this.currentUser.set(null);
+  }
+
   isAuthenticated(): boolean {
     if (!isPlatformBrowser(this.platformId)) {
       return false;
@@ -72,13 +125,18 @@ export class LoginService {
       return false;
     }
 
+    // Access token geçerliyse doğrudan izin ver
     const expireTime = this.getTokenExpireTime(user.efbToken);
-    const now = Date.now();
+    if (expireTime > Date.now()) {
+      return true;
+    }
 
-    return expireTime > now;
+    // Access token süresi dolmuş ama refresh token varsa geçiş izni ver;
+    // interceptor ilk 401'de token yenileyecek.
+    return !!user.refreshToken;
   }
 
-  getTokenExpireTime(token: string): number {
+  private getTokenExpireTime(token: string): number {
     const payload = JSON.parse(atob(token.split('.')[1])); // JWT payload kısmını decode et
 
     return payload.exp * 1000; // `exp` zamanı Unix epoch formatındadır, milisaniyeye çevir

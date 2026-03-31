@@ -14,7 +14,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   const isCanActivate = loginService.isAuthenticated();
 
   if (!isCanActivate) {
-    loginService.logout();
+    loginService.forceLogout();
     return false;
   }
 

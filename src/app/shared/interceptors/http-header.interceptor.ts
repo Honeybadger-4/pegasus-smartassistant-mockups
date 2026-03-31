@@ -14,6 +14,7 @@ export const httpHeadersInterceptor: HttpInterceptorFn = (req, next) => {
   const osVersion = result.os.version || 'Unknown Version';
   const deviceBrand = result.device.type || 'Unknown Brand';
   const deviceModel = result.device.model || 'Unknown Model';
+  const deviceId = localStorage.getItem('deviceId') || '-';
 
   const headers: any = {
     'Content-Type': 'application/json',
@@ -23,13 +24,16 @@ export const httpHeadersInterceptor: HttpInterceptorFn = (req, next) => {
     appVersion: '-',
     deviceBrand,
     deviceModel,
-    deviceId: '-',
+    deviceId,
     ipAddress: '-',
   };
 
-  if (!req.url.includes('/login') || req.url.includes('/login-info')) {
+  const noAuthEndpoint =
+    (req.url.includes('/login') && !req.url.includes('/login-info')) ||
+    req.url.includes('/auth/refresh');
+
+  if (!noAuthEndpoint) {
     headers['authorization'] = `Bearer ${token}`;
-    console.log(result);
   }
 
   const updatedRequest = req.clone({
