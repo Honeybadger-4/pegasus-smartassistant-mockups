@@ -1,7 +1,6 @@
 export interface ILoginResponse {
   username: string;
   companyId: number;
-  userId: number;
   extendedCrewInfo: {
     crewName: string;
     crewMiddleName: string;
@@ -13,4 +12,6 @@ export interface ILoginResponse {
     active: boolean;
   };
   efbToken: string;
+  refreshToken: string;
+  enabledFeatures: string[];
 }
