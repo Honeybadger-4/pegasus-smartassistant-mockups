@@ -27,7 +27,7 @@ export class LoginService {
     const apiUrl = `${this.baseUrl}/api/v1/login`;
 
     return this.http
-      .post<IHttpResponseModel>(apiUrl, { username, password })
+      .post<IHttpResponseModel>(apiUrl, { username, password }, { headers: { channel: 'WEB' } })
       .pipe(
         map((response) => {
           const data: ILoginResponse = response.data;
