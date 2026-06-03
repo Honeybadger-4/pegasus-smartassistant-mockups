@@ -26,8 +26,8 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         req.url.includes('/auth/logout') ||
         (req.url.includes('/login') && !req.url.includes('/login-info'));
 
-      // 401/403 ve auth endpoint değilse refresh token akışını dene
-      if ((error.status === 401 || error.status === 403) && !isAuthEndpoint) {
+      // 401 ve auth endpoint değilse refresh token akışını dene
+      if (error.status === 401 && !isAuthEndpoint) {
         const currentRefreshToken = loginService.currentUser()?.refreshToken;
 
         if (!currentRefreshToken) {
